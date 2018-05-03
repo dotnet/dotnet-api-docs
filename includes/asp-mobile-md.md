@@ -1,1 +1,0 @@
-For information about how to develop ASP.NET mobile applications, see [Mobile Apps & Sites with ASP.NET](/aspnet/mobile/overview).
