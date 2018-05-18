@@ -35,8 +35,7 @@ Initially, the enumerator is positioned before the first element in the <xref:Sy
 
 If <xref:System.Span%601.Enumerator.MoveNext%2A> passes the end of the <xref:System.Span%601>, the enumerator is positioned after the last item in the <xref:System.Span%601>, and <xref:System.Span%601.Enumerator.MoveNext%2A> returns `false`. When the enumerator is at this position, subsequent calls to <xref:System.Span%601.Enumerator.MoveNext%2A> also return `false`. If the call to <xref:System.Span%601.Enumerator.MoveNext%2A> returns `false`, <xref:System.Span%601.Enumerator.Current> is undefined. You cannot set <xref:System.Span%601.Enumerator.Current> to the first item in the <xref:System.Span%601> again; you must create a new enumerator instance instead. 
 
-An enumerator remains valid as long as the collection remains unchanged. If changes are made to the collection, such as adding, modifying, or deleting elements, the enumerator is irrecoverably invalidated and its behavior is undefined. 
-The enumerator does not have exclusive access to the collection; therefore, enumerating through a collection is intrinsically not a thread-safe procedure. To guarantee thread safety during enumeration, you can lock the collection during the entire enumeration. To allow the collection to be accessed by multiple threads for reading and writing, you must implement your own synchronization. 
+The enumerator does not have exclusive access to the <xref:System.Span%601>; therefore, enumerating through a span is intrinsically not a thread-safe procedure. To guarantee thread safety during enumeration, you can lock the span during the entire enumeration. To allow the span to be accessed by multiple threads for reading and writing, you must implement your own synchronization. 
       ]]></format>
     </remarks>
   </Docs>
@@ -56,9 +55,23 @@ The enumerator does not have exclusive access to the collection; therefore, enum
         <ReturnType>T@</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the item at the current position of the enumerator.</summary>
+        <value>The element in the <see cref="T:System.Span`1" /> at the current position of the enumerator.</value>
+        <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+`Current` is undefined under any of the following conditions: 
+
+- Immediately after the enumertor is created, the enumerator is positioned before the first element in the span. <xref:System.Span%601.Enumerator.MoveNext%2A> must be called to advance the enumerator to the first element of the collection before reading the value of `Current`.
+
+- The last call to <xref:System.Span%601.Enumerator.MoveNext%2A> returned `false`, which indicates the end of the collection. 
+
+`Current` returns the same object until <xref:System.Span%601.Enumerator.MoveNext%2A> is called. <xref:System.Span%601.Enumerator.MoveNext%2A> sets `Current` to the next item in the span. 
+
+      ]]></format>
+        </remarks>
+        <exception cref="T:System.IndexOutOfRangeException">
+          The enumerator is positioned either before the first item or after the last item in the <xref:System.Span%601>.</exception> 
       </Docs>
     </Member>
     <Member MemberName="MoveNext">
