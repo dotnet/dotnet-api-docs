@@ -20,10 +20,19 @@
 ## Remarks
 
 You can use <xref:System.HashCode> to combine multiple values (for example, fields on a structure or class) into a
-single hash code using the xxHash32 algorithm. This structure operates in one of two ways:
+single hash code. This structure operates in one of two ways:
 
  * Static methods that accept a set of up to eight values to combine.
  * Two instance methods that operate in a streaming fashion, accepting value one at a time.
+
+Hash codes are calculated with a random seed that is statically initialized the first time <xref:System.HashCode> is
+used. As such <xref:System.HashCode> will only return stable values across a single process invocation. This discourages
+storing hash codes in serialized structures. The internal algorithm used by <xref:System.HashCode> is an implementation
+detail and may change.
+
+<xref:System.HashCode> currently returns the same value if <xref:System.HashCode.ToHashCode> is called multiple times.
+This is an implementation detail and should not be considered as documented behavior. Future revisions of this type may
+return different values if <xref:System.HashCode.ToHashCode> is called multiple times.
 
 ### Static Methods
 
@@ -35,12 +44,12 @@ The static methods should be preferred when eight or fewer hash codes are being 
 ### Instance Methods
 
 The instance methods are provided for scenarios where more than eight hash codes are being combined, or when a specific
-<xref:System.IEqualityComparer%601> instance is supported.
+<xref:System.Collections.Generic.IEqualityComparer%601> instance must be provided.
  
  [!code-csharp[System.HashCode.Structure#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.hashcode.structure/cs/example2.cs#1)]
  [!code-vb[System.HashCode.Structure#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.hashcode.structure/vb/example2.vb#1)]
 
-An optional <xref:System.IEqualityComparer%601> can be provided. 
+An optional <xref:System.Collections.Generic.IEqualityComparer%601> can be provided.
 
  [!code-csharp[System.HashCode.Structure#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.hashcode.structure/cs/example3.cs#1)]
  [!code-vb[System.HashCode.Structure#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.hashcode.structure/vb/example3.vb#1)]
@@ -49,15 +58,6 @@ Note that the <xref:System.HashCode> structure must be passed by-reference to ot
  
  [!code-csharp[System.HashCode.Structure#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.hashcode.structure/cs/example4.cs#1)]
  [!code-vb[System.HashCode.Structure#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.hashcode.structure/vb/example4.vb#1)]
-
-### Behavior
-
- * The hash codes are statically randomized. <xref:System.HashCode> will not return the same value across process
-   invocations. This is to encourage the best practice whereby hash codes are not serialized to binary structures - such 
-   on-disk or to the network.
- * The stability of values across multiple invocations of <xref:System.HashCode.ToHashCode> are an implementation detail
-   and are not documented behavior.
- * This type should not be used as a xxHash32 implementation for extremely long streams of data.
 
       ]]></format>
     </remarks>
@@ -115,6 +115,8 @@ Note that the <xref:System.HashCode> structure must be passed by-reference to ot
         <param name="value">The value to add to the hash code.</param>
         <param name="comparer">
           The <see cref="System.Collections.Generic.IEqualityComparer&lt;T&gt;" /> to use to calculate the hash code.
+          This value can be a null reference (Nothing in Visual Basic), which will use the default equality comparer for
+          <typeparamref name="T">.
         </param>
         <summary>
           Adds a single value to the hash code, specifying the type that provides the hash code function.
@@ -482,6 +484,7 @@ Note that the <xref:System.HashCode> structure must be passed by-reference to ot
         <param name="obj">Ignored.</param>
         <summary>This method is not supported and should not be called.</summary>
         <returns>This method will always throw a <see cref="System.NotSupportedException" />.</returns>
+        <exception cref="T:System.NotSupportedException">Always thrown when this method is called.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -510,6 +513,7 @@ Note that the <xref:System.HashCode> structure must be passed by-reference to ot
       <Docs>
         <summary>This method is not supported and should not be called.</summary>
         <returns>This method will always throw a <see cref="System.NotSupportedException" />.</returns>
+        <exception cref="T:System.NotSupportedException">Always thrown when this method is called.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToHashCode">
@@ -533,8 +537,7 @@ Note that the <xref:System.HashCode> structure must be passed by-reference to ot
         </summary>
         <returns>The calculated hash code.</returns>
         <remarks>
-          This method should not be called multiple times. The stability of hash codes across multiple invocations is an
-          implementation detail and is not documented behavior.
+          This method should not be called multiple times. See the documentation for <see cref="System.HashCode" />.
         </remarks>
       </Docs>
     </Member>
