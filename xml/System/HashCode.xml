@@ -23,38 +23,37 @@ You can use <xref:System.HashCode> to combine multiple values (for example, fiel
 single hash code. This structure operates in one of two ways:
 
  * Static methods that accept a set of up to eight values to combine.
- * Two instance methods that operate in a streaming fashion, accepting value one at a time.
+ * Two instance methods that operate in a streaming fashion, accepting values one at a time.
 
-Hash codes are calculated with a random seed that is statically initialized the first time <xref:System.HashCode> is
-used. As such <xref:System.HashCode> will only return stable values across a single process invocation. This discourages
-storing hash codes in serialized structures. The internal algorithm used by <xref:System.HashCode> is an implementation
-detail and may change.
+<xref:System.HashCode> uses a static random seed. HashCode returns stable values across a single process invocation, but
+not across multiple process invocations. Do not store hash codes produced by <xref:System.HashCode> in serialized
+structures, for example, on-disk.
 
 <xref:System.HashCode> currently returns the same value if <xref:System.HashCode.ToHashCode> is called multiple times.
-This is an implementation detail and should not be considered as documented behavior. Future revisions of this type may
-return different values if <xref:System.HashCode.ToHashCode> is called multiple times.
+This behavior is an implementation detail. Future revisions of this type may return different values if
+<xref:System.HashCode.ToHashCode> is called multiple times.
 
 ### Static Methods
 
-The static methods should be preferred when eight or fewer hash codes are being combined.
+The static methods combine the default hash codes of up to eight values.
  
  [!code-csharp[System.HashCode.Structure#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.hashcode.structure/cs/example1.cs#1)]
  [!code-vb[System.HashCode.Structure#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.hashcode.structure/vb/example1.vb#1)] 
 
 ### Instance Methods
 
-The instance methods are provided for scenarios where more than eight hash codes are being combined, or when a specific
-<xref:System.Collections.Generic.IEqualityComparer%601> instance must be provided.
+The instance methods combine the hash codes of more than eight values.
  
  [!code-csharp[System.HashCode.Structure#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.hashcode.structure/cs/example2.cs#1)]
  [!code-vb[System.HashCode.Structure#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.hashcode.structure/vb/example2.vb#1)]
 
-An optional <xref:System.Collections.Generic.IEqualityComparer%601> can be provided.
+The instance methods also combine the hash codes produced by a specific
+<xref:System.Collections.Generic.IEqualityComparer%601> implementation.
 
  [!code-csharp[System.HashCode.Structure#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.hashcode.structure/cs/example3.cs#1)]
  [!code-vb[System.HashCode.Structure#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.hashcode.structure/vb/example3.vb#1)]
 
-Note that the <xref:System.HashCode> structure must be passed by-reference to other methods, as it is a value type.
+The <xref:System.HashCode> structure must be passed by-reference to other methods, as it is a value type.
  
  [!code-csharp[System.HashCode.Structure#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.hashcode.structure/cs/example4.cs#1)]
  [!code-vb[System.HashCode.Structure#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.hashcode.structure/vb/example4.vb#1)]
@@ -144,13 +143,14 @@ Note that the <xref:System.HashCode> structure must be passed by-reference to ot
         <Parameter Name="value1" Type="T1" />
       </Parameters>
       <Docs>
-        <typeparam name="T1">The type of the value to mix.</typeparam>
-        <param name="value1">The value to mix.</param>
-        <summary>Mixes the hash code for a single value.</summary>
-        <returns>The mixed hash code.</returns>
+        <typeparam name="T1">The type of the value to add the the hash code.</typeparam>
+        <param name="value1">The value to add to the hash code.</param>
+        <summary>Diffuses the hash code returned by the specified value.</summary>
+        <returns>The hash code that represents the single value.</returns>
         <remarks>
-          Some data structures require high quality hash codes. This method is provided to increase the quality of hash
-          codes, where the underlying data is simple (such as a single integer).
+          Some data structures assume that hash codes are diffused across a large range. This method improves the
+          quality of the hash code returned by the value and is useful when the underlying data type is simple, for
+          example, an integer value.
         </remarks>
       </Docs>
     </Member>
