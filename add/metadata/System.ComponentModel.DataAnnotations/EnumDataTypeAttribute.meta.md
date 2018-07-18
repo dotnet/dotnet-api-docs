@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.EnumDataTypeAttribute
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.EnumType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.IsValid(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.#ctor(System.Ty
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

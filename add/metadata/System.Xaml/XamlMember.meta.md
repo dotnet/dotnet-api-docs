@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlMember
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---
@@ -184,18 +181,12 @@ manager: "martinek"
 uid: System.Xaml.XamlMember.MarkupExtensionBracketCharacters
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Xaml.XamlMember.LookupMarkupExtensionBracketCharacters
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlObjectReaderException
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

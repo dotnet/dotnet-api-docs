@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.AssociatedMetadataTypeTypeDescriptionProvider
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,13 +8,10 @@ uid: System.ComponentModel.DataAnnotations.AssociatedMetadataTypeTypeDescription
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
 uid: System.ComponentModel.DataAnnotations.AssociatedMetadataTypeTypeDescriptionProvider.GetTypeDescriptor
-ms.technology: 
-  - "dotnet-standard"
 ---
 
 ---
@@ -25,7 +19,6 @@ uid: System.ComponentModel.DataAnnotations.AssociatedMetadataTypeTypeDescription
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +26,6 @@ uid: System.ComponentModel.DataAnnotations.AssociatedMetadataTypeTypeDescription
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,5 +33,4 @@ uid: System.ComponentModel.DataAnnotations.AssociatedMetadataTypeTypeDescription
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

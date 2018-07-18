@@ -1,9 +1,6 @@
 ---
 uid: System.Configuration.ProtectedConfigurationProviderCollection
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Configuration.ProtectedConfigurationProviderCollection.Item(System.S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Configuration.ProtectedConfigurationProviderCollection.Add(System.Co
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.Configuration.ProtectedConfigurationProviderCollection.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

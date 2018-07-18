@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.IRootObjectProvider
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

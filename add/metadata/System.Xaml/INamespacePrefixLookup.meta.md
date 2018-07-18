@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.INamespacePrefixLookup
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

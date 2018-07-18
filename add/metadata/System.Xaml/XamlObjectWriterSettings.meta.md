@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlObjectWriterSettings
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---
@@ -65,9 +62,6 @@ manager: "martinek"
 uid: System.Xaml.XamlObjectWriterSettings.SourceBamlUri
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlNodeQueue
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

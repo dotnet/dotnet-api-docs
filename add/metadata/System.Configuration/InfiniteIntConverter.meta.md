@@ -1,15 +1,10 @@
 ---
 uid: System.Configuration.InfiniteIntConverter
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Configuration.InfiniteIntConverter.ConvertFrom
-ms.technology: 
-  - "dotnet-standard"
 ---
 
 ---
@@ -17,7 +12,6 @@ uid: System.Configuration.InfiniteIntConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,13 +19,10 @@ uid: System.Configuration.InfiniteIntConverter.ConvertTo(System.ComponentModel.I
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Configuration.InfiniteIntConverter.ConvertTo
-ms.technology: 
-  - "dotnet-standard"
 ---
 
 ---
@@ -39,5 +30,4 @@ uid: System.Configuration.InfiniteIntConverter.ConvertFrom(System.ComponentModel
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlParseException
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

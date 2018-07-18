@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.RangeAttribute
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.FormatErrorMessage(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.Minimum
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.Maximum
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double,Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.OperandType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.IsValid(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,13 +57,10 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Type,Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
 uid: System.ComponentModel.DataAnnotations.RangeAttribute.IsValid
-ms.technology: 
-  - "dotnet-standard"
 ---
 
 ---
@@ -81,5 +68,4 @@ uid: System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Int32,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.CreditCardAttribute
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.ComponentModel.DataAnnotations.CreditCardAttribute.IsValid(System.Ob
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.ComponentModel.DataAnnotations.CreditCardAttribute.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

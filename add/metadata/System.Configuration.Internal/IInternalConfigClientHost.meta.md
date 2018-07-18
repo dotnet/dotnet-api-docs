@@ -1,9 +1,6 @@
 ---
 uid: System.Configuration.Internal.IInternalConfigClientHost
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Configuration.Internal.IInternalConfigClientHost.GetRoamingUserConfi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Configuration.Internal.IInternalConfigClientHost.GetExeConfigPath
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Configuration.Internal.IInternalConfigClientHost.GetLocalUserConfigP
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Configuration.Internal.IInternalConfigClientHost.IsExeConfig(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Configuration.Internal.IInternalConfigClientHost.IsLocalUserConfig(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,5 +43,4 @@ uid: System.Configuration.Internal.IInternalConfigClientHost.IsRoamingUserConfig
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

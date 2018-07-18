@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.IValidatableObject
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,5 +8,4 @@ uid: System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.Co
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

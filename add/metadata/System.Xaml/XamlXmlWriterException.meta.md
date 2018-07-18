@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlXmlWriterException
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

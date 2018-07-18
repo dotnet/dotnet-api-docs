@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlSchemaContext
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

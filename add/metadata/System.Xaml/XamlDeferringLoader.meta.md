@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlDeferringLoader
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

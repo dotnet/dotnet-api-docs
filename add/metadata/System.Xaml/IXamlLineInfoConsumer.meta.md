@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.IXamlLineInfoConsumer
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

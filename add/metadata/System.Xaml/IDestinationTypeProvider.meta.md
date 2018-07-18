@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.IDestinationTypeProvider
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

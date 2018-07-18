@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlLanguage
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---
@@ -67,7 +64,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "mairaw"
 ms.author: "mairaw"
-manager: "wpickett"
 ---
 
 ---

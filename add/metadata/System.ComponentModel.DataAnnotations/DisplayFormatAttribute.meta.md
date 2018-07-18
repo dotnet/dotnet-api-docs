@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.DisplayFormatAttribute
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.ComponentModel.DataAnnotations.DisplayFormatAttribute.HtmlEncode
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatStri
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.ComponentModel.DataAnnotations.DisplayFormatAttribute.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.ComponentModel.DataAnnotations.DisplayFormatAttribute.NullDisplayTex
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ConvertEmptySt
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,5 +43,4 @@ uid: System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ApplyFormatInE
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

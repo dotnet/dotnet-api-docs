@@ -1,9 +1,6 @@
 ---
 uid: System.Configuration.Internal.IConfigurationManagerHelper
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,5 +8,4 @@ uid: System.Configuration.Internal.IConfigurationManagerHelper.EnsureNetConfigLo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

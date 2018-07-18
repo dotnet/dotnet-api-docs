@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlDuplicateMemberException
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

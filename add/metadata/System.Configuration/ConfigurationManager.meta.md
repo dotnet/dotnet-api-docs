@@ -1,9 +1,6 @@
 ---
 uid: System.Configuration.ConfigurationManager
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Configuration.ConfigurationManager.AppSettings
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Configuration.ConfigurationManager.GetSection(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Configuration.ConfigurationManager.ConnectionStrings
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Configuration.ConfigurationManager.OpenMappedMachineConfiguration(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Configuration.ConfigurationManager.OpenExeConfiguration
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Strin
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Configuration.ConfigurationManager.OpenMachineConfiguration
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Configuration.ConfigurationManager.RefreshSection(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Confi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---
 
 ---
@@ -99,5 +85,4 @@ uid: System.Configuration.ConfigurationManager.OpenMappedExeConfiguration
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "tomfitz"
-manager: "wpickett"
 ---

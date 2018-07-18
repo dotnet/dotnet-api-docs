@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.ValidationAttribute
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Ob
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.FormatErrorMessag
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Ob
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.RequiresValidatio
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.Validate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.Func
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResou
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.Stri
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.O
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.O
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResou
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.GetValidationResu
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -131,5 +113,4 @@ uid: System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageStrin
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlBackgroundReader
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

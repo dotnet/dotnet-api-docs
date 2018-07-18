@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.CompareAttribute
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,13 +8,10 @@ uid: System.ComponentModel.DataAnnotations.CompareAttribute.RequiresValidationCo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
 uid: System.ComponentModel.DataAnnotations.CompareAttribute.IsValid
-ms.technology: 
-  - "dotnet-standard"
 ---
 
 ---
@@ -25,7 +19,6 @@ uid: System.ComponentModel.DataAnnotations.CompareAttribute.OtherPropertyDisplay
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +26,6 @@ uid: System.ComponentModel.DataAnnotations.CompareAttribute.OtherProperty
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +33,6 @@ uid: System.ComponentModel.DataAnnotations.CompareAttribute.FormatErrorMessage(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +40,6 @@ uid: System.ComponentModel.DataAnnotations.CompareAttribute.#ctor(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,5 +47,4 @@ uid: System.ComponentModel.DataAnnotations.CompareAttribute.IsValid(System.Objec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

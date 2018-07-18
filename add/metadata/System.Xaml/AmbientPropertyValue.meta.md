@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.AmbientPropertyValue
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

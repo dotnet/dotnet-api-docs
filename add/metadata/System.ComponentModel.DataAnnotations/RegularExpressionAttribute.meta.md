@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.RegularExpressionAttribute
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.ComponentModel.DataAnnotations.RegularExpressionAttribute.FormatErro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.ComponentModel.DataAnnotations.RegularExpressionAttribute.IsValid(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.ComponentModel.DataAnnotations.RegularExpressionAttribute.MatchTimeo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.ComponentModel.DataAnnotations.RegularExpressionAttribute.#ctor(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,11 +36,8 @@ uid: System.ComponentModel.DataAnnotations.RegularExpressionAttribute.Pattern
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
 uid: System.ComponentModel.DataAnnotations.RegularExpressionAttribute.IsValid
-ms.technology: 
-  - "dotnet-standard"
 ---

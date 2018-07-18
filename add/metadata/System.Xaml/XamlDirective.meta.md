@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlDirective
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

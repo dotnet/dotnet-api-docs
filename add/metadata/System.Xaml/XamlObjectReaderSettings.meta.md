@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlObjectReaderSettings
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

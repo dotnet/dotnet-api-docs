@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlObjectEventArgs
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

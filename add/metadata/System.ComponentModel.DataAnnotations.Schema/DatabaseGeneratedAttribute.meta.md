@@ -1,9 +1,6 @@
 ---
 uid: System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute
-ms.technology: 
-  - "dotnet-standard"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.#ct
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.Dat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

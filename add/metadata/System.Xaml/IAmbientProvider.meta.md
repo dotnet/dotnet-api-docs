@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.IAmbientProvider
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

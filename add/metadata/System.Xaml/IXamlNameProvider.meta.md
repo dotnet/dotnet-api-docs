@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.IXamlNameProvider
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlObjectWriter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.XamlSchemaException
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---
