@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XamlDeferLoadAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

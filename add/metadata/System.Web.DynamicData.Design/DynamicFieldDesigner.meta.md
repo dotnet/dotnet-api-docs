@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.Design.DynamicFieldDesigner
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.GetNodeText(System.Web.U
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.DefaultNodeText
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.CreateTemplateField(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.CreateField(System.Web.U
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.UsesSchema
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.GetTemplateContent(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.CreateField
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,5 +64,4 @@ uid: System.Web.DynamicData.Design.DynamicFieldDesigner.IsEnabled(System.Web.UI.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

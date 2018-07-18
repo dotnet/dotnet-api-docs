@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.IWhereParametersProvider
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,5 +8,4 @@ uid: System.Web.DynamicData.IWhereParametersProvider.GetWhereParameters(System.W
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

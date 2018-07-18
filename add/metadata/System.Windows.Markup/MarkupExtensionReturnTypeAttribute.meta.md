@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.MarkupExtensionReturnTypeAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

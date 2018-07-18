@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.StlClr.DequeEnumeratorBase`1
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

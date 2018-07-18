@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.PingCompletedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

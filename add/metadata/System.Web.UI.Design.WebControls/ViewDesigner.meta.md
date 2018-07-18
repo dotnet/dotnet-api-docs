@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.ViewDesigner
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.ViewDesigner.GetDesignTimeHtml
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.ViewDesigner.GetDesignTimeHtml(System.Web.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.WebControls.ViewDesigner.Initialize(System.ComponentMo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.Design.WebControls.ViewDesigner.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,5 +36,4 @@ uid: System.Web.UI.Design.WebControls.ViewDesigner.NoWrap
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

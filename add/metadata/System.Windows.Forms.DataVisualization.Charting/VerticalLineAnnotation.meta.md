@@ -1,9 +1,6 @@
 ---
 uid: System.Windows.Forms.DataVisualization.Charting.VerticalLineAnnotation
-ms.technology: 
-  - "dotnet-winforms"
 ms.author: "mblythe"
-manager: "mblythe"
 ---
 
 ---

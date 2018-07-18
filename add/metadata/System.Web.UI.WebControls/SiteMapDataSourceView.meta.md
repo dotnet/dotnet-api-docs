@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.SiteMapDataSourceView
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.WebControls.SiteMapDataSourceView.ExecuteSelect(System.Web.UI
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.WebControls.SiteMapDataSourceView.#ctor(System.Web.UI.WebCont
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.UI.WebControls.SiteMapDataSourceView.#ctor(System.Web.UI.WebCont
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.UI.WebControls.SiteMapDataSourceView.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.UI.WebControls.SiteMapDataSourceView.Select(System.Web.UI.DataSo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,5 +49,4 @@ uid: System.Web.UI.WebControls.SiteMapDataSourceView.OnDataSourceViewChanged(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.GetTemplateField(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.GetService(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.CreateTemplateFie
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.UsesSchema
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.GetNewDataSourceN
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.ServiceProvider
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.DefaultNodeText
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.CreateField
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.IsEnabled(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.GetTemplate(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.GetNodeText(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,5 +92,4 @@ uid: System.Web.UI.Design.WebControls.DataControlFieldDesigner.CreateField(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

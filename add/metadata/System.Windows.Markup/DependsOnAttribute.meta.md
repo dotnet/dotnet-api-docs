@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.DependsOnAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

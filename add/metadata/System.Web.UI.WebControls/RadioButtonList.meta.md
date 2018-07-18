@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.RadioButtonList
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.LoadPostData(System.String,System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.FindControl(System.String,System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.RenderItem(System.Web.UI.WebContr
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.HasHeader
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.Render(System.Web.UI.HtmlTextWrit
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.System#Web#UI#WebControls#IRepeat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.TextAlign
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.GetItemStyle(System.Web.UI.WebCon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.CreateControlStyle
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.RepeatColumns
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.RepeatedItemCount
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.System#Web#UI#WebControls#IRepeat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.CellSpacing
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.RaisePostDataChangedEvent
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -131,7 +113,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.System#Web#UI#WebControls#IRepeat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +120,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.HasFooter
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -147,7 +127,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.System#Web#UI#IPostBackDataHandle
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -155,7 +134,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.System#Web#UI#WebControls#IRepeat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -163,7 +141,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.System#Web#UI#WebControls#IRepeat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -171,7 +148,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.RepeatDirection
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -185,7 +161,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.RenderWhenDataEmpty
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -193,7 +168,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.System#Web#UI#IPostBackDataHandle
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -201,7 +175,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.RepeatLayout
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -209,7 +182,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.CellPadding
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -217,7 +189,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.OnInit(System.EventArgs)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -225,7 +196,6 @@ uid: System.Web.UI.WebControls.RadioButtonList.HasSeparators
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -233,5 +203,4 @@ uid: System.Web.UI.WebControls.RadioButtonList.System#Web#UI#WebControls#IRepeat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

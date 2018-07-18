@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Converters.SizeValueSerializer
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

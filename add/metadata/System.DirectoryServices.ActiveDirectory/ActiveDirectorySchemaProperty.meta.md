@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.ActiveDirectorySchemaProperty
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

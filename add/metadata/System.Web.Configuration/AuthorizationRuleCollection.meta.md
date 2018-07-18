@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Configuration.AuthorizationRuleCollection
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.Add(System.Web.Configu
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.RemoveAt(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.Clear
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.Get(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,7 +49,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.Remove(System.Web.Conf
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +56,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.IndexOf(System.Web.Con
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +63,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.Set(System.Int32,Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,7 +70,6 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.CollectionType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -89,5 +77,4 @@ uid: System.Web.Configuration.AuthorizationRuleCollection.Item(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

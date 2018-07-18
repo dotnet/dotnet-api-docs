@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectNotFoundException
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

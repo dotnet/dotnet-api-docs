@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.PreFilterProperti
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.Initialize(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.GetErrorDesignTim
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.ActionLists
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.UsePreviewControl
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.AddDesignerRegion
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.AutoFormats
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,5 +64,4 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardDesigner.ConvertToCustomNa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

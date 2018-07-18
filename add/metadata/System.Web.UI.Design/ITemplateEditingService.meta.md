@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.ITemplateEditingService
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.ITemplateEditingService.GetContainingTemplateName(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.ITemplateEditingService.SupportsNestedTemplateEditing
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.ITemplateEditingService.CreateFrame(System.Web.UI.Desi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.Design.ITemplateEditingService.CreateFrame(System.Web.UI.Desi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,5 +36,4 @@ uid: System.Web.UI.Design.ITemplateEditingService.CreateFrame
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

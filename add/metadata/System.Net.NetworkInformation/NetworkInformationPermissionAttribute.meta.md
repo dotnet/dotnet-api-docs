@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.NetworkInformationPermissionAttribute
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

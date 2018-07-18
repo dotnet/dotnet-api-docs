@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.DesignerAutoFormatCollection
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.RemoveAt(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.Count
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IEnume
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.Contains(System.Web.UI.De
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.Add(System.Web.UI.Design.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.Remove(System.Web.UI.Desi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -131,7 +113,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.Clear
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +120,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.Insert(System.Int32,Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -147,7 +127,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.SyncRoot
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -155,7 +134,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IColle
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -163,7 +141,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IColle
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -171,7 +148,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IList#
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -179,7 +155,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.IndexOf(System.Web.UI.Des
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -187,7 +162,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.Item(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -195,7 +169,6 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.PreviewSize
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -203,5 +176,4 @@ uid: System.Web.UI.Design.DesignerAutoFormatCollection.System#Collections#IColle
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

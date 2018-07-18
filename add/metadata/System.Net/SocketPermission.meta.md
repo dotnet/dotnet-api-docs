@@ -1,7 +1,5 @@
 ---
 uid: System.Net.SocketPermission
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

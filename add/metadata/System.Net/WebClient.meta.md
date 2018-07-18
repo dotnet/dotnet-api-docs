@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebClient
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

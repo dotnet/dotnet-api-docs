@@ -1,7 +1,5 @@
 ---
 uid: System.Net.DnsPermission
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.HtmlControls.HtmlInputGenericControl
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.OnServerChange(System.Ev
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.System#Web#UI#IPostBackD
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.#ctor(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.OnPreRender(System.Event
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.LoadPostData(System.Stri
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.System#Web#UI#IPostBackD
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.RaisePostDataChangedEven
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,5 +64,4 @@ uid: System.Web.UI.HtmlControls.HtmlInputGenericControl.ServerChange
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

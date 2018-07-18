@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.TcpClient
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

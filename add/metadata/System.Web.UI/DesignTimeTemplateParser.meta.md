@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.DesignTimeTemplateParser
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.DesignTimeTemplateParser.ParseControl(System.Web.UI.DesignTim
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.DesignTimeTemplateParser.ParseControls(System.Web.UI.DesignTi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.DesignTimeTemplateParser.ParseTheme(System.ComponentModel.Des
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,5 +29,4 @@ uid: System.Web.UI.DesignTimeTemplateParser.ParseTemplate(System.Web.UI.DesignTi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

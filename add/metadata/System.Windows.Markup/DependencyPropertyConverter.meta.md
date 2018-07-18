@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.DependencyPropertyConverter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

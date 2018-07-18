@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.Packaging.XpsSignatureDefinition
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

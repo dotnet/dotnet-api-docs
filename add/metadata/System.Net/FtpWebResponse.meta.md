@@ -1,7 +1,5 @@
 ---
 uid: System.Net.FtpWebResponse
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

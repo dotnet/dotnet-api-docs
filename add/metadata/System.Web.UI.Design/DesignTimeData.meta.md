@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.DesignTimeData
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.DesignTimeData.CreateSampleDataTable(System.Collection
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.DesignTimeData.CreateSampleDataTable
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.DesignTimeData.CreateDummyDataBoundDataTable
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.Design.DesignTimeData.DataBindingHandler
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.Design.DesignTimeData.CreateSampleDataTable(System.Collection
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.Design.DesignTimeData.GetDataMembers(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.Design.DesignTimeData.GetSelectedDataSource
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.Design.DesignTimeData.CreateDummyDataTable
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.UI.Design.DesignTimeData.GetDataFields(System.Collections.IEnume
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.UI.Design.DesignTimeData.GetDesignTimeDataSource(System.Data.Dat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.UI.Design.DesignTimeData.GetDataMember(System.ComponentModel.ILi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.UI.Design.DesignTimeData.GetSelectedDataSource(System.ComponentM
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,5 +92,4 @@ uid: System.Web.UI.Design.DesignTimeData.GetSelectedDataSource(System.ComponentM
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

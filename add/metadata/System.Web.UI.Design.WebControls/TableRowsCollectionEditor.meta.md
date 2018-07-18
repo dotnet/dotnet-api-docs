@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.TableRowsCollectionEditor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.TableRowsCollectionEditor.CreateInstance(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.TableRowsCollectionEditor.CanSelectMultipl
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.Web.UI.Design.WebControls.TableRowsCollectionEditor.#ctor(System.Typ
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

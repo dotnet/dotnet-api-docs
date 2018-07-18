@@ -1,7 +1,5 @@
 ---
 uid: System.Net.DownloadStringCompletedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

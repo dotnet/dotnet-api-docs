@@ -1,9 +1,6 @@
 ---
 uid: System.Windows.Forms.DataVisualization.Charting.LegendItemsCollection
-ms.technology: 
-  - "dotnet-winforms"
 ms.author: "mblythe"
-manager: "mblythe"
 ---
 
 ---

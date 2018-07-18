@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.ClientScriptManager
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.ClientScriptManager.GetCallbackEventReference(System.Web.UI.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterExpandoAttribute(System.String,Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterArrayDeclaration(System.String,Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterClientScriptInclude(System.String
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.ClientScriptManager.GetPostBackEventReference
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.ClientScriptManager.IsClientScriptBlockRegistered(System.Stri
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterClientScriptResource(System.Type,
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterClientScriptBlock(System.Type,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.UI.ClientScriptManager.GetPostBackClientHyperlink(System.Web.UI.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterClientScriptInclude(System.Type,S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterForEventValidation(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.UI.ClientScriptManager.GetWebResourceUrl(System.Type,System.Stri
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.UI.ClientScriptManager.IsOnSubmitStatementRegistered
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.Web.UI.ClientScriptManager.IsClientScriptBlockRegistered(System.Type
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterForEventValidation(System.String,
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -131,7 +113,6 @@ uid: System.Web.UI.ClientScriptManager.GetCallbackEventReference(System.String,S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +120,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterClientScriptBlock
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -147,7 +127,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterForEventValidation(System.Web.UI.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -155,7 +134,6 @@ uid: System.Web.UI.ClientScriptManager.ValidateEvent
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -163,7 +141,6 @@ uid: System.Web.UI.ClientScriptManager.GetCallbackEventReference
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -171,7 +148,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterStartupScript(System.Type,System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -179,7 +155,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterClientScriptInclude
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -187,7 +162,6 @@ uid: System.Web.UI.ClientScriptManager.IsClientScriptIncludeRegistered(System.St
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -195,7 +169,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterStartupScript(System.Type,System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -203,7 +176,6 @@ uid: System.Web.UI.ClientScriptManager.IsClientScriptIncludeRegistered
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -211,7 +183,6 @@ uid: System.Web.UI.ClientScriptManager.IsStartupScriptRegistered
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -219,7 +190,6 @@ uid: System.Web.UI.ClientScriptManager.GetPostBackClientHyperlink
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -227,7 +197,6 @@ uid: System.Web.UI.ClientScriptManager.IsClientScriptBlockRegistered
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -235,7 +204,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterStartupScript
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -243,7 +211,6 @@ uid: System.Web.UI.ClientScriptManager.GetCallbackEventReference(System.Web.UI.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -251,7 +218,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterOnSubmitStatement(System.Type,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -259,7 +225,6 @@ uid: System.Web.UI.ClientScriptManager.IsOnSubmitStatementRegistered(System.Stri
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -267,7 +232,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterClientScriptBlock(System.Type,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -275,7 +239,6 @@ uid: System.Web.UI.ClientScriptManager.GetPostBackClientHyperlink(System.Web.UI.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -283,7 +246,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterExpandoAttribute(System.String,Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -291,7 +253,6 @@ uid: System.Web.UI.ClientScriptManager.IsStartupScriptRegistered(System.Type,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -299,7 +260,6 @@ uid: System.Web.UI.ClientScriptManager.GetPostBackEventReference(System.Web.UI.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -307,7 +267,6 @@ uid: System.Web.UI.ClientScriptManager.IsStartupScriptRegistered(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -315,7 +274,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterForEventValidation
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -323,7 +281,6 @@ uid: System.Web.UI.ClientScriptManager.GetPostBackEventReference(System.Web.UI.P
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -331,7 +288,6 @@ uid: System.Web.UI.ClientScriptManager.ValidateEvent(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -339,7 +295,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterExpandoAttribute
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -347,7 +302,6 @@ uid: System.Web.UI.ClientScriptManager.IsClientScriptIncludeRegistered(System.Ty
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -355,7 +309,6 @@ uid: System.Web.UI.ClientScriptManager.ValidateEvent(System.String,System.String
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -363,7 +316,6 @@ uid: System.Web.UI.ClientScriptManager.GetPostBackEventReference(System.Web.UI.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -371,7 +323,6 @@ uid: System.Web.UI.ClientScriptManager.RegisterHiddenField(System.String,System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -379,7 +330,6 @@ uid: System.Web.UI.ClientScriptManager.IsOnSubmitStatementRegistered(System.Type
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -387,7 +337,6 @@ uid: System.Web.UI.ClientScriptManager.GetCallbackEventReference(System.Web.UI.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -395,5 +344,4 @@ uid: System.Web.UI.ClientScriptManager.GetPostBackEventReference(System.Web.UI.P
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.Collaboration.PeerApplication
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

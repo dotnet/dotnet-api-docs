@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.XpsPackagingException
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

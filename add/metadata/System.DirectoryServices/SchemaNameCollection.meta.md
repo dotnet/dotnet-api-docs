@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.SchemaNameCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

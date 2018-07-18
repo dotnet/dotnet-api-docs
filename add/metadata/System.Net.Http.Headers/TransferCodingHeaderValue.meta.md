@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.TransferCodingHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

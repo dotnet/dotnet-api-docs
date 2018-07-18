@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.AccountManagement.DirectoryObjectClassAttribute
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

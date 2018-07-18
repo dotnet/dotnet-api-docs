@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.ContentPropertyAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

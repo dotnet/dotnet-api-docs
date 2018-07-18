@@ -1,7 +1,5 @@
 ---
 uid: System.Net.UiSynchronizationContext
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

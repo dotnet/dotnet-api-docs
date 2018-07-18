@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.WarningHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

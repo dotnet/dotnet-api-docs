@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.PingException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.NetworkChange
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

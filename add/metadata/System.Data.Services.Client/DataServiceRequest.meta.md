@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Services.Client.DataServiceRequest
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

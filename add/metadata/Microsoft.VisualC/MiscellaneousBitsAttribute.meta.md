@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.MiscellaneousBitsAttribute
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

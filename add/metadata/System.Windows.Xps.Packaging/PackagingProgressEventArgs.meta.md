@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.Packaging.PackagingProgressEventArgs
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.DataFieldConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.DataFieldConverter.GetStandardValues(System.ComponentM
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.Design.DataFieldConverter.GetStandardValuesExclusive(System.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -39,7 +34,6 @@ uid: System.Web.UI.Design.DataFieldConverter.GetStandardValuesSupported(System.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +59,6 @@ uid: System.Web.UI.Design.DataFieldConverter.ConvertFrom(System.ComponentModel.I
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +66,6 @@ uid: System.Web.UI.Design.DataFieldConverter.CanConvertFrom(System.ComponentMode
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,5 +73,4 @@ uid: System.Web.UI.Design.DataFieldConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

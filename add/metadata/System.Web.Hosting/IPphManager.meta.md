@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Hosting.IPphManager
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Hosting.IPphManager.StopProcessProtocol(System.String,System.Boo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.Hosting.IPphManager.StopProcessProtocolListenerChannel(System.St
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.Web.Hosting.IPphManager.StartProcessProtocolListenerChannel(System.S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

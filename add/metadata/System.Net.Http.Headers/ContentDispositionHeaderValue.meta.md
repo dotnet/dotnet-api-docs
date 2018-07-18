@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.ContentDispositionHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

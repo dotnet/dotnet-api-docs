@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebRequest
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

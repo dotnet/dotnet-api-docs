@@ -1,7 +1,5 @@
 ---
 uid: System.Net.AuthenticationManager
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

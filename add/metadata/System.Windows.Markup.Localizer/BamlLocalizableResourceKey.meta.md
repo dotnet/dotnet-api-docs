@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.Localizer.BamlLocalizableResourceKey
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

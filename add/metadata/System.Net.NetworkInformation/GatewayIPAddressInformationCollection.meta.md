@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.GatewayIPAddressInformationCollection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

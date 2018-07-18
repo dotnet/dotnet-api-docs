@@ -1,7 +1,5 @@
 ---
 uid: System.Net.IWebRequestCreate
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

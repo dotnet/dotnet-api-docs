@@ -1,9 +1,6 @@
 ---
 uid: System.Windows.Forms.DataVisualization.Charting.ChartNamedElementCollection`1
-ms.technology: 
-  - "dotnet-winforms"
 ms.author: "mblythe"
-manager: "mblythe"
 ---
 
 ---

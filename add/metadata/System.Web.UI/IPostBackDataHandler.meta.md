@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.IPostBackDataHandler
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.IPostBackDataHandler.RaisePostDataChangedEvent
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.UI.IPostBackDataHandler.LoadPostData(System.String,System.Collec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

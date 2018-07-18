@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.SetterTriggerConditionValueConverter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

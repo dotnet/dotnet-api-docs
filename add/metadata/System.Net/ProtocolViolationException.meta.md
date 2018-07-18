@@ -1,7 +1,5 @@
 ---
 uid: System.Net.ProtocolViolationException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

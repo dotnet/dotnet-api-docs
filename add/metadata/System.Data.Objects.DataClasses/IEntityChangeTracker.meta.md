@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Objects.DataClasses.IEntityChangeTracker
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

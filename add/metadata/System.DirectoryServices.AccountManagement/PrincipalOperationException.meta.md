@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.AccountManagement.PrincipalOperationException
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

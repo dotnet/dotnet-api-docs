@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebRequestMethods.Ftp
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

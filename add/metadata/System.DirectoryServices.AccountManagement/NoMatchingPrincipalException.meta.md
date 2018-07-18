@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.AccountManagement.NoMatchingPrincipalException
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

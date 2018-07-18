@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.IPPacketInformation
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

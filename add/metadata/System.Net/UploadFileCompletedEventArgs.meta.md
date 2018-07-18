@@ -1,7 +1,5 @@
 ---
 uid: System.Net.UploadFileCompletedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

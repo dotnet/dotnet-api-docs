@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.FtpCachePolicyElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

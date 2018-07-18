@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.WebUtilityElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

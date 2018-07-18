@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.NoSignSpecifiedModifier
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

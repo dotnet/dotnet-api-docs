@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.UdpStatistics
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

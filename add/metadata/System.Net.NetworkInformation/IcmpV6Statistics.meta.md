@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.IcmpV6Statistics
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

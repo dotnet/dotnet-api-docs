@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.WhitespaceSignificantCollectionAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

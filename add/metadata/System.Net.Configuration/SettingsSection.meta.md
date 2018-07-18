@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.SettingsSection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

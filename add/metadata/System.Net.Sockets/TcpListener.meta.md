@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.TcpListener
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

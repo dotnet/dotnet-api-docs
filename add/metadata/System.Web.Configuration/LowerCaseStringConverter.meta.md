@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Configuration.LowerCaseStringConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Configuration.LowerCaseStringConverter.CanConvertTo(System.Compo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.Configuration.LowerCaseStringConverter.CanConvertFrom(System.Com
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.Configuration.LowerCaseStringConverter.ConvertTo(System.Componen
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.Configuration.LowerCaseStringConverter.ConvertFrom(System.Compon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,5 +60,4 @@ uid: System.Web.Configuration.LowerCaseStringConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

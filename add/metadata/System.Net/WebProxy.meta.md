@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebProxy
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

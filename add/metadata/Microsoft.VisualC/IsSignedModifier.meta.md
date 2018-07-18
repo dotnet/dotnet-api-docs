@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.IsSignedModifier
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

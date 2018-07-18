@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Odbc.OdbcFactory
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

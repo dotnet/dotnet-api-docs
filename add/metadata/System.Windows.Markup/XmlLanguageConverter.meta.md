@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XmlLanguageConverter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.NetworkAvailabilityEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

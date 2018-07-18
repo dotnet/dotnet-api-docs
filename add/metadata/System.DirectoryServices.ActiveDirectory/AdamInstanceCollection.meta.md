@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.AdamInstanceCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

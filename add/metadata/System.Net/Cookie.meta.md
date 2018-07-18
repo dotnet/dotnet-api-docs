@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Cookie
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

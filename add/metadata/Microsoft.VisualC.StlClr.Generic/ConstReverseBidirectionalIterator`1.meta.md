@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.StlClr.Generic.ConstReverseBidirectionalIterator`1
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

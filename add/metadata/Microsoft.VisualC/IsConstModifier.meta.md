@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.IsConstModifier
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

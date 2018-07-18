@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.NetworkStream
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

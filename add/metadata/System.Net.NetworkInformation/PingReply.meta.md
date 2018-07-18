@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.PingReply
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mail.SmtpFailedRecipientsException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.Expressions.CustomExpressionEventArgs
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.WebControls.Expressions.CustomExpressionEventArgs.Query
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.WebControls.Expressions.CustomExpressionEventArgs.#ctor(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.Web.UI.WebControls.Expressions.CustomExpressionEventArgs.Values
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

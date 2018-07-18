@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.IsVolatileModifier
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

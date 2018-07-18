@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.NetworkInterface
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Baml2006.Baml2006Reader
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

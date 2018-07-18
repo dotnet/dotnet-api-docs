@@ -1,10 +1,6 @@
 ---
 uid: System.Windows.Input.Manipulations.ManipulationDelta2D
-ms.technology: 
-  - "dotnet-wpf"
-author: "Xansky"
 ms.author: "mhopkins"
-manager: "markl"
 ---
 
 ---

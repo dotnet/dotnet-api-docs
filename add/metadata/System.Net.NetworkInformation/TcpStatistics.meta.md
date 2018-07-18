@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.TcpStatistics
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

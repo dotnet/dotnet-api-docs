@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControlToolboxItem
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.#ctor(System.Type)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.CreateComponentsCore(System.Comp
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.Initialize(System.Type)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.GetToolType(System.ComponentMode
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,7 +49,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.GetToolAttributeValue(System.Com
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +56,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.GetToolHtml(System.ComponentMode
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +63,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.Serialize(System.Runtime.Seriali
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,7 +70,6 @@ uid: System.Web.UI.Design.WebControlToolboxItem.#ctor(System.Runtime.Serializati
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -89,5 +77,4 @@ uid: System.Web.UI.Design.WebControlToolboxItem.Deserialize(System.Runtime.Seria
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

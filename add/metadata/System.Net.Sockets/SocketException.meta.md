@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.SocketException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

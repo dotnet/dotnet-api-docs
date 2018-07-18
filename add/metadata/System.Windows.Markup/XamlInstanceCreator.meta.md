@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XamlInstanceCreator
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

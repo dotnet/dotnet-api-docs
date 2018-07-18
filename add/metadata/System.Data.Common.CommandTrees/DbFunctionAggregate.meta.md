@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Common.CommandTrees.DbFunctionAggregate
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

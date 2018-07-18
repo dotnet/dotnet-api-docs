@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.Reference
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

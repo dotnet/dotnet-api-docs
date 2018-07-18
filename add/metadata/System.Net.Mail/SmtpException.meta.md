@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mail.SmtpException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

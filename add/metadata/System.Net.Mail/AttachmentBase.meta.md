@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mail.AttachmentBase
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

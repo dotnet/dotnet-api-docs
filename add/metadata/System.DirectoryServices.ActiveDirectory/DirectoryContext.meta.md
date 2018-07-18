@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.DirectoryContext
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

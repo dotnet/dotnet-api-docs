@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.ByteArrayContent
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

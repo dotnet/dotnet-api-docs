@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.SocketInformation
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,46 +1,29 @@
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection
-ms.technology: 
-  - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.IndexOf(System.Windows.Media.Media3D.Vector3D)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#IList#Add(System.Object)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.ToString
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
@@ -53,61 +36,42 @@ manager: "martinek"
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#IFormattable#ToString(System.String,System.IFormatProvider)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.Clone
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.Count
 ms.technology: 
   - "dotnet-wpf"
-ms.author: "dotnet-bot"
-manager: "wpickett"
----
+ms.---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.#ctor
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#IList#Remove(System.Object)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.RemoveAt(System.Int32)
 ms.technology: 
   - "dotnet-wpf"
-ms.author: "dotnet-bot"
-manager: "wpickett"
----
+ms.---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.ToString(System.IFormatProvider)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
@@ -120,27 +84,18 @@ manager: "martinek"
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#IList#IndexOf(System.Object)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#IList#Contains(System.Object)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#Generic#IEnumerable{System#Windows#Media#Media3D#Vector3D}#GetEnumerator
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
@@ -153,88 +108,60 @@ manager: "martinek"
 uid: System.Windows.Media.Media3D.Vector3DCollection.CloneCurrentValue
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.Add(System.Windows.Media.Media3D.Vector3D)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.Contains(System.Windows.Media.Media3D.Vector3D)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.GetEnumerator
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.CopyTo(System.Windows.Media.Media3D.Vector3D[],System.Int32)
 ms.technology: 
   - "dotnet-wpf"
-ms.author: "dotnet-bot"
-manager: "wpickett"
----
+ms.---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.#ctor(System.Collections.Generic.IEnumerable{System.Windows.Media.Media3D.Vector3D})
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.Insert(System.Int32,System.Windows.Media.Media3D.Vector3D)
 ms.technology: 
   - "dotnet-wpf"
-ms.author: "dotnet-bot"
-manager: "wpickett"
----
+ms.---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#IList#Insert(System.Int32,System.Object)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.Remove(System.Windows.Media.Media3D.Vector3D)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.Item(System.Int32)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
@@ -247,36 +174,25 @@ manager: "martinek"
 uid: System.Windows.Media.Media3D.Vector3DCollection.Parse(System.String)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.#ctor(System.Int32)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.Clear
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#IEnumerable#GetEnumerator
 ms.technology: 
   - "dotnet-wpf"
-ms.author: "dotnet-bot"
-manager: "wpickett"
----
+ms.---
 
 ---
 uid: System.Windows.Media.Media3D.Vector3DCollection.System#Collections#Generic#ICollection{System#Windows#Media#Media3D#Vector3D}#IsReadOnly

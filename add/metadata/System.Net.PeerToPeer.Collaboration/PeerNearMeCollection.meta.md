@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.Collaboration.PeerNearMeCollection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

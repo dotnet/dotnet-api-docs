@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebFormsRootDesigner
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IDes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.ReferenceManager
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IDes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.GetClientScriptsInDocument
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.GetService(System.Type)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.AddClientScriptToDocument(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.OnLoadComplete(System.EventArgs)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.CreateUrlResolutionService
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#IDisposable#Dispose
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.SupportedTechnologies
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.IsLoading
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.GenerateErrorDesignTimeHtml(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IRoo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.LoadComplete
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.PostFilterProperties(System.Colle
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -131,7 +113,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IDes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +120,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.GenerateEmptyDesignTimeHtml(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -147,7 +127,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.DocumentUrl
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -155,7 +134,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.RemoveControlFromDocument(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -163,7 +141,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.PreFilterProperties(System.Collec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -171,7 +148,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.GetControlViewAndTag(System.Web.U
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -179,7 +155,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.CurrentCulture
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -187,7 +162,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IDes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -195,7 +169,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IDes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -203,7 +176,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.AddControlToDocument(System.Web.U
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -211,7 +183,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -219,7 +190,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.Dispose(System.Boolean)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -227,7 +197,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.PreFilterAttributes(System.Collec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -235,7 +204,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IDes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -243,7 +211,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.GetView(System.ComponentModel.Des
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -251,7 +218,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.Initialize(System.ComponentModel.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -259,7 +225,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.PreFilterEvents(System.Collection
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -267,7 +232,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IDes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -275,7 +239,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.Verbs
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -283,7 +246,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.RemoveClientScriptFromDocument(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -291,7 +253,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.CreateDesignerActionService(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -299,7 +260,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IDes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -307,7 +267,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.System#ComponentModel#Design#IRoo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -315,7 +274,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.Component
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -323,7 +281,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.SetControlID(System.Web.UI.Contro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -331,7 +288,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.IsDesignerViewLocked
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -339,7 +295,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.PostFilterAttributes(System.Colle
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -347,7 +302,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.Finalize
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -355,7 +309,6 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.PostFilterEvents(System.Collectio
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -363,5 +316,4 @@ uid: System.Web.UI.Design.WebFormsRootDesigner.ResolveUrl(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

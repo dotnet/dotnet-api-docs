@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.Protocols.AddRequest
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

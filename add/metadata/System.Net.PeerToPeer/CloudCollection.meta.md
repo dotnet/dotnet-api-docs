@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.CloudCollection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

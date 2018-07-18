@@ -1,6 +1,5 @@
 ---
 uid: System.Net.Sockets.SocketTaskExtensions
-manager: "markl"
 ---
 
 ---

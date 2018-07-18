@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.HttpMethod
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

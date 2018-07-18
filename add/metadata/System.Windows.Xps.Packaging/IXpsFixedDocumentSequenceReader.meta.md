@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.Packaging.IXpsFixedDocumentSequenceReader
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

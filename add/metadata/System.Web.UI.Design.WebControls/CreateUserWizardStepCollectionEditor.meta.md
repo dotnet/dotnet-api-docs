@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.CreateUserWizardStepCollectionEditor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardStepCollectionEditor.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardStepCollectionEditor.HelpT
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardStepCollectionEditor.CanRe
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,5 +29,4 @@ uid: System.Web.UI.Design.WebControls.CreateUserWizardStepCollectionEditor.Creat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

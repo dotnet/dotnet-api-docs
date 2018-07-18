@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkProgressChangedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

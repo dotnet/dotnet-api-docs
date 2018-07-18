@@ -1,7 +1,5 @@
 ---
 uid: System.Net.GlobalProxySelection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.ExpressionsCollectionConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -17,7 +14,6 @@ uid: System.Web.UI.Design.ExpressionsCollectionConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,5 +21,4 @@ uid: System.Web.UI.Design.ExpressionsCollectionConverter.ConvertTo(System.Compon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

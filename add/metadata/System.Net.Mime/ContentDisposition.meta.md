@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mime.ContentDisposition
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

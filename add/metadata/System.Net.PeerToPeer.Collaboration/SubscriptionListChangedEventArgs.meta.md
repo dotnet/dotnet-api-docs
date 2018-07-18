@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.Collaboration.SubscriptionListChangedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

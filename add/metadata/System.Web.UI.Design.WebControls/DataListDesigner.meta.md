@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.DataListDesigner
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.OnSchemaRefreshed
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.AllowResize
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.GetCachedTemplateEditingV
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.GetErrorDesignTimeHtml(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.GetTemplateContainerDataI
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,7 +49,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.TemplatesExist
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +56,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.OnTemplateEditingVerbsCha
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +63,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.GetTemplateContent(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,7 +70,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.AutoFormats
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -89,7 +77,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.SetTemplateContent(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -97,7 +84,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -105,7 +91,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.Initialize(System.Compone
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -113,7 +98,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.GetEmptyDesignTimeHtml
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -121,7 +105,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.Dispose(System.Boolean)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -129,7 +112,6 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.CreateTemplateEditingFram
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -137,5 +119,4 @@ uid: System.Web.UI.Design.WebControls.DataListDesigner.GetDesignTimeHtml
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.NeedsCopyConstructorModifier
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.DecoratedNameAttribute
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

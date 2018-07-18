@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Common.CommandTrees.DbInsertCommandTree
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

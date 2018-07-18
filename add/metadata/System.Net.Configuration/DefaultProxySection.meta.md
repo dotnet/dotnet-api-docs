@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.DefaultProxySection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

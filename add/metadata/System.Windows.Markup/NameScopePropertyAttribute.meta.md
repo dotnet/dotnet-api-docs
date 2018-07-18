@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.NameScopePropertyAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.Ping
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

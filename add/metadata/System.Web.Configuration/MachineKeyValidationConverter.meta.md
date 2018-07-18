@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Configuration.MachineKeyValidationConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Configuration.MachineKeyValidationConverter.ConvertFrom(System.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -31,7 +27,6 @@ uid: System.Web.Configuration.MachineKeyValidationConverter.ConvertTo(System.Com
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -39,5 +34,4 @@ uid: System.Web.Configuration.MachineKeyValidationConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

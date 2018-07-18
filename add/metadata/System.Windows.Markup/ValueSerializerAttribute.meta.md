@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.ValueSerializerAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

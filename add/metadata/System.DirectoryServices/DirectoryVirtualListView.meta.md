@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.DirectoryVirtualListView
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

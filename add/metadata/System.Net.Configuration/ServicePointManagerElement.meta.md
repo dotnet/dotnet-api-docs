@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.ServicePointManagerElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

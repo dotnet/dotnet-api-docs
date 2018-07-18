@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.WebRequestModuleElementCollection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

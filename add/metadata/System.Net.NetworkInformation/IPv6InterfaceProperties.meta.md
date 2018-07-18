@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.IPv6InterfaceProperties
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

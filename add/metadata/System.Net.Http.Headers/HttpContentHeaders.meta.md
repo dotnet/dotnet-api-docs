@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.HttpContentHeaders
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

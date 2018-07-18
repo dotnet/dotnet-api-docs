@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.DataVisualization.Charting.StatisticFormula
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "mblythe"
-manager: "mblythe"
 ---
 
 ---

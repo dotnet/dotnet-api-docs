@@ -1,46 +1,30 @@
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer
-ms.technology: 
-  - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.System#Windows#Automation#Provider#ITransformProvider#Resize(System.Double,System.Double)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.System#Windows#Automation#Provider#ITransformProvider#Move(System.Double,System.Double)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.System#Windows#Automation#Provider#ITransformProvider#Rotate(System.Double)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.GetClassNameCore
 ms.technology: 
   - "dotnet-wpf"
-ms.author: "dotnet-bot"
-manager: "wpickett"
----
+ms.---
 
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.System#Windows#Automation#Provider#ITransformProvider#CanMove
@@ -52,9 +36,6 @@ manager: "markl"
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.IsContentElementCore
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
@@ -67,36 +48,24 @@ manager: "markl"
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.GetAutomationControlTypeCore
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.System#Windows#Automation#Provider#IInvokeProvider#Invoke
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.GridViewColumnHeaderAutomationPeer.#ctor(System.Windows.Controls.GridViewColumnHeader)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---

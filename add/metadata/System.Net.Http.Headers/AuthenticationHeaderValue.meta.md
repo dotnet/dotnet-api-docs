@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.AuthenticationHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

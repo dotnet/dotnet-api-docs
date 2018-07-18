@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Globalization.IStringLocalizerProvider
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,5 +8,4 @@ uid: System.Web.Globalization.IStringLocalizerProvider.GetLocalizedString(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

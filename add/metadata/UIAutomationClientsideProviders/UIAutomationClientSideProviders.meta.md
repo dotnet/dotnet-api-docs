@@ -1,7 +1,5 @@
 ---
 uid: UIAutomationClientsideProviders.UIAutomationClientSideProviders
-ms.author: "kbridge"
-manager: "leannef"
 ---
 
 ---

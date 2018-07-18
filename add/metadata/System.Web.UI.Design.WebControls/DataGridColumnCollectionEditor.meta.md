@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.DataGridColumnCollectionEditor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.DataGridColumnCollectionEditor.EditValue(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.DataGridColumnCollectionEditor.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.UI.Design.WebControls.DataGridColumnCollectionEditor.GetEditStyl
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---

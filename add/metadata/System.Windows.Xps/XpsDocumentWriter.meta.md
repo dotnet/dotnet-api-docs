@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.XpsDocumentWriter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebFormsDesignerActionService
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebFormsDesignerActionService.GetComponentDesignerActi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.UI.Design.WebFormsDesignerActionService.#ctor(System.IServicePro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

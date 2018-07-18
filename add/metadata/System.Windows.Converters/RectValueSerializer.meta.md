@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Converters.RectValueSerializer
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

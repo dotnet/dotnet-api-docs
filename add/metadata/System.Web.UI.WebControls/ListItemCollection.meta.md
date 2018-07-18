@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.ListItemCollection
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Capacity
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.IndexOf(System.Web.UI.WebContr
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Remove(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.RemoveAt(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Collections#IList#Add(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Collections#IList#Index
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Collections#IList#Remov
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Insert(System.Int32,System.Str
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Add
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Web#UI#IStateManager#Tr
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Web#UI#IStateManager#Lo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Insert(System.Int32,System.Web
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Item(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.FindByValue(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -131,7 +113,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.FindByText(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +120,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.IsReadOnly
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -147,7 +127,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Web#UI#IStateManager#Is
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -155,7 +134,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.IsSynchronized
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -163,7 +141,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Collections#IList#Conta
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -171,7 +148,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Web#UI#IStateManager#Sa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -179,7 +155,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Contains(System.Web.UI.WebCont
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -187,7 +162,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Clear
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -195,7 +169,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.AddRange(System.Web.UI.WebCont
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -203,7 +176,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.SyncRoot
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -211,7 +183,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Add(System.Web.UI.WebControls.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -219,7 +190,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Add(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -227,7 +197,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.GetEnumerator
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -235,7 +204,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Remove(System.Web.UI.WebContro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -243,7 +211,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Remove
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -251,7 +218,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Collections#IList#Item(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -259,7 +225,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Collections#IList#Inser
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -267,7 +232,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.CopyTo(System.Array,System.Int
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -275,7 +239,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Insert
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -283,7 +246,6 @@ uid: System.Web.UI.WebControls.ListItemCollection.Count
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -291,5 +253,4 @@ uid: System.Web.UI.WebControls.ListItemCollection.System#Collections#IList#IsFix
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

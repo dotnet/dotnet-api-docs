@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.FieldTemplateUserControl
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.System#Web#DynamicData#IFie
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.ExtractValues(System.Collec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.FormattingOptions
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.MetadataAttributes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.FormatFieldValue(System.Obj
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.BuildChildrenPath(System.St
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.ExtractForeignKey(System.Co
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.ContainerType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.SetUpValidator(System.Web.U
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.Table
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.SetUpValidator(System.Web.U
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.ChildrenColumn
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.ForeignKeyColumn
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.DataControl
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -131,7 +113,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.FindOtherFieldTemplate(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +120,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.System#Web#UI#IBindableCont
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -147,7 +127,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.IgnoreModelValidationAttrib
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -155,7 +134,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.Host
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -163,7 +141,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.Column
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -171,7 +148,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.Row
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -179,7 +155,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.BuildForeignKeyPath(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -187,7 +162,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.Mode
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -195,7 +169,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.ChildrenPath
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -203,7 +176,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.FieldValue
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -211,7 +183,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.FieldValueEditString
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -219,7 +190,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.PopulateListControl(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -227,7 +197,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.GetColumnValue(System.Web.D
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -235,7 +204,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.ConvertEditedValue(System.S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -243,7 +211,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.FieldValueString
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -251,7 +218,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.ForeignKeyPath
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -259,7 +225,6 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.GetSelectedValueString
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -267,5 +232,4 @@ uid: System.Web.DynamicData.FieldTemplateUserControl.SetUpValidator
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

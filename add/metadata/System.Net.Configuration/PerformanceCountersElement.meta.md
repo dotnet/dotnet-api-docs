@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.PerformanceCountersElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

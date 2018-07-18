@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.AccountManagement.PrincipalSearchResult`1
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

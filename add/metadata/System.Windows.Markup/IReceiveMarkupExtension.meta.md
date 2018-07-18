@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.IReceiveMarkupExtension
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

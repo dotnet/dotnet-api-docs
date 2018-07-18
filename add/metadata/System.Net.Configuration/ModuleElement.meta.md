@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.ModuleElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.IWebFormsBuilderUIService
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.IWebFormsBuilderUIService.BuildUrl(System.Windows.Form
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.UI.Design.IWebFormsBuilderUIService.BuildColor(System.Windows.Fo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

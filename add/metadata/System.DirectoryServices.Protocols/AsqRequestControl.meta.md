@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.Protocols.AsqRequestControl
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

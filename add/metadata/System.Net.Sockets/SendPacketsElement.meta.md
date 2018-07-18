@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.SendPacketsElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

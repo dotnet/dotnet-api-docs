@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.CreateChildAccessRule
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

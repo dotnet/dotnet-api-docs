@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.UdpSingleSourceMulticastClient
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

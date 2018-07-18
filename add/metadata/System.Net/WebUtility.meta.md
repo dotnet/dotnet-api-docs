@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebUtility
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

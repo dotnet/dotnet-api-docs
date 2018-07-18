@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.IAddChild
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

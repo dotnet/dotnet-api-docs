@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.TreeNodeStyleCollection
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.WebControls.TreeNodeStyleCollection.IndexOf(System.Web.UI.Web
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.WebControls.TreeNodeStyleCollection.Item(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.WebControls.TreeNodeStyleCollection.Remove(System.Web.UI.WebC
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.WebControls.TreeNodeStyleCollection.CopyTo(System.Web.UI.WebC
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.UI.WebControls.TreeNodeStyleCollection.Insert(System.Int32,Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,7 +49,6 @@ uid: System.Web.UI.WebControls.TreeNodeStyleCollection.RemoveAt(System.Int32)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +56,6 @@ uid: System.Web.UI.WebControls.TreeNodeStyleCollection.Add(System.Web.UI.WebCont
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,5 +63,4 @@ uid: System.Web.UI.WebControls.TreeNodeStyleCollection.Contains(System.Web.UI.We
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

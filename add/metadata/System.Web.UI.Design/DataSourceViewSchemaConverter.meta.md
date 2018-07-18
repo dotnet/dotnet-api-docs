@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.DataSourceViewSchemaConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -17,7 +14,6 @@ uid: System.Web.UI.Design.DataSourceViewSchemaConverter.GetStandardValues(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.Design.DataSourceViewSchemaConverter.GetStandardValues(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.UI.Design.DataSourceViewSchemaConverter.GetStandardValuesSupport
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.UI.Design.DataSourceViewSchemaConverter.ConvertFrom(System.Compo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -55,7 +48,6 @@ uid: System.Web.UI.Design.DataSourceViewSchemaConverter.CanConvertFrom(System.Co
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -63,7 +55,6 @@ uid: System.Web.UI.Design.DataSourceViewSchemaConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -71,7 +62,6 @@ uid: System.Web.UI.Design.DataSourceViewSchemaConverter.GetStandardValuesExclusi
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -79,7 +69,6 @@ uid: System.Web.UI.Design.DataSourceViewSchemaConverter.GetStandardValues
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---

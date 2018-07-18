@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.IsCXXReferenceModifier
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.ConstructorArgumentAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

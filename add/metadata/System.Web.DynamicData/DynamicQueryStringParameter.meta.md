@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.DynamicQueryStringParameter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.DynamicData.DynamicQueryStringParameter.GetWhereParameters(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.DynamicData.DynamicQueryStringParameter.Evaluate(System.Web.Http
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.Web.DynamicData.DynamicQueryStringParameter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

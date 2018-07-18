@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.WebRequestHandler
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

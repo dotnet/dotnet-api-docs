@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.RangeConditionHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

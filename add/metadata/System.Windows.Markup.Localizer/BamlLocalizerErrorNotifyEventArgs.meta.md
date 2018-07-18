@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.Localizer.BamlLocalizerErrorNotifyEventArgs
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

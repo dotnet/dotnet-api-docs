@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.HyperLinkDataBindingHandler
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.HyperLinkDataBindingHandler.DataBindControl(System.Com
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.UI.Design.HyperLinkDataBindingHandler.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

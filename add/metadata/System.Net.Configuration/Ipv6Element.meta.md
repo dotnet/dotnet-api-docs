@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.Ipv6Element
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.RequestCachingSection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

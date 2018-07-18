@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Security.AuthenticatedStream
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

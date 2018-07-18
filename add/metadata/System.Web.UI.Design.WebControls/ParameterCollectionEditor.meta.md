@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.ParameterCollectionEditor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.ParameterCollectionEditor.GetEditStyle(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -31,7 +27,6 @@ uid: System.Web.UI.Design.WebControls.ParameterCollectionEditor.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -39,5 +34,4 @@ uid: System.Web.UI.Design.WebControls.ParameterCollectionEditor.EditValue(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

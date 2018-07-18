@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.ResolveCompletedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

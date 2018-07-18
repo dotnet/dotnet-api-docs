@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.IUriContext
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

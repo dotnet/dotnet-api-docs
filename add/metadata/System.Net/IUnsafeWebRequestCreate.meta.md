@@ -1,7 +1,5 @@
 ---
 uid: System.Net.IUnsafeWebRequestCreate
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

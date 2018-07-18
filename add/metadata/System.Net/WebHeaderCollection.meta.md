@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebHeaderCollection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,10 +1,7 @@
 ---
 uid: System.Web.Security.PassportPrincipal
-ms.technology: 
-  - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -13,5 +10,4 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---

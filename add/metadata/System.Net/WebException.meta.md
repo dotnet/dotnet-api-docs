@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

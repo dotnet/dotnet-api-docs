@@ -1,7 +1,5 @@
 ---
 uid: System.Data.SqlTypes.SqlTypeException
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

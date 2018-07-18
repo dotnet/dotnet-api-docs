@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.NullExtension
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

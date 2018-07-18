@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XmlnsCompatibleWithAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

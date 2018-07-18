@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.BypassElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebSockets.WebSocketReceiveResult
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

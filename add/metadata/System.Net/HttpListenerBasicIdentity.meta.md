@@ -1,7 +1,5 @@
 ---
 uid: System.Net.HttpListenerBasicIdentity
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

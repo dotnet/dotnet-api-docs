@@ -1,19 +1,11 @@
 ---
 uid: System.Windows.Automation.Peers.SelectorAutomationPeer
-ms.technology: 
-  - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.SelectorAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
@@ -26,18 +18,13 @@ manager: "markl"
 uid: System.Windows.Automation.Peers.SelectorAutomationPeer.#ctor(System.Windows.Controls.Primitives.Selector)
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Windows.Automation.Peers.SelectorAutomationPeer.GetAutomationControlTypeCore
 ms.technology: 
   - "dotnet-wpf"
-ms.author: "dotnet-bot"
-manager: "wpickett"
----
+ms.---
 
 ---
 uid: System.Windows.Automation.Peers.SelectorAutomationPeer.System#Windows#Automation#Provider#ISelectionProvider#CanSelectMultiple
@@ -49,7 +36,4 @@ manager: "markl"
 uid: System.Windows.Automation.Peers.SelectorAutomationPeer.System#Windows#Automation#Provider#ISelectionProvider#GetSelection
 ms.technology: 
   - "dotnet-wpf"
-author: "dotnet-bot"
-ms.author: "dotnetcontent"
-manager: "wpickett"
 ---

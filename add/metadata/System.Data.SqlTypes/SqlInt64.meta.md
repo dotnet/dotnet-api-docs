@@ -1,7 +1,5 @@
 ---
 uid: System.Data.SqlTypes.SqlInt64
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.Protocols.DsmlRequestDocument
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

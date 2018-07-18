@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.DynamicValidatorEventArgs
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.DynamicData.DynamicValidatorEventArgs.Exception
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.DynamicData.DynamicValidatorEventArgs.#ctor(System.Exception,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.Web.DynamicData.DynamicValidatorEventArgs.Operation
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

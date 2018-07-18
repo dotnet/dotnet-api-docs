@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.MobileControls.DeviceSpecificChoiceTemplateBuilder
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.MobileControls.DeviceSpecificChoiceTemplateBuilder.Init(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.MobileControls.DeviceSpecificChoiceTemplateBuilder.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.MobileControls.DeviceSpecificChoiceTemplateBuilder.AppendSubB
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,5 +29,4 @@ uid: System.Web.UI.MobileControls.DeviceSpecificChoiceTemplateBuilder.AppendLite
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

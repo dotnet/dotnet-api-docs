@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.Permissions.XamlAccessLevel
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

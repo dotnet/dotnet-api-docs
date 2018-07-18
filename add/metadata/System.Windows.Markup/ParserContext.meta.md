@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.ParserContext
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

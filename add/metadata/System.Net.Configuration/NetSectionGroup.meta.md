@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.NetSectionGroup
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

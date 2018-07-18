@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.UidPropertyAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

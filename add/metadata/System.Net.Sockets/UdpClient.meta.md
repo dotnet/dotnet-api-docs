@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.UdpClient
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

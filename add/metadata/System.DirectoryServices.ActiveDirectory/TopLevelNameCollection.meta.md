@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.TopLevelNameCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.UnitConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -23,7 +20,6 @@ uid: System.Web.UI.WebControls.UnitConverter.CanConvertFrom(System.ComponentMode
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +39,6 @@ uid: System.Web.UI.WebControls.UnitConverter.ConvertTo(System.ComponentModel.ITy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +46,6 @@ uid: System.Web.UI.WebControls.UnitConverter.CanConvertTo(System.ComponentModel.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +53,6 @@ uid: System.Web.UI.WebControls.UnitConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,5 +60,4 @@ uid: System.Web.UI.WebControls.UnitConverter.ConvertFrom(System.ComponentModel.I
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

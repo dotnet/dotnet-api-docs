@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.IPv4InterfaceStatistics
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

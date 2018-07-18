@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.MulticastOption
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.PingOptions
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

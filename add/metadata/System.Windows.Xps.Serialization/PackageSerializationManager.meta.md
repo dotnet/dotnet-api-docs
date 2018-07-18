@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.Serialization.PackageSerializationManager
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.StringArrayConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.WebControls.StringArrayConverter.ConvertFrom(System.Component
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.WebControls.StringArrayConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -39,7 +34,6 @@ uid: System.Web.UI.WebControls.StringArrayConverter.CanConvertFrom(System.Compon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -53,5 +47,4 @@ uid: System.Web.UI.WebControls.StringArrayConverter.ConvertTo(System.ComponentMo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

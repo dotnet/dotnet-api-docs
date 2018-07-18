@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Objects.DataClasses.EdmTypeAttribute
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.GlobalCatalogCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

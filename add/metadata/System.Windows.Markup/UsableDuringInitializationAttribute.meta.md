@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.UsableDuringInitializationAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

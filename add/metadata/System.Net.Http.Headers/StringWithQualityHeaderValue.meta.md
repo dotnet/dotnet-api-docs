@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.StringWithQualityHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

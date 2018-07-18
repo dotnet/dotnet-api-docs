@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Configuration.BrowserCapabilitiesFactory
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.UcbrowserProcessBrowser
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Opera10ProcessBrowsers(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Firefox3plusProcessBrow
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin98ProcessBro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.VoiceProcessBrowsers(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IeProcessBrowsers(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.WebkitProcessGateways(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IemobileProcessBrowsers
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Opera10ProcessGateways(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.InternetexplorerProcess
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.CrawlerProcessBrowsers(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.VoiceProcessGateways(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie6to9ProcessBrowsers(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin2000bProcess
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IeProcessGateways(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -131,7 +113,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Safari3plusProcessBrows
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +120,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin2000aProcess
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -147,7 +127,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie8ProcessGateways(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -155,7 +134,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Opera8plusProcessBrowse
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -163,7 +141,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformProcessGateways
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -171,7 +148,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie6plusProcessBrowsers(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -179,7 +155,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie7ProcessGateways(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -187,7 +162,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.CpuProcessBrowsers(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -195,7 +169,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Safari4ProcessBrowsers(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -203,7 +176,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformunixProcessGate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -211,7 +183,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.WebkitProcessBrowsers(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -219,7 +190,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.BlackberryProcessBrowse
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -227,7 +197,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IpodProcessGateways(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -235,7 +204,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.DefaultProcessGateways(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -243,7 +211,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.DefaultWmlProcessBrowse
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -251,7 +218,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformwinxpProcessBro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -259,7 +225,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.CrawlerProcessGateways(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -267,7 +232,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformmac68kProcessGa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -275,7 +239,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IphoneProcessGateways(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -283,7 +246,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Firefox35ProcessGateway
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -291,7 +253,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie10plusProcessGateways
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -299,7 +260,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.DefaultXhtmlmpProcessBr
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -307,7 +267,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IemobileProcessGateways
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -315,7 +274,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.OperaProcessGateways(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -323,7 +281,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformwinxpProcessGat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -331,7 +288,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin16ProcessGat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -339,7 +295,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.WindowsphoneProcessGate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -347,7 +302,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Firefox3ProcessGateways
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -355,7 +309,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -363,7 +316,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Win16ProcessGateways(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -371,7 +323,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.WindowsphoneProcessBrow
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -379,7 +330,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.OSProcessBrowsers(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -387,7 +337,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Safari3to4ProcessGatewa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -395,7 +344,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.InternetexplorerProcess
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -403,7 +351,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin98ProcessGat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -411,7 +358,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.OSProcessGateways(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -419,7 +365,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie7ProcessBrowsers(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -427,7 +372,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Opera8to9ProcessGateway
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -435,7 +379,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Safari3plusProcessGatew
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -443,7 +386,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.OperaProcessBrowsers(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -451,7 +393,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformwinntProcessBro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -459,7 +400,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PixelsProcessBrowsers(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -467,7 +407,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.OperamobileProcessBrows
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -475,7 +414,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin16ProcessBro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -483,7 +421,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.GenericdownlevelProcess
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -491,7 +428,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.WebkitmobileProcessBrow
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -499,7 +435,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.FirefoxProcessBrowsers(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -507,7 +442,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.WinProcessGateways(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -515,7 +449,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.WinProcessBrowsers(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -523,7 +456,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie9ProcessGateways(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -531,7 +463,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.DefaultDefaultProcessBr
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -539,7 +470,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Safari3to4ProcessBrowse
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -547,7 +477,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.CpuProcessGateways(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -555,7 +484,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.ChromeProcessGateways(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -563,7 +491,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin2000aProcess
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -571,7 +498,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Firefox3ProcessBrowsers
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -579,7 +505,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Opera8plusProcessGatewa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -587,7 +512,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.MozillaProcessBrowsers(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -595,7 +519,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IpodProcessBrowsers(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -603,7 +526,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie6plusProcessGateways(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -611,7 +533,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Win32ProcessGateways(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -619,7 +540,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformwebtvProcessGat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -627,7 +547,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.MozillaProcessGateways(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -635,7 +554,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformwebtvProcessBro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -643,7 +561,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IebetaProcessBrowsers(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -651,7 +568,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.FirefoxProcessGateways(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -659,7 +575,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PopulateMatchedHeaders(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -667,7 +582,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Safari4ProcessGateways(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -675,7 +589,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.UcbrowserProcessGateway
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -683,7 +596,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IpadProcessGateways(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -691,7 +603,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.BlackberryProcessGatewa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -699,7 +610,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.GenericdownlevelProcess
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -707,7 +617,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Firefox3plusProcessGate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -715,7 +624,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IphoneProcessBrowsers(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -723,7 +631,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PopulateBrowserElements
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -731,7 +638,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin2000bProcess
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -739,7 +645,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformProcessBrowsers
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -747,7 +652,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.MonoProcessGateways(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -755,7 +659,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.WebkitmobileProcessGate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -763,7 +666,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie10plusProcessBrowsers
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -771,7 +673,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin95ProcessGat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -779,7 +680,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformmac68kProcessBr
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -787,7 +687,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.OperaminiProcessBrowser
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -795,7 +694,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.MonoProcessBrowsers(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -803,7 +701,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie6to9ProcessGateways(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -811,7 +708,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformmacppcProcessGa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -819,7 +715,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Platformwin95ProcessBro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -827,7 +722,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie9ProcessBrowsers(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -835,7 +729,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.OperaminiProcessGateway
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -843,7 +736,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Win16ProcessBrowsers(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -851,7 +743,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformwinceProcessBro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -859,7 +750,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.OperamobileProcessGatew
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -867,7 +757,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PixelsProcessGateways(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -875,7 +764,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Firefox35ProcessBrowser
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -883,7 +771,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Win32ProcessBrowsers(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -891,7 +778,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Opera8to9ProcessBrowser
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -899,7 +785,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.Ie8ProcessBrowsers(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -907,7 +792,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.ChromeProcessBrowsers(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -915,7 +799,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IpadProcessBrowsers(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -923,7 +806,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.SafariProcessGateways(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -931,7 +813,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformmacppcProcessBr
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -939,7 +820,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.DefaultProcessBrowsers(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -947,7 +827,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.ConfigureBrowserCapabil
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -955,7 +834,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformwinceProcessGat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -963,7 +841,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.SafariProcessBrowsers(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -971,7 +848,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformunixProcessBrow
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -979,7 +855,6 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.IebetaProcessGateways(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---
 
 ---
@@ -987,5 +862,4 @@ uid: System.Web.Configuration.BrowserCapabilitiesFactory.PlatformwinntProcessGat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "robmcm"
-manager: "wpickett"
 ---

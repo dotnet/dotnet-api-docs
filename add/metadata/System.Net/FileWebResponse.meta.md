@@ -1,7 +1,5 @@
 ---
 uid: System.Net.FileWebResponse
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

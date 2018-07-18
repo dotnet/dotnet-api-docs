@@ -1,7 +1,5 @@
 ---
 uid: System.Data.EntityClient.EntityCommand
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

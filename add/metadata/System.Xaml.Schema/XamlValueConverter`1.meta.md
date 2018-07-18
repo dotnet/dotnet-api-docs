@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.Schema.XamlValueConverter`1
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

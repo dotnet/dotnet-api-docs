@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.PropertyCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

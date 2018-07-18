@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.Design.DataControlReferenceIDConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -23,7 +20,6 @@ uid: System.Web.DynamicData.Design.DataControlReferenceIDConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -31,7 +27,6 @@ uid: System.Web.DynamicData.Design.DataControlReferenceIDConverter.GetStandardVa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -39,7 +34,6 @@ uid: System.Web.DynamicData.Design.DataControlReferenceIDConverter.GetStandardVa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -53,5 +47,4 @@ uid: System.Web.DynamicData.Design.DataControlReferenceIDConverter.GetStandardVa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

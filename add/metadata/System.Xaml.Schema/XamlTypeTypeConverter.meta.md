@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.Schema.XamlTypeTypeConverter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

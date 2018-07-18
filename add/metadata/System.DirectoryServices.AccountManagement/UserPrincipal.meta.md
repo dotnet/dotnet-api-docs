@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.AccountManagement.UserPrincipal
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

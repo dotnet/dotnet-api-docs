@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.Packaging.IXpsFixedDocumentWriter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.DeleteChildAccessRule
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

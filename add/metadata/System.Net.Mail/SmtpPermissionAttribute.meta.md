@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mail.SmtpPermissionAttribute
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

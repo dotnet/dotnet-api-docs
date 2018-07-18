@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.MediaTypeWithQualityHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

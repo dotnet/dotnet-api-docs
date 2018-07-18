@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.IComponentConnector
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

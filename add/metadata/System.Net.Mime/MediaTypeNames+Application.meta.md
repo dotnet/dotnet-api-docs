@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mime.MediaTypeNames.Application
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

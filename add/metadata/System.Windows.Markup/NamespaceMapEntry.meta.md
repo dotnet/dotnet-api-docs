@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.NamespaceMapEntry
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

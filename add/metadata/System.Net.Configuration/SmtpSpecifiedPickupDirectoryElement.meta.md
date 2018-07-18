@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.SmtpSpecifiedPickupDirectoryElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

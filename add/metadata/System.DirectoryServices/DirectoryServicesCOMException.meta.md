@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.DirectoryServicesCOMException
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

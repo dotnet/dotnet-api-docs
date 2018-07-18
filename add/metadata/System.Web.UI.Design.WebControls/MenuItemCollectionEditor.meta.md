@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.MenuItemCollectionEditor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -17,7 +14,6 @@ uid: System.Web.UI.Design.WebControls.MenuItemCollectionEditor.EditValue(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.Design.WebControls.MenuItemCollectionEditor.GetEditStyle(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -39,5 +34,4 @@ uid: System.Web.UI.Design.WebControls.MenuItemCollectionEditor.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

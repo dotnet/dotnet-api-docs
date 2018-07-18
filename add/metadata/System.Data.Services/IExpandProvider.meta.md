@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Services.IExpandProvider
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

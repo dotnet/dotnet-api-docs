@@ -1,7 +1,5 @@
 ---
 uid: System.Data.SqlClient.SqlDataAdapter
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

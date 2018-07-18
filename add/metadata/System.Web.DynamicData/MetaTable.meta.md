@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.MetaTable
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.DynamicData.MetaTable.CreateTable
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.DynamicData.MetaTable.GetQuery
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.DynamicData.MetaTable.GetColumnValuesFromRoute(System.Web.HttpCo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.DynamicData.MetaTable.CreateTable(System.ComponentModel.ICustomT
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.DynamicData.MetaTable.CanInsert(System.Security.Principal.IPrinc
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.DynamicData.MetaTable.GetActionPath
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.DynamicData.MetaTable.GetDisplayString(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.DynamicData.MetaTable.Scaffold
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.DynamicData.MetaTable.ForeignKeyColumnsNames
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.DynamicData.MetaTable.Model
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.DynamicData.MetaTable.ToString
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.DynamicData.MetaTable.CreateColumn(System.Web.DynamicData.ModelP
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.DynamicData.MetaTable.TryGetTable(System.Type,System.Web.Dynamic
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +99,6 @@ uid: System.Web.DynamicData.MetaTable.DataContextPropertyName
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -123,7 +106,6 @@ uid: System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Web.Rou
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -131,7 +113,6 @@ uid: System.Web.DynamicData.MetaTable.Name
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +120,6 @@ uid: System.Web.DynamicData.MetaTable.GetPrimaryKeyString
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -147,7 +127,6 @@ uid: System.Web.DynamicData.MetaTable.DataContextType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -155,7 +134,6 @@ uid: System.Web.DynamicData.MetaTable.IsReadOnly
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -163,7 +141,6 @@ uid: System.Web.DynamicData.MetaTable.SortDescending
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -171,7 +148,6 @@ uid: System.Web.DynamicData.MetaTable.TryGetColumn(System.String,System.Web.Dyna
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -179,7 +155,6 @@ uid: System.Web.DynamicData.MetaTable.GetFilteredColumns
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -187,7 +162,6 @@ uid: System.Web.DynamicData.MetaTable.GetScaffoldColumns(System.Web.UI.WebContro
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -195,7 +169,6 @@ uid: System.Web.DynamicData.MetaTable.SortColumn
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -203,7 +176,6 @@ uid: System.Web.DynamicData.MetaTable.GetPrimaryKeyValues(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -211,7 +183,6 @@ uid: System.Web.DynamicData.MetaTable.CanDelete(System.Security.Principal.IPrinc
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -219,7 +190,6 @@ uid: System.Web.DynamicData.MetaTable.GetPrimaryKeyDictionary(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -227,7 +197,6 @@ uid: System.Web.DynamicData.MetaTable.ResetMetadata
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -235,7 +204,6 @@ uid: System.Web.DynamicData.MetaTable.CreateTable(System.Type)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -243,7 +211,6 @@ uid: System.Web.DynamicData.MetaTable.ListActionPath
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -251,7 +218,6 @@ uid: System.Web.DynamicData.MetaTable.Provider
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -259,7 +225,6 @@ uid: System.Web.DynamicData.MetaTable.PrimaryKeyColumns
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -267,7 +232,6 @@ uid: System.Web.DynamicData.MetaTable.GetTable(System.Type)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -275,7 +239,6 @@ uid: System.Web.DynamicData.MetaTable.CreateForeignKeyColumn(System.Web.DynamicD
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -283,7 +246,6 @@ uid: System.Web.DynamicData.MetaTable.GetColumn(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -291,7 +253,6 @@ uid: System.Web.DynamicData.MetaTable.DisplayColumn
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -299,7 +260,6 @@ uid: System.Web.DynamicData.MetaTable.EntityType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -307,7 +267,6 @@ uid: System.Web.DynamicData.MetaTable.Columns
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -315,7 +274,6 @@ uid: System.Web.DynamicData.MetaTable.CreateContext
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -323,7 +281,6 @@ uid: System.Web.DynamicData.MetaTable.CanUpdate(System.Security.Principal.IPrinc
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -331,7 +288,6 @@ uid: System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Collect
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -339,7 +295,6 @@ uid: System.Web.DynamicData.MetaTable.HasPrimaryKey
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -347,7 +302,6 @@ uid: System.Web.DynamicData.MetaTable.Initialize
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -355,7 +309,6 @@ uid: System.Web.DynamicData.MetaTable.#ctor(System.Web.DynamicData.MetaModel,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -363,7 +316,6 @@ uid: System.Web.DynamicData.MetaTable.GetPrimaryKeyString(System.Collections.Gen
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -371,7 +323,6 @@ uid: System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Object,
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -379,7 +330,6 @@ uid: System.Web.DynamicData.MetaTable.DisplayName
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -387,7 +337,6 @@ uid: System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Collect
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -395,7 +344,6 @@ uid: System.Web.DynamicData.MetaTable.RootEntityType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -403,7 +351,6 @@ uid: System.Web.DynamicData.MetaTable.CreateChildrenColumn(System.Web.DynamicDat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -411,7 +358,6 @@ uid: System.Web.DynamicData.MetaTable.Attributes
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -419,7 +365,6 @@ uid: System.Web.DynamicData.MetaTable.GetQuery(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -427,7 +372,6 @@ uid: System.Web.DynamicData.MetaTable.BuildAttributeCollection
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -435,7 +379,6 @@ uid: System.Web.DynamicData.MetaTable.GetDataKeyFromRoute
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -443,7 +386,6 @@ uid: System.Web.DynamicData.MetaTable.GetActionPath(System.String,System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -451,7 +393,6 @@ uid: System.Web.DynamicData.MetaTable.GetActionPath(System.String)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -459,7 +400,6 @@ uid: System.Web.DynamicData.MetaTable.CanRead(System.Security.Principal.IPrincip
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -467,5 +407,4 @@ uid: System.Web.DynamicData.MetaTable.GetPrimaryKeyString(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

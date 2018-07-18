@@ -1,7 +1,5 @@
 ---
 uid: System.Net.OpenWriteCompletedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

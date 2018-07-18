@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.PropertyAccessRule
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

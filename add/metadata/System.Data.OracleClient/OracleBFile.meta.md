@@ -1,7 +1,5 @@
 ---
 uid: System.Data.OracleClient.OracleBFile
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

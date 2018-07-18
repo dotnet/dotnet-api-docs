@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.TcpConnectionInformation
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

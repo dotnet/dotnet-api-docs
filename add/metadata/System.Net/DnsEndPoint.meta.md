@@ -1,7 +1,5 @@
 ---
 uid: System.Net.DnsEndPoint
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

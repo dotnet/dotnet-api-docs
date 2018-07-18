@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.Collaboration.CreateContactCompletedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

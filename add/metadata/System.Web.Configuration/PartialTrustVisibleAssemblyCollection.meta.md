@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Configuration.PartialTrustVisibleAssemblyCollection
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Configuration.PartialTrustVisibleAssemblyCollection.Item(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.Configuration.PartialTrustVisibleAssemblyCollection.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.Configuration.PartialTrustVisibleAssemblyCollection.Add(System.W
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.Configuration.PartialTrustVisibleAssemblyCollection.Remove(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.Configuration.PartialTrustVisibleAssemblyCollection.RemoveAt(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,5 +49,4 @@ uid: System.Web.Configuration.PartialTrustVisibleAssemblyCollection.Clear
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

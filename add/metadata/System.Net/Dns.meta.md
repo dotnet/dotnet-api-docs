@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Dns
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

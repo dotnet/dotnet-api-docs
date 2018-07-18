@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.DataMemberConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -17,7 +14,6 @@ uid: System.Web.UI.Design.DataMemberConverter.GetStandardValues(System.Component
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +39,6 @@ uid: System.Web.UI.Design.DataMemberConverter.CanConvertFrom(System.ComponentMod
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +46,6 @@ uid: System.Web.UI.Design.DataMemberConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +53,6 @@ uid: System.Web.UI.Design.DataMemberConverter.GetStandardValuesSupported(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +60,6 @@ uid: System.Web.UI.Design.DataMemberConverter.ConvertFrom(System.ComponentModel.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +67,6 @@ uid: System.Web.UI.Design.DataMemberConverter.GetStandardValuesExclusive(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.IPHostEntry
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

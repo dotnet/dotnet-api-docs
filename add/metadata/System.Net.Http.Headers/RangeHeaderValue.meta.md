@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.RangeHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

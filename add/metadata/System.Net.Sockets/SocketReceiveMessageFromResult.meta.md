@@ -1,6 +1,5 @@
 ---
 uid: System.Net.Sockets.SocketReceiveMessageFromResult
-manager: "markl"
 ---
 
 ---

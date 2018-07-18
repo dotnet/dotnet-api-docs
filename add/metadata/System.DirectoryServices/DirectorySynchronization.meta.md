@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.DirectorySynchronization
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

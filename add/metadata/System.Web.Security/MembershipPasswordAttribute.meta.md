@@ -1,10 +1,7 @@
 ---
 uid: System.Web.Security.MembershipPasswordAttribute
-ms.technology: 
-  - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -13,7 +10,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -22,7 +18,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -31,7 +26,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -40,7 +34,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -64,7 +56,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +64,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -82,7 +72,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +80,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -100,7 +88,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -109,5 +96,4 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---

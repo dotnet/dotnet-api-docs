@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.DebugInfoInPDBAttribute
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.DelegatingHandler
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

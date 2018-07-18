@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.XpsSerializationException
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

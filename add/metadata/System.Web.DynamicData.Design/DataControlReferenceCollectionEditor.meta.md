@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.Design.DataControlReferenceCollectionEditor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.DynamicData.Design.DataControlReferenceCollectionEditor.#ctor(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.DynamicData.Design.DataControlReferenceCollectionEditor.CreateCo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

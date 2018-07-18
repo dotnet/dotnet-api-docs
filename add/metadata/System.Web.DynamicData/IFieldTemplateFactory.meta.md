@@ -1,9 +1,6 @@
 ---
 uid: System.Web.DynamicData.IFieldTemplateFactory
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.DynamicData.IFieldTemplateFactory.Initialize(System.Web.DynamicD
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.DynamicData.IFieldTemplateFactory.CreateFieldTemplate(System.Web
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

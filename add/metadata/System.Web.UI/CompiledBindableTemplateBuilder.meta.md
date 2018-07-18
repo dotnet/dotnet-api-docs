@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.CompiledBindableTemplateBuilder
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.CompiledBindableTemplateBuilder.ExtractValues(System.Web.UI.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.CompiledBindableTemplateBuilder.#ctor(System.Web.UI.BuildTemp
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.Web.UI.CompiledBindableTemplateBuilder.InstantiateIn(System.Web.UI.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

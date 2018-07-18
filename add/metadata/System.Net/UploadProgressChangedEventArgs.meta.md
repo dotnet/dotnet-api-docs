@@ -1,7 +1,5 @@
 ---
 uid: System.Net.UploadProgressChangedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

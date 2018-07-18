@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ExtendedRightAccessRule
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

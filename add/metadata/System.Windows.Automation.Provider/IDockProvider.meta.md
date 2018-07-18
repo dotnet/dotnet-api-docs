@@ -1,10 +1,6 @@
 ---
 uid: System.Windows.Automation.Provider.IDockProvider
-ms.technology: 
-  - "dotnet-wpf"
-author: "Xansky"
 ms.author: "mhopkins"
-manager: "markl"
 ---
 
 ---

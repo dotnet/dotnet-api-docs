@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectoryAuditRule
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

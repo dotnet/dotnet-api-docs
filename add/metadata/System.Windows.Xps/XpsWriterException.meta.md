@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.XpsWriterException
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

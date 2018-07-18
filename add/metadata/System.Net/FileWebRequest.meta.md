@@ -1,7 +1,5 @@
 ---
 uid: System.Net.FileWebRequest
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

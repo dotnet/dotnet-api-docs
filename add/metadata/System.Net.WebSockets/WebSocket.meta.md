@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebSockets.WebSocket
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

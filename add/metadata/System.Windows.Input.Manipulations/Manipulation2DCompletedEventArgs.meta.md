@@ -1,10 +1,6 @@
 ---
 uid: System.Windows.Input.Manipulations.Manipulation2DCompletedEventArgs
-ms.technology: 
-  - "dotnet-wpf"
-author: "Xansky"
 ms.author: "mhopkins"
-manager: "markl"
 ---
 
 ---

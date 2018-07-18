@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.InternalTypeHelper
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

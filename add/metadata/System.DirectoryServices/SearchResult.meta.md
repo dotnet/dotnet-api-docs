@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.SearchResult
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

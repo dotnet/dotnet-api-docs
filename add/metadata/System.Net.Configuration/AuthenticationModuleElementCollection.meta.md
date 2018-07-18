@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.AuthenticationModuleElementCollection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

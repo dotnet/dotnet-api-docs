@@ -1,7 +1,5 @@
 ---
 uid: System.Net.HttpListener
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

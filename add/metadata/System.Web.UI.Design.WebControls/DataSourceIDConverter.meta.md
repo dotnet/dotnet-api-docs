@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.DataSourceIDConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.DataSourceIDConverter.GetStandardValuesSup
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -31,7 +27,6 @@ uid: System.Web.UI.Design.WebControls.DataSourceIDConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -39,7 +34,6 @@ uid: System.Web.UI.Design.WebControls.DataSourceIDConverter.CanConvertFrom(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -47,7 +41,6 @@ uid: System.Web.UI.Design.WebControls.DataSourceIDConverter.GetStandardValues(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -55,7 +48,6 @@ uid: System.Web.UI.Design.WebControls.DataSourceIDConverter.GetStandardValuesExc
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -69,7 +61,6 @@ uid: System.Web.UI.Design.WebControls.DataSourceIDConverter.IsValidDataSource(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +74,6 @@ uid: System.Web.UI.Design.WebControls.DataSourceIDConverter.ConvertFrom(System.C
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---

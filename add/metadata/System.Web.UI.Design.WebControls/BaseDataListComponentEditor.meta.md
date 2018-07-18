@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.BaseDataListComponentEditor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.BaseDataListComponentEditor.#ctor(System.I
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.BaseDataListComponentEditor.EditComponent(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,5 +28,4 @@ uid: System.Web.UI.Design.WebControls.BaseDataListComponentEditor.GetInitialComp
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ListChildrenAccessRule
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

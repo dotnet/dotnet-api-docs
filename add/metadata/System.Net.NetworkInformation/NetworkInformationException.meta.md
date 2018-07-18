@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.NetworkInformationException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

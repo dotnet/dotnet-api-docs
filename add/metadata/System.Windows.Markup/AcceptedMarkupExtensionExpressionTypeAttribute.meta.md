@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.AcceptedMarkupExtensionExpressionTypeAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

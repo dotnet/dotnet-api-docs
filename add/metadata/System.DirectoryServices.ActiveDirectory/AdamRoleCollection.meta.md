@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.AdamRoleCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

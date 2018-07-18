@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.DirectoryServicesPermissionEntry
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

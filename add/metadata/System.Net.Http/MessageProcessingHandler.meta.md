@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.MessageProcessingHandler
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

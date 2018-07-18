@@ -1,7 +1,5 @@
 ---
 uid: System.Net.OpenReadCompletedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

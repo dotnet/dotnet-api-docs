@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.Localizer.ElementLocalizability
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.MultipartContent
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

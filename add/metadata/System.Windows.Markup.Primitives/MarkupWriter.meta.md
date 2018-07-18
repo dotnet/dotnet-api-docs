@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.Primitives.MarkupWriter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

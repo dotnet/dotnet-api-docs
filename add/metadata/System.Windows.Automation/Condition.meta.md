@@ -1,10 +1,6 @@
 ---
 uid: System.Windows.Automation.Condition
-ms.technology: 
-  - "dotnet-wpf"
-author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -13,7 +9,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -22,5 +17,4 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---

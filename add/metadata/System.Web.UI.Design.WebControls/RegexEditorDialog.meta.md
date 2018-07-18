@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.RegexEditorDialog
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.lstStandardExpressions_S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.cmdTestValidate_Click(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.RegularExpression
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.txtExpression_TextChange
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.RegexTypeEditor_Activate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,7 +49,6 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.Dispose(System.Boolean)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +56,6 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.cmdOK_Click(System.Objec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +63,6 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.#ctor(System.ComponentMo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,5 +70,4 @@ uid: System.Web.UI.Design.WebControls.RegexEditorDialog.cmdHelp_Click(System.Obj
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

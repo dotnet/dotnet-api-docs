@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.SmtpSection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

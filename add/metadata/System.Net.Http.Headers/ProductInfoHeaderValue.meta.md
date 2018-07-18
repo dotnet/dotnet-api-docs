@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.ProductInfoHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

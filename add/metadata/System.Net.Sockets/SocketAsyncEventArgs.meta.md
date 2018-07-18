@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.SocketAsyncEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

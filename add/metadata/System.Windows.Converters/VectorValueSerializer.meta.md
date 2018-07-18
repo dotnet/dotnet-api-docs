@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Converters.VectorValueSerializer
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

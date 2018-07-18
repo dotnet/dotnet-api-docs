@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.MulticastIPAddressInformation
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mail.LinkedResource
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.DateTimeValueSerializer
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

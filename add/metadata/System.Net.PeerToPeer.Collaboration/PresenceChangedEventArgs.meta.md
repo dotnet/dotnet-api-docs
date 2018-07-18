@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.Collaboration.PresenceChangedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

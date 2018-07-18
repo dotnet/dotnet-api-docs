@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.SyncFromAllServersOperationException
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

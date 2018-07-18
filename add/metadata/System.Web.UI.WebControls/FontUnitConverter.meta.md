@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.FontUnitConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -17,7 +14,6 @@ uid: System.Web.UI.WebControls.FontUnitConverter.CanConvertTo(System.ComponentMo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.WebControls.FontUnitConverter.ConvertFrom(System.ComponentMod
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +46,6 @@ uid: System.Web.UI.WebControls.FontUnitConverter.CanConvertFrom(System.Component
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +59,6 @@ uid: System.Web.UI.WebControls.FontUnitConverter.GetStandardValues(System.Compon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +66,6 @@ uid: System.Web.UI.WebControls.FontUnitConverter.GetStandardValuesSupported(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,7 +73,6 @@ uid: System.Web.UI.WebControls.FontUnitConverter.GetStandardValuesExclusive(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -89,7 +80,6 @@ uid: System.Web.UI.WebControls.FontUnitConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -109,5 +99,4 @@ uid: System.Web.UI.WebControls.FontUnitConverter.ConvertTo(System.ComponentModel
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

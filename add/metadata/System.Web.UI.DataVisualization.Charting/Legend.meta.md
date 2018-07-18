@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.DataVisualization.Charting.Legend
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "mblythe"
-manager: "mblythe"
 ---
 
 ---

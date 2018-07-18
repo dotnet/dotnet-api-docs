@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.MailSettingsSectionGroup
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

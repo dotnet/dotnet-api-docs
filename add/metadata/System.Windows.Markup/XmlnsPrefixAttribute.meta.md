@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XmlnsPrefixAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

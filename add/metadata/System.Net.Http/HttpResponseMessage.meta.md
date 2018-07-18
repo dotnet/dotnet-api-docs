@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.HttpResponseMessage
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

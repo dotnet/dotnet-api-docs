@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.Packaging.XpsDocument
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

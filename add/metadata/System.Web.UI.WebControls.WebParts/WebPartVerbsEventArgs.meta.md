@@ -1,10 +1,7 @@
 ---
 uid: System.Web.UI.WebControls.WebParts.WebPartVerbsEventArgs
-ms.technology: 
-  - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -13,7 +10,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -22,7 +18,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -31,5 +26,4 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---

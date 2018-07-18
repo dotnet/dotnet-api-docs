@@ -1,7 +1,5 @@
 ---
 uid: System.Net.DownloadProgressChangedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

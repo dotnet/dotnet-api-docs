@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.AccountManagement.MultipleMatchesException
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

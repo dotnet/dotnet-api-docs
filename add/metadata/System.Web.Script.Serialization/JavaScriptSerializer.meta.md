@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Script.Serialization.JavaScriptSerializer
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.RecursionLimit
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.Deserialize``1(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.Deserialize(System.Str
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.#ctor(System.Web.Scrip
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.Serialize
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.ConvertToType(System.O
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +63,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.MaxJsonLength
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,7 +70,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.Serialize(System.Objec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -95,7 +83,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.ConvertToType``1(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -103,7 +90,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.Serialize(System.Objec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -111,7 +97,6 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.RegisterConverters(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -119,5 +104,4 @@ uid: System.Web.Script.Serialization.JavaScriptSerializer.DeserializeObject(Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

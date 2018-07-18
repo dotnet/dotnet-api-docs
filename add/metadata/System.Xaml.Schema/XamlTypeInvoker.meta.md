@@ -1,8 +1,5 @@
 ---
 uid: System.Xaml.Schema.XamlTypeInvoker
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

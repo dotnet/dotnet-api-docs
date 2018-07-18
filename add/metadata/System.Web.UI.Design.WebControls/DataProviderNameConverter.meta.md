@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.DataProviderNameConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -17,7 +14,6 @@ uid: System.Web.UI.Design.WebControls.DataProviderNameConverter.GetStandardValue
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.Design.WebControls.DataProviderNameConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -45,7 +40,6 @@ uid: System.Web.UI.Design.WebControls.DataProviderNameConverter.GetStandardValue
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -53,5 +47,4 @@ uid: System.Web.UI.Design.WebControls.DataProviderNameConverter.GetStandardValue
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

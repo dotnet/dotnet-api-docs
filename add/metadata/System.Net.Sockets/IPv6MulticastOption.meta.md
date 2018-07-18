@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.IPv6MulticastOption
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

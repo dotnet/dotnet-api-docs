@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Services.Configuration.DataServicesFeaturesSection
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

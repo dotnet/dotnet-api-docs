@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.StlClr.Generic.IRandomAccessIterator`1
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

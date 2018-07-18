@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.Headers.CacheControlHeaderValue
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

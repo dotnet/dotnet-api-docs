@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.StlClr.IDeque`1
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

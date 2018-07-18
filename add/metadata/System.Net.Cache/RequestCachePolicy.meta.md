@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Cache.RequestCachePolicy
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

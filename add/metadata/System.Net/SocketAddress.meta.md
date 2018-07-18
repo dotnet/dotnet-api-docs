@@ -1,7 +1,5 @@
 ---
 uid: System.Net.SocketAddress
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

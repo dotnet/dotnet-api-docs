@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Linq.DBConvert
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

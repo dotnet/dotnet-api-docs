@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.HttpContent
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

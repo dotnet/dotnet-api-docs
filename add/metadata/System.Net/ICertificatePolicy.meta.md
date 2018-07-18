@@ -1,7 +1,5 @@
 ---
 uid: System.Net.ICertificatePolicy
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

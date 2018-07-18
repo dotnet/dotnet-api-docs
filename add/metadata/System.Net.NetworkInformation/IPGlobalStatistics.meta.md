@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.IPGlobalStatistics
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

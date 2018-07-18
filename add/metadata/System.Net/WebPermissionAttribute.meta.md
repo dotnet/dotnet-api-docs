@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WebPermissionAttribute
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

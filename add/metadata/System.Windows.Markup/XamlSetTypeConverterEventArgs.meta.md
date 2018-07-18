@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XamlSetTypeConverterEventArgs
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

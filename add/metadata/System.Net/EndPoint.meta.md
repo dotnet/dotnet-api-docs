@@ -1,7 +1,5 @@
 ---
 uid: System.Net.EndPoint
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

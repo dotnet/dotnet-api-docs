@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.StaticExtension
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

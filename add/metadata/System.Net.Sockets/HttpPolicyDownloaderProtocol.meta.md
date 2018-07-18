@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.HttpPolicyDownloaderProtocol
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

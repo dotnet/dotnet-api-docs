@@ -1,7 +1,5 @@
 ---
 uid: System.Net.HttpListenerException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.WriteStreamClosedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

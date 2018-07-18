@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Hosting.IApplicationPreloadManager
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Hosting.IApplicationPreloadManager.SetApplicationPreloadState(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.Hosting.IApplicationPreloadManager.SetApplicationPreloadUtil(Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

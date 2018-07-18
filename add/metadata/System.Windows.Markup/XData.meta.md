@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XData
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

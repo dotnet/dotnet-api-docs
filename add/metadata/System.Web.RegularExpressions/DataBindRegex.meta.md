@@ -1,10 +1,7 @@
 ---
 uid: System.Web.RegularExpressions.DataBindRegex
-ms.technology: 
-  - "dotnet-webforms"
 author: "rpetrusha"
 ms.author: "ronpet"
-manager: "wpickett"
 ---
 
 ---
@@ -13,7 +10,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "rpetrusha"
 ms.author: "ronpet"
-manager: "wpickett"
 ---
 
 ---
@@ -22,5 +18,4 @@ ms.technology:
   - "dotnet-webforms"
 author: "rpetrusha"
 ms.author: "ronpet"
-manager: "wpickett"
 ---

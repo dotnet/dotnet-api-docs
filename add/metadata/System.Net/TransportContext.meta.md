@@ -1,7 +1,5 @@
 ---
 uid: System.Net.TransportContext
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

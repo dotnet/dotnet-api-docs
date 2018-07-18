@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.TemplateKeyConverter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

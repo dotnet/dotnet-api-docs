@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.ServiceProviders
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Globalization.ResourceFileStringLocalizerProvider
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Globalization.ResourceFileStringLocalizerProvider.GetLocalizedSt
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.Globalization.ResourceFileStringLocalizerProvider.ResourceFileNa
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,5 +22,4 @@ uid: System.Web.Globalization.ResourceFileStringLocalizerProvider.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

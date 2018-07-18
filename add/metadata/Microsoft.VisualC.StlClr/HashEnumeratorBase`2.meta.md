@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.StlClr.HashEnumeratorBase`2
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

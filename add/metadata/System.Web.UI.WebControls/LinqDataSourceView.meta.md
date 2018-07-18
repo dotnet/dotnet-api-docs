@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.LinqDataSourceView
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnSelecting(System.Web.UI.WebC
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnContextDisposing(System.Web.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ContextCreated
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,7 +29,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.DisposeContext(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -43,7 +36,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ExecuteInsert(System.Collectio
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +43,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.HandleValidationErrors(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +50,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Inserting
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CanRetrieveTotalRowCount
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -75,7 +64,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.EnableInsert
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -83,7 +71,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ExecuteDelete(System.Collectio
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -91,7 +78,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Updated
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -99,7 +85,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CanSort
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -107,7 +92,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CanPage
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -121,7 +105,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ExecuteUpdate(System.Collectio
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -129,7 +112,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Select(System.Web.UI.DataSourc
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -137,7 +119,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.EnableObjectTracking
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -145,7 +126,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnInserted(System.Web.UI.WebCo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -153,7 +133,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.EnableDelete
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -161,7 +140,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.#ctor(System.Web.UI.WebControl
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -169,7 +147,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnContextCreated(System.Web.UI
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -177,7 +154,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ResetDataObject(System.Object,
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -185,7 +161,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ValidateInsertSupported(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -193,7 +168,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CreateContext
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -201,7 +175,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnInserting(System.Web.UI.WebC
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -209,7 +182,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ValidateDeleteSupported(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -217,7 +189,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CanInsert
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -225,7 +196,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnDeleting(System.Web.UI.WebCo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -233,7 +203,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Deleting
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -241,7 +210,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.UpdateDataObject(System.Object
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -249,7 +217,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.EnableUpdate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -257,7 +224,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ValidateUpdateSupported(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -265,7 +231,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.DeleteObject(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -273,7 +238,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnUpdated(System.Web.UI.WebCon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -281,7 +245,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnUpdating(System.Web.UI.WebCo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -289,7 +252,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.TableName
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -297,7 +259,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Selecting
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -305,7 +266,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.InsertObject(System.Object)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -313,7 +273,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ContextTypeName
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -321,7 +280,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CreateContext(System.Type)
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -329,7 +287,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Deleted
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -337,7 +294,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnException(System.Web.Dynamic
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -345,7 +301,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnSelected(System.Web.UI.WebCo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -353,7 +308,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.GetTableMemberInfo(System.Type
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -361,7 +315,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ContextDisposing
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -369,7 +322,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CanUpdate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -377,7 +329,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ContextType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -385,7 +336,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CreateContext(System.Web.UI.Da
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -393,7 +343,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnDeleted(System.Web.UI.WebCon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -401,7 +350,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ValidateContextType(System.Typ
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -409,7 +357,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.InsertDataObject(System.Object
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -417,7 +364,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.UpdateObject(System.Object,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -425,7 +371,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.GetSource(System.Web.UI.WebCon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -439,7 +384,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Updating
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -447,7 +391,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ValidateTableType(System.Type,
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -455,7 +398,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.CanDelete
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -463,7 +405,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Inserted
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -471,7 +412,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.Selected
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -485,7 +425,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ExecuteSelect(System.Web.UI.Da
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -493,7 +432,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ContextCreating
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -501,7 +439,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.OnContextCreating(System.Web.U
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -509,7 +446,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.StoreOriginalValues(System.Col
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -517,7 +453,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.StoreOriginalValuesInViewState
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -525,7 +460,6 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.DeleteDataObject(System.Object
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -533,5 +467,4 @@ uid: System.Web.UI.WebControls.LinqDataSourceView.ValidateEditSupported
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

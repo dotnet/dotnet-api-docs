@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.UdpReceiveResult
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

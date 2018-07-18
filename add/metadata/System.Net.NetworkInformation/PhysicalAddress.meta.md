@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.PhysicalAddress
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

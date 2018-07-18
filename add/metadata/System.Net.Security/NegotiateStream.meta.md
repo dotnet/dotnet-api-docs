@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Security.NegotiateStream
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.HttpClientHandler
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

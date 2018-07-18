@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Entity.Design.PropertyGeneratedEventArgs
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.CookieException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

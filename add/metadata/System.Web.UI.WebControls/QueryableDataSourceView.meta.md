@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.WebControls.QueryableDataSourceView
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.BuildUpdateObjects(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.DeleteParameters
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ExecuteQueryExpressions(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.StoreOriginalValues(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.AutoGenerateOrderByClause
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,7 +49,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.QueryCreated
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +56,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.HandleValidationErrors(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +63,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.AutoPage
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,7 +70,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.SelectNew
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -89,7 +77,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.OrderBy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -97,7 +84,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.CanSort
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -105,7 +91,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.CreateQueryContext(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -113,7 +98,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.GetOriginalValues(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -121,7 +105,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.LoadViewState(System.Obje
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -129,7 +112,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.CanPage
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -137,7 +119,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.GroupBy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -145,7 +126,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.System#Web#UI#IStateManag
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -153,7 +133,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ExecuteDelete(System.Coll
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -161,7 +140,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.InsertObject(System.Objec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -169,7 +147,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.EntityType
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -177,7 +154,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.System#Web#UI#IStateManag
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -185,7 +161,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.OnQueryParametersChanged(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -193,7 +168,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.OrderGroupsBy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -201,7 +175,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ExecuteQuery(System.Linq.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -209,7 +182,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.IsTrackingViewState
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -217,7 +189,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.RaiseViewChanged
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -225,7 +196,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.WhereParameters
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -233,7 +203,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.GroupByParameters
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -241,7 +210,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.CanRetrieveTotalRowCount
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -249,7 +217,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.Insert(System.Collections
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -257,7 +224,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ExecutePaging(System.Linq
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -265,7 +231,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.AutoGenerateWhereClause
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -273,7 +238,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ExecuteSorting(System.Lin
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -281,7 +245,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.DeleteObject(System.Objec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -289,7 +252,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.TrackViewState
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -297,7 +259,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.CanInsert
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -305,7 +266,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.OrderByParameters
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -313,7 +273,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ExecuteInsert(System.Coll
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -327,7 +286,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.UpdateObject(System.Objec
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -335,7 +293,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.CanUpdate
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -349,7 +306,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.BuildInsertObject(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -357,7 +313,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.Delete(System.Collections
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -365,7 +320,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.StoreOriginalValues(Syste
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -373,7 +327,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.InsertParameters
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -381,7 +334,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.BuildDeleteObject(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -389,7 +341,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.OrderGroupsByParameters
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -397,7 +348,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.System#Web#UI#IStateManag
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -405,7 +355,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.System#Web#UI#IStateManag
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -413,7 +362,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.StoreOriginalValues
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -421,7 +369,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.Update(System.Collections
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -429,7 +376,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.EventSelecting
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -437,7 +383,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.EventSelected
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -445,7 +390,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ExecuteUpdate(System.Coll
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -453,7 +397,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.SaveViewState
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -461,7 +404,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.CanDelete
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -469,7 +411,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.GetSource(System.Web.UI.W
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -477,7 +418,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.SelectNewParameters
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -485,7 +425,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.BuildQuery(System.Web.UI.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -493,7 +432,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ExecuteSelect(System.Web.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -501,7 +439,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.OnQueryCreated(System.Web
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -509,7 +446,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.UpdateParameters
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -517,7 +453,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.ClearOriginalValues
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -525,7 +460,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.Where
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -533,7 +467,6 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.#ctor(System.Web.UI.DataS
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -541,5 +474,4 @@ uid: System.Web.UI.WebControls.QueryableDataSourceView.AutoSort
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

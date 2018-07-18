@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.IQueryAmbient
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

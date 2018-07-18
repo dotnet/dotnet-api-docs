@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.TreeNodeBindingDepthConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -17,7 +14,6 @@ uid: System.Web.UI.Design.WebControls.TreeNodeBindingDepthConverter.ConvertTo(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -25,7 +21,6 @@ uid: System.Web.UI.Design.WebControls.TreeNodeBindingDepthConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -39,5 +34,4 @@ uid: System.Web.UI.Design.WebControls.TreeNodeBindingDepthConverter.ConvertFrom(
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.NetworkInformation.IPAddressInformation
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

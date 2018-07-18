@@ -1,7 +1,5 @@
 ---
 uid: System.Net.HttpListenerPrefixCollection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.PeerToPeerException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

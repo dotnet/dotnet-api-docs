@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Services.Internal.ExpandedWrapper`1
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

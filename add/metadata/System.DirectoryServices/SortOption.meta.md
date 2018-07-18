@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.SortOption
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

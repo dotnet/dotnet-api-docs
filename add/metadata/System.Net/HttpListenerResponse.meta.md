@@ -1,7 +1,5 @@
 ---
 uid: System.Net.HttpListenerResponse
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

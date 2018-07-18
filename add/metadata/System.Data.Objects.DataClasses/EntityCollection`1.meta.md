@@ -1,7 +1,5 @@
 ---
 uid: System.Data.Objects.DataClasses.EntityCollection`1
-ms.technology: 
-  - "dotnet-ado"
 author: "douglaslMS"
 ms.author: "douglasl"
 manager: "craigg"

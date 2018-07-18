@@ -1,10 +1,7 @@
 ---
 uid: System.Web.Configuration.FolderLevelBuildProvider
-ms.technology: 
-  - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -13,7 +10,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -22,7 +18,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -31,7 +26,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -40,7 +34,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -49,5 +42,4 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---

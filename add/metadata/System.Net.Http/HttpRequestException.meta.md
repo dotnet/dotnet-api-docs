@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Http.HttpRequestException
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

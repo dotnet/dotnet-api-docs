@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.ProxyElement
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

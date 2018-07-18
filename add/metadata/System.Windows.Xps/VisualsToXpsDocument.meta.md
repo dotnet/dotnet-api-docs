@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Xps.VisualsToXpsDocument
-ms.technology: 
-  - "dotnet-wpf"
-manager: "leannef"
 ---
 
 ---

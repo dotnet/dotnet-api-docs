@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.PnrpPermission
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

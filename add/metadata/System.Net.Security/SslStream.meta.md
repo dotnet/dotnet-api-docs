@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Security.SslStream
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

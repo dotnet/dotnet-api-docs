@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Sockets.LingerOption
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

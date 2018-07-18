@@ -1,7 +1,5 @@
 ---
 uid: System.Net.ICredentials
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

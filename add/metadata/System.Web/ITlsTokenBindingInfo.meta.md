@@ -1,7 +1,5 @@
 ---
 uid: System.Web.ITlsTokenBindingInfo
-ms.technology: 
-  - "dotnet-webforms"
 ---
 
 ---

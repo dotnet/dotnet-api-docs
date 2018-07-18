@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.WizardStepTemplatedEditableRegion
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.WizardStepTemplatedEditableRegion.#ctor(Sy
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.UI.Design.WebControls.WizardStepTemplatedEditableRegion.Step
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

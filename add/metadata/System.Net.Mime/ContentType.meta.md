@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mime.ContentType
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

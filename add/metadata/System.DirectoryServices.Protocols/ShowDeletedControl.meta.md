@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.Protocols.ShowDeletedControl
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

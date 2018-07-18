@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.AuthenticationModulesSection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

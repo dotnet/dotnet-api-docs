@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.ArrayExtension
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

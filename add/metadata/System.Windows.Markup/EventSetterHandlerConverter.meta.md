@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.EventSetterHandlerConverter
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

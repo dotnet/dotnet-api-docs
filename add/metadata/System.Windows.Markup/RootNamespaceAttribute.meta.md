@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.RootNamespaceAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

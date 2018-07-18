@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.Protocols.DirSyncResponseControl
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

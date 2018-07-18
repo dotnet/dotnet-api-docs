@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.IXamlTypeResolver
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

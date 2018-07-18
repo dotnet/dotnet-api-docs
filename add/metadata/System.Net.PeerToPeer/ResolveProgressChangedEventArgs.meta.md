@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.ResolveProgressChangedEventArgs
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mail.AlternateView
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.DirectoryEntries
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

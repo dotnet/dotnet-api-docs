@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.Protocols.PartialResultsCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

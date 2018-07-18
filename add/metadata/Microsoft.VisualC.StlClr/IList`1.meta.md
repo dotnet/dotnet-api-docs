@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.StlClr.IList`1
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mail.MailMessage
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

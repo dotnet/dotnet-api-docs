@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.Protocols.SecurityPackageContextConnectionInformation
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

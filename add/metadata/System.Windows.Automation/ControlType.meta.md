@@ -1,10 +1,6 @@
 ---
 uid: System.Windows.Automation.ControlType
-ms.technology: 
-  - "dotnet-wpf"
-author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -13,7 +9,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -22,7 +17,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -31,7 +25,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -40,7 +33,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +41,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -58,7 +49,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -67,7 +57,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -76,7 +65,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -85,7 +73,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -94,7 +81,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -103,7 +89,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -112,7 +97,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -121,7 +105,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -130,7 +113,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -139,7 +121,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -148,7 +129,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -157,7 +137,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -166,7 +145,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -175,7 +153,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -184,7 +161,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -193,7 +169,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -202,7 +177,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -211,7 +185,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -220,7 +193,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -229,7 +201,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -238,7 +209,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -247,7 +217,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -256,7 +225,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -265,7 +233,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -274,7 +241,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -283,7 +249,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -292,7 +257,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -301,7 +265,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -310,7 +273,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -319,7 +281,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -328,7 +289,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -337,7 +297,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -346,7 +305,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -355,7 +313,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -364,7 +321,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -373,7 +329,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -382,7 +337,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -391,7 +345,6 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---
 
 ---
@@ -400,5 +353,4 @@ ms.technology:
   - "dotnet-wpf"
 author: "Xansky"
 ms.author: "mhopkins"
-manager: "wpickett"
 ---

@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mail.SmtpClient
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

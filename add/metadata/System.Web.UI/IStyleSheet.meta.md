@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.IStyleSheet
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.IStyleSheet.RegisterStyle(System.Web.UI.WebControls.Style,Sys
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.UI.IStyleSheet.CreateStyleRule(System.Web.UI.WebControls.Style,S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Converters.PointValueSerializer
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

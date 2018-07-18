@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.DirectoryEntryConfiguration
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

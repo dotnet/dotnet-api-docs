@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.DomainCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

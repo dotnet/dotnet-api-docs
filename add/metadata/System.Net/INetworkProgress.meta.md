@@ -1,7 +1,5 @@
 ---
 uid: System.Net.INetworkProgress
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

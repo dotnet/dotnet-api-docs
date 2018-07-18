@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.RuntimeNamePropertyAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

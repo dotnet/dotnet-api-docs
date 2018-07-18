@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XamlTypeMapper
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

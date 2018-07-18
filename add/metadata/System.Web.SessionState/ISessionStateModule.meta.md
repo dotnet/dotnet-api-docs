@@ -1,9 +1,6 @@
 ---
 uid: System.Web.SessionState.ISessionStateModule
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.SessionState.ISessionStateModule.ReleaseSessionState(System.Web.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.SessionState.ISessionStateModule.ReleaseSessionStateAsync(System
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Caching.OutputCacheUtility
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Caching.OutputCacheUtility.GetValidationCallbacks(System.Web.Htt
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.Caching.OutputCacheUtility.SetContentBuffers(System.Web.HttpResp
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -27,7 +22,6 @@ uid: System.Web.Caching.OutputCacheUtility.GetContentBuffers(System.Web.HttpResp
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -35,13 +29,11 @@ uid: System.Web.Caching.OutputCacheUtility.CreateCacheDependency(System.Web.Http
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
 uid: System.Web.Caching.OutputCacheUtility.FlushKernelCache(System.String)
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,5 +41,4 @@ uid: System.Web.Caching.OutputCacheUtility.SetupKernelCaching(System.String,Syst
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

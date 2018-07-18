@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.XamlDesignerSerializationManager
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

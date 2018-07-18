@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.DataSourceCacheDurationConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.DataSourceCacheDurationConverter.CanConvertTo(System.Componen
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -37,7 +33,6 @@ uid: System.Web.UI.DataSourceCacheDurationConverter.GetStandardValuesSupported(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -51,7 +46,6 @@ uid: System.Web.UI.DataSourceCacheDurationConverter.ConvertTo(System.ComponentMo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -59,7 +53,6 @@ uid: System.Web.UI.DataSourceCacheDurationConverter.GetStandardValuesExclusive(S
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +66,6 @@ uid: System.Web.UI.DataSourceCacheDurationConverter.GetStandardValues(System.Com
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,7 +73,6 @@ uid: System.Web.UI.DataSourceCacheDurationConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -89,7 +80,6 @@ uid: System.Web.UI.DataSourceCacheDurationConverter.ConvertFrom(System.Component
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -109,5 +99,4 @@ uid: System.Web.UI.DataSourceCacheDurationConverter.CanConvertFrom(System.Compon
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

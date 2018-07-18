@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.Protocols.LdapException
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

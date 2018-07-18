@@ -1,9 +1,6 @@
 ---
 uid: System.Web.Configuration.ProvidersHelper
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.Configuration.ProvidersHelper.InstantiateProvider(System.Configu
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,5 +15,4 @@ uid: System.Web.Configuration.ProvidersHelper.InstantiateProviders(System.Config
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

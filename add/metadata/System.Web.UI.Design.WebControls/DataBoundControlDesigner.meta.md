@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.ConnectToDataSour
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.PreFilterProperti
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.System#Web#UI#Des
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -49,7 +42,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.UseDataSourcePick
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -57,7 +49,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.Dispose(System.Bo
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -65,7 +56,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.DisconnectFromDat
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -73,7 +63,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.CreateDataSource
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -81,7 +70,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.GetDesignTimeData
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -89,7 +77,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.GetSampleDataSour
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -97,7 +84,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.System#Web#UI#Des
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -105,7 +91,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.System#Web#UI#Des
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -113,7 +98,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.System#Web#UI#Des
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -121,7 +105,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.SampleRowCount
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -129,7 +112,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.DesignerView
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -137,7 +119,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.DataBind(System.W
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -145,7 +126,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.System#Web#UI#Des
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -153,7 +133,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.DataSourceDesigne
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -161,7 +140,6 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.DataMember
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -169,5 +147,4 @@ uid: System.Web.UI.Design.WebControls.DataBoundControlDesigner.ActionLists
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

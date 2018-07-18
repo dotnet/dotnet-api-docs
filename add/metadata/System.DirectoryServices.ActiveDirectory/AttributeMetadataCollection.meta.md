@@ -1,8 +1,6 @@
 ---
 uid: System.DirectoryServices.ActiveDirectory.AttributeMetadataCollection
-author: "BrucePerlerMS"
 ms.author: "bruceper"
-manager: "mbaldwin"
 ---
 
 ---

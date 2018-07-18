@@ -1,7 +1,6 @@
 ---
 uid: Microsoft.VisualC.IsLongModifier
 ms.author: "mblome"
-manager: "ghogen"
 ---
 
 ---

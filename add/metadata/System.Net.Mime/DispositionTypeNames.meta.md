@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Mime.DispositionTypeNames
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

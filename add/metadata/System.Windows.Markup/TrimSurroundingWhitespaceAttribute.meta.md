@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.TrimSurroundingWhitespaceAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

@@ -1,9 +1,6 @@
 ---
 uid: System.Web.UI.Design.SkinIDTypeConverter
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -11,7 +8,6 @@ uid: System.Web.UI.Design.SkinIDTypeConverter.CanConvertFrom(System.ComponentMod
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -19,7 +15,6 @@ uid: System.Web.UI.Design.SkinIDTypeConverter.#ctor
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -33,7 +28,6 @@ uid: System.Web.UI.Design.SkinIDTypeConverter.GetStandardValuesSupported(System.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -41,7 +35,6 @@ uid: System.Web.UI.Design.SkinIDTypeConverter.ConvertFrom(System.ComponentModel.
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -55,7 +48,6 @@ uid: System.Web.UI.Design.SkinIDTypeConverter.ConvertTo(System.ComponentModel.IT
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -63,7 +55,6 @@ uid: System.Web.UI.Design.SkinIDTypeConverter.CanConvertTo(System.ComponentModel
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---
 
 ---
@@ -95,5 +86,4 @@ uid: System.Web.UI.Design.SkinIDTypeConverter.GetStandardValues(System.Component
 ms.technology: 
   - "dotnet-webforms"
 ms.author: "riande"
-manager: "wpickett"
 ---

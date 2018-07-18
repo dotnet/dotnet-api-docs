@@ -1,7 +1,5 @@
 ---
 uid: System.Net.PeerToPeer.PeerNameRecord
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

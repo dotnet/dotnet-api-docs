@@ -1,7 +1,5 @@
 ---
 uid: System.Net.Configuration.ConnectionManagementElementCollection
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---

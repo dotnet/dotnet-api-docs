@@ -1,10 +1,7 @@
 ---
 uid: System.Web.UI.MobileControls.Adapters.MobileTextWriter
-ms.technology: 
-  - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -13,7 +10,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -22,7 +18,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -31,7 +26,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -40,7 +34,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -55,7 +48,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -64,7 +56,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -79,7 +70,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -88,7 +78,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -97,7 +86,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -106,7 +94,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -115,7 +102,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -124,7 +110,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -133,7 +118,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -142,7 +126,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -157,7 +140,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -166,7 +148,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -175,7 +156,6 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---
 
 ---
@@ -184,5 +164,4 @@ ms.technology:
   - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
-manager: "wpickett"
 ---

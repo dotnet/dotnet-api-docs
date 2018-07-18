@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.DictionaryKeyPropertyAttribute
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

@@ -1,8 +1,5 @@
 ---
 uid: System.Windows.Markup.IStyleConnector
-ms.technology: 
-  - "dotnet-wpf"
-manager: "martinek"
 ---
 
 ---

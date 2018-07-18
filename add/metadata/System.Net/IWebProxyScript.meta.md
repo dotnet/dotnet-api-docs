@@ -1,7 +1,5 @@
 ---
 uid: System.Net.IWebProxyScript
-ms.author: "bobdel"
-manager: "markl"
 ---
 
 ---
