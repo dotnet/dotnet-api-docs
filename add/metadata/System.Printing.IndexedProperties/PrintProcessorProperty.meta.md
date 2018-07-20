@@ -12,7 +12,7 @@ uid: System.Printing.IndexedProperties.PrintProcessorProperty.#ctor(System.Strin
 
 ---
 uid: System.Printing.IndexedProperties.PrintProcessorProperty.#ctor(System.String,System.Object)
-ms.---
+---
 
 ---
 uid: System.Printing.IndexedProperties.PrintProcessorProperty.op_Implicit
@@ -20,4 +20,4 @@ uid: System.Printing.IndexedProperties.PrintProcessorProperty.op_Implicit
 
 ---
 uid: System.Printing.IndexedProperties.PrintProcessorProperty.#ctor
-ms.---
+---

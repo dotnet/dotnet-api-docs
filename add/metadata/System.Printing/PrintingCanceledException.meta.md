@@ -8,7 +8,7 @@ uid: System.Printing.PrintingCanceledException.#ctor(System.Runtime.Serializatio
 
 ---
 uid: System.Printing.PrintingCanceledException.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.Exception)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintingCanceledException.#ctor

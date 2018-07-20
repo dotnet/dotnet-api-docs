@@ -40,11 +40,11 @@ uid: System.Printing.PrintSystemObject.IsDisposed
 
 ---
 uid: System.Printing.PrintSystemObject.Dispose(System.Boolean)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintSystemObject.PropertiesCollection
-ms.---
+---
 
 ---
 uid: System.Printing.PrintSystemObject.Name

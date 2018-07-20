@@ -4,12 +4,8 @@ uid: System.Windows.Forms.ToolStripSplitButton.ToolStripSplitButtonAccessibleObj
 
 ---
 uid: System.Windows.Forms.ToolStripSplitButton.ToolStripSplitButtonAccessibleObject.#ctor(System.Windows.Forms.ToolStripSplitButton)
-ms.technology: 
-  - "dotnet-winforms"
-ms.---
+---
 
 ---
 uid: System.Windows.Forms.ToolStripSplitButton.ToolStripSplitButtonAccessibleObject.DoDefaultAction
-ms.technology: 
-  - "dotnet-winforms"
 ---

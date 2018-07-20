@@ -12,8 +12,6 @@ uid: System.ComponentModel.BindingList`1.IsSortedCore
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#SupportsSorting
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -54,8 +52,6 @@ uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#Appl
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#AllowEdit
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -72,8 +68,6 @@ uid: System.ComponentModel.BindingList`1.AddNewCore
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#AllowNew
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -106,14 +100,10 @@ uid: System.ComponentModel.BindingList`1.SupportsSortingCore
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IRaiseItemChangedEvents#RaisesItemChangedEvents
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#SupportsSearching
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -122,8 +112,6 @@ uid: System.ComponentModel.BindingList`1.AllowNew
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#SortDirection
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -132,8 +120,6 @@ uid: System.ComponentModel.BindingList`1.CancelNew(System.Int32)
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#IsSorted
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -142,8 +128,6 @@ uid: System.ComponentModel.BindingList`1.InsertItem(System.Int32,`0)
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#SupportsChangeNotification
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -164,8 +148,6 @@ uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#AddI
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#AllowRemove
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -194,8 +176,6 @@ uid: System.ComponentModel.BindingList`1.SortPropertyCore
 
 ---
 uid: System.ComponentModel.BindingList`1.System#ComponentModel#IBindingList#SortProperty
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

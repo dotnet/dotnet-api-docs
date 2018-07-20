@@ -6,5 +6,4 @@ ms.author: "mblome"
 ---
 uid: Microsoft.VisualC.StlClr.Generic.IBidirectionalIterator`1.prev
 ms.author: "mblome"
-manager: "ghogen"
 ---

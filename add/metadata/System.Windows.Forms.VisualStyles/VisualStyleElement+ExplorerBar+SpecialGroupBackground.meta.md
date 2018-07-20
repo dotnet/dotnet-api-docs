@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ExplorerBar.SpecialGro
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ExplorerBar.SpecialGroupBackground.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

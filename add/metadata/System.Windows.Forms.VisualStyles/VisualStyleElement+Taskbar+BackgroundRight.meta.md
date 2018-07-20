@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Taskbar.BackgroundRigh
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Taskbar.BackgroundRight.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

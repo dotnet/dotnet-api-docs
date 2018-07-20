@@ -4,7 +4,7 @@ uid: System.Printing.Interop.PrintTicketConverter
 
 ---
 uid: System.Printing.Interop.PrintTicketConverter.ConvertPrintTicketToDevMode
-ms.---
+---
 
 ---
 uid: System.Printing.Interop.PrintTicketConverter.Dispose

@@ -12,14 +12,10 @@ uid: System.ComponentModel.ListSortDescriptionCollection.System#Collections#ILis
 
 ---
 uid: System.ComponentModel.ListSortDescriptionCollection.System#Collections#ICollection#SyncRoot
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
 uid: System.ComponentModel.ListSortDescriptionCollection.System#Collections#IList#IsFixedSize
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -36,14 +32,10 @@ uid: System.ComponentModel.ListSortDescriptionCollection.System#Collections#ILis
 
 ---
 uid: System.ComponentModel.ListSortDescriptionCollection.System#Collections#IList#Item(System.Int32)
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
 uid: System.ComponentModel.ListSortDescriptionCollection.System#Collections#ICollection#IsSynchronized
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -72,8 +64,6 @@ uid: System.ComponentModel.ListSortDescriptionCollection.Contains(System.Object)
 
 ---
 uid: System.ComponentModel.ListSortDescriptionCollection.System#Collections#IList#IsReadOnly
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

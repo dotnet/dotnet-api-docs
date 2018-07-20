@@ -24,8 +24,6 @@ uid: System.ComponentModel.Design.Serialization.DesignerSerializationManager.Pre
 
 ---
 uid: System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#Properties
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -42,8 +40,6 @@ uid: System.ComponentModel.Design.Serialization.DesignerSerializationManager.Sys
 
 ---
 uid: System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#Context
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

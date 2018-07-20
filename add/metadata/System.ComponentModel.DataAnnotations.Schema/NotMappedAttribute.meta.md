@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute.#ctor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

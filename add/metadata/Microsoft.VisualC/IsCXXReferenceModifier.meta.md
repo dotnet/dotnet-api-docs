@@ -6,5 +6,4 @@ ms.author: "mblome"
 ---
 uid: Microsoft.VisualC.IsCXXReferenceModifier.#ctor
 ms.author: "mblome"
-manager: "ghogen"
 ---

@@ -20,7 +20,7 @@ uid: System.Printing.PrintServer.Name
 
 ---
 uid: System.Printing.PrintServer.GetPrintQueues(System.String[])
-ms.---
+---
 
 ---
 uid: System.Printing.PrintServer.#ctor(System.String,System.String[],System.Printing.PrintSystemDesiredAccess)
@@ -44,7 +44,7 @@ uid: System.Printing.PrintServer.#ctor(System.String,System.String[])
 
 ---
 uid: System.Printing.PrintServer.InstallPrintQueue(System.String,System.String,System.String[],System.String,System.Printing.IndexedProperties.PrintPropertyDictionary)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintServer.GetPrintQueues(System.String[],System.Printing.EnumeratedPrintQueueTypes[])
@@ -52,7 +52,7 @@ uid: System.Printing.PrintServer.GetPrintQueues(System.String[],System.Printing.
 
 ---
 uid: System.Printing.PrintServer.NetPopup
-ms.---
+---
 
 ---
 uid: System.Printing.PrintServer.MinorVersion
@@ -72,7 +72,7 @@ uid: System.Printing.PrintServer.DefaultPortThreadPriority
 
 ---
 uid: System.Printing.PrintServer.EventLog
-ms.---
+---
 
 ---
 uid: System.Printing.PrintServer.GetPrintQueue
@@ -88,7 +88,7 @@ uid: System.Printing.PrintServer.#ctor(System.Printing.PrintSystemDesiredAccess)
 
 ---
 uid: System.Printing.PrintServer.SchedulerPriority
-ms.---
+---
 
 ---
 uid: System.Printing.PrintServer.GetPrintQueues(System.Printing.PrintQueueIndexedProperty[])
@@ -172,4 +172,4 @@ uid: System.Printing.PrintServer.InstallPrintQueue(System.String,System.String,S
 
 ---
 uid: System.Printing.PrintServer.GetPrintQueues(System.Printing.PrintQueueIndexedProperty[],System.Printing.EnumeratedPrintQueueTypes[])
-ms.---
+---

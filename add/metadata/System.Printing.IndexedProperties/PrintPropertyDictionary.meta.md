@@ -28,7 +28,7 @@ uid: System.Printing.IndexedProperties.PrintPropertyDictionary.GetObjectData(Sys
 
 ---
 uid: System.Printing.IndexedProperties.PrintPropertyDictionary.SetProperty(System.String,System.Printing.IndexedProperties.PrintProperty)
-ms.---
+---
 
 ---
 uid: System.Printing.IndexedProperties.PrintPropertyDictionary.OnDeserialization(System.Object)

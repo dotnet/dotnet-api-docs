@@ -8,7 +8,7 @@ uid: System.Printing.PrintJobInfoCollection.#ctor(System.Printing.PrintQueue,Sys
 
 ---
 uid: System.Printing.PrintJobInfoCollection.Dispose
-ms.---
+---
 
 ---
 uid: System.Printing.PrintJobInfoCollection.GetNonGenericEnumerator

@@ -8,7 +8,7 @@ uid: System.Printing.IndexedProperties.PrintTicketProperty.#ctor
 
 ---
 uid: System.Printing.IndexedProperties.PrintTicketProperty.op_Implicit
-ms.---
+---
 
 ---
 uid: System.Printing.IndexedProperties.PrintTicketProperty.Value

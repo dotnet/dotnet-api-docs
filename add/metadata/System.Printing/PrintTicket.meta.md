@@ -28,7 +28,7 @@ uid: System.Printing.PrintTicket.PageScalingFactor
 
 ---
 uid: System.Printing.PrintTicket.Collation
-ms.---
+---
 
 ---
 uid: System.Printing.PrintTicket.PageOrientation
@@ -60,7 +60,7 @@ uid: System.Printing.PrintTicket.TrueTypeFontMode
 
 ---
 uid: System.Printing.PrintTicket.GetXmlStream
-ms.---
+---
 
 ---
 uid: System.Printing.PrintTicket.Clone
@@ -72,7 +72,7 @@ uid: System.Printing.PrintTicket.Stapling
 
 ---
 uid: System.Printing.PrintTicket.PageOrder
-ms.---
+---
 
 ---
 uid: System.Printing.PrintTicket.#ctor
@@ -88,7 +88,7 @@ uid: System.Printing.PrintTicket.PropertyChanged
 
 ---
 uid: System.Printing.PrintTicket.PageResolution
-ms.---
+---
 
 ---
 uid: System.Printing.PrintTicket.SaveTo(System.IO.Stream)

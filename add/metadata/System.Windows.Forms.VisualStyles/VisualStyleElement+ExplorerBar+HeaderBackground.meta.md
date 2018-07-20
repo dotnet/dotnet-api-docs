@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ExplorerBar.HeaderBack
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ExplorerBar.HeaderBackground.Normal
-ms.technology: 
-  - "dotnet-winforms"
-ms.---
+---

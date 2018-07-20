@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar.BarVertica
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar.BarVertical.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

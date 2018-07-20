@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Window.SmallFrameLeftS
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Window.SmallFrameLeftSizingTemplate.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

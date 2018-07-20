@@ -4,6 +4,4 @@ uid: System.Web.ClientServices.Providers.IClientFormsAuthenticationCredentialsPr
 
 ---
 uid: System.Web.ClientServices.Providers.IClientFormsAuthenticationCredentialsProvider.GetCredentials
-ms.technology: 
-  - "dotnet-webforms"
 ---

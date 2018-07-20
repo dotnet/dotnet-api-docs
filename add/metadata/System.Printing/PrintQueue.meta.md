@@ -4,7 +4,7 @@ uid: System.Printing.PrintQueue
 
 ---
 uid: System.Printing.PrintQueue.IsServerUnknown
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.AddJob(System.String,System.String,System.Boolean,System.Printing.PrintTicket)
@@ -52,7 +52,7 @@ uid: System.Printing.PrintQueue.GetPrintCapabilitiesAsXml
 
 ---
 uid: System.Printing.PrintQueue.CreateXpsDocumentWriter(System.Printing.PrintQueue)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.IsInitializing
@@ -76,7 +76,7 @@ uid: System.Printing.PrintQueue.GetPrintCapabilities(System.Printing.PrintTicket
 
 ---
 uid: System.Printing.PrintQueue.InternalDispose(System.Boolean)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.InPartialTrust
@@ -96,11 +96,11 @@ uid: System.Printing.PrintQueue.UntilTimeOfDay
 
 ---
 uid: System.Printing.PrintQueue.IsOffline
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.IsPaperJammed
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.AddJob(System.String)
@@ -136,7 +136,7 @@ uid: System.Printing.PrintQueue.#ctor(System.Printing.PrintServer,System.String)
 
 ---
 uid: System.Printing.PrintQueue.NeedUserIntervention
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.IsBusy
@@ -180,11 +180,11 @@ uid: System.Printing.PrintQueue.IsOutOfPaper
 
 ---
 uid: System.Printing.PrintQueue.CreateXpsDocumentWriter
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.QueueStatus
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.AddJob(System.String,System.Printing.PrintTicket)
@@ -200,7 +200,7 @@ uid: System.Printing.PrintQueue.MergeAndValidatePrintTicket(System.Printing.Prin
 
 ---
 uid: System.Printing.PrintQueue.#ctor(System.Printing.PrintServer,System.String,System.Printing.PrintSystemDesiredAccess)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.ClientPrintSchemaVersion
@@ -228,7 +228,7 @@ uid: System.Printing.PrintQueue.AddJob(System.String,System.String,System.Boolea
 
 ---
 uid: System.Printing.PrintQueue.CreateXpsDocumentWriter(System.Double@,System.Double@)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.Name
@@ -252,7 +252,7 @@ uid: System.Printing.PrintQueue.CurrentJobSettings
 
 ---
 uid: System.Printing.PrintQueue.IsPaused
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.GetPrintCapabilitiesAsXml(System.Printing.PrintTicket)
@@ -272,7 +272,7 @@ uid: System.Printing.PrintQueue.IsOutOfMemory
 
 ---
 uid: System.Printing.PrintQueue.Commit
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.Comment
@@ -312,11 +312,11 @@ uid: System.Printing.PrintQueue.IsDevQueryEnabled
 
 ---
 uid: System.Printing.PrintQueue.IsProcessing
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.Priority
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.#ctor(System.Printing.PrintServer,System.String,System.Printing.PrintQueueIndexedProperty[])
@@ -352,11 +352,11 @@ uid: System.Printing.PrintQueue.IsPublished
 
 ---
 uid: System.Printing.PrintQueue.CreateXpsDocumentWriter(System.String,System.Printing.PrintDocumentImageableArea@)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.IsDirect
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.ShareName
@@ -376,11 +376,11 @@ uid: System.Printing.PrintQueue.Description
 
 ---
 uid: System.Printing.PrintQueue.IsBidiEnabled
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.MergeAndValidatePrintTicket
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueue.QueueAttributes

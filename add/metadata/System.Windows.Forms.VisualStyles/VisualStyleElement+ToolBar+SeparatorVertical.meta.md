@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar.SeparatorVerti
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar.SeparatorVertical.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

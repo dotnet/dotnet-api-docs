@@ -12,14 +12,10 @@ uid: System.ComponentModel.Design.DesignSurfaceCollection.System#Collections#IEn
 
 ---
 uid: System.ComponentModel.Design.DesignSurfaceCollection.System#Collections#ICollection#Count
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
 uid: System.ComponentModel.Design.DesignSurfaceCollection.System#Collections#ICollection#SyncRoot
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -32,8 +28,6 @@ uid: System.ComponentModel.Design.DesignSurfaceCollection.Count
 
 ---
 uid: System.ComponentModel.Design.DesignSurfaceCollection.System#Collections#ICollection#IsSynchronized
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

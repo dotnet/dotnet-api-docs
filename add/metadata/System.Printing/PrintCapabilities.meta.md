@@ -12,7 +12,7 @@ uid: System.Printing.PrintCapabilities.#ctor(System.IO.Stream)
 
 ---
 uid: System.Printing.PrintCapabilities.PageOrderCapability
-ms.---
+---
 
 ---
 uid: System.Printing.PrintCapabilities.OrientedPageMediaHeight
@@ -32,7 +32,7 @@ uid: System.Printing.PrintCapabilities.PageMediaTypeCapability
 
 ---
 uid: System.Printing.PrintCapabilities.DeviceFontSubstitutionCapability
-ms.---
+---
 
 ---
 uid: System.Printing.PrintCapabilities.PageImageableArea
@@ -84,7 +84,7 @@ uid: System.Printing.PrintCapabilities.PageScalingFactorRange
 
 ---
 uid: System.Printing.PrintCapabilities.CollationCapability
-ms.---
+---
 
 ---
 uid: System.Printing.PrintCapabilities.DuplexingCapability

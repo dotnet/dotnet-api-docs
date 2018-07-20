@@ -20,7 +20,7 @@ uid: System.Printing.PrintSystemException.#ctor(System.Int32,System.String,Syste
 
 ---
 uid: System.Printing.PrintSystemException.#ctor(System.Int32,System.String,System.Exception)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintSystemException.#ctor(System.Int32,System.String)
@@ -28,7 +28,7 @@ uid: System.Printing.PrintSystemException.#ctor(System.Int32,System.String)
 
 ---
 uid: System.Printing.PrintSystemException.#ctor(System.String)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintSystemException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)

@@ -12,7 +12,7 @@ uid: System.Printing.PrintServerException.#ctor
 
 ---
 uid: System.Printing.PrintServerException.#ctor(System.String)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintServerException.ServerName

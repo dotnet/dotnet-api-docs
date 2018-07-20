@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Web.UI.Design.HtmlIntrinsicControlDesigner.#ctor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

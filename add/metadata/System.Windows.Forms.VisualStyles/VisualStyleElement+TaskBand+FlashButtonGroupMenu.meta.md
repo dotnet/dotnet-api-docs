@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand.FlashButtonGr
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand.FlashButtonGroupMenu.Normal
-ms.technology: 
-  - "dotnet-winforms"
-ms.---
+---

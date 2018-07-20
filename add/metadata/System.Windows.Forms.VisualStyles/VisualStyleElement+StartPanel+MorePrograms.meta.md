@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.MoreProgram
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.MorePrograms.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

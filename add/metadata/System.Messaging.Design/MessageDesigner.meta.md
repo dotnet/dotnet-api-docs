@@ -8,5 +8,4 @@ uid: System.Messaging.Design.MessageDesigner.PreFilterProperties(System.Collecti
 
 ---
 uid: System.Messaging.Design.MessageDesigner.#ctor
-manager: "tyoung"
 ---

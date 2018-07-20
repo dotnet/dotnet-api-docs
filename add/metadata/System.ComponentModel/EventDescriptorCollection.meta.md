@@ -16,8 +16,6 @@ uid: System.ComponentModel.EventDescriptorCollection.System#Collections#IList#In
 
 ---
 uid: System.ComponentModel.EventDescriptorCollection.System#Collections#ICollection#Count
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -30,8 +28,6 @@ uid: System.ComponentModel.EventDescriptorCollection.Remove(System.ComponentMode
 
 ---
 uid: System.ComponentModel.EventDescriptorCollection.System#Collections#IList#IsFixedSize
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -68,14 +64,10 @@ uid: System.ComponentModel.EventDescriptorCollection.Empty
 
 ---
 uid: System.ComponentModel.EventDescriptorCollection.System#Collections#IList#IsReadOnly
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
 uid: System.ComponentModel.EventDescriptorCollection.System#Collections#ICollection#IsSynchronized
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -136,8 +128,6 @@ uid: System.ComponentModel.EventDescriptorCollection.Count
 
 ---
 uid: System.ComponentModel.EventDescriptorCollection.System#Collections#IList#Item(System.Int32)
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -150,8 +140,6 @@ uid: System.ComponentModel.EventDescriptorCollection.IndexOf(System.ComponentMod
 
 ---
 uid: System.ComponentModel.EventDescriptorCollection.System#Collections#ICollection#SyncRoot
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

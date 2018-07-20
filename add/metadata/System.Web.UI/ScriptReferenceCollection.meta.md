@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Web.UI.ScriptReferenceCollection.#ctor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

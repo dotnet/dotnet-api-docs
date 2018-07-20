@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Web.Profile.DefaultProfile.#ctor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.ProgListSep
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.ProgListSeparator.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

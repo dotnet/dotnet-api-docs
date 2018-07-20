@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Tab.TopTabItemBothEdge
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Tab.TopTabItemBothEdges.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

@@ -8,7 +8,7 @@ uid: System.Printing.IndexedProperties.PrintDriverProperty.#ctor
 
 ---
 uid: System.Printing.IndexedProperties.PrintDriverProperty.op_Implicit
-ms.---
+---
 
 ---
 uid: System.Printing.IndexedProperties.PrintDriverProperty.#ctor(System.String,System.Object)

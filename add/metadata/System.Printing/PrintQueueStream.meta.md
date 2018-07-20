@@ -8,11 +8,11 @@ uid: System.Printing.PrintQueueStream.EndWrite(System.IAsyncResult)
 
 ---
 uid: System.Printing.PrintQueueStream.Write(System.Byte[],System.Int32,System.Int32)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueueStream.#ctor(System.Printing.PrintQueue,System.String)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueueStream.Dispose(System.Boolean)
@@ -68,7 +68,7 @@ uid: System.Printing.PrintQueueStream.#ctor(System.Printing.PrintQueue,System.St
 
 ---
 uid: System.Printing.PrintQueueStream.Close
-ms.---
+---
 
 ---
 uid: System.Printing.PrintQueueStream.#ctor(System.Printing.PrintQueue,System.String,System.Boolean,System.Printing.PrintTicket)

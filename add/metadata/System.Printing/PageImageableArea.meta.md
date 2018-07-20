@@ -16,7 +16,7 @@ uid: System.Printing.PageImageableArea.OriginWidth
 
 ---
 uid: System.Printing.PageImageableArea.ExtentWidth
-ms.---
+---
 
 ---
 uid: System.Printing.PageImageableArea.OriginHeight

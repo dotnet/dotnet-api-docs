@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Web.Configuration.HttpConfigurationContext.VirtualPath
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

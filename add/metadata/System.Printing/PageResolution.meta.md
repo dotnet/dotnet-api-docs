@@ -32,4 +32,4 @@ uid: System.Printing.PageResolution.ToString
 
 ---
 uid: System.Printing.PageResolution.#ctor(System.Int32,System.Int32,System.Printing.PageQualitativeResolution)
-ms.---
+---

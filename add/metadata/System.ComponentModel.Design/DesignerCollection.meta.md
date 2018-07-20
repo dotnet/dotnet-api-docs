@@ -4,8 +4,6 @@ uid: System.ComponentModel.Design.DesignerCollection
 
 ---
 uid: System.ComponentModel.Design.DesignerCollection.System#Collections#ICollection#Count
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -18,8 +16,6 @@ uid: System.ComponentModel.Design.DesignerCollection.System#Collections#IEnumera
 
 ---
 uid: System.ComponentModel.Design.DesignerCollection.System#Collections#ICollection#SyncRoot
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -44,8 +40,6 @@ uid: System.ComponentModel.Design.DesignerCollection.#ctor(System.ComponentModel
 
 ---
 uid: System.ComponentModel.Design.DesignerCollection.System#Collections#ICollection#IsSynchronized
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

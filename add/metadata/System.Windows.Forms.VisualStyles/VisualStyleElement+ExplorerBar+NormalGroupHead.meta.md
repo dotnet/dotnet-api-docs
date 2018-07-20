@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ExplorerBar.NormalGrou
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ExplorerBar.NormalGroupHead.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

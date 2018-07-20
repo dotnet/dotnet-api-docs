@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Web.Hosting.IAppDomainFactory.Create(System.String,System.String,System.String,System.String,System.String,System.Int32)
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

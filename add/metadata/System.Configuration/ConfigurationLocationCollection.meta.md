@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Configuration.ConfigurationLocationCollection.Item(System.Int32)
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

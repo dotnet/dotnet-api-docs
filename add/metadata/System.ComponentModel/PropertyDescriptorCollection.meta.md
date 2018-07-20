@@ -40,8 +40,6 @@ uid: System.ComponentModel.PropertyDescriptorCollection.IndexOf(System.Component
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IList#IsFixedSize
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -50,14 +48,10 @@ uid: System.ComponentModel.PropertyDescriptorCollection.Add(System.ComponentMode
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#ICollection#Count
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IDictionary#Item(System.Object)
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -70,8 +64,6 @@ uid: System.ComponentModel.PropertyDescriptorCollection.CopyTo(System.Array,Syst
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#ICollection#SyncRoot
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -84,8 +76,6 @@ uid: System.ComponentModel.PropertyDescriptorCollection.Find(System.String,Syste
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IDictionary#Keys
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -94,8 +84,6 @@ uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IDict
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IDictionary#IsFixedSize
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -120,14 +108,10 @@ uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IEnum
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IList#Item(System.Int32)
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IDictionary#IsReadOnly
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -144,8 +128,6 @@ uid: System.ComponentModel.PropertyDescriptorCollection.Item(System.String)
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IList#IsReadOnly
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -158,8 +140,6 @@ uid: System.ComponentModel.PropertyDescriptorCollection.Contains(System.Componen
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#ICollection#IsSynchronized
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -204,8 +184,6 @@ uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IList
 
 ---
 uid: System.ComponentModel.PropertyDescriptorCollection.System#Collections#IDictionary#Values
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

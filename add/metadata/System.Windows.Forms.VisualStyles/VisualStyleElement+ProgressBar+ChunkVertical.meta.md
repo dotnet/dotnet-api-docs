@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar.ChunkVerti
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar.ChunkVertical.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

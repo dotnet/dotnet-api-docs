@@ -20,4 +20,4 @@ uid: System.Printing.IndexedProperties.PrintInt32Property.op_Implicit
 
 ---
 uid: System.Printing.IndexedProperties.PrintInt32Property.#ctor(System.String,System.Object)
-ms.---
+---

@@ -6,5 +6,4 @@ ms.author: "mblome"
 ---
 uid: Microsoft.VisualC.IsSignedModifier.#ctor
 ms.author: "mblome"
-manager: "ghogen"
 ---

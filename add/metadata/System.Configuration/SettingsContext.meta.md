@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Configuration.SettingsContext.#ctor
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

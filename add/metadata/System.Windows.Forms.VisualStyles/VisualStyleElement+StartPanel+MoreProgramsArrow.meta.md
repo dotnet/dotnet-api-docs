@@ -4,18 +4,12 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.MoreProgram
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.MoreProgramsArrow.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.MoreProgramsArrow.Pressed
-ms.technology: 
-  - "dotnet-winforms"
 ---
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.MoreProgramsArrow.Hot
-ms.technology: 
-  - "dotnet-winforms"
 ---

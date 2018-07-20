@@ -4,8 +4,6 @@ uid: System.ComponentModel.AttributeCollection
 
 ---
 uid: System.ComponentModel.AttributeCollection.System#Collections#ICollection#Count
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -22,8 +20,6 @@ uid: System.ComponentModel.AttributeCollection.GetDefaultAttribute(System.Type)
 
 ---
 uid: System.ComponentModel.AttributeCollection.System#Collections#ICollection#IsSynchronized
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -84,8 +80,6 @@ uid: System.ComponentModel.AttributeCollection.GetEnumerator
 
 ---
 uid: System.ComponentModel.AttributeCollection.System#Collections#ICollection#SyncRoot
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

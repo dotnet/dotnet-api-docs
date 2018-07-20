@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Window.FrameBottomSizi
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Window.FrameBottomSizingTemplate.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

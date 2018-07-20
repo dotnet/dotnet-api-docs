@@ -48,8 +48,6 @@ uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection
 
 ---
 uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection.System#Collections#IList#IsFixedSize
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -58,14 +56,10 @@ uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection
 
 ---
 uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection.System#Collections#ICollection#IsSynchronized
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
 uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection.System#Collections#IList#IsReadOnly
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -74,8 +68,6 @@ uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection
 
 ---
 uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection.System#Collections#ICollection#SyncRoot
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -96,8 +88,6 @@ uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection
 
 ---
 uid: System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection.System#Collections#IList#Item(System.Int32)
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

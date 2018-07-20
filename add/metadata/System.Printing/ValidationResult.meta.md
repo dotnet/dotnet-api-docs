@@ -4,7 +4,7 @@ uid: System.Printing.ValidationResult
 
 ---
 uid: System.Printing.ValidationResult.op_Inequality(System.Printing.ValidationResult,System.Printing.ValidationResult)
-ms.---
+---
 
 ---
 uid: System.Printing.ValidationResult.ConflictStatus

@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Web.UI.IResourceUrlGenerator.GetResourceUrl(System.Type,System.String)
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

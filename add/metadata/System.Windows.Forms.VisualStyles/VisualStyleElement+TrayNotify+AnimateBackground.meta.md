@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify.AnimateBack
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify.AnimateBackground.Normal
-ms.technology: 
-  - "dotnet-winforms"
-ms.---
+---

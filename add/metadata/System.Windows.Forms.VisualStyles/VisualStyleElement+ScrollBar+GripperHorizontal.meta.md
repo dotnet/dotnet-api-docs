@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar.GripperHoriz
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar.GripperHorizontal.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

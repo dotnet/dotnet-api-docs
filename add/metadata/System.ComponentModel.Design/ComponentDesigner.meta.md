@@ -24,8 +24,6 @@ uid: System.ComponentModel.Design.ComponentDesigner.#ctor
 
 ---
 uid: System.ComponentModel.Design.ComponentDesigner.System#ComponentModel#Design#ITreeDesigner#Parent
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---
@@ -122,8 +120,6 @@ uid: System.ComponentModel.Design.ComponentDesigner.InheritanceAttribute
 
 ---
 uid: System.ComponentModel.Design.ComponentDesigner.System#ComponentModel#Design#ITreeDesigner#Children
-ms.author: "jimwalk"
-manager: "martinek"
 ---
 
 ---

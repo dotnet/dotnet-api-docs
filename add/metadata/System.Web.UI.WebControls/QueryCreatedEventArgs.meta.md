@@ -5,14 +5,10 @@ ms.author: "riande"
 
 ---
 uid: System.Web.UI.WebControls.QueryCreatedEventArgs.Query
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---
 
 ---
 uid: System.Web.UI.WebControls.QueryCreatedEventArgs.#ctor(System.Linq.IQueryable)
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

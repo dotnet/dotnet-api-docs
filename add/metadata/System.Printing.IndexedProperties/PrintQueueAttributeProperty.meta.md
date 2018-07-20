@@ -16,7 +16,7 @@ uid: System.Printing.IndexedProperties.PrintQueueAttributeProperty.#ctor(System.
 
 ---
 uid: System.Printing.IndexedProperties.PrintQueueAttributeProperty.#ctor(System.String,System.Object)
-ms.---
+---
 
 ---
 uid: System.Printing.IndexedProperties.PrintQueueAttributeProperty.Value

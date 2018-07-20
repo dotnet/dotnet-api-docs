@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.PlaceListSe
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel.PlaceListSeparator.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

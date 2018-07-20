@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Window.CaptionSizingTe
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Window.CaptionSizingTemplate.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

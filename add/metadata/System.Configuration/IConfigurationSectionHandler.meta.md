@@ -5,7 +5,5 @@ ms.author: "riande"
 
 ---
 uid: System.Configuration.IConfigurationSectionHandler.Create(System.Object,System.Object,System.Xml.XmlNode)
-ms.technology: 
-  - "dotnet-webforms"
 ms.author: "riande"
 ---

@@ -24,7 +24,7 @@ uid: System.Printing.PrintCommitAttributesException.#ctor(System.String,System.E
 
 ---
 uid: System.Printing.PrintCommitAttributesException.#ctor(System.String)
-ms.---
+---
 
 ---
 uid: System.Printing.PrintCommitAttributesException.#ctor(System.Int32,System.String,System.Collections.ObjectModel.Collection{System.String},System.Collections.ObjectModel.Collection{System.String},System.String)

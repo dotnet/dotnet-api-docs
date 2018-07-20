@@ -4,6 +4,4 @@ uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Taskbar.SizingBarBotto
 
 ---
 uid: System.Windows.Forms.VisualStyles.VisualStyleElement.Taskbar.SizingBarBottom.Normal
-ms.technology: 
-  - "dotnet-winforms"
 ---

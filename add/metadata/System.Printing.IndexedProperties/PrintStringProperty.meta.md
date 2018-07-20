@@ -12,7 +12,7 @@ uid: System.Printing.IndexedProperties.PrintStringProperty.#ctor(System.String,S
 
 ---
 uid: System.Printing.IndexedProperties.PrintStringProperty.#ctor
-ms.---
+---
 
 ---
 uid: System.Printing.IndexedProperties.PrintStringProperty.#ctor(System.String)

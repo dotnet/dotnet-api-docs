@@ -16,7 +16,7 @@ uid: System.Printing.IndexedProperties.PrintThreadPriorityProperty.#ctor(System.
 
 ---
 uid: System.Printing.IndexedProperties.PrintThreadPriorityProperty.#ctor
-ms.---
+---
 
 ---
 uid: System.Printing.IndexedProperties.PrintThreadPriorityProperty.#ctor(System.String,System.Object)

@@ -4,7 +4,7 @@ uid: System.Printing.PageMediaSize
 
 ---
 uid: System.Printing.PageMediaSize.Height
-ms.---
+---
 
 ---
 uid: System.Printing.PageMediaSize.#ctor
@@ -32,4 +32,4 @@ uid: System.Printing.PageMediaSize.#ctor(System.Printing.PageMediaSizeName,Syste
 
 ---
 uid: System.Printing.PageMediaSize.#ctor(System.Double,System.Double)
-ms.---
+---

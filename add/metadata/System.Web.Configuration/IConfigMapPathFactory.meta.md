@@ -6,8 +6,6 @@ ms.author: "tdykstra"
 
 ---
 uid: System.Web.Configuration.IConfigMapPathFactory.Create(System.String,System.String)
-ms.technology: 
-  - "dotnet-webforms"
 author: "tdykstra"
 ms.author: "tdykstra"
 ---
