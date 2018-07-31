@@ -346,9 +346,33 @@
 ## Examples  
  The following example shows how the <xref:System.Windows.Media.RenderOptions.ClearTypeHint%2A> property affects different branches of the visual tree. In the first text block control, text is rendered with ClearType because the text block inherits the setting from the main window. In the second text block, ClearType is not used because the parent element's <xref:System.Windows.UIElement.OpacityMask%2A> property is set. In the third text block, <xref:System.Windows.Media.RenderOptions.ClearTypeHint%2A> is used, but rendering issues may occur.  
   
- [!code-xml[ClearTypeHint#_ClearTypeHintXAML](~/samples/snippets/csharp/VS_Snippets_Wpf/cleartypehint/CS/window1.xaml#_cleartypehintxaml)]
- [!code-xml[ClearTypeHint#_ClearTypeHintXAML](~/samples/snippets/xaml/VS_Snippets_Wpf/cleartypehint/xaml/window1.xaml#_cleartypehintxaml)]  
-  
+```xaml
+<Window x:Class="ClearTypeHintDemo.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Window1" Height="300" Width="300"
+        AllowsTransparency="True" 
+        WindowStyle="None" 
+        RenderOptions.ClearTypeHint="Enabled" 
+        Background="White">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="opacityBrush" >
+            <GradientStop Color="#FF000000" Offset="0.0" />
+            <GradientStop Color="#00000000" Offset="1.0" />
+        </LinearGradientBrush>
+    </Window.Resources>
+
+    <StackPanel>
+        <TextBlock Text="This text is rendered with ClearType." />
+        <StackPanel OpacityMask="{StaticResource opacityBrush}" >
+            <TextBlock Text="This text is not rendered with ClearType." />
+            <TextBlock RenderOptions.ClearTypeHint="Enabled" 
+                       Text="This text is rendered with ClearType but may alpha-blend incorrectly." />
+        </StackPanel>
+    </StackPanel>
+</Window>  
+```
+
  ]]></format>
         </remarks>
       </Docs>
