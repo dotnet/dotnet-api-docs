@@ -237,9 +237,25 @@
 ## Examples  
  The follow example creates a <xref:System.Windows.Controls.ListBox> that contains two <xref:System.Windows.Controls.CheckBox> controls.  The example does not explicitly create a <xref:System.Windows.Controls.ListBoxItem> for either <xref:System.Windows.Controls.CheckBox>, so it sets <xref:System.Windows.Controls.Primitives.Selector.IsSelected%2A?displayProperty=nameWithType> directly on each <xref:System.Windows.Controls.CheckBox>.  To illustrate that <xref:System.Windows.Controls.Primitives.Selector.IsSelected%2A?displayProperty=nameWithType> is not updated, the example binds the <xref:System.Windows.Controls.Primitives.ToggleButton.IsChecked%2A> property of the first checkbox to <xref:System.Windows.Controls.Primitives.Selector.IsSelected%2A?displayProperty=nameWithType>. When the user unselects the item in the <xref:System.Windows.Controls.ListBox>, the <xref:System.Windows.Controls.CheckBox> remains checked.  Likewise, checking or unchecking the <xref:System.Windows.Controls.CheckBox> does not affect whether the <xref:System.Windows.Controls.CheckBox> is selected in the <xref:System.Windows.Controls.ListBox>. The example binds <xref:System.Windows.Controls.Primitives.ToggleButton.IsChecked%2A> of the second <xref:System.Windows.Controls.CheckBox> to <xref:System.Windows.Controls.ListBoxItem.IsSelected%2A?displayProperty=nameWithType>.  In this case, unselecting the item in the <xref:System.Windows.Controls.ListBox> causes the checkbox to be unchecked, and unchecking the checkbox also unselects the item.  
   
- [!code-xml[Selector#1](~/samples/snippets/csharp/VS_Snippets_Wpf/Selector/CS/Window1.xaml#1)]
- [!code-xml[Selector#1](~/samples/snippets/xaml/VS_Snippets_Wpf/Selector/XAML/Window1.xaml#1)]  
-  
+```xaml
+<ListBox Name="listBox1" SelectionMode="Multiple">
+  <CheckBox Selector.IsSelected="True" 
+            IsChecked="{Binding RelativeSource={RelativeSource Self}, 
+                        Path=(Selector.IsSelected), Mode=TwoWay}">
+    CheckBox.IsChecked is bound to Selector.IsChecked, which is set only
+    once.
+  </CheckBox>
+
+  <CheckBox ListBox.IsSelected="True" 
+            IsChecked="{Binding RelativeSource={RelativeSource 
+                        AncestorType={x:Type ListBoxItem}}, 
+                        Path=IsSelected, Mode=TwoWay}">
+    CheckBox.IsChecked is bound to ListBoxItem.IsChecked, which is
+    updated throughout the duration of the application.
+  </CheckBox>
+</ListBox>
+```
+
  ]]></format>
         </remarks>
       </Docs>
