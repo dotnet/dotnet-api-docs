@@ -38,11 +38,18 @@ Like <xref:System.Span%601>, `Memory<T>` represents a contiguous region of memor
 - A string (a sequence of characters).
 - A <xref:System.Runtime.InteropServices.SafeHandle>.
 
-`Memory<T>` cannot be backed by:
+`Memory<T>` cannot be backed by transient unmanaged memory, such as memory available by using [stackalloc](~/docs/csharp/language-reference/keywords/stackalloc.md).
 
-- Transient unmanaged memory, such as memory available by using [stackalloc](~/docs/csharp/language-reference/keywords/stackalloc.md).
+Because the memory allocated to the `Memory<T>` structure is placed on the managed heap, it does not have the same restrictions as a <xref:System.Span%601> instance. In particular:
+
+- It can be used as a field in a class.
+
+- It can be used across `await` and `yield` boundaries.
 
 In addition to `Memory<T>`, you can use <xref:System.ReadOnlyMemory%601?displayProperty=nameWithType> to represent immutable or read-only memory.
+
+### Memory<T> basics
+
 
     ]]></format>
      </remarks>
@@ -598,7 +605,12 @@ Because a call to the <xref="System.Memory%601.ToArray%2A> method performs a hea
       <Docs>
         <summary>Returns the string representation of this <see cref="T:System.Memory`1" /> object.</summary>
         <returns>the string representation of this <see cref="T:System.Memory`1" /> object.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+For a `Memory<Char>`, the `ToString` method returns a <xref:System.String> that contains the characters pointed to by the <xref:System.Memory%601>. Otherwise, it returns a <xref:System.String> with the name of the type and the number of elements that the <xref:System.Memory%601> contains.
+
+         ]]></format>          </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryCopyTo">
