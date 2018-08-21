@@ -314,60 +314,56 @@ private void keyTest()
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns an instance of <see cref="T:System.Speech.Recognition.GrammarBuilder" /> constructed from the current <see cref="T:System.Speech.Recognition.SemanticResultKey" /> instance.</summary>
+        <summary>Returns an instance of [GrammarBuilder](https://msdn.microsoft.com/en-us/library/ms556978\(v=vs.110\)) constructed from the current [SemanticResultKey](https://msdn.microsoft.com/en-us/library/ms557030\(v=vs.110\)) instance.</summary>
         <returns>To be added.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks  
- The use of <xref:System.Speech.Recognition.SemanticResultValue.ToGrammarBuilder%2A> is equivalent to using the <xref:System.Speech.Recognition.GrammarBuilder> constructor which takes <xref:System.Speech.Recognition.SemanticResultKey> as an argument (<xref:System.Speech.Recognition.GrammarBuilder.%23ctor%28System.Speech.Recognition.SemanticResultKey%29>).  
-  
-   
-  
+The use of [ToGrammarBuilder](https://msdn.microsoft.com/en-us/library/ms576596\(v=vs.110\)) is equivalent to using the [GrammarBuilder](https://msdn.microsoft.com/en-us/library/ms556978\(v=vs.110\)) constructor which takes [SemanticResultKey](https://msdn.microsoft.com/en-us/library/ms557030\(v=vs.110\)) as an argument ([GrammarBuilder(SemanticResultKey)](https://msdn.microsoft.com/en-us/library/ms554228\(v=vs.110\))).
+
 ## Examples  
- The following example creates a <xref:System.Speech.Recognition.Grammar> object that supports commands to change the background color.  
-  
- A <xref:System.Speech.Recognition.Choices> object (`colorChoice`) containing the list of options for background colors is filled using the <xref:System.Speech.Recognition.Choices.Add%28System.Speech.Recognition.GrammarBuilder%5B%5D%29> method with <xref:System.Speech.Recognition.GrammarBuilder> instances. The <xref:System.Speech.Recognition.GrammarBuilder> instances are obtained through the <xref:System.Speech.Recognition.SemanticResultKey.ToGrammarBuilder> method on the <xref:System.Speech.Recognition.SemanticResultValue> objects created from color strings.  
-  
- A <xref:System.Speech.Recognition.GrammarBuilder> is then obtained by calling <xref:System.Speech.Recognition.SemanticResultKey.ToGrammarBuilder> on a <xref:System.Speech.Recognition.SemanticResultKey> instance, which will be used to key the semantic choices in `colorChoice`.  
-  
-```csharp  
-  
-private Grammar CreateGrammarBuilderRGBSemantics()   
-{  
-  
-  // Create a set of choices, each a lookup from a color name to RGB.  
-  // Choices constructors do not take SemanticResultValue parameters, so cast   
-  // the SemanticResultValue to GrammarBuilder.  
-  Choices colorChoice = new Choices();  
-  foreach (string colorName in System.Enum.GetNames(typeof(KnownColor)))   
-  {  
-    SemanticResultValue colorValue=new SemanticResultValue(colorName, Color.FromName(colorName).ToArgb());  
-  
-    // Use implicit conversion of SemanticResultValue to GrammarBuilder.  
-    colorChoice.Add(colorValue.ToGrammarBuilder());      
-  }  
-  SemanticResultKey choiceKey = new SemanticResultKey("rgb", colorChoice);  
-  GrammarBuilder choiceBuilder = choiceKey.ToGrammarBuilder();  
-  
-  // Create two intermediate grammars with introductory phrase and the color choice.  
-  GrammarBuilder makeBackgroundBuilder = "Make background";  
-  makeBackgroundBuilder.Append(choiceBuilder);  
-  
-  GrammarBuilder configureBackgroundBuilder = new GrammarBuilder("Configure background as");  
-  configureBackgroundBuilder.Append((new SemanticResultKey("rgb", colorChoice)).ToGrammarBuilder());  
-  
-  // Create the Grammar object, which recognizes either intermediate grammar.  
-  Grammar grammar = new Grammar(new Choices(new GrammarBuilder[] {makeBackgroundBuilder, configureBackgroundBuilder}));  
-  grammar.Name = "Make Background /Configure background as";  
-  
-  return grammar;  
-}  
-  
-```  
-  
- ]]></format>
+The following example creates a [Grammar](https://msdn.microsoft.com/en-us/library/ms556977\(v=vs.110\)) object that supports commands to change the background color.
+
+A [Choices](https://msdn.microsoft.com/en-us/library/ms556964\(v=vs.110\)) object (colorChoice) containing the list of options for background colors is filled using the [Add(GrammarBuilder\[\])](https://msdn.microsoft.com/en-us/library/ms576557\(v=vs.110\)) method with [GrammarBuilder](https://msdn.microsoft.com/en-us/library/ms556978\(v=vs.110\)) instances. The [GrammarBuilder](https://msdn.microsoft.com/en-us/library/ms556978\(v=vs.110\)) instances are obtained through the ToGrammarBuilder() method on the [SemanticResultValue](https://msdn.microsoft.com/en-us/library/ms557033\(v=vs.110\)) objects created from color strings.
+
+A [GrammarBuilder](https://msdn.microsoft.com/en-us/library/ms556978\(v=vs.110\)) is then obtained by calling ToGrammarBuilder() on a [SemanticResultKey](https://msdn.microsoft.com/en-us/library/ms557030\(v=vs.110\)) instance, which will be used to key the semantic choices in colorChoice.
+
+``` csharp
+private Grammar CreateGrammarBuilderRGBSemantics() 
+{
+
+  // Create a set of choices, each a lookup from a color name to RGB.
+  // Choices constructors do not take SemanticResultValue parameters, so cast 
+  // the SemanticResultValue to GrammarBuilder.
+  Choices colorChoice = new Choices();
+  foreach (string colorName in System.Enum.GetNames(typeof(KnownColor))) 
+  {
+    SemanticResultValue colorValue=new SemanticResultValue(colorName, Color.FromName(colorName).ToArgb());
+
+    // Use implicit conversion of SemanticResultValue to GrammarBuilder.
+    colorChoice.Add(colorValue.ToGrammarBuilder());    
+  }
+  SemanticResultKey choiceKey = new SemanticResultKey("rgb", colorChoice);
+  GrammarBuilder choiceBuilder = choiceKey.ToGrammarBuilder();
+
+  // Create two intermediate grammars with introductory phrase and the color choice.
+  GrammarBuilder makeBackgroundBuilder = "Make background";
+  makeBackgroundBuilder.Append(choiceBuilder);
+
+  GrammarBuilder configureBackgroundBuilder = new GrammarBuilder("Configure background as");
+  configureBackgroundBuilder.Append((new SemanticResultKey("rgb", colorChoice)).ToGrammarBuilder());
+
+  // Create the Grammar object, which recognizes either intermediate grammar.
+  Grammar grammar = new Grammar(new Choices(new GrammarBuilder[] {makeBackgroundBuilder, configureBackgroundBuilder}));
+  grammar.Name = "Make Background /Configure background as";
+
+  return grammar;
+}
+```]]></format>
         </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ms557030\(v=vs.110\)">SemanticResultKey Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ms554855\(v=vs.110\)">System.Speech.Recognition Namespace</related>
       </Docs>
     </Member>
   </Members>

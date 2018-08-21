@@ -130,9 +130,45 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a value indicating whether a generic method contains unassigned generic type parameters.</summary>
+        <value>true if the current [MethodInfo](https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)) contains unassigned generic type parameters; otherwise, false.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+To invoke a generic method, there must be no generic type definitions or open constructed types in the type arguments of the method itself, or in any enclosing types. Making this recursive determination can be difficult. For convenience, and to reduce the chance of error, the ContainsGenericParameters property provides a standard way to distinguish between closed constructed methods, which can be invoked, and open constructed methods, which cannot. If the ContainsGenericParameters property returns true, the method cannot be invoked.
+
+The ContainsGenericParameters property searches recursively for type parameters. For example, it returns true for any method in an open type A\<T\> (A(Of T) in Visual Basic), even though the method itself is not generic. Contrast this with the behavior of the <xref:p:system.reflection.methodinfo.isgenericmethod> property, which returns false for such a method.
+
+For a list of the invariant conditions for terms specific to generic methods, see the <xref:p:system.reflection.methodinfo.isgenericmethod> property. For a list of the invariant conditions for other terms used in generic reflection, see the [IsGenericType](https://msdn.microsoft.com/en-us/library/ms131514\(v=vs.90\)) property.
+
+## Examples  
+The following code example uses the ContainsGenericParameters property to display a message indicating whether a [MethodInfo](https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)) is an open generic method (that is, whether it has unbound type parameters).
+
+This example is part of a larger example provided for the [MakeGenericMethod](https://msdn.microsoft.com/en-us/library/ms145392\(v=vs.90\)) method.
+
+``` vb
+Console.WriteLine(vbTab _
+    & "Does it have unassigned generic parameters? {0}", _
+    mi.ContainsGenericParameters)
+```
+
+``` csharp
+Console.WriteLine("\tDoes it have unassigned generic parameters? {0}", 
+    mi.ContainsGenericParameters);
+```
+
+``` c++
+Console::WriteLine("\tDoes it have unassigned generic parameters? {0}", 
+    mi->ContainsGenericParameters);
+```]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)">MethodInfo Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/c1dzxka4\(v=vs.90\)">MethodInfo Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/136wx94f\(v=vs.90\)">System.Reflection Namespace</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ms145392\(v=vs.90\)">MakeGenericMethod</related>
+        <altmember cref="p:system.reflection.methodinfo.isgenericmethod" />
+        <altmember cref="P:System.Reflection.MethodInfo.IsGenericMethodDefinition" />
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateDelegate">
@@ -675,9 +711,122 @@ public:
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a value indicating whether the current [MethodInfo](https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)) represents the definition of a generic method.</summary>
+        <value>true if the [MethodInfo](https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)) object represents the definition of a generic method; otherwise, false.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+If the current [MethodInfo](https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)) represents a generic method definition, then:
+
+  - IsGenericMethodDefinition returns true.
+
+  - For each [Type](https://msdn.microsoft.com/en-us/library/42892f65\(v=vs.90\)) object in the array returned by the [GetGenericArguments](https://msdn.microsoft.com/en-us/library/c076w33e\(v=vs.90\)) method:
+
+      - The [Type.IsGenericParameter](https://msdn.microsoft.com/en-us/library/ca4817ds\(v=vs.90\)) property returns true.
+
+      - The [Type.DeclaringMethod](https://msdn.microsoft.com/en-us/library/azhzf8y4\(v=vs.90\)) returns the current [MethodInfo](https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)).
+
+      - The [Type.GenericParameterPosition](https://msdn.microsoft.com/en-us/library/xcasb3b8\(v=vs.90\)) property is the same as the position of the [Type](https://msdn.microsoft.com/en-us/library/42892f65\(v=vs.90\)) object in the array.
+
+Use the IsGenericMethodDefinition property to determine whether type arguments have been assigned to the type parameters of a generic method. If type arguments have been assigned, the IsGenericMethodDefinition property returns false even if some of the type arguments are [Type](https://msdn.microsoft.com/en-us/library/42892f65\(v=vs.90\)) objects that represent type parameters of enclosing types. For example, consider the following C\#, Visual Basic, and C++ code:
+
+    class C
+    {
+        T N<T,U>(T t, U u) {...}
+        public V M<V>(V v)
+        {
+            return N<V,int>(v, 42);
+        }
+    }
+
+    Class C
+        Public Function N(Of T,U)(ByVal ta As T, ByVal ua As U) As T
+            ...
+        End Function
+        Public Function M(Of V)(ByVal va As V ) As V
+            Return N(Of V, Integer)(va, 42)
+        End Function
+    End Class
+
+    ref class C
+    {
+    private:
+        generic <typename T, typename U> T N(T t, U u) {...}
+    public:
+        generic <typename V> V M(V v)
+        {
+            return N<V, int>(v, 42);
+        }
+    };
+
+The method body of M contains a call to method N, specifying the type parameter of M and the type [Int32](https://msdn.microsoft.com/en-us/library/td2s409d\(v=vs.90\)). The IsGenericMethodDefinition property returns false for method N\<V,int\>.
+
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="~/add/media/Bb338480.s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-note(VS.110).jpeg" title="Note" alt="Note" /><strong>Note:</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Although the open constructed method N&lt;V,int&gt; is not encountered when reflecting over class C, it must be generated using <a href="https://msdn.microsoft.com/en-us/library/ms145392(v=vs.90)">MakeGenericMethod</a> in order to emit C as a dynamic class.</p></td>
+</tr>
+</tbody>
+</table>
+
+If a generic method definition includes generic parameters of the declaring type, there will be a generic method definition specific to each constructed type. For example, consider the following C\# and Visual Basic code:
+
+    class B<U,V> {}
+    class C<T> { public B<T,S> M<S>() {...}}
+
+    Class B(Of U, V)
+    End Class
+    Class C(Of T)
+        Public Function M(Of S)() As B(Of T, S)
+            ...
+        End Function
+    End Class 
+
+    generic <typename U, typename V> ref class B {};
+    generic <typename T> ref class C
+    {
+    public:
+        generic <typename S> B<T,S>^ M() {...};
+    };
+
+In the constructed type C\<int\> (C(Of Integer) in Visual Basic), the generic method M returns B\<int, S\>. In the open type C\<T\>, M returns B\<T, S\>. In both cases, the IsGenericMethodDefinition property returns true for the [MethodInfo](https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)) that represents M.
+
+For a list of the invariant conditions for terms specific to generic methods, see the <xref:p:system.reflection.methodinfo.isgenericmethod> property. For a list of the invariant conditions for other terms used in generic reflection, see the [IsGenericType](https://msdn.microsoft.com/en-us/library/ms131514\(v=vs.90\)) property.
+
+## Examples  
+The following code example uses the IsGenericMethodDefinition property to display a message indicating whether a [MethodInfo](https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)) represents a generic method definition.
+
+This example is part of a larger example provided for the [MakeGenericMethod](https://msdn.microsoft.com/en-us/library/ms145392\(v=vs.90\)) method.
+
+``` vb
+Console.WriteLine(vbTab _
+    & "Is this a generic method definition? {0}", _
+    mi.IsGenericMethodDefinition)
+```
+
+``` csharp
+Console.WriteLine("\tIs this a generic method definition? {0}", 
+    mi.IsGenericMethodDefinition);
+```
+
+``` c++
+Console::WriteLine("\tIs this a generic method definition? {0}", 
+    mi->IsGenericMethodDefinition);
+```]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/1wa35kh5\(v=vs.90\)">MethodInfo Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/c1dzxka4\(v=vs.90\)">MethodInfo Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/136wx94f\(v=vs.90\)">System.Reflection Namespace</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ms145392\(v=vs.90\)">MakeGenericMethod</related>
       </Docs>
     </Member>
     <Member MemberName="MakeGenericMethod">

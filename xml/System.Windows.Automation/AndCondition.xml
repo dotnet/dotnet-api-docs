@@ -83,21 +83,71 @@
         <summary>Retrieves an array of the subconditions for this condition.</summary>
         <returns>To be added.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks  
- The returned array is a copy. Modifying it does not affect the state of the <xref:System.Windows.Automation.AndCondition>.  
-  
-   
-  
+The returned array is a copy. Modifying it does not affect the state of the [AndCondition](https://msdn.microsoft.com/en-us/library/ms606759\(v=vs.110\)).
+
 ## Examples  
- The following example constructs an <xref:System.Windows.Automation.AndCondition> and then displays the number of conditions it contains.  
-  
- [!code-csharp[UIAClient_snip#176](~/samples/snippets/csharp/VS_Snippets_Wpf/UIAClient_snip/CSharp/ConditionSnips.cs#176)]
- [!code-vb[UIAClient_snip#176](~/samples/snippets/visualbasic/VS_Snippets_Wpf/UIAClient_snip/VisualBasic/ConditionSnips.vb#176)]  
-  
- ]]></format>
+The following example constructs an [AndCondition](https://msdn.microsoft.com/en-us/library/ms606759\(v=vs.110\)) and then displays the number of conditions it contains.
+
+``` csharp
+/// <summary>
+/// Uses AndCondition to retrieve elements that match both of two conditions.
+/// </summary>
+/// <param name="elementMainWindow">An application window element.</param>
+public void AndConditionExample(AutomationElement elementMainWindow)
+{
+    if (elementMainWindow == null)
+    {
+        throw new ArgumentException();
+    }
+
+    AndCondition conditionEnabledButtons = new AndCondition(
+        new PropertyCondition(AutomationElement.IsEnabledProperty, true),
+        new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Button));
+    AutomationElementCollection enabledButtons = elementMainWindow.FindAll(
+        TreeScope.Subtree, conditionEnabledButtons);
+    Console.WriteLine("\nEnabled buttons:");
+    foreach (AutomationElement autoElement in enabledButtons)
+    {
+        Console.WriteLine(autoElement.Current.Name);
+    }
+
+    // Example of getting the conditions from the AndCondition.
+    Condition[] conditions = conditionEnabledButtons.GetConditions();
+    Console.WriteLine("AndCondition has " + conditions.GetLength(0) + " subconditions.");
+
+}
+```
+
+``` vb
+''' <summary>
+''' Uses AndCondition to retrieve elements that match both of two conditions.
+''' </summary>
+''' <param name="elementMainWindow">An application window element.</param>
+Public Sub AndConditionExample(ByVal elementMainWindow As AutomationElement)
+    If elementMainWindow Is Nothing Then
+        Throw New ArgumentException()
+    End If
+
+    Dim conditionEnabledButtons As New AndCondition(New PropertyCondition(AutomationElement.IsEnabledProperty, True), New PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Button))
+    Dim enabledButtons As AutomationElementCollection = elementMainWindow.FindAll(TreeScope.Subtree, conditionEnabledButtons)
+    Console.WriteLine("Enabled buttons:")
+    Dim autoElement As AutomationElement
+    For Each autoElement In enabledButtons
+        Console.WriteLine(autoElement.Current.Name)
+    Next autoElement
+
+    ' Example of getting the conditions from the AndCondition.
+    Dim conditions As Condition() = conditionEnabledButtons.GetConditions()
+    Console.WriteLine("AndCondition has " & conditions.GetLength(0) & " subconditions.")
+
+End Sub 'AndConditionExample
+```]]></format>
         </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ms606759\(v=vs.110\)">AndCondition Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ms590934\(v=vs.110\)">System.Windows.Automation Namespace</related>
       </Docs>
     </Member>
   </Members>

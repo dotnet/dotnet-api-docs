@@ -1,4 +1,4 @@
-﻿<Type Name="IDataObject" FullName="Microsoft.Aspnet.Snapin.IDataObject">
+<Type Name="IDataObject" FullName="Microsoft.Aspnet.Snapin.IDataObject">
   <TypeSignature Language="C#" Value="public interface IDataObject" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IDataObject" />
   <TypeSignature Language="DocId" Value="T:Microsoft.Aspnet.Snapin.IDataObject" />
@@ -19,8 +19,15 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Creates a connection between a caller and a data object implementing the IDataObject interface. This connection enables notifications of changes to the caller in the data for the data object.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks  
+For more information about programming with the IDataObject interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+    </remarks>
+    <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+    <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
   </Docs>
   <Members>
     <Member MemberName="DAdvise">
@@ -45,13 +52,56 @@
         <Parameter Name="d" Type="System.Int32" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <param name="c">To be added.</param>
-        <param name="d">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="a">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> defining the format, medium, and target device for notifications.</param>
+        <param name="b">A [ADVF](https://msdn.microsoft.com/en-us/library/z057sak3\(v=vs.90\)) value specifying the requested behavior for the connection.</param>
+        <param name="c">A pointer to the [IAdviseSink](https://msdn.microsoft.com/en-us/library/0xw8ek7b\(v=vs.90\)) on the caller object.</param>
+        <param name="d">A pointer to the connection set up by this call to the DAdvise method.</param>
+        <summary>Creates a notification connection between a data object implementing the <see cref="T:Microsoft.Aspnet.Snapin.IDataObject" /> interface and a caller object, letting the caller receive notification of changes in the data for the data object.</summary>
+        <returns>The DAdvise method supports the standard returns values E\_INVALIDARG, E\_UNEXPECTED, and E\_OUTOFMEMORY, as well as the following return values:  
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>The DAdvise method successfully created the connection.</p></td>
+</tr>
+<tr class="even">
+<td><p>E_NOTIMPL</p></td>
+<td><p>The data object does not implement the DAdvise method.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_LINDEX</p></td>
+<td><p>lindex is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_FORMATETC</p></td>
+<td><p>The data pointer value is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>OLE_E_ADVISENOTSUPPORTED</p></td>
+<td><p>The object does not support change notification.</p></td>
+</tr>
+</tbody>
+</table></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
     <Member MemberName="DUnadvise">
@@ -73,10 +123,45 @@
         <Parameter Name="a" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="a">The connection to destroy.</param>
+        <summary>Destroys a notification connection that was created by an earlier call to the <see cref="M:Microsoft.Aspnet.Snapin.IDataObject.DAdvise(System.IntPtr,System.Int32,System.IntPtr,System.Int32@)" /> method.</summary>
+        <returns>
+          <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>The DUnadvise method successfully deleted the specified connection.</p></td>
+</tr>
+<tr class="even">
+<td><p>OLE_E_NOCONNECTION</p></td>
+<td><p>The specified connection is not a valid connection.</p></td>
+</tr>
+<tr class="odd">
+<td><p>OLE_E_ADVISENOTSUPPORTED</p></td>
+<td><p>The object does not support change notification.</p></td>
+</tr>
+</tbody>
+</table>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
     <Member MemberName="EnumDAdvise">
@@ -98,10 +183,43 @@
         <Parameter Name="a" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="a">The address of the [IEnumSTATDATA](https://msdn.microsoft.com/en-us/library/4b732x1f\(v=vs.90\)) receiving the interface pointer to the new enumerator object. There are no connections if this call to the EnumDAdvise method sets a to nulla null reference (Nothing in Visual Basic).</param>
+        <summary>Retrieves a pointer to an object that can enumerate the notification connections that are currently maintained by this <see cref="T:Microsoft.Aspnet.Snapin.IDataObject" /> interface.</summary>
+        <returns>The EnumDAdvise method supports the standard return value E\_OUTOFMEMORY, as well as the following return values:  
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>This call to the EnumDAdvise method successfully created the instance of the enumerator object.</p>
+<p>-or-</p>
+<p>There are no connections.</p></td>
+</tr>
+<tr class="even">
+<td><p>OLE_E_ADVISENOTSUPPORTED</p></td>
+<td><p>The object does not support change notification.</p></td>
+</tr>
+</tbody>
+</table></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
     <Member MemberName="EnumFormatEtc">
@@ -124,11 +242,46 @@
         <Parameter Name="b" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="a">A value from the [DATADIR](https://msdn.microsoft.com/en-us/library/7fh99c34\(v=vs.90\)) indicating the direction of the data.</param>
+        <param name="b">An output variable address receiving the <see cref="T:Microsoft.Aspnet.Snapin.IEnumFORMATETC" />.</param>
+        <summary>Retrieves a pointer to an object that can enumerate the <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> enumerator types that this implementation supports.</summary>
+        <returns>The EnumFormatEtc method supports the standard return values E\_INVALIDARG and E\_OUTOFMEMORY, as well as the following return values:  
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>This call to the EnumFormatEtc method successfully created the enumerator object.</p></td>
+</tr>
+<tr class="even">
+<td><p>E_NOTIMPL</p></td>
+<td><p>The specified direction is not supported.</p></td>
+</tr>
+<tr class="odd">
+<td><p>OLE_S_USEREG</p></td>
+<td><p>A request to OLE to enumerate the formats from the registry.</p></td>
+</tr>
+</tbody>
+</table></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
     <Member MemberName="GetCanonicalFormatEtc">
@@ -151,11 +304,60 @@
         <Parameter Name="b" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="a">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> defining the format, medium, and target device for calls to retrieve data.</param>
+        <param name="b">An output pointer to a FORMATETC containing the most general information possible for a specific rendering.
+
+    \-or-
+
+    nulla null reference (Nothing in Visual Basic), if the GetCanonicalFormatEtc method returns DATA\_S\_SAMEFORMATETC.</param>
+        <summary>Retrieves a pointer to a standard <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> structure that is logically equivalent to, but not necessarily equal to, the <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> structure that is referenced by the a parameter.</summary>
+        <returns>The GetCanonicalFormatEtc method supports the standard return values E\_INVALIDARG, E\_UNEXPECTED, and E\_OUTOFMEMORY, as well as the following return values:  
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>The returned FORMATETC is different from the structure passed in the parameters.</p></td>
+</tr>
+<tr class="even">
+<td><p>DATA_S_SAMEFORMATETC</p></td>
+<td><p>The returned FORMATETC is the same as the structure passed in the parameters and nulla null reference (Nothing in Visual Basic) is returned in b.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_LINDEX</p></td>
+<td><p>lindex is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_FORMATETC</p></td>
+<td><p>a is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>OLE_E_NOTRUNNING</p></td>
+<td><p>The object application is not running.</p></td>
+</tr>
+</tbody>
+</table></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+The GetCanonicalFormatEtc method allows the implementer of the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface to return a canonical <xref:T:Microsoft.Aspnet.Snapin.FORMATETC> structure without duplicating the rendering logic for the <xref:T:Microsoft.Aspnet.Snapin.FORMATETC> structure.
+
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
     <Member MemberName="GetData">
@@ -178,11 +380,62 @@
         <Parameter Name="b" Type="Microsoft.Aspnet.Snapin.STGMEDIUM" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="pFormatEtc">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pFormatEtc">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> defining the format, medium, and target device for calls to retrieve data.</param>
+        <param name="b">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.STGMEDIUM" /> indicating the storage medium containing the returned data.</param>
+        <summary>Renders the data that is described in the specified pFormatEtc structure and transfers it to the b parameter.</summary>
+        <returns>The GetData method supports the standard return values E\_INVALIDARG, E\_UNEXPECTED, and E\_OUTOFMEMORY, as well as the following return values:  
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>This call to the GetData method successfully retrieved and placed data in the provided storage medium.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_LINDEX</p></td>
+<td><p>lindex is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_FORMATETC</p></td>
+<td><p>pFormatEtc is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_TYMED</p></td>
+<td><p>tymed is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_DVASPECT</p></td>
+<td><p>dwAspect is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>OLE_E_NOTRUNNING</p></td>
+<td><p>The object application is not running.</p></td>
+</tr>
+<tr class="odd">
+<td><p>STG_E_MEDIUMFULL</p></td>
+<td><p>An error occurred when allocating the medium.</p></td>
+</tr>
+</tbody>
+</table></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
     <Member MemberName="GetDataHere">
@@ -205,11 +458,64 @@
         <Parameter Name="b" Type="Microsoft.Aspnet.Snapin.STGMEDIUM" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="pFormatEtc">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pFormatEtc">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> defining the format, medium, and target device for calls to retrieve data.</param>
+        <param name="b">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.STGMEDIUM" /> indicating the storage medium containing the returned data.</param>
+        <summary>Renders the data that is described in the specified pFormatEtc structure and transfers it to the b parameter.</summary>
+        <returns>The GetDataHere method supports the standard return values E\_INVALIDARG, E\_UNEXPECTED, and E\_OUTOFMEMORY, as well as the following return values:  
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>This call to the GetDataHere method successfully retrieved and placed data in the provided storage medium.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_LINDEX</p></td>
+<td><p>lindex is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_FORMATETC</p></td>
+<td><p>pFormatEtc is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_TYMED</p></td>
+<td><p>tymed is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_DVASPECT</p></td>
+<td><p>dwAspect is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>OLE_E_NOTRUNNING</p></td>
+<td><p>The object application is not running.</p></td>
+</tr>
+<tr class="odd">
+<td><p>STG_E_MEDIUMFULL</p></td>
+<td><p>An error occurred when allocating the medium.</p></td>
+</tr>
+</tbody>
+</table></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+The GetDataHere method differs from the <xref:M:Microsoft.Aspnet.Snapin.IDataObject.GetData(Microsoft.Aspnet.Snapin.FORMATETC@,Microsoft.Aspnet.Snapin.STGMEDIUM@)> method in that the caller must allocate and release the specified storage medium.
+
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
     <Member MemberName="QueryGetData">
@@ -231,10 +537,59 @@
         <Parameter Name="a" Type="Microsoft.Aspnet.Snapin.FORMATETC" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="a">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> defining the format, medium, and target device for calls to retrieve data.</param>
+        <summary>Retrieves a value indicating whether the implementer can render the data that is contained in the a parameter.</summary>
+        <returns>The QueryGetData method supports the standard return values E\_INVALIDARG, E\_UNEXPECTED, and E\_OUTOFMEMORY, as well as the following return values:  
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>A subsequent call to the <a href="khb70kwk(v=vs.90).md">GetData</a> method probably will be successful.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_LINDEX</p></td>
+<td><p>lindex is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_FORMATETC</p></td>
+<td><p>pFormatEtc is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_TYMED</p></td>
+<td><p>tymed is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_DVASPECT</p></td>
+<td><p>dwAspect value.</p></td>
+</tr>
+<tr class="even">
+<td><p>OLE_E_NOTRUNNING</p></td>
+<td><p>The object application is not running.</p></td>
+</tr>
+</tbody>
+</table></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+A client of a data object that is implementing the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface calls the QueryGetData method to determine the likelihood of success of a subsequent call to the <xref:M:Microsoft.Aspnet.Snapin.IDataObject.GetData(Microsoft.Aspnet.Snapin.FORMATETC@,Microsoft.Aspnet.Snapin.STGMEDIUM@)> method. A result indicating that this instance of the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface can render the data that is contained in the a parameter does not guarantee success in a subsequent call to the <xref:M:Microsoft.Aspnet.Snapin.IDataObject.GetData(Microsoft.Aspnet.Snapin.FORMATETC@,Microsoft.Aspnet.Snapin.STGMEDIUM@)> method.
+
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
     <Member MemberName="SetData">
@@ -258,12 +613,63 @@
         <Parameter Name="c" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <param name="c">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="a">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.FORMATETC" /> defining the format for the data object implementing the <see cref="T:Microsoft.Aspnet.Snapin.IDataObject" /> to use when interpreting the data contained in the storage medium.</param>
+        <param name="b">A pointer to the <see cref="T:Microsoft.Aspnet.Snapin.STGMEDIUM" /> defining the storage medium for the SetData method to use to pass the data.</param>
+        <param name="c">true to specify that the called data object implementing the <see cref="T:Microsoft.Aspnet.Snapin.IDataObject" /> owns the storage medium after the call and must free the medium after it has been used; otherwise, false to specify the caller retains ownership of the storage medium and the data object uses the medium for the duration of the call only.</param>
+        <summary>Transfers the data that is contained in the <see cref="T:Microsoft.Aspnet.Snapin.STGMEDIUM" /> structure, referenced by a, to this instance of the <see cref="T:Microsoft.Aspnet.Snapin.IDataObject" /> interface.</summary>
+        <returns>The SetData method supports the standard return values E\_FAIL, E\_INVALIDARG, E\_UNEXPECTED, and E\_OUTOFMEMORY, as well as the following return values:  
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Return value</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>S_OK</p></td>
+<td><p>This call to the SetData method successfully transferred the data.</p></td>
+</tr>
+<tr class="even">
+<td><p>E_NOTIMPL</p></td>
+<td><p>The SetData method is not implemented for the data object implementing the <a href="861624d2(v=vs.90).md">IDataObject</a>.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_LINDEX</p></td>
+<td><p>lindex is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_FORMATETC</p></td>
+<td><p>pFormatEtc is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>DV_E_TYMED</p></td>
+<td><p>tymed is not valid.</p></td>
+</tr>
+<tr class="even">
+<td><p>DV_E_DVASPECT</p></td>
+<td><p>dwAspect is not valid.</p></td>
+</tr>
+<tr class="odd">
+<td><p>OLE_E_NOTRUNNING</p></td>
+<td><p>The object application is not running.</p></td>
+</tr>
+</tbody>
+</table></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+For more information about programming with the <xref:T:Microsoft.Aspnet.Snapin.IDataObject> interface and the Microsoft Management Console (MMC), see the "MMC Programmer's Guide" in the [MSDN Library](http://go.microsoft.com/fwlink/?linkid=37118).]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/111kadx9\(v=vs.90\)">IDataObject Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/89ccda1w\(v=vs.90\)">Microsoft.Aspnet.Snapin Namespace</related>
+        <altmember cref="T:Microsoft.Aspnet.Snapin.IDataObject" />
       </Docs>
     </Member>
   </Members>

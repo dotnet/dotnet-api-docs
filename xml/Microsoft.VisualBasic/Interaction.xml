@@ -1327,75 +1327,31 @@ drawObj.SaveAs("C:\Drawings\sample.drw")
         <Parameter Name="Timeout" Type="System.Int32" Index="3" />
       </Parameters>
       <Docs>
-        <param name="PathName">Required. <see langword="String" />. Name of the program to execute, together with any required arguments and command-line switches. <c>PathName</c> can also include the drive and the directory path or folder.  
-  
- If you do not know the path to the program, you can use the <see cref="Overload:Microsoft.VisualBasic.FileIO.FileSystem.GetFiles" /> to locate it. For example, you can call <c>My.Computer.FileSystem.GetFiles("C:\", True, "testFile.txt")</c>, which returns the full path of every file named <c>testFile.txt</c> anywhere on drive C:\\.</param>
+        <param name="PathName">Required. **String**. Name of the program to execute, together with any required arguments and command-line switches. *PathName* can also include the drive and the directory path or folder.
+
+    If you do not know the path to the program, you can use the [GetFiles](https://msdn.microsoft.com/en-us/library/ms127992\(v=vs.110\)) to locate it. For example, you can call My.Computer.FileSystem.GetFiles("C:\\", True, "testFile.txt"), which returns the full path of every file named testFile.txt anywhere on drive C:\\.</param>
         <param name="Pathname">To be added.</param>
-        <param name="Style">Optional. <see langword="AppWinStyle" />. A value chosen from the <see cref="T:Microsoft.VisualBasic.AppWinStyle" /> specifying the style of the window in which the program is to run. If <c>Style</c> is omitted, <see langword="Shell" /> uses <see langword="AppWinStyle.MinimizedFocus" />, which starts the program minimized and with focus.</param>
-        <param name="Wait">Optional. <see langword="Boolean" />. A value indicating whether the <see langword="Shell" /> function should wait for completion of the program. If <c>Wait</c> is omitted, <see langword="Shell" /> uses <see langword="False" />.</param>
-        <param name="Timeout">Optional. <see langword="Integer" />. The number of milliseconds to wait for completion if <c>Wait</c> is <see langword="True" />. If <c>Timeout</c> is omitted, <see langword="Shell" /> uses -1, which means there is no timeout and <see langword="Shell" /> does not return until the program finishes. Therefore, if you omit <c>Timeout</c> or set it to -1, it is possible that <see langword="Shell" /> might never return control to your program.</param>
+        <param name="Style">Optional. **AppWinStyle**. A value chosen from the [AppWinStyle](https://msdn.microsoft.com/en-us/library/73a4tt6z\(v=vs.110\)) specifying the style of the window in which the program is to run. If *Style* is omitted, **Shell** uses **AppWinStyle.MinimizedFocus**, which starts the program minimized and with focus.</param>
+        <param name="Wait">Optional. **Boolean**. A value indicating whether the **Shell** function should wait for completion of the program. If *Wait* is omitted, **Shell** uses **False**.</param>
+        <param name="Timeout">Optional. **Integer**. The number of milliseconds to wait for completion if *Wait* is **True**. If *Timeout* is omitted, **Shell** uses -1, which means there is no timeout and **Shell** does not return until the program finishes. Therefore, if you omit *Timeout* or set it to -1, it is possible that **Shell** might never return control to your program.</param>
         <summary>Runs an executable program and returns an integer containing the program's process ID if it is still running.</summary>
         <returns>Runs an executable program and returns an integer containing the program's process ID if it is still running.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks  
- The return value of the `Shell` function depends on whether the program named in `PathName` is still executing when `Shell` returns. If you set `Wait` to `True` and the program finishes before the timeout expires, `Shell` returns zero. If the timeout expires, or if you omit `Wait` or set it to `False`, `Shell` returns the process ID of the program. The process ID is a unique number that identifies the running program.  
-  
-## Failure to Start  
- If the `Shell` function cannot start the named program, a <xref:System.IO.FileNotFoundException> error occurs. This can happen, for example, when you attempt to run a 16-bit program, such as `command.com`, from an application using <xref:System.Windows.Forms?displayProperty=nameWithType>. For a workaround, you can run a 32-bit program that calls the desired 16-bit program. In the case of `command.com`, you can run `cmd.exe` as an alternative.  
-  
-## Waiting for Completion  
- By default, the `Shell` function runs the program asynchronously. This means that a program started with the `Shell` function might not finish executing before the statements following the `Shell` function are executed. If you want to wait for the program to finish before you continue, set `Wait` to `True`.  
-  
-## Determining the Exit Code  
- A process can return an *exit code* when it terminates. However, you cannot use `Shell` to retrieve this exit code, because `Shell` returns zero if it waits for termination, and also because the process runs in a different object from `Shell`.  
-  
- To retrieve the exit code from a process, you must write your own code to initiate the process and wait for termination. The following example shows how to initiate a process, wait for it to terminate, and retrieve its exit code.  
-  
-```vb  
-Dim procID As Integer  
-Dim newProc As Diagnostics.Process  
-newProc = Diagnostics.Process.Start("C:\WINDOWS\NOTEPAD.EXE")  
-procID = newProc.Id  
-newProc.WaitForExit()  
-Dim procEC As Integer = -1  
-If newProc.HasExited Then  
-    procEC = newProc.ExitCode  
-End If  
-MsgBox("Process with ID " & CStr(ProcID) & _  
-    " terminated with exit code " & CStr(procEC))  
-```  
-  
-## Protecting the File Specification  
- You should always enclose the entire path and file specification in quotation marks, as the following example shows.  
-  
-```vb  
-ID = Shell("""C:\Program Files\display.exe"" -a -q", , True, 100000)  
-```  
-  
- Each pair of adjacent double quotation marks (`" "`) within the string literal is interpreted as one double quotation character in the string. Therefore, the preceding example presents the following string to the `Shell` function:  
-  
-```console  
-"C:\Program Files\display.exe" -a -q  
-```  
-  
- If you did not have the path enclosed in quotation marks, Windows would look for a file called `Program.exe` in the C:\ directory, instead of `display.exe` in the C:\Program Files directory.  
-  
-> [!IMPORTANT]
->  If you do not enclose the path and file specification in quotation marks, there is a security risk if the file name or a path node contains spaces. In the preceding example, the path node `\Program Files` includes a space. If the specification were not inside quotation marks and a program named `Program.exe` had been installed in C:\\, for example by illicit tampering, Windows would execute it instead of `display.exe`.  
-  
-> [!IMPORTANT]
->  The `Shell` function requires unmanaged code permission, which might affect its execution in partial-trust situations. For more information, see <xref:System.Security.Permissions.SecurityPermission> and [Code Access Permissions](http://msdn.microsoft.com/library/e5ae402f-6dda-4732-bbe8-77296630f675).  
-  
-   
-  
+The return value of the **Shell** function depends on whether the program named in *PathName* is still executing when **Shell** returns. If you set *Wait* to **True** and the program finishes before the timeout expires, **Shell** returns zero. If the timeout expires, or if you omit *Wait* or set it to **False**, **Shell** returns the process ID of the program. The process ID is a unique number that identifies the running program.
+
 ## Examples  
- The following example uses the `Shell` function to run an application specified by the user. Specifying <xref:Microsoft.VisualBasic.AppWinStyle.NormalFocus?displayProperty=nameWithType> as the second argument opens the application in normal size and gives it the focus.  
-  
- [!code-vb[VbVbalrFunctions#47](~/samples/snippets/visualbasic/VS_Snippets_VBCSharp/VbVbalrFunctions/VB/Class1.vb#47)]  
-  
- ]]></format>
+The following example uses the **Shell** function to run an application specified by the user. Specifying [AppWinStyle.NormalFocus](https://msdn.microsoft.com/en-us/library/73a4tt6z\(v=vs.110\)) as the second argument opens the application in normal size and gives it the focus.
+
+``` vb
+Dim procID As Integer
+' Run calculator.
+procID = Shell("C:\Windows\system32\calc.exe", AppWinStyle.NormalFocus)
+' The preceding path is for Windows XP.
+' The Windows 2000 path is C:\WINNT\system32\calc.exe.
+```]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="Style" /> is not within range 0 through 9, inclusive.</exception>
@@ -1409,6 +1365,14 @@ ID = Shell("""C:\Program Files\display.exe"" -a -q", , True, 100000)
         <altmember cref="T:System.NullReferenceException" />
         <altmember cref="Overload:Microsoft.VisualBasic.FileIO.FileSystem.GetFiles" />
         <altmember cref="Overload:Microsoft.VisualBasic.Interaction.AppActivate" />
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/73a4tt6z\(v=vs.110\)">AppWinStyle</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/3w1b3114\(v=vs.110\)">ArgumentException</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/dzyy5k3x\(v=vs.110\)">FileNotFoundException</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/8w0s4024\(v=vs.110\)">NullReferenceException</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ms127992\(v=vs.110\)">GetFiles</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/cf213249\(v=vs.110\)">AppActivate</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/6k8xtde1\(v=vs.110\)">Interaction Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/00zt4b2a\(v=vs.110\)">Microsoft.VisualBasic Namespace</related>
       </Docs>
     </Member>
     <Member MemberName="Switch">

@@ -1,4 +1,4 @@
-﻿<Type Name="DataGridColumnStyle" FullName="System.Windows.Forms.DataGridColumnStyle">
+<Type Name="DataGridColumnStyle" FullName="System.Windows.Forms.DataGridColumnStyle">
   <TypeSignature Language="C#" Value="public abstract class DataGridColumnStyle : System.ComponentModel.Component, System.Windows.Forms.IDataGridColumnStyleEditingNotificationService" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit DataGridColumnStyle extends System.ComponentModel.Component implements class System.Windows.Forms.IDataGridColumnStyleEditingNotificationService" />
   <TypeSignature Language="DocId" Value="T:System.Windows.Forms.DataGridColumnStyle" />
@@ -664,30 +664,154 @@
         <Parameter Name="displayText" Type="System.String" Index="4" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2" />
       </Parameters>
       <Docs>
-        <param name="source">The <see cref="T:System.Windows.Forms.CurrencyManager" /> for the <see cref="T:System.Windows.Forms.DataGridColumnStyle" />.</param>
+        <param name="source">The [CurrencyManager](https://msdn.microsoft.com/en-us/library/f6c917kt\(v=vs.110\)) for the [DataGridColumnStyle](https://msdn.microsoft.com/en-us/library/7dyk6053\(v=vs.110\)).</param>
         <param name="displayText">The text to display in the control.</param>
         <param name="rowNum">The row number in this column which is being edited.</param>
-        <param name="bounds">The <see cref="T:System.Drawing.Rectangle" /> in which the control is to be sited.</param>
-        <param name="readOnly">A value indicating whether the column is a read-only. <see langword="true" /> if the value is read-only; otherwise, <see langword="false" />.</param>
+        <param name="bounds">The [Rectangle](https://msdn.microsoft.com/en-us/library/1zk39146\(v=vs.110\)) in which the control is to be sited.</param>
+        <param name="readOnly">A value indicating whether the column is a read-only. **true** if the value is read-only; otherwise, **false**.</param>
         <param name="instantText">To be added.</param>
-        <summary>Prepares the cell for editing using the specified <see cref="T:System.Windows.Forms.CurrencyManager" />, row number, and <see cref="T:System.Drawing.Rectangle" /> parameters.</summary>
+        <summary>Prepares the cell for editing using the specified [CurrencyManager](https://msdn.microsoft.com/en-us/library/f6c917kt\(v=vs.110\)), row number, and [Rectangle](https://msdn.microsoft.com/en-us/library/1zk39146\(v=vs.110\)) parameters.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks  
- Typically, the <xref:System.Windows.Forms.DataGridColumnStyle.Edit%2A> method sites a control onto the grid at the location of the cell being edited.  
-  
-   
-  
+Typically, the [Edit](https://msdn.microsoft.com/en-us/library/8ky4909w\(v=vs.110\)) method sites a control onto the grid at the location of the cell being edited.
+
 ## Examples  
- The following code example uses the <xref:System.Windows.Forms.DataGridColumnStyle.Edit%2A> method to change the text of a clicked cell in the <xref:System.Windows.Forms.DataGrid?displayProperty=nameWithType> control.  
-  
- [!code-cpp[Classic DataGridColumnStyle.Edit1 Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic DataGridColumnStyle.Edit1 Example/CPP/source.cpp#1)]
- [!code-csharp[Classic DataGridColumnStyle.Edit1 Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic DataGridColumnStyle.Edit1 Example/CS/source.cs#1)]
- [!code-vb[Classic DataGridColumnStyle.Edit1 Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic DataGridColumnStyle.Edit1 Example/VB/source.vb#1)]  
-  
- ]]></format>
+The following code example uses the [Edit](https://msdn.microsoft.com/en-us/library/8ky4909w\(v=vs.110\)) method to change the text of a clicked cell in the [System.Windows.Forms.DataGrid](https://msdn.microsoft.com/en-us/library/7h01014w\(v=vs.110\)) control.
+
+``` csharp
+public class Form1: Form
+{
+static void Main(){}
+
+protected DataSet myDataSet;
+
+private void dataGrid1_MouseDown(object sender, MouseEventArgs e)
+{
+    // Use the HitTest method to get a HitTestInfo object.
+    System.Windows.Forms.DataGrid.HitTestInfo hi;   
+    DataGrid grid = (DataGrid) sender;
+    hi=grid.HitTest(e.X, e.Y);
+    // Test if the clicked area was a cell.
+    if (hi.Type==DataGrid.HitTestType.Cell)
+    {
+       // If it's a cell, get the GridTable and CurrencyManager of the
+       // clicked table.         
+       DataGridTableStyle dgt = grid.TableStyles[0];     
+       CurrencyManager myCurrencyManager = (CurrencyManager)
+        this.BindingContext[myDataSet.Tables[dgt.MappingName]];
+       // Get the Rectangle of the clicked cell.
+       Rectangle cellRect;
+       cellRect=grid.GetCellBounds(hi.Row, hi.Column);
+       // Get the clicked DataGridTextBoxColumn.
+       MyColumnStyle gridCol =(MyColumnStyle) 
+       dgt.GridColumnStyles[hi.Column];
+       // Edit the value.
+       gridCol.EditVal(myCurrencyManager, hi.Row, cellRect, false, "New Text");
+    }
+ }
+
+public class MyColumnStyle:DataGridTextBoxColumn{
+    public void EditVal(CurrencyManager cm, int row, Rectangle rec, 
+    bool readOnly, string text){
+        this.Edit(cm, row, rec, readOnly, text);
+    }
+}
+}
+```
+
+``` vb
+Public Class Form1
+   Inherits Form
+
+   Protected myDataSet As DataSet
+
+   Shared Sub Main()
+   End Sub
+
+    Private Sub dataGrid1_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs)
+        ' Use the HitTest method to get a HitTestInfo object.
+        Dim hi As System.Windows.Forms.DataGrid.HitTestInfo
+        Dim grid As DataGrid = CType(sender, DataGrid)
+        hi = grid.HitTest(e.X, e.Y)
+        ' Test if the clicked area was a cell.
+        If hi.Type = DataGrid.HitTestType.Cell Then
+            ' If it's a cell, get the GridTable and CurrencyManager of the
+            ' clicked table.         
+            Dim dgt As DataGridTableStyle = grid.TableStyles(0)
+            Dim myCurrencyManager As CurrencyManager = _
+            CType(Me.BindingContext _
+            (myDataSet.Tables(dgt.MappingName)), CurrencyManager)
+            ' Get the Rectangle of the clicked cell.
+            Dim cellRect As Rectangle
+            cellRect = grid.GetCellBounds(hi.Row, hi.Column)
+            ' Get the clicked DataGridTextBoxColumn.
+            Dim gridCol As MyColumnStyle = CType(dgt.GridColumnStyles _
+            (hi.Column), MyColumnStyle)
+            ' Edit the value.
+            gridCol.EditVal(myCurrencyManager, hi.Row, cellRect, False, "New Text")
+        End If
+    End Sub
+End Class 
+
+Public Class MyColumnStyle
+   Inherits DataGridTextBoxColumn
+   Public Sub EditVal(cm As CurrencyManager, row As Integer, _
+   rec As Rectangle, bReadOnly As Boolean, text As String)
+      MyBase.Edit(cm, row, rec, bReadOnly, text)
+   End Sub
+End Class
+```
+
+``` c++
+public ref class Form1: public Form
+{
+private:
+   DataSet^ myDataSet;
+   void dataGrid1_MouseDown( Object^ sender, MouseEventArgs^ e )
+   {
+      // Use the HitTest method to get a HitTestInfo object.
+      System::Windows::Forms::DataGrid::HitTestInfo^ hi;
+      DataGrid^ grid = dynamic_cast<DataGrid^>(sender);
+      hi = grid->HitTest( e->X, e->Y );
+
+      // Test if the clicked area was a cell.
+      if ( hi->Type == DataGrid::HitTestType::Cell )
+      {
+         // If it's a cell, get the GridTable and CurrencyManager of the
+         // clicked table.         
+         DataGridTableStyle^ dgt = grid->TableStyles[ 0 ];
+         CurrencyManager^ myCurrencyManager = dynamic_cast<CurrencyManager^>(this->BindingContext[ myDataSet->Tables[ dgt->MappingName ] ]);
+
+         // Get the Rectangle of the clicked cell.
+         Rectangle cellRect;
+         cellRect = grid->GetCellBounds( hi->Row, hi->Column );
+
+         // Get the clicked DataGridTextBoxColumn.
+         MyColumnStyle ^ gridCol = dynamic_cast<MyColumnStyle^>(dgt->GridColumnStyles[ hi->Column ]);
+
+         // Edit the value.
+         gridCol->EditVal( myCurrencyManager, hi->Row, cellRect, false, "New Text" );
+      }
+   }
+
+
+public:
+   ref class MyColumnStyle: public DataGridTextBoxColumn
+   {
+   public:
+      void EditVal( CurrencyManager^ cm, int row, Rectangle rec, bool readOnly, String^ text )
+      {
+         this->Edit( cm, row, rec, readOnly, text );
+      }
+   };
+};
+```]]></format>
         </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/58h6418b\(v=vs.110\)">Edit Overload</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/7dyk6053\(v=vs.110\)">DataGridColumnStyle Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/k50ex0x9\(v=vs.110\)">System.Windows.Forms Namespace</related>
       </Docs>
     </Member>
     <Member MemberName="Edit">
@@ -723,22 +847,23 @@
         <Parameter Name="cellIsVisible" Type="System.Boolean" Index="5" />
       </Parameters>
       <Docs>
-        <param name="source">The <see cref="T:System.Windows.Forms.CurrencyManager" /> for the <see cref="T:System.Windows.Forms.DataGridColumnStyle" />.</param>
+        <param name="source">The [CurrencyManager](https://msdn.microsoft.com/en-us/library/f6c917kt\(v=vs.110\)) for the [DataGridColumnStyle](https://msdn.microsoft.com/en-us/library/7dyk6053\(v=vs.110\)).</param>
         <param name="displayText">The text to display in the control.</param>
         <param name="rowNum">The row number in this column which is being edited.</param>
-        <param name="bounds">The <see cref="T:System.Drawing.Rectangle" /> in which the control is to be sited.</param>
-        <param name="readOnly">A value indicating whether the column is a read-only. <see langword="true" /> if the value is read-only; otherwise, <see langword="false" />.</param>
+        <param name="bounds">The [Rectangle](https://msdn.microsoft.com/en-us/library/1zk39146\(v=vs.110\)) in which the control is to be sited.</param>
+        <param name="readOnly">A value indicating whether the column is a read-only. **true** if the value is read-only; otherwise, **false**.</param>
         <param name="instantText">To be added.</param>
-        <param name="cellIsVisible">A value indicating whether the cell is visible. <see langword="true" /> if the cell is visible; otherwise, <see langword="false" />.</param>
+        <param name="cellIsVisible">A value indicating whether the cell is visible. **true** if the cell is visible; otherwise, **false**.</param>
         <summary>When overridden in a deriving class, prepares a cell for editing.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks  
- Typically, the <xref:System.Windows.Forms.DataGridColumnStyle.Edit%2A> method sites a control onto the grid at the location of the cell being edited.  
-  
- ]]></format>
+Typically, the [Edit](https://msdn.microsoft.com/en-us/library/8ky4909w\(v=vs.110\)) method sites a control onto the grid at the location of the cell being edited.]]></format>
         </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/58h6418b\(v=vs.110\)">Edit Overload</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/7dyk6053\(v=vs.110\)">DataGridColumnStyle Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/k50ex0x9\(v=vs.110\)">System.Windows.Forms Namespace</related>
       </Docs>
     </Member>
     <Member MemberName="EndUpdate">
@@ -1901,23 +2026,55 @@
         <Parameter Name="displayText" Type="System.String" Index="2" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2" />
       </Parameters>
       <Docs>
-        <param name="source">The <see cref="T:System.Windows.Forms.CurrencyManager" /> associated with the <see cref="T:System.Windows.Forms.DataGridColumnStyle" />.</param>
+        <param name="source">The [CurrencyManager](https://msdn.microsoft.com/en-us/library/f6c917kt\(v=vs.110\)) associated with the [DataGridColumnStyle](https://msdn.microsoft.com/en-us/library/7dyk6053\(v=vs.110\)).</param>
         <param name="displayText">The new value.</param>
         <param name="rowNum">The row to update.</param>
         <param name="instantText">To be added.</param>
         <summary>Updates the value of a specified row with the given text.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Examples  
- The following code example uses the <xref:System.Windows.Forms.DataGridColumnStyle.UpdateUI%2A> to set a new value.  
-  
- [!code-cpp[Classic DataGridColumnStyle.UpdateUI Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic DataGridColumnStyle.UpdateUI Example/CPP/source.cpp#1)]
- [!code-csharp[Classic DataGridColumnStyle.UpdateUI Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic DataGridColumnStyle.UpdateUI Example/CS/source.cs#1)]
- [!code-vb[Classic DataGridColumnStyle.UpdateUI Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic DataGridColumnStyle.UpdateUI Example/VB/source.vb#1)]  
-  
- ]]></format>
+The following code example uses the UpdateUI to set a new value.
+
+``` csharp
+private void UpdateGridUI() {
+   // Get the MyDataGridColumnStyle to update.
+   // MyDataGridColumnStyle is a class derived from DataGridColumnStyle.
+   MyDataGridColumnStyle myGridColumn = 
+   (MyDataGridColumnStyle)dataGrid1.TableStyles[0].GridColumnStyles["CompanyName"];
+   // Call UpdateUI.
+   myGridColumn.UpdateUI(myCurrencyManager, 10, "my new value");
+}       
+```
+
+``` vb
+Private Sub UpdateGridUI()
+   ' Get the MyDataGridColumnStyle to update.
+   ' MyDataGridColumnStyle is a class derived from DataGridColumnStyle.
+   Dim myGridColumn As MyDataGridColumnStyle = CType _
+   (dataGrid1.TableStyles(0).GridColumnStyles("CompanyName"), _
+   MyDataGridColumnStyle)
+   ' Call UpdateUI.
+   myGridColumn.UpdateUI(myCurrencyManager, 10, "my new value")
+End Sub 
+```
+
+``` c++
+void UpdateGridUI()
+{
+
+   // Get the MyDataGridColumnStyle to update.
+   // MyDataGridColumnStyle is a class derived from DataGridColumnStyle.
+   MyDataGridColumnStyle^ myGridColumn = dynamic_cast<MyDataGridColumnStyle^>(dataGrid1->TableStyles[ 0 ]->GridColumnStyles[ "CompanyName" ]);
+
+   // Call UpdateUI.
+   myGridColumn->UpdateUI( myCurrencyManager, 10, "my new value" );
+}
+```]]></format>
         </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/7dyk6053\(v=vs.110\)">DataGridColumnStyle Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/k50ex0x9\(v=vs.110\)">System.Windows.Forms Namespace</related>
       </Docs>
     </Member>
     <Member MemberName="Width">

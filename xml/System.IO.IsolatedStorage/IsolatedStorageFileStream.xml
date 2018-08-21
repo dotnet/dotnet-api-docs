@@ -1,4 +1,4 @@
-﻿<Type Name="IsolatedStorageFileStream" FullName="System.IO.IsolatedStorage.IsolatedStorageFileStream">
+<Type Name="IsolatedStorageFileStream" FullName="System.IO.IsolatedStorage.IsolatedStorageFileStream">
   <TypeSignature Language="C#" Value="public class IsolatedStorageFileStream : System.IO.FileStream" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit IsolatedStorageFileStream extends System.IO.FileStream" />
   <TypeSignature Language="DocId" Value="T:System.IO.IsolatedStorage.IsolatedStorageFileStream" />
@@ -833,8 +833,78 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>\[This documentation is for preview only, and is subject to change in later releases. Blank topics are included as placeholders.\]
+
+Releases resources associated with the [IsolatedStorageFileStream](https://msdn.microsoft.com/en-us/library/zx8yhe22\(v=vs.100\)) object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Any data previously written to the buffer is copied to the file before the file stream is closed, so it is not necessary to call [Flush](https://msdn.microsoft.com/en-us/library/48cytchs\(v=vs.100\)) before invoking Close.
+
+Following a call to Close, any operations on the file stream might raise exceptions. After Close has been called once, it does nothing if called again. The [Finalize](https://msdn.microsoft.com/en-us/library/4k87zsw7\(v=vs.100\)) method invokes Close so the file stream is closed before the garbage collector finalizes the object.
+
+[IsolatedStorageFileStream](https://msdn.microsoft.com/en-us/library/zx8yhe22\(v=vs.100\)) objects require an [IsolatedStorageFile](https://msdn.microsoft.com/en-us/library/c76z57x8\(v=vs.100\)) object that determines the storage context for the files accessed. For streams opened without passing an [IsolatedStorageFile](https://msdn.microsoft.com/en-us/library/c76z57x8\(v=vs.100\)) object, a default [IsolatedStorageFile](https://msdn.microsoft.com/en-us/library/c76z57x8\(v=vs.100\)) object is created for the executing assembly and then closed during the call to Close.
+
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="~/add/media/Bb338480.s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-note(VS.110).jpeg" title="Note" alt="Note" class="note" /><strong>Note</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>The Close method calls <a href="https://msdn.microsoft.com/en-us/library/ms228203(v=vs.100)">Dispose</a> with disposing set to true to release its resources, then calls <a href="https://msdn.microsoft.com/en-us/library/c68wdy5e(v=vs.100)">SuppressFinalize</a> to suppress finalization of this object by the garbage collector.</p></td>
+</tr>
+</tbody>
+</table>
+
+## Examples  
+The following code example demonstrates the Close method.
+
+``` csharp
+IsolatedStorageFileStream source =
+     new IsolatedStorageFileStream(this.userName,FileMode.Open,isoFile);
+ // This stream is the one that data will be read from
+ Console.WriteLine("Source can be read?" + (source.CanRead?"true":"false"));
+ IsolatedStorageFileStream target =
+     new IsolatedStorageFileStream("Archive\\ " + this.userName,FileMode.OpenOrCreate,isoFile);
+ // This stream is the one that data will be written to
+ Console.WriteLine("Target is writable?" + (target.CanWrite?"true":"false"));
+ // Do work...
+ // After you have read and written to the streams, close them
+ source.Close();
+ target.Close();
+```
+
+``` vb
+Dim source As New IsolatedStorageFileStream(UserName,FileMode.Open,isoFile)
+ ' This stream is the one that data will be read from
+ If source.CanRead Then
+     Console.WriteLine("Source can read ? true")
+ Else
+     Console.WriteLine("Source can read ? false")
+ End If
+ Dim target As New IsolatedStorageFileStream("Archive\\ " & UserName, _
+                                             FileMode.OpenOrCreate, _
+                                             isoFile)
+ ' This stream is the one that data will be written to
+ If target.CanWrite Then
+     Console.WriteLine("Target is writable? true")
+ Else
+     Console.WriteLine("Target is writable? false")
+ End If
+ ' After you have read and written to the streams, close them
+ source.Close()
+ target.Close()
+```]]></format>
+        </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/zx8yhe22\(v=vs.100\)">IsolatedStorageFileStream Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/bt7657aw\(v=vs.100\)">IsolatedStorageFileStream Members</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/x7dzh4ws\(v=vs.100\)">System.IO.IsolatedStorage Namespace</related>
       </Docs>
     </Member>
     <Member MemberName="Dispose">

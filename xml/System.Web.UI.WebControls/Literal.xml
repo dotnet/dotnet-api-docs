@@ -342,22 +342,121 @@
         <Parameter Name="writer" Type="System.Web.UI.HtmlTextWriter" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2" />
       </Parameters>
       <Docs>
-        <param name="writer">The <see cref="T:System.Web.UI.HtmlTextWriter" /> object that receives the server control content.</param>
+        <param name="writer">The [HtmlTextWriter](https://msdn.microsoft.com/en-us/library/bt7b938d\(v=vs.110\)) object that receives the server control content.</param>
         <param name="output">To be added.</param>
-        <summary>Sends server control content to a provided <see cref="T:System.Web.UI.HtmlTextWriter" /> object, which writes the content to be rendered on the client.</summary>
+        <summary>Sends server control content to a provided [HtmlTextWriter](https://msdn.microsoft.com/en-us/library/bt7b938d\(v=vs.110\)) object, which writes the content to be rendered on the client.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Examples  
- The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.Literal.Render%2A> method in a custom server control so that specific text is always displayed before the <xref:System.Web.UI.WebControls.Literal>.  
-  
- [!code-aspx-csharp[CustomLiteralRender#1](~/samples/snippets/csharp/VS_Snippets_WebNet/CustomLiteralRender/CS/custom_literal_rendercs.aspx#1)]
- [!code-aspx-vb[CustomLiteralRender#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/CustomLiteralRender/VB/custom_literal_rendervb.aspx#1)]  
-[!code-csharp[CustomLiteralRender#2](~/samples/snippets/csharp/VS_Snippets_WebNet/CustomLiteralRender/CS/custom_literal_render.cs#2)]
-[!code-vb[CustomLiteralRender#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/CustomLiteralRender/VB/custom_literal_render.vb#2)]  
-  
- ]]></format>
+The following code example demonstrates how to override the Render method in a custom server control so that specific text is always displayed before the [Literal](https://msdn.microsoft.com/en-us/library/f0aw4d5w\(v=vs.110\)).
+
+``` csharp
+<%@ Register TagPrefix="aspSample" Namespace="Samples.AspNet.CS.Controls" Assembly="Samples.AspNet.CS" %>
+<%@ Page Language="C#" AutoEventWireup="True" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+    <head>
+        <title>Custom LiteralControl - Render - C# Example</title>
+       <script runat="server">
+      void Button1_Click(Object sender, EventArgs e)
+      {
+         Literal1.Text = "Welcome to ASP.NET!";
+      }
+   </script>
+    </head>
+    <body>
+        <form id="Form1" method="post" runat="server">
+            <h3>Custom LiteralControl - Render - C# Example</h3>
+
+            <aspSample:CustomLiteralRender id="Literal1" 
+              runat="server" />
+
+      <br /><br />
+
+      <asp:Button id="Button1"
+        Text="Change"
+        OnClick="Button1_Click"
+        runat="server"/>
+        </form>
+    </body>
+</html>
+```
+
+``` vb
+<%@ Register TagPrefix="aspSample" Namespace="Samples.AspNet.VB.Controls" Assembly="Samples.AspNet.VB" %>
+<%@ Page Language="VB" AutoEventWireup="True" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+    <head>
+        <title>Custom LiteralControl - Render - VB.Net Example</title>
+       <script runat="server">
+      Sub Button1_Click(sender As Object, e As EventArgs)
+
+         Literal1.Text = "Welcome to ASP.NET!"
+
+      End Sub
+   </script>
+    </head>
+    <body>
+        <form id="Form1" method="post" runat="server">
+            <h3>Custom LiteralControl - Render - VB.Net Example</h3>
+
+            <aspSample:CustomLiteralRender id="Literal1" 
+              runat="server" />
+
+      <br /><br />
+
+      <asp:Button id="Button1"
+        Text="Change"
+        OnClick="Button1_Click"
+        runat="server"/>
+        </form>
+    </body>
+</html>
+```
+
+``` csharp
+using System.Web;
+using System.Security.Permissions;
+
+namespace Samples.AspNet.CS.Controls
+{
+  [AspNetHostingPermission(SecurityAction.Demand, Level=AspNetHostingPermissionLevel.Minimal)]
+  public sealed class CustomLiteralRender : System.Web.UI.LiteralControl
+  {
+    protected override void Render(System.Web.UI.HtmlTextWriter writer)
+    {
+      // Write out some literal text.
+      writer.Write("Literal Text: ");
+
+      // Call the base Render method.
+      base.Render(writer);
+    }
+  }
+}
+```
+
+``` vb
+<AspNetHostingPermission(SecurityAction.Demand, Level:=AspNetHostingPermissionLevel.Minimal)> _
+Public NotInheritable Class CustomLiteralRender
+    Inherits System.Web.UI.WebControls.Literal
+
+    Protected Overrides Sub Render(ByVal writer As System.Web.UI.HtmlTextWriter)
+
+        ' Write out some literal text.
+        writer.Write("Literal Text: ")
+
+        ' Call the base Render method.
+        MyBase.Render(writer)
+    End Sub
+End Class
+```]]></format>
         </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/f0aw4d5w\(v=vs.110\)">Literal Class</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/8bhzsw6t\(v=vs.110\)">System.Web.UI.WebControls Namespace</related>
       </Docs>
     </Member>
     <Member MemberName="Text">

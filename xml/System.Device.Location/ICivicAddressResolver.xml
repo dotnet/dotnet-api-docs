@@ -1,4 +1,4 @@
-﻿<Type Name="ICivicAddressResolver" FullName="System.Device.Location.ICivicAddressResolver">
+<Type Name="ICivicAddressResolver" FullName="System.Device.Location.ICivicAddressResolver">
   <TypeSignature Language="C#" Value="public interface ICivicAddressResolver" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract ICivicAddressResolver" />
   <TypeSignature Language="DocId" Value="T:System.Device.Location.ICivicAddressResolver" />
@@ -43,19 +43,95 @@
       </Parameters>
       <Docs>
         <param name="coordinate">The latitude/longitude location to resolve to an address.</param>
-        <summary>Resolves a <see cref="T:System.Device.Location.GeoCoordinate" /> to a civic address synchronously.</summary>
+        <summary>Resolves a [GeoCoordinate](https://msdn.microsoft.com/en-us/library/ee425989\(v=vs.110\)) to a civic address synchronously.</summary>
         <returns>To be added.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Examples  
- The following example shows how to call <xref:System.Device.Location.ICivicAddressResolver.ResolveAddress%2A>.  
-  
- [!code-csharp[System.Device.Location.ResolveCivicAddressSync#1](~/samples/snippets/csharp/VS_Snippets_Misc/system.device.location.resolvecivicaddresssync/cs/resolvecivicaddresssync.cs#1)]
- [!code-vb[System.Device.Location.ResolveCivicAddressSync#1](~/samples/snippets/visualbasic/VS_Snippets_Misc/system.device.location.resolvecivicaddresssync/vb/resolvecivicaddresssync.vb#1)]  
-  
- ]]></format>
+The following example shows how to call ResolveAddress.
+
+``` csharp
+using System;
+using System.Device.Location;
+namespace ResolveAddressSync
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ResolveAddressSync();
+        }
+        static void ResolveAddressSync()
+        {
+            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High);
+            watcher.MovementThreshold = 1.0; // set to one meter
+            watcher.TryStart(false, TimeSpan.FromMilliseconds(1000));
+
+            CivicAddressResolver resolver = new CivicAddressResolver();
+
+            if (watcher.Position.Location.IsUnknown == false)
+            {
+                CivicAddress address = resolver.ResolveAddress(watcher.Position.Location);
+
+                if (!address.IsUnknown)
+                {
+                    Console.WriteLine("Country: {0}, Zip: {1}",
+                            address.CountryRegion,
+                            address.PostalCode);
+                }
+                else
+                {
+                    Console.WriteLine("Address unknown.");
+                }
+            }
+        }
+
+    }
+}
+```
+
+``` vb
+Imports System.Device.Location
+Module ResolveAddressSync
+
+    Public Sub ResolveAddressSync()
+        Dim watcher As GeoCoordinateWatcher
+        watcher = New System.Device.Location.GeoCoordinateWatcher(GeoPositionAccuracy.High)
+        Dim started As Boolean = False
+        watcher.MovementThreshold = 1.0     'set to one meter
+        started = watcher.TryStart(False, TimeSpan.FromMilliseconds(1000))
+
+        Dim resolver As CivicAddressResolver = New CivicAddressResolver()
+        If started Then
+            If Not watcher.Position.Location.IsUnknown Then
+                Dim address As CivicAddress = resolver.ResolveAddress(watcher.Position.Location)
+                If Not address.IsUnknown Then
+                    Console.WriteLine("Country: {0}, Zip: {1}",
+                                address.CountryRegion,
+                                address.PostalCode)
+                Else
+                    Console.WriteLine("Address unknown.")
+                End If
+            End If
+        Else
+            Console.WriteLine("GeoCoordinateWatcher timed out on start.")
+        End If
+    End Sub
+
+
+    Public Sub Main()
+
+        ResolveAddressSync()
+        Console.WriteLine("Enter any key to quit.")
+        Console.ReadLine()
+    End Sub
+
+End Module
+```]]></format>
         </remarks>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ee426040\(v=vs.110\)">ICivicAddressResolver Interface</related>
+        <related type="Article" href="https://msdn.microsoft.com/en-us/library/ee426011\(v=vs.110\)">System.Device.Location Namespace</related>
       </Docs>
     </Member>
     <Member MemberName="ResolveAddressAsync">
