@@ -456,6 +456,8 @@
   
 ## Remarks  
  If you call <xref:System.Collections.Concurrent.ConcurrentDictionary%602.AddOrUpdate%2A> simultaneously on different threads, `addValueFactory` may be called multiple times, but its key/value pair might not be added to the dictionary for every call.  
+
+ For modifications and write operations to the dictionary, <xref:System.Collections.Concurrent.ConcurrentDictionary%602> uses fine-grained locking to ensure thread safety. (Read operations on the dictionary are performed in a lock-free manner.) However, the `addValueFactory` and `updateValueFactory` delegates are called outside the locks to avoid the problems that can arise from executing unknown code under a lock. Therefore, <xref:System.Collections.Concurrent.ConcurrentDictionary%602.AddOrUpdate%2A> is not atomic with regards to all other operations on the <xref:System.Collections.Concurrent.ConcurrentDictionary%602> class.  
   
  ]]></format>
         </remarks>
@@ -511,6 +513,9 @@
   
  [!code-csharp[System.Collections.ConcurrentColAddUpdate#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.collections.concurrentcoladdupdate/cs/program.cs#1)]
  [!code-vb[System.Collections.ConcurrentColAddUpdate#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.collections.concurrentcoladdupdate/vb/module1.vb#1)]  
+
+## Remarks  
+ For modifications and write operations to the dictionary, <xref:System.Collections.Concurrent.ConcurrentDictionary%602> uses fine-grained locking to ensure thread safety. (Read operations on the dictionary are performed in a lock-free manner.) However, the `updateValueFactory` delegate is called outside the locks to avoid the problems that can arise from executing unknown code under a lock. Therefore, <xref:System.Collections.Concurrent.ConcurrentDictionary%602.AddOrUpdate%2A> is not atomic with regards to all other operations on the <xref:System.Collections.Concurrent.ConcurrentDictionary%602> class.  
   
  ]]></format>
         </remarks>
@@ -553,14 +558,23 @@
         <Parameter Name="factoryArgument" Type="TArg" />
       </Parameters>
       <Docs>
-        <typeparam name="TArg">The type of the keys in this <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /></typeparam>
+        <typeparam name="TArg">The type of an argument to pass into <c>addValueFactory</c> and <c>updateValueFactory</c>.</typeparam>
         <param name="key">The key to be added or whose value should be updated.</param>
         <param name="addValueFactory">The function used to generate a value for an absent key.</param>
         <param name="updateValueFactory">The function used to generate a new value for an existing key based on the key's existing value.</param>
         <param name="factoryArgument">An argument to pass into <c>addValueFactory</c> and <c>updateValueFactory</c>.</param>
-        <summary>Adds a key/value pair to the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key does not already exist, or updates a key/value pair in the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key already exists.</summary>
-        <returns>The new value for the key. This will be either be the result of addValueFactory (if the key was absent) or the result of updateValueFactory (if the key was present).</returns>
-        <remarks>To be added.</remarks>
+        <summary>Uses the specified functions and argument to add a key/value pair to the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key does not already exist, or to update a key/value pair in the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key already exists.</summary>
+        <returns>The new value for the key. This will be either be the result of <c>addValueFactory</c> (if the key was absent) or the result of <c>updateValueFactory</c> (if the key was present).</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If you call <xref:System.Collections.Concurrent.ConcurrentDictionary%602.AddOrUpdate%2A> simultaneously on different threads, `addValueFactory` may be called multiple times, but its key/value pair might not be added to the dictionary for every call.  
+
+ For modifications and write operations to the dictionary, <xref:System.Collections.Concurrent.ConcurrentDictionary%602> uses fine-grained locking to ensure thread safety. (Read operations on the dictionary are performed in a lock-free manner.) However, the `addValueFactory` and `updateValueFactory` delegates are called outside the locks to avoid the problems that can arise from executing unknown code under a lock. Therefore, <xref:System.Collections.Concurrent.ConcurrentDictionary%602.AddOrUpdate%2A> is not atomic with regards to all other operations on the <xref:System.Collections.Concurrent.ConcurrentDictionary%602> class.  
+  
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="key" />, <paramref name="addValueFactory" />, or <paramref name="updateValueFactory" /> is a null reference (Nothing in Visual Basic).</exception>
       </Docs>
