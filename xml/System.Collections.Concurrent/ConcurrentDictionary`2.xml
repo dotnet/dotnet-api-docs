@@ -771,7 +771,7 @@
         <AssemblyVersion>4.0.10.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Adds a key/value pair to the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key does not already exist.</summary>
+        <summary>Adds a key/value pair to the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key does not already exist, or returns the existing value if the key exists.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -826,6 +826,8 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks   
+ For modifications and write operations to the dictionary, <xref:System.Collections.Concurrent.ConcurrentDictionary%602> uses fine-grained locking to ensure thread safety. (Read operations on the dictionary are performed in a lock-free manner.) However, the `valueFactory` delegate is called outside the locks to avoid the problems that can arise from executing unknown code under a lock. Therefore, <xref:System.Collections.Concurrent.ConcurrentDictionary%602.GetOrAdd%2A> is not atomic with regards to all other operations on the <xref:System.Collections.Concurrent.ConcurrentDictionary%602> class.  
+
  Since a key/value can be inserted by another thread while `valueFactory` is generating a value, you cannot trust that just because `valueFactory` executed, its produced value will be inserted into the dictionary and returned. If you call <xref:System.Collections.Concurrent.ConcurrentDictionary%602.GetOrAdd%2A> simultaneously on different threads, `valueFactory` may be called multiple times, but only one key/value pair will be added to the dictionary. 
  
  The return value depends on the presence of the key in the dictionary and whether a key/value is inserted by another thread after <xref:System.Collections.Concurrent.ConcurrentDictionary%602.GetOrAdd%2A> is called but before `valueFactory` generates a value:
@@ -878,7 +880,7 @@
       <Docs>
         <param name="key">The key of the element to add.</param>
         <param name="value">The value to be added, if the key does not already exist.</param>
-        <summary>Adds a key/value pair to the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key does not already exist.</summary>
+        <summary>Adds a key/value pair to the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key does not already exist, or returns the existing value if the key exists.</summary>
         <returns>The value for the key. This will be either the existing value for the key if the key is already in the dictionary, or the new value if the key was not in the dictionary.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -919,13 +921,30 @@
         <Parameter Name="factoryArgument" Type="TArg" />
       </Parameters>
       <Docs>
-        <typeparam name="TArg">The type of the keys in this <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /></typeparam>
+        <typeparam name="TArg">The type of an argument to pass into <c>valueFactory</c>.</typeparam>
         <param name="key">The key of the element to add.</param>
         <param name="valueFactory">The function used to generate a value for the key.</param>
-        <param name="factoryArgument">An argument value to pass into <c>name</c>.</param>
-        <summary>Adds a key/value pair to the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> if the key does not already exist.</summary>
-        <returns>The value for the key.  This will be either the existing value for the key if the key is already in the dictionary, or the new value for the key as returned by <paramref name="valueFactory" /> if the key was not in the dictionary.</returns>
-        <remarks>To be added.</remarks>
+        <param name="factoryArgument">An argument value to pass into <c>valueFactory</c>.</param>
+        <summary>Adds a key/value pair to the <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" /> by using the specified function and an argument if the key does not already exist, or returns the existing value if the key exists.</summary>
+        <returns>The value for the key. This will be either the existing value for the key if the key is already in the dictionary, or the new value if the key was not in the dictionary.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks   
+ For modifications and write operations to the dictionary, <xref:System.Collections.Concurrent.ConcurrentDictionary%602> uses fine-grained locking to ensure thread safety. (Read operations on the dictionary are performed in a lock-free manner.) However, the `valueFactory` delegate is called outside the locks to avoid the problems that can arise from executing unknown code under a lock. Therefore, <xref:System.Collections.Concurrent.ConcurrentDictionary%602.GetOrAdd%2A> is not atomic with regards to all other operations on the <xref:System.Collections.Concurrent.ConcurrentDictionary%602> class.  
+
+ Since a key/value can be inserted by another thread while `valueFactory` is generating a value, you cannot trust that just because `valueFactory` executed, its produced value will be inserted into the dictionary and returned. If you call <xref:System.Collections.Concurrent.ConcurrentDictionary%602.GetOrAdd%2A> simultaneously on different threads, `valueFactory` may be called multiple times, but only one key/value pair will be added to the dictionary. 
+ 
+ The return value depends on the presence of the key in the dictionary and whether a key/value is inserted by another thread after <xref:System.Collections.Concurrent.ConcurrentDictionary%602.GetOrAdd%2A> is called but before `valueFactory` generates a value:
+
+ | Scenario | Return value |
+ | -------- | ------------ |
+ | The key is already in the dictionary. | The existing value is returned. |
+ | The key is not in the dictionary. `valueFactory` generates a value. On rechecking for the key, no key is found. | The key/value is inserted into the dictionary, and the value is returned. |
+ | The key is not in the dictionary. `valueFactory` generates a value. While `valueFactory` is generating the value, a different thread inserts a value for the key. After `valueFactory` executes and upon rechecking for the key, the key inserted by the other thread is found. | The value inserted by the other thread is returned. |
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsEmpty">
