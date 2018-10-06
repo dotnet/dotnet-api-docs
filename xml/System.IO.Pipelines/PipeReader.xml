@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Defines a class that provides access to a read side of pipe.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -54,9 +54,9 @@
         <Parameter Name="consumed" Type="System.SequencePosition" />
       </Parameters>
       <Docs>
-        <param name="consumed">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="consumed">Marks the extent of the data that has been successfully processed.</param>
+        <summary>Moves forward the pipeline's read cursor to after the consumed data.</summary>
+        <remarks>The memory for the consumed data will be released and no longer available. The examined data communicates to the pipeline when it should signal more data is available.</remarks>
       </Docs>
     </Member>
     <Member MemberName="AdvanceTo">
@@ -79,10 +79,13 @@
         <Parameter Name="examined" Type="System.SequencePosition" />
       </Parameters>
       <Docs>
-        <param name="consumed">To be added.</param>
-        <param name="examined">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="consumed">Marks the extent of the data that has been successfully processed.</param>
+        <param name="examined">Marks the extent of the data that has been read and examined.</param>
+        <summary>Moves forward the pipeline's read cursor to after the consumed data.</summary>
+        <remarks>
+            The memory for the consumed data will be released and no longer available.
+            The examined data communicates to the pipeline when it should signal more data is available.
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CancelPendingRead">
@@ -102,7 +105,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Cancels to currently pending or if none is pending next call to <see cref="M:System.IO.Pipelines.PipeReader.ReadAsync(System.Threading.CancellationToken)" />, without completing the <see cref="T:System.IO.Pipelines.PipeReader" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -123,8 +126,8 @@
         <Parameter Name="exception" Type="System.Exception" />
       </Parameters>
       <Docs>
-        <param name="exception">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="exception">Optional <see cref="T:System.Exception" /> indicating a failure that's causing the pipeline to complete.</param>
+        <summary>Signals to the producer that the consumer is done reading.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -150,7 +153,7 @@
       <Docs>
         <param name="callback">To be added.</param>
         <param name="state">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Cancels the pending <see cref="M:System.IO.Pipelines.PipeReader.ReadAsync(System.Threading.CancellationToken)" /> operation. If there is none, cancels next <see cref="M:System.IO.Pipelines.PipeReader.ReadAsync(System.Threading.CancellationToken)" /> operation, without completing the <see cref="T:System.IO.Pipelines.PipeWriter" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -172,8 +175,8 @@
       </Parameters>
       <Docs>
         <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Asynchronously reads a sequence of bytes from the current <see cref="T:System.IO.Pipelines.PipeReader" />.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.ValueTask`1" /> representing the asynchronous read operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -196,10 +199,10 @@
         <Parameter Name="result" Type="System.IO.Pipelines.ReadResult" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="result">The <see cref="T:System.IO.Pipelines.ReadResult" /></param>
+        <summary>Attempts to synchronously read data the <see cref="T:System.IO.Pipelines.PipeReader" />.</summary>
+        <returns><see langword="true" /> if data was available, or if the call was canceled or the writer was completed; otherwise, <see langword="false" />.</returns>
+        <remarks>If the pipe returns <see langword="false" />, there's no need to call <see cref="M:System.IO.Pipelines.PipeReader.AdvanceTo(System.SequencePosition,System.SequencePosition)" />.</remarks>
       </Docs>
     </Member>
   </Members>
