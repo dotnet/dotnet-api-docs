@@ -5448,7 +5448,7 @@ Task t Status: RanToCompletion, Result: 42
 ## Remarks  
  You can use `await Task.Yield();` in an asynchronous method to force the method to complete asynchronously. If there is a current synchronization context (<xref:System.Threading.SynchronizationContext> object), this will post the remainder of the method’s execution back to that context. However, the context will decide how to prioritize this work relative to other work that may be pending. The synchronization context that is present on a UI thread in most UI environments will often prioritize work posted to the context higher than input and rendering work. For this reason, do not rely on `await Task.Yield();` to keep a UI responsive.  For more information, see the entry [Useful Abstractions Enabled with ContinueWith](http://blogs.msdn.com/b/pfxteam/archive/2008/07/23/8768673.aspx) in the Parallel Programming with .NET blog.  
 
-A good example of the usage would be a `Windows Forms` application where you would like to execute an action but at the same time release the thread so the UI would be accessible to user.
+A good example of the usage would be a `Windows Forms` application where you would like to execute a lengthy operation, but at the same time release the thread so the UI would be accessible to user. This operation will get run at a later time (at which point, it still may run synchronously) on the current context.
 ```cs
 async void Form_Load(object s, object e) 
 { 
