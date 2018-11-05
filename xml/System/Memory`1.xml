@@ -32,24 +32,13 @@
   
 ## Remarks  
   
-Like <xref:System.Span%601>, `Memory<T>` represents a contiguous region of memory. Unlike <xref:System.Span%601>, however, `Memory<T>` is not a [ref struct](~/doocs/csharp/reference-semantics-with-value-types?view=netcore-2.1.md#ref-struct-type). This means that `Memory<T>` can be backed by:
-
-- An array.
-- A string (a sequence of characters).
-- A <xref:System.Runtime.InteropServices.SafeHandle>.
-
-`Memory<T>` cannot be backed by transient unmanaged memory, such as memory available by using [stackalloc](~/docs/csharp/language-reference/keywords/stackalloc.md).
-
-Because the memory allocated to the `Memory<T>` structure is placed on the managed heap, it does not have the same restrictions as a <xref:System.Span%601> instance. In particular:
+Like <xref:System.Span%601>, `Memory<T>` represents a contiguous region of memory. Unlike <xref:System.Span%601>, however, `Memory<T>` is not a [ref struct](~/doocs/csharp/reference-semantics-with-value-types?view=netcore-2.1.md#ref-struct-type). This means that `Memory<T>` can be placed on the managed heap, whereas <xref:System.Span%601> cannot. As a result, the `Memory<T>` structure does not have the same restrictions as a <xref:System.Span%601> instance. In particular:
 
 - It can be used as a field in a class.
 
 - It can be used across `await` and `yield` boundaries.
 
 In addition to `Memory<T>`, you can use <xref:System.ReadOnlyMemory%601?displayProperty=nameWithType> to represent immutable or read-only memory.
-
-### Memory<T> basics
-
 
     ]]></format>
      </remarks>
@@ -79,12 +68,17 @@ In addition to `Memory<T>`, you can use <xref:System.ReadOnlyMemory%601?displayP
        <remarks>
           <format type="text/markdown"><![CDATA[  
 
-If `array` is `null`, this constructor returns a `null` <xref:System.Memory%601> object.
+If `array` is `null`, this constructor returns a <xref:System.Memory%601> object with a `default<T>` value.
 
       ]]></format>
         </remarks>
         <exception cref="T:System.ArrayTypeMismatchException">
-          <paramref name="T" /> is a reference type, and <paramref name="array" /> is not an array of type <paramref name="T" />.</exception>
+          <paramref name="T" /> is a reference type, and <paramref name="array" /> is not an array of type <paramref name="T" />.
+        
+-or-
+
+The array is <see href="~/docs/csharp/programming-guide/concepts/covariance-contravariance/index.md" />covariant.</see>
+          </exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -115,7 +109,7 @@ If `array` is `null`, this constructor returns a `null` <xref:System.Memory%601>
        <remarks>
           <format type="text/markdown"><![CDATA[  
 
-If `array` is `null`, this constructor returns a `null` <xref:System.Memory%601> object.
+If `array` is `null`, this constructor returns a  <xref:System.Memory%601> object with a `default<T>` value.
 
        ]]></format>
         </remarks>
@@ -219,7 +213,9 @@ The two objects are equal if:
    - `other` is a <xref:System.Memory%601> or <xref:System.ReadOnlyMemory%601> object.
    
    - Both objects point to the same array and have the same length.
-   
+
+The `Equals(Memory<T>)` method performs a test for reference equality; it does not compare the elements of <xref:Memory%601> for equality.
+
          ]]></format>
         </remarks>
       </Docs>
@@ -518,7 +514,7 @@ The garbage collector will not move the memory until the returned <xref:T:System
         <param name="start">The index at which to begin the slice.</param>
         <param name="length">The number of elements to include in the slice.</param>
         <summary>Forms a slice out of the current memory starting at a specified index for a specified length.</summary>
-        <returns>An object that <paramref name="length" /> elements from the current instance starting at <paramref name="start" />. </returns>
+        <returns>An object that contains <paramref name="length" /> elements from the current instance starting at <paramref name="start" />. </returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeExceptionException"><paramref name="start" /> is less than zero or greater than or equal to <see cref="P:Memory`1.Length" />.
 
