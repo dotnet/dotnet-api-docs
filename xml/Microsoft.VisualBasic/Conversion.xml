@@ -396,11 +396,11 @@ End Class
   
  `Fix(number)` is equivalent to `Sign(number) * Int(Abs(number)).`  
 
-Starting with Visual Basic 15.8, the performance of Double-to-integer conversion is optimized if you pass the value returned by the `Fix` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the Double value returned by `Fix` is implicitly converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to `Off`. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. The following illustrates such an optimized conversion:
+Starting with Visual Basic 15.8, the performance of Double-to-integer conversion is optimized if you pass the value returned by the `Fix` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the Double value returned by `Fix` is implicitly converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to `Off`. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. The following example illustrates such an optimized conversion:
 
 ```vb
 Dim d As Double = 173.7619
-Dim i1 As Integer = CInt(Fix(d))           ' Displays 173
+Dim i1 As Integer = CInt(Fix(d))           ' Result: 173
 ```  
   
 ## Examples  
@@ -652,16 +652,14 @@ Dim i1 As Integer = CInt(Fix(d))           ' Displays 173
  The difference between `Int` and `Fix` functions is that if `Number` is negative, `Int` returns the first negative integer less than or equal to `Number`, whereas `Fix` returns the first negative integer greater than or equal to `Number`. For example, `Int` converts -8.4 to -9, and `Fix` converts -8.4 to -8.  
   
  `Fix(number)` is equivalent to `Sign(number) * Int(Abs(number)).`  
-  
-Starting with Visual Basic 15.8, if the `Number` argument is an object whose runtime type is `Double`, `Single`, or `Decimal`, the performance of floating-point-to-integer conversion is optimized if you pass the value returned by the `Fix` method to the [CInt](~/docs/visual-basic/language-reference/functions/conversion-functions.md) function. For example:
-   
+
+Starting with Visual Basic 15.8, if the `Number` argument is an object whose runtime type is `Double` or `Single`, the performance of floating-point-to-integer conversion is optimized if you pass the value returned by the `Fix` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the value returned by `Fix` is automatically converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to Off. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. For example:
+
 ```vb
 Dim d As Object = 173.7619
-Dim i1 As Integer = CInt(Fix(d))           ' Displays 173
-Dim s As Object = 173.7619
-Dim i2 As Integer = CInt(Fix(s))           ' Displays 173
-Dim dec As Object = 175.7619d
-Dim i3 As Integer = CInt(Fix(dec))         ' Displays 173
+Dim i1 As Integer = CInt(Fix(d))           ' Result: 173
+Dim s As Object = 173.7619F
+Dim i2 As Integer = CInt(Fix(s))           ' Result: 173
 ```     
   
 ## Examples  
@@ -725,11 +723,11 @@ Dim i3 As Integer = CInt(Fix(dec))         ' Displays 173
   
  `Fix(number)` is equivalent to `Sign(number) * Int(Abs(number)).`  
   
-Starting with Visual Basic 15.8, the performance of Single-to-integer conversion is optimized if you pass the value returned by the `Fix` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the Single value returned by `Fix` is automatically converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to Off. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. The following illustrates such an optimized conversion:
+Starting with Visual Basic 15.8, the performance of Single-to-integer conversion is optimized if you pass the value returned by the `Fix` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the Single value returned by `Fix` is automatically converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to Off. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. The following example illustrates such an optimized conversion:
    
 ```vb
 Dim s As Single = 173.7619
-Dim i2 As Integer = CInt(Fix(s))           ' Displays 173
+Dim i2 As Integer = CInt(Fix(s))           ' Result: 173
 ```
 
 ## Examples  
@@ -1396,13 +1394,12 @@ Dim i2 As Integer = CInt(Fix(s))           ' Displays 173
   
  `Fix(number)` is equivalent to `Sign(number) * Int(Abs(number)).`  
   
-Starting with Visual Basic 15.8, the performance of decimal-to-integer conversion is optimized if you pass the value returned by the `Int` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the Double value returned by `Int` is automatically converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to Off. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. The following illustrates such an optimized conversion:
+Starting with Visual Basic 15.8, the performance of Double-to-integer conversion is optimized if you pass the value returned by the `Int` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the Double value returned by `Int` is automatically converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to Off. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. The following example illustrates such an optimized conversion:
 
 ```vb
-Dim dec As Decimal = 175.7619d
-Dim i3 As Integer = CInt(Fix(dec))         ' Displays 175
+Dim dbl As Double = 175.7619
+Dim i3 As Integer = CInt(Int(dbl))         ' Result: 175
 ```  
-   
   
 ## Examples  
  This example illustrates how the `Int` and `Fix` functions return integer portions of numbers. In the case of a negative number argument, the `Int` function returns the first negative integer less than or equal to the number; the `Fix` function returns the first negative integer greater than or equal to the number. The following example requires you to specify `Option Strict Off` because implicit conversions from type `Double` to type `Integer` are not allowed under `Option Strict On`:  
@@ -1654,8 +1651,15 @@ Dim i3 As Integer = CInt(Fix(dec))         ' Displays 175
   
  `Fix(number)` is equivalent to `Sign(number) * Int(Abs(number)).`  
   
-   
-  
+Starting with Visual Basic 15.8, if the `Number` argument is an object whose runtime type is `Double` or `Single`, the performance of floating-point-to-integer conversion is optimized if you pass the value returned by the `Int` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the value returned by `Int` is automatically converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to Off. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. For example:
+
+```vb
+Dim d As Object = 173.7619
+Dim i1 As Integer = CInt(Int(d))           ' Result: 173
+Dim s As Object = 173.7619F
+Dim i2 As Integer = CInt(Int(s))           ' Result: 173
+```
+
 ## Examples  
  This example illustrates how the `Int` and `Fix` functions return integer portions of numbers. In the case of a negative number argument, the `Int` function returns the first negative integer less than or equal to the number; the `Fix` function returns the first negative integer greater than or equal to the number. The following example requires you to specify `Option Strict Off` because implicit conversions from type `Double` to type `Integer` are not allowed under `Option Strict On`:  
   
@@ -1717,8 +1721,13 @@ Dim i3 As Integer = CInt(Fix(dec))         ' Displays 175
   
  `Fix(number)` is equivalent to `Sign(number) * Int(Abs(number)).`  
   
-   
-  
+Starting with Visual Basic 15.8, the performance of Single-to-integer conversion is optimized if you pass the value returned by the `Int` method to the any of the [integral conversion functions](~/docs/visual-basic/language-reference/functions/conversion-functions.md), or if the Single value returned by `Int` is automatically converted to an integer with [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) set to Off. This optimization allows code to run faster -- up to twice as fast for code that does a large number of conversions to integer types. The following example illustrates such an optimized conversion:
+
+```vb
+Dim sng As Single = 175.7619
+Dim i3 As Integer = CInt(Fix(sng))         ' Result: 175
+```
+
 ## Examples  
  This example illustrates how the `Int` and `Fix` functions return integer portions of numbers. In the case of a negative number argument, the `Int` function returns the first negative integer less than or equal to the number; the `Fix` function returns the first negative integer greater than or equal to the number. The following example requires you to specify `Option Strict Off` because implicit conversions from type `Double` to type `Integer` are not allowed under `Option Strict On`:  
   
