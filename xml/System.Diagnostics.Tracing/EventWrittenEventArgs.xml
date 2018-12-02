@@ -29,7 +29,33 @@
   <Interfaces />
   <Docs>
     <summary>Provides data for the <see cref="M:System.Diagnostics.Tracing.EventListener.OnEventWritten(System.Diagnostics.Tracing.EventWrittenEventArgs)" /> callback.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Whenever an event is dispatched to an <xref:System.Diagnostics.Tracing.EventListener>, the <xref:System.Diagnostics.Tracing.EventListener.OnEventWritten&2A?displayProperty=nameWithType> callback method is invoked. It is passed an `EventWrittenEventArgs` instance that contains information associated with the event. 
+
+The following sections contain additional information about individual `EventWrittenEventArgs` properties.
+
+### ActivityId property
+
+Retrieving the value of the `ActivityId` property accesses thread local storage. This has the following implications:  
+  
+-   The `ActivityId` property is valid only for the duration of the <xref:System.Diagnostics.Tracing.EventListener.OnEventWritten%2A?displayProperty=nameWithType> callback.  
+  
+-   If the activity ID is changed during the callback, the activity ID returned by the `ActivityId` property is invalid.  
+
+### OSThreadId and TimeStamp properties 
+
+Starting with .NET Core 2.2, <xref:System.Diagnostics.Tracing.EventListener> objects can subscribe to native runtime events (such as GC, JIT, and threadpool events) in addition to events emitted by <xref:System.Diagnostics.Tracing.EventSource> objects. In previous versions of .NET Core and all versions of .NET Framework, the thead ID and timestamp can be gathered from the environment, because they are dispatched synchronously on the same thread that emitted them. Not all native runtime events can be dispatched synchronously, however. Some events, such as GC events, are emitted when managed thread execution is suspended. These events are buffered in native code and are dispatched by a dispatcher thread once managed code can execute again. Because these events are buffered, the environment cannot be used to reliably retrieve the thread ID and timestamp. Because of this, starting with .NET Core 2.2, thread ID and timestamp information are available as members of the `EventWrittenEventArgs` class.
+
+### RelatedActivityId property
+
+The `RelatedActivityId` prooerty is a child of the `ActivityId` property. An activity ID can be associated with multiple related activity IDs.
+
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="ActivityId">
@@ -66,20 +92,9 @@
         <ReturnType>System.Guid</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the activity ID on the thread that the event was written to.</summary>
+        <summary>Gets the activity ID on the thread that the event was written to. See the Remarks section for more information. </summary>
         <value>The activity ID on the thread that the event was written to.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Retrieving the value of the <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId%2A> property accesses thread local storage. This has the following implications:  
-  
--   The <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId%2A> field is valid only for the duration of the <xref:System.Diagnostics.Tracing.EventListener.OnEventWritten%2A?displayProperty=nameWithType> callback.  
-  
--   If the activity ID is changed during the callback, the activity ID returned by the <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId%2A> property is invalid.  
-  
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <altmember cref="P:System.Diagnostics.Tracing.EventWrittenEventArgs.RelatedActivityId" />
         <altmember cref="M:System.Diagnostics.Tracing.EventSource.SetCurrentThreadActivityId(System.Guid)" />
       </Docs>
@@ -382,8 +397,8 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the native thread identifier.</summary>
-        <value>The native thread identifier.</value>
+        <summary>Gets the thread identifier for the OS thread that wrote the event. (.NET Core 2.2 and later only.)</summary>
+        <value>The thread identifier for the OS thread that wrote the event.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -489,16 +504,9 @@
         <ReturnType>System.Guid</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the identifier of an activity that is related to the activity represented by the current instance.</summary>
+        <summary>Gets the identifier of an activity that is related to the activity represented by the current instance. See the Remarks section for additional information. </summary>
         <value>The identifier of the related activity, or <see cref="F:System.Guid.Empty" /> if there is no related activity.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.RelatedActivityId%2A> is a child of the <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId%2A> property. An activity ID can be associated with multiple related activity IDs.  
-  
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <altmember cref="P:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId" />
         <altmember cref="M:System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityId(System.Int32,System.Guid,System.Object[])" />
       </Docs>
@@ -593,7 +601,7 @@
         <ReturnType>System.DateTime</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the date and time of the event.</summary>
+        <summary>Gets the date and time of the event. (.NET Core 2.2 and later only.)</summary>
         <value>The date and time of the event.</value>
         <remarks>To be added.</remarks>
       </Docs>
