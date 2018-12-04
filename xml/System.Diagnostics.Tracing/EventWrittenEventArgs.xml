@@ -34,17 +34,13 @@
   
 ## Remarks  
 
-Whenever an event is dispatched to an <xref:System.Diagnostics.Tracing.EventListener>, the <xref:System.Diagnostics.Tracing.EventListener.OnEventWritten&2A?displayProperty=nameWithType> callback method is invoked. It is passed an `EventWrittenEventArgs` instance that contains information associated with the event. 
+Whenever an event is dispatched to an <xref:System.Diagnostics.Tracing.EventListener>, the <xref:System.Diagnostics.Tracing.EventListener.OnEventWritten%2A?displayProperty=nameWithType> callback method is invoked. It is passed an `EventWrittenEventArgs` instance that contains information associated with the event. All property values of the `EventWrittenEventArgs` class are valid only during the callback. 
 
 The following sections contain additional information about individual `EventWrittenEventArgs` properties.
 
 ### ActivityId property
 
-Retrieving the value of the `ActivityId` property accesses thread local storage. This has the following implications:  
-  
--   The `ActivityId` property is valid only for the duration of the <xref:System.Diagnostics.Tracing.EventListener.OnEventWritten%2A?displayProperty=nameWithType> callback.  
-  
--   If the activity ID is changed during the callback, the activity ID returned by the `ActivityId` property is invalid.  
+When using <xref:System.Activities.Activity?displayProperty=nameWithType> and its derived classes, threads can be marked as having an activity associated with them. The `ActivityId` property returns the activity ID of the thread that logged the event. Note that threads do not have to have an activity, in which case this property returns <xref:System.Guid.Empty?displayProperty=nameWithType>.
 
 ### OSThreadId and TimeStamp properties 
 
@@ -52,7 +48,7 @@ Starting with .NET Core 2.2, <xref:System.Diagnostics.Tracing.EventListener> obj
 
 ### RelatedActivityId property
 
-The `RelatedActivityId` prooerty is a child of the `ActivityId` property. An activity ID can be associated with multiple related activity IDs.
+ A related activity is an activity that is strongly related to the current one. Typically, it is either the activity that caused the current activity (events with the `Start` opcode typically do this) or an activity that was created by the current one (events with the `Send` opcode typically do this). When it is used, the `RelatedActivityID` is explicitly passed by the method doing the logging. Many events don't pass a `RelatedActivityId`, in which case this property returns <xref:System.Guid.Empty?displayProperty=nameWithType>.
 
  ]]></format>
     </remarks>
@@ -61,7 +57,7 @@ The `RelatedActivityId` prooerty is a child of the `ActivityId` property. An act
     <Member MemberName="ActivityId">
       <MemberSignature Language="C#" Value="public Guid ActivityId { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Guid ActivityId" />
-      <MemberSignature Language="DocId" Value="P:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId" />
+      <MemberSignature Language="DdocId" Value="P:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ActivityId As Guid" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property Guid ActivityId { Guid get(); };" />
       <MemberSignature Language="F#" Value="member this.ActivityId : Guid" Usage="System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId" />
@@ -601,8 +597,8 @@ The `RelatedActivityId` prooerty is a child of the `ActivityId` property. An act
         <ReturnType>System.DateTime</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the date and time of the event. (.NET Core 2.2 and later only.)</summary>
-        <value>The date and time of the event.</value>
+        <summary>Gets the time that the event was originally generated as a <see cref="System.DateTime" /> timestamp. (.NET Core 2.2 and later only.)</summary>
+        <value>The date and time when the event was logged. The system tries to be as precise as possible. </value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
