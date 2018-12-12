@@ -20,26 +20,30 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Represents an assembly load context, which represents the runtime's concept of a load binding scope. This class is abstract and must be implemented to be instantiated.</summary>
+    <summary>An assembly load context represents the runtime's concept of a scope for binding. This class is abstract.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Runtime.Loader.AssemblyLoadContext> represents an instance of a load context.  Conceptually, a load context creates a scope for loading, resolving, and potentially unloading a set of assemblies.
+ The <xref:System.Runtime.Loader.AssemblyLoadContext> represents a load context. Conceptually, a load context creates a scope for loading, resolving, and potentially unloading a set of assemblies.
  
- <xref:System.Runtime.Loader.AssemblyLoadContext> is an abstract class. While the class is abstract, only the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> needs to be implemented to create a concrete class.
+ <xref:System.Runtime.Loader.AssemblyLoadContext> is an abstract class. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> needs to be implemented to create a concrete class.
+ 
+ The <xref:System.Runtime.Loader.AssemblyLoadContext> exist primarily exists to provide assembly isolation. It allows multiple versions of the same assembly to be loaded within a single process. It replace the isolation mechanisms provided by multiple <xref:System.AppDomain /> instances in the .NET Framework.
 
 ### Usage in the runtime
  The runtime implements two <xref:System.Runtime.Loader.AssemblyLoadContext>:
      * The <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> represents the runtimes default binding context which is used for the framework and the application main assembly and its normal dependencies.
      * The <xref:System.Reflection.Assembly.LoadFile(System.String)?displayProperty=nameWithType> method isolates the assemblies it loads by instantiating the most basic <xref:System.Runtime.Loader.AssemblyLoadContext>.  It has a simplistic isolation scheme which loads each assembly in its own <xref:System.Runtime.Loader.AssemblyLoadContext> with no dependency resolution.
+ 
+ To implement the <xref:System.Reflection.Assembly.LoadFrom(System.String)?displayProperty=nameWithType> event, the runtime adds a <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event handler to bind to dependent files in the same directory.
 
 ### Application usage
  An application can create its own <xref:System.Runtime.Loader.AssemblyLoadContext> to create a custom solution for advanced binding scenarios. The customization focuses on defining dependency resolution mechanisms.
  
  The <xref:System.Runtime.Loader.AssemblyLoadContext> provides two extension points to implement managed assembly resolution.
      1. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.String)?displayProperty=nameWithType> provides the first chance for the <xref:System.Runtime.Loader.AssemblyLoadContext> to resolve the assembly, load it and return it. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.String)?displayProperty=nameWithType> returns `null`, the loader will try to load the assembly into the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType>.
-     2. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> is unable to resolve the assembly, the original <xref:System.Runtime.Loader.AssemblyLoadContext> gets a second chance to resolve the assembly. The runtime raises the <xref:System.Runtime.Loader.AssemblyLoadContext.ResolvingEvent>
+     2. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> is unable to resolve the assembly, the original <xref:System.Runtime.Loader.AssemblyLoadContext> gets a second chance to resolve the assembly. The runtime raises the <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event.
  
  Additionally the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll(System.String)?displayProperty=nameWithType> virtual method allows customization of the default unmanaged assembly resolution. The default implementation is often sufficient for most typical scenarios.
 
@@ -50,10 +54,11 @@
      * When code explicitly loads assemblies
 
 ### Limitations
- The runtime's assemblies may only be loaded in the default assembly.  It is not possible to load multiple versions of the runtime.
+ The runtime's assemblies may only be loaded in the default assembly.  It is not possible to load multiple versions of the runtime in a single process.
  
  ]]></format>
     </remarks>
+    <related type="Article" href="https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md">AssemblyLoadContext CoreCLR design document</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -101,7 +106,7 @@
         <ReturnType>System.Runtime.Loader.AssemblyLoadContext</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the instance of the default <see cref="T:System.Runtime.Loader.AssemblyLoadContext" />.  The default context contains the framework and the main application assembly and its dependencies.</summary>
+        <summary>Gets the default <see cref="T:System.Runtime.Loader.AssemblyLoadContext" />.  The default context contains the framework and the main application assembly and its dependencies.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -254,6 +259,10 @@
  
  > [!NOTE]
  > <xref:System.IO.FileLoadException> is thrown if `assemblyRef` specifies the full assembly name, and the first assembly that matches the simple name has a different version, or culture. The loader does not continue probing for other assemblies that match the simple name.
+ 
+ Each <xref:System.Runtime.Loader.AssemblyLoadContext /> can load only
+     * One version of an executable assembly
+     * One version of a satellite assembly for each culture
  
  ]]></format>
         </remarks>
@@ -512,6 +521,8 @@
  >  If more than one event handler is registered for this event, the event handlers are called in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.
  
  For more information about handling events, see [Handling and Raising Events](~/docs/standard/events/index.md).
+ 
+ It is noteworthy that a handler can be added for this event on any <xref:System.Runtime.Loader.AssemblyLoadContext /> including the default and anonymous contexts.
  
  ]]></format>
         </remarks>
