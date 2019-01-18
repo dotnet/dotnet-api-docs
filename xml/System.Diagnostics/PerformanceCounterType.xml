@@ -103,8 +103,15 @@ The following are the formulas used by some of the counters that represent calcu
 
 - `RateOfCountsPerSecond64`: (N1 - N0) / ((D1 - D0) / F), where N1 and N0 are performance counter readings, D1 and D0 are their corresponding time readings, and F represents the number of ticks per second. Thus, the numerator represents the number of operations performed during the last sample interval, the denominator represents the number of ticks elapsed during the last sample interval, and F is the frequency of the ticks. The value of F is factored into the equation so that the result can be displayed in seconds.  
 
-- `RawFraction`: (N 0 / D 0) x 100, where D 0 represents a measured attribute (using a base counter of type `RawBase`) and N 0 represents one component of that attribute.
+- `RawFraction`: (N0 / D0) x 100, where D0 represents a measured attribute (using a base counter of type `RawBase`) and N0 represents one component of that attribute.
 
+- `SampleCounter`: (N1 - N0) / ((D1 - D0) / F), where the numerator (N) represents the number of operations completed, the denominator (D) represents elapsed time in units of ticks of the system performance timer, and F represents the number of ticks that elapse in one second. F is factored into the equation so that the result can be displayed in seconds.
+
+- `SampleFraction`: ((N1 - N0) / (D1 - D0)) x 100, where the numerator represents the number of successful operations during the last sample interval, and the denominator represents the change in the number of all operations (of the type measured) completed during the sample interval, using counters of type `SampleBase`.
+
+- `Timer100Ns`: (N1 - N0) / (D1 - D0) x 100, where the numerator represents the portions of the sample interval during which the monitored components were active, and the denominator represents the total elapsed time of the sample interval.
+
+- `Timer100NsInverse`: (1- ((N1 - N0) / (D1 - D0))) x 100, where the numerator represents the time during the interval when the monitored components were inactive, and the denominator represents the total elapsed time of the sample interval.  
 
 ## Examples  
  The following examples demonstrate several of the counter types in the <xref:System.Diagnostics.PerformanceCounterType> enumeration.  
@@ -815,14 +822,6 @@ The following are the formulas used by some of the counters that represent calcu
       <MemberValue>4260864</MemberValue>
       <Docs>
         <summary>An average counter that shows the average number of operations completed in one second. When a counter of this type samples the data, each sampling interrupt returns one or zero. The counter data is the number of ones that were sampled. It measures time in units of ticks of the system performance timer.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Formula: (N 1 - N 0) / ((D 1 - D 0) / F), where the numerator (N) represents the number of operations completed, the denominator (D) represents elapsed time in units of ticks of the system performance timer, and F represents the number of ticks that elapse in one second. F is factored into the equation so that the result can be displayed in seconds.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SampleFraction">
@@ -848,17 +847,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>549585920</MemberValue>
       <Docs>
-        <summary>A percentage counter that shows the average ratio of hits to all operations during the last two sample intervals.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Formula: ((N 1 - N 0) / (D 1 - D 0)) x 100, where the numerator represents the number of successful operations during the last sample interval, and the denominator represents the change in the number of all operations (of the type measured) completed during the sample interval, using counters of type `SampleBase`.  
-  
- Counters of this type include Cache\Pin Read Hits %.  
-  
- ]]></format>
-        </remarks>
+        <summary>A percentage counter that shows the average ratio of hits to all operations during the last two sample intervals. Counters of this type include Cache\Pin Read Hits %.</summary>
       </Docs>
     </Member>
     <Member MemberName="Timer100Ns">
@@ -884,17 +873,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>542180608</MemberValue>
       <Docs>
-        <summary>A percentage counter that shows the active time of a component as a percentage of the total elapsed time of the sample interval. It measures time in units of 100 nanoseconds (ns). Counters of this type are designed to measure the activity of one component at a time.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Formula: (N 1 - N 0) / (D 1 - D 0) x 100, where the numerator represents the portions of the sample interval during which the monitored components were active, and the denominator represents the total elapsed time of the sample interval.  
-  
- Counters of this type include Processor\ % User Time.  
-  
- ]]></format>
-        </remarks>
+        <summary>A percentage counter that shows the active time of a component as a percentage of the total elapsed time of the sample interval. It measures time in units of 100 nanoseconds (ns). Counters of this type are designed to measure the activity of one component at a time. Counters of this type include Processor\ % User Time.</summary>
       </Docs>
     </Member>
     <Member MemberName="Timer100NsInverse">
@@ -920,19 +899,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>558957824</MemberValue>
       <Docs>
-        <summary>A percentage counter that shows the average percentage of active time observed during the sample interval.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This is an inverse counter. Counters of this type calculate active time by measuring the time that the service was inactive and then subtracting the percentage of active time from 100 percent.  
-  
- Formula: (1- ((N 1 - N 0) / (D 1 - D 0))) x 100, where the numerator represents the time during the interval when the monitored components were inactive, and the denominator represents the total elapsed time of the sample interval.  
-  
- Counters of this type include Processor\ % Processor Time.  
-  
- ]]></format>
-        </remarks>
+        <summary>A percentage counter that shows the average percentage of active time observed during the sample interval. This is an inverse counter. Counters of this type include Processor\ % Processor Time.</summary>
       </Docs>
     </Member>
   </Members>
