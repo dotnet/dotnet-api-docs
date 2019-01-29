@@ -409,17 +409,39 @@
         <Parameter Name="state" Type="System.Object" Index="4" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="array">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="asyncCallback">To be added.</param>
-        <param name="cback">To be added.</param>
-        <param name="asyncState">To be added.</param>
-        <param name="state">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The byte array to read the data into.</param>
+        <param name="array">The byte array to read the data into.</param>
+        <param name="offset">The byte offset in <paramref name="array" /> at which to begin reading data from the stream.</param>
+        <param name="count">The maximum number of bytes to read.</param>
+        <param name="asyncCallback">An optional asynchronous callback, to be called when the read operation is complete.</param>
+        <param name="cback">An optional asynchronous callback, to be called when the read operation is complete.</param>
+        <param name="asyncState">A user-provided object that distinguishes this particular asynchronous read request from other requests.</param>
+        <param name="state">A user-provided object that distinguishes this particular asynchronous read request from other requests.</param>
+        <summary>Begins an asynchronous read operation. (Consider using the <see cref="M:System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32)" /> method instead.)</summary>
+        <returns>An  object that represents the asynchronous read operation, which could still be pending.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)], you can perform asynchronous read operations by using the <xref:System.IO.Stream.ReadAsync%2A> method. The <xref:System.IO.Compression.DeflateStream.BeginRead%2A> method is still available in the [!INCLUDE[net_v45](~/includes/net-v45-md.md)] to support legacy code; however, you can implement asynchronous I/O operations more easily by using the new async methods. For more information, see [Asynchronous File I/O](~/docs/standard/io/asynchronous-file-i-o.md).
+  
+ Pass the <xref:System.IAsyncResult> return value to the <xref:System.IO.Compression.DeflateStream.EndRead%2A> method of the stream to determine how many bytes were read and to release operating system resources used for reading. You can do this either by using the same code that called <xref:System.IO.Compression.DeflateStream.BeginRead%2A> or in a callback passed to <xref:System.IO.Compression.DeflateStream.BeginRead%2A>.  
+  
+ The current position in the stream is updated when the asynchronous read or write operation is issued, not when the I/O operation completes.  
+  
+ Multiple simultaneous asynchronous requests render the request completion order uncertain.  
+  
+ Use the <xref:System.IO.Compression.DeflateStream.CanRead%2A> property to determine whether the current <xref:System.IO.Compression.DeflateStream> object supports reading.  
+  
+ If a stream is closed or you pass an invalid argument, exceptions are thrown immediately from <xref:System.IO.Compression.DeflateStream.BeginRead%2A>. Errors that occur during an asynchronous read request, such as a disk failure during the I/O request, occur on the thread pool thread and throw exceptions when calling <xref:System.IO.Compression.DeflateStream.EndRead%2A>.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">The method tried to read asynchronously past the end of the stream, or a disk error occurred.</exception>
+        <exception cref="T:System.ArgumentException">One or more of the arguments is invalid.</exception>
+        <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+        <exception cref="T:System.NotSupportedException">The current <see cref="T:System.IO.Compression.DeflateStream" /> implementation does not support the read operation.</exception>
+        <exception cref="T:System.InvalidOperationException">This call cannot be completed.</exception>
       </Docs>
     </Member>
     <Member MemberName="BeginWrite">
