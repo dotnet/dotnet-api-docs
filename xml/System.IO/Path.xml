@@ -69,9 +69,7 @@ For more information on file path formats on Windows, see [File path formats on 
   
  Because all these operations are performed on strings, it is impossible to verify that the results are valid in all scenarios. For example, the <xref:System.IO.Path.GetExtension%2A> method parses a string that you pass to it and returns the extension from that string. However, this does not mean that a file with that extension exists on the disk.  
   
- For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).  
-  
-   
+ For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).   
   
 ## Examples  
  The following code example demonstrates some of the main members of the `Path` class.  
@@ -86,6 +84,7 @@ For more information on file path formats on Windows, see [File path formats on 
     <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
     <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
     <related type="Article" href="~/docs/standard/io/how-to-read-and-write-to-a-newly-created-data-file.md">How to: Read and Write to a Newly Created Data File</related>
+    <related type="Article" href="~/docs/standard/io/file-path-formats.md">File path formats on Windows systems</related>
   </Docs>
   <Members>
     <Member MemberName="AltDirectorySeparatorChar">
@@ -123,18 +122,19 @@ For more information on file path formats on Windows, see [File path formats on 
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The character stored in this field cannot be in <xref:System.IO.Path.InvalidPathChars>. This field can be set to the same value as <xref:System.IO.Path.DirectorySeparatorChar>. `AltDirectorySeparatorChar` and <xref:System.IO.Path.DirectorySeparatorChar> are both valid for separating directory levels in a path string.  
+ 
+This field can have the same value as <xref:System.IO.Path.DirectorySeparatorChar>. `AltDirectorySeparatorChar` and <xref:System.IO.Path.DirectorySeparatorChar> are both valid for separating directory levels in a path string.  
   
- The value of this field is a slash ('/') on Windows, UNIX and Macintosh operating systems.  
-  
-   
+The value of this field is a slash ('/') on the Windows, UNIX and Macintosh operating systems.  
   
 ## Examples  
- The following code example demonstrates a use of the `AltDirectorySeparatorChar` field.  
-  
- [!code-cpp[System.IO.Path Members#13](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.IO.Path Members/CPP/pathmembers.cpp#13)]
- [!code-csharp[System.IO.Path Members#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.IO.Path Members/CS/pathmembers.cs#13)]
- [!code-vb[System.IO.Path Members#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.IO.Path Members/VB/pathmembers.vb#13)]  
+
+## Examples  
+
+The following example displays <xref:System.IO.Path> field values on Windows and on Linux systems. Note that Windows supports either the forward slash (which is returned by the <xref:System.IO.Path.AltDirectorySeparatorChar> field) or the backslash (which is returned by the <xref:system.IO.Path.DirectorySeparatorChar> field) as path separator characters, while Linux supports only the forward slash.
+
+[!code-csharp[DirectorySeparatorChar](~samples/snippets/csharp/api/system.io/path/directoryseparatorchar/program.cs)]
+[!code-vb[DirectorySeparatorChar](~samples/snippets/visualbasic/api/system.io/path/directoryseparatorchar/program.vb)]
   
  ]]></format>
         </remarks>
@@ -238,13 +238,12 @@ For more information on file path formats on Windows, see [File path formats on 
  
 ## Remarks  
 
-This method is intended to concatenate paths. However, if an argument other than the first contains a rooted path, any previous path components are ignored, and the returned string begins with that rooted path component.
+This method is intended to concatenate individual strings into a single string that represents a file path. However, if an argument other than the first contains a rooted path, any previous path components are ignored, and the returned string begins with that rooted path component.
 
 > [!IMPORTANT]
 > This method assumes that the first argument is an absolute path and that the following argument or arguments are relative paths. If this is not the case, and particularly if any subsequent arguments are strings input by the user, call the <xref:System.IO.Path.Join%2A> method instead.
 
  ]]></format>
-
         </remarks>
       </Docs>
     </MemberGroup>
@@ -292,16 +291,20 @@ This method is intended to concatenate paths. However, if an argument other than
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- `paths` should be an array of the parts of the path to combine. If the one of the subsequent paths is an absolute path, then the combine operation resets starting with that absolute path, discarding all previous combined paths.  
-  
+## Remarks
+
+`paths` should be an array of the parts of the path to combine. If the one of the subsequent paths is an absolute path, then the combine operation resets starting with that absolute path, discarding all previous combined paths.  
+
+If any element in `paths` but the last one does not end with either the <xref:System.IO.Path.DirectorySeparatorChar> or the <xref:System.IO.Path.AltDirectorySeparatorChar> character, the `Combine` method adds a <xref:System.IO.Path.DirectorySeparatorChar> character between that element and the next one. Note that, if the element ends in a path separator character that is not appropriate for the target platform, the `Combine` method preserves the original path separator character and appends a supported one. The following example compares the result when the backslash is used as a path separator character on Windows and Linux systems.
+
+[!code-csharp[Combine and path separator characters](~/samples/snippets/csharp/api/system.io/path/combine/program.cs#1)]
+[!code-vb[Combine and path separator characters](~/samples/snippets/visualbasic/api/system.io/path/combine/program.vb#1)]  
+
  Zero-length strings are omitted from the combined path.  
   
  The parameters are not parsed if they have white space.  
   
  Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
-  
-   
   
 ## Examples  
  The following example combines an array of strings into a path.  
@@ -565,21 +568,36 @@ This method is intended to concatenate paths. However, if an argument other than
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- The character stored in this field cannot be in <xref:System.IO.Path.InvalidPathChars>. <xref:System.IO.Path.AltDirectorySeparatorChar> and `DirectorySeparatorChar` are both valid for separating directory levels in a path string.  
+## Remarks
+
+<xref:System.IO.Path.AltDirectorySeparatorChar> and `DirectorySeparatorChar` are both valid for separating directory levels in a path string.  
   
-   
+When you are using .NET Core to develop applications that run on multiple platforms:
+
+- If you prefer to hard-code the directory separator character, you should use the forward slash (`/`) character. It is the only recognized directory separator character on Unix systems, as the output from the example shows, and is the <xref:System.IO.Path.AltDirectorySeparatorChar> on Windows.
+
+- Use string concatenation to dynamically retrieve the path separator character at runtime and incorporate it into file system paths. For example, 
+
+   ```csharp
+   separator = Path.DirectorySeparatorChar;
+   path = $"{separator}users{separator}user1{separator}";
+   ```
+   ```vb
+   separator = Path.DirectorySeparatorChar;
+   path = $"{separator}users{separator}user1{separator}";
+   ``` 
   
 ## Examples  
- The following code example demonstrates the use of the `DirectorySeparatorChar` field.  
-  
- [!code-cpp[System.IO.Path Members#13](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.IO.Path Members/CPP/pathmembers.cpp#13)]
- [!code-csharp[System.IO.Path Members#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.IO.Path Members/CS/pathmembers.cs#13)]
- [!code-vb[System.IO.Path Members#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.IO.Path Members/VB/pathmembers.vb#13)]  
+
+The following example displays <xref:System.IO.Path> field values on Windows and on Linux systems. Note that Windows supports either the forward slash (which is returned by the <xref:System.IO.Path.AltDirectorySeparatorChar> field) or the backslash (which is returned by the <xref:system.IO.Path.DirectorySeparatorChar> field) as path separator characters, while Linux supports only the forward slash.  
+
+[!code-csharp[DirectorySeparatorChar](~samples/snippets/csharp/api/system.io/path/directoryseparatorchar/program.cs)]
+[!code-vb[DirectorySeparatorChar](~samples/snippets/visualbasic/api/system.io/path/directoryseparatorchar/program.vb)]
   
  ]]></format>
         </remarks>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
+        <related type="Article" href="~/docs/standard/io/file-path-formats.md">File path formats on Windows systems</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
       </Docs>
@@ -1737,6 +1755,25 @@ C:\Users\UserName\AppData\Local\Temp\
         <related type="article"  href="~/docs/standard/io/file-path-formats.md">File path formats on Windows systems</related>
       </Docs>
     </Member>
+    
+    <MemberGroup MemberName="IsPathRooted">
+      <Docs>
+        <summary>Gets a value that indicates whether a file path contains a root.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+ 
+## Remarks  
+
+A **rooted path** is file path that is fixed to a specific drive or UNIC path; it contrasts with a path that is relative to the current drive or working directory. For example, on Windows systems, a rooted path begins with a backslash (for example, "\Documents") or a drive letter and colon (for example, "C:Documents"). 
+
+Note that rooted paths can be either absolute (that is, fully qualified) or relative. An absolute rooted path is a fully qualified path from the root of a drive to a specific directory. A relative rooted path specifies a drive, but its fully qualified path is resolved against the current directory. The following example illustrates the difference.
+
+[!code-csharp[IsPathRooted](~/samples/snippets/csharp/api/system.IO/Path/IsPathRooted/program.cs)]
+[!code-vb[IsPathRooted](~/samples/snippets/visualbasic/api/system.IO/Path/IsPathRooted/program.vb)]
+
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="IsPathRooted">
       <MemberSignature Language="C#" Value="public static bool IsPathRooted (ReadOnlySpan&lt;char&gt; path);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsPathRooted(valuetype System.ReadOnlySpan`1&lt;char&gt; path) cil managed" />
@@ -1756,9 +1793,9 @@ C:\Users\UserName\AppData\Local\Temp\
         <Parameter Name="path" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="path">The path to test.</param>
+        <summary>Gets a value that indicates whether the specified character span that represents a file path contains a root.</summary>
+        <returns><see langword="true" /> if <paramref name="path" /> contains a root; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
         <related type="article"  href="~/docs/standard/io/file-path-formats.md">File path formats on Windows systems</related>
       </Docs>
