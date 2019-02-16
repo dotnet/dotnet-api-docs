@@ -9,6 +9,9 @@
     <AssemblyName>System.Runtime</AssemblyName>
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
   </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Memory</AssemblyName>
+  </AssemblyInfo>
   <TypeParameters>
     <TypeParameter Name="T" />
   </TypeParameters>
@@ -18,9 +21,25 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <typeparam name="T">The type of elements to store in memory.</typeparam>
+    <summary>Identifies the owner of a block of memory who is responsible for disposing of the underlying memory appropriately. </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+The `IMemoryOwner<T>` interface is used to define the owner responsible for the lifetime management of a <xref:System.Memory%601> buffer. An instance of the `IMemoryOwner<T>` interface is returned by the <xref:System.Buffers.MemoryPool%601.Rent%2A?displayProperty=nameWithType> method. 
+
+While a buffer can have multiple consumers, it can only have a single owner at any given time. The owner can:
+
+- Create the buffer either directly or by calling a factory method.
+
+- Transfer ownership to another consumer. In this case, the previous owner should no longer use the buffer.
+
+- Destroy the buffer when it is no longer in use.
+
+Because the `IMemoryOwner<T>` object implements the <xref:System.IDisposable> interface, you should call its <xref:System.IDisposable.Dispose%2A> method only after the memory buffer is no longer needed and you have destroyed it. You should *not* dispose of the `IMemoryOnwer<T>` object while a reference to its memory is available. This means that the type in which `IMemoryOwner<T>` is declared should not have a <xref:System.Object.Finalize%2A> method.
+
+   ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Memory">
@@ -35,12 +54,15 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Memory&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the memory belonging to this owner.</summary>
+        <value>The memory belonging to this owner.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
