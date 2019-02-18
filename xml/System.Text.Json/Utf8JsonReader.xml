@@ -19,7 +19,11 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides a high-performance API for forward-only, read-only access to the UTF-8 encoded JSON text.
+            It processes the text sequentially with no caching and adheres strictly to the JSON RFC by default (https://tools.ietf.org/html/rfc8259). When it encounters invalid JSON, it throws
+            a JsonReaderException with basic error information like line number and byte position on the line.
+            Since this type is a ref struct, it does not directly support async. However, it does provide support for reentrancy to read incomplete data, and continue reading once more data is presented.
+            To be able to set max depth while reading OR allow skipping comments, create an instance of <see cref="T:System.Text.Json.JsonReaderState" /> and pass that in to the reader.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -47,11 +51,14 @@
         <Parameter Name="state" Type="System.Text.Json.JsonReaderState" />
       </Parameters>
       <Docs>
-        <param name="jsonData">To be added.</param>
-        <param name="isFinalBlock">To be added.</param>
-        <param name="state">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="jsonData">The ReadOnlySequence&lt;byte&gt; containing the UTF-8 encoded JSON text to process.</param>
+        <param name="isFinalBlock">True when the input span contains the entire data to process. Set to false only if it is known that the input span contains partial data with more data to follow.</param>
+        <param name="state">If this is the first call to the ctor, pass in a default state. Otherwise, capture the state from the previous instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> and pass that back.</param>
+        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonReader" /> instance.</summary>
+        <remarks>
+            Since this type is a ref struct, it is a stack-only type and all the limitations of ref structs apply to it.
+            This is the reason why the ctor accepts a <see cref="T:System.Text.Json.JsonReaderState" />.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -72,11 +79,14 @@
         <Parameter Name="state" Type="System.Text.Json.JsonReaderState" />
       </Parameters>
       <Docs>
-        <param name="jsonData">To be added.</param>
-        <param name="isFinalBlock">To be added.</param>
-        <param name="state">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="jsonData">The ReadOnlySpan&lt;byte&gt; containing the UTF-8 encoded JSON text to process.</param>
+        <param name="isFinalBlock">True when the input span contains the entire data to process. Set to false only if it is known that the input span contains partial data with more data to follow.</param>
+        <param name="state">If this is the first call to the ctor, pass in a default state. Otherwise, capture the state from the previous instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> and pass that back.</param>
+        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonReader" /> instance.</summary>
+        <remarks>
+            Since this type is a ref struct, it is a stack-only type and all the limitations of ref structs apply to it.
+            This is the reason why the ctor accepts a <see cref="T:System.Text.Json.JsonReaderState" />.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="BytesConsumed">
@@ -95,7 +105,7 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the total amount of bytes consumed by the <see cref="T:System.Text.Json.Utf8JsonReader" /> so far for the current instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> with the given UTF-8 encoded input text.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -116,7 +126,7 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Tracks the recursive depth of the nested objects / arrays within the JSON text processed so far. This provides the depth of the current token.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -137,7 +147,11 @@
         <ReturnType>System.Text.Json.JsonReaderState</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the current snapshot of the <see cref="T:System.Text.Json.Utf8JsonReader" /> state which must
+            be captured by the caller and passed back in to the <see cref="T:System.Text.Json.Utf8JsonReader" /> ctor with more data.
+            Unlike the <see cref="T:System.Text.Json.Utf8JsonReader" />, which is a ref struct, the state can survive
+            across async/await boundaries and hence this type is required to provide support for reading
+            in more data asynchronously before continuing with a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -159,9 +173,13 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source as a <see cref="T:System.Boolean" />.
+            Returns true if the TokenType is JsonTokenType.True and false if the TokenType is JsonTokenType.False.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a boolean (i.e. <see cref="F:System.Text.Json.JsonTokenType.True" /> or <see cref="F:System.Text.Json.JsonTokenType.False" />).
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
       </Docs>
     </Member>
     <Member MemberName="GetDecimal">
@@ -181,9 +199,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Decimal" />.
+            Returns the value if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.Decimal" />
+            value.
+            Throws exceptions otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
+        <exception cref="T:System.FormatException">
+            Thrown if the JSON token value represents a number less than <see cref="F:System.Decimal.MinValue" /> or greater 
+            than <see cref="F:System.Decimal.MaxValue" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="GetDouble">
@@ -203,9 +231,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Double" />.
+            Returns the value if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.Double" />
+            value.
+            Throws exceptions otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
+        <exception cref="T:System.FormatException">
+            Thrown if the JSON token value represents a number less than <see cref="F:System.Double.MinValue" /> or greater 
+            than <see cref="F:System.Double.MaxValue" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="GetInt32">
@@ -225,9 +263,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to an <see cref="T:System.Int32" />.
+            Returns the value if the entire UTF-8 encoded token value can be successfully parsed to an <see cref="T:System.Int32" />
+            value.
+            Throws exceptions otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
+        <exception cref="T:System.FormatException">
+            Thrown if the JSON token value is either of incorrect numeric format (for example if it contains a decimal or 
+            is written in scientific notation) or, it represents a number less than <see cref="F:System.Int32.MinValue" /> or greater 
+            than <see cref="F:System.Int32.MaxValue" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="GetInt64">
@@ -247,9 +296,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Int64" />.
+            Returns the value if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.Int64" />
+            value.
+            Throws exceptions otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
+        <exception cref="T:System.FormatException">
+            Thrown if the JSON token value is either of incorrect numeric format (for example if it contains a decimal or 
+            is written in scientific notation) or, it represents a number less than <see cref="F:System.Int64.MinValue" /> or greater 
+            than <see cref="F:System.Int64.MaxValue" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="GetSingle">
@@ -269,9 +329,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Single" />.
+            Returns the value if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.Single" />
+            value.
+            Throws exceptions otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
+        <exception cref="T:System.FormatException">
+            Thrown if the JSON token value represents a number less than <see cref="F:System.Single.MinValue" /> or greater 
+            than <see cref="F:System.Single.MaxValue" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="GetString">
@@ -291,9 +361,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source, unescaped, and transcoded as a <see cref="T:System.String" />.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of the JSON token that is not a string
+            (i.e. other than <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
+            I will also throw when the JSON string contains invalid UTF-8 bytes, or invalid UTF-16 surrogates.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="GetUInt32">
@@ -318,9 +394,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.UInt32" />.
+            Returns the value if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.UInt32" />
+            value.
+            Throws exceptions otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
+        <exception cref="T:System.FormatException">
+            Thrown if the JSON token value is either of incorrect numeric format (for example if it contains a decimal or 
+            is written in scientific notation) or, it represents a number less than <see cref="F:System.UInt32.MinValue" /> or greater 
+            than <see cref="F:System.UInt32.MaxValue" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="GetUInt64">
@@ -345,9 +432,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.UInt64" />.
+            Returns the value if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.UInt64" />
+            value.
+            Throws exceptions otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
+        <exception cref="T:System.FormatException">
+            Thrown if the JSON token value is either of incorrect numeric format (for example if it contains a decimal or 
+            is written in scientific notation) or, it represents a number less than <see cref="F:System.UInt64.MinValue" /> or greater 
+            than <see cref="F:System.UInt64.MaxValue" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="HasValueSequence">
@@ -366,7 +464,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Lets the caller know which of the two 'Value' properties to read to get the token value. For input data within a ReadOnlySpan&lt;byte&gt; this will
+            always return false. For input data within a ReadOnlySequence&lt;byte&gt;, this will only return true if the token value straddles more than a single segment and
+            hence couldn't be represented as a span.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -387,7 +487,9 @@
         <ReturnType>System.SequencePosition</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the current <see cref="T:System.SequencePosition" /> within the provided UTF-8 encoded
+            input ReadOnlySequence&lt;byte&gt;. If the <see cref="T:System.Text.Json.Utf8JsonReader" /> was constructed
+            with a ReadOnlySpan&lt;byte&gt; instead, this will always return a default <see cref="T:System.SequencePosition" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -409,9 +511,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Read the next JSON token from input source.</summary>
+        <returns>True if the token was read successfully, else false.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Text.Json.JsonReaderException">
+            Thrown when an invalid JSON token is encountered according to the JSON RFC or if the current depth exceeds the recursive limit set by the max depth.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="TokenType">
@@ -430,7 +535,7 @@
         <ReturnType>System.Text.Json.JsonTokenType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the type of the last processed JSON token in the UTF-8 encoded JSON text.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -455,9 +560,15 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Decimal" />.
+            Returns true if the entire UTF-8 encoded token value can be successfully 
+            parsed to a <see cref="T:System.Decimal" /> value.
+            Returns false otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetDouble">
@@ -480,9 +591,15 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Double" />.
+            Returns true if the entire UTF-8 encoded token value can be successfully 
+            parsed to a <see cref="T:System.Double" /> value.
+            Returns false otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetInt32">
@@ -505,9 +622,15 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to an <see cref="T:System.Int32" />.
+            Returns true if the entire UTF-8 encoded token value can be successfully 
+            parsed to an <see cref="T:System.Int32" /> value.
+            Returns false otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetInt64">
@@ -530,9 +653,15 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Int64" />.
+            Returns true if the entire UTF-8 encoded token value can be successfully 
+            parsed to a <see cref="T:System.Int64" /> value.
+            Returns false otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetSingle">
@@ -555,9 +684,15 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Single" />.
+            Returns true if the entire UTF-8 encoded token value can be successfully 
+            parsed to a <see cref="T:System.Single" /> value.
+            Returns false otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetUInt32">
@@ -585,9 +720,15 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.UInt32" />.
+            Returns true if the entire UTF-8 encoded token value can be successfully 
+            parsed to a <see cref="T:System.UInt32" /> value.
+            Returns false otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetUInt64">
@@ -615,9 +756,15 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.UInt64" />.
+            Returns true if the entire UTF-8 encoded token value can be successfully 
+            parsed to a <see cref="T:System.UInt64" /> value.
+            Returns false otherwise.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.
+            <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
       </Docs>
     </Member>
     <Member MemberName="ValueSequence">
@@ -636,9 +783,15 @@
         <ReturnType>System.Buffers.ReadOnlySequence&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the value of the last processed token as a ReadOnlySpan&lt;byte&gt; slice of the input payload. If the JSON is provided within a ReadOnlySequence&lt;byte&gt;
+            and the slice that represents the token value fits in a single segment, then <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> will contain the sliced value since it can be represented as a span.
+            Otherwise, the <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> will contain the token value.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            If <see cref="P:System.Text.Json.Utf8JsonReader.HasValueSequence" /> is false, <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> contains useless data, likely for
+            a previous multi-segment token. Therefore, only access <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> if <see cref="P:System.Text.Json.Utf8JsonReader.HasValueSequence" /> is true.
+            Otherwise, the token value must be accessed from <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" />.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ValueSpan">
@@ -657,9 +810,16 @@
         <ReturnType>System.ReadOnlySpan&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the value of the last processed token as a ReadOnlySpan&lt;byte&gt; slice of the input payload. If the JSON is provided within a ReadOnlySequence&lt;byte&gt;
+            and the slice that represents the token value fits in a single segment, then
+            <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> will contain the sliced value since it can be represented as a span.
+            Otherwise, the <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> will contain the token value.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            If <see cref="P:System.Text.Json.Utf8JsonReader.HasValueSequence" /> is true, <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> contains useless data, likely for
+            a previous single-segment token. Therefore, only access <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> if <see cref="P:System.Text.Json.Utf8JsonReader.HasValueSequence" /> is false.
+            Otherwise, the token value must be accessed from <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" />.
+            </remarks>
       </Docs>
     </Member>
   </Members>
