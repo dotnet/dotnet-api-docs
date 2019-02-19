@@ -1,4 +1,4 @@
-<Type Name="HttpClientHandler" FullName="System.Net.Http.HttpClientHandler">
+﻿<Type Name="HttpClientHandler" FullName="System.Net.Http.HttpClientHandler">
   <TypeSignature Language="C#" Value="public class HttpClientHandler : System.Net.Http.HttpMessageHandler" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit HttpClientHandler extends System.Net.Http.HttpMessageHandler" />
   <TypeSignature Language="DocId" Value="T:System.Net.Http.HttpClientHandler" />
@@ -22,24 +22,37 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>The default message handler used by <see cref="T:System.Net.Http.HttpClient" />.</summary>
+    <summary>The default message handler used by <see cref="T:System.Net.Http.HttpClient" /> in .NET Framework and .NET Core 2.0 and earlier.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Net.Http.HttpClientHandler> class and classes derived from it enable developers to configure a variety of options ranging from proxies to authentication.  
+ The `HttpClientHandler` class and classes derived from it enable developers to configure a variety of options ranging from proxies to authentication.  
   
 ### HttpClientHandler in .NET Core
 
-Starting with .NET Core 2.1, the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of `HttpClientHandler` provides the implementation used by higher-level HTTP networking APIs. You can configure your application to use `HttpClientHandler` instead by calling the <xref:System.AppContext.SetSwitch%2A> method as follows:
+Starting with .NET Core 2.1, the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of `HttpClientHandler` provides the implementation used by higher-level HTTP networking APIs. You can configure your application to use `HttpClientHandler` instead in any of the following ways:
 
-```csharp
-AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
-```
-```vb
-AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
-``` 
+- By calling the <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> method as follows:
+
+  ```csharp
+  AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
+  ```
+  ```vb
+  AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
+  ``` 
+By defining the `System.Net.Http.useSocketsHttpHandler` switch in the *.netcore.runtimeconfig.json* configuration file:
+
+  ```json
+  "runtimeOptions": {
+    "configProperties": {
+        "System.Net.Http.useSocketsHttpHandler": false
+    }
+  }
+  ```
   
+- By defining an environment variable named `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` and setting it to either `false` or 0.
+
 ## Examples  
  [!code-csharp[System.Net.Http.HttpClientHandler#1](~/samples/snippets/csharp/VS_Snippets_Misc/system.net.http.httpclienthandler/cs/source.cs#1)]  
   
@@ -47,11 +60,11 @@ AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
   
  ]]></format>
     </remarks>
-    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkID=245696">Connecting to a web service</related>
-    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkId=245697">Quickstart: Connecting using HttpClient </related>
-    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkId=245699">How to use HttpClient handlers</related>
-    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkId=245698">How to secure HttpClient connections</related>
-    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkId=242550">HttpClient Sample</related>
+    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkID=245696">Connecting to a web service</related>
+    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=245697">Quickstart: Connecting using HttpClient </related>
+    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=245699">How to use HttpClient handlers</related>
+    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=245698">How to secure HttpClient connections</related>
+    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=242550">HttpClient Sample</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -105,7 +118,7 @@ AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
       <Docs>
         <summary>Gets or sets a value that indicates whether the handler should follow redirection responses.</summary>
         <value>
-          <see langword="true" /> if the if the handler should follow redirection responses; otherwise <see langword="false" />. The default value is <see langword="true" />.</value>
+          <see langword="true" /> if the handler should follow redirection responses; otherwise <see langword="false" />. The default value is <see langword="true" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -343,12 +356,15 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,System.Boolean&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a cached delegate that always returns <see langword="True" />.</summary>
-        <value>A cached delegate that always returns <see langword="True" />.</value>
+        <summary>Gets a cached delegate that always returns <see langword="true" />.</summary>
+        <value>A cached delegate that always returns <see langword="true" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -681,7 +697,7 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2">
+        <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>set: System.Security.SecuritySafeCritical</AttributeName>
         </Attribute>
       </Attributes>

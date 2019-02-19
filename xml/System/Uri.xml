@@ -1,4 +1,4 @@
-<Type Name="Uri" FullName="System.Uri">
+﻿<Type Name="Uri" FullName="System.Uri">
   <TypeSignature Language="C#" Value="public class Uri : System.Runtime.Serialization.ISerializable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable beforefieldinit Uri extends System.Object implements class System.Runtime.Serialization.ISerializable" />
   <TypeSignature Language="DocId" Value="T:System.Uri" />
@@ -35,11 +35,11 @@
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
       <AttributeName>System.ComponentModel.TypeConverter(typeof(System.UriTypeConverter))</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
-      <AttributeName>Serializable</AttributeName>
+    <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+      <AttributeName>System.Serializable</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -63,7 +63,9 @@
 -   If the host name is an IPv6 address, the canonical IPv6 address is used. ScopeId and other optional IPv6 data are removed.  
   
 -   Removes default and empty port numbers.
-
+  
+-   Converts implicit file paths without the file:// scheme (for example, "C:\my\file") to explicit file paths with the file:// scheme.
+  
 -   Escaped characters (also known as percent-encoded octets) that don't have a reserved purpose are decoded (also known as being unescaped). These unreserved characters include uppercase and lowercase letters (%41-%5A and %61-%7A), decimal digits (%30-%39), hyphen (%2D), period (%2E), underscore (%5F), and tilde (%7E).
 
 -   Canonicalizes the path for hierarchical URIs by compacting sequences such as /./, /../, and // (whether or not the sequence is escaped). Note that there are some schemes for which these sequences are not compacted.
@@ -161,6 +163,14 @@ http://myUrl/
   
  The <xref:System.GenericUriParserOptions.Idn?displayProperty=nameWithType> type indicates the parser supports Internationalized Domain Name (IDN) parsing (IDN) of host names. Whether IDN is used is dictated by the configuration values previously discussed.  
   
+## Implicit File Path Support
+ <xref:System.Uri> can also be used to represent local file system paths. These paths can be represented *explicitly* in URIs that begin with the file:// scheme, and *implicitly* in URIs that do not have the file:// scheme. As a concrete example, the following two URIs are both valid, and represent the same file path:
+```csharp
+Uri uri1 = new Uri("C:/test/path/file.txt") // Implicit file path.
+Uri uri2 = new Uri("file:///C:/test/path/file.txt") // Explicit file path.
+```
+ These implicit file paths are not compliant with the URI specification and so should be avoided when possible. When using .NET Core on Unix-based systems, implicit file paths can be especially problematic, because an absolute implicit file path is *indistinguishable* from a relative path. When such ambiguity is present, <xref:System.Uri> default to interpreting the path as an absolute URI.
+  
 ## Performance Considerations  
  If you use a *Web.config *file that contains URIs to initialize your application, additional time is required to process the URIs if their scheme identifiers are nonstandard. In such a case, initialize the affected parts of your application when the URIs are needed, not at start time.  
   
@@ -185,8 +195,8 @@ http://myUrl/
     <altmember cref="M:System.Uri.MakeRelative(System.Uri)" />
     <altmember cref="M:System.Uri.IsWellFormedOriginalString" />
     <altmember cref="T:System.UriBuilder" />
-    <related type="Article" href="http://msdn.microsoft.com/library/35883fe9-2d09-4d8b-80ca-cf23a941e459">Changes to the System.Uri namespace in Version 2.0</related>
-    <related type="Article" href="http://msdn.microsoft.com/library/b5e994c3-3535-4aff-8e1b-b69be22e9a22">International Resource Identifier Support in System.UriSystem.Uri</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/35883fe9-2d09-4d8b-80ca-cf23a941e459">Changes to the System.Uri namespace in Version 2.0</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/b5e994c3-3535-4aff-8e1b-b69be22e9a22">International Resource Identifier Support in System.UriSystem.Uri</related>
     <related type="Article" href="~/docs/framework/network-programming/index.md">Network Programming in the .NET Framework</related>
   </Docs>
   <Members>
@@ -262,7 +272,7 @@ http://myUrl/
           <paramref name="uriString" /> is <see langword="null" />.</exception>
         <exception cref="T:System.UriFormatException">
           <block subset="none" type="note">
-            <para>In the <see href="http://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
+            <para>In the <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
           </block>
           <paramref name="uriString" /> is empty.  
   
@@ -432,7 +442,7 @@ http://myUrl/
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The constructor has been deprecated. Please use new Uri(string). The dontEscape parameter is deprecated and is always false. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -443,7 +453,7 @@ http://myUrl/
       <Docs>
         <param name="uriString">A string that identifies the resource to be represented by the <see cref="T:System.Uri" /> instance. Note that an IPv6 address in string form must be enclosed within brackets. For example, "http://[2607:f8b0:400d:c06::69]".</param>
         <param name="dontEscape">
-          <see langword="true" /> if <c>uriString</c> is completely escaped; otherwise, <see langword="false" />.</param>
+          <see langword="true" /> if <paramref name="uriString" /> is completely escaped; otherwise, <see langword="false" />.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Uri" /> class with the specified URI, with explicit control of character escaping.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -570,7 +580,7 @@ http://myUrl/
           <paramref name="uriString" /> is <see langword="null" />.</exception>
         <exception cref="T:System.UriFormatException">
           <block subset="none" type="note">
-            <para>In the <see href="http://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
+            <para>In the <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
           </block>
           <paramref name="uriString" /> contains a relative URI and <paramref name="uriKind" /> is <see cref="F:System.UriKind.Absolute" />.  
   
@@ -696,7 +706,7 @@ http://myUrl/
           <paramref name="baseUri" /> is not an absolute <see cref="T:System.Uri" /> instance.</exception>
         <exception cref="T:System.UriFormatException">
           <block subset="none" type="note">
-            <para>In the <see href="http://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
+            <para>In the <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
           </block>
  The URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is empty or contains only spaces.  
   
@@ -782,7 +792,7 @@ http://myUrl/
       </Parameters>
       <Docs>
         <param name="baseUri">An absolute <see cref="T:System.Uri" /> that is the base for the new <see cref="T:System.Uri" /> instance.</param>
-        <param name="relativeUri">A relative <see cref="T:System.Uri" /> instance that is combined with <c>baseUri</c>.</param>
+        <param name="relativeUri">A relative <see cref="T:System.Uri" /> instance that is combined with <paramref name="baseUri" />.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Uri" /> class based on the combination of a specified base <see cref="T:System.Uri" /> instance and a relative <see cref="T:System.Uri" /> instance.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -815,7 +825,7 @@ http://myUrl/
           <paramref name="baseUri" /> is not an absolute <see cref="T:System.Uri" /> instance.</exception>
         <exception cref="T:System.UriFormatException">
           <block subset="none" type="note">
-            <para>In the <see href="http://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
+            <para>In the <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
           </block>
           The URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is empty or contains only spaces.  
   
@@ -893,7 +903,7 @@ http://myUrl/
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The constructor has been deprecated. Please new Uri(Uri, string). The dontEscape parameter is deprecated and is always false. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -906,7 +916,7 @@ http://myUrl/
         <param name="baseUri">The base URI.</param>
         <param name="relativeUri">The relative URI to add to the base URI.</param>
         <param name="dontEscape">
-          <see langword="true" /> if <c>uriString</c> is completely escaped; otherwise, <see langword="false" />.</param>
+          <see langword="true" /> if <paramref name="uriString" /> is completely escaped; otherwise, <see langword="false" />.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Uri" /> class based on the specified base and relative URIs, with explicit control of character escaping.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1176,7 +1186,7 @@ http://myUrl/
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. It is not used by the system. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -1339,7 +1349,7 @@ http://myUrl/
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. It is not used by the system. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -1392,7 +1402,7 @@ http://myUrl/
       <Docs>
         <param name="uri1">The first <see cref="T:System.Uri" />.</param>
         <param name="uri2">The second <see cref="T:System.Uri" />.</param>
-        <param name="partsToCompare">A bitwise combination of the <see cref="T:System.UriComponents" /> values that specifies the parts of <c>uri1</c> and <c>uri2</c> to compare.</param>
+        <param name="partsToCompare">A bitwise combination of the <see cref="T:System.UriComponents" /> values that specifies the parts of <paramref name="uri1" /> and <paramref name="uri2" /> to compare.</param>
         <param name="compareFormat">One of the <see cref="T:System.UriFormat" /> values that specifies the character escaping used when the URI components are compared.</param>
         <param name="comparisonType">One of the <see cref="T:System.StringComparison" /> values.</param>
         <summary>Compares the specified parts of two URIs using the specified comparison rules.</summary>
@@ -1620,7 +1630,7 @@ If you used an escaped string to construct this instance (for example, "http://[
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. It is not used by the system. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -1689,7 +1699,7 @@ If you used an escaped string to construct this instance (for example, "http://[
           <paramref name="stringToEscape" /> is <see langword="null" />.</exception>
         <exception cref="T:System.UriFormatException">
           <block subset="none" type="note">
-            <para>In the <see href="http://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
+            <para>In the <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
           </block>  
   
  The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exception>
@@ -1720,7 +1730,7 @@ If you used an escaped string to construct this instance (for example, "http://[
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. Please use GetComponents() or static EscapeUriString() to escape a Uri component or a string. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -1805,7 +1815,7 @@ If you used an escaped string to construct this instance (for example, "http://[
           <paramref name="stringToEscape" /> is <see langword="null" />.</exception>
         <exception cref="T:System.UriFormatException">
           <block subset="none" type="note">
-            <para>In the <see href="http://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
+            <para>In the <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.FormatException" />, instead.</para>
           </block>  
   
  The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exception>
@@ -2231,7 +2241,7 @@ If you used an escaped string to construct this instance (for example, "http://[
       </Parameters>
       <Docs>
         <param name="pattern">The hexadecimal representation of a character.</param>
-        <param name="index">The location in <c>pattern</c> where the hexadecimal representation of a character begins.</param>
+        <param name="index">The location in <paramref name="pattern" /> where the hexadecimal representation of a character begins.</param>
         <summary>Converts a specified hexadecimal representation of a character to the character.</summary>
         <returns>The character represented by the hexadecimal encoding at position <paramref name="index" />. If the character at <paramref name="index" /> is not hexadecimal encoded, the character at <paramref name="index" /> is returned. The value of <paramref name="index" /> is incremented to point to the character following the one returned.</returns>
         <remarks>
@@ -2382,7 +2392,7 @@ If you used an escaped string to construct this instance (for example, "http://[
       </ReturnValue>
       <Docs>
         <summary>The RFC 3490 compliant International Domain Name of the host, using Punycode as appropriate. This string, after being unescaped if necessary, is safe to use for DNS resolution.</summary>
-        <value>Returns the hostname, formatted with Punycode according to the IDN standard.<see cref="T:System.String" />.</value>
+        <value>The hostname, formatted with Punycode according to the IDN standard.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2466,7 +2476,7 @@ If you used an escaped string to construct this instance (for example, "http://[
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. It is not used by the system. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -2479,7 +2489,8 @@ If you used an escaped string to construct this instance (for example, "http://[
       <Docs>
         <param name="character">The <see cref="T:System.Char" /> to test.</param>
         <summary>Gets whether a character is invalid in a file system name.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the specified character is invalid; otherwise <see langword="false" />.</returns>
+        <returns>
+          <see langword="true" /> if the specified character is invalid; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2637,7 +2648,7 @@ If you used an escaped string to construct this instance (for example, "http://[
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. It is not used by the system. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -2741,7 +2752,8 @@ If you used an escaped string to construct this instance (for example, "http://[
       <Docs>
         <param name="character">The character to validate.</param>
         <summary>Determines whether a specified character is a valid hexadecimal digit.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the character is a valid hexadecimal digit; otherwise <see langword="false" />.</returns>
+        <returns>
+          <see langword="true" /> if the character is a valid hexadecimal digit; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2794,7 +2806,7 @@ If you used an escaped string to construct this instance (for example, "http://[
       </Parameters>
       <Docs>
         <param name="pattern">The string to check.</param>
-        <param name="index">The location in <c>pattern</c> to check for hexadecimal encoding.</param>
+        <param name="index">The location in <paramref name="pattern" /> to check for hexadecimal encoding.</param>
         <summary>Determines whether a character in a string is hexadecimal encoded.</summary>
         <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if <paramref name="pattern" /> is hexadecimal encoded at the specified location; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -2895,7 +2907,7 @@ If you used an escaped string to construct this instance (for example, "http://[
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. It is not used by the system. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -2999,7 +3011,8 @@ If you used an escaped string to construct this instance (for example, "http://[
       <Parameters />
       <Docs>
         <summary>Indicates whether the string used to construct this <see cref="T:System.Uri" /> was well-formed and is not required to be further escaped.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the string was well-formed; else <see langword="false" />.</returns>
+        <returns>
+          <see langword="true" /> if the string was well-formed; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3025,7 +3038,7 @@ If you used an escaped string to construct this instance (for example, "http://[
   
  ]]></format>
         </remarks>
-        <related type="ExternalDocumentation" href="http://www.ietf.org/">http://www.ietf.org</related>
+        <related type="ExternalDocumentation" href="https://www.ietf.org/">Internet Engineering Task Force (IETF)</related>
       </Docs>
     </Member>
     <Member MemberName="IsWellFormedUriString">
@@ -3063,9 +3076,10 @@ If you used an escaped string to construct this instance (for example, "http://[
       </Parameters>
       <Docs>
         <param name="uriString">The string used to attempt to construct a <see cref="T:System.Uri" />.</param>
-        <param name="uriKind">The type of the <see cref="T:System.Uri" /> in <c>uriString</c>.</param>
+        <param name="uriKind">The type of the <see cref="T:System.Uri" /> in <paramref name="uriString" />.</param>
         <summary>Indicates whether the string is well-formed by attempting to construct a URI with the string and ensures that the string does not require further escaping.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the string was well-formed; else <see langword="false" />.</returns>
+        <returns>
+          <see langword="true" /> if the string was well-formed; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3090,7 +3104,7 @@ If you used an escaped string to construct this instance (for example, "http://[
   
  ]]></format>
         </remarks>
-        <related type="ExternalDocumentation" href="http://www.ietf.org/">http://www.ietf.org</related>
+        <related type="ExternalDocumentation" href="https://www.ietf.org/">Internet Engineering Task Force (IETF)</related>
       </Docs>
     </Member>
     <Member MemberName="LocalPath">
@@ -3174,7 +3188,7 @@ If you used an escaped string to construct this instance (for example, "http://[
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. Please use MakeRelativeUri(Uri uri). http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -3325,8 +3339,8 @@ If you used an escaped string to construct this instance (for example, "http://[
         <Parameter Name="uri2" Type="System.Uri" />
       </Parameters>
       <Docs>
-        <param name="uri1">A <see cref="T:System.Uri" /> instance to compare with <c>uri2</c>.</param>
-        <param name="uri2">A <see cref="T:System.Uri" /> instance to compare with <c>uri1</c>.</param>
+        <param name="uri1">A <see cref="T:System.Uri" /> instance to compare with <paramref name="uri2" />.</param>
+        <param name="uri2">A <see cref="T:System.Uri" /> instance to compare with <paramref name="uri1" />.</param>
         <summary>Determines whether two <see cref="T:System.Uri" /> instances have the same value.</summary>
         <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> instances are equivalent; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -3383,8 +3397,8 @@ If you used an escaped string to construct this instance (for example, "http://[
         <Parameter Name="uri2" Type="System.Uri" />
       </Parameters>
       <Docs>
-        <param name="uri1">A <see cref="T:System.Uri" /> instance to compare with <c>uri2</c>.</param>
-        <param name="uri2">A <see cref="T:System.Uri" /> instance to compare with <c>uri1</c>.</param>
+        <param name="uri1">A <see cref="T:System.Uri" /> instance to compare with <paramref name="uri2" />.</param>
+        <param name="uri2">A <see cref="T:System.Uri" /> instance to compare with <paramref name="uri1" />.</param>
         <summary>Determines whether two <see cref="T:System.Uri" /> instances do not have the same value.</summary>
         <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the two <see cref="T:System.Uri" /> instances are not equal; otherwise, <see langword="false" />. If either parameter is <see langword="null" />, this method returns <see langword="true" />.</returns>
         <remarks>
@@ -3492,7 +3506,7 @@ If you used an escaped string to construct this instance (for example, "http://[
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. It is not used by the system. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
@@ -4079,7 +4093,7 @@ If you used an escaped string to construct this instance (for example, "http://[
       <Docs>
         <param name="baseUri">The base <see cref="T:System.Uri" />.</param>
         <param name="relativeUri">The relative <see cref="T:System.Uri" />, represented as a <see cref="T:System.String" />, to add to the base <see cref="T:System.Uri" />.</param>
-        <param name="result">When this method returns, contains a <see cref="T:System.Uri" /> constructed from <c>baseUri</c> and <c>relativeUri</c>. This parameter is passed uninitialized.</param>
+        <param name="result">When this method returns, contains a <see cref="T:System.Uri" /> constructed from <paramref name="baseUri" /> and <paramref name="relativeUri" />. This parameter is passed uninitialized.</param>
         <summary>Creates a new <see cref="T:System.Uri" /> using the specified base and relative <see cref="T:System.String" /> instances.</summary>
         <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> was successfully created; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -4130,7 +4144,7 @@ If you used an escaped string to construct this instance (for example, "http://[
       <Docs>
         <param name="baseUri">The base <see cref="T:System.Uri" />.</param>
         <param name="relativeUri">The relative <see cref="T:System.Uri" /> to add to the base <see cref="T:System.Uri" />.</param>
-        <param name="result">When this method returns, contains a <see cref="T:System.Uri" /> constructed from <c>baseUri</c> and <c>relativeUri</c>. This parameter is passed uninitialized.</param>
+        <param name="result">When this method returns, contains a <see cref="T:System.Uri" /> constructed from <paramref name="baseUri" /> and <paramref name="relativeUri" />. This parameter is passed uninitialized.</param>
         <summary>Creates a new <see cref="T:System.Uri" /> using the specified base and relative <see cref="T:System.Uri" /> instances.</summary>
         <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> was successfully created; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -4172,7 +4186,7 @@ If you used an escaped string to construct this instance (for example, "http://[
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("The method has been deprecated. Please use GetComponents() or static UnescapeDataString() to unescape a Uri component or a string. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
