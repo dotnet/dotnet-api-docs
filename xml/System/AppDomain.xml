@@ -55,6 +55,9 @@
   
 -   If an assembly is loaded into the default application domain, it cannot be unloaded from memory while the process is running. However, if you open a second application domain to load and execute the assembly, the assembly is unloaded when that application domain is unloaded. Use this technique to minimize the working set of long-running processes that occasionally use large DLLs.  
   
+ > [!NOTE]
+ >  On .NET Core, the <xref:System.AppDomain> implementation is limited by design and does not provide isolation, unloading, or security boundaries. For .NET Core, there is exactly one <xref:System.AppDomain>. Isolation and unloading are provided through <xref:System.Runtime.Loader.AssemblyLoadContext>. Security boundaries should be provided by process boundaries and appropriate remoting techniques.
+ 
  Multiple application domains can run in a single process; however, there is not a one-to-one correlation between application domains and threads. Several threads can belong to a single application domain, and while a given thread is not confined to a single application domain, at any given time, a thread executes in a single application domain.  
   
  Application domains are created using the <xref:System.AppDomain.CreateDomain%2A> method. <xref:System.AppDomain> instances are used to load and execute assemblies (<xref:System.Reflection.Assembly>). When an <xref:System.AppDomain> is no longer in use, it can be unloaded.  
@@ -73,7 +76,7 @@
    
   
 ## Examples  
- This example shows how to create a new <xref:System.AppDomain>, instantiate a type in that new <xref:System.AppDomain>, and communicate with that type’s object. In addition, this example shows how to unload the <xref:System.AppDomain> causing the object to be garbage collected.  
+ This example shows how to create a new <xref:System.AppDomain>, instantiate a type in that new <xref:System.AppDomain>, and communicate with that type's object. In addition, this example shows how to unload the <xref:System.AppDomain> causing the object to be garbage collected.  
   
  [!code-cpp[AppDomainX#1](~/samples/snippets/cpp/VS_Snippets_CLR/AppDomainX/cpp/AppDomainX.cpp#1)]
  [!code-csharp[AppDomainX#1](~/samples/snippets/csharp/VS_Snippets_CLR/AppDomainX/cs/AppDomainX.cs#1)]
@@ -81,10 +84,10 @@
   
  ]]></format>
     </remarks>
-    <related type="Article" href="http://msdn.microsoft.com/library/07ea8438-7a34-49f0-a7e8-3d6ff7e4a482">How To: Configure an Application Domain</related>
-    <related type="Article" href="http://msdn.microsoft.com/library/ba1fa43e-49f5-47d9-bd7f-3024af16f4ba">How To: Create an Application Domain</related>
-    <related type="Article" href="http://msdn.microsoft.com/library/1432aa2d-bd83-4346-bf3b-a1b7920e2aa9">How to: Load Assemblies into an Application Domain</related>
-    <related type="Article" href="http://msdn.microsoft.com/library/f356116d-e415-4f7c-a332-6e6a60227192">How to: Unload an Application Domain</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/07ea8438-7a34-49f0-a7e8-3d6ff7e4a482">How To: Configure an Application Domain</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/ba1fa43e-49f5-47d9-bd7f-3024af16f4ba">How To: Create an Application Domain</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/1432aa2d-bd83-4346-bf3b-a1b7920e2aa9">How to: Load Assemblies into an Application Domain</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/f356116d-e415-4f7c-a332-6e6a60227192">How to: Unload an Application Domain</related>
   </Docs>
   <Members>
     <Member MemberName="ActivationContext">
@@ -153,11 +156,14 @@
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Obsolete("AppDomain.AppendPrivatePath has been deprecated. Please investigate the use of AppDomainSetup.PrivateBinPath instead.")</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("AppDomain.AppendPrivatePath has been deprecated. Please investigate the use of AppDomainSetup.PrivateBinPath instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Obsolete("AppDomain.AppendPrivatePath has been deprecated. Please investigate the use of AppDomainSetup.PrivateBinPath instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -422,7 +428,7 @@
  For this event, the <xref:System.ResolveEventArgs.Name%2A?displayProperty=nameWithType> property returns the assembly name before policy is applied.  
   
 > [!IMPORTANT]
->  If more than one event handler is registered for this event, the event handlersarecalled in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.  
+>  If more than one event handler is registered for this event, the event handlers are called in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.
   
  For more information about handling events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
   
@@ -441,7 +447,7 @@
         </remarks>
         <permission cref="T:System.Security.SecurityCriticalAttribute">Requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
         <altmember cref="P:System.ResolveEventArgs.RequestingAssembly" />
-        <related type="Article" href="http://msdn.microsoft.com/library/5099e549-f4fd-49fb-a290-549edd456c6a">Resolving Assembly Loads</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/5099e549-f4fd-49fb-a290-549edd456c6a">Resolving Assembly Loads</related>
       </Docs>
     </Member>
     <Member MemberName="BaseDirectory">
@@ -535,11 +541,14 @@
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Obsolete("AppDomain.ClearPrivatePath has been deprecated. Please investigate the use of AppDomainSetup.PrivateBinPath instead.")</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("AppDomain.ClearPrivatePath has been deprecated. Please investigate the use of AppDomainSetup.PrivateBinPath instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Obsolete("AppDomain.ClearPrivatePath has been deprecated. Please investigate the use of AppDomainSetup.PrivateBinPath instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -605,11 +614,14 @@
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Obsolete("Use AppDomainSetup.ShadowCopyDirectories")</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("AppDomain.ClearShadowCopyPath has been deprecated. Please investigate the use of AppDomainSetup.ShadowCopyDirectories instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Obsolete("AppDomain.ClearShadowCopyPath has been deprecated. Please investigate the use of AppDomainSetup.ShadowCopyDirectories instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -874,6 +886,7 @@
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="friendlyName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">Method not supported on .NET Core.</exception>
         <permission cref="T:System.Security.Permissions.SecurityPermission">to provide evidence. Associated enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.ControlEvidence" />.</permission>
         <altmember cref="P:System.AppDomain.FriendlyName" />
       </Docs>
@@ -1196,7 +1209,7 @@
         <param name="shadowCopyFiles">
           <see langword="true" /> to load a shadow copy of an assembly into the application domain.</param>
         <param name="adInit">An <see cref="T:System.AppDomainInitializer" /> delegate that represents a callback method to invoke when the new <see cref="T:System.AppDomain" /> object is initialized.</param>
-        <param name="adInitArgs">An array of string arguments to be passed to the callback represented by <c>adInit</c>, when the new <see cref="T:System.AppDomain" /> object is initialized.</param>
+        <param name="adInitArgs">An array of string arguments to be passed to the callback represented by <paramref name="adInit" />, when the new <see cref="T:System.AppDomain" /> object is initialized.</param>
         <summary>Creates a new application domain with the given name, using evidence, application base path, relative search path, and a parameter that specifies whether a shadow copy of an assembly is to be loaded into the application domain. Specifies a callback method that is invoked when the application domain is initialized, and an array of string arguments to pass the callback method.</summary>
         <returns>The newly created application domain.</returns>
         <remarks>
@@ -1249,6 +1262,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1325,6 +1339,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1401,6 +1416,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1427,10 +1443,10 @@
         <param name="assemblyName">The display name of the assembly. See <see cref="P:System.Reflection.Assembly.FullName" />.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <param name="ignoreCase">A Boolean value specifying whether to perform a case-sensitive search or not.</param>
-        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <c>typeName</c> constructor. If <c>bindingAttr</c> is zero, a case-sensitive search for public constructors is conducted.</param>
-        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects using reflection. If <c>binder</c> is null, the default binder is used.</param>
-        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <c>args</c> must be an empty array or null.</param>
-        <param name="culture">Culture-specific information that governs the coercion of <c>args</c> to the formal types declared for the <c>typeName</c> constructor. If <c>culture</c> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
+        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <paramref name="typeName" /> constructor. If <paramref name="bindingAttr" /> is zero, a case-sensitive search for public constructors is conducted.</param>
+        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects using reflection. If <paramref name="binder" /> is null, the default binder is used.</param>
+        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <paramref name="args" /> must be an empty array or null.</param>
+        <param name="culture">Culture-specific information that governs the coercion of <paramref name="args" /> to the formal types declared for the <paramref name="typeName" /> constructor. If <paramref name="culture" /> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object that specifies the URL that is required to activate a remote object.  
   
  This parameter is related to client-activated objects. Client activation is a legacy technology that is retained for backward compatibility but is not recommended for new development. Distributed applications should instead use Windows Communication Foundation.</param>
@@ -1523,14 +1539,14 @@
         <param name="assemblyName">The display name of the assembly. See <see cref="P:System.Reflection.Assembly.FullName" />.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <param name="ignoreCase">A Boolean value specifying whether to perform a case-sensitive search or not.</param>
-        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <c>typeName</c> constructor. If <c>bindingAttr</c> is zero, a case-sensitive search for public constructors is conducted.</param>
-        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects using reflection. If <c>binder</c> is null, the default binder is used.</param>
-        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <c>args</c> must be an empty array or null.</param>
-        <param name="culture">Culture-specific information that governs the coercion of <c>args</c> to the formal types declared for the <c>typeName</c> constructor. If <c>culture</c> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
+        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <paramref name="typeName" /> constructor. If <paramref name="bindingAttr" /> is zero, a case-sensitive search for public constructors is conducted.</param>
+        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects using reflection. If <paramref name="binder" /> is null, the default binder is used.</param>
+        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <paramref name="args" /> must be an empty array or null.</param>
+        <param name="culture">Culture-specific information that governs the coercion of <paramref name="args" /> to the formal types declared for the <paramref name="typeName" /> constructor. If <paramref name="culture" /> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object that specifies the URL that is required to activate a remote object.  
   
  This parameter is related to client-activated objects.Client activation is a legacy technology that is retained for backward compatibility but is not recommended for new development. Distributed applications should instead use Windows Communication Foundation.</param>
-        <param name="securityAttributes">Information used to authorize creation of <c>typeName</c>.</param>
+        <param name="securityAttributes">Information used to authorize creation of <paramref name="typeName" />.</param>
         <summary>Creates a new instance of the specified type defined in the specified assembly. Parameters specify a binder, binding flags, constructor arguments, culture-specific information used to interpret arguments, activation attributes, and authorization to create the type.</summary>
         <returns>An object that is a wrapper for the new instance specified by <paramref name="typeName" />. The return value needs to be unwrapped to access the real object.</returns>
         <remarks>
@@ -1599,6 +1615,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1683,6 +1700,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1766,6 +1784,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1792,10 +1811,10 @@
         <param name="assemblyName">The display name of the assembly. See <see cref="P:System.Reflection.Assembly.FullName" />.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <param name="ignoreCase">A Boolean value specifying whether to perform a case-sensitive search or not.</param>
-        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <c>typeName</c> constructor. If <c>bindingAttr</c> is zero, a case-sensitive search for public constructors is conducted.</param>
-        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects using reflection. If <c>binder</c> is null, the default binder is used.</param>
-        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <c>args</c> must be an empty array or null.</param>
-        <param name="culture">A culture-specific object used to govern the coercion of types. If <c>culture</c> is <see langword="null" />, the <see langword="CultureInfo" /> for the current thread is used.</param>
+        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <paramref name="typeName" /> constructor. If <paramref name="bindingAttr" /> is zero, a case-sensitive search for public constructors is conducted.</param>
+        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects using reflection. If <paramref name="binder" /> is null, the default binder is used.</param>
+        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <paramref name="args" /> must be an empty array or null.</param>
+        <param name="culture">A culture-specific object used to govern the coercion of types. If <paramref name="culture" /> is <see langword="null" />, the <see langword="CultureInfo" /> for the current thread is used.</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object. that specifies the URL that is required to activate a remote object.  
   
  This parameter is related to client-activated objects. Client activation is a legacy technology that is retained for backward compatibility but is not recommended for new development. Distributed applications should instead use Windows Communication Foundation.</param>
@@ -1896,14 +1915,14 @@
         <param name="assemblyName">The display name of the assembly. See <see cref="P:System.Reflection.Assembly.FullName" />.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <param name="ignoreCase">A Boolean value specifying whether to perform a case-sensitive search or not.</param>
-        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <c>typeName</c> constructor. If <c>bindingAttr</c> is zero, a case-sensitive search for public constructors is conducted.</param>
-        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects using reflection. If <c>binder</c> is null, the default binder is used.</param>
-        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <c>args</c> must be an empty array or null.</param>
-        <param name="culture">A culture-specific object used to govern the coercion of types. If <c>culture</c> is <see langword="null" />, the <see langword="CultureInfo" /> for the current thread is used.</param>
+        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <paramref name="typeName" /> constructor. If <paramref name="bindingAttr" /> is zero, a case-sensitive search for public constructors is conducted.</param>
+        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects using reflection. If <paramref name="binder" /> is null, the default binder is used.</param>
+        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <paramref name="args" /> must be an empty array or null.</param>
+        <param name="culture">A culture-specific object used to govern the coercion of types. If <paramref name="culture" /> is <see langword="null" />, the <see langword="CultureInfo" /> for the current thread is used.</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object that specifies the URL that is required to activate a remote object.  
   
  This parameter is related to client-activated objects. Client activation is a legacy technology that is retained for backward compatibility but is not recommended for new development. Distributed applications should instead use Windows Communication Foundation.</param>
-        <param name="securityAttributes">Information used to authorize creation of <c>typeName</c>.</param>
+        <param name="securityAttributes">Information used to authorize creation of <paramref name="typeName" />.</param>
         <summary>Creates a new instance of the specified type. Parameters specify the name of the type, and how it is found and created.</summary>
         <returns>An instance of the object specified by <paramref name="typeName" />.</returns>
         <remarks>
@@ -1982,6 +2001,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2089,6 +2109,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2167,6 +2188,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2193,10 +2215,10 @@
         <param name="assemblyFile">The name, including the path, of a file that contains an assembly that defines the requested type. The assembly is loaded using the <see cref="M:System.Reflection.Assembly.LoadFrom(System.String)" /> method.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <param name="ignoreCase">A Boolean value specifying whether to perform a case-sensitive search or not.</param>
-        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <c>typeName</c> constructor. If <c>bindingAttr</c> is zero, a case-sensitive search for public constructors is conducted.</param>
-        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects through reflection. If <c>binder</c> is null, the default binder is used.</param>
-        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <c>args</c> must be an empty array or null.</param>
-        <param name="culture">Culture-specific information that governs the coercion of <c>args</c> to the formal types declared for the <c>typeName</c> constructor. If <c>culture</c> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
+        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <paramref name="typeName" /> constructor. If <paramref name="bindingAttr" /> is zero, a case-sensitive search for public constructors is conducted.</param>
+        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects through reflection. If <paramref name="binder" /> is null, the default binder is used.</param>
+        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <paramref name="args" /> must be an empty array or null.</param>
+        <param name="culture">Culture-specific information that governs the coercion of <paramref name="args" /> to the formal types declared for the <paramref name="typeName" /> constructor. If <paramref name="culture" /> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object that specifies the URL that is required to activate a remote object.  
   
  This parameter is related to client-activated objects. Client activation is a legacy technology that is retained for backward compatibility but is not recommended for new development. Distributed applications should instead use Windows Communication Foundation.</param>
@@ -2295,14 +2317,14 @@
         <param name="assemblyFile">The name, including the path, of a file that contains an assembly that defines the requested type. The assembly is loaded using the <see cref="M:System.Reflection.Assembly.LoadFrom(System.String)" /> method.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <param name="ignoreCase">A Boolean value specifying whether to perform a case-sensitive search or not.</param>
-        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <c>typeName</c> constructor. If <c>bindingAttr</c> is zero, a case-sensitive search for public constructors is conducted.</param>
-        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects through reflection. If <c>binder</c> is null, the default binder is used.</param>
-        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <c>args</c> must be an empty array or null.</param>
-        <param name="culture">Culture-specific information that governs the coercion of <c>args</c> to the formal types declared for the <c>typeName</c> constructor. If <c>culture</c> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
+        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <paramref name="typeName" /> constructor. If <paramref name="bindingAttr" /> is zero, a case-sensitive search for public constructors is conducted.</param>
+        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects through reflection. If <paramref name="binder" /> is null, the default binder is used.</param>
+        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <paramref name="args" /> must be an empty array or null.</param>
+        <param name="culture">Culture-specific information that governs the coercion of <paramref name="args" /> to the formal types declared for the <paramref name="typeName" /> constructor. If <paramref name="culture" /> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object that specifies the URL that is required to activate a remote object.  
   
  This parameter is related to client-activated objects. Client activation is a legacy technology that is retained for backward compatibility but is not recommended for new development. Distributed applications should instead use Windows Communication Foundation.</param>
-        <param name="securityAttributes">Information used to authorize creation of <c>typeName</c>.</param>
+        <param name="securityAttributes">Information used to authorize creation of <paramref name="typeName" />.</param>
         <summary>Creates a new instance of the specified type defined in the specified assembly file.</summary>
         <returns>An object that is a wrapper for the new instance, or <see langword="null" /> if <paramref name="typeName" /> is not found. The return value needs to be unwrapped to access the real object.</returns>
         <remarks>
@@ -2362,12 +2384,16 @@
       </Docs>
     </MemberGroup>
     <Member MemberName="CreateInstanceFromAndUnwrap">
-      <MemberSignature Language="C#" Value="public object CreateInstanceFromAndUnwrap (string assemblyName, string typeName);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object CreateInstanceFromAndUnwrap(string assemblyName, string typeName) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.AppDomain.CreateInstanceFromAndUnwrap(System.String,System.String)" />
-      <MemberSignature Language="VB.NET" Value="Public Function CreateInstanceFromAndUnwrap (assemblyName As String, typeName As String) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ CreateInstanceFromAndUnwrap(System::String ^ assemblyName, System::String ^ typeName);" />
-      <MemberSignature Language="F#" Value="member this.CreateInstanceFromAndUnwrap : string * string -&gt; obj" Usage="appDomain.CreateInstanceFromAndUnwrap (assemblyName, typeName)" />
+      <MemberSignature Language="C#" Value="public object CreateInstanceFromAndUnwrap (string assemblyName, string typeName);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object CreateInstanceFromAndUnwrap(string assemblyName, string typeName) cil managed" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="DocId" Value="M:System.AppDomain.CreateInstanceFromAndUnwrap(System.String,System.String)" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="VB.NET" Value="Public Function CreateInstanceFromAndUnwrap (assemblyName As String, typeName As String) As Object" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ CreateInstanceFromAndUnwrap(System::String ^ assemblyName, System::String ^ typeName);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="F#" Value="member this.CreateInstanceFromAndUnwrap : string * string -&gt; obj" Usage="appDomain.CreateInstanceFromAndUnwrap (assemblyName, typeName)" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public object CreateInstanceFromAndUnwrap (string assemblyFile, string typeName);" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object CreateInstanceFromAndUnwrap(string assemblyFile, string typeName) cil managed" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="VB.NET" Value="Public Function CreateInstanceFromAndUnwrap (assemblyFile As String, typeName As String) As Object" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ CreateInstanceFromAndUnwrap(System::String ^ assemblyFile, System::String ^ typeName);" FrameworkAlternate="netcore-3.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2378,6 +2404,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2391,11 +2418,13 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="assemblyName" Type="System.String" />
-        <Parameter Name="typeName" Type="System.String" />
+        <Parameter Name="assemblyName" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="assemblyFile" Type="System.String" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="typeName" Type="System.String" Index="1" FrameworkAlternate="netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="assemblyName">The file name and path of the assembly that defines the requested type.</param>
+        <param name="assemblyFile">To be added.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <summary>Creates a new instance of the specified type defined in the specified assembly file.</summary>
         <returns>The requested object, or <see langword="null" /> if <paramref name="typeName" /> is not found.</returns>
@@ -2435,12 +2464,16 @@
       </Docs>
     </Member>
     <Member MemberName="CreateInstanceFromAndUnwrap">
-      <MemberSignature Language="C#" Value="public object CreateInstanceFromAndUnwrap (string assemblyName, string typeName, object[] activationAttributes);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object CreateInstanceFromAndUnwrap(string assemblyName, string typeName, object[] activationAttributes) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.AppDomain.CreateInstanceFromAndUnwrap(System.String,System.String,System.Object[])" />
-      <MemberSignature Language="VB.NET" Value="Public Function CreateInstanceFromAndUnwrap (assemblyName As String, typeName As String, activationAttributes As Object()) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ CreateInstanceFromAndUnwrap(System::String ^ assemblyName, System::String ^ typeName, cli::array &lt;System::Object ^&gt; ^ activationAttributes);" />
-      <MemberSignature Language="F#" Value="member this.CreateInstanceFromAndUnwrap : string * string * obj[] -&gt; obj" Usage="appDomain.CreateInstanceFromAndUnwrap (assemblyName, typeName, activationAttributes)" />
+      <MemberSignature Language="C#" Value="public object CreateInstanceFromAndUnwrap (string assemblyName, string typeName, object[] activationAttributes);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object CreateInstanceFromAndUnwrap(string assemblyName, string typeName, object[] activationAttributes) cil managed" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="DocId" Value="M:System.AppDomain.CreateInstanceFromAndUnwrap(System.String,System.String,System.Object[])" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="VB.NET" Value="Public Function CreateInstanceFromAndUnwrap (assemblyName As String, typeName As String, activationAttributes As Object()) As Object" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ CreateInstanceFromAndUnwrap(System::String ^ assemblyName, System::String ^ typeName, cli::array &lt;System::Object ^&gt; ^ activationAttributes);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="F#" Value="member this.CreateInstanceFromAndUnwrap : string * string * obj[] -&gt; obj" Usage="appDomain.CreateInstanceFromAndUnwrap (assemblyName, typeName, activationAttributes)" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public object CreateInstanceFromAndUnwrap (string assemblyFile, string typeName, object[] activationAttributes);" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object CreateInstanceFromAndUnwrap(string assemblyFile, string typeName, object[] activationAttributes) cil managed" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="VB.NET" Value="Public Function CreateInstanceFromAndUnwrap (assemblyFile As String, typeName As String, activationAttributes As Object()) As Object" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ CreateInstanceFromAndUnwrap(System::String ^ assemblyFile, System::String ^ typeName, cli::array &lt;System::Object ^&gt; ^ activationAttributes);" FrameworkAlternate="netcore-3.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2451,6 +2484,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2464,12 +2498,14 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="assemblyName" Type="System.String" />
-        <Parameter Name="typeName" Type="System.String" />
-        <Parameter Name="activationAttributes" Type="System.Object[]" />
+        <Parameter Name="assemblyName" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="assemblyFile" Type="System.String" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="typeName" Type="System.String" Index="1" FrameworkAlternate="netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="activationAttributes" Type="System.Object[]" Index="2" FrameworkAlternate="netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="assemblyName">The file name and path of the assembly that defines the requested type.</param>
+        <param name="assemblyFile">To be added.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly (see the <see cref="P:System.Type.FullName" /> property).</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object that specifies the URL that is required to activate a remote object.  
   
@@ -2526,6 +2562,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2552,10 +2589,10 @@
         <param name="assemblyFile">The file name and path of the assembly that defines the requested type.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <param name="ignoreCase">A Boolean value specifying whether to perform a case-sensitive search or not.</param>
-        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <c>typeName</c> constructor. If <c>bindingAttr</c> is zero, a case-sensitive search for public constructors is conducted.</param>
-        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects through reflection. If <c>binder</c> is null, the default binder is used.</param>
-        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <c>args</c> must be an empty array or null.</param>
-        <param name="culture">Culture-specific information that governs the coercion of <c>args</c> to the formal types declared for the <c>typeName</c> constructor. If <c>culture</c> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
+        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <paramref name="typeName" /> constructor. If <paramref name="bindingAttr" /> is zero, a case-sensitive search for public constructors is conducted.</param>
+        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects through reflection. If <paramref name="binder" /> is null, the default binder is used.</param>
+        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <paramref name="args" /> must be an empty array or null.</param>
+        <param name="culture">Culture-specific information that governs the coercion of <paramref name="args" /> to the formal types declared for the <paramref name="typeName" /> constructor. If <paramref name="culture" /> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object that specifies the URL that is required to activate a remote object.  
   
  This parameter is related to client-activated objects. Client activation is a legacy technology that is retained for backward compatibility but is not recommended for new development. Distributed applications should instead use Windows Communication Foundation.</param>
@@ -2646,14 +2683,14 @@
         <param name="assemblyName">The file name and path of the assembly that defines the requested type.</param>
         <param name="typeName">The fully qualified name of the requested type, including the namespace but not the assembly, as returned by the <see cref="P:System.Type.FullName" /> property.</param>
         <param name="ignoreCase">A Boolean value specifying whether to perform a case-sensitive search or not.</param>
-        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <c>typeName</c> constructor. If <c>bindingAttr</c> is zero, a case-sensitive search for public constructors is conducted.</param>
-        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects through reflection. If <c>binder</c> is null, the default binder is used.</param>
-        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <c>args</c> must be an empty array or null.</param>
-        <param name="culture">Culture-specific information that governs the coercion of <c>args</c> to the formal types declared for the <c>typeName</c> constructor. If <c>culture</c> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
+        <param name="bindingAttr">A combination of zero or more bit flags that affect the search for the <paramref name="typeName" /> constructor. If <paramref name="bindingAttr" /> is zero, a case-sensitive search for public constructors is conducted.</param>
+        <param name="binder">An object that enables the binding, coercion of argument types, invocation of members, and retrieval of <see cref="T:System.Reflection.MemberInfo" /> objects through reflection. If <paramref name="binder" /> is null, the default binder is used.</param>
+        <param name="args">The arguments to pass to the constructor. This array of arguments must match in number, order, and type the parameters of the constructor to invoke. If the default constructor is preferred, <paramref name="args" /> must be an empty array or null.</param>
+        <param name="culture">Culture-specific information that governs the coercion of <paramref name="args" /> to the formal types declared for the <paramref name="typeName" /> constructor. If <paramref name="culture" /> is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> for the current thread is used.</param>
         <param name="activationAttributes">An array of one or more attributes that can participate in activation. Typically, an array that contains a single <see cref="T:System.Runtime.Remoting.Activation.UrlAttribute" /> object that specifies the URL that is required to activate a remote object.  
   
  This parameter is related to client-activated objects. Client activation is a legacy technology that is retained for backward compatibility but is not recommended for new development. Distributed applications should instead use Windows Communication Foundation.</param>
-        <param name="securityAttributes">Information used to authorize creation of <c>typeName</c>.</param>
+        <param name="securityAttributes">Information used to authorize creation of <paramref name="typeName" />.</param>
         <summary>Creates a new instance of the specified type defined in the specified assembly file.</summary>
         <returns>The requested object, or <see langword="null" /> if <paramref name="typeName" /> is not found.</returns>
         <remarks>
@@ -3023,7 +3060,7 @@
       <Docs>
         <param name="name">The unique identity of the dynamic assembly.</param>
         <param name="access">The mode in which the dynamic assembly will be accessed.</param>
-        <param name="dir">The name of the directory where the assembly will be saved. If <c>dir</c> is <see langword="null" />, the directory defaults to the current directory.</param>
+        <param name="dir">The name of the directory where the assembly will be saved. If <paramref name="dir" /> is <see langword="null" />, the directory defaults to the current directory.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, and storage directory.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
         <remarks>
@@ -3164,7 +3201,7 @@
       <Docs>
         <param name="name">The unique identity of the dynamic assembly.</param>
         <param name="access">The mode in which the dynamic assembly will be accessed.</param>
-        <param name="dir">The name of the directory where the assembly will be saved. If <c>dir</c> is <see langword="null" />, the directory defaults to the current directory.</param>
+        <param name="dir">The name of the directory where the assembly will be saved. If <paramref name="dir" /> is <see langword="null" />, the directory defaults to the current directory.</param>
         <param name="evidence">The evidence supplied for the dynamic assembly. The evidence is used unaltered as the final set of evidence used for policy resolution.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, storage directory, and evidence.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
@@ -3329,7 +3366,7 @@
       <Docs>
         <param name="name">The unique identity of the dynamic assembly.</param>
         <param name="access">The mode in which the dynamic assembly will be accessed.</param>
-        <param name="dir">The name of the directory where the dynamic assembly will be saved. If <c>dir</c> is <see langword="null" />, the current directory is used.</param>
+        <param name="dir">The name of the directory where the dynamic assembly will be saved. If <paramref name="dir" /> is <see langword="null" />, the current directory is used.</param>
         <param name="isSynchronized">
           <see langword="true" /> to synchronize the creation of modules, types, and members in the dynamic assembly; otherwise, <see langword="false" />.</param>
         <param name="assemblyAttributes">An enumerable list of attributes to be applied to the assembly, or <see langword="null" /> if there are no attributes.</param>
@@ -3498,7 +3535,7 @@
       <Docs>
         <param name="name">The unique identity of the dynamic assembly.</param>
         <param name="access">The mode in which the dynamic assembly will be accessed.</param>
-        <param name="dir">The name of the directory where the assembly will be saved. If <c>dir</c> is <see langword="null" />, the directory defaults to the current directory.</param>
+        <param name="dir">The name of the directory where the assembly will be saved. If <paramref name="dir" /> is <see langword="null" />, the directory defaults to the current directory.</param>
         <param name="requiredPermissions">The required permissions request.</param>
         <param name="optionalPermissions">The optional permissions request.</param>
         <param name="refusedPermissions">The refused permissions request.</param>
@@ -3587,7 +3624,7 @@
       <Docs>
         <param name="name">The unique identity of the dynamic assembly.</param>
         <param name="access">The mode in which the dynamic assembly will be accessed.</param>
-        <param name="dir">The name of the directory where the assembly will be saved. If <c>dir</c> is <see langword="null" />, the directory defaults to the current directory.</param>
+        <param name="dir">The name of the directory where the assembly will be saved. If <paramref name="dir" /> is <see langword="null" />, the directory defaults to the current directory.</param>
         <param name="evidence">The evidence supplied for the dynamic assembly. The evidence is used unaltered as the final set of evidence used for policy resolution.</param>
         <param name="requiredPermissions">The required permissions request.</param>
         <param name="optionalPermissions">The optional permissions request.</param>
@@ -3683,7 +3720,7 @@
       <Docs>
         <param name="name">The unique identity of the dynamic assembly.</param>
         <param name="access">The mode in which the dynamic assembly will be accessed.</param>
-        <param name="dir">The name of the directory where the dynamic assembly will be saved. If <c>dir</c> is <see langword="null" />, the directory defaults to the current directory.</param>
+        <param name="dir">The name of the directory where the dynamic assembly will be saved. If <paramref name="dir" /> is <see langword="null" />, the directory defaults to the current directory.</param>
         <param name="evidence">The evidence supplied for the dynamic assembly. The evidence is used unaltered as the final set of evidence used for policy resolution.</param>
         <param name="requiredPermissions">The required permissions request.</param>
         <param name="optionalPermissions">The optional permissions request.</param>
@@ -3778,7 +3815,7 @@
       <Docs>
         <param name="name">The unique identity of the dynamic assembly.</param>
         <param name="access">The mode in which the dynamic assembly will be accessed.</param>
-        <param name="dir">The name of the directory where the dynamic assembly will be saved. If <c>dir</c> is <see langword="null" />, the current directory is used.</param>
+        <param name="dir">The name of the directory where the dynamic assembly will be saved. If <paramref name="dir" /> is <see langword="null" />, the current directory is used.</param>
         <param name="evidence">The evidence that is supplied for the dynamic assembly. The evidence is used unaltered as the final set of evidence used for policy resolution.</param>
         <param name="requiredPermissions">The required permissions request.</param>
         <param name="optionalPermissions">The optional permissions request.</param>
@@ -5165,7 +5202,7 @@
         <permission cref="T:System.Security.SecurityCriticalAttribute">Requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
         <altmember cref="T:System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs" />
         <altmember cref="E:System.AppDomain.UnhandledException" />
-        <related type="Article" href="http://msdn.microsoft.com/library/66f002b8-a97d-4a6e-a503-2cec01689113">How to: Receive First-Chance Exception Notifications</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/66f002b8-a97d-4a6e-a503-2cec01689113">How to: Receive First-Chance Exception Notifications</related>
       </Docs>
     </Member>
     <Member MemberName="FriendlyName">
@@ -5305,8 +5342,11 @@
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Obsolete("AppDomain.GetCurrentThreadId has been deprecated because it does not provide a stable Id when managed threads are running on fibers (aka lightweight threads). To get a stable identifier for a managed thread, use the ManagedThreadId property on Thread.'")</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("AppDomain.GetCurrentThreadId has been deprecated because it does not provide a stable Id when managed threads are running on fibers (aka lightweight threads). To get a stable identifier for a managed thread, use the ManagedThreadId property on Thread.  http://go.microsoft.com/fwlink/?linkid=14202", false)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Obsolete("AppDomain.GetCurrentThreadId has been deprecated because it does not provide a stable Id when managed threads are running on fibers (aka lightweight threads). To get a stable identifier for a managed thread, use the ManagedThreadId property on Thread.  https://go.microsoft.com/fwlink/?linkid=14202", false)</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -6419,8 +6459,8 @@
         </remarks>
         <exception cref="T:System.ArgumentException">The current process attempted to assign the value <see langword="false" /> to this property.</exception>
         <permission cref="T:System.Security.SecurityCriticalAttribute">Requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
-        <related type="Article" href="http://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
-        <related type="Article" href="http://msdn.microsoft.com/library/02119ab6-1e91-448e-97ad-e7b2e5c4bbbd">&lt;appdomainResourceMonitoring&gt; Element</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/02119ab6-1e91-448e-97ad-e7b2e5c4bbbd">&lt;appdomainResourceMonitoring&gt; Element</related>
       </Docs>
     </Member>
     <Member MemberName="MonitoringSurvivedMemorySize">
@@ -6466,7 +6506,7 @@
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see langword="static" /> (<see langword="Shared" /> in Visual Basic) <see cref="P:System.AppDomain.MonitoringIsEnabled" /> property is set to <see langword="false" />.</exception>
         <permission cref="T:System.Security.SecurityCriticalAttribute">Requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
-        <related type="Article" href="http://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
       </Docs>
     </Member>
     <Member MemberName="MonitoringSurvivedProcessMemorySize">
@@ -6512,7 +6552,7 @@
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see langword="static" /> (<see langword="Shared" /> in Visual Basic) <see cref="P:System.AppDomain.MonitoringIsEnabled" /> property is set to <see langword="false" />.</exception>
         <permission cref="T:System.Security.SecurityCriticalAttribute">Requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
-        <related type="Article" href="http://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
       </Docs>
     </Member>
     <Member MemberName="MonitoringTotalAllocatedMemorySize">
@@ -6551,7 +6591,7 @@
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The <see langword="static" /> (<see langword="Shared" /> in Visual Basic) <see cref="P:System.AppDomain.MonitoringIsEnabled" /> property is set to <see langword="false" />.</exception>
         <permission cref="T:System.Security.SecurityCriticalAttribute">Requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
-        <related type="Article" href="http://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
       </Docs>
     </Member>
     <Member MemberName="MonitoringTotalProcessorTime">
@@ -6601,7 +6641,7 @@
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see langword="static" /> (<see langword="Shared" /> in Visual Basic) <see cref="P:System.AppDomain.MonitoringIsEnabled" /> property is set to <see langword="false" />.</exception>
         <permission cref="T:System.Security.SecurityCriticalAttribute">Requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
-        <related type="Article" href="http://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/318bedf8-7f35-4f00-b34a-2b7b8e3fa315">Application Domain Resource Monitoring</related>
       </Docs>
     </Member>
     <Member MemberName="PermissionSet">
@@ -6619,6 +6659,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -6695,7 +6736,7 @@
  Beginning with the .NET Framework version 2.0, this event is raised in each application domain that registers an event handler.  
   
 > [!NOTE]
->  The total execution time of all <xref:System.AppDomain.ProcessExit> event handlers is limited, just as the total execution time of all finalizers is limited at process shutdown. The default is two seconds. An unmanaged host can change this execution time by calling the [ICLRPolicyManager::SetTimeout](~/docs/framework/unmanaged-api/hosting/iclrpolicymanager-settimeout-method.md) method with the [OPR_ProcessExit](~/docs/framework/unmanaged-api/hosting/eclroperation-enumeration.md) enumeration value.  
+>  In .NET Framework, the total execution time of all <xref:System.AppDomain.ProcessExit> event handlers is limited, just as the total execution time of all finalizers is limited at process shutdown. The default is two seconds. An unmanaged host can change this execution time by calling the [ICLRPolicyManager::SetTimeout](~/docs/framework/unmanaged-api/hosting/iclrpolicymanager-settimeout-method.md) method with the [OPR_ProcessExit](~/docs/framework/unmanaged-api/hosting/eclroperation-enumeration.md) enumeration value. This time limit does not exist in .NET Core.  
   
  In the .NET Framework versions 1.0 and 1.1, this event is raised only in the default application domain, and only if an event handler is registered in the default application domain.  
   
@@ -7025,11 +7066,14 @@
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Obsolete("Use AppDomainSetup.SetCachePath")</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("AppDomain.SetCachePath has been deprecated. Please investigate the use of AppDomainSetup.CachePath instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Obsolete("AppDomain.SetCachePath has been deprecated. Please investigate the use of AppDomainSetup.CachePath instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -7221,11 +7265,14 @@
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Obsolete("Use AppDomainSetup.DynamicBase")</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("AppDomain.SetDynamicBase has been deprecated. Please investigate the use of AppDomainSetup.DynamicBase instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Obsolete("AppDomain.SetDynamicBase has been deprecated. Please investigate the use of AppDomainSetup.DynamicBase instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -7346,11 +7393,14 @@
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Obsolete("Use AppDomainSetup.ShadowCopyFiles")</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("AppDomain.SetShadowCopyFiles has been deprecated. Please investigate the use of AppDomainSetup.ShadowCopyFiles instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Obsolete("AppDomain.SetShadowCopyFiles has been deprecated. Please investigate the use of AppDomainSetup.ShadowCopyFiles instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -7412,11 +7462,14 @@
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Obsolete("Use AppDomainSetup.ShadowCopyDirectories")</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
           <AttributeName>System.Obsolete("AppDomain.SetShadowCopyPath has been deprecated. Please investigate the use of AppDomainSetup.ShadowCopyDirectories instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Obsolete("AppDomain.SetShadowCopyPath has been deprecated. Please investigate the use of AppDomainSetup.ShadowCopyDirectories instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -7530,6 +7583,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -7956,7 +8010,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This event provides notification of uncaught exceptions. It allows the application to log information about the exception before the system default handler reports the exception to the user and terminates the application. If sufficient information about the state of the application is available, other actions may be undertaken — such as saving program data for later recovery. Caution is advised, because program data can become corrupted when exceptions are not handled.  
+ This event provides notification of uncaught exceptions. It allows the application to log information about the exception before the system default handler reports the exception to the user and terminates the application. If sufficient information about the state of the application is available, other actions may be undertaken - such as saving program data for later recovery. Caution is advised, because program data can become corrupted when exceptions are not handled.  
   
 > [!NOTE]
 >  In the .NET Framework versions 1.0 and 1.1, application termination and debugging options are reported to the user before this event is raised, rather than after.  
