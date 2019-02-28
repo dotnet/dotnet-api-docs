@@ -20,8 +20,92 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+      <format type="text/markdown"><![CDATA[
+      Contains extension methods for the <see xref="T:Windows.Storage.IStorageFile"/> and <see xref="T:Windows.Storage.IStorageFolder"/> interfaces in the Windows Runtime when developing Windows Store apps.
+      ]]></format>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+      ## Remarks
+
+These extension methods are available only when you develop Windows Store apps. The methods provide convenient ways of opening files for reading or writing in Windows Store apps. You do not create an instance of the WindowsRuntimeStorageExtensions class; instead, you use these methods from instances of the IStorageFile and IStorageFolder interfaces.
+
+The WindowsRuntimeStorageExtensions class contains two methods that extend IStorageFile for reading or writing:
+
+  - [OpenStreamForReadAsync(IStorageFile)](/dotnet/api/system.io.windowsruntimestorageextensions.openstreamforreadasync?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStorageExtensions_OpenStreamForReadAsync_Windows_Storage_IStorageFile_)
+  - [OpenStreamForWriteAsync(IStorageFile)](/dotnet/api/system.io.windowsruntimestorageextensions.openstreamforreadasync?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStorageExtensions_OpenStreamForReadAsync_Windows_Storage_IStorageFolder_System_String_)
+
+The WindowsRuntimeStorageExtensions class contains two methods that extend IStorageFolder for reading and writing:
+  - [OpenStreamForReadAsync(IStorageFolder, String)](/dotnet/api/system.io.windowsruntimestorageextensions.openstreamforwriteasync?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStorageExtensions_OpenStreamForWriteAsync_Windows_Storage_IStorageFile_)
+  - [OpenStreamForWriteAsync(IStorageFolder, String, CreationCollisionOption)](/dotnet/api/system.io.windowsruntimestorageextensions.openstreamforwriteasync?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStorageExtensions_OpenStreamForWriteAsync_Windows_Storage_IStorageFolder_System_String_Windows_Storage_CreationCollisionOption_)
+
+## Examples
+
+The following example shows how to open a file in the application data as a [Stream](/dotnet/api/system.io.stream) in a Windows Store app, and write to it by using an instance of the [StreamWriter](/dotnet/api/system.io.streamwriter) class. It then reads the contents for the file by using an instance of the [StreamReader](/dotnet/api/system.io.streamreader) class.
+
+```C#
+using System;
+using System.IO;
+using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+namespace ExampleApplication
+{
+    public sealed partial class BlankPage : Page
+    {
+        public BlankPage()
+        {
+            this.InitializeComponent();
+        }
+
+        private async void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (StreamWriter writer = 
+                new StreamWriter(await ApplicationData.Current.LocalFolder.OpenStreamForWriteAsync(
+                "testfile.txt",  CreationCollisionOption.OpenIfExists)))
+            {
+                await writer.WriteLineAsync("new entry");
+                await writer.WriteLineAsync(UserText.Text);
+            }
+        }
+
+        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            StorageFile openedFile = await ApplicationData.Current.LocalFolder.GetFileAsync("testfile.txt");
+            using (StreamReader reader = new StreamReader(await openedFile.OpenStreamForReadAsync()))
+            {
+                Results.Text = await reader.ReadToEndAsync();
+            }
+        }
+    }
+}
+```
+
+The next example shows the XAML code that is associated with the previous example. 
+
+```XAML
+<Page
+    x:Class="ExampleApplication.BlankPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ExampleApplication"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="Provide text to write to file:"></TextBlock>
+        <TextBox Name="UserText" Width="400"></TextBox>
+        <Button Name="CreateButton" Content="Create File" Click="CreateButton_Click"></Button>
+        <Button Name="VerifyButton" Content="Verify Contents" Click="VerifyButton_Click"></Button>
+        <TextBlock Name="Results"></TextBlock>
+    </StackPanel>
+</Page>
+```
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="CreateSafeFileHandle">
@@ -157,10 +241,96 @@
         <Parameter Name="windowsRuntimeFile" Type="Windows.Storage.IStorageFile" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="windowsRuntimeFile">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="windowsRuntimeFile">The Windows Runtime <see xref="T:Windows.Storage.IStorageFile"/> object to read from.</param>
+        <summary>Retrieves a stream for reading from a specified file.</summary>
+        <returns>A task that represents the asynchronous read operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+#### Usage Note
+In Visual Basic and C#, you can call this method as an instance method on any object of type IStorageFile. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+
+## Exceptions
+
+| Exception | Condition |
+|-----------|-----------|
+| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **windowsRuntimeFile** is *null*. |
+| [IOException](/dotnet/api/system.io.ioexception) | The file could not be opened or retrieved as a stream.|
+
+## Examples
+
+The following example shows how to open a file as a [Stream](/dotnet/api/system.io.stream) in a Windows Store app, and read its contents by using an instance of the [StreamReader](/dotnet/api/system.io.streamreader) class.
+
+```C#
+using System;
+using System.IO;
+using System.Text;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+namespace ExampleApplication
+{
+    public sealed partial class BlankPage : Page
+    {
+        public BlankPage()
+        {
+            this.InitializeComponent();
+        }
+
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            StringBuilder contents = new StringBuilder();
+            string nextLine;
+            int lineCounter = 1;
+
+            var openPicker = new FileOpenPicker();
+            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            openPicker.FileTypeFilter.Add(".txt");
+            StorageFile selectedFile = await openPicker.PickSingleFileAsync();
+
+            using (StreamReader reader = new StreamReader(await selectedFile.OpenStreamForReadAsync()))
+            {
+                while ((nextLine = await reader.ReadLineAsync()) != null)
+                {
+                    contents.AppendFormat("{0}. ", lineCounter);
+                    contents.Append(nextLine);
+                    contents.AppendLine();
+                    lineCounter++;
+                    if (lineCounter > 3)
+                    {
+                        contents.AppendLine("Only first 3 lines shown.");
+                        break;
+                    }
+                }
+            }
+            DisplayContentsBlock.Text = contents.ToString();
+        }
+    }
+}
+```
+
+The next example shows the XAML code that is associated with the previous example. 
+
+```XAML
+<Page
+    x:Class="ExampleApplication.BlankPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ExampleApplication"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="Display lines from a file."></TextBlock>
+        <Button Content="Load File" Click="Button_Click_1"></Button>
+        <TextBlock Name="DisplayContentsBlock"></TextBlock>
+    </StackPanel>
+</Page>
+```
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="OpenStreamForReadAsync">
@@ -189,11 +359,83 @@
         <Parameter Name="relativePath" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="rootDirectory">To be added.</param>
-        <param name="relativePath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="rootDirectory">The Windows Runtime <see xref="T:Windows.Storage.IStorageFile"/> object that contains the file to read from.</param>
+        <param name="relativePath">The path, relative to the root folder, to the file to read from.</param>
+        <summary>Retrieves a stream for reading from a file in the specified parent folder.</summary>
+        <returns>A task that represents the asynchronous read operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+          #### Usage Note
+In Visual Basic and C#, you can call this method as an instance method on any object of type IStorageFolder. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+
+## Exceptions
+
+| Exception | Condition |
+|-----------|-----------|
+| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **rootDirectory** or **relativePath** is *null*. |
+| [ArgumentException](/dotnet/api/system.argumentexception) | **relativePath** is empty or contains only white-space characters. |
+| [IOException](/dotnet/api/system.io.ioexception) | The file could not be opened or retrieved as a stream.|
+
+## Examples
+
+The following example shows how to open a file as a [Stream](/dotnet/api/system.io.stream) in a Windows Store app, and read its contents by using an instance of the [StreamReader](/dotnet/api/system.io.streamreader) class.
+
+```C#
+using System;
+using System.IO;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+namespace ExampleApplication
+{
+    public sealed partial class BlankPage : Page
+    {
+        public BlankPage()
+        {
+            this.InitializeComponent();
+            CreateTestFile();
+        }
+
+        private async void CreateTestFile()
+        {
+            StorageFile newFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("testfile.txt");
+            await FileIO.WriteTextAsync(newFile, "example content in file");
+        }
+
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            using (StreamReader reader = new StreamReader(
+                await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("testfile.txt")))
+            {
+                string contents = await reader.ReadToEndAsync();   
+                DisplayContentsBlock.Text = contents;
+            }
+        }
+    }
+}
+```
+The next example shows the XAML code that is associated with the previous example. 
+
+```XAML
+<Page
+    x:Class="ExampleApplication.BlankPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ExampleApplication"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Button Content="Open File" Click="Button_Click_1"></Button>
+        <TextBlock Name="DisplayContentsBlock"></TextBlock>
+    </StackPanel>
+</Page>
+```
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="OpenStreamForWriteAsync">
@@ -221,10 +463,87 @@
         <Parameter Name="windowsRuntimeFile" Type="Windows.Storage.IStorageFile" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="windowsRuntimeFile">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="windowsRuntimeFile">The Windows Runtime <see xref="T:Windows.Storage.IStorageFile"/> object to write to.</param>
+        <summary>Retrieves a stream for writing to a specified file.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+          #### Usage Note
+In Visual Basic and C#, you can call this method as an instance method on any object of type IStorageFile. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+
+## Exceptions
+
+| Exception | Condition |
+|-----------|-----------|
+| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **windowsRuntimeFile ** is *null*. |
+| [IOException](/dotnet/api/system.io.ioexception) | The file could not be opened or retrieved as a stream.|
+
+## Examples
+
+The following example shows how to open a file as a [Stream](/dotnet/api/system.io.stream) in a Windows Store app, and write to it by using an instance of the [StreamReader](/dotnet/api/system.io.streamreader) class.
+
+```C#
+using System;
+using System.IO;
+using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+namespace ExampleApplication
+{
+    public sealed partial class BlankPage : Page
+    {
+        public BlankPage()
+        {
+            this.InitializeComponent();
+        }
+
+        private async void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            StorageFile newFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("testfile3.txt");
+
+            using (StreamWriter writer = new StreamWriter(await newFile.OpenStreamForWriteAsync()))
+            {
+                await writer.WriteLineAsync("new entry");
+                await writer.WriteLineAsync(UserText.Text);
+            }
+        }
+
+        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            StorageFile openedFile = await ApplicationData.Current.LocalFolder.GetFileAsync("testfile3.txt");
+            using (StreamReader reader = new StreamReader(await openedFile.OpenStreamForReadAsync()))
+            {
+                Results.Text = await reader.ReadToEndAsync();
+            }
+        }
+    }
+}
+```
+
+The next example shows the XAML code that is associated with the previous example. 
+
+```XAML
+<Page
+    x:Class="ExampleApplication.BlankPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ExampleApplication"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="Provide text to write to file:"></TextBlock>
+        <TextBox Name="UserText" Width="400"></TextBox>
+        <Button Name="CreateButton" Content="Create File" Click="CreateButton_Click"></Button>
+        <Button Name="VerifyButton" Content="Verify Contents" Click="VerifyButton_Click"></Button>
+        <TextBlock Name="Results"></TextBlock>
+    </StackPanel>
+</Page>
+```
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="OpenStreamForWriteAsync">
@@ -253,12 +572,89 @@
         <Parameter Name="creationCollisionOption" Type="Windows.Storage.CreationCollisionOption" />
       </Parameters>
       <Docs>
-        <param name="rootDirectory">To be added.</param>
-        <param name="relativePath">To be added.</param>
-        <param name="creationCollisionOption">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="rootDirectory">The Windows Runtime <see xref="T:Windows.Storage.IStorageFile"/> object that contains the file to write to.</param>
+        <param name="relativePath">The path, relative to the root folder, to the file to write to.</param>
+        <param name="creationCollisionOption">The Windows Runtime <see xref="T:Windows.Storage.CreationCollisionOption"/> enumeration value that specifies the behavior to use when the name of the file to create is the same as the name of an existing file.</param>
+        <summary>Retrieves a stream for writing to a file in the specified parent folder.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
+        <remarks><format type="text/markdown"><![CDATA[
+          #### Usage Note
+In Visual Basic and C#, you can call this method as an instance method on any object of type IStorageFolder. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+
+## Exceptions
+
+| Exception | Condition |
+|-----------|-----------|
+| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **rootDirectory** or **relativePath** is *null*. |
+| [ArgumentException](/dotnet/api/system.argumentexception) | **relativePath** is empty or contains only white-space characters. |
+| [IOException](/dotnet/api/system.io.ioexception) | The file could not be opened or retrieved as a stream.|
+
+## Examples
+
+The following example shows how to open a file as a [Stream](/dotnet/api/system.io.stream) in a Windows Store app, and write to it by using an instance of the [StreamReader](/dotnet/api/system.io.streamreader) class.
+
+```C#
+using System;
+using System.IO;
+using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+namespace ExampleApplication
+{
+    public sealed partial class BlankPage : Page
+    {
+        public BlankPage()
+        {
+            this.InitializeComponent();
+        }
+
+        private async void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            StorageFile newFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("testfile3.txt");
+
+            using (StreamWriter writer = new StreamWriter(await newFile.OpenStreamForWriteAsync()))
+            {
+                await writer.WriteLineAsync("new entry");
+                await writer.WriteLineAsync(UserText.Text);
+            }
+        }
+
+        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            StorageFile openedFile = await ApplicationData.Current.LocalFolder.GetFileAsync("testfile3.txt");
+            using (StreamReader reader = new StreamReader(await openedFile.OpenStreamForReadAsync()))
+            {
+                Results.Text = await reader.ReadToEndAsync();
+            }
+        }
+    }
+}
+```
+
+The next example shows the XAML code that is associated with the previous example. 
+
+```XAML
+<Page
+    x:Class="ExampleApplication.BlankPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ExampleApplication"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="Provide text to write to file:"></TextBlock>
+        <TextBox Name="UserText" Width="400"></TextBox>
+        <Button Name="CreateButton" Content="Create File" Click="CreateButton_Click"></Button>
+        <Button Name="VerifyButton" Content="Verify Contents" Click="VerifyButton_Click"></Button>
+        <TextBlock Name="Results"></TextBlock>
+    </StackPanel>
+</Page>
+```
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
