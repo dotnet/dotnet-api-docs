@@ -25,97 +25,33 @@
       <format type="text/markdown"><![CDATA[
 ## Remarks
 
-These extension methods are available only when you develop Windows Store apps. The methods provide convenient ways of working with streams in Windows Store apps. You do not create an instance of the WindowsRuntimeStreamExtensions class; instead, you use these methods from instances of the [IInputStream](/uwp/api/Windows.Storage.Streams.IInputStream) and [IOutputStream](/uwp/api/Windows.Storage.Streams.IOutputStream) interfaces and the [Stream](/dotnet/api/system.io.stream) class.
+These extension methods are available only when you develop Windows Store apps. The methods provide convenient ways of working with streams in Windows Store apps. You do not create an instance of the WindowsRuntimeStreamExtensions class; instead, you use these methods from instances of the <xref:Windows.Storage.Streams.IInputStream> and <xref:Windows.Storage.Streams.IOutputStream> interfaces and the <xref:System.IO.Stream> class.
 
-The WindowsRuntimeStreamExtensions class contains two methods for converting a managed [Stream](/dotnet/api/system.io.stream) object to a stream in the Windows Runtime:
+The WindowsRuntimeStreamExtensions class contains two methods for converting a managed <xref:System.IO.Stream> object to a stream in the Windows Runtime:
 
-  - [AsInputStream](/dotnet/api/system.io.windowsruntimestreamextensions.asinputstream?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsInputStream_System_IO_Stream_)
-  - [AsOutputStream](/dotnet/api/system.io.windowsruntimestreamextensions.asoutputstream?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsOutputStream_System_IO_Stream_)
+  - <xref:System.IO.WindowsRuntimeStreamExtensions.AsInputStream%2A>
+  - <xref:System.IO.WindowsRuntimeStreamExtensions.AsOutputStream%2A>
 
-The WindowsRuntimeStreamExtensions class contains three overloaded methods for converting a stream in the Windows Runtime to a [Stream](/dotnet/api/system.io.stream) object:
+The WindowsRuntimeStreamExtensions class contains three overloaded methods for converting a stream in the Windows Runtime to a <xref:System.IO.Stream> object:
 
-  - [AsStream](/dotnet/api/system.io.windowsruntimestreamextensions.asstream?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStream_Windows_Storage_Streams_IRandomAccessStream_)
-  - [AsStreamForRead](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforread?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStreamForRead_Windows_Storage_Streams_IInputStream_)
-  - [AsStreamForWrite](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforwrite?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStreamForWrite_Windows_Storage_Streams_IOutputStream_)
+  - <xref:System.IO.WindowsRuntimeStreamExtensions.AsStream%2A>
+  - <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead%2A>
+  - <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite%2A>
 
-Starting with the .NET Framework 4.5.1, the WindowsRuntimeStreamExtensions class contains a method for converting a stream to a Windows Runtime [RandomAccessStream](/uwp/api/Windows.Storage.Streams.RandomAccessStream):
+Starting with the .NET Framework 4.5.1, the WindowsRuntimeStreamExtensions class contains a method for converting a stream to a Windows Runtime <xref:Windows.Storage.Streams.RandomAccessStream>:
 
-  - [WindowsRuntimeStreamExtensions.AsRandomAccessStream(System.IO.Stream) Method](/dotnet/standard/cross-platform/windowsruntimestreamextensions-asrandomaccessstream-method)
+  - <xref:System.IO.WindowsRuntimeStreamExtensions.AsRandomAccessStream%2A>
 
 ## Examples
 
-The following example shows how to use the [AsStreamForWrite](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforwrite?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStreamForWrite_Windows_Storage_Streams_IOutputStream_) and [AsStreamForRead](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforread?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStreamForRead_Windows_Storage_Streams_IInputStream_) methods to convert a managed stream to and from a stream in the Windows Runtime.
+The following example shows how to use the <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite%2A> and <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead%2A>
 
-```C#
-using System;
-using System.IO;
-using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-namespace ExampleApplication
-{
-    public sealed partial class BlankPage : Page
-    {
-        public BlankPage()
-        {
-            this.InitializeComponent();
-        }
-
-        private async void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            StorageFile newFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("testfile.txt");
-            var streamNewFile = await newFile.OpenAsync(FileAccessMode.ReadWrite);
-
-            using (var outputNewFile = streamNewFile.GetOutputStreamAt(0))
-            {
-                using (StreamWriter writer = new StreamWriter(outputNewFile.AsStreamForWrite()))
-                {
-                    await writer.WriteLineAsync("content for new file");
-                    await writer.WriteLineAsync(UserText.Text);
-                }
-            }
-        }
-
-        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
-        {
-            StorageFile openedFile = await ApplicationData.Current.LocalFolder.GetFileAsync("testfile.txt");
-            var streamOpenedFile = await openedFile.OpenAsync(FileAccessMode.Read);
-
-            using (var inputOpenedFile = streamOpenedFile.GetInputStreamAt(0))
-            {
-                using (StreamReader reader = new StreamReader(inputOpenedFile.AsStreamForRead()))
-                {
-                    Results.Text = await reader.ReadToEndAsync();
-                }
-            }
-        }
-    }
-}
-```
+[!code-csharp[windowsruntimestreamextensions#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage.xaml.cs#2)]
+[!code-vb[windowsruntimestreamextensions#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/vb/blankpage.xaml.vb#2)]
 
 Here's the XAML code that is associated with the previous example. 
 
-```XAML
-<Page
-    x:Class="ExampleApplication.BlankPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExampleApplication"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
-    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock Text="Provide text to write to file:"></TextBlock>
-        <TextBox Name="UserText" Width="400"></TextBox>
-        <Button Name="CreateButton" Content="Create File" Click="CreateButton_Click"></Button>
-        <Button Name="VerifyButton" Content="Verify Contents" Click="VerifyButton_Click"></Button>
-        <TextBlock Name="Results"></TextBlock>
-    </StackPanel>
-</Page>
-```
-
+[!code-xaml[windowsruntimestreamextensions#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage.xaml#1)]
       ]]></format>
     </remarks>
   </Docs>
@@ -149,97 +85,25 @@ Here's the XAML code that is associated with the previous example.
         <returns>A Windows Runtime <see xref="T:Windows.Storage.Streams.IInputStream"/> object that represents the converted stream.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-#### Usage Note
-
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
-
-## Exceptions
-
-| Exception | Condition |
-|-----------|-----------|
-| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **stream** is *null*. |
-| [NotSupportedException](/dotnet/api/system.notsupportedexception) | The stream does not support reading. |
+          ## Remarks
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
 ## Examples
 
-The following example shows how to use the [AsInputStream](/dotnet/api/system.io.windowsruntimestreamextensions.asinputstream) and [AsOutputStream](/dotnet/api/system.io.windowsruntimestreamextensions.asoutputstream) methods to convert a managed stream to and from a stream in the Windows Runtime.
+The following example shows how to use the <xref:System.IO.WindowsRuntimeStreamExtensions.AsInputStream%2A> and <xref:System.IO.WindowsRuntimeStreamExtensions.AsOutputStream%2A> methods to convert a managed stream to and from a stream in the Windows Runtime.
 
-```C#
-using System;
-using System.IO;
-using System.Text;
-using Windows.Storage;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-
-namespace ExampleApplication
-{
-    public sealed partial class BlankPage : Page
-    {
-        System.Text.UnicodeEncoding ue;
-        byte[] bytesToWrite;
-        byte[] bytesToAdd;
-        int totalBytes;
-
-        public BlankPage()
-        {
-            this.InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            ue = new System.Text.UnicodeEncoding();
-            bytesToWrite = ue.GetBytes("example text to write to memory stream");
-            bytesToAdd = ue.GetBytes("text added through datawriter");
-            totalBytes = bytesToWrite.Length + bytesToAdd.Length;
-        }
-
-        private async void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            byte[] bytesRead = new byte[totalBytes];
-            using (MemoryStream memStream = new MemoryStream(totalBytes))
-            {
-                await memStream.WriteAsync(bytesToWrite, 0, bytesToWrite.Length);
-
-                DataWriter writer = new DataWriter(memStream.AsOutputStream());
-                writer.WriteBytes(bytesToAdd);
-                await writer.StoreAsync();
-
-                memStream.Seek(0, SeekOrigin.Begin);
-
-                DataReader reader = new DataReader(memStream.AsInputStream());
-                await reader.LoadAsync((uint)totalBytes);
-                reader.ReadBytes(bytesRead);
-                Results.Text = ue.GetString(bytesRead, 0, bytesRead.Length);
-            }
-        }
-    }
-}
-```
+[!code-csharp[windowsruntimestreamextensions#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage2.xaml.cs#4)]
+[!code-vb[windowsruntimestreamextensions#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/vb/blankpage2.xaml.vb#4)]
 
 Here's the XAML code that is associated with the previous example.
 
-```XAML
-<Page
-    x:Class="ExampleApplication.BlankPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExampleApplication"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
-    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Button Name="CreateButton" Content="Write and read with stream" Click="CreateButton_Click"></Button>
-        <TextBlock Name="Results"></TextBlock>
-    </StackPanel>
-</Page>
-```
+[!code-xaml[windowsruntimestreamextensions#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage2.xaml#3)]
 
           ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="stream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.NotSupportedException">The stream does not support reading.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsOutputStream">
@@ -271,94 +135,23 @@ Here's the XAML code that is associated with the previous example.
         <returns>A Windows Runtime <see xref="T:Windows.Storage.Streams.IOutputStream"/> object that represents the converted stream.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-#### Usage Note
-
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
-
-## Exceptions
-
-| Exception | Condition |
-|-----------|-----------|
-| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **stream** is *null*. |
-| [NotSupportedException](/dotnet/api/system.notsupportedexception) | The stream does not support reading. |
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:System.IO.Stream>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
 ## Examples
-The following example shows how to use the [AsInputStream](/dotnet/api/system.io.windowsruntimestreamextensions.asinputstream) and [AsOutputStream](/dotnet/api/system.io.windowsruntimestreamextensions.asoutputstream) methods to convert a managed stream to and from a stream in the Windows Runtime.
+The following example shows how to use the <xref:System.IO.WindowsRuntimeStreamExtensions.AsInputStream%2A> and <xref:System.IO.WindowsRuntimeStreamExtensions.AsOutputStream%2A> methods to convert a managed stream to and from a stream in the Windows Runtime.
 
-```C#
-using System;
-using System.IO;
-using System.Text;
-using Windows.Storage;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+[!code-csharp[windowsruntimestreamextensions#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage2.xaml.cs#4)]
+[!code-vb[windowsruntimestreamextensions#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/vb/blankpage2.xaml.vb#4)]
 
-namespace ExampleApplication
-{
-    public sealed partial class BlankPage : Page
-    {
-        System.Text.UnicodeEncoding ue;
-        byte[] bytesToWrite;
-        byte[] bytesToAdd;
-        int totalBytes;
-
-        public BlankPage()
-        {
-            this.InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            ue = new System.Text.UnicodeEncoding();
-            bytesToWrite = ue.GetBytes("example text to write to memory stream");
-            bytesToAdd = ue.GetBytes("text added through datawriter");
-            totalBytes = bytesToWrite.Length + bytesToAdd.Length;
-        }
-
-        private async void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            byte[] bytesRead = new byte[totalBytes];
-            using (MemoryStream memStream = new MemoryStream(totalBytes))
-            {
-                await memStream.WriteAsync(bytesToWrite, 0, bytesToWrite.Length);
-
-                DataWriter writer = new DataWriter(memStream.AsOutputStream());
-                writer.WriteBytes(bytesToAdd);
-                await writer.StoreAsync();
-
-                memStream.Seek(0, SeekOrigin.Begin);
-
-                DataReader reader = new DataReader(memStream.AsInputStream());
-                await reader.LoadAsync((uint)totalBytes);
-                reader.ReadBytes(bytesRead);
-                Results.Text = ue.GetString(bytesRead, 0, bytesRead.Length);
-            }
-        }
-    }
-}
-```
 Here's the XAML code that is associated with the previous example.
 
-```XAML
-<Page
-    x:Class="ExampleApplication.BlankPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExampleApplication"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+[!code-xaml[windowsruntimestreamextensions#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage2.xaml#3)]
 
-    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Button Name="CreateButton" Content="Write and read with stream" Click="CreateButton_Click"></Button>
-        <TextBlock Name="Results"></TextBlock>
-    </StackPanel>
-</Page>
-```
           ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="stream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.NotSupportedException">The stream does not support reading.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsRandomAccessStream">
@@ -390,9 +183,11 @@ Here's the XAML code that is associated with the previous example.
         <returns>A Windows Runtime <see xref="T:Windows.Storage.Streams.IRandomAccessStream"/>, which represents the converted stream.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-#### Usage Note
+          ## Remarks
 
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:System.IO.Stream>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+
           ]]></format>
         </remarks>
       </Docs>
@@ -427,21 +222,15 @@ In Visual Basic and C#, you can call this method as an instance method on any ob
         <returns>The converted stream.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-#### Usage Note
+          ## Remarks
 
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:System.IO.Stream>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
-## Exceptions
-
-| Exception | Condition |
-|-----------|-----------|
-| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **windowsRuntimeStream** is *null*. |
-
-## Remarks
-
-A default buffer size of 16,384 bytes is used when converting the stream. To specify a different buffer size, use the [AsStream(IRandomAccessStream, Int32)](/dotnet/api/system.io.windowsruntimestreamextensions.asstream?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStream_Windows_Storage_Streams_IRandomAccessStream_System_Int32_) overload.
+A default buffer size of 16,384 bytes is used when converting the stream. To specify a different buffer size, use the <xref:System.IO.WindowsRuntimeStreamExtensions.AsStream%2A> overload.
           ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="windowsRuntimeStream" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsStream">
@@ -476,24 +265,18 @@ A default buffer size of 16,384 bytes is used when converting the stream. To spe
         <returns>The converted stream.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-#### Usage Note
+          ## Remarks
 
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:System.IO.Stream>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
-## Exceptions
-
-| Exception | Condition |
-|-----------|-----------|
-| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **windowsRuntimeStream** is *null*. |
-| [ArgumentOutOfRangeException](/dotnet/api/system.argumentoutofrangeexception) | **bufferSize** is negative. |
-
-## Remarks
-
-You use this method to specify a buffer size when converting the stream. To use the default buffer size of 16,384 bytes, use the [AsStream(IRandomAccessStream)](/dotnet/api/system.io.windowsruntimestreamextensions.asstream?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStream_Windows_Storage_Streams_IRandomAccessStream_) overload.
+You use this method to specify a buffer size when converting the stream. To use the default buffer size of 16,384 bytes, use the <xref:System.IO.WindowsRuntimeStreamExtensions.AsStream%2A> overload.
 
 In most situations, buffering improves the performance of stream operations. You can disable buffering by setting **bufferSize** to zero, but you should do this only when you are sure that disabling buffering is appropriate for your situation.
           ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="windowsRuntimeStream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.ArgumentOutOfRangeException"><paramref name="bufferSize" /> is negative.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsStreamForRead">
@@ -526,265 +309,33 @@ In most situations, buffering improves the performance of stream operations. You
         <returns>The converted stream.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-#### Usage Note
+          ## Remarks
 
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:System.IO.Stream>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
-## Exceptions
-
-| Exception | Condition |
-|-----------|-----------|
-| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **windowsRuntimeStream** is *null*. |
-
-## Remarks
-
-A default buffer size of 16,384 bytes is used when converting the stream. To specify a different buffer size, use the [AsStreamForRead(IInputStream, Int32)](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforread?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStreamForRead_Windows_Storage_Streams_IInputStream_System_Int32_) overload.
+A default buffer size of 16,384 bytes is used when converting the stream. To specify a different buffer size, use the <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead%2A> overload.
 
 ## Examples
 
-The following example shows how to use the [AsStreamForWrite](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforwrite) and [AsStreamForRead](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforread) methods to convert a managed stream to and from a stream in the Windows Runtime.
+The following example shows how to use the <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite%2A> and <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead%2A> methods to convert a managed stream to and from a stream in the Windows Runtime.
 
-```C#
-using System;
-using System.IO;
-using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+[!code-csharp[windowsruntimestreamextensions#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage.xaml.cs#2)]
+[!code-vb[windowsruntimestreamextensions#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/vb/blankpage.xaml.vb#2)]
 
-namespace ExampleApplication
-{
-    public sealed partial class BlankPage : Page
-    {
-        public BlankPage()
-        {
-            this.InitializeComponent();
-        }
-
-        private async void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            StorageFile newFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("testfile.txt");
-            var streamNewFile = await newFile.OpenAsync(FileAccessMode.ReadWrite);
-
-            using (var outputNewFile = streamNewFile.GetOutputStreamAt(0))
-            {
-                using (StreamWriter writer = new StreamWriter(outputNewFile.AsStreamForWrite()))
-                {
-                    await writer.WriteLineAsync("content for new file");
-                    await writer.WriteLineAsync(UserText.Text);
-                }
-            }
-        }
-
-        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
-        {
-            StorageFile openedFile = await ApplicationData.Current.LocalFolder.GetFileAsync("testfile.txt");
-            var streamOpenedFile = await openedFile.OpenAsync(FileAccessMode.Read);
-
-            using (var inputOpenedFile = streamOpenedFile.GetInputStreamAt(0))
-            {
-                using (StreamReader reader = new StreamReader(inputOpenedFile.AsStreamForRead()))
-                {
-                    Results.Text = await reader.ReadToEndAsync();
-                }
-            }
-        }
-    }
-}
-```
 Here's the XAML code that is associated with the previous example.
 
-```XAML
-<Page
-    x:Class="ExampleApplication.BlankPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExampleApplication"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+[!code-xaml[windowsruntimestreamextensions#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage.xaml#1)]
+[!code-csharp[windowsruntimestreamextensions#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage.xaml.cs#2)]
+[!code-vb[windowsruntimestreamextensions#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/vb/blankpage.xaml.vb#2)]
 
-    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock Text="Provide text to write to file:"></TextBlock>
-        <TextBox Name="UserText" Width="400"></TextBox>
-        <Button Name="CreateButton" Content="Create File" Click="CreateButton_Click"></Button>
-        <Button Name="VerifyButton" Content="Verify Contents" Click="VerifyButton_Click"></Button>
-        <TextBlock Name="Results"></TextBlock>
-    </StackPanel>
-</Page>
-```
-          ]]></format>
-        </remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AsStreamForRead">
-      <MemberSignature Language="C#" Value="public static System.IO.Stream AsStreamForRead (this Windows.Storage.Streams.IInputStream windowsRuntimeStream, int bufferSize);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.IO.Stream AsStreamForRead(class Windows.Storage.Streams.IInputStream windowsRuntimeStream, int32 bufferSize) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead(Windows.Storage.Streams.IInputStream,System.Int32)" />
-      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function AsStreamForRead (windowsRuntimeStream As IInputStream, bufferSize As Integer) As Stream" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::IO::Stream ^ AsStreamForRead(Windows::Storage::Streams::IInputStream ^ windowsRuntimeStream, int bufferSize);" />
-      <MemberSignature Language="F#" Value="static member AsStreamForRead : Windows.Storage.Streams.IInputStream * int -&gt; System.IO.Stream" Usage="System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead (windowsRuntimeStream, bufferSize)" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.0.14.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.IO.Stream</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="windowsRuntimeStream" Type="Windows.Storage.Streams.IInputStream" RefType="this" />
-        <Parameter Name="bufferSize" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="windowsRuntimeStream">The Windows Runtime <see xref="T:Windows.Storage.Streams.IInputStream"/> object to convert.</param>
-        <param name="bufferSize">The size, in bytes, of the buffer. This value cannot be negative, but it can be 0 (zero) to disable buffering.</param>
-        <summary>Converts an input stream in the Windows Runtime to a managed stream in the .NET for Windows 8.x Store apps using the specified buffer size.</summary>
-        <returns>The converted stream.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-#### Usage Note
-
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
-
-## Exceptions
-
-| Exception | Condition |
-|-----------|-----------|
-| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **windowsRuntimeStream** is *null*. |
-| [ArgumentOutOfRangeException] | **bufferSize** is negative. |
-
-## Remarks
-
-You use this method to specify a buffer size when converting the stream. To use the default buffer size of 16,384 bytes, use the [AsStreamForRead(IInputStream)](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforread?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStreamForRead_Windows_Storage_Streams_IInputStream_) overload.
-
-In most situations, buffering improves the performance of stream operations. You can disable buffering by setting **bufferSize** to zero, but you should do this only when you are sure that disabling buffering is appropriate for your situation.]]></format>
-        </remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AsStreamForWrite">
-      <MemberSignature Language="C#" Value="public static System.IO.Stream AsStreamForWrite (this Windows.Storage.Streams.IOutputStream windowsRuntimeStream);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.IO.Stream AsStreamForWrite(class Windows.Storage.Streams.IOutputStream windowsRuntimeStream) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite(Windows.Storage.Streams.IOutputStream)" />
-      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function AsStreamForWrite (windowsRuntimeStream As IOutputStream) As Stream" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::IO::Stream ^ AsStreamForWrite(Windows::Storage::Streams::IOutputStream ^ windowsRuntimeStream);" />
-      <MemberSignature Language="F#" Value="static member AsStreamForWrite : Windows.Storage.Streams.IOutputStream -&gt; System.IO.Stream" Usage="System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite windowsRuntimeStream" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.0.14.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.IO.Stream</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="windowsRuntimeStream" Type="Windows.Storage.Streams.IOutputStream" RefType="this" />
-      </Parameters>
-      <Docs>
-        <param name="windowsRuntimeStream">The Windows Runtime <see xref="T:Windows.Storage.Streams.IOutputStream"/> object to convert.</param>
-        <summary>Converts an output stream in the Windows Runtime to a managed stream in the .NET for Windows 8.x Store apps.</summary>
-        <returns>The converted stream.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-#### Usage Note
-
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
-
-## Exceptions
-
-| Exception | Condition |
-|-----------|-----------|
-| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **windowsRuntimeStream** is *null*. |
-
-## Remarks
-
-A default buffer size of 16,384 bytes is used when converting the stream. To specify a different buffer size, use the [AsStreamForWrite(IOutputStream)](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforwrite?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStreamForWrite_Windows_Storage_Streams_IOutputStream_System_Int32_) overload.
-
-## Examples
-
-The following example shows how to use the [AsStreamForWrite](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforwrite) and [AsStreamForRead](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforread) methods to convert a managed stream to and from a stream in the Windows Runtime.
-
-```C#
-using System;
-using System.IO;
-using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-namespace ExampleApplication
-{
-    public sealed partial class BlankPage : Page
-    {
-        public BlankPage()
-        {
-            this.InitializeComponent();
-        }
-
-        private async void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            StorageFile newFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("testfile.txt");
-            var streamNewFile = await newFile.OpenAsync(FileAccessMode.ReadWrite);
-
-            using (var outputNewFile = streamNewFile.GetOutputStreamAt(0))
-            {
-                using (StreamWriter writer = new StreamWriter(outputNewFile.AsStreamForWrite()))
-                {
-                    await writer.WriteLineAsync("content for new file");
-                    await writer.WriteLineAsync(UserText.Text);
-                }
-            }
-        }
-
-        private async void VerifyButton_Click(object sender, RoutedEventArgs e)
-        {
-            StorageFile openedFile = await ApplicationData.Current.LocalFolder.GetFileAsync("testfile.txt");
-            var streamOpenedFile = await openedFile.OpenAsync(FileAccessMode.Read);
-
-            using (var inputOpenedFile = streamOpenedFile.GetInputStreamAt(0))
-            {
-                using (StreamReader reader = new StreamReader(inputOpenedFile.AsStreamForRead()))
-                {
-                    Results.Text = await reader.ReadToEndAsync();
-                }
-            }
-        }
-    }
-}
-```
 Here's the XAML code that is associated with the previous example.
 
-```XAML
-<Page
-    x:Class="ExampleApplication.BlankPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExampleApplication"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+[!code-xaml[windowsruntimestreamextensions#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestreamextensions/cs/blankpage.xaml#1)]
 
-    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock Text="Provide text to write to file:"></TextBlock>
-        <TextBox Name="UserText" Width="400"></TextBox>
-        <Button Name="CreateButton" Content="Create File" Click="CreateButton_Click"></Button>
-        <Button Name="VerifyButton" Content="Verify Contents" Click="VerifyButton_Click"></Button>
-        <TextBlock Name="Results"></TextBlock>
-    </StackPanel>
-</Page>
-```
           ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="windowsRuntimeStream" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsStreamForWrite">
@@ -819,24 +370,18 @@ Here's the XAML code that is associated with the previous example.
         <returns>The converted stream.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-#### Usage Note
+          ## Remarks
 
-In Visual Basic and C#, you can call this method as an instance method on any object of type [Stream](/dotnet/api/system.io.stream). When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:System.IO.Stream>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
-## Exceptions
-
-| Exception | Condition |
-|-----------|-----------|
-| [ArgumentNullException](/dotnet/api/system.argumentnullexception) | **windowsRuntimeStream** is *null*. |
-| [ArgumentOutOfRangeException] | **bufferSize** is negative. |
-
-## Remarks
-
-You use this method to specify a buffer size when converting the stream. To use the default buffer size of 16,384 bytes, use the [AsStreamForWrite(IOutputStream)](/dotnet/api/system.io.windowsruntimestreamextensions.asstreamforwrite?view=dotnet-uwp-10.0#System_IO_WindowsRuntimeStreamExtensions_AsStreamForWrite_Windows_Storage_Streams_IOutputStream_System_Int32_) overload.
+You use this method to specify a buffer size when converting the stream. To use the default buffer size of 16,384 bytes, use the <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite%2A> overload.
 
 In most situations, buffering improves the performance of stream operations. You can disable buffering by setting **bufferSize** to zero, but you should do this only when you are sure that disabling buffering is appropriate for your situation.
           ]]></format>
         </remarks>
+         <exception cref="T:System.ArgumentNullException"><paramref name="windowsRuntimeStream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.ArgumentOutOfRangeException"><paramref name="bufferSize" /> is negative.</exception>
       </Docs>
     </Member>
   </Members>
