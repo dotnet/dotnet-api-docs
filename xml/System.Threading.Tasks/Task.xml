@@ -5445,21 +5445,40 @@ Task t Status: RanToCompletion, Result: 42
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- You can use `await Task.Run();` in a method to force it to complete asynchronously. If there is a current synchronization context (<xref:System.Threading.SynchronizationContext> object), this will post the remainder of the method's execution back to that context. However, the context will decide how to prioritize this work relative to other work that may be pending. The synchronization context that is present on a UI thread in most UI environments will often prioritize work posted to the context higher than input and rendering work. For this reason, do not rely on `await Task.Yield();` or `await Task.Run();` to keep a UI responsive.  For more information, see the entry [Useful Abstractions Enabled with ContinueWith](http://blogs.msdn.com/b/pfxteam/archive/2008/07/23/8768673.aspx) in the Parallel Programming with .NET blog.  
+`Task.Yield` is used in wrong scenarios very often and that's to try to “refresh” the UI:
 
-A good example of the usage would be a `Windows Forms` application where you would like to execute a lengthy operation, but at the same time release the thread so the UI would be accessible to user. This operation will get run at a later time (at which point, it still may run synchronously) on the current context.
 ```cs
-async void Form_Load(object s, object e) 
-{ 
-    await Task.Run(() => LoadLocalConfiguration());  // unblock the UI before doing potentially lengthy operation
+// Bad code, do not use!!
+async Task LongRunningCpuBoundWorkAsync()
+{
+  // This method is called directly from the UI, and
+  //  does lots of CPU-bound work.
+  // Since this blocks the UI, this method is given
+  //  an async signature and periodically "yields".
+  for (int i = 0; i != 1000000; ++i)
+  {
+    ... // CPU-bound work.
+    await Task.Yield();
+  }
 }
 ```
 
-```vb
-Private Async Sub Form_Load(ByVal s As Object, ByVal e As Object)
-    Await Task.Run(Function() LoadLocalConfiguration()) ' unblock the UI before doing potentially lengthy operation    
-End Sub
+However, this approach will not work. The reason is that UI message loops are priority queues, and any scheduled continuations have a much higher priority than “repaint the window”. So, the `Yield` schedules the continuation and returns to the message loop, and the message loop immediately executes that continuation without processing any of its `WM_PAINT` messages.
+
+A very good usecase of `Task.Yield` is in unit tests when you need to ensure that a particular method would in fact work if its asynchronous operation did not complete synchronously, or to ensure that the code under test is exercised when it receives a `Task` that's not complete:
+
+```cs
+// In a fake service:
+public async Task<int> CountOrderFromDb)
+{
+   // simulate async operation reading a database
+   // but use yield, not Task.Delay so it doesn't slow down text execution.
+   await Task.Yield();
+   return 5;
+}
 ```
+
+In conclusion, `Task.Yield` is occasionally useful when unit testing, but much less so for production code.
   
  ]]></format>
         </remarks>
