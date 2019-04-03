@@ -21,6 +21,9 @@
     <Interface>
       <InterfaceName>System.ICloneable</InterfaceName>
     </Interface>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
+    </Interface>
   </Interfaces>
   <Docs>
     <summary>Represents a large object binary (<see langword="LOB" />) data type stored on an Oracle server. This class cannot be inherited.</summary>
@@ -392,7 +395,7 @@ connection.Close
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Closes the current stream and releases resources that are associated with the stream.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -609,7 +612,7 @@ connection.Close
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Releases the resources that are used by this object.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -630,7 +633,7 @@ connection.Close
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="disposing" Type="System.Boolean" />
+        <Parameter Name="disposing" Type="System.Boolean" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
         <param name="disposing">To be added.</param>
@@ -1079,8 +1082,8 @@ If(myLob == OracleLob.Null)
         <Parameter Name="count" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="buffer">An array of bytes. When this method returns, the buffer contains the specified byte array with the values between <c>offset</c> and (<c>offset</c> + <c>count</c>) replaced by the bytes read from the current source.</param>
-        <param name="offset">The zero-based byte offset in <c>buffer</c> at which to begin storing the data read from the current stream. For <see langword="CLOB" /> and <see langword="NCLOB" /> data types, this must be an even number.</param>
+        <param name="buffer">An array of bytes. When this method returns, the buffer contains the specified byte array with the values between <paramref name="offset" /> and (<paramref name="offset" /> + <paramref name="count" />) replaced by the bytes read from the current source.</param>
+        <param name="offset">The zero-based byte offset in <paramref name="buffer" /> at which to begin storing the data read from the current stream. For <see langword="CLOB" /> and <see langword="NCLOB" /> data types, this must be an even number.</param>
         <param name="count">The maximum number of bytes to be read from the current stream. For <see langword="CLOB" /> and <see langword="NCLOB" /> data types, this must be an even number.</param>
         <summary>Reads a sequence of bytes from the current <see cref="T:System.Data.OracleClient.OracleLob" /> stream and advances the position within the stream by the number of bytes read.</summary>
         <returns>The total number of bytes read into the buffer. This may be less than the number of bytes requested if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.</returns>
@@ -1122,7 +1125,7 @@ public static void ReadLobExample(OracleCommand command)
       //Example - Reading CLOB/NCLOB data (in chunks).  
       //Note: You can read character data as raw Unicode bytes (using OracleLob.Read as in the above example).  
       //However, because the OracleLob object inherits directly from the.NET stream object,   
-      //all the existing classes that manipluate streams can also be used. For example, the   
+      //all the existing classes that manipulate streams can also be used. For example, the   
       //.NET StreamReader makes converting the raw bytes into actual characters easier.  
       StreamReader streamreader = new StreamReader(CLOB, Encoding.Unicode);  
       char[] cbuffer = new char[100];  
@@ -1190,7 +1193,7 @@ If(myLob == OracleLob.Null)
         <Parameter Name="origin" Type="System.IO.SeekOrigin" />
       </Parameters>
       <Docs>
-        <param name="offset">A byte offset relative to origin. If <c>offset</c> is negative, the new position precedes the position specified by <c>origin</c> by the number of bytes specified by <c>offset</c>. If <c>offset</c> is zero, the new position is the position specified by <c>origin</c>. If <c>offset</c> is positive, the new position follows the position specified by <c>origin</c> by the number of bytes specified by <c>offset</c>.</param>
+        <param name="offset">A byte offset relative to origin. If <paramref name="offset" /> is negative, the new position precedes the position specified by <paramref name="origin" /> by the number of bytes specified by <paramref name="offset" />. If <paramref name="offset" /> is zero, the new position is the position specified by <paramref name="origin" />. If <paramref name="offset" /> is positive, the new position follows the position specified by <paramref name="origin" /> by the number of bytes specified by <paramref name="offset" />.</param>
         <param name="origin">A value of type <see cref="T:System.IO.SeekOrigin" /> indicating the reference point used to obtain the new position.</param>
         <summary>Sets the position on the current <see cref="T:System.Data.OracleClient.OracleLob" /> stream.</summary>
         <returns>The new position within the current stream.</returns>
@@ -1318,8 +1321,8 @@ If(myLob == OracleLob.Null)
         <Parameter Name="count" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="buffer">An array of bytes. This method copies the number of bytes specified in <c>count</c> from <c>buffer</c> to the current stream.</param>
-        <param name="offset">The zero-based byte offset in <c>buffer</c> at which to begin copying bytes to the current stream. For <see langword="CLOB" /> and <see langword="NCLOB" /> data types, this must be an even number.</param>
+        <param name="buffer">An array of bytes. This method copies the number of bytes specified in <paramref name="count" /> from <paramref name="buffer" /> to the current stream.</param>
+        <param name="offset">The zero-based byte offset in <paramref name="buffer" /> at which to begin copying bytes to the current stream. For <see langword="CLOB" /> and <see langword="NCLOB" /> data types, this must be an even number.</param>
         <param name="count">The number of bytes to be written to the current stream. For <see langword="CLOB" /> and <see langword="NCLOB" /> data types, this must be an even number.</param>
         <summary>Writes a sequence of bytes to the current <see cref="T:System.Data.OracleClient.OracleLob" /> stream, and advances the current position within this stream by the number of bytes written.</summary>
         <remarks>
@@ -1421,7 +1424,7 @@ public static void WriteLobExample(OracleCommand command)
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="value" Type="System.Byte" />
+        <Parameter Name="value" Type="System.Byte" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
         <param name="value">The byte to write to the stream.</param>

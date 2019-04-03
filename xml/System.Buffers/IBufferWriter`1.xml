@@ -9,14 +9,19 @@
     <AssemblyName>System.Memory</AssemblyName>
     <AssemblyVersion>4.0.1.0</AssemblyVersion>
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter Name="T" />
   </TypeParameters>
   <Interfaces />
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
+    <typeparam name="T">The type of the items in the <see cref="T:System.Buffers.IBufferWriter`1" />.</typeparam>
+    <summary>Represents an output sink into which <typeparamref name="T" /> data can be written.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -32,6 +37,11 @@
         <AssemblyName>System.Memory</AssemblyName>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -40,9 +50,9 @@
         <Parameter Name="count" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="count">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="count">The number of data items written to the <see cref="T:System.Span`1" /> or <see cref="T:System.Memory`1" />.</param>
+        <summary>Notifies the <see cref="T:System.Buffers.IBufferWriter`1" /> that <paramref name="count" /> data items were written to the output <see cref="T:System.Span`1" /> or <see cref="T:System.Memory`1" />.</summary>
+        <remarks>You must request a new buffer after calling Advance to continue writing more data; you cannot write to a previously acquired buffer.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetMemory">
@@ -56,6 +66,11 @@
         <AssemblyName>System.Memory</AssemblyName>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Memory&lt;T&gt;</ReturnType>
@@ -64,10 +79,21 @@
         <Parameter Name="sizeHint" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="sizeHint">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="sizeHint">The minimum length of the returned <see cref="T:System.Memory`1" />. If 0, a non-empty buffer is returned. </param>
+        <summary>Returns a <see cref="T:System.Memory`1" /> to write to that is at least the requested size (specified by <paramref name="sizeHint" />).</summary>
+        <returns>A <see cref="T:System.Memory`1" /> of at least the size <paramref name="sizeHint" />. If <paramref name="sizeHint" /> is 0, returns a non-empty buffer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+There is no guarantee that successive calls will return the same buffer or the same-sized buffer.
+
+This must never return <xref:System.Span%601.Empty?displayProperty=nameWithType>, but it can throw if the requested buffer size is not available.
+
+You must request a new buffer after calling `Advance` to continue writing more data; you cannot write to a previously acquired buffer.
+
+         ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">The requested buffer size is not available.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetSpan">
@@ -81,6 +107,11 @@
         <AssemblyName>System.Memory</AssemblyName>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Span&lt;T&gt;</ReturnType>
@@ -89,10 +120,19 @@
         <Parameter Name="sizeHint" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="sizeHint">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="sizeHint">The minimum length of the returned <see cref="T:System.Span`1" />. If 0, a non-empty buffer is returned. </param>
+        <summary>Returns a <see cref="T:System.Span`1" /> to write to that is at least the requested size (specified by <paramref name="sizeHint" />).</summary>
+        <returns>A <see cref="T:System.Span`1" /> of at least the size <paramref name="sizeHint" />. If <paramref name="sizeHint" /> is 0, returns a non-empty buffer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+  
+There is no guarantee that successive calls will return the same buffer or the same-sized buffer.
+
+This method must never return <xref:System.Span%601.Empty?displayProperty=nameWithType>, but it can throw if the requested buffer size is not available.
+
+You must request a new buffer after calling `Advance` to continue writing more data; you cannot write to a previously acquired buffer.
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

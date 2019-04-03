@@ -14,6 +14,7 @@
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>System.Transactions.Local</AssemblyName>
@@ -27,7 +28,7 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- In order for a resource manager to participate in a transaction, it must enlist in the transaction through the transaction manager. The <xref:System.Transactions.Transaction> class defines a set of methods whose names begin with `Enlist` that provide this functionality. The different `Enlist` methods correspond to the different types of enlistment that a resource maanger may have.  
+ In order for a resource manager to participate in a transaction, it must enlist in the transaction through the transaction manager. The <xref:System.Transactions.Transaction> class defines a set of methods whose names begin with `Enlist` that provide this functionality. The different `Enlist` methods correspond to the different types of enlistment that a resource manager may have.  
   
  This class describes an interface that a resource manager should implement to provide two phase commit notification callbacks for the transaction manager upon enlisting for participation. For each resource manager's implementation of the <xref:System.Transactions.IEnlistmentNotification> interface, you should enlist it using the <xref:System.Transactions.Transaction.EnlistVolatile%2A> method or the <xref:System.Transactions.Transaction.EnlistDurable%2A> method of the <xref:System.Transactions.Transaction> class, depending on whether your resource is volatile or durable. For more information on enlistment and 2PC, see [Enlisting Resources as Participants in a Transaction](~/docs/framework/data/transactions/enlisting-resources-as-participants-in-a-transaction.md) and [Committing a Transaction in Single-Phase and Multi-Phase](~/docs/framework/data/transactions/committing-a-transaction-in-single-phase-and-multi-phase.md) respectively.  
   
@@ -36,7 +37,7 @@
 |Method|Description|  
 |------------|-----------------|  
 |<xref:System.Transactions.IEnlistmentNotification.Prepare%2A>|This method of an enlisted object is used as a callback by the Transaction Manager during the first phase of a transaction, when the transaction manager asks participants whether they can commit the transaction.|  
-|<xref:System.Transactions.IEnlistmentNotification.Commit%2A>|This method of an enlisted object is used as a callback by the Transaction Manager during the second phase of a transaction if the transaction is commited.|  
+|<xref:System.Transactions.IEnlistmentNotification.Commit%2A>|This method of an enlisted object is used as a callback by the Transaction Manager during the second phase of a transaction if the transaction is committed.|  
 |<xref:System.Transactions.IEnlistmentNotification.Rollback%2A>|This method of an enlisted object is used as a callback by the Transaction Manager during the second phase of a transaction if the transaction is aborted (that is, rolled back).|  
 |<xref:System.Transactions.IEnlistmentNotification.InDoubt%2A>|This method of an enlisted object is used as a callback by the Transaction Manager during the second phase of a transaction if the transaction is in doubt.|  
   
@@ -54,8 +55,8 @@
  ]]></format>
     </remarks>
     <altmember cref="T:System.Transactions.ISinglePhaseNotification" />
-    <related type="Article" href="http://msdn.microsoft.com/library/786a12c2-d530-49f4-9c59-5c973e15a11d">Enlisting Resources as Participants in a Transaction</related>
-    <related type="Article" href="http://msdn.microsoft.com/library/694ea153-e4db-41ae-96ac-9ac66dcb69a9">Committing a Transaction in Single-Phase and Multi-Phase</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/786a12c2-d530-49f4-9c59-5c973e15a11d">Enlisting Resources as Participants in a Transaction</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/694ea153-e4db-41ae-96ac-9ac66dcb69a9">Committing a Transaction in Single-Phase and Multi-Phase</related>
   </Docs>
   <Members>
     <Member MemberName="Commit">
@@ -74,6 +75,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Transactions.Local</AssemblyName>
@@ -119,6 +121,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Transactions.Local</AssemblyName>
@@ -167,6 +170,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Transactions.Local</AssemblyName>
@@ -188,7 +192,7 @@
 ## Remarks  
  The transaction manager calls this method of an enlisted resource manager during the phase 1 of a commitment, when it asks participants whether they can commit the transaction.  
   
- When you are implementing a durable resource manager, you should log your prepare record during this phase. The record should contain all the necessary information to perform recovery. This includes the <xref:System.Transactions.PreparingEnlistment.RecoveryInformation%2A> property, which is passed to the transaction manager in the <xref:System.Transactions.TransactionManager.Reenlist%2A> method during recovery. For more information on recovery, see [Performing Recovery](http://msdn.microsoft.com/library/d342c5c7-da64-4a4c-8e63-b52f4fbf2691).  
+ When you are implementing a durable resource manager, you should log your prepare record during this phase. The record should contain all the necessary information to perform recovery. This includes the <xref:System.Transactions.PreparingEnlistment.RecoveryInformation%2A> property, which is passed to the transaction manager in the <xref:System.Transactions.TransactionManager.Reenlist%2A> method during recovery. For more information on recovery, see [Performing Recovery](https://msdn.microsoft.com/library/d342c5c7-da64-4a4c-8e63-b52f4fbf2691).  
   
  Your resource manager should complete all work that must be finished before calling the <xref:System.Transactions.PreparingEnlistment.Prepared%2A> method of the `preparingEnlistment` parameter to indicate its vote for commitment. You should make sure that this is accomplished before receiving any phase 2 notification such as commit, rollback or in doubt. This is because phase 2 notifications can happen inline on the same thread that called the <xref:System.Transactions.PreparingEnlistment.Prepared%2A> method in phase 1. As such, you should not do any work after the <xref:System.Transactions.PreparingEnlistment.Prepared%2A> call (for example, releasing locks) that you would expect to have completed before receiving the phase 2 notifications.  
   
@@ -216,6 +220,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Transactions.Local</AssemblyName>
