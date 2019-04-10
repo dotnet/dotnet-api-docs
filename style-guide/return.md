@@ -4,7 +4,7 @@ The Return Value subsection describes the return value of a method or operator.
 
 ## Guidelines
 
-DxEditor displays a Return Value section automatically for methods that return values. After the **returnValue** tag, add a paragraph that describes the return value.
+docs.microsoft.com displays a Return Value section automatically for methods that return values. After the **returnValue** tag, add a paragraph that describes the return value.
 
 - Provide a clear description of the return value. Keep the description concise, but provide enough context to make it meaningful.
 - Use wording that is programming language-neutral.
@@ -50,7 +50,7 @@ The Property Value subsection describes the value of a property.
 
 ### Guidelines
 
-In DxEditor, use the Return Value section (**returnValue** tag) for the property value description; DxEditor doesn't have a special tag for this subsection.
+In docs.microsoft.com, use the Return Value section (**returnValue** tag) for the property value description; docs.microsoft.com doesn't have a special tag for this subsection.
 
 - Provide a clear description of the property value. Keep the description concise, but provide enough context.
 - Use wording that is programming language-neutral.
@@ -74,7 +74,7 @@ The following table shows the boilerplate wording for property value description
 
 ## Field Value Subsection
 
-The Field Value subsection describes the value of a field. In DxEditor, use the Return Value section for the field value description.
+The Field Value subsection describes the value of a field. In docs.microsoft.com, use the Return Value section for the field value description.
 
 Providing a Field Value description is optional. If no description is authored, the subsection does not appear in the build.
 

@@ -18,9 +18,7 @@ For each exception, add an **exception** tag and insert a link to the exception 
 
 Fit the description to the following model:
 
-```
 *&lt;Exception&gt;* is thrown if *&lt;condition&gt;*.
-```
 
 For example:
 

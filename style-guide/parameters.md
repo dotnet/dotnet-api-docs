@@ -15,7 +15,7 @@ docs.microsoft.com displays a Parameters section automatically if it's required.
 
 ## How-To
 
-DxEditor automatically populates the Parameter column of the Parameters table with the name of each parameter, and applies the correct style. However, be sure to apply the **parameterReference** tag to other occurrences of parameter names throughout the documentation, including the Description column in the table.
+docs.microsoft.com automatically populates the Parameter column of the Parameters table with the name of each parameter, and applies the correct style. However, be sure to apply the **parameterReference** tag to other occurrences of parameter names throughout the documentation, including the Description column in the table.
 
 The guidelines for writing parameter descriptions depend on the kind of type or member that you are documenting, as well as on the type of the parameter itself. Write a description of each parameter, using the wording shown in the tables in the following sections. The sections and tables are organized by topic type.
 
