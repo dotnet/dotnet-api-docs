@@ -1,7 +1,3 @@
----
-
----
-
 # Summary Section
 
 The summary succinctly states what a type or member does or represents. All types and members must have summaries, consisting of a short description (optimally one sentence) that conveys the importance of the class or member.
