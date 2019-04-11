@@ -6,7 +6,7 @@ The Parameters subsection lists and describes each parameter in the declaration.
 
 docs.microsoft.com displays a Parameters section automatically if it's required.
 
-- Include an accurate description of what should be passed for the parameter. When you write this description, think about how the parameter is used by the method. 
+- Include an accurate description of what should be passed for the parameter. When you write this description, think about how the parameter is used by the method.
 - Don't include a link to the parameter type, because that's added by the build, but you can specify the type in plain text (for example, "a string" for a **System.String** object). This reference should be programming language-neutral.
 - Keep the description concise, but provide enough context to make it meaningful. Don't just repeat the parameter name. For example, a *length* parameter for an operation that sets the length of a stream could be described like this: "The desired length of the current stream, in bytes." Avoid meaningless descriptions like this: "The length."
 - Include important information such as which enumeration values are supported, whether the value can be null, the unit of measurement, if applicable, and the default value, if one exists. For example: the *bufferSize* parameter for the **System.IO.Stream.CopyTo (Stream, Int32)** method has the following description:<br /><br />*bufferSize*<br />
@@ -67,7 +67,7 @@ For general guidelines for writing parameter descriptions, see [Parameters Subse
 
 | Parameter | Wording | Example |
 |----------------|---------|---------|
-| *disposing* | **true** to release managed and unmanaged resources; **false** to release only unmanaged resources. | *disposing*<<br />Type:****System.Boolean**<<br />**true** to release managed and unmanaged resources; **false** to release only unmanaged resources. |
+| *disposing* | **true** to release managed and unmanaged resources; **false** to release only unmanaged resources. | *disposing*<<br />Type:*** *System.Boolean**<<br />**true** to release managed and unmanaged resources; **false** to release only unmanaged resources. |
 
 ## Event-Handler Delegate Topics
 

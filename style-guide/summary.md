@@ -34,11 +34,11 @@ The following table provides wording guidelines, boilerplate text, and examples 
 | Item | Wording | Examples |
 |------|---------|----------|
 | General class, interface, or structure | &lt;Begin with a present-tense third-person verb.&gt; | ***DataGrid*** *class summary:*<br />Displays XDO data in a scrollable grid.<br />***TimeSpan*** *structure summary*:<br />Represents a time interval. |
-| Interface | Defines...,   or Provides..,. or Exposes... | ***IComparable****interface summary*:<br />Defines a generalized type-specific comparison method that a value type or class implements to order or sort its instances.<br />***IFormattable****interface summary*:<br />Provides functionality to format the value of an object into a string representation. |
-| Abstract base class | Defines the core behavior of *&lt;class name or feature&gt;* and provides a base for *&lt;derived classes or derivations&gt;*.  | ***BaseNotificationEventType****class summary:*<br />Defines the core behavior of notification events and provides a base for derived classes.<br />***MessageQuery****class summary*:<br />Defines the core behavior of classes that are used to search for specific correlating data in a message. |
-| Class that represents a standard Windows control (for example, a button or check box) | Represents a Windows *&lt;control&gt;* control. | ***Windows.Forms.Button**** class: *<br />Represents a Windows button control. |
+| Interface | Defines...,   or Provides..,. or Exposes... | ***IComparable*** *interface summary*:<br />Defines a generalized type-specific comparison method that a value type or class implements to order or sort its instances.<br />***IFormattable*** *interface summary*:<br />Provides functionality to format the value of an object into a string representation. |
+| Abstract base class | Defines the core behavior of *&lt;class name or feature&gt;* and provides a base for *&lt;derived classes or derivations&gt;*.  | ***BaseNotificationEventType*** *class summary:*<br />Defines the core behavior of notification events and provides a base for derived classes.<br />***MessageQuery*** *class summary*:<br />Defines the core behavior of classes that are used to search for specific correlating data in a message. |
+| Class that represents a standard Windows control (for example, a button or check box) | Represents a Windows *&lt;control&gt;* control. | ***Windows.Forms.Button*** *class*<br />Represents a Windows button control. |
 | Exception class | The exception that is thrown when/for/by *&lt;condition&gt;*.<br /> **Note:**<br />This summary does not begin with a verb. |
-| ***ArgumentOutOfRangeException**** class summary: *<br />The exception that is thrown when the value of an argument is outside the allowable range of values as defined by the invoked method.<br />***ComponentModel.Win32Exception**** class summary:*<br />The exception that is thrown for a Win32 error code.<br />***Reflection.TargetInvocationException**** class summary:*<br />The exception that is thrown by methods invoked through reflection. |
+| ***ArgumentOutOfRangeException*** * class summary: *<br />The exception that is thrown when the value of an argument is outside the allowable range of values as defined by the invoked method.<br />***ComponentModel.Win32Exception*** *class summary:*<br />The exception that is thrown for a Win32 error code.<br />***Reflection.TargetInvocationException*** * class summary:*<br />The exception that is thrown by methods invoked through reflection. |
 
 ## Constructor Topics
 
@@ -46,9 +46,9 @@ The following table provides wording guidelines and boilerplate text for Summary
 
 | Item | Wording | Examples |
 |------|---------|----------|
-| Constructor, class | Initializes a new instance of the *&lt;Class&gt;* class. | **WebProxy***constructor summary: *<br />Initializes a new instance of the **WebProxy** class. |
+| Constructor, class | Initializes a new instance of the *&lt;Class&gt;* class. | **WebProxy** *constructor summary:*<br />Initializes a new instance of the **WebProxy** class. |
 | Constructor, abstract class | Called from constructors in derived classes to initialize the *&lt;Class&gt;* class. | **Aes***constructor summary:*<br />Called from constructors in derived classes to initialize the **Aes** class. |
-| Constructor, struct | Initializes a new instance of the *&lt;Struct&gt;* structure. | **SqlInt64***constructor summary: *<br />Initializes a new instance of the **SqlInt64** structure using the supplied long integer. |
+| Constructor, struct | Initializes a new instance of the *&lt;Struct&gt;* structure. | **SqlInt64** *constructor summary:*<br />Initializes a new instance of the **SqlInt64** structure using the supplied long integer. |
 
 ## Enum Topics
 
@@ -56,9 +56,9 @@ The following table provides wording guidelines and boilerplate text for Summary
 
 | Item | Wording | Examples |
 |------|---------|----------|
-| Enum | &lt;Begin with a present-tense third-person verb, such as *Specifies* or *Describes*.&gt;  | ***FormBorderStyle**** enum summary: *<br />Specifies the border styles for a form.<br />***MouseButtons**** enum summary:*<br />Specifies constants that define which mouse button was pressed. |
-| Enum member | &lt;Noun phrase. Begin with an introductory article, if appropriate.&gt; | ***BorderStyle.FixedSingle**** enum member summary: *<br />A single-line border. |
-| Enum member used as a mask | A mask used to retrieve &lt;noun phrase&gt;.<br /> **Note:**<br />If the enum member will be used as a mask, call this out, and specify the information to be retrieved using the mask. | ***MethodAttributes.MemberAccessMask**** enum member summary: *<br />A mask used to retrieve the scope of a method. |
+| Enum | &lt;Begin with a present-tense third-person verb, such as *Specifies* or *Describes*.&gt;  | ***FormBorderStyle*** *enum summary:*<br />Specifies the border styles for a form.<br />***MouseButtons*** *enum summary:*<br />Specifies constants that define which mouse button was pressed. |
+| Enum member | &lt;Noun phrase. Begin with an introductory article, if appropriate.&gt; | ***BorderStyle.FixedSingle*** *enum member summary:*<br />A single-line border. |
+| Enum member used as a mask | A mask used to retrieve &lt;noun phrase&gt;.<br /> **Note:**<br />If the enum member will be used as a mask, call this out, and specify the information to be retrieved using the mask. | ***MethodAttributes.MemberAccessMask*** *enum member summary:*<br />A mask used to retrieve the scope of a method. |
 
 ## Event-related Topics
 
@@ -70,8 +70,8 @@ The following table provides wording guidelines and boilerplate text for Summary
 | &lt;EventArgs&gt; class | Provides data for the *&lt;Event&gt;* event. | **ComponentRenameEventArgs** class summary:<br />Provides data for the **ComponentRename** event. |
 | Event-handler delegate class, specific to one event on a control | Represents the callback method that will handle the *&lt;Event&gt;* event of a *&lt;Class&gt;*. | **PeekCompletedEventHandler** delegate summary:<br />Represents the callback method that will handle the **PeekCompleted** event of a **MessageQueue**. |
 | Event-handler delegate class, specific to multiple events on a control | Represents the callback method that will handle the *&lt;Event1&gt;* event, *&lt;Event2&gt;* event, or *&lt;Event3&gt;* event of a *&lt;Class&gt;*. | **PrintEventHandler** delegate summary:<br />Represents the callback method that will handle the **BeginPrint** event or **EndPrint** event of a **PrintDocument**. |
-| Event-handler delegate class, specific to one event on multiple controls | Represents the callback method that will handle the *&lt;Event&gt;* event of a *&lt;Class1&gt;* or a *&lt;Class2&gt;*. | ***MeasureItemEventHandler**** delegate summary: *<br />Represents the callback method that will handle the **MeasureItem** event of a **ListBox**, **ComboBox**, **CheckedListBox**, or **MenuItem** control. |
-| Event-handler delegate class, generic | Represents the callback method that will handle an event of a control. | ***EventHandler Generic**** delegate summary *<br />Represents the callback method that will handle the event.</p></td></tr><tr><td><p>**On***&lt;Event&gt;* method | Raises the *&lt;Event&gt;* event.<br /> **Note:**<br />In some cases, such as the **WebPart** class, a method named **On***EventName* might not raise the *EventName* event. For example, **WebPart** defines four methods named **OnClosing**, **OnConnectModeChanged**, **OnDeleting**, and **OnEditModeChanged**. Derived classes override these methods and provide special handling for the state transitions named by the methods. Thus, the description of the **OnClosing** method reads, "*Enables derived classes to provide custom handling when* a **WebPart** control is closed on a Web Parts page." The phrase in italics is the appropriate pattern for such summaries. <br />Because this naming pattern violates .NET Framework naming guidelines, the writer should raise the naming issue in the design phase, if the opportunity arises. A name such as **ClosingNotification** or **ClosingCallback** would be more appropriate in this scenario.<br />Other special cases in WPF and Silverlight content use either "Provides class handling for the *EventName* routed eventâ€¦" or "Called before the *EventName* event occurs" for the summary.<p></p></td></tr></table><p></p></div></td><td><p>***Control.OnBackgroundImageChanged**** method summary: *<br />Raises the **BackgroundImageChanged** event. |
+| Event-handler delegate class, specific to one event on multiple controls | Represents the callback method that will handle the *&lt;Event&gt;* event of a *&lt;Class1&gt;* or a *&lt;Class2&gt;*. | ***MeasureItemEventHandler*** *delegate summary:*<br />Represents the callback method that will handle the **MeasureItem** event of a **ListBox**, **ComboBox**, **CheckedListBox**, or **MenuItem** control. |
+| Event-handler delegate class, generic | Represents the callback method that will handle an event of a control. | ***EventHandler Generic*** *delegate summary*<br />Represents the callback method that will handle the event.</p></td></tr><tr><td><p>**On***&lt;Event&gt;* method | Raises the *&lt;Event&gt;* event.<br /> **Note:**<br />In some cases, such as the **WebPart** class, a method named **On***EventName* might not raise the *EventName* event. For example, **WebPart** defines four methods named **OnClosing**, **OnConnectModeChanged**, **OnDeleting**, and **OnEditModeChanged**. Derived classes override these methods and provide special handling for the state transitions named by the methods. Thus, the description of the **OnClosing** method reads, "*Enables derived classes to provide custom handling when* a **WebPart** control is closed on a Web Parts page." The phrase in italics is the appropriate pattern for such summaries. <br />Because this naming pattern violates .NET Framework naming guidelines, the writer should raise the naming issue in the design phase, if the opportunity arises. A name such as **ClosingNotification** or **ClosingCallback** would be more appropriate in this scenario.<br />Other special cases in WPF and Silverlight content use either "Provides class handling for the *EventName* routed eventâ€¦" or "Called before the *EventName* event occurs" for the summary.<p></p></td></tr></table><p></p></div></td><td><p>***Control.OnBackgroundImageChanged*** * method summary: *<br />Raises the **BackgroundImageChanged** event. |
 
 ## Field Topics
 
@@ -79,7 +79,7 @@ The following table provides wording guidelines and boilerplate text for Summary
 
 | Item | Wording | Examples |
 |------|---------|----------|
-| Field | &lt;Begin with a present-tense third-person verb, such as *Specifies* or *Represents*.&gt; | ***MessageBox.YesNo**** summary:*<br />Specifies that the message box should display Yes and No buttons.<br />***Registry.CLASSES_ROOT**** summary:*<br />Represents the HKEY_CLASSES_ROOT registry key. |
+| Field | &lt;Begin with a present-tense third-person verb, such as *Specifies* or *Represents*.&gt; | ***MessageBox.YesNo*** * summary:*<br />Specifies that the message box should display Yes and No buttons.<br />***Registry.CLASSES_ROOT*** * summary:*<br />Represents the HKEY_CLASSES_ROOT registry key. |
 
 ## Abstract and Virtual Member Topics
 
@@ -87,8 +87,8 @@ The following table provides wording guidelines and boilerplate text for Summary
 
 | Item | Wording | Examples |
 |------|---------|----------|
-| Abstract member of an abstract class | When overridden in a derived class, &lt;continue with a present-tense third-person verb stating what the member does&gt;. | ***XmlWriter.Close**** member summary: *<br />When overridden in a derived class, closes this stream and the underlying stream. |
-| Virtual member of an abstract class that does not provide the intended implementation | When overridden in a derived class, &lt;continue with a present-tense third-person verb stating what the member does&gt;.<br /> **Note:**<br />In the Remarks section, include a sentence that explains the default, unintended behavior. | ***Stream.ReadByte**** summary: *<br />When overridden in a derived class, reads the next byte from this stream, and advances the current position of the stream by one.<br />*Include the following in ****Stream.ReadByte**** remarks: *<br />Because the **Stream** class does not support reading, **ReadByte** throws a **NotSupportedException** exception by default. |
+| Abstract member of an abstract class | When overridden in a derived class, &lt;continue with a present-tense third-person verb stating what the member does&gt;. | ***XmlWriter.Close*** *member summary:*<br />When overridden in a derived class, closes this stream and the underlying stream. |
+| Virtual member of an abstract class that does not provide the intended implementation | When overridden in a derived class, &lt;continue with a present-tense third-person verb stating what the member does&gt;.<br /> **Note:**<br />In the Remarks section, include a sentence that explains the default, unintended behavior. | ***Stream.ReadByte*** * summary: *<br />When overridden in a derived class, reads the next byte from this stream, and advances the current position of the stream by one.<br />*Include the following in *** *Stream.ReadByte*** *remarks:*<br />Because the **Stream** class does not support reading, **ReadByte** throws a **NotSupportedException** exception by default. |
 
 ## Method Topics
 
@@ -96,14 +96,14 @@ The following table provides wording guidelines and boilerplate text for Summary
 
 | Item | Wording | Examples |
 |------|---------|----------|
-| General method  | &lt;Begin with a present-tense third-person verb.&gt; | ***DataGrid**** class summary: *<br />Displays XDO data in a scrollable grid.<br />***Application.DoEvents**** method summary:*<br />Processes Windows messages that are currently in the message queue. |
-| **Dispose** method, general overload | Releases the resources used by the current instance of the **&lt;class&gt;** class. | ***ComponentDesigner.Dispose**** method summary: *<br />Releases the resources used by the current instance of the **ComponentDesigner** class. |
-| **Dispose()** method | Releases the resources used by the current instance of the **&lt;class&gt;** class. | ***Timer.Dispose**** method summary: *<br />Releases the resources used by the current instance of the **Timer** class. |
-| **Dispose(Boolean)** method | Called by the **Dispose()** and **Finalize()** methods to release the managed and unmanaged resources used by the current instance of the **&lt;class&gt;** class.  | ***DocumentDesigner.Dispose**** method (Boolean): *<br />Called by the **Dispose()** and **Finalize()** methods to release the managed and unmanaged resources used by the current instance of the **DocumentDesigner** class. |
-| **ShouldSerialize** *&lt;Property&gt;* method | Indicates whether the *&lt;Property&gt;* property should be persisted. | ***DataGrid.ShouldSerializeBackgroundColor**** method summary: *<br />Indicates whether the **BackgroundColor** property should be persisted. |
-| **Reset***&lt;Property&gt;* method | Resets the *&lt;Property&gt;* property to its default value. | ***Control.ResetText**** method summary: *<br />Resets the **Text** property to its default value. |
+| General method  | &lt;Begin with a present-tense third-person verb.&gt; | ***DataGrid*** * class summary: *<br />Displays XDO data in a scrollable grid.<br />***Application.DoEvents*** * method summary:*<br />Processes Windows messages that are currently in the message queue. |
+| **Dispose** method, general overload | Releases the resources used by the current instance of the **&lt;class&gt;** class. | ***ComponentDesigner.Dispose*** *method summary:*<br />Releases the resources used by the current instance of the **ComponentDesigner** class. |
+| **Dispose()** method | Releases the resources used by the current instance of the **&lt;class&gt;** class. | ***Timer.Dispose*** *method summary:*<br />Releases the resources used by the current instance of the **Timer** class. |
+| **Dispose(Boolean)** method | Called by the **Dispose()** and **Finalize()** methods to release the managed and unmanaged resources used by the current instance of the **&lt;class&gt;** class.  | ***DocumentDesigner.Dispose*** *method (Boolean):*<br />Called by the **Dispose()** and **Finalize()** methods to release the managed and unmanaged resources used by the current instance of the **DocumentDesigner** class. |
+| **ShouldSerialize** *&lt;Property&gt;* method | Indicates whether the *&lt;Property&gt;* property should be persisted. | ***DataGrid.ShouldSerializeBackgroundColor*** *method summary:*<br />Indicates whether the **BackgroundColor** property should be persisted. |
+| **Reset***&lt;Property&gt;* method | Resets the *&lt;Property&gt;* property to its default value. | ***Control.ResetText*** *method summary:*<br />Resets the **Text** property to its default value. |
 | Method that always throws an exception | Throws a/an *&lt;ExceptionType&gt;* exception in all cases.<br /> **Note:**<br />In the Remarks section, explain why the member is not supported. |
-| ***DataGridViewSelectedRowCollection.Clear**** method summary: *<br />Throws a **NotSupportedException** exception in all cases. |
+| ***DataGridViewSelectedRowCollection.Clear*** *method summary:*<br />Throws a **NotSupportedException** exception in all cases. |
 | Explicit interface method implementation | &lt;Copy from the interface member if appropriate&gt; |
 
 ## Operator Topics
@@ -112,8 +112,8 @@ The following table provides wording guidelines and boilerplate text for Summary
 
 | Item | Wording | Examples |
 |------|---------|----------|
-| Unary/binary operator; for example, + operator | &lt;Begin with a present-tense verb.&gt; | ***Unit**** + operator summary: *<br />Adds a value to a **Unit**. |
-| Conversion operator | Converts a *&lt;Type&gt;* to a *&lt;Type&gt;*.<br /> **Note:**<br />If one type is a primitive, use the language-neutral phrase for it. | *Decimal to 32-bit integer conversion summary: *<br />Converts a decimal to a 32-bit signed integer. |
+| Unary/binary operator; for example, + operator | &lt;Begin with a present-tense verb.&gt; | ***Unit*** *+ operator summary:*<br />Adds a value to a **Unit**. |
+| Conversion operator | Converts a *&lt;Type&gt;* to a *&lt;Type&gt;*.<br /> **Note:**<br />If one type is a primitive, use the language-neutral phrase for it. | *Decimal to 32-bit integer conversion summary:*<br />Converts a decimal to a 32-bit signed integer. |
 
 ## Property Topics
 
@@ -124,8 +124,8 @@ The following table provides wording guidelines and boilerplate text for Summary
 
 | Item | Wording | Examples |
 |------|---------|----------|
-| Read/write property or indexer | *Boolean: *<br />Gets or sets a value that indicates whether *&lt;condition&gt;*.<br />*Other:*<br />Gets or sets *&lt;summary without specifying the type&gt;*.  | ***Control.AllowDrop**** property summary: *<br />Gets or sets a value that indicates whether the control can accept data that the user drags onto it.<br />***Control.BackColor**** property summary:*<br />Gets or sets the background color for the control. |
-| Read-only property or indexer | *Boolean: *<br />Gets a value that indicates whether *&lt;condition&gt;*.<br />Other:<br />Gets *&lt;summary without specifying the type&gt;*.<br /> **Note:**<br />It is not necessary to say "This property is read-only." | **Type.IsByRef** property summary:<br />Gets a value that indicates whether the **Type** is passed by reference.<br />***Type.DefaultBinder**** property summary: *<br />Gets the default binder used by the system. |
+| Read/write property or indexer | *Boolean:*<br />Gets or sets a value that indicates whether *&lt;condition&gt;*.<br />*Other:*<br />Gets or sets *&lt;summary without specifying the type&gt;*.  | ***Control.AllowDrop*** * property summary: *<br />Gets or sets a value that indicates whether the control can accept data that the user drags onto it.<br />***Control.BackColor*** * property summary:*<br />Gets or sets the background color for the control. |
+| Read-only property or indexer | *Boolean:*<br />Gets a value that indicates whether *&lt;condition&gt;*.<br />Other:<br />Gets *&lt;summary without specifying the type&gt;*.<br /> **Note:**<br />It is not necessary to say "This property is read-only." | **Type.IsByRef** property summary:<br />Gets a value that indicates whether the **Type** is passed by reference.<br />***Type.DefaultBinder*** *property summary:*<br />Gets the default binder used by the system. |
 | Explicit interface property implementation | &lt;Copy from the interface member if appropriate&gt; |
 
 ## Overloaded Member Topics

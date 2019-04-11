@@ -2,7 +2,7 @@
 
 The Return Value subsection describes the return value of a method or operator.
 
-## Guidelines
+## Guidelines for Return Value
 
 docs.microsoft.com displays a Return Value section automatically for methods that return values. After the **returnValue** tag, add a paragraph that describes the return value.
 
@@ -28,7 +28,7 @@ The following table shows the boilerplate wording for return value descriptions 
 | Class, interface, or structure | &lt;*Noun phrase description without specifying the data type. Begin with an introductory article.*&gt;<br /> **Note:**<br />If the abstraction is not clear from the context, you can use the wording "An object that identifies/specifies/contains *XXX*." However, avoid this unless there is no other way to describe the return value. | Type: **System.Threading.Thread**<br />The new thread. <br />Type: **System.IAsyncResult**<br />The posted asynchronous request. |
 | Flag enum | A bitwise combination of the enumeration values &lt;*additional information, if necessary*&gt;. | Type: **System.IO.FileAccess**<br />A bitwise combination of the enumeration values. |
 | Other enum | One of the enumeration values &lt;*additional information, if necessary*&gt;. | Type: **System.Windows.Forms.DialogResult**<br />One of the enumeration values that indicates the return value of a dialog box. |
-| Boolean | **true** if *XXX*; otherwise, **false**.<br />**true** if *XXX*; **false** if *XXX*.<br /> **Note:**<br />Use the "otherwise" wording unless the second condition must be noted explicitly.<br /> **Note:**<br />The wording for Boolean return values is "**true** if...," not "**true** to...." (The wording "**true** to...." is for parameters.) | Type:** System.Boolean**<br />**true** if the specified path refers to a file; otherwise, **false**. <br /><br />Type:** System.Boolean**<br />**true** if the enumerator was successfully advanced to the next element; **false** if the enumerator has passed the end of the collection.<br /><br />For **ShouldSerialize***&lt;Property&gt;* methods, use this phrasing:<br />Type:** System.Boolean**<br />**true** if the **InputBindings** property value should be serialized; otherwise, **false**. | 
+| Boolean | **true** if *XXX*; otherwise, **false**.<br />**true** if *XXX*; **false** if *XXX*.<br /> **Note:**<br />Use the "otherwise" wording unless the second condition must be noted explicitly.<br /> **Note:**<br />The wording for Boolean return values is "**true** if...," not "**true** to...." (The wording "**true** to...." is for parameters.) | Type:** System.Boolean**<br />**true** if the specified path refers to a file; otherwise, **false**. <br /><br />Type: **System.Boolean**<br />**true** if the enumerator was successfully advanced to the next element; **false** if the enumerator has passed the end of the collection.<br /><br />For **ShouldSerialize** *&lt;Property&gt;* methods, use this phrasing:<br />Type:** System.Boolean**<br />**true** if the **InputBindings** property value should be serialized; otherwise, **false**. |
 | Other primitive or string | &lt;*Noun phrase description, without specifying the data type. Begin with an introductory article.*&gt; | Type: **System.String**<br />The string being read.<br />Type: **System.Int32**<br />The hash code for the current **SortDescription** object. |
 | Array | An array *XXX*. | Type: **System.Reflection.FieldInfo()**<br />An array that contains the fields implemented by a type.
 
@@ -39,16 +39,16 @@ The following table shows the boilerplate wording for return value descriptions 
 | Operator type | Return value wording | Examples |
 |---------------|----------------------|----------|
 | Unary/binary operator | A/The *&lt;generic description of type&gt;*. | Type: **System.Windows.Point**<br />The point to translate. |
-| Conversion operator | A/The *&lt;generic description of type&gt;* that represents the converted *&lt;Type&gt;*. | Type:****System.Single**<br />The single-precision floating-point number that represents the converted **Decimal**.<br />(You can also say:<br />The converted **Decimal**.) |
+| Conversion operator | A/The *&lt;generic description of type&gt;* that represents the converted *&lt;Type&gt;*. | Type:*** *System.Single**<br />The single-precision floating-point number that represents the converted **Decimal**.<br />(You can also say:<br />The converted **Decimal**.) |
 
 > [!NOTE]
 > If any of the return types in an operator is a primitive type, use the language-neutral phrase for it. For more information, see Primitive Data Types
 
 ## Property Value Subsection
 
-The Property Value subsection describes the value of a property. 
+The Property Value subsection describes the value of a property.
 
-### Guidelines
+### Guidelines for Property Value
 
 In docs.microsoft.com, use the Return Value section (**returnValue** tag) for the property value description; docs.microsoft.com doesn't have a special tag for this subsection.
 
@@ -66,7 +66,7 @@ The following table shows the boilerplate wording for property value description
 | Property type | Wording | Examples |
 |---------------|---------|----------|
 | Class, interface, or structure | A/An/The &lt;*description, without specifying the data type*&gt;. The default is *default value*.<br /> **Note:**<br />Information the user should notice even if skimmingIf the abstraction is not clear from the context, you can use the wording "An object that identifies/specifies/contains...". However, avoid this unless there is no other way to describe the property value. | Type: **System.Windows.Forms.Cursor**<br />The current default cursor.<br />Type: **System.Net.ICredentials**<br />The authentication credentials associated with this request. The default is **null**. |
-| Flag enum | A bitwise combination of the enumeration values that &lt;*additional information*&gt;. The default is *&lt;EnumMember&gt;*. | Type: **System.AppDomainManagerInitializationOptions**<br />A bitwise combination of the enumeration values that describe the initialization action to perform. The default is **None**.<br />*Example of flag enum with a combination of default values:*<br />Type: **System.IO.NotifyFilters**<br />A bitwise combination of the enumeration values that specify the changes. The default is the bitwise OR combination of **NotifyFilters.LastWrite**, **NotifyFilters.FileName**, and **NotifyFilters.DirectoryName**. | 
+| Flag enum | A bitwise combination of the enumeration values that &lt;*additional information*&gt;. The default is *&lt;EnumMember&gt;*. | Type: **System.AppDomainManagerInitializationOptions**<br />A bitwise combination of the enumeration values that describe the initialization action to perform. The default is **None**.<br />*Example of flag enum with a combination of default values:*<br />Type: **System.IO.NotifyFilters**<br />A bitwise combination of the enumeration values that specify the changes. The default is the bitwise OR combination of **NotifyFilters.LastWrite**, **NotifyFilters.FileName**, and **NotifyFilters.DirectoryName**. |
 | Other enum | One of the enumeration values that &lt;*additional information*&gt;. The default is *&lt;EnumMember&gt;*. | Type: **System.Windows.Forms.BorderStyle**<br />One of the enumeration values that specifies the border style for a control. The default is **BorderStyle.FixedSingle**. |
 | Boolean</p></td><td><p>**true** if XXX; otherwise, **false**. The default is XXX. <br />**true** if XXX; **false** if XXX. The default is XXX.<br />&lt;**true**/**false**&gt; in all cases.<br /> **Note:**<br />Use the "otherwise" wording unless the second condition must be noted explicitly.<br /> **Note:**<br />The wording for Boolean property values is "true if...," not "true to...." (The wording "true to...." is for parameters.) | | Type: **System.Boolean**<br />**true** if rows can be deleted from the grid; otherwise, **false**. The default is **true**. <br />Type: **System.Boolean**<br />**true** if the stream supports writing; **false** if the stream is closed or was opened with read-only access. The default is **true**.<br />Type: **System.Boolean**<br />**false** in all cases. |
 | Other primitive or string | &lt;*Noun phrase description, without specifying the data type.*&gt; The default is XXX. | Type: **System.Int32**<br />The width, in pixels, of the columns in the grid. The default is 75. |
