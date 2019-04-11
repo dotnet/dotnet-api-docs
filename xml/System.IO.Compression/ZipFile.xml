@@ -445,12 +445,12 @@
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">
-      <MemberSignature Language="C#" Value="public static void ExtractToDirectory (string sourceArchiveFileName, string destinationDirectoryName, bool overwriteFiles);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void ExtractToDirectory(string sourceArchiveFileName, string destinationDirectoryName, bool overwriteFiles) cil managed" />
+      <MemberSignature Language="C#" Value="public static void ExtractToDirectory (string sourceArchiveFileName, string destinationDirectoryName, bool overwrite);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void ExtractToDirectory(string sourceArchiveFileName, string destinationDirectoryName, bool overwrite) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.Compression.ZipFile.ExtractToDirectory(System.String,System.String,System.Boolean)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub ExtractToDirectory (sourceArchiveFileName As String, destinationDirectoryName As String, overwriteFiles As Boolean)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void ExtractToDirectory(System::String ^ sourceArchiveFileName, System::String ^ destinationDirectoryName, bool overwriteFiles);" />
-      <MemberSignature Language="F#" Value="static member ExtractToDirectory : string * string * bool -&gt; unit" Usage="System.IO.Compression.ZipFile.ExtractToDirectory (sourceArchiveFileName, destinationDirectoryName, overwriteFiles)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub ExtractToDirectory (sourceArchiveFileName As String, destinationDirectoryName As String, overwrite As Boolean)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void ExtractToDirectory(System::String ^ sourceArchiveFileName, System::String ^ destinationDirectoryName, bool overwrite);" />
+      <MemberSignature Language="F#" Value="static member ExtractToDirectory : string * string * bool -&gt; unit" Usage="System.IO.Compression.ZipFile.ExtractToDirectory (sourceArchiveFileName, destinationDirectoryName, overwrite)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Compression.ZipFile</AssemblyName>
@@ -470,14 +470,65 @@
       <Parameters>
         <Parameter Name="sourceArchiveFileName" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
         <Parameter Name="destinationDirectoryName" Type="System.String" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
-        <Parameter Name="overwriteFiles" Type="System.Boolean" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
+        <Parameter Name="overwrite" Type="System.Boolean" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="sourceArchiveFileName">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
-        <param name="overwriteFiles">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="sourceArchiveFileName">The path to the archive on the file system that is to be extracted.</param>
+        <param name="destinationDirectoryName">The path to the directory on the file system. The directory specified must not exist, but the directory that it is contained in must exist.</param>
+        <param name="overwrite"><see langword="true" /> to overwrite files.</param>
+        <summary>Extracts all of the files in the specified archive to a directory on the file system.</summary>
+        <remarks>
+          <format type="text/markdown">
+    <![CDATA[
+## Remarks
+ The specified directory must not exist. The method will create all subdirectories and the specified directory.
+ 
+ If there is an error while extracting the archive, the archive will remain partially extracted.
+  
+ Each entry will be extracted such that the extracted file has the same relative path to the `destinationDirectoryName` as the entry has to the archive.
+ 
+ The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory.
+ 
+ If a file to be archived has an invalid last modified time, the first datetime representable in the Zip timestamp format (midnight on January 1, 1980) will be used.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException"><paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by <see cref="F:System.IO.Path.InvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException"><paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> specifies a path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The path specified by <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is invalid (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">The directory specified by <paramref name="destinationDirectoryName" /> already exists.
+
+-or-
+
+An I/O error has occurred.
+
+-or-
+
+A <see cref="T:System.IO.Compression.ZipArchiveEntry" />'s name is zero-length, contains only whitespace, or contains one or more invalid characters as defined by <see cref="F:System.IO.Path.InvalidPathChars" />.
+
+-or-
+
+Extracting a <see cref="T:System.IO.Compression.ZipArchiveEntry" /> would result in a file destination that is outside the destination directory (for example, because of parent directory accessors).
+
+-or-
+
+A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has the same name as an already extracted entry from the same archive.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is in an invalid format. </exception>
+        <exception cref="T:System.IO.FileNotFoundException">
+          <paramref name="sourceArchiveFileName" /> was not found.
+        </exception>
+        <exception cref="T:System.IO.InvalidDataException">The archive specified by <paramref name="sourceArchiveFileName" /> is not a valid <see cref="T:System.IO.Compression.ZipArchive" />.
+
+-or-
+
+A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> was not found or was corrupt.
+
+-or-
+
+A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed using a compression method that is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">
@@ -578,12 +629,12 @@
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">
-      <MemberSignature Language="C#" Value="public static void ExtractToDirectory (string sourceArchiveFileName, string destinationDirectoryName, System.Text.Encoding entryNameEncoding, bool overwriteFiles);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void ExtractToDirectory(string sourceArchiveFileName, string destinationDirectoryName, class System.Text.Encoding entryNameEncoding, bool overwriteFiles) cil managed" />
+      <MemberSignature Language="C#" Value="public static void ExtractToDirectory (string sourceArchiveFileName, string destinationDirectoryName, System.Text.Encoding entryNameEncoding, bool overwrite);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void ExtractToDirectory(string sourceArchiveFileName, string destinationDirectoryName, class System.Text.Encoding entryNameEncoding, bool overwrite) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.Compression.ZipFile.ExtractToDirectory(System.String,System.String,System.Text.Encoding,System.Boolean)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub ExtractToDirectory (sourceArchiveFileName As String, destinationDirectoryName As String, entryNameEncoding As Encoding, overwriteFiles As Boolean)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void ExtractToDirectory(System::String ^ sourceArchiveFileName, System::String ^ destinationDirectoryName, System::Text::Encoding ^ entryNameEncoding, bool overwriteFiles);" />
-      <MemberSignature Language="F#" Value="static member ExtractToDirectory : string * string * System.Text.Encoding * bool -&gt; unit" Usage="System.IO.Compression.ZipFile.ExtractToDirectory (sourceArchiveFileName, destinationDirectoryName, entryNameEncoding, overwriteFiles)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub ExtractToDirectory (sourceArchiveFileName As String, destinationDirectoryName As String, entryNameEncoding As Encoding, overwrite As Boolean)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void ExtractToDirectory(System::String ^ sourceArchiveFileName, System::String ^ destinationDirectoryName, System::Text::Encoding ^ entryNameEncoding, bool overwrite);" />
+      <MemberSignature Language="F#" Value="static member ExtractToDirectory : string * string * System.Text.Encoding * bool -&gt; unit" Usage="System.IO.Compression.ZipFile.ExtractToDirectory (sourceArchiveFileName, destinationDirectoryName, entryNameEncoding, overwrite)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Compression.ZipFile</AssemblyName>
@@ -604,15 +655,63 @@
         <Parameter Name="sourceArchiveFileName" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
         <Parameter Name="destinationDirectoryName" Type="System.String" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
         <Parameter Name="entryNameEncoding" Type="System.Text.Encoding" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
-        <Parameter Name="overwriteFiles" Type="System.Boolean" Index="3" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
+        <Parameter Name="overwrite" Type="System.Boolean" Index="3" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="sourceArchiveFileName">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
-        <param name="entryNameEncoding">To be added.</param>
-        <param name="overwriteFiles">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="sourceArchiveFileName">The path to the archive on the file system that is to be extracted.</param>
+        <param name="destinationDirectoryName">The path to the directory on the file system. The directory specified must not exist, but the directory that it is contained in must exist.</param>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this <see cref="T:System.IO.Compression.ZipArchive" />.</param>
+        <param name="overwrite"><see langword="true" /> to overwrite files.</param>
+        <summary>Extracts all of the files in the specified archive to a directory on the file system.</summary>
+        <remarks>
+<format type="text/markdown"><![CDATA[
+## Remarks
+ The specified directory must not exist. This method will create all subdirectories and the specified directory.
+
+ If there is an error while extracting the archive, the archive will remain partially extracted.
+
+ Each entry will be extracted such that the extracted file has the same relative path to the `destinationDirectoryName` as the entry has to the archive.
+
+ The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory.
+
+ If a file to be archived has an invalid last modified time, the first datetime representable in the Zip timestamp format (midnight on January 1, 1980) will be used.
+ 
+]]>
+</format>
+        </remarks>
+        <exception cref="T:System.ArgumentException"><paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by <see cref="F:System.IO.Path.InvalidPathChars" />, or <paramref name="entryNameEncoding" /> is set to a Unicode encoding other than UTF-8.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException"><paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> specifies a path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The path specified by <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is invalid, (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">The directory specified by <paramref name="destinationDirectoryName" /> already exists.
+
+-or-
+
+An I/O error has occurred.
+
+-or-
+
+A <see cref="T:System.IO.Compression.ZipArchiveEntry" />'s name is zero-length, contains only whitespace, or contains one or more invalid characters as defined by <see cref="F:System.IO.Path.InvalidPathChars" />.
+
+-or-
+
+Extracting a <see cref="T:System.IO.Compression.ZipArchiveEntry" /> would result in a file destination that is outside the destination directory (for example, because of parent directory accessors).
+
+-or-
+
+A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has the same name as an already extracted entry from the same archive.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        <exception cref="T:System.NotSupportedException"><paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is in an invalid format. </exception>
+        <exception cref="T:System.IO.FileNotFoundException"><paramref name="sourceArchiveFileName" /> was not found.</exception>
+        <exception cref="T:System.IO.InvalidDataException">The archive specified by <paramref name="sourceArchiveFileName" /> is not a valid <see cref="T:System.IO.Compression.ZipArchive" />
+
+-or-
+
+An archive entry was not found or was corrupt.
+
+-or-
+
+An archive entry has been compressed using a compression method that is not supported.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Open">
