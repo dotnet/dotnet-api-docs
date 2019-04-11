@@ -19,11 +19,13 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Provides a high-performance API for forward-only, non-cached writing of UTF-8 encoded JSON text. It writes the text sequentially with no caching and by default adheres to the <see href="https://tools.ietf.org/html/rfc8259">JSON RFC</see>, with the exception of writing comments.</summary>
+    <summary>Provides a high-performance API for forward-only, non-cached writing of UTF-8 encoded JSON text.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
 
 ## Remarks
+
+`Utf8JsonWriter` writes the text sequentially with no caching and by default adheres to the [JSON RFC](https://tools.ietf.org/html/rfc8259), with the exception of writing comments.
 
 A method that attempts to write invalid JSON when validation is enabled throws a <xref:System.InvalidOperationException> with a context-specific error message.
 Since this type is a ref struct, it does not directly support async. However, it does provide support for reentrancy to write partial data and to continue writing in chunks.
@@ -50,8 +52,7 @@ To be able to format the output with indentation and white space OR to skip vali
       </Parameters>
       <Docs>
         <param name="bufferWriter">An instance of <see cref="T:System.Buffers.IBufferWriter`1" /> used as a destination for writing JSON text.</param>
-        <param name="state">If this is the first call to the constructor, pass in a default state. Otherwise,
-            capture the state from the previous instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> and pass that back.</param>
+        <param name="state">A struct that contains the reader state. On the first call to the constructor, it should reflect a default state; otherwise, it should capture the state from the previous instance instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> and pass that back.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> class with the specified <paramref name="bufferWriter" />.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -194,7 +195,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
 Unlike the <xref:System.Text.Json.Utf8JsonWriter>, which is a ref struct, the state can survive across async/await boundaries, and hence this type is required to provide support for reading
 in more data asynchronously before continuing with a new instance of the <xref:System.Text.Json.Utf8JsonWriter>.
 
-Getting the state for creating a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> object without first committing the data that has been written would result in an inconsistent state. 
+Getting the state for creating a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> struct without first committing the data that has been written would result in an inconsistent state. 
 Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current state.	
 
  ]]></format>
@@ -469,7 +470,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       </Parameters>
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -498,7 +499,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to transcode and write as UTF-8.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -527,7 +528,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -581,7 +582,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Decimal" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -614,7 +615,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Double" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -647,7 +648,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Int32" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -680,7 +681,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Int64" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -713,7 +714,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Single" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -751,7 +752,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.UInt32" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -789,7 +790,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.UInt64" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -822,7 +823,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Decimal" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -855,7 +856,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Double" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -888,7 +889,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Int32" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -921,7 +922,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Int64" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -954,7 +955,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Single" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -992,7 +993,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.UInt32" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -1030,7 +1031,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.UInt64" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -1063,7 +1064,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Decimal" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -1096,7 +1097,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Double" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -1129,7 +1130,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Int32" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -1162,7 +1163,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Int64" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -1195,7 +1196,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Single" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
@@ -1233,7 +1234,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.UInt32" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -1271,7 +1272,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.UInt64" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
@@ -1536,7 +1537,7 @@ if this would result in an invalid JSON to be written (while validation is enabl
       </Parameters>
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON array to be written.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the beginning of a JSON array with a property name as the key.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -1570,7 +1571,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON array to be transcoded and written as UTF-8.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the beginning of a JSON array with a property name as the key.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -1604,7 +1605,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON array to be transcoded and written as UTF-8.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the beginning of a JSON array with a property name as the key.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -1666,7 +1667,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       </Parameters>
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the beginning of a JSON object with a property name as the key.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -1700,7 +1701,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the beginning of a JSON object with a property name as the key.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -1734,7 +1735,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the beginning of a JSON object with a property name as the key.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -1770,7 +1771,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.DateTime" /> using the round-trippable ('O') <see cref="T:System.Buffers.StandardFormat" /> . For example, 2017-06-12T05:30:45.7680000.
@@ -1803,7 +1804,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.DateTimeOffset" /> using the round-trippable ('O') <see cref="T:System.Buffers.StandardFormat" /> . For example, 2017-06-12T05:30:45.7680000-07:00.
@@ -1836,7 +1837,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Guid" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'D'), as the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn.
@@ -1968,7 +1969,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.DateTime" /> using the round-trippable ('O') <see cref="T:System.Buffers.StandardFormat" /> . For example, 2017-06-12T05:30:45.7680000.
@@ -2001,7 +2002,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.DateTimeOffset" /> using the round-trippable ('O') <see cref="T:System.Buffers.StandardFormat" /> . For example, 2017-06-12T05:30:45.7680000-07:00.
@@ -2034,7 +2035,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Guid" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'D'), as the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn.
@@ -2166,7 +2167,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.DateTime" /> using the round-trippable ('O') <see cref="T:System.Buffers.StandardFormat" /> . For example, 2017-06-12T05:30:45.7680000.
@@ -2199,7 +2200,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.DateTimeOffset" /> using the round-trippable ('O') <see cref="T:System.Buffers.StandardFormat" /> . For example, 2017-06-12T05:30:45.7680000-07:00.
@@ -2232,7 +2233,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
-        <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
             Writes the <see cref="T:System.Guid" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'D'), as the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn.
