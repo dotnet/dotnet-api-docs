@@ -25,8 +25,8 @@
 
 ## Remarks
 
-When the user attempts to write invalid JSON and validation is enabled, it throws a <xref:System.InvalidOperationException> with a context specific error message.
-Since this type is a ref struct, it does not directly support async. However, it does provide support for reentrancy to write partial data, and continue writing in chunks.
+A method that attempts to write invalid JSON when validation is enabled throws a <xref:System.InvalidOperationException> with a context-specific error message.
+Since this type is a ref struct, it does not directly support async. However, it does provide support for reentrancy to write partial data and to continue writing in chunks.
 To be able to format the output with indentation and white space OR to skip validation, create an instance of <xref:System.Text.Json.JsonWriterState> and pass that in to the writer.
 
  ]]></format>
@@ -49,7 +49,7 @@ To be able to format the output with indentation and white space OR to skip vali
         <Parameter Name="state" Type="System.Text.Json.JsonWriterState" />
       </Parameters>
       <Docs>
-        <param name="bufferWriter">An instance of <see cref="T:System.Buffers.IBufferWriter`1" /> used as a destination for writing JSON text into.</param>
+        <param name="bufferWriter">An instance of <see cref="T:System.Buffers.IBufferWriter`1" /> used as a destination for writing JSON text.</param>
         <param name="state">If this is the first call to the constructor, pass in a default state. Otherwise,
             capture the state from the previous instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> and pass that back.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> class with the specified <paramref name="bufferWriter" />.</summary>
@@ -58,7 +58,7 @@ To be able to format the output with indentation and white space OR to skip vali
 
 ## Remarks
 
-Since this type is a ref struct, it is a stack-only type and all the limitations of ref structs apply to it.
+Since this type is a ref struct, it is a stack-only type, and all the limitations of ref structs apply to it.
 This is the reason why the constructor accepts a <xref:System.Text.Json.JsonWriterState>.
 
  ]]></format>
@@ -83,9 +83,9 @@ This is the reason why the constructor accepts a <xref:System.Text.Json.JsonWrit
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the total amount of bytes committed to the output by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far for the current instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" />.
+        <summary>Gets the total number of bytes committed to the output by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far for the current instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" />.
             This indicates how much the <see cref="T:System.Buffers.IBufferWriter`1" /> has advanced.</summary>
-        <value>The total amount of bytes committed to the output by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far.</value>
+        <value>The total number of bytes committed to the output by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -105,9 +105,9 @@ This is the reason why the constructor accepts a <xref:System.Text.Json.JsonWrit
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the total amount of bytes written by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far for the current instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" />.
+        <summary>Gets the total number of bytes written by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far for the current instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" />.
             This includes data that has been written beyond what has already been committed.</summary>
-        <value>The total amount of bytes written by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far.</value>
+        <value>The total number of bytes written by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -134,7 +134,7 @@ This is the reason why the constructor accepts a <xref:System.Text.Json.JsonWrit
 
 ## Remarks
 
-The `CurrentDepth` property tracks the recursive depth of the nested objects / arrays within the JSON text written so far..
+The `CurrentDepth` property tracks the recursive depth of the nested objects / arrays within the JSON text written so far.
 
  ]]></format>
         </remarks>
@@ -191,7 +191,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
 
 ## Remarks
 
-Unlike the <xref:System.Text.Json.Utf8JsonWriter>, which is a ref struct, the state can survive across async/await boundaries and hence this type is required to provide support for reading
+Unlike the <xref:System.Text.Json.Utf8JsonWriter>, which is a ref struct, the state can survive across async/await boundaries, and hence this type is required to provide support for reading
 in more data asynchronously before continuing with a new instance of the <xref:System.Text.Json.Utf8JsonWriter>.
 
 Getting the state for creating a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> object without first committing the data that has been written would result in an inconsistent state. 
@@ -225,7 +225,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
         <param name="value">The value to be written as a JSON literal "true" or "false" as part of the name/value pair.</param>
-        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter and its default value is <see langword="true" />.</param>
+        <param name="escape"><see langword="false" /> to indicate the writer should assume the property name is properly escaped and skips the escaping step; otherwise, <see langword="true" />. This is an optional parameter; its default value is <see langword="true" />.</param>
         <summary>Writes the property name and <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as part of a name/value pair of a JSON object.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
@@ -497,7 +497,7 @@ Call <xref:System.Text.Json.Utf8JsonWriter.Flush%2A> before getting the current 
         <Parameter Name="escape" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to transcode and write as UTF-8.</param>
         <param name="escape">If this is set to false, the writer assumes the property name is properly escaped and skips the escaping step.</param>
         <summary>Writes the property name and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
         <remarks>To be added.</remarks>
