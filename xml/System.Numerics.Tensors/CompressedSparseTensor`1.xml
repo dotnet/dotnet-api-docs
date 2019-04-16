@@ -41,9 +41,10 @@
         <Parameter Name="reverseStride" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="dimensions">To be added.</param>
-        <param name="reverseStride">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="dimensions">An span of integers that represent the size of each dimension of the <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> to create.</param>
+        <param name="reverseStride">
+          <see langword="false" /> (default) to indicate that the first dimension is most major (farthest apart) and the last dimension is most minor (closest together): akin to row-major in a rank-2 tensor.  <see langword="true" /> to indicate that the last dimension is most major (farthest apart) and the first dimension is most minor (closest together): akin to column-major in a rank-2 tensor.</param>
+        <summary>Constructs a new <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> of the specifed dimensions and stride ordering.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -64,10 +65,10 @@
         <Parameter Name="reverseStride" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="dimensions">To be added.</param>
-        <param name="capacity">To be added.</param>
-        <param name="reverseStride">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="dimensions">An span of integers that represent the size of each dimension of the <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> to create.</param>
+        <param name="capacity">The number of non-zero values this tensor can store without resizing.</param>
+        <param name="reverseStride"><see langword="false" /> (default) to indicate that the first dimension is most major (farthest apart) and the last dimension is most minor (closest together): akin to row-major in a rank-2 tensor. <see langword="true" /> to indicate that the last dimension is most major (farthest apart) and the first dimension is most minor (closest together): akin to column-major in a rank-2 tensor.</param>
+        <summary>Constructs a new <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> of the specifed dimensions, initial capacity, and stride ordering.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -91,13 +92,13 @@
         <Parameter Name="reverseStride" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="values">To be added.</param>
-        <param name="compressedCounts">To be added.</param>
-        <param name="indices">To be added.</param>
-        <param name="nonZeroCount">To be added.</param>
-        <param name="dimensions">To be added.</param>
-        <param name="reverseStride">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="values">Memory storing non-zero values to construct this tensor with.</param>
+        <param name="compressedCounts">Memory storing the counts of non-zero elements at each index of the compressed dimension.</param>
+        <param name="indices">Memory storing the linearized index (excluding the compressed dimension) of non-zero elements.</param>
+        <param name="nonZeroCount">The number of valid entries (eg: non-zero values) in <paramref name="values" /> and <paramref name="indices" />.</param>
+        <param name="dimensions">An span of integers that represent the size of each dimension of the <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> to create.</param>
+        <param name="reverseStride"><see langword="false" /> (default) to indicate that the first dimension is most major (farthest apart) and the last dimension is most minor (closest together): akin to row-major in a rank-2 tensor. <see langword="true" /> to indicate that the last dimension is most major (farthest apart) and the first dimension is most minor (closest together): akin to column-major in a rank-2 tensor.</param>
+        <summary>Constructs a new <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> of the specifed dimensions, wrapping existing backing memory for the contents. Growing this <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> will re-allocate the backing memory.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -117,7 +118,7 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the number of non-zero values this tensor can store without resizing.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -139,8 +140,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Creates a shallow copy of this tensor, with new backing storage.</summary>
+        <returns>A shallow copy of this tensor.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -166,10 +167,10 @@
         <Parameter Name="dimensions" Type="System.ReadOnlySpan&lt;System.Int32&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="TResult">To be added.</typeparam>
-        <param name="dimensions">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="TResult">Type contained in the returned <see cref="T:System.Numerics.Tensors.Tensor&lt;TResult&gt;" />.</typeparam>
+        <param name="dimensions">An span of integers that represent the size of each dimension of the <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> to create.</param>
+        <summary>Creates a new Tensor of a different type with the specified <paramref name="dimensions" /> and the same layout as this tensor with elements initialized to their default value.</summary>
+        <returns>A new tensor with the same layout as this tensor but different type and dimensions.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -189,8 +190,8 @@
         <ReturnType>System.Memory&lt;System.Int32&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Memory storing the counts of non-zero elements at each index of the compressed dimension.</summary>
+        <value>A <see cref="T:System.Memory&lt;System.Int32&gt;" /> instance.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -213,9 +214,9 @@
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="index">An integer index computed as a dot-product of indices.</param>
+        <summary>Gets the value at the specied index, where index is lineraized as a dot product between indices and strides.</summary>
+        <returns>The value at the specified position in this Tensor.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -235,8 +236,8 @@
         <ReturnType>System.Memory&lt;System.Int32&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Memory storing the linearized index (excluding the compressed dimension) of non-zero elements.</summary>
+        <value>A <see cref="T:System.Memory&lt;System.Int32&gt;" /> instance.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -259,9 +260,9 @@
         <Parameter Name="indices" Type="System.ReadOnlySpan&lt;System.Int32&gt;" />
       </Parameters>
       <Docs>
-        <param name="indices">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <param name="indices">A span of integers that represent the indices specifying the position of the element to get.</param>
+        <summary>Obtains the value at the specified indices</summary>
+        <value>The value at the specified position in this Tensor.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -281,8 +282,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Get's the number on non-zero values currently being stored in this tensor.</summary>
+        <value>An integer.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -305,9 +306,9 @@
         <Parameter Name="dimensions" Type="System.ReadOnlySpan&lt;System.Int32&gt;" />
       </Parameters>
       <Docs>
-        <param name="dimensions">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="dimensions">An span of integers that represent the size of each dimension of the <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> to create.</param>
+        <summary>Reshapes the current tensor to new dimensions. Unlike other Tensor implementations, <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> must allocate new backing storage to represent a reshaped Tensor.</summary>
+        <returns>A new tensor that reinterprets the content of this tensor to new <paramref name="dimensions" /> (assuming the same linear index for each element).</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -331,9 +332,9 @@
         <Parameter Name="value" Type="T" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="index">An integer index computed as a dot-product of indices.</param>
+        <param name="value">The new value to set at the specified position in this Tensor.</param>
+        <summary>Sets the value at the specied index, where index is a linearized version of n-dimension indices using strides.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -354,8 +355,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Creates a copy of this tensor as a new <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" /> eliminating any unused space in the backing storage.</summary>
+        <returns>A copy of this tensor as a <see cref="T:System.Numerics.Tensors.CompressedSparseTensor`1" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -376,8 +377,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Creates a copy of this tensor as a <see cref="T:System.Numerics.Tensors.DenseTensor`1" />.</summary>
+        <returns>A copy of this tensor as a <see cref="T:System.Numerics.Tensors.DenseTensor`1" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -398,8 +399,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Creates a copy of this tensor as a <see cref="T:System.Numerics.Tensors.SparseTensor`1" />.</summary>
+        <returns>A copy of this tensor as a <see cref="T:System.Numerics.Tensors.SparseTensor`1" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -419,8 +420,8 @@
         <ReturnType>System.Memory&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Memory storing non-zero values.</summary>
+        <value>A <see. cref="T:System.Memory&lt;T&gt;" /> instance.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
