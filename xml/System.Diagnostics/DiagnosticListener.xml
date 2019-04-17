@@ -51,8 +51,8 @@
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="name">The name of this DiagnosticListener.</param>
+        <summary>Creates a new DiagnosticListener. It is a NotificationSource, which means the returned result can be used to  log notifications, but it also has a Subscribe method so notifications can be forwarded arbitrarily. Thus its job is to forward things from the producer to all the listeners (multi-casting). Generally, you should not be making your own DiagnosticListener but use the DiagnosticListener.Default, so that notifications are as 'public' as possible.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -77,7 +77,7 @@
         <ReturnType>System.IObservable&lt;System.Diagnostics.DiagnosticListener&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>When you subscribe to this you get callbacks for all NotificationListeners in the appdomain, as well as those that occurred in the past, and all future Listeners created in the future.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -107,7 +107,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Clean up the NotificationListeners. Notification listeners do NOT DIE ON THEIR OWN because they are in a global list (for discoverability).  You must dispose them explicitly. Note that we do not do the Dispose(bool) pattern because we frankly don't want to support subclasses that have non-managed state.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -131,8 +131,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Determines whether there are any registered subscribers.</summary>
+        <returns><see langword="true" /> if there are any registered subscribers, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -161,8 +161,8 @@
       </Parameters>
       <Docs>
         <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Override abstract method. Meant to check if the DiagnosticListener is enabled.</summary>
+        <returns>Meant to return <see langword="true" /> if it is enabled, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -192,8 +192,8 @@
         <param name="name">To be added.</param>
         <param name="arg1">To be added.</param>
         <param name="arg2">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Override abstract method. Meant to check if the DiagnosticListener is enabled.</summary>
+        <returns>Meant to return <see langword="true" /> if it is enabled, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -218,8 +218,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The name of this DiagnosticListener.</summary>
+        <value>A <see cref="System.String" /> representing the name.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -279,9 +279,19 @@
         <Parameter Name="isEnabled" Type="System.Func&lt;System.String,System.Object,System.Object,System.Boolean&gt;" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="observer">To be added.</param>
-        <param name="isEnabled">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="observer">An <see cref="T:System.IObserver" /> subscriber.</param>
+        <param name="isEnabled">Filters events based on their name (<see cref="T:System.String" />) and up to two context object (which can be <see langword="null" />).  
+            
+A particular instrumentation site has the option of calling one or more <see cref="M:System.Diagnostics.DiagnosticListener.IsEnabled" /> overloads  in which it passes the name of the event and up to two other (instrumentation site specific) objects as arguments. If any of these <see cref="M:System.Diagnostics.DiagnosticListener.IsEnabled" /> calls are made then this <paramref name="isEnabled" /> predicate is invoked with passed values (if shorter overloads are used, <see langword="null" /> is passed for missing context objects).
+            
+This gives any particular instrumentation site the ability to pass up to two pieces of information to the subscriber to do sophisticated, efficient filtering. This requires more coupling between the instrumentation site and the subscriber code.
+            
+It is expected that a particular instrumentation site may call different overloads of IsEnabled for the same event, first calling <see cref="M:System.Diagnostics.DiagnosticListener.IsEnabled(System.String)" /> which calls the filter with two <see langword="null" /> context objects and if <paramref name="isEnabled" /> returns <see langword="true" /> calling again with context objects. The <paramref name="isEnabled" /> filter should be designed with this in mind. 
+            
+Note that the <paramref name="isEnabled" /> predicate is an optional optimization to allow the instrumentation site to avoid setting up the payload and calling <see cref="M:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)" /> when no subscriber cares about it. In particular the instrumentation site has the option of ignoring the <see cref="M:System.Diagnostics.DiagnosticListener.IsEnabled" /> predicate (not calling it) and simply calling <see cref="M:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)" />. Thus if the subscriber requires the filtering, it needs to do it itself.
+            
+If this parameter is <see langword="null" />, no filtering is done (all overloads of <see cref="M:System.Diagnostics.DiagnosticSource.IsEnabled" /> return <see langword="true" />).</param>
+        <summary>Add a subscriber (Observer). If the <paramref name="isEnabled" /> parameter is not <see langword="null" />, it indicates that some events are uninteresting can be skipped for efficiency.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -311,9 +321,13 @@
         <Parameter Name="isEnabled" Type="System.Predicate&lt;System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="observer">To be added.</param>
-        <param name="isEnabled">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="observer">An <see cref="T:System.IObserver" /> subscriber.</param>
+        <param name="isEnabled">Filters events based on their name (<see cref="T:System.String" />). Should return <see langword="true" /> if the event is enabled.  
+            
+Note that the <paramref name="isEnabled" /> predicate is an optional optimization to allow the instrumentation site to avoid setting up the payload and calling <see cref="M:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)" /> when no subscriber cares about it. In particular the instrumentation site has the option of ignoring the <see cref="M:System.Diagnostics.DiagnosticListener.IsEnabled" /> predicate (not calling it) and simply calling <see cref="M:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)" />.   Thus if the subscriber requires the filtering, it needs to do it itself.
+            
+If this parameter is <see langword="null" />, no filtering is done (all overloads of <see cref="M:System.Diagnostics.DiagnosticSource.IsEnabled" /> return <see langword="true" />).</param>
+        <summary>Add a subscriber (Observer). If the <paramref name="isEnabled" /> parameter is not <see langword="null" />, it indicates that some events are uninteresting and can be skipped for efficiency.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -337,8 +351,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the DiagnosticListener name.</summary>
+        <returns>A <see cref="T:System.String" /> with the name.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
