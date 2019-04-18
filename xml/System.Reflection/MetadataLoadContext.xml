@@ -77,44 +77,44 @@ Assemblies are treated strictly as metadata. There are no restrictions on loadin
 
 The core assembly is treated differently than other assemblies because references to these well-known types do not include the assembly reference, unlike normal types.
             
-Typically, this assembly is named "mscorlib", or "netstandard". If the core assembly cannot be found, the value will be null and many other reflection methods, including those that parse method signatures, will throw.
+Typically, this assembly is named "mscorlib" or "netstandard". If the core assembly cannot be found, the value will be `null`, and many other reflection methods, including those that parse method signatures, will throw an exception.
             
-The <xref:System.Reflection.MetadataLoadContext.CoreAssembly> is determined by passing the coreAssemblyName parameter passed to the <xref:System.Reflection.MetadataAssemblyResolver> constructor
-to the MetadataAssemblyResolver's <xref:System.Reflection.MetadataAssemblyResolver.Resolve> method.
+The `CoreAssembly` is determined by passing the `coreAssemblyName` parameter passed to the <xref:System.Reflection.MetadataAssemblyResolver> constructor
+to the <xref:System.Reflection.MetadataAssemblyResolver.Resolve?displayProperty=nameWithType> method.
 
-If no coreAssemblyName argument was specified in the constructor of <xref:System.Reflection.MetadataLoadContext>, then default values are used including "mscorlib", "System.Runtime" and "netstandard".
+If no `coreAssemblyName` argument was specified in the constructor of <xref:System.Reflection.MetadataLoadContext>, then default values are used, including "mscorlib", "System.Runtime" and "netstandard".
             
 The designated core assembly does not need to contain the core types directly. It can type forward them to other assemblies. Thus, it is perfectly permissible to use the mscorlib facade as the designated core assembly.
             
-Note that <xref:System.Runtime> is not an ideal core assembly as it excludes some of the interop-related pseudo-custom attribute types such as DllImportAttribute. However, it can serve if you have no interest in those attributes. The CustomAttributes API will skip those attributes if the core assembly does not include the necessary types.
+Note that <xref:System.Runtime> is not an ideal core assembly because it excludes some of the interop-related pseudo-custom attribute types such as <xref:System.Runtime.InteropServices.DllImportAttribute>. However, it can serve if you have no interest in those attributes. The CustomAttributes API will skip those attributes if the core assembly does not include the necessary types.
             
-The CoreAssembly is not loaded until necessary. These APIs do not trigger the search for the core assembly:
+The core assembly is not loaded until necessary. The following APIs do not trigger the search for the core assembly:
 
-* MetadataLoadContext.LoadFromStream()
-* LoadFromAssemblyPath()
-* LoadFromByteArray()
-* Assembly.GetName()
-* Assembly.FullName
-* Assembly.GetReferencedAssemblies()
-* Assembly.GetTypes()
-* Assembly.DefinedTypes
-* Assembly.GetExportedTypes()
-* Assembly.GetForwardedTypes()
-* Assembly.GetType(string, bool, bool)
-* Type.Name
-* Type.FullName
-* Type.AssemblyQualifiedName
+* <xref:System.Reflection.MetadataLoadContext.LoadFromStream%2A?displayProperty=nameWithType>
+* <xref:System.Reflection.MetadataLoadContext.LoadFromAssemblyPath%2A?displayProperty=nameWithType>
+* <xref:System.Reflection.MetadataLoadContext.LoadFromByteArray?displayProperty=nameWithType>
+* <System.Reflection.Assembly.GetName%2A?displayProperty=nameWithType>
+* <System.Reflection.Assembly.FullName?displayProperty=nameWithType>
+* <System.Reflection.Assembly.GetReferencedAssemblies%2A?displayProperty=nameWithType>
+* <System.Reflection.Assembly.GetTypes%2A?displayProperty=nameWithType>
+* <System.Reflection.Assembly.DefinedTypes?displayProperty=nameWithType>
+* <System.Reflection.Assembly.GetExportedTypes%2A?displayProperty=nameWithType>
+* <System.Reflection.Assembly.GetForwardedTypes%2A?displayProperty=nameWithType>
+* <System.Reflection.Assembly.GetType(System.String,System.Boolean,System.Boolean)?displayProperty=nameWithType>
+* <xref:System.Type.Name?displayProperty=nameWithType>
+* <xref:System.Type.FullName?displayProperty=nameWithType>
+* <xref:System.Type.AssemblyQualifiedName?displayProperty=nameWithType>
             
 If a core assembly cannot be found or if the core assembly is missing types, this will affect the behavior of the <xref:System.Reflection.MetadataLoadContext> as follows:
             
-* APIs that need to parse signatures or typespecs and return the results as Types will throw. For example:
+* APIs that need to parse signatures or typespecs and return the results as <xref:System.Type> objects will throw an exception. For example:
 
- * MethodBase.ReturnType
- * MethodBase.GetParameters()
- * Type.BaseType
- * Type.GetInterfaces()
+ * <xref:System.Reflection.MethodBase.ReturnType?displayProperty=nameWithType>
+ * System.Reflection.MethodBase.GetParameters%2A?displayProperty=nameWithType>
+ * <xref:System.Type.BaseType?displayProperty-nameWithType>
+ * <xref:System.Type.GetInterfaces%2A?displayProperty=nameWithType>
             
-* APIs that need to compare types to well known core types will not throw and the comparison will evaluate to `false`. For example, if you do not specify a core assembly, <xref:Type.IsPrimitive> will return `false` for everything, even types named <xref:System.Int32>. Similarly, Type.GetTypeCode() will return <xref:TypeCode.Object> for everything.
+* APIs that need to compare types to well-known core types will not throw an exception, and the comparison will evaluate to `false`. For example, if you do not specify a core assembly, <xref:Type.IsPrimitive> will return `false` for everything, even types named <xref:System.Int32>. Similarly, <xref:System.Type.GetTypeCode%2A?displayProperty=nameWithType> will return <xref:TypeCode.Object> for everything.
             
 * If a metadata entity sets flags that surface as a pseudo-custom attribute, and the core assembly does not contain the pseudo-custom attribute type, the necessary constructor or any of the parameter types of the constructor, the <xref:System.Reflection.MetadataLoadContext> will not throw. It will omit the pseudo-custom attribute from the list of returned attributes.
           ]]></format>
@@ -141,7 +141,7 @@ If a core assembly cannot be found or if the core assembly is missing types, thi
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Releases any native resources (such as file locks on assembly files.) After disposal, it is not safe to use any Assembly objects dispensed by the <see cref="T:System.Reflection.MetadataLoadContext" />, nor any Reflection objects dispensed by those Assembly objects.
+        <summary>Releases any native resources (such as file locks on assembly files). After disposal, it is not safe to use any <see cref="T:System.Reflection.Assembly" /> objects dispensed by the <see cref="T:System.Reflection.MetadataLoadContext" />, nor any reflection objects dispensed by those <see cref="T:System.Reflection.Assembly" /> objects.
 
 Though objects provided by the <see cref="T:System.Reflection.MetadataLoadContext" /> strive to throw an <see cref="T:System.ObjectDisposedException" />, this is not guaranteed.
 
@@ -190,15 +190,15 @@ Some APIs may return fixed or previously cached data. Accessing objects *during*
       </Parameters>
       <Docs>
         <param name="assemblyName">An <see cref="T:System.Reflection.AssemblyName" /> instance.</param>
-        <summary>Resolves the supplied assembly name to an assembly. If an assembly was previously bound by to this name, that assembly is returned. Otherwise, the <see cref="T:System.Reflection.MetadataLoadContext" /> calls the specified <see cref="T:System.Reflection.MetadataAssemblyResolver" />.</summary>
-        <returns>A <see cref="T:System.Reflection.Assembly" /> instance.</returns>
+        <summary>Resolves the supplied assembly name to an assembly. If an assembly was previously bound to this name, that assembly is returned. Otherwise, the <see cref="T:System.Reflection.MetadataLoadContext" /> calls the specified <see cref="T:System.Reflection.MetadataAssemblyResolver" />.</summary>
+        <returns>An <see cref="T:System.Reflection.Assembly" /> instance.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 ## Remarks
-Note that the behavior of this method matches the behavior of AssemblyLoadContext.LoadFromAssemblyName() resolve event but does not match the behavior of Assembly.ReflectionOnlyLoad(). (the latter gives up without raising its resolve event.)
+Note that the behavior of this method matches the behavior of the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName%2A?displayProperty=nameWithType> resolve event but does not match the behavior of <xref:System.Reflection.Assembly.ReflectionOnlyLoad%2A?displayProperty=nameWithType>. (The latter gives up without raising its resolve event.)
           ]]></format>
         </remarks>
-        <exception cref="T:System.IO.FileNotFoundException">Thrown if the resolver returns <see langword="null" />.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">The resolver returns <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="LoadFromAssemblyName">
@@ -221,17 +221,17 @@ Note that the behavior of this method matches the behavior of AssemblyLoadContex
       </Parameters>
       <Docs>
         <param name="assemblyName">A <see cref="T:System.String" /> representing the assembly name.</param>
-        <summary>Resolves the supplied assembly name to an assembly. If an assembly was previously bound by to this name, that assembly is returned. Otherwise, the <see cref="T:System.Reflection.MetadataLoadContext" /> calls the specified <see cref="T:System.Reflection.MetadataAssemblyResolver" />.</summary>
-        <returns>A <see cref="T:System.Reflection.Assembly" /> instance.</returns>
+        <summary>Resolves the supplied assembly name to an assembly. If an assembly was previously bound to this name, that assembly is returned. Otherwise, the <see cref="T:System.Reflection.MetadataLoadContext" /> calls the specified <see cref="T:System.Reflection.MetadataAssemblyResolver" />.</summary>
+        <returns>An <see cref="T:System.Reflection.Assembly" /> instance.</returns>
         <remarks>
           <format type="text/markdown">
             <![CDATA[
 ## Remarks
-Note that the behavior of this method matches the behavior of AssemblyLoadContext.LoadFromAssemblyName() resolve event but does not match the behavior of Assembly.ReflectionOnlyLoad(). (the latter gives up without raising its resolve event.)
+Note that the behavior of this method matches the behavior of <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName%2A?displayProperty=nameWithType> resolve event but does not match the behavior of <xxref:System.Reflection.Assembly.ReflectionOnlyLoad%2A?displayProperty=nameWithType>. (The latter gives up without raising its resolve event.)
           ]]>
           </format>
         </remarks>
-        <exception cref="T:System.IO.FileNotFoundException">Thrown i the resolver returns <see langword="null" />.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">The resolver returns <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="LoadFromAssemblyPath">
@@ -255,9 +255,9 @@ Note that the behavior of this method matches the behavior of AssemblyLoadContex
       <Docs>
         <param name="assemblyPath">A <see cref="T:System.String" /> representing the path to the assembly.</param>
         <summary>Loads an assembly from a specific path on the disk and binds its assembly name to it in the <see cref="T:System.Reflection.MetadataLoadContext" />. If a prior assembly with the same name was already loaded into the <see cref="T:System.Reflection.MetadataLoadContext" />, the prior assembly will be returned.</summary>
-        <returns>A <see cref="T:System.Reflection.Assembly" /> instance.</returns>
+        <returns>An <see cref="T:System.Reflection.Assembly" /> instance.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.IO.FileLoadException">Thrown if the two assemblies do not have the same Mvid.</exception>
+        <exception cref="T:System.IO.FileLoadException">The two assemblies do not have the same Mvid.</exception>
       </Docs>
     </Member>
     <Member MemberName="LoadFromByteArray">
@@ -280,9 +280,9 @@ Note that the behavior of this method matches the behavior of AssemblyLoadContex
       <Docs>
         <param name="assembly">A <see cref="T:System.Byte[]" /> holding an assembly.</param>
         <summary>Loads an assembly from a byte array and binds its assembly name to it in the <see cref="T:System.Reflection.MetadataLoadContext" />. If a prior assembly with the same name was already loaded into the <see cref="T:System.Reflection.MetadataLoadContext" />, the prior assembly will be returned.</summary>
-        <returns>A <see cref="T:System.Reflection.Assembly" /> instance.</returns>
+        <returns>An <see cref="T:System.Reflection.Assembly" /> instance.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.IO.FileLoadException">Thrown if the two assemblies do not have the same Mvid.</exception>
+        <exception cref="T:System.IO.FileLoadException">The two assemblies do not have the same Mvid.</exception>
       </Docs>
     </Member>
     <Member MemberName="LoadFromStream">
@@ -312,10 +312,10 @@ Note that the behavior of this method matches the behavior of AssemblyLoadContex
 ## Remarks
 
 > [!IMPORTANT]
-> The <xref:System.Reflection.MetadataLoadContext> takes ownership of the <xref:System.IO.Stream> passed into this method. The original owner must not mutate its position, dispose the <xref:System.IO.Stream> or  assume that its position will stay unchanged.
+> The <xref:System.Reflection.MetadataLoadContext> takes ownership of the <xref:System.IO.Stream> passed into this method. The original owner must not mutate its position, dispose the <xref:System.IO.Stream>, or assume that its position will stay unchanged.
           ]]></format>
         </remarks>
-        <exception cref="T:System.IO.FileLoadException">Thrown if the two assemblies do not have the same Mvid.</exception>
+        <exception cref="T:System.IO.FileLoadException">The two assemblies do not have the same Mvid.</exception>
       </Docs>
     </Member>
   </Members>
