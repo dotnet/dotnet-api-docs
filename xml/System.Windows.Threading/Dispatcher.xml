@@ -1063,8 +1063,8 @@
       </Parameters>
       <Docs>
         <param name="method">A delegate to a method that takes parameters specified in <paramref name="args" />, which is pushed onto the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue.</param>
-        <param name="timeout">The maximum amount of time to wait for the operation to complete.</param>
-        <param name="args">An array of objects to pass as arguments to the given method. Can be <see langword="null" />.</param>
+        <param name="timeout">The minimum amount of time to wait for the operation to start. Once the operation has started, it will complete before this method returns.</param>
+        <param name="args">An array of objects to pass as arguments to the given method. Can be <see langword="null" /> if no arguments are needed.</param>
         <summary>Executes the specified delegate within the designated time span at the specified priority with the specified arguments synchronously on the thread the <see cref="T:System.Windows.Threading.Dispatcher" /> is associated with.</summary>
         <returns>The return value from the delegate being invoked or <see langword="null" /> if the delegate has no return value.</returns>
         <remarks>
@@ -1077,6 +1077,10 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="method" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents infinite wait, and you're invoking across threads.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -1213,7 +1217,7 @@
       </Parameters>
       <Docs>
         <param name="priority">The priority, relative to the other pending operations in the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue, the specified method is invoked.</param>
-        <param name="timeout">The maximum time to wait for the operation to finish.</param>
+        <param name="timeout">The minimum amount of time to wait for the operation to start. Once the operation has started, it will complete before this method returns.</param>
         <param name="method">The delegate to a method that takes no arguments, which is pushed onto the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue.</param>
         <summary>Executes the specified delegate synchronously at the specified priority and with the specified time-out value on the thread the <see cref="T:System.Windows.Threading.Dispatcher" /> was created.</summary>
         <returns>The return value from the delegate being invoked or <see langword="null" /> if the delegate has no return value.</returns>
@@ -1227,6 +1231,14 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="method" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents infinite wait, and you're invoking across threads.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="priority" /> is equal to <see cref="F:System.Windows.Threading.DispatcherPriority.Inactive" />.</exception>
+        <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">
+          <paramref name="priority" /> is not a valid priority.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -1255,12 +1267,18 @@
         <Parameter Name="timeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="callback">A delegate to invoke through the dispatcher.</param>
+        <param name="callback">An Action delegate to invoke through the dispatcher.</param>
         <param name="priority">The priority that determines in what order the specified callback is invoked relative to the other pending operations in the <see cref="T:System.Windows.Threading.Dispatcher" />.</param>
         <param name="cancellationToken">An object that indicates whether to cancel the action.</param>
-        <param name="timeout">The minimum amount of time to wait for the operation to start.</param>
+        <param name="timeout">The minimum amount of time to wait for the operation to start. Once the operation has started, it will complete before this method returns.</param>
         <summary>Executes the specified <see cref="T:System.Action" /> synchronously at the specified priority on the thread the <see cref="T:System.Windows.Threading.Dispatcher" /> is associated with.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="callback" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents infinite wait.</exception>
+        <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">
+          <paramref name="priority" /> is not a valid priority.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -1298,7 +1316,7 @@
       </Parameters>
       <Docs>
         <param name="method">A delegate to a method that takes parameters specified in <paramref name="args" />, which is pushed onto the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue.</param>
-        <param name="timeout">The maximum amount of time to wait for the operation to complete.</param>
+        <param name="timeout">The minimum amount of time to wait for the operation to start. Once the operation has started, it will complete before this method returns.</param>
         <param name="priority">The priority, relative to the other pending operations in the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue, the specified method is invoked.</param>
         <param name="args">An array of objects to pass as arguments to the given method. Can be <see langword="null" />.</param>
         <summary>Executes the specified delegate within the designated time span at the specified priority with the specified arguments synchronously on the thread the <see cref="T:System.Windows.Threading.Dispatcher" /> is associated with.</summary>
@@ -1313,6 +1331,14 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="method" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents infinite wait, and you're invoking across threads.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="priority" /> is equal to <see cref="F:System.Windows.Threading.DispatcherPriority.Inactive" />.</exception>
+        <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">
+          <paramref name="priority" /> is not a valid priority.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -1413,7 +1439,7 @@
       </Parameters>
       <Docs>
         <param name="priority">The priority, relative to the other pending operations in the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue, the specified method is invoked.</param>
-        <param name="timeout">The maximum time to wait for the operation to finish.</param>
+        <param name="timeout">The minimum amount of time to wait for the operation to start. Once the operation has started, it will complete before this method returns.</param>
         <param name="method">A delegate to a method that takes multiple arguments, which is pushed onto the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue.</param>
         <param name="arg">An object to pass as an argument to the given method. This can be <see langword="null" /> if no arguments are needed.</param>
         <summary>Executes the specified delegate at the specified priority with the specified argument synchronously on the thread the <see cref="T:System.Windows.Threading.Dispatcher" /> is associated with.</summary>
@@ -1477,7 +1503,7 @@
       </Parameters>
       <Docs>
         <param name="priority">The priority, relative to the other pending operations in the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue, the specified method is invoked.</param>
-        <param name="timeout">The maximum time to wait for the operation to finish.</param>
+        <param name="timeout">The minimum amount of time to wait for the operation to start. Once the operation has started, it will complete before this method returns.</param>
         <param name="method">A delegate to a method that takes multiple arguments, which is pushed onto the <see cref="T:System.Windows.Threading.Dispatcher" /> event queue.</param>
         <param name="arg">An object to pass as an argument to the specified method.</param>
         <param name="args">An array of objects to pass as arguments to the specified method.</param>
@@ -1501,6 +1527,8 @@
           <paramref name="priority" /> is not a valid <see cref="T:System.Windows.Threading.DispatcherPriority" />.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="method" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents infinite wait, and you're invoking across threads.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke&lt;TResult&gt;">
@@ -1649,7 +1677,7 @@
         <param name="callback">A delegate to invoke through the dispatcher.</param>
         <param name="priority">The priority that determines in what order the specified callback is invoked relative to the other pending operations in the <see cref="T:System.Windows.Threading.Dispatcher" />.</param>
         <param name="cancellationToken">An object that indicates whether to cancel the operation.</param>
-        <param name="timeout">The minimum amount of time to wait for the operation to start.</param>
+        <param name="timeout">The minimum amount of time to wait for the operation to start. Once the operation has started, it will complete before this method returns.</param>
         <summary>Executes the specified <see cref="T:System.Func`1" /> synchronously at the specified priority on the thread the <see cref="T:System.Windows.Threading.Dispatcher" /> is associated with.</summary>
         <returns>To be added.</returns>
         <remarks>
@@ -1660,6 +1688,12 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="callback" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents an infinite wait.</exception>
+        <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">
+          <paramref name="priority" /> is not a valid priority.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="InvokeAsync">
