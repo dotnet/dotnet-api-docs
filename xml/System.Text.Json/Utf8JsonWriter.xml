@@ -54,10 +54,11 @@ To be able to format the output with indentation and white space OR to skip vali
         <Parameter Name="options" Type="System.Text.Json.JsonWriterOptions" />
       </Parameters>
       <Docs>
-        <param name="bufferWriter">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="bufferWriter">An instance of <see cref="T:System.Buffers.IBufferWriter`1" /> used as a destination for writing JSON text into.</param>
+        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> By default, the <see cref="T:System.Text.Json.Utf8JsonWriter" /> writes JSON minimized (i.e. with no extra whitespace) and validates that the JSON being written is structurally valid according to JSON RFC.</param>
+        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> instance with a specified <paramref name="bufferWriter" />.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The instance of <see cref="T:System.Buffers.IBufferWriter`1" /> that is passed in is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -76,10 +77,11 @@ To be able to format the output with indentation and white space OR to skip vali
         <Parameter Name="options" Type="System.Text.Json.JsonWriterOptions" />
       </Parameters>
       <Docs>
-        <param name="utf8Json">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="utf8Json">An instance of <see cref="T:System.IO.Stream" /> used as a destination for writing JSON text into.</param>
+        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> By default, the <see cref="T:System.Text.Json.Utf8JsonWriter" /> writes JSON minimized (i.e. with no extra whitespace) and validates that the JSON being written is structurally valid according to JSON RFC.</param>
+        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> instance with a specified <paramref name="utf8Json" />.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The instance of <see cref="T:System.IO.Stream" /> that is passed in is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="BytesCommitted">
@@ -101,7 +103,15 @@ To be able to format the output with indentation and white space OR to skip vali
         <summary>Gets the total number of bytes committed to the output by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far for the current instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" />.
             This indicates how much the <see cref="T:System.Buffers.IBufferWriter`1" /> has advanced.</summary>
         <value>The total number of bytes committed to the output by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format><![CDATA[
+          
+In the case of IBufferwriter, this is how much the IBufferWriter has advanced.
+
+In the case of Stream, this is how much data has been written to the stream.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="BytesPending">
@@ -120,7 +130,7 @@ To be able to format the output with indentation and white space OR to skip vali
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the amount of bytes written by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far that have not yet been flushed to the output and committed.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -174,8 +184,16 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Commits any left over JSON text that has not yet been flushed and releases all resources used by the current instance.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+In the case of IBufferWriter, this advances the underlying <xref:T:System.Buffers.IBufferWriter`1> based on what has been written so far.
+
+In the case of Stream, this writes the data to the stream and flushes it.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DisposeAsync">
@@ -198,9 +216,17 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Asynchronously commits any left over JSON text that has not yet been flushed and releases all resources used by the current instance.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format><![CDATA[
+          
+In the case of IBufferWriter, this advances the underlying <xref:T:System.Buffers.IBufferWriter`1> based on what has been written so far.
+          
+In the case of Stream, this writes the data to the stream and flushes it.
+            
+            ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Flush">
@@ -220,8 +246,17 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Commits the JSON text written so far which makes it visible to the output destination.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+In the case of IBufferWriter, this advances the underlying <xref:T:System.Buffers.IBufferWriter`1> based on what has been written so far.
+
+In the case of Stream, this writes the data to the stream and flushes it.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ObjectDisposedException">The instance of <see cref="T:System.Text.Json.Utf8JsonWriter" /> has been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="FlushAsync">
@@ -242,9 +277,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       </Parameters>
       <Docs>
         <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Asynchronously commits the JSON text written so far which makes it visible to the output destination.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format><![CDATA[
+          
+In the case of IBufferWriter, this advances the underlying <xref:T:System.Buffers.IBufferWriter`1> based on what has been written so far.
+
+In the case of Stream, this writes the data to the stream and flushes it asynchronously, while monitoring cancellation requests.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ObjectDisposedException">The instance of <see cref="T:System.Text.Json.Utf8JsonWriter" /> has been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Options">
@@ -263,7 +307,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <ReturnType>System.Text.Json.JsonWriterOptions</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the custom behavior when writing JSON using the <see cref="T:System.Text.Json.Utf8JsonWriter" /> which indicates whether to format the output while writing and whether to skip structural JSON validation or not.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -285,8 +329,15 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Resets the <see cref="T:System.Text.Json.Utf8JsonWriter" /> internal state so that it can be re-used.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The <xref:T:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options and the original output as the destination (either <xref:T:System.Buffers.IBufferWriter`1> or <xref:T:System.IO.Stream>).
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ObjectDisposedException">The instance of <see cref="T:System.Text.Json.Utf8JsonWriter" /> has been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Reset">
@@ -308,9 +359,17 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="bufferWriter" Type="System.Buffers.IBufferWriter&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="bufferWriter">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="bufferWriter">An instance of <see cref="T:System.Buffers.IBufferWriter`1" /> used as a destination for writing JSON text into.</param>
+        <summary>Resets the <see cref="T:System.Text.Json.Utf8JsonWriter" /> internal state so that it can be re-used with the new instance of <see cref="T:System.Buffers.IBufferWriter`1" />.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The <xref:T:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options but now write to the passed in <xref:T:System.Buffers.IBufferWriter`1> as the new destination.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The instance of <see cref="T:System.Buffers.IBufferWriter`1" /> that is passed in is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">The instance of <see cref="T:System.Text.Json.Utf8JsonWriter" /> has been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Reset">
@@ -332,9 +391,17 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="utf8Json" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="utf8Json">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8Json">An instance of <see cref="T:System.IO.Stream" /> used as a destination for writing JSON text into.</param>
+        <summary>Resets the <see cref="T:System.Text.Json.Utf8JsonWriter" /> internal state so that it can be re-used with the new instance of <see cref="T:System.IO.Stream" />.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The <xref:T:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options but now write to the passed in <xref:T:System.IO.Stream> as the new destination.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The instance of <see cref="T:System.IO.Stream" /> that is passed in is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">The instance of <see cref="T:System.Text.Json.Utf8JsonWriter" /> has been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBoolean">
@@ -357,10 +424,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON literal "true" or "false" as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBoolean">
@@ -383,10 +458,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON literal "true" or "false" as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBoolean">
@@ -409,10 +492,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON literal "true" or "false" as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBooleanValue">
@@ -437,8 +528,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <param name="value">The value to be written as a JSON literal "true" or "false" as an element of a JSON array.</param>
         <summary>Writes the <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as an element of a JSON array.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCommentValue">
@@ -460,9 +550,16 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="utf8Value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8Value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON comment within /*..*/.</param>
+        <summary>Writes the UTF-8 text value (as a JSON comment).</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The comment value is not escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large OR if the given UTF-8 text value contains a comment delimiter (i.e. */).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCommentValue">
@@ -484,9 +581,16 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within /*..*/.</param>
+        <summary>Writes the UTF-16 text value (as a JSON comment).</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The comment value is not escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large OR if the given UTF-16 text value contains a comment delimiter (i.e. */).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCommentValue">
@@ -508,9 +612,16 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within /*..*/.</param>
+        <summary>Writes the string text value (as a JSON comment).</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The comment value is not escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large OR if the given string text value contains a comment delimiter (i.e. */).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteEndArray">
@@ -532,8 +643,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       <Docs>
         <summary>Writes the end of a JSON array.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteEndObject">
@@ -555,8 +665,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       <Docs>
         <summary>Writes the end of a JSON object.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNull">
@@ -578,9 +687,17 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="utf8PropertyName" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <summary>Writes the property name and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNull">
@@ -602,9 +719,17 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="propertyName" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the property name and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNull">
@@ -626,9 +751,17 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="propertyName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the property name and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNullValue">
@@ -650,8 +783,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       <Docs>
         <summary>Writes the JSON literal "null" as an element of a JSON array.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -674,10 +806,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Decimal" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -700,10 +840,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Double" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -726,10 +874,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -752,10 +908,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -778,10 +942,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Single" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -809,10 +981,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -840,10 +1020,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.UInt64" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -866,10 +1054,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Decimal" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -892,10 +1088,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Double" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+          
+The property name is escaped before writing.
+          
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -918,10 +1122,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -944,10 +1156,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -970,10 +1190,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Single" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1001,10 +1229,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1032,10 +1268,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.UInt64" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1058,10 +1302,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Decimal" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1084,10 +1336,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Double" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1110,10 +1370,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1136,10 +1404,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1162,10 +1438,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.Single" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1193,10 +1477,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1224,10 +1516,18 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <Parameter Name="value" Type="System.UInt64" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumberValue">
@@ -1254,8 +1554,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <remarks>
             Writes the <see cref="T:System.Decimal" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumberValue">
@@ -1282,8 +1581,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <remarks>
             Writes the <see cref="T:System.Double" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumberValue">
@@ -1310,8 +1608,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <remarks>
             Writes the <see cref="T:System.Int32" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumberValue">
@@ -1338,8 +1635,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <remarks>
             Writes the <see cref="T:System.Int64" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumberValue">
@@ -1366,8 +1662,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <remarks>
             Writes the <see cref="T:System.Single" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G').
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumberValue">
@@ -1399,8 +1694,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <remarks>
             Writes the <see cref="T:System.UInt32" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumberValue">
@@ -1432,8 +1726,7 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <remarks>
             Writes the <see cref="T:System.UInt64" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'G'). For example, 32767.
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartArray">
@@ -1455,13 +1748,11 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
       <Docs>
         <summary>Writes the beginning of a JSON array.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The depth of the JSON has exceeded the maximum depth of 1000.
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000.
 
 -or-
 
-if this would result in an invalid JSON to be written (while validation is enabled).
-            </exception>
+if this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartArray">
@@ -1483,9 +1774,21 @@ if this would result in an invalid JSON to be written (while validation is enabl
         <Parameter Name="utf8PropertyName" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON array to be written.</param>
+        <summary>Writes the beginning of a JSON array with a property name as the key.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000
+
+-or-
+       
+if this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartArray">
@@ -1507,9 +1810,21 @@ if this would result in an invalid JSON to be written (while validation is enabl
         <Parameter Name="propertyName" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON array to be transcoded and written as UTF-8.</param>
+        <summary>Writes the beginning of a JSON array with a property name as the key.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000
+
+-or-
+       
+if this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartArray">
@@ -1531,9 +1846,21 @@ if this would result in an invalid JSON to be written (while validation is enabl
         <Parameter Name="propertyName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON array to be transcoded and written as UTF-8.</param>
+        <summary>Writes the beginning of a JSON array with a property name as the key.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000
+
+-or-
+       
+if this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartObject">
@@ -1555,13 +1882,11 @@ if this would result in an invalid JSON to be written (while validation is enabl
       <Docs>
         <summary>Writes the beginning of a JSON object.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The depth of the JSON has exceeded the maximum depth of 1000.
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000.
 
 -or-
 
-The JSON data to be written would be invalid JSON (while validation is enabled).
-            </exception>
+The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartObject">
@@ -1583,9 +1908,21 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="utf8PropertyName" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <summary>Writes the beginning of a JSON object with a property name as the key.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000 
+
+-or-
+       
+if this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartObject">
@@ -1607,9 +1944,21 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="propertyName" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the beginning of a JSON object with a property name as the key.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000 
+
+-or-
+       
+if this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartObject">
@@ -1631,9 +1980,21 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="propertyName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the beginning of a JSON object with a property name as the key.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000 
+
+-or-
+       
+if this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1656,10 +2017,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.DateTime" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1682,10 +2051,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.DateTimeOffset" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1708,10 +2085,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.Guid" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1734,10 +2119,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="utf8Value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="utf8Value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the UTF-8 property name and UTF-8 text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1760,10 +2153,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the UTF-8 property name and UTF-16 text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1786,10 +2187,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the UTF-8 property name and string text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1812,10 +2221,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.DateTime" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1838,10 +2255,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.DateTimeOffset" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1864,10 +2289,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.Guid" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1890,10 +2323,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="utf8Value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="utf8Value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the UTF-16 property name and UTF-8 text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1916,10 +2357,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the UTF-16 property name and UTF-16 text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1942,10 +2391,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the UTF-16 property name and string text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1968,10 +2425,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.DateTime" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -1994,10 +2459,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.DateTimeOffset" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -2020,10 +2493,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.Guid" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -2046,10 +2527,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="utf8Value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="utf8Value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and UTF-8 text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -2072,10 +2561,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and UTF-16 text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -2098,10 +2595,18 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and string text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The property name and value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStringValue">
@@ -2128,8 +2633,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <remarks>
             Writes the <see cref="T:System.DateTime" /> using the round-trippable ('O') <see cref="T:System.Buffers.StandardFormat" /> . For example, 2017-06-12T05:30:45.7680000.
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStringValue">
@@ -2156,8 +2660,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <remarks>
             Writes the <see cref="T:System.DateTimeOffset" /> using the round-trippable ('O') <see cref="T:System.Buffers.StandardFormat" />. For example, 2017-06-12T05:30:45.7680000-07:00.
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStringValue">
@@ -2184,8 +2687,7 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <remarks>
             Writes the <see cref="T:System.Guid" /> using the default <see cref="T:System.Buffers.StandardFormat" /> (that is, 'D'), as the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn.
             </remarks>
-        <exception cref="T:System.InvalidOperationException">
-            The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON data to be written would be invalid JSON (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStringValue">
@@ -2207,9 +2709,17 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="utf8Value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8Value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON string element of a JSON array.</param>
+        <summary>Writes the UTF-8 text value (as a JSON string) as an element of a JSON array.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStringValue">
@@ -2231,9 +2741,17 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON string element of a JSON array.</param>
+        <summary>Writes the UTF-16 text value (as a JSON string) as an element of a JSON array.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStringValue">
@@ -2255,9 +2773,17 @@ The JSON data to be written would be invalid JSON (while validation is enabled).
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON string element of a JSON array.</param>
+        <summary>Writes the string text value (as a JSON string) as an element of a JSON array.</summary>
+        <remarks>
+          <format><![CDATA[
+
+The value is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">When this would result in an invalid JSON to be written (while validation is enabled).</exception>
       </Docs>
     </Member>
   </Members>
