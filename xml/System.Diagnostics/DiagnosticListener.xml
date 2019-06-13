@@ -26,8 +26,16 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides an implementation of the abstract <see cref="T:System.Diagnostics.DiagnosticSource" /> class that represents a named place to which a source sends its information (events).</summary>
+    <remarks>
+      <format type="text/markdown">
+        <![CDATA[
+        
+For more information on the <xref:System.Diagnostics.DiagnosticSource> and <xref:System.Diagnostics.DiagnosticListener> classes, see [DiagnosticSource User's Guide](https://github.com/dotnet/corefx/blob/d3942d4671919edb0cca6ddc1840190f524a809d/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md).
+
+        ]]>
+      </format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -51,9 +59,15 @@
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">The name of this <see cref="T:System.Diagnostics.DiagnosticListener" />.</param>
+        <summary>Creates a new <see cref="T:System.Diagnostics.DiagnosticListener" />.</summary>
+        <remarks>  
+          <format type="text/markdown"><![CDATA[  
+
+`DiagnosticListener` is a NotificationSource, which means the returned result can be used to  log notifications, but it also has a <xref:System.Diagnostics.DiagnosticListener.Subscribe%2A> method so notifications can be forwarded arbitrarily. Thus, its job is to forward things from the producer to all the listeners (multi-casting). Generally, you should not be making your own <see cref="T:System.Diagnostics.DiagnosticListener" /> but use the default, so that notifications are as public as possible.
+ 
+         ]]></format>
+         </remarks>
       </Docs>
     </Member>
     <Member MemberName="AllListeners">
@@ -77,9 +91,14 @@
         <ReturnType>System.IObservable&lt;System.Diagnostics.DiagnosticListener&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the collection of listeners for this <see cref="T:System.Diagnostics.DiagnosticListener" />.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks><format type="text/markdown"><![CDATA[
+
+When you subscribe to this, you get callbacks for all NotificationListeners in the appdomain, as well as those that occurred in the past, and all future Listeners created in the future.
+
+        ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -107,8 +126,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Disposes the NotificationListeners. </summary>
+        <remarks>Notification listeners do not die on their own because they are in a global list (for discoverability). You must dispose of them explicitly. Note that we do not do the <c>Dispose(bool)</c> pattern because we don't want to support subclasses that have non-managed state.</remarks>
       </Docs>
     </Member>
     <Member MemberName="IsEnabled">
@@ -131,8 +150,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Determines whether there are any registered subscribers.</summary>
+        <returns><see langword="true" /> if there are any registered subscribers, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -161,8 +180,8 @@
       </Parameters>
       <Docs>
         <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Checks whether the <see cref="T:System.Diagnostics.DiagnosticListener" /> is enabled.</summary>
+        <returns><see langword="true" /> if notifications are enabled; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -192,8 +211,8 @@
         <param name="name">To be added.</param>
         <param name="arg1">To be added.</param>
         <param name="arg2">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Checks if the DiagnosticListener is enabled.</summary>
+        <returns><see langword="true" /> if it is enabled, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -218,8 +237,58 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
+        <summary>Gets the name of this <see cref="T:System.Diagnostics.DiagnosticListener" />.</summary>
+        <value>The name of the <see cref="T:System.Diagnostics.DiagnosticListener" />.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnActivityExport">
+      <MemberSignature Language="C#" Value="public override void OnActivityExport (System.Diagnostics.Activity activity, object payload);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void OnActivityExport(class System.Diagnostics.Activity activity, object payload) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.DiagnosticListener.OnActivityExport(System.Diagnostics.Activity,System.Object)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void OnActivityExport(System::Diagnostics::Activity ^ activity, System::Object ^ payload);" />
+      <MemberSignature Language="F#" Value="override this.OnActivityExport : System.Diagnostics.Activity * obj -&gt; unit" Usage="diagnosticListener.OnActivityExport (activity, payload)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
+        <AssemblyVersion>4.0.4.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="activity" Type="System.Diagnostics.Activity" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="payload" Type="System.Object" Index="1" FrameworkAlternate="netcore-3.0" />
+      </Parameters>
+      <Docs>
+        <param name="activity">To be added.</param>
+        <param name="payload">To be added.</param>
         <summary>To be added.</summary>
-        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnActivityImport">
+      <MemberSignature Language="C#" Value="public override void OnActivityImport (System.Diagnostics.Activity activity, object payload);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void OnActivityImport(class System.Diagnostics.Activity activity, object payload) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.DiagnosticListener.OnActivityImport(System.Diagnostics.Activity,System.Object)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void OnActivityImport(System::Diagnostics::Activity ^ activity, System::Object ^ payload);" />
+      <MemberSignature Language="F#" Value="override this.OnActivityImport : System.Diagnostics.Activity * obj -&gt; unit" Usage="diagnosticListener.OnActivityImport (activity, payload)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
+        <AssemblyVersion>4.0.4.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="activity" Type="System.Diagnostics.Activity" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="payload" Type="System.Object" Index="1" FrameworkAlternate="netcore-3.0" />
+      </Parameters>
+      <Docs>
+        <param name="activity">To be added.</param>
+        <param name="payload">To be added.</param>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -279,11 +348,26 @@
         <Parameter Name="isEnabled" Type="System.Func&lt;System.String,System.Object,System.Object,System.Boolean&gt;" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="observer">To be added.</param>
-        <param name="isEnabled">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="observer">A subscriber.</param>
+        <param name="isEnabled">A delegate that filters events based on their name and up to two context object (which can be <see langword="null" />).</param>
+        <summary>Adds a subscriber. If the <paramref name="isEnabled" /> parameter is not <see langword="null" />, it indicates that some events are uninteresting can be skipped for efficiency.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown">
+            <![CDATA[
+
+A particular instrumentation site has the option of calling one or more <xref:System.Diagnostics.DiagnosticListener.IsEnabled%2A> overloads  in which it passes the name of the event and up to two other (instrumentation site specific) objects as arguments. If any of these <xref:System.Diagnostics.DiagnosticListener.IsEnabled%2A> calls are made then this `isEnabled` predicate is invoked with passed values (if shorter overloads are used, `null` is passed for missing context objects).
+
+This gives any particular instrumentation site the ability to pass up to two pieces of information to the subscriber to do sophisticated, efficient filtering. This requires more coupling between the instrumentation site and the subscriber code.
+
+It is expected that a particular instrumentation site may call different overloads of `IsEnabled` for the same event, first calling <xref:System.Diagnostics.DiagnosticListener.IsEnabled(System.String)>, which calls the filter with two `null` context objects. If `isEnabled` returns `true`, it calls again with context objects. The `isEnabled` filter should be designed with this in mind.
+
+Note that the `isEnabled` predicate is an optional optimization to allow the instrumentation site to avoid setting up the payload and calling <xref:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)> when no subscriber cares about it. In particular, the instrumentation site has the option of ignoring the <xref:System.Diagnostics.DiagnosticListener.IsEnabled%2A> predicate (not calling it) and simply calling <xref:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)>. Thus, if the subscriber requires the filtering, it needs to do it itself.
+
+If this parameter is `null`, no filtering is done (all overloads of <xref:System.Diagnostics.DiagnosticSource.IsEnabled%2A> return `true`).
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Subscribe">
@@ -311,8 +395,47 @@
         <Parameter Name="isEnabled" Type="System.Predicate&lt;System.String&gt;" />
       </Parameters>
       <Docs>
+        <param name="observer">A subscriber.</param>
+        <param name="isEnabled">A delegate that filters events based on their name (<see cref="T:System.String" />). The delegate should return <see langword="true" /> if the event is enabled.</param>
+        <summary>Add a subscriber (Observer). If the <paramref name="isEnabled" /> parameter is not <see langword="null" />, it indicates that some events are uninteresting and can be skipped for efficiency.</summary>
+        <returns>To be added.</returns>
+        <remarks>
+          <format type="text/markdown">
+            <![CDATA[
+            
+Note that the `isEnabled` predicate is an optional optimization to allow the instrumentation site to avoid setting up the payload and calling <xref:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)> when no subscriber cares about it. In particular the instrumentation site has the option of ignoring the <xref:System.Diagnostics.DiagnosticListener.IsEnabled> predicate (not calling it) and simply calling <xref:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)>. Thus if the subscriber requires the filtering, it needs to do it itself.
+
+If this parameter is `null`, no filtering is done (all overloads of <xref:System.Diagnostics.DiagnosticSource.IsEnabled%2A> return `true`).
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Subscribe">
+      <MemberSignature Language="C#" Value="public virtual IDisposable Subscribe (IObserver&lt;System.Collections.Generic.KeyValuePair&lt;string,object&gt;&gt; observer, Func&lt;string,object,object,bool&gt; isEnabled, Action&lt;System.Diagnostics.Activity,object&gt; onActivityImport = null, Action&lt;System.Diagnostics.Activity,object&gt; onActivityExport = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.IDisposable Subscribe(class System.IObserver`1&lt;valuetype System.Collections.Generic.KeyValuePair`2&lt;string, object&gt;&gt; observer, class System.Func`4&lt;string, object, object, bool&gt; isEnabled, class System.Action`2&lt;class System.Diagnostics.Activity, object&gt; onActivityImport, class System.Action`2&lt;class System.Diagnostics.Activity, object&gt; onActivityExport) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.DiagnosticListener.Subscribe(System.IObserver{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Func{System.String,System.Object,System.Object,System.Boolean},System.Action{System.Diagnostics.Activity,System.Object},System.Action{System.Diagnostics.Activity,System.Object})" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function Subscribe (observer As IObserver(Of KeyValuePair(Of String, Object)), isEnabled As Func(Of String, Object, Object, Boolean), Optional onActivityImport As Action(Of Activity, Object) = null, Optional onActivityExport As Action(Of Activity, Object) = null) As IDisposable" />
+      <MemberSignature Language="F#" Value="abstract member Subscribe : IObserver&lt;System.Collections.Generic.KeyValuePair&lt;string, obj&gt;&gt; * Func&lt;string, obj, obj, bool&gt; * Action&lt;System.Diagnostics.Activity, obj&gt; * Action&lt;System.Diagnostics.Activity, obj&gt; -&gt; IDisposable&#xA;override this.Subscribe : IObserver&lt;System.Collections.Generic.KeyValuePair&lt;string, obj&gt;&gt; * Func&lt;string, obj, obj, bool&gt; * Action&lt;System.Diagnostics.Activity, obj&gt; * Action&lt;System.Diagnostics.Activity, obj&gt; -&gt; IDisposable" Usage="diagnosticListener.Subscribe (observer, isEnabled, onActivityImport, onActivityExport)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
+        <AssemblyVersion>4.0.4.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IDisposable</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="observer" Type="System.IObserver&lt;System.Collections.Generic.KeyValuePair&lt;System.String,System.Object&gt;&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="isEnabled" Type="System.Func&lt;System.String,System.Object,System.Object,System.Boolean&gt;" Index="1" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="onActivityImport" Type="System.Action&lt;System.Diagnostics.Activity,System.Object&gt;" Index="2" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="onActivityExport" Type="System.Action&lt;System.Diagnostics.Activity,System.Object&gt;" Index="3" FrameworkAlternate="netcore-3.0" />
+      </Parameters>
+      <Docs>
         <param name="observer">To be added.</param>
         <param name="isEnabled">To be added.</param>
+        <param name="onActivityImport">To be added.</param>
+        <param name="onActivityExport">To be added.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
@@ -337,8 +460,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns a string with the name of this DiagnosticListener.</summary>
+        <returns>The name of this DiagnosticListener.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -354,7 +477,7 @@
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Write(System::String ^ name, System::Object ^ parameters);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2" />
       <MemberSignature Language="DocId" Value="M:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)" FrameworkAlternate="netcore-2.0" />
       <MemberSignature Language="F#" Value="override this.Write : string * obj -&gt; unit" Usage="diagnosticListener.Write (name, parameters)" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
-      <MemberSignature Language="F#" Value="override this.Write : string * obj -&gt; unit" Usage="diagnosticListener.Write (name, parameters)" FrameworkAlternate="netcore-2.0;netcore-1.0;netcore-1.1" />
+      <MemberSignature Language="F#" Value="override this.Write : string * obj -&gt; unit" Usage="diagnosticListener.Write (name, parameters)" FrameworkAlternate="netcore-2.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
