@@ -17,7 +17,14 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Activity represents operation with context to be used for logging. Activity has operation name, Id, start time and duration, tags and baggage.
+             
+Current activity can be accessed with static AsyncLocal variable Activity.Current.
+Activities should be created with constructor, configured as necessary and then started with Activity.Start method which maintains parent-child relationships for the activities and sets Activity.Current.
+            
+When activity is finished, it should be stopped with static Activity.Stop method.
+            
+No methods on Activity allow exceptions to escape as a response to bad inputs. They are thrown and caught (that allows Debuggers and Monitors to see the error) but the exception is suppressed, and the operation does something reasonable (typically doing nothing).</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -69,7 +76,7 @@ Note that <xref:System.Diagnostics.Activity> has a "builder" pattern: you call t
         <ReturnType>System.Diagnostics.ActivityTraceFlags</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Return the flags (defined by the W3C ID specification) associated with the activity.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -228,7 +235,7 @@ This key/value pair is included in the collection returned by the <see cref="P:S
         <ReturnType>System.Diagnostics.ActivityIdFormat</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Activity tries to use the same format for IDs as its parent. However if the activity has no parent, it has to do something.  This determines the default format we use.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -273,7 +280,7 @@ This key/value pair is included in the collection returned by the <see cref="P:S
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Normally if the ParentID is defined, the format of that is used to determine the format used by the Activity. However if ForceDefaultFormat is set to true, the ID format will always be the DefaultIdFormat even if the ParentID is define and is a different format.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -354,7 +361,7 @@ An ID has a hierarchical structure: `root-id.id1_id2.id3_`. The ID is generated 
         <ReturnType>System.Diagnostics.ActivityIdFormat</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the format for the ID.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -465,7 +472,7 @@ This property value can be `null` if this is a root <see cref="T:System.Diagnost
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>If the parent Activity ID has the W3C format, this returns the ID for the SpanId part of the ParentId.  Otherwise it returns a zero SpanId.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -486,7 +493,7 @@ This property value can be `null` if this is a root <see cref="T:System.Diagnost
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary><see langword="true" /> if the W3CIdFlags.Recorded flag is set.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -661,7 +668,7 @@ This property should only be used in 'boundary' scenarios where an <see cref="T:
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>If the Activity has the W3C format, this returns the ID for the SPAN part of the Id. Otherwise, it returns a zero SpanId.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -816,7 +823,7 @@ Call <xref:System.Diagnostics.DiagnosticSource.StopActivity%2A?displayProperty=n
         <ReturnType>System.Diagnostics.ActivityTraceId</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>If the Activity has the W3C format, this returns the ID for the TraceId part of the Id. Otherwise, it returns a zero TraceId.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -837,7 +844,11 @@ Call <xref:System.Diagnostics.DiagnosticSource.StopActivity%2A?displayProperty=n
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Holds the W3C 'tracestate' header as a string.   
+
+Tracestate is intended to carry information supplemental to trace identity contained in traceparent. List of key value pairs carried by tracestate convey information about request position in multiple distributed tracing graphs. It is typically used by distributed tracing systems and should not be used as a general purpose baggage as this use may break correlation of a distributed trace.
+            
+Logically it is just a kind of baggage (if flows just like baggage), but because it is expected to be special cased (it has its own HTTP header), it is more convenient/efficient if it is not lumped in with other baggage.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
