@@ -308,6 +308,7 @@
         <summary>Returns a <see cref="T:System.Data.DataView" /> for the child <see cref="T:System.Data.DataTable" /> with the specified <see cref="T:System.Data.DataRelation" /> and parent.</summary>
         <returns>A <see cref="T:System.Data.DataView" /> for the child <see cref="T:System.Data.DataTable" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException"><see langword="null" /> or mismatch between <paramref name="relation" /> and <see cref="M:System.Data.DataView.get_Table" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateChildView">
@@ -346,6 +347,7 @@
         <summary>Returns a <see cref="T:System.Data.DataView" /> for the child <see cref="T:System.Data.DataTable" /> with the specified <see cref="T:System.Data.DataRelation" /> name and parent.</summary>
         <returns>a <see cref="T:System.Data.DataView" /> for the child <see cref="T:System.Data.DataTable" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">Unmatched <paramref name="relationName" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="DataView">
@@ -534,7 +536,12 @@
         <summary>Gets a value indicating whether the current <see cref="T:System.Data.DataRowView" /> is identical to the specified object.</summary>
         <returns>
           <see langword="true" /> if <paramref name="object" /> is a <see cref="T:System.Data.DataRowView" /> and it returns the same row as the current <see cref="T:System.Data.DataRowView" />; otherwise <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+Checks for same reference instead of equivalent <xref:System.Data.DataRowView.DataView> or <xref:System.Data.DataRowView.Row>.
+Necessary for ListChanged event handlers to use data structures that use the default to <xref:System.Object.Equals(System.Object)> instead of <xref:System.Object.ReferenceEquals(System.Object,System.Object)> to understand if they need to add a <xref:E:System.Data.DataRowView.PropertyChanged> event handler.
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -706,6 +713,8 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.Data.DataException"><see cref="M:System.Data.DataView.get_AllowEdit" /> when setting a value.</exception>
+        <exception cref="T:System.IndexOutOfRangeException"><see cref="M:System.Data.DataColumnCollection.get_Item(System.Int32)" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Item">
@@ -754,6 +763,10 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentException"><see cref="M:System.Data.DataColumnCollection.get_Item(System.String)" /> when <paramref name="property" /> is ambiguous.</exception>
+        <exception cref="T:System.ArgumentException">Unmatched <paramref name="property" /> when getting a value.</exception>
+        <exception cref="T:System.Data.DataException">Unmatched <paramref name="property" /> when setting a value.</exception>
+        <exception cref="T:System.Data.DataException"><see cref="M:System.Data.DataView.get_AllowEdit" /> when setting a value.</exception>
       </Docs>
     </Member>
     <Member MemberName="PropertyChanged">
