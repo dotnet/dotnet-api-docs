@@ -34,7 +34,21 @@
   </Attributes>
   <Docs>
     <summary>Provides a safe handle that can be used by Cryptography Next Generation (CNG) objects.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+Since NCrypt handles do not have a native DuplicateHandle type call, we need to do manual reference counting in managed code whenever we hand out an extra reference to one of these handles.
+
+This class wraps up the logic to correctly duplicate and free these handles to simulate a native duplication.
+            
+Each open handle object can be thought of as being in one of three states:
+
+  1. Owner     - Created via the marshaler, traditional style safe handle. Notably, only one owner handle exists for a given native handle.
+  2. Duplicate - Points at a handle in the Holder state. Releasing a handle in the duplicate state results only in decrementing the reference count of the holder, not in a release of the native handle.
+  3. Holder    - Holds onto a native handle and is referenced by handles in the duplicate state.
+
+When all duplicate handles are closed, the holder handle releases the native handle. A holder handle will never be finalized, since this results in a race between the finalizers of the duplicate handles and the holder handle. Instead, it relies upon all of the duplicate handles to be finalized and decrement the ref count to zero.  Instances of a holder handle should never be referenced by anything but a duplicate handle.
+      ]]></format>
+    </remarks>
     <permission cref="T:System.Security.Permissions.SecurityPermission">for permission to call unmanaged code. Security action: <see cref="F:System.Security.Permissions.SecurityAction.InheritanceDemand" />. Associated enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode" /></permission>
     <forInternalUseOnly />
   </Docs>
@@ -170,7 +184,17 @@
         <summary>Releases a handle used by a Cryptography Next Generation (CNG) object.</summary>
         <returns>
           <see langword="true" /> if the handle is released successfully; otherwise, <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+Similar to duplication, releasing a handle performs different operations based upon the state of the handle.
+            
+An instance which was constructed with a parentHandle value will only call DangerousRelease on the parentHandle object. Otherwise the behavior is dictated by the ownership state.
+
+  1. Owner     - Simply call the release P/Invoke method
+  2. Duplicate - Decrement the reference count of the current holder
+  3. Holder    - Call the release P/Invoke. Note that ReleaseHandle on a holder implies a reference count of zero.
+          ]]></format>
+        </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>

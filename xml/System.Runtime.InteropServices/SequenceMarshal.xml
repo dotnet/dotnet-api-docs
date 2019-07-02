@@ -20,7 +20,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides a collection of methods for interoperating with <see cref="T:System.Buffers.ReadOnlySequence`1" />.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -53,11 +53,11 @@
         <Parameter Name="segment" Type="System.ArraySegment&lt;T&gt;" RefType="out" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="sequence">To be added.</param>
-        <param name="segment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">The type of the read-only sequence.</typeparam>
+        <param name="sequence">The read only sequence from which the array segment will be retrieved.</param>
+        <param name="segment">The returned array segment.</param>
+        <summary>Gets an array segment from the underlying read-only sequence.</summary>
+        <returns><see langword="true" /> if it is possible to retrieve the array segment, <see langword="false" /> if not, and returns a default array segment.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -90,11 +90,11 @@
         <Parameter Name="memory" Type="System.ReadOnlyMemory&lt;T&gt;" RefType="out" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="sequence">To be added.</param>
-        <param name="memory">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">The type of the read-only sequence.</typeparam>
+        <param name="sequence">The read only sequence from which the memory will be retrieved.</param>
+        <param name="memory">The returned read-only memory of type T.</param>
+        <summary>Gets a read-only memory from the underlying read-only sequence.</summary>
+        <returns><see langword="true" /> if it could be retrieved, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -130,14 +130,14 @@
         <Parameter Name="endIndex" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="sequence">To be added.</param>
-        <param name="startSegment">To be added.</param>
-        <param name="startIndex">To be added.</param>
-        <param name="endSegment">To be added.</param>
-        <param name="endIndex">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">The type of the read-only sequence.</typeparam>
+        <param name="sequence">TThe read-only sequence from which the read-only sequence segment will be retrieved.</param>
+        <param name="startSegment">The beginning read-only sequence segment.</param>
+        <param name="startIndex">The initial position.</param>
+        <param name="endSegment">The ending read-only sequence segment.</param>
+        <param name="endIndex">The final position.</param>
+        <summary>Gets a read-only sequence segment from the underlying read-only sequence.</summary>
+        <returns><see langword="true" /> if it could be retrieved, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -176,9 +176,15 @@
         <typeparam name="T">To be added.</typeparam>
         <param name="reader">To be added.</param>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Tries to read the given type out of the buffer if possible.
+Warning: this is dangerous to use with arbitrary structs - see remarks for full details.</summary>
+        <returns><see langword="true" /> if successful, <see langword="false" /> otherwise. <paramref name="value" /> will be default if failed (due to lack of space).</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+[!IMPORTANT]
+The read is a straight copy of bits. If a struct depends on specific state of it's members to behave correctly this can lead to exceptions, etc. If reading endian specific integers, use the explicit overloads such as <xref:System.Buffers.SequenceReaderExtensions.TryReadLittleEndian(System.Buffers.SequenceReader{System.Byte}@,System.Int32@)>.
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
