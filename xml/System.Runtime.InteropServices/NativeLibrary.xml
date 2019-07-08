@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides APIs for managing Native Libraries.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -37,8 +37,8 @@
         <Parameter Name="handle" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="handle">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="handle">The native library handle to be freed.</param>
+        <summary>Frees a given a loaded library handle. No action if the input handle is <see langword="null" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -62,11 +62,13 @@
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="handle">To be added.</param>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="handle">The native library handle.</param>
+        <param name="name">The name of the exported symbol.</param>
+        <summary>Get the address of an exported Symbol This is a simple wrapper around OS calls, and does not perform any name mangling.</summary>
+        <returns>The address of the symbol.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">If the handle or the name is <see langword="null" />.</exception>
+        <exception cref="T:System.EntryPointNotFoundException">If the symbol is not found.</exception>
       </Docs>
     </Member>
     <Member MemberName="Load">
@@ -88,10 +90,13 @@
         <Parameter Name="libraryPath" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="libraryPath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="libraryPath">The name of the native library to be loaded.</param>
+        <summary>NativeLibrary Loader: Simple API. This method is a wrapper around OS loader, using "default" flags.</summary>
+        <returns>The handle for the loaded native library.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">If libraryPath is <see langword="null" />.</exception>
+        <exception cref="T:System.DllNotFoundException">If the library can't be found.</exception>
+        <exception cref="T:System.BadImageFormatException">If the library is not valid.</exception>
       </Docs>
     </Member>
     <Member MemberName="Load">
@@ -114,12 +119,20 @@
         <Parameter Name="searchPath" Type="System.Nullable&lt;System.Runtime.InteropServices.DllImportSearchPath&gt;" />
       </Parameters>
       <Docs>
-        <param name="libraryName">To be added.</param>
-        <param name="assembly">To be added.</param>
-        <param name="searchPath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="libraryName">The name of the native library to be loaded.</param>
+        <param name="assembly">The assembly loading the native library.</param>
+        <param name="searchPath">The search path.</param>
+        <summary>NativeLibrary Loader: High-level API.
+Given a library name, this function searches specific paths based on the  runtime configuration, input parameters, and attributes of the calling assembly. If DllImportSearchPath parameter is non-null, the flags in this enumeration are used. Otherwise, the flags specified by the DefaultDllImportSearchPaths attribute on the calling assembly (if any) are used. This LoadLibrary() method does not invoke the managed call-backs for native library resolution: 
+* The per-assembly registered callback.
+* AssemblyLoadContext.LoadUnmanagedDll().
+* AssemblyLoadContext.ResolvingUnmanagedDllEvent.</summary>
+        <returns>The handle for the loaded library.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">If libraryPath or assembly is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">If assembly is not a RuntimeAssembly.</exception>
+        <exception cref="T:System.DllNotFoundException">If the library can't be found.</exception>
+        <exception cref="T:System.BadImageFormatException">If the library is not valid.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetDllImportResolver">
@@ -141,10 +154,15 @@
         <Parameter Name="resolver" Type="System.Runtime.InteropServices.DllImportResolver" />
       </Parameters>
       <Docs>
-        <param name="assembly">To be added.</param>
-        <param name="resolver">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="assembly">The assembly for which the resolver is registered.</param>
+        <param name="resolver">The resolver callback to register.</param>
+        <summary>Set a callback for resolving native library imports from an assembly.
+This per-assembly resolver is the first attempt to resolve native library loads initiated by this assembly.
+Only one resolver can be registered per assembly.
+Trying to register a second resolver fails with InvalidOperationException.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">If assembly or resolver is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">If a resolver is already set for this assembly.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetExport">
@@ -168,12 +186,13 @@
         <Parameter Name="address" Type="System.IntPtr" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="handle">To be added.</param>
-        <param name="name">To be added.</param>
-        <param name="address">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="handle">The  native library handle.</param>
+        <param name="name">The name of the exported symbol.</param>
+        <param name="address">The out-parameter for the symbol address, if it exists.</param>
+        <summary>Get the address of an exported Symbol, but do not throw.</summary>
+        <returns><see langword="true" /> on success, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">If handle or name is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryLoad">
@@ -196,11 +215,12 @@
         <Parameter Name="handle" Type="System.IntPtr" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="libraryPath">To be added.</param>
-        <param name="handle">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="libraryPath">The name of the native library to be loaded.</param>
+        <param name="handle">The out-parameter for the loaded native library handle.</param>
+        <summary>NativeLibrary Loader: Simple API that doesn't throw.</summary>
+        <returns><see langword="true" /> on successful load, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">If libraryPath is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryLoad">
@@ -224,13 +244,15 @@
         <Parameter Name="handle" Type="System.IntPtr" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="libraryName">To be added.</param>
-        <param name="assembly">To be added.</param>
-        <param name="searchPath">To be added.</param>
-        <param name="handle">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="libraryName">The name of the native library to be loaded.</param>
+        <param name="assembly">The assembly loading the native library.</param>
+        <param name="searchPath">The search path.</param>
+        <param name="handle">The out-parameter for the loaded native library handle.</param>
+        <summary>NativeLibrary Loader: High-level API that doesn't throw.</summary>
+        <returns><see langword="true" /> on successful load, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">If libraryPath or assembly is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">If assembly is not a RuntimeAssembly.</exception>
       </Docs>
     </Member>
   </Members>
