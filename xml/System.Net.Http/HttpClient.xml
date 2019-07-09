@@ -363,9 +363,36 @@ public class GoodController : ApiController
         <ReturnType>System.Net.IWebProxy</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the global Http proxy.</summary>
+        <value>A proxy used by every call that instantiates a <see cref="T:System.Net.Http.HttpWebRequest" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+The <xref:System.Net.Http.HttpClient.DefaultProxy%2A> property gets or sets the global proxy. The <xref:System.Net.Http.HttpClient.DefaultProxy%2A> property determines the default proxy that all <xref:System.Net.Http.HttpClient> instances use if no proxy is set explicitly in the <xref:System.Net.Http.HttpClientHandler> passed through its constructor. 
+
+If the <xref:System.Net.Http.HttpClient.DefaultProxy%2A> property is overridden, all subsequent instances of the <xref:System.Net.Http.HttpClient> class that does not define its own Proxy in <xref:System.Net.Http.HttpClientHandler> will be using the new defined Proxy in <xref:System.Net.Http.HttpClient.DefaultProxy%2A>.
+
+The <xref:System.Net.Http.HttpClient.DefaultProxy%2A> property reads proxy settings from your system configuration and follows a certain behavior depending on your platform: 
+
+* **For Windows:** Reads proxy configuration from Environment Variables, If there are not defined, the current user's  proxy settings are used.
+
+* **For OSX:** Reads proxy configuration from Environment Variables, If they are not defined, the System Proxy Information settings are used.
+
+* **For Linux:** Reads proxy configuration from Environment Variables, If they are not defined, no proxy is defined.
+
+The Environment Variables used for the DefaultProxy initialization are:
+* HTTP_PROXY
+* HTTPS_PROXY
+* ALL_PROXY
+* NO_PROXY
+
+The name of Environment Variables remain constant across Windows, OSX, and Linux platforms.
+ ]]></format>
+      </remarks>
+      <exception cref="T:System.ArgumentNullException">
+          The value passed cannot be <see langword="null" />.
+      </exception>
       </Docs>
     </Member>
     <Member MemberName="DefaultRequestHeaders">
@@ -424,10 +451,23 @@ public class GoodController : ApiController
         <ReturnType>System.Version</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+        <summary>Gets or sets the default version used on subsequent requests made by this <see cref="T:System.Net.Http.HttpClient" /> instance.</summary>
+        <value>The <see cref="P:System.Net.Http.HttpRequestMessage.Version" /> which is going to be set on <see cref="T:System.Net.Http.HttpRequestMessage" /> instances created by this <see cref="T:System.Net.Http.HttpClient" /> instance.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+<xref:System.Net.Http.HttpClient.DefaultRequestVersion%2A> is <xref:System.Net.HttpVersion.Version11> by default.
+
+The <xref:System.Net.Http.HttpClient.DefaultRequestVersion%2A> property would be set as the <xref:System.Net.Http.HttpRequestMessage.Version%2A> on any <xref:System.Net.Http.HttpRequestMessage> the <xref:System.Net.Http.HttpClient> instance creates, in example, as part of a call to <xref:System.Net.Http.HttpClient.GetAsync%2A>, <xref:System.Net.Http.HttpClient.GetStringAsync%2A>, <xref:System.Net.Http.HttpClient.GetByteArrayAsync%2A>, etc.
+
+The <xref:System.Net.Http.HttpClient.DefaultRequestVersion%2A> property can be overriden as long as the <xref:System.Net.Http.HttpClient> instance has not started any request.
+ ]]></format>
+      </remarks>
+      <exception cref="T:System.ArgumentNullException">Cannot set a <see langword="null" /> value to <see cref="P:System.Net.Http.HttpClient.DefaultRequestVersion" />.</exception>
+      <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Http.HttpClient" /> instance has already started one or more requests.</exception>
+      <exception cref="T:System.ObjectDisposedException"><see cref="T:System.Net.Http.HttpClient" /> instance has already been disposed.</exception>
+    </Docs>
     </Member>
     <MemberGroup MemberName="DeleteAsync">
       <AssemblyInfo>
