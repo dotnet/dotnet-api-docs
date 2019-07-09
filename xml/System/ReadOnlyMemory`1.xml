@@ -29,8 +29,8 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
+    <typeparam name="T">The object type from which the contiguous region of memory will be read.</typeparam>
+    <summary>Represents a contiguous region of memory, similar to <see cref="T:System.ReadOnlySpan`1" />. Unlike <see cref="T:System.ReadOnlySpan`1" />, it is not a byref-like type.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -57,9 +57,20 @@
         <Parameter Name="array" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="array">The target array.</param>
+        <summary>Creates a new memory over the entirety of the target array.</summary>
+        <remarks>
+          <format type="text/markdown">
+            <![CDATA[
+
+### Remarks
+
+Returns `default` when <xref:array> is `null`.
+
+            ]]>
+          </format>
+        </remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">When <paramref name="array" /> is covariant and array's type is not exactly T[].</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -87,11 +98,23 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="array">The target array.</param>
+        <param name="start">The index at which to begin the memory.</param>
+        <param name="length">The number of items in the memory.</param>
+        <summary>Creates a new memory over the portion of the target array beginning at 'start' index and ending at 'end' index (exclusive).</summary>
+        <remarks>
+          <format type="text/markdown">
+            <![CDATA[
+
+### Remarks
+
+Returns `default` when <xref:array> is `null`.
+
+            ]]>
+          </format>
+        </remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">When <paramref name="array" /> is covariant and array's type is not exactly T[].</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">When the specified <paramref name="start" /> or end index is not in the range (&lt;0 or &gt;Length).</exception>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -120,9 +143,10 @@
         <Parameter Name="destination" Type="System.Memory&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The Memory to copy items into.</param>
+        <summary>Copies the contents of the read-only memory into the destination. If the source and destination overlap, this method behaves as if the original values are in a temporary location before the destination is overwritten.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The destination is shorter than the source.</exception>
       </Docs>
     </Member>
     <Member MemberName="Empty">
@@ -148,8 +172,8 @@
         <ReturnType>System.ReadOnlyMemory&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Returns an empty <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <value>An empty read-only memory.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -184,9 +208,9 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="obj">The object to compare.</param>
+        <summary>Determines whether the specified object is equal to the current object.</summary>
+        <returns><see langword="true" /> if equal, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -216,10 +240,20 @@
         <Parameter Name="other" Type="System.ReadOnlyMemory&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="other">The read-only memory to compare.</param>
+        <summary>Checks if the memory points to the same array and has the same length. This does not check to see if the contents are equal.</summary>
+        <returns><see langword="true" /> if equal, <see langword="false" /> otherwise.</returns>
+        <remarks>
+          <format type="text/markdown">
+            <![CDATA[
+
+[!IMPORTANT]
+
+This does not check to see if the contents are equal.
+
+            ]]>
+          </format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -251,8 +285,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the hash code for this <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <returns>The hash code.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -279,8 +313,8 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Returns <see langword="true" /> if Length is 0.</summary>
+        <value>A boolean.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -339,8 +373,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The number of items in the memory.</summary>
+        <value>An integer.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -370,9 +404,9 @@
         <Parameter Name="segment" Type="System.ArraySegment&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="segment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="segment">The array segment to convert.</param>
+        <summary>Defines an implicit conversion of a <see cref="T:System.ArraySegment`1" /> to a <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <returns>A read-only memory representation of the array segment.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -402,9 +436,9 @@
         <Parameter Name="array" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="array">An array of type T to convert.</param>
+        <summary>Defines an implicit conversion of an array to a <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <returns>The read-only memory representation of the array of type T.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -432,9 +466,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Creates a handle for the memory.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown">
+            <![CDATA[
+
+### [!IMPORTANT]
+
+The GC will not move the memory until the returned <see cref="T:System.Buffers.MemoryHandle" /> is disposed, enabling taking and using the memory's address.
+
+            ]]>
+          </format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">An instance with nonprimitive (non-blittable) members cannot be pinned.</exception>
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -495,10 +540,11 @@
         <Parameter Name="start" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="start">The index at which to begin this slice.</param>
+        <summary>Forms a slice out of the given memory, beginning at 'start'.</summary>
+        <returns>A read-only memory representing the desired slice.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">The specified <paramref name="start" /> index is not in range (&lt;0 or &gt;Length).</exception>
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -559,11 +605,12 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="start">The index at which to begin this slice.</param>
+        <param name="length">The desired length for the slice (exclusive).</param>
+        <summary>Forms a slice out of the given memory, beginning at 'start', of given length.</summary>
+        <returns>A read-only memory representing the desired slice.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">The specified <paramref name="start" /> or end index is not in range (&lt;0 or &gt;Length).</exception>
       </Docs>
     </Member>
     <Member MemberName="Span">
@@ -589,8 +636,8 @@
         <ReturnType>System.ReadOnlySpan&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Returns a span from the memory.</summary>
+        <value>A memory span.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -618,9 +665,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Copies the contents from the memory into a new array.</summary>
+        <returns>An array of type T.</returns>
+        <remarks>
+          <format type="text/markdown">
+            <![CDATA[
+
+### Remarks
+
+This heap allocates, so should generally be avoided. However, it is sometimes necessary to bridge the gap with APIs written in terms of arrays.
+
+            ]]>
+          </format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -647,8 +704,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>The string representation of this read-only memory instance.</summary>
+        <returns>For <see cref="T:System.ReadOnlyMemory`1" />, returns a new instance of string that represents the characters pointed to by the memory. Otherwise, returns a <see cref="T:System.String" /> with the name of the type and the number of elements.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -678,9 +735,9 @@
         <Parameter Name="destination" Type="System.Memory&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The span to copy items into.</param>
+        <summary>Copies the contents of the readonly-only memory into the destination. If the source and destination overlap, this method behaves as if the original values are in a temporary location before the destination is overwritten.</summary>
+        <returns>If the destination is shorter than the source, this method returns <see langword="false" /> and no data is written to the destination. Otherwise, it returns <see langword="true" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
