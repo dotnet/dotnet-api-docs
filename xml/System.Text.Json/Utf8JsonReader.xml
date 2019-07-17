@@ -667,8 +667,8 @@ For input data within a `ReadOnlySpan<byte>`, this always returns `false`. For i
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns the mode of this instance of the <see cref="T:System.Text.Json.Utf8JsonReader" />.</summary>
-        <value><see langword="true" /> when the reader was constructed with the input span containing the entire data to process. <see langword="false" /> when the reader was constructed knowing that the input span may contain partial data with more data to follow.</value>
+        <summary>Gets the mode of this instance of the <see cref="T:System.Text.Json.Utf8JsonReader" />.</summary>
+        <value><see langword="true" /> if the reader was constructed with the input span containing the entire data to process. <see langword="false" /> if the reader was constructed with an input span that may contain partial data with more data to follow.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -745,17 +745,21 @@ The current depth exceeds the recursive limit set by the maximum depth.</excepti
 
 ## Remarks
 
-When <xref:System.Text.Json.Utf8JsonReader.TokenType> is <xref:System.Text.Json.JsonTokenType.PropertyName>, the reader first moves to the property value.
+When <xref:System.Text.Json.Utf8JsonReader.TokenType> is <xref:System.Text.Json.JsonTokenType.PropertyName?displayProperty=nameWithType>, the reader first moves to the property value.
 
-When <xref:System.Text.Json.Utf8JsonReader.TokenType> (originally, or after advancing) is <xref:System.Text.Json.JsonTokenType.StartObject> or  <xref:System.Text.Json.JsonTokenType.StartArray>, the reader advances to the matching <xref:System.Text.Json.JsonTokenType.EndObject> or <xref:System.Text.Json.JsonTokenType.EndArray>.
+When <xref:System.Text.Json.Utf8JsonReader.TokenType> (originally, or after advancing) is <xref:System.Text.Json.JsonTokenType.StartObject?displayProperty=nameWithtype> or  <xref:System.Text.Json.JsonTokenType.StartArray?displayProperty=nameWithType>, the reader advances to the matching <xref:System.Text.Json.JsonTokenType.EndObject?displayProperty=nameWithType> or <xref:System.Text.Json.JsonTokenType.EndArray?displayProperty=nameWithType>.
             
 For all other token types, the reader does not move. After the next call to <xref:System.Text.Json.Utf8JsonReader.Read>, the reader will be at the next value (when in an array), the next property name (when in an object), or the end array/object token.
 
             ]]>
           </format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">Thrown when the reader was given partial data with more data to follow (i.e. <see cref="P:System.Text.Json.Utf8JsonReader.IsFinalBlock" /> is false).</exception>
-        <exception cref="T:System.Text.Json.JsonException">Thrown when an invalid JSON token is encountered while skipping, according to the JSON RFC, or if the current depth exceeds the recursive limit set by the max depth.</exception>
+        <exception cref="T:System.InvalidOperationException">The reader was given partial data with more data to follow (that is, <see cref="P:System.Text.Json.Utf8JsonReader.IsFinalBlock" /> is <see langword="false" />).</exception>
+        <exception cref="T:System.Text.Json.JsonException">An invalid JSON token was encountered while skipping, according to the JSON RFC.
+
+- or -
+
+The current depth exceeds the recursive limit set by the maximum depth.</exception>
       </Docs>
     </Member>
     <Member MemberName="TextEquals">
@@ -840,17 +844,17 @@ If the look up text is invalid or incomplete UTF-16 text (such as unpaired surro
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns the index that the last processed JSON token starts at within the given UTF-8 encoded input text, skipping any white space.</summary>
-        <value>To be added.</value>
+        <summary>Gets the index that the last processed JSON token within the given UTF-8 encoded input text starts at, skipping any white space.</summary>
+        <value>The starting index of the last processed JSON token within the given UTF-8 encoded input text.</value>
         <remarks>
           <format type="text/markdown">
             <![CDATA[
 
 ## Remarks
 
-For JSON strings (including property names), this points to before the start quote.
+For JSON strings (including property names), this value points to before the start quote.
 
-For comments, this points to before the first comment delimiter (i.e. '/').
+For comments, this value points to before the first comment delimiter (that is, '/').
 
             ]]>
           </format>
@@ -897,11 +901,11 @@ For comments, this points to before the first comment delimiter (i.e. '/').
         <Parameter Name="value" Type="System.Byte[]" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>Parses the current JSON token value from the source and decodes the base 64 encoded JSON string as bytes.</summary>
-        <returns><see langword="true" /> if the entire token value is encoded as valid base 64 text and can be successfully decoded to bytes, <see langword="false" /> otherwise.</returns>
+        <param name="value">When the method returns, a byte array that contains the base 64-encoded JSON string if the method succeeds.</param>
+        <summary>Tries to parse the current JSON token value from the source and decodes the base 64 encoded JSON string as a byte array.</summary>
+        <returns><see langword="true" /> if the entire token value is encoded as valid base 64 text and can be successfully decoded; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">Thrown if trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.String" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON token is not a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetDateTime">
@@ -1218,7 +1222,7 @@ This method only parses <xref:System.Guid> values with hyphens and without any s
       <Docs>
         <summary>Tries to skip the children of the current JSON token.</summary>
         <returns>
-          <see langword="true" /> if there was enough data for the children to be skipped successfully, else <see langword="false" />.</returns>
+          <see langword="true" /> if there was enough data for the children to be skipped successfully; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown">
             <![CDATA[
@@ -1227,15 +1231,19 @@ This method only parses <xref:System.Guid> values with hyphens and without any s
 
 If the reader did not have enough data to completely skip the children of the current token, it will be reset to the state it was in before the method was called.
               
-When <xref:System.Text.Json.Utf8JsonReader.TokenType> is <xref:System.Text.Json.JsonTokenType.PropertyName>, the reader first moves to the property value.
+When <xref:System.Text.Json.Utf8JsonReader.TokenType> is <xref:System.Text.Json.JsonTokenType.PropertyName?displayProperty=nameWithType>, the reader first moves to the property value.
 
-When <xref:System.Text.Json.Utf8JsonReader.TokenType> (originally, or after advancing) is <xref:System.Text.Json.JsonTokenType.StartObject> or <xref:System.Text.Json.JsonTokenType.StartArray>, the reader advances to the matching <xref:System.Text.Json.JsonTokenType.EndObject> or <xref:System.Text.Json.JsonTokenType.EndArray>.
+When <xref:System.Text.Json.Utf8JsonReader.TokenType> (originally, or after advancing) is <xref:System.Text.Json.JsonTokenType.StartObject?displayProperty=nameWithType> or <xref:System.Text.Json.JsonTokenType.StartArray?displayProperty=nameWithType>, the reader advances to the matching <xref:System.Text.Json.JsonTokenType.EndObject?displayProperty=nameWithType> or <xref:System.Text.Json.JsonTokenType.EndArray?displayProperty=nameWithType>.
             
 For all other token types, the reader does not move. After the next call to <xref:System.Text.Json.Utf8JsonReader.Read>, the reader will be at the next value (when in an array), the next property name (when in an object), or the end array/object token.
 
           ]]></format>
         </remarks>
-        <exception cref="T:System.Text.Json.JsonException">Thrown when an invalid JSON token is encountered while skipping, according to the JSON RFC, or if the current depth exceeds the recursive limit set by the max depth.</exception>
+        <exception cref="T:System.Text.Json.JsonException">An invalid JSON token was encountered while skipping, according to the JSON RFC.
+          
+- or -
+
+The current depth exceeds the recursive limit set by the maximum depth.</exception>
       </Docs>
     </Member>
     <Member MemberName="ValueSequence">
