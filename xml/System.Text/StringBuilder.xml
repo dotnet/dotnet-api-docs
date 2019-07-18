@@ -3892,33 +3892,37 @@ The `Equals` method performs an ordinal comparison to determine whether the char
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns a <see cref="T:System.Text.StringBuilder+ChunkEnumerator" /> that follows the <see cref="T:System.Collections.Generic.IEnumerable" /> pattern and can be used in a C# 'foreach' statement to retreive the <see cref="T:System.Text.StringBuilder" /> data as <see cref="T:System.ReadOnlyMemory" /> chunks of characters.</summary>
-        <returns>A <see cref="T:System.Text.StringBuilder+ChunkEnumerator" /> instance.</returns>
+        <summary>Returns an object that can be used to iterate through the chunks of characters represented in a <see langword="ReadOnlyMemory<Char>" /> created from this <see cref="T:System.Text.StringBuilder" /> instance.</summary>
+        <returns>An enumerator for the chunbks in the <see langword="ReadOnlyMemory<Char>" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-A usage example (C#) would be:
-             
-    foreach (ReadOnlyMemory<char> chunk in sb.GetChunks())
-        foreach(char ch in chunk.Span)
+You can iterate the chunks in the memory range with code like the following: 
+
+```csharp
+foreach (ReadOnlyMemory<char> chunk in sb.GetChunks())
+    foreach(char ch in chunk.Span)
         { /* operations on ch */ }
+```
             
-It is undefined what happens if the <xref:System.Text.StringBuilder> is modified while the chunk enumeration is incomplete. <xref:System.Text.StringBuilder> is also not thread-safe, so operating on it with concurrent threads is illegal.
+The purpose of this method is to efficiently extract the data of a *constant* <xref:System.Text.StringBuilder>. If the <xref:System.Text.StringBuilder> is modified while the chunk enumeration is incomplete, the result is undefined. <xref:System.Text.StringBuilder> is also not thread-safe, so operating on it with concurrent threads is illegal.
 
-The <xref:System.ReadOnlyMemory> chunks returned are not guaranteed to remain unchanged if the <xref:System.Text.StringBuilder> is modified, so do not cache them for later use either.
+The <xref:System.ReadOnlyMemory%601> chunks returned are not guaranteed to remain unchanged if the <xref:System.Text.StringBuilder> is modified, so do not cache them for later use.
+             
+Creating a <xref:System.ReadOnlySpan%601> from a <xref:System.ReadOnlyMemory%1> (as the <xref:System.ReadOnlyMemory%601.Span?displayProperty=nameWithType> method does in the previous example, is expensive, so create a local variable for the span if you need to use it in a nested `for` statement. For example: 
 
-This API's purpose is to efficiently extract the data of a *constant* <xref:System.Text.StringBuilder>.  
-             
-Creating a <xref:System.ReadOnlySpan> from a <xref:System.ReadOnlyMemory> (the `.Span` property) is expensive compared to the fetching of the character, so create a local variable for the span if you need to use it in a nested `for` statement. For example: 
-             
-    foreach (ReadOnlyMemory<char> chunk in sb.GetChunks())
-    {
-        var span = chunk.Span;
-        for(int i = 0; i < span.Length; i++)
-        { /* operations on span[i] */ }
+```csharp
+foreach (ReadOnlyMemory<char> chunk in sb.GetChunks())
+{
+    var span = chunk.Span;
+    for(int i = 0; i < span.Length; i++)
+    { 
+        /* operations on span[i] */ 
     }
+}
+```
 
           ]]></format>
         </remarks>
