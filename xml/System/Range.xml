@@ -27,16 +27,16 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Represents a range has start and end indexes.</summary>
+    <summary>Represents a range that has start and end indexes.</summary>
     <remarks>
       <format type="text/markdown">
         <![CDATA[
 
 ### Remarks
 
-Range is used by the C# compiler to support the range syntax.
+`Range` is used by the C# compiler to support the range syntax:
 
-```cs
+```csharp
     int[] someArray = new int[5] { 1, 2, 3, 4, 5 };
     int[] subArray1 = someArray[0..2];               // { 1, 2 }
     int[] subArray2 = someArray[1..^0];              // { 2, 3, 4, 5 }
@@ -68,9 +68,9 @@ Range is used by the C# compiler to support the range syntax.
         <Parameter Name="end" Type="System.Index" />
       </Parameters>
       <Docs>
-        <param name="start">Represents the inclusive start index of the range.</param>
-        <param name="end">Represents the exclusive end index of the range.</param>
-        <summary>Construct a Range object using the start and end indexes.</summary>
+        <param name="start">The inclusive start index of the range.</param>
+        <param name="end">The exclusive end index of the range.</param>
+        <summary>Instantiates a new <see cref="T:System.Range" /> instance with the specified starting and ending indexes.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -94,8 +94,8 @@ Range is used by the C# compiler to support the range syntax.
         <ReturnType>System.Range</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Creates a Range object starting from the first element to the end.</summary>
-        <value>A Range object.</value>
+        <summary>Gets a <see cref="T:System.Range" /> object that starts from the first element to the end.</summary>
+        <value>A range from the start to the end.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -119,8 +119,8 @@ Range is used by the C# compiler to support the range syntax.
         <ReturnType>System.Index</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Represent the exclusive end index of the Range.</summary>
-        <value>An Index.</value>
+        <summary>Gets an <see cref="T:System.Index" /> that represents the exclusive end index of the range.</summary>
+        <value>The end index of the range.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -147,9 +147,9 @@ Range is used by the C# compiler to support the range syntax.
         <Parameter Name="end" Type="System.Index" />
       </Parameters>
       <Docs>
-        <param name="end">The position of the last element up to which the Range object will be created.</param>
-        <summary>Creates a Range object starting from the first element in the collection to the end Index.</summary>
-        <returns>The Range.</returns>
+        <param name="end">The position of the last element up to which the <see cref="T:System.Range" /> object will be created.</param>
+        <summary>Creates a <see cref="T:System.Range" /> object starting from the first element in the collection to a specified end index.</summary>
+        <returns>A range that starts from the first element to <paramref name="end" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -177,8 +177,8 @@ Range is used by the C# compiler to support the range syntax.
       </Parameters>
       <Docs>
         <param name="value">An object to compare with this Range object.</param>
-        <summary>Indicates whether the current Range object is equal to another object of the same type.</summary>
-        <returns><see langword="true" /> if equal, <see langword="false" /> otherwise.</returns>
+        <summary>Returns a value that indicates whether the current instance is equal to a specified object.</summary>
+        <returns><see langword="true" /> if <paramref name="value" /> is of type <see cref="T:System.Range" /> and is equal to the current instance; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -193,7 +193,7 @@ Range is used by the C# compiler to support the range syntax.
       <Implements>
         <InterfaceMember>M:System.IEquatable`1.Equals(`0)</InterfaceMember>
       </Implements>
-      <AssemblyInfo>
+      <AssemblyInfo>R
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
@@ -209,8 +209,8 @@ Range is used by the C# compiler to support the range syntax.
       </Parameters>
       <Docs>
         <param name="other">A Range object to compare with this Range object.</param>
-        <summary>Indicates whether the current Range object is equal to another Range object.</summary>
-        <returns><see langword="true" /> if equal, <see langword="false" /> otherwise.</returns>
+        <summary>Returns a value that indicates whether the current instance is equal to another <see cref="T:System.Range" /> object.</summary>
+        <returns><see langword="true" /> if the current instance is equal to <paramref name="other" />; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -263,24 +263,21 @@ Range is used by the C# compiler to support the range syntax.
         <Parameter Name="length" Type="System.Int32" Index="0" FrameworkAlternate="netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="length">The length of the collection that the range will be used with. Must be a positive value.</param>
-        <summary>Calculate the start offset and length of range object using a collection length.</summary>
-        <returns>To be added.</returns>
+        <param name="length">A positive integer that represents the length of the collection that the range will be used with.</param>
+        <summary>Returns a <see cref="T:System.Range.OffsetAndLength" /> instance with the starting offset and length of a range.</summary>
+        <returns>The starting offset and length of the range.</returns>
         <remarks>
           <format type="text/markdown">
             <![CDATA[
 
-### Remarks
+## Remarks
 
-For performance reasons, we don't validate the input length parameter against negative values.
-
-It is expected that Range will always be used with collections that have non negative length/count.
-
-We do validate that the Range is within length scope.
+For performance reasons, this method does't validate `length` to ensure that it is not negative. It does ensure that `length` is within the current `Range` instance. 
 
             ]]>
           </format>
         </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="length" /> is outside the bounds of the current range. </exception>
       </Docs>
     </Member>
     <Member MemberName="Start">
@@ -303,8 +300,8 @@ We do validate that the Range is within length scope.
         <ReturnType>System.Index</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Represents the inclusive start index of the Range.</summary>
-        <value>An index.</value>
+        <summary>Gets the inclusive start index of the <see cref="T:System.Range" />.</summary>
+        <value>The inclusive start index of the range.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -332,8 +329,8 @@ We do validate that the Range is within length scope.
       </Parameters>
       <Docs>
         <param name="start">The position of the first element from which the Range will be created.</param>
-        <summary>Creates a Range object starting from start index to the end of the collection.</summary>
-        <returns>A Range.</returns>
+        <summary>Returns a new <see cref="T:System.Range" /> instance starting from a specified start index to the end of the collection.</summary>
+        <returns>A range from <paramref name="start" /> to the end of the collection.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -358,8 +355,8 @@ We do validate that the Range is within length scope.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Converts the value of the current Range object to its equivalent string representation.</summary>
-        <returns>The string representation of the Range.</returns>
+        <summary>Returns the string representation of the current <see cref="T:System.Range" /> object.</summary>
+        <returns>The string representation of the range.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
