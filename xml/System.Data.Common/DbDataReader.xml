@@ -200,7 +200,7 @@
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Releases the resources used by the <see cref="T:System.Data.Common.DbDataReader" /> and calls <see cref="M:System.Data.SqlClient.SqlDataReader.Close" />.</summary>
+        <summary>Releases the resources used by the <see cref="T:System.Data.Common.DbDataReader" /> and calls <see cref="M:System.Data.Common.DbDataReader.Close" />.</summary>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </MemberGroup>
@@ -300,7 +300,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This method calls <xref:System.Data.SqlClient.SqlDataReader.Close%2A>.  
+ This method calls <xref:System.Common.DbDataReader.Close%2A>.  
   
  ]]></format>
         </remarks>
@@ -515,7 +515,7 @@
         <param name="buffer">The buffer into which to copy the data.</param>
         <param name="bufferOffset">The index with the buffer to which the data will be copied.</param>
         <param name="length">The maximum number of characters to read.</param>
-        <summary>Reads a stream of bytes from the specified column, starting at location indicated by <paramref name="dataOffset" />, into the buffer, starting at the location indicated by <paramref name="bufferOffset" />.</summary>
+        <summary>Reads a specified number of bytes from the specified column starting at a specified index and writes them to a buffer starting at a specified position in the buffer.</summary>
         <returns>The actual number of bytes read.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
@@ -611,7 +611,7 @@
         <param name="buffer">The buffer into which to copy the data.</param>
         <param name="bufferOffset">The index with the buffer to which the data will be copied.</param>
         <param name="length">The maximum number of characters to read.</param>
-        <summary>Reads a stream of characters from the specified column, starting at location indicated by <paramref name="dataOffset" />, into the buffer, starting at the location indicated by <paramref name="bufferOffset" />.</summary>
+        <summary>Reads a specified number of characters from a specified column starting at a specified index, and writes them to a buffer starting at a specified position.</summary>
         <returns>The actual number of characters read.</returns>
         <remarks>To be added.</remarks>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
@@ -656,8 +656,8 @@
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Returns a <see cref="T:System.Data.Common.DbDataReader" /> object for the requested column.</summary>
-        <returns>A <see cref="T:System.Data.Common.DbDataReader" /> object.</returns>
+        <summary>Returns a nested data reader for the requested column.</summary>
+        <returns>A data reader.</returns>
         <remarks>To be added.</remarks>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -700,7 +700,7 @@
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
         <summary>Gets name of the data type of the specified column.</summary>
-        <returns>A string representing the name of the data type.</returns>
+        <returns>The name of the data type.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -848,7 +848,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a <see cref="T:System.Decimal" /> object.</summary>
+        <summary>Gets the value of the specified column as a <see cref="T:System.Decimal" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
@@ -1034,13 +1034,13 @@ private static void GetDataTypes(String connectionString) {
       <Docs>
         <typeparam name="T">The type of the value to be returned.</typeparam>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Synchronously gets the value of the specified column as the requested type.</summary>
+        <summary>Gets the value of the specified column as the requested type.</summary>
         <returns>The value of the specified column.</returns>
-        <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.  
+	<exception cref="T:System.InvalidOperationException">The connection was dropped or closed during data retrieval.  
 
 -or-
   
- The <see cref="T:System.Data.SqlClient.SqlDataReader" /> is closed during the data retrieval.  
+ The data reader was closed during data retrieval.  
   
 -or-
 
@@ -1048,14 +1048,14 @@ private static void GetDataTypes(String connectionString) {
 
 -or-
 
- Tried to read a previously-read column in sequential mode.  
+ The reader tried to read a previously-read column in sequential mode.  
 
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">
-          <paramref name="T" /> doesn't match the type returned by the database or cannot be cast.</exception>
+          The value returned by the database doesn't match or cannot be cast to <typeparamref name="T" />.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="GetFieldValueAsync&lt;T&gt;">
@@ -1105,16 +1105,16 @@ private static void GetDataTypes(String connectionString) {
         <typeparam name="T">The type of the value to be returned.</typeparam>
         <param name="ordinal">The zero-based column ordinal.</param>
         <summary>Asynchronously gets the value of the specified column as the requested type.</summary>
-        <returns>The value of the specified column.</returns>
+        <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> contains the value of the specified column.</returns>
         <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during data retrieval.  
   
 -or-
 
- The <see cref="T:System.Data.Common.DbDataReader" /> is closed during the data retrieval.  
+ The data reader was closed during the data retrieval.  
 
 -or-
 
- There is no data ready to be read (for example, the first <see cref="M:System.Data.Common.DbDataReader.Read" /> hasn't been called, or returned false).  
+ There is no data ready to be read (for example, the first <see cref="M:System.Data.Common.DbDataReader.Read" /> hasn't been called, or it returned <see langword="false" />).
 
 -or-
 
@@ -1122,10 +1122,10 @@ private static void GetDataTypes(String connectionString) {
 
 -or-
 
- There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
+ There was an asynchronous operation in progress. This applies to all Get_*_ methods when running in sequential mode, as they could be called while reading a stream.</exception>
         <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
         <exception cref="T:System.InvalidCastException">
-          <paramref name="T" /> doesn't match the type returned by the data source  or cannot be cast.</exception>
+          The value returned by the database doesn't match or cannot be cast to <typeparamref name="T" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetFieldValueAsync&lt;T&gt;">
@@ -1165,18 +1165,18 @@ private static void GetDataTypes(String connectionString) {
       <Docs>
         <typeparam name="T">The type of the value to be returned.</typeparam>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <param name="cancellationToken">An optional token to cancel the asynchronous operation.</param>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         <summary>Asynchronously gets the value of the specified column as the requested type.</summary>
-        <returns>The value of the specified column.</returns>
-        <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.  
+        <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> contains the value of the specified column.</returns>
+        <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during data retrieval.  
   
 -or-
 
- The <see cref="T:System.Data.Common.DbDataReader" /> is closed during the data retrieval.  
+ The data reader was closed during the data retrieval.  
 
 -or-
 
- There is no data ready to be read (for example, the first <see cref="M:System.Data.Common.DbDataReader.Read" /> hasn't been called, or returned false).  
+ There is no data ready to be read (for example, the first <see cref="M:System.Data.Common.DbDataReader.Read" /> hasn't been called, or it returned <see langword="false" />).
 
 -or-
 
@@ -1184,10 +1184,10 @@ private static void GetDataTypes(String connectionString) {
 
 -or-
 
- There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
+ There was an asynchronous operation in progress. This applies to all Get_*_ methods when running in sequential mode, as they could be called while reading a stream.</exception>
         <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
         <exception cref="T:System.InvalidCastException">
-          <paramref name="T" /> doesn't match the type returned by the data source or cannot be cast.</exception>
+          The value returned by the database doesn't match or cannot be cast to <typeparamref name="T" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetFloat">
@@ -1271,7 +1271,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a globally-unique identifier (GUID).</summary>
+        <summary>Gets the value of the specified column as a globally unique identifier (GUID).</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
@@ -1698,7 +1698,7 @@ private static void GetCredits(String connectionString) {
         <summary>Returns a <see cref="T:System.Data.DataTable" /> that describes the column metadata of the <see cref="T:System.Data.Common.DbDataReader" />.</summary>
         <returns>A <see cref="T:System.Data.DataTable" /> that describes the column metadata.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Data.SqlClient.SqlDataReader" /> is closed.</exception>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Data.Common.DbDataReader" /> is closed.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -1735,7 +1735,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets a <see cref="T:System.IO.Stream" /> to retrieve data from the specified column.</summary>
+        <summary>Gets a stream to retrieve data from the specified column.</summary>
         <returns>A stream.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1744,11 +1744,11 @@ private static void GetCredits(String connectionString) {
  <xref:System.Data.Common.DbDataReader.GetStream%2A> only supports the retrieval of values that can be converted to byte arrays.  
  ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.  
+        <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during the data retrieval.  
   
 -or-
 
- The <see cref="T:System.Data.Common.DbDataReader" /> is closed during the data retrieval.  
+ The data reader is closed during the data retrieval.  
 
 -or-
 
@@ -1756,7 +1756,7 @@ private static void GetCredits(String connectionString) {
 
 -or-
 
- Tried to read a previously-read column in sequential mode.  
+ The data reader tried to read a previously-read column in sequential mode.  
 
 -or-
 
@@ -1842,7 +1842,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets a <see cref="T:System.IO.TextReader" /> to retrieve data from the column.</summary>
+        <summary>Gets a text reader to retrieve data from the column.</summary>
         <returns>A text reader.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1851,11 +1851,11 @@ private static void GetCredits(String connectionString) {
  <xref:System.Data.Common.DbDataReader.GetTextReader%2A> only supports the retrieval of values that can be converted to character arrays (strings).  
  ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.  
+        <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during the data retrieval.  
   
 -or-
 
- The <see cref="T:System.Data.Common.DbDataReader" /> is closed during the data retrieval.  
+ The data reader is closed during the data retrieval.  
 
 -or-
 
@@ -1863,7 +1863,7 @@ private static void GetCredits(String connectionString) {
 
 -or-
 
- Tried to read a previously-read column in sequential mode.  
+ The data reader tried to read a previously-read column in sequential mode.  
 
 -or-
 
@@ -1990,7 +1990,7 @@ private static void GetCredits(String connectionString) {
       <Docs>
         <summary>Gets a value that indicates whether this <see cref="T:System.Data.Common.DbDataReader" /> contains one or more rows.</summary>
         <value>
-          <see langword="true" /> if the <see cref="T:System.Data.Common.DbDataReader" /> contains one or more rows; otherwise <see langword="false" />.</value>
+          <see langword="true" /> if the <see cref="T:System.Data.Common.DbDataReader" /> contains one or more rows; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -2030,9 +2030,9 @@ private static void GetCredits(String connectionString) {
       <Docs>
         <summary>Gets a value indicating whether the <see cref="T:System.Data.Common.DbDataReader" /> is closed.</summary>
         <value>
-          <see langword="true" /> if the <see cref="T:System.Data.Common.DbDataReader" /> is closed; otherwise <see langword="false" />.</value>
+          <see langword="true" /> if the <see cref="T:System.Data.Common.DbDataReader" /> is closed; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Data.SqlClient.SqlDataReader" /> is closed.</exception>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Data.Common.DbDataReader" /> is closed.</exception>
         <block subset="none" type="overrides">
           <para>This property and <see cref="P:System.Data.Common.DbDataReader.RecordsAffected" /> should be implemented to return a value when the reader is closed.</para>
         </block>
@@ -2078,12 +2078,12 @@ private static void GetCredits(String connectionString) {
         <param name="ordinal">The zero-based column ordinal.</param>
         <summary>Gets a value that indicates whether the column contains nonexistent or missing values.</summary>
         <returns>
-          <see langword="true" /> if the specified column is equivalent to <see cref="T:System.DBNull" />; otherwise <see langword="false" />.</returns>
+          <see langword="true" /> if the specified column is equivalent to <see cref="T:System.DBNull" />; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Call this method to check for null column values before calling the typed get methods (for example, <xref:System.Data.Common.DbDataReader.GetByte%2A>, <xref:System.Data.Common.DbDataReader.GetChar%2A>, and so on) to avoid raising an error.  
+ Call this method to check for null column values before calling the typed Get_*_ methods (for example, <xref:System.Data.Common.DbDataReader.GetByte%2A>, <xref:System.Data.Common.DbDataReader.GetChar%2A>, and so on) to avoid throwing an exception.  
   
  ]]></format>
         </remarks>
@@ -2135,12 +2135,12 @@ private static void GetCredits(String connectionString) {
         <param name="ordinal">The zero-based column to be retrieved.</param>
         <summary>Asynchronously gets a value that indicates whether the column contains non-existent or missing values.</summary>
         <returns>
-          <see langword="true" /> if the specified column value is equivalent to <see langword="DBNull" />; otherwise, <see langword="false" />.</returns>
-        <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.  
+          A <see cref="T:System.Threading.Tasks.Task`1" /> whose <see cref="P:System.Threading.Tasks.Task.Result" /> property is <see langword="true" /> if the specified column value is equivalent to <see langword="DBNull" /> or <see langword="false" /> if it is not.</returns>
+        <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during the data retrieval.  
   
 -or-
 
- The <see cref="T:System.Data.Common.DbDataReader" /> is closed during the data retrieval.  
+ The data reader is closed during the data retrieval.  
 
 -or-
 
@@ -2189,15 +2189,15 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column to be retrieved.</param>
-        <param name="cancellationToken">A cancellation token to cancel the asynchronous operation. The returned task must be marked as cancelled.</param>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         <summary>Asynchronously gets a value that indicates whether the column contains non-existent or missing values.</summary>
         <returns>
-          <see langword="true" /> if the specified column value is equivalent to <see langword="DBNull" /> otherwise <see langword="false" />.</returns>
-        <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.  
+          A <see cref="T:System.Threading.Tasks.Task`1" /> whose <see cref="P:System.Threading.Tasks.Task.Result" /> property is <see langword="true" /> if the specified column value is equivalent to <see langword="DBNull" /> or <see langword="false" /> if it is not.</returns>
+        <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during the data retrieval.  
   
 -or-
 
- The <see cref="T:System.Data.Common.DbDataReader" /> is closed during the data retrieval.  
+ The data reader is closed during the data retrieval.  
 
 -or-
 
@@ -2348,7 +2348,7 @@ private static void GetCredits(String connectionString) {
       <Docs>
         <summary>Advances the reader to the next result when reading the results of a batch of statements.</summary>
         <returns>
-          <see langword="true" /> if there are more result sets; otherwise <see langword="false" />.</returns>
+          <see langword="true" /> if there are more result sets; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2510,7 +2510,7 @@ private static void GetCredits(String connectionString) {
       <Docs>
         <summary>Advances the reader to the next record in a result set.</summary>
         <returns>
-          <see langword="true" /> if there are more rows; otherwise <see langword="false" />.</returns>
+          <see langword="true" /> if there are more rows; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
