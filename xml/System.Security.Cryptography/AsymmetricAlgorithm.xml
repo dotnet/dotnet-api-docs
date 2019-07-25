@@ -459,11 +459,26 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="passwordBytes">The bytes to use as a password when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>Exports the current key in the PKCS#8 EncryptedPrivateKeyInfo format with a byte-based password.</summary>
+        <returns>A byte array containing the PKCS#8 EncryptedPrivateKeyInfo representation of this key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`.
+ This enables compatibility with other systems which use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.
+
+-or-
+
+<paramref name="pbeParameters"/> indicates that <see cref="F:System.Security.Cryptography.PbeEncryptionAlgorithm.TripleDes3KeyPkcs12"/> should be used, which requires <see cref="T:System.Char"/>-based passwords.
+</exception>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.TryExportEncryptedPkcs8PrivateKey" />
       </Docs>
     </Member>
     <Member MemberName="ExportEncryptedPkcs8PrivateKey">
@@ -491,11 +506,20 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>Exports the current key in the PKCS#8 EncryptedPrivateKeyInfo format with a char-based password.</summary>
+        <returns>A byte array containing the PKCS#8 EncryptedPrivateKeyInfo representation of this key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When `pbeParameters` indicates an algorithm that uses PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.TryExportEncryptedPkcs8PrivateKey" />
       </Docs>
     </Member>
     <Member MemberName="ExportPkcs8PrivateKey">
@@ -521,9 +545,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Exports the current key in the PKCS#8 PrivateKeyInfo format.</summary>
+        <returns>A byte array containing the PKCS#8 PrivateKeyInfo representation of this key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.ExportEncryptedPkcs8PrivateKey" />
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.TryExportPkcs8PrivateKey" />
       </Docs>
     </Member>
     <Member MemberName="ExportSubjectPublicKeyInfo">
@@ -549,9 +576,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Exports the public-key portion of the current key in the X.509 SubjectPublicKeyInfo format.</summary>
+        <returns>A byte array containing the X.509 SubjectPublicKeyInfo representation of the public-key portion of this key.</returns>
         <remarks>To be added.</remarks>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.TryExportSubjectPublicKeyInfo" />
       </Docs>
     </Member>
     <Member MemberName="FromXmlString">
@@ -630,11 +658,43 @@
         <Parameter Name="bytesRead" Type="System.Int32" RefType="out" Index="2" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="source">To be added.</param>
-        <param name="bytesRead">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="passwordBytes">The bytes to use as a password when decrypting the key material.</param>
+        <param name="source">The bytes of a PKCS#8 EncryptedPrivateKeyInfo structure in the ASN.1-BER encoding.</param>
+        <param name="bytesRead">When this method returns, contains a value that indicates the number of bytes read from <paramref name="source"/>. This parameter is treated as uninitialized.</param>
+        <summary>Imports the public/private keypair from a PKCS#8 EncryptedPrivateKeyInfo structure after decrypting with a byte-based password, replacing the keys for this object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`.
+ This enables compatibility with other systems which use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+
+ This method only supports the binary (BER/CER/DER) encoding of EncryptedPrivateKeyInfo.
+ If the value is Base64-encoded or in the PEM text format, the caller must Base64-decode the contents before calling this method.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The password is incorrect.
+
+-or-
+
+The contents of <paramref name="source"/> indicate the Key Derivation Function (KDF) to apply is the legacy PKCS#12 KDF, which requires <see cref="T:System.Char"/>-based passwords.
+
+-or-
+
+The contents of <paramref name="source"/> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.
+
+-or-
+
+The contents of <paramref name="source"/> indicate the key is for an algorithm other than the algorithm represented by this instance.
+
+-or-
+
+The contents of <paramref name="source"/> represent the key in a format that is not supported.
+
+-or-
+
+The algorithm-specific key import failed.
+</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportEncryptedPkcs8PrivateKey">
@@ -664,11 +724,38 @@
         <Parameter Name="bytesRead" Type="System.Int32" RefType="out" Index="2" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="source">To be added.</param>
-        <param name="bytesRead">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use for decrypting the key material.</param>
+        <param name="source">The bytes of a PKCS#8 EncryptedPrivateKeyInfo structure in the ASN.1-BER encoding.</param>
+        <param name="bytesRead">When this method returns, contains a value that indicates the number of bytes read from <paramref name="source"/>. This parameter is treated as uninitialized.</param>
+        <summary>Imports the public/private keypair from a PKCS#8 EncryptedPrivateKeyInfo structure after decrypting with a char-based password, replacing the keys for this object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When the contents of `source` indicate an algorithm that uses PBKDF1 (Password-Based Key Derivation Function 1) or PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+
+ This method only supports the binary (BER/CER/DER) encoding of EncryptedPrivateKeyInfo.
+ If the value is Base64-encoded or in the PEM text format, the caller must Base64-decode the contents before calling this method.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The password is incorrect.
+
+-or-
+
+The contents of <paramref name="source"/> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.
+
+-or-
+
+The contents of <paramref name="source"/> indicate the key is for an algorithm other than the algorithm represented by this instance.
+
+-or-
+
+The contents of <paramref name="source"/> represent the key in a format that is not supported.
+
+-or-
+
+The algorithm-specific key import failed.
+</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportPkcs8PrivateKey">
@@ -697,10 +784,31 @@
         <Parameter Name="bytesRead" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="bytesRead">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">The bytes of a PKCS#8 PrivateKeyInfo structure in the ASN.1-BER encoding.</param>
+        <param name="bytesRead">When this method returns, contains a value that indicates the number of bytes read from <paramref name="source"/>. This parameter is treated as uninitialized.</param>
+        <summary>Imports the public/private keypair from a PKCS#8 PrivateKeyInfo structure after decryption, replacing the keys for this object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method only supports the binary (BER/CER/DER) encoding of PrivateKeyInfo.
+ If the value is Base64-encoded or in the PEM text format, the caller must Base64-decode the contents before calling this method.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of <paramref name="source"/> do not represent an ASN.1-BER-encoded PKCS#8 PrivateKeyInfo structure.
+
+-or-
+
+The contents of <paramref name="source"/> indicate the key is for an algorithm other than the algorithm represented by this instance.
+
+-or-
+
+The contents of <paramref name="source"/> represent the key in a format that is not supported.
+
+-or-
+
+The algorithm-specific key import failed.
+</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportSubjectPublicKeyInfo">
@@ -729,10 +837,31 @@
         <Parameter Name="bytesRead" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="bytesRead">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">The bytes of an X.509 SubjectPublicKeyInfo structure in the ASN.1-DER encoding.</param>
+        <param name="bytesRead">When this method returns, contains a value that indicates the number of bytes read from <paramref name="source"/>. This parameter is treated as uninitialized.</param>
+        <summary>Imports the public key from an X.509 SubjectPublicKeyInfo structure after decryption, replacing the keys for this object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method only supports the binary (DER) encoding of SubjectPublicKeyInfo.
+ If the value is Base64-encoded or in the PEM text format, the caller must Base64-decode the contents before calling this method.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of <paramref name="source"/> do not represent an ASN.1-DER-encoded X.509 SubjectPublicKeyInfo structure.
+
+-or-
+
+The contents of <paramref name="source"/> indicate the key is for an algorithm other than the algorithm represented by this instance.
+
+-or-
+
+The contents of <paramref name="source"/> represent the key in a format that is not supported.
+
+-or-
+
+The algorithm-specific key import failed.
+</exception>
       </Docs>
     </Member>
     <Member MemberName="KeyExchangeAlgorithm">
@@ -1137,13 +1266,28 @@ This member is an explicit interface member implementation. It can be used only 
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="3" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="passwordBytes">The bytes to use as a password when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <param name="destination">The byte span to receive the PKCS#8 EncryptedPrivateKeyInfo data.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination"/>. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to export the current key in the PKCS#8 EncryptedPrivateKeyInfo format into a provided buffer, using a byte-based password.</summary>
+        <returns><see langword="true"/> if <paramref name="destination"/> is big enough to receive the output; otherwise, <see langword="false"/>.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`.
+ This enables compatibility with other systems which use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.
+
+-or-
+
+<paramref name="pbeParameters"/> indicates that <see cref="F:System.Security.Cryptography.PbeEncryptionAlgorithm.TripleDes3KeyPkcs12"/> should be used, which requires <see cref="T:System.Char"/>-based passwords.
+</exception>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.ExportEncryptedPkcs8PrivateKey" />
       </Docs>
     </Member>
     <Member MemberName="TryExportEncryptedPkcs8PrivateKey">
@@ -1173,13 +1317,22 @@ This member is an explicit interface member implementation. It can be used only 
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="3" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <param name="destination">The byte span to receive the PKCS#8 EncryptedPrivateKeyInfo data.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination"/>. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to export the current key in the PKCS#8 EncryptedPrivateKeyInfo format into a provided buffer, using a char-based password.</summary>
+        <returns><see langword="true"/> if <paramref name="destination"/> is big enough to receive the output; otherwise, <see langword="false"/>.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When `pbeParameters` indicates an algorithm that uses PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.ExportEncryptedPkcs8PrivateKey" />
       </Docs>
     </Member>
     <Member MemberName="TryExportPkcs8PrivateKey">
@@ -1208,11 +1361,13 @@ This member is an explicit interface member implementation. It can be used only 
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The byte span to receive the PKCS#8 PrivateKeyInfo data.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination"/>. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to export the current key in the PKCS#8 PrivateKeyInfo format into a provided buffer.</summary>
+        <returns><see langword="true"/> if <paramref name="destination"/> is big enough to receive the output; otherwise, <see langword="false"/>.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.ExportPkcs8PrivateKey" />
       </Docs>
     </Member>
     <Member MemberName="TryExportSubjectPublicKeyInfo">
@@ -1241,11 +1396,13 @@ This member is an explicit interface member implementation. It can be used only 
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The byte span to receive the X.509 SubjectPublicKeyInfo data.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination"/>. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to export the current key in the X.509 SubjectPublicKeyInfo format into a provided buffer.</summary>
+        <returns><see langword="true"/> if <paramref name="destination"/> is big enough to receive the output; otherwise, <see langword="false"/>.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.ExportSubjectPublicKeyInfo" />
       </Docs>
     </Member>
   </Members>
