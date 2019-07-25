@@ -669,7 +669,7 @@ If a thread pool implementation may have different types of work items, the coun
         <typeparam name="TState">The type of elements of <paramref name="state" />.</typeparam>
         <param name="callBack">An <see cref="T:System.Action`1" /> representing the method to execute.</param>
         <param name="state">An object containing data to be used by the method.</param>
-        <param name="preferLocal">Unlike other QueueUserWorkItem methods, prefer executing in the local thread pool and not the global thread pool.</param>
+        <param name="preferLocal"><see langword="true" /> to prefer queueing the work item in a queue close to the current thread; <see langword="false" /> to prefer queueing the work item to the thread pool's shared queue.</param>
         <summary>Queues a method specified by an <see cref="T:System.Action`1" /> delegate for execution, and provides data to be used by the method. The method executes when a thread pool thread becomes available.</summary>
         <returns>
           <see langword="true" /> if the method is successfully queued; <see cref="T:System.NotSupportedException" /> is thrown if the work item could not be queued.
@@ -1285,11 +1285,22 @@ If a thread pool implementation may have different types of threads, the count i
         <Parameter Name="preferLocal" Type="System.Boolean" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="callBack">To be added.</param>
-        <param name="preferLocal">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="callBack">The work item to invoke when a thread in the thread pool picks up the work item.</param>
+        <param name="preferLocal"><see langword="true" /> to prefer queueing the work item in a queue close to the current thread; <see langword="false" /> to prefer queueing the work item to the thread pool's shared queue.</param>
+        <summary>Queues the specified work item object to the thread pool.</summary>
+        <returns><see langword="true" /> if the method succeeds; <see cref="T:System.OutOfMemoryException" /> is thrown if the work item could not be queued.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The thread pool will invoke the work item's <xref:System.Threading.IThreadPoolWorkItem.Execute> method. It is the responsibility of that work item to propagate <xref:System.Threading.ExecutionContext> if it's needed; the thread pool will not do so.
+
+         ]]></format>
+       </remarks>
+         <exception cref="T:System.ArgumentNullException"><paramref name="callback" /> is <see langword="null" />.</exception>
+         <exception cref="T:System.ArgumentOutOfRangeException">The work item is a <see cref="T:System.Threading.Tasks.Task" />.</exception>
+         <exception cref="T:System.OutOfMemoryException">The work item could not be queued.</exception>
       </Docs>
     </Member>
     <Member MemberName="UnsafeQueueUserWorkItem">
@@ -1388,11 +1399,13 @@ If a thread pool implementation may have different types of threads, the count i
         <typeparam name="TState">The type of elements of <paramref name="state" />.</typeparam>
         <param name="callBack">A delegate representing the method to execute.</param>
         <param name="state">An object containing data to be used by the method.</param>
-        <param name="preferLocal">`true` to execute in the local threadpool; `false` to execute in the global thread pool.</param>
+        <param name="preferLocal"><see langword="true" /> to prefer queueing the work item in a queue close to the current thread; <see langword="false" /> to prefer queueing the work item to the thread pool's shared queue.</param>
         <summary>Queues a method specified by an <see cref="T:System.Action`1" /> delegate for execution, and specifies an object containing data to be used by the method. The method executes when a thread pool thread becomes available.</summary>
         <returns>
           <see langword="true" /> if the method is successfully queued; <see cref="T:System.NotSupportedException" /> is thrown if the work item could not be queued.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="callback" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.NotSupportedException">The work item could not be queued.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="UnsafeRegisterWaitForSingleObject">
