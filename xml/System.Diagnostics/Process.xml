@@ -2054,6 +2054,44 @@ There are problems accessing the performance counter API's used to get process i
         <altmember cref="M:System.Diagnostics.Process.GetProcessById(System.Int32,System.String)" />
       </Docs>
     </Member>
+    <MemberGroup MemberName="Kill">
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+The `Kill` method forces a termination of the process, while <xref:System.Diagnostics.Process.CloseMainWindow%2A> only requests a termination. 
+When a process with a graphical interface is executing, its message loop is in a wait state. 
+The message loop executes every time a Windows message is sent to the process by the operating system. 
+Calling <xref:System.Diagnostics.Process.CloseMainWindow%2A> sends a request to close to the main window, which, in a well-formed application, closes child windows and revokes all running message loops for the application. 
+The request to exit the process by calling <xref:System.Diagnostics.Process.CloseMainWindow%2A> does not force the application to quit.
+The application can ask for user verification before quitting, or it can refuse to quit. 
+To force the application to quit, use the `Kill` method.
+The behavior of <xref:System.Diagnostics.Process.CloseMainWindow%2A> is identical to that of a user closing an application's main window using the system menu.
+Therefore, the request to exit the process by closing the main window does not force the application to quit immediately.
+  
+> [!NOTE]
+> The <xref:System.Diagnostics.Process.Kill%2A> method executes asynchronously. 
+> After calling the `Kill` method, call the <xref:System.Diagnostics.Process.WaitForExit%2A> method to wait for the process to exit, or check the <xref:System.Diagnostics.Process.HasExited%2A> property to determine if the process has exited.
+  
+Data edited by the process or resources allocated to the process can be lost if you call `Kill`. 
+`Kill` causes an abnormal process termination and should be used only when necessary.
+<xref:System.Diagnostics.Process.CloseMainWindow%2A> enables an orderly termination of the process and closes all windows, so it is preferable for applications with an interface. 
+If <xref:System.Diagnostics.Process.CloseMainWindow%2A> fails, you can use `Kill` to terminate the process.
+`Kill` is the only way to terminate processes that do not have graphical interfaces.
+  
+You can call `Kill` and <xref:System.Diagnostics.Process.CloseMainWindow%2A> only for processes that are running on the local computer.
+You cannot cause processes on remote computers to exit. You can only view information for processes running on remote computers.
+  
+> [!NOTE]
+> If the call to the `Kill` method is made while the process is currently terminating, a <xref:System.ComponentModel.Win32Exception> is thrown for Access Denied.
+  
+ ]]></format>
+        </remarks>        
+      </Docs>
+    </MemberGroup>    
     <Member MemberName="Kill">
       <MemberSignature Language="C#" Value="public void Kill ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Kill() cil managed" />
@@ -2086,24 +2124,7 @@ There are problems accessing the performance counter API's used to get process i
       <Parameters />
       <Docs>
         <summary>Immediately stops the associated process.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Diagnostics.Process.Kill%2A> forces a termination of the process, while <xref:System.Diagnostics.Process.CloseMainWindow%2A> only requests a termination. When a process with a graphical interface is executing, its message loop is in a wait state. The message loop executes every time a Windows message is sent to the process by the operating system. Calling <xref:System.Diagnostics.Process.CloseMainWindow%2A> sends a request to close to the main window, which, in a well-formed application, closes child windows and revokes all running message loops for the application. The request to exit the process by calling <xref:System.Diagnostics.Process.CloseMainWindow%2A> does not force the application to quit. The application can ask for user verification before quitting, or it can refuse to quit. To force the application to quit, use the <xref:System.Diagnostics.Process.Kill%2A> method. The behavior of <xref:System.Diagnostics.Process.CloseMainWindow%2A> is identical to that of a user closing an application's main window using the system menu. Therefore, the request to exit the process by closing the main window does not force the application to quit immediately.  
-  
-> [!NOTE]
->  The <xref:System.Diagnostics.Process.Kill%2A> method executes asynchronously. After calling the <xref:System.Diagnostics.Process.Kill%2A> method, call the <xref:System.Diagnostics.Process.WaitForExit%2A> method to wait for the process to exit, or check the <xref:System.Diagnostics.Process.HasExited%2A> property to determine if the process has exited.  
-  
- Data edited by the process or resources allocated to the process can be lost if you call <xref:System.Diagnostics.Process.Kill%2A>. <xref:System.Diagnostics.Process.Kill%2A> causes an abnormal process termination and should be used only when necessary. <xref:System.Diagnostics.Process.CloseMainWindow%2A> enables an orderly termination of the process and closes all windows, so it is preferable for applications with an interface. If <xref:System.Diagnostics.Process.CloseMainWindow%2A> fails, you can use <xref:System.Diagnostics.Process.Kill%2A> to terminate the process. <xref:System.Diagnostics.Process.Kill%2A> is the only way to terminate processes that do not have graphical interfaces.  
-  
- You can call <xref:System.Diagnostics.Process.Kill%2A> and <xref:System.Diagnostics.Process.CloseMainWindow%2A> only for processes that are running on the local computer. You cannot cause processes on remote computers to exit. You can only view information for processes running on remote computers.  
-  
-> [!NOTE]
->  If the call to the <xref:System.Diagnostics.Process.Kill%2A> method is made while the process is currently terminating, a <xref:System.ComponentModel.Win32Exception> is thrown for Access Denied.  
-  
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ComponentModel.Win32Exception">The associated process could not be terminated.  
   
  -or-  
@@ -2151,26 +2172,9 @@ There are problems accessing the performance counter API's used to get process i
       </Parameters>
       <Docs>
         <param name="entireProcessTree">
-          <see langword="true" /> to kill the associated process and its descendants; <see langword="false" /> to kill only associated process.</param>
-        <summary>Immediately stops the associated process, and (optionally) all of its child/descendent processes.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Diagnostics.Process.Kill%2A> forces a termination of the process, while <xref:System.Diagnostics.Process.CloseMainWindow%2A> only requests a termination. When a process with a graphical interface is executing, its message loop is in a wait state. The message loop executes every time a Windows message is sent to the process by the operating system. Calling <xref:System.Diagnostics.Process.CloseMainWindow%2A> sends a request to close to the main window, which, in a well-formed application, closes child windows and revokes all running message loops for the application. The request to exit the process by calling <xref:System.Diagnostics.Process.CloseMainWindow%2A> does not force the application to quit. The application can ask for user verification before quitting, or it can refuse to quit. To force the application to quit, use the <xref:System.Diagnostics.Process.Kill%2A> method. The behavior of <xref:System.Diagnostics.Process.CloseMainWindow%2A> is identical to that of a user closing an application's main window using the system menu. Therefore, the request to exit the process by closing the main window does not force the application to quit immediately.  
-  
-> [!NOTE]
->  The <xref:System.Diagnostics.Process.Kill%2A> method executes asynchronously. After calling the <xref:System.Diagnostics.Process.Kill%2A> method, call the <xref:System.Diagnostics.Process.WaitForExit%2A> method to wait for the process to exit, or check the <xref:System.Diagnostics.Process.HasExited%2A> property to determine if the process has exited.  
-  
- Data edited by the process or resources allocated to the process can be lost if you call <xref:System.Diagnostics.Process.Kill%2A>. <xref:System.Diagnostics.Process.Kill%2A> causes an abnormal process termination and should be used only when necessary. <xref:System.Diagnostics.Process.CloseMainWindow%2A> enables an orderly termination of the process and closes all windows, so it is preferable for applications with an interface. If <xref:System.Diagnostics.Process.CloseMainWindow%2A> fails, you can use <xref:System.Diagnostics.Process.Kill%2A> to terminate the process. <xref:System.Diagnostics.Process.Kill%2A> is the only way to terminate processes that do not have graphical interfaces.  
-  
- You can call <xref:System.Diagnostics.Process.Kill%2A> and <xref:System.Diagnostics.Process.CloseMainWindow%2A> only for processes that are running on the local computer. You cannot cause processes on remote computers to exit. You can only view information for processes running on remote computers.  
-  
-> [!NOTE]
->  If the call to the <xref:System.Diagnostics.Process.Kill%2A> method is made while the process is currently terminating, a <xref:System.ComponentModel.Win32Exception> is thrown for Access Denied.  
-  
- ]]></format>
-        </remarks>
+          <see langword="true" /> to kill the associated process and its descendants; <see langword="false" /> to kill only the associated process.</param>
+        <summary>Immediately stops the associated process, and optionally all of its child/descendent processes.</summary>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ComponentModel.Win32Exception">The associated process could not be terminated.  
   
  -or-  
