@@ -422,6 +422,7 @@
         <summary>Gets the value of the specified column as a Boolean.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -466,6 +467,7 @@
         <summary>Gets the value of the specified column as a byte.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -518,6 +520,8 @@
         <summary>Reads a specified number of bytes from the specified column starting at a specified index and writes them to a buffer starting at a specified position in the buffer.</summary>
         <returns>The actual number of bytes read.</returns>
         <remarks>To be added.</remarks>
+
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -562,6 +566,7 @@
         <summary>Gets the value of the specified column as a single character.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -659,6 +664,7 @@
         <summary>Returns a nested data reader for the requested column.</summary>
         <returns>A data reader.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -724,6 +730,7 @@ private static void GetDataTypes(String connectionString) {
   
  ]]></format>
         </remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -767,6 +774,7 @@ private static void GetDataTypes(String connectionString) {
         <summary>Gets the value of the specified column as a <see cref="T:System.DateTime" /> object.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -851,6 +859,7 @@ private static void GetDataTypes(String connectionString) {
         <summary>Gets the value of the specified column as a <see cref="T:System.Decimal" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -993,6 +1002,7 @@ private static void GetDataTypes(String connectionString) {
         <summary>Gets the data type of the specified column.</summary>
         <returns>The data type of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -1108,11 +1118,17 @@ private static void GetDataTypes(String connectionString) {
         <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> contains the value of the specified column.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
- ## Remarks
+ ## Remarks 
+ This asynchronous method is only needed to avoid blocking the calling thread when the reader is created in sequential mode.
  
- This asynchronous method should only be used to avoid using blocking I/O when the reader is created in sequential mode.
- 
- If sequential mode isn't specificied, the data for all column values is readily available in memory immediately after ReadAsync completes. 
+ If sequential mode isn't specified, all column values should become available in memory each time ReadAsync completes, and calling the synchronous version of the method shouldn't block the calling thread.
+
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
+
  ]]></format>
         </remarks>
 
@@ -1133,7 +1149,7 @@ private static void GetDataTypes(String connectionString) {
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get_*_ methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">
           The value returned by the database doesn't match or cannot be cast to <typeparamref name="T" />.</exception>
       </Docs>
@@ -1180,11 +1196,18 @@ private static void GetDataTypes(String connectionString) {
         <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> contains the value of the specified column.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
- ## Remarks
+ ## Remarks 
+ This asynchronous method is only needed to avoid blocking the calling thread when the reader is created in sequential mode.
  
- This asynchronous method should only be used to avoid using blocking I/O when the reader is created in sequential mode.
+ If sequential mode isn't specified, all column values should become available in memory each time ReadAsync completes, and calling the synchronous version of the method shouldn't block the calling thread.
+
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
  
- If sequential mode isn't specificied, the data for all column values is readily available in memory immediately after ReadAsync completes. 
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during data retrieval.  
@@ -1204,7 +1227,7 @@ private static void GetDataTypes(String connectionString) {
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get_*_ methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">
           The value returned by the database doesn't match or cannot be cast to <typeparamref name="T" />.</exception>
       </Docs>
@@ -1249,6 +1272,7 @@ private static void GetDataTypes(String connectionString) {
         <summary>Gets the value of the specified column as a single-precision floating point number.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -1293,6 +1317,7 @@ private static void GetDataTypes(String connectionString) {
         <summary>Gets the value of the specified column as a globally unique identifier (GUID).</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -1337,6 +1362,7 @@ private static void GetDataTypes(String connectionString) {
         <summary>Gets the value of the specified column as a 16-bit signed integer.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -1405,6 +1431,7 @@ private static void GetCredits(String connectionString) {
   
  ]]></format>
         </remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -1449,6 +1476,7 @@ private static void GetCredits(String connectionString) {
         <summary>Gets the value of the specified column as a 64-bit signed integer.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -1582,6 +1610,7 @@ private static void GetCredits(String connectionString) {
         <summary>Gets the provider-specific type of the specified column.</summary>
         <returns>A provider-specific .NET type.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -1624,7 +1653,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
+        <summary>Gets the value of the specified column as an instance of a provider-specific type.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1677,7 +1706,7 @@ private static void GetCredits(String connectionString) {
       <Docs>
         <param name="values">An array of <see cref="T:System.Object" /> into which to copy the attribute columns.</param>
         <summary>Gets all provider-specific attribute columns in the collection for the current row.</summary>
-        <returns>The number of instances of <see cref="T:System.Object" /> in the array.</returns>
+        <returns>The number of instances of elements in the array.</returns>
         <remarks>To be added.</remarks>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -1718,6 +1747,7 @@ private static void GetCredits(String connectionString) {
         <returns>A <see cref="T:System.Data.DataTable" /> that describes the column metadata.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Data.Common.DbDataReader" /> is closed.</exception>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -1780,7 +1810,7 @@ private static void GetCredits(String connectionString) {
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified column isn't a binary type that supports reading with a <see cref="T:System.IO.Stream" />.</exception>
       </Docs>
     </Member>
@@ -1824,6 +1854,7 @@ private static void GetCredits(String connectionString) {
         <summary>Gets the value of the specified column as an instance of <see cref="T:System.String" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -1887,7 +1918,7 @@ private static void GetCredits(String connectionString) {
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <exception cref="T:System.InvalidCastException">The specified column isn't a text type that supports reading with a <see cref="T:System.IO.TextReader" />.</exception>
       </Docs>
     </Member>
@@ -1931,6 +1962,7 @@ private static void GetCredits(String connectionString) {
         <summary>Gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -2106,6 +2138,7 @@ private static void GetCredits(String connectionString) {
   
  ]]></format>
         </remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -2158,10 +2191,16 @@ private static void GetCredits(String connectionString) {
         <remarks>
           <format type="text/markdown"><![CDATA[
  ## Remarks
+ This asynchronous method is only needed to avoid blocking the calling thread when the reader is created in sequential mode.
  
- This asynchronous method should only be used to avoid using blocking I/O when the reader is created in sequential mode.
- 
- If sequential mode isn't specificied, the data for all column values is readily available in memory immediately after ReadAsync completes. 
+ If sequential mode isn't specified, all column values should become available in memory each time ReadAsync completes, and calling the synchronous version of the method shouldn't block the calling thread.
+
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
+
  ]]></format>
         </remarks>
 <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during the data retrieval.  
@@ -2181,7 +2220,7 @@ private static void GetCredits(String connectionString) {
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsDBNullAsync">
@@ -2224,10 +2263,17 @@ private static void GetCredits(String connectionString) {
         <remarks>
           <format type="text/markdown"><![CDATA[
  ## Remarks
+ This asynchronous method is only needed to avoid blocking the calling thread when the reader is created in sequential mode.
  
- This asynchronous method should only be used to avoid using blocking I/O when the reader is created in sequential mode.
+ If sequential mode isn't specified, all column values should become available in memory each time ReadAsync completes, and calling the synchronous version of the method shouldn't block the calling thread.
+
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
  
- If sequential mode isn't specificied, the data for all column values is readily available in memory immediately after ReadAsync completes. 
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
  ]]></format>
         </remarks>
 
@@ -2248,7 +2294,7 @@ private static void GetCredits(String connectionString) {
 -or-
   
  There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Item">
@@ -2302,7 +2348,7 @@ private static void GetCredits(String connectionString) {
         <summary>Gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
         <value>The value of the specified column.</value>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.IndexOutOfRangeException">The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount" />.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -2404,7 +2450,7 @@ private static void GetCredits(String connectionString) {
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Implements the asynchronous version of <see cref="M:System.Data.Common.DbDataReader.NextResult" />, but returns a Task synchronously, blocking the calling thread.</summary>
+        <summary>Asynchronously advances the reader to the next result when reading the results of a batch of statements.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2446,16 +2492,16 @@ private static void GetCredits(String connectionString) {
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>An asynchronous version of <see cref="M:System.Data.Common.DbDataReader.NextResult" />, which advances the reader to the next result when reading the results of a batch of statements.  
-  
- Invokes <see cref="M:System.Data.Common.DbDataReader.NextResultAsync(System.Threading.CancellationToken)" /> with CancellationToken.None.</summary>
-        <returns>A task representing the asynchronous operation.</returns>
+        <summary>Asynchronously advances the reader to the next result when reading the results of a batch of statements.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is <see langword="true" /> if there are more result sets or <see langword="false" /> if there aren't.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
-  
 ## Remarks  
- For more information about asynchronous programming, see [Asynchronous Programming](~/docs/framework/data/adonet/asynchronous-programming.md).  
-  
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
  ]]></format>
         </remarks>
         <exception cref="T:System.Data.Common.DbException">An error occurred while executing the command text.</exception>
@@ -2494,18 +2540,18 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="cancellationToken">The cancellation instruction.</param>
-        <summary>This is the asynchronous version of <see cref="M:System.Data.Common.DbDataReader.NextResult" />. Providers should override with an appropriate implementation. The <paramref name="cancellationToken" /> may optionally be ignored.  
-  
- The default implementation invokes the synchronous <see cref="M:System.Data.Common.DbDataReader.NextResult" /> method and returns a completed task, blocking the calling thread. The default implementation will return a cancelled task if passed an already cancelled <paramref name="cancellationToken" />. Exceptions thrown by <see cref="M:System.Data.Common.DbDataReader.NextResult" /> will be communicated via the returned Task Exception property.  
-  
- Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.</summary>
-        <returns>A task representing the asynchronous operation.</returns>
+        <summary>Asynchronously advances the reader to the next result when reading the results of a batch of statements.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is <see langword="true" /> if there are more result sets or <see langword="false" /> if there aren't.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
-  
 ## Remarks  
- For more information about asynchronous programming, see [Asynchronous Programming](~/docs/framework/data/adonet/asynchronous-programming.md).  
-  
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
+ 
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
  ]]></format>
         </remarks>
         <exception cref="T:System.Data.Common.DbException">An error occurred while executing the command text.</exception>
@@ -2566,7 +2612,7 @@ private static void GetCredits(String connectionString) {
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Implements the asynchronous version of <see cref="M:System.Data.Common.DbDataReader.Read" />, but returns a Task synchronously, blocking the calling thread.</summary>
+        <summary>Asynchronously advances the reader to the next record in a result set.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2608,14 +2654,17 @@ private static void GetCredits(String connectionString) {
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>An asynchronous version of <see cref="M:System.Data.Common.DbDataReader.Read" />, which advances the reader to the next record in a result set. This method invokes <see cref="M:System.Data.Common.DbDataReader.ReadAsync(System.Threading.CancellationToken)" /> with CancellationToken.None.</summary>
-        <returns>A task representing the asynchronous operation.</returns>
+        <summary>Asynchronously advances the reader to the next record in a result set.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is <see langword="true" /> if there are more rows or <see langword="false" /> if there aren't.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
-  
 ## Remarks  
- For more information about asynchronous programming, see [Asynchronous Programming](~/docs/framework/data/adonet/asynchronous-programming.md).  
-  
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ 
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.Data.Common.DbException">An error occurred while executing the command text.</exception>
@@ -2654,18 +2703,19 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="cancellationToken">The cancellation instruction.</param>
-        <summary>This is the asynchronous version of <see cref="M:System.Data.Common.DbDataReader.Read" />.  Providers should override with an appropriate implementation. The cancellationToken may optionally be ignored.  
-  
- The default implementation invokes the synchronous <see cref="M:System.Data.Common.DbDataReader.Read" /> method and returns a completed task, blocking the calling thread. The default implementation will return a cancelled task if passed an already cancelled cancellationToken.  Exceptions thrown by Read will be communicated via the returned Task Exception property.  
-  
- Do not invoke other methods and properties of the <see langword="DbDataReader" /> object until the returned Task is complete.</summary>
-        <returns>A task representing the asynchronous operation.</returns>
+        <summary>Asynchronously advances the reader to the next record in a result set.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is <see langword="true" /> if there are more rows or <see langword="false" /> if there aren't.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
-  
 ## Remarks  
- For more information about asynchronous programming, see [Asynchronous Programming](~/docs/framework/data/adonet/asynchronous-programming.md).  
-  
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
+ 
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.Data.Common.DbException">An error occurred while executing the command text.</exception>

@@ -43,6 +43,7 @@
         <summary>Gets the value of the specified column as a Boolean.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -72,6 +73,7 @@
         <summary>Gets the value of the specified column as a byte.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -109,6 +111,7 @@
         <summary>Reads a specified number of bytes from the specified column starting at a specified index and writes them to a buffer starting at a specified position in the buffer.</summary>
         <returns>The actual number of bytes read.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -138,7 +141,8 @@
         <summary>Gets the value of the specified column as a single character.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
+	<exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -175,6 +179,7 @@
         <summary>Reads a specified number of characters from a specified column starting at a specified index, and writes them to a buffer starting at a specified position.</summary>
         <returns>The actual number of characters read.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -208,6 +213,7 @@
         <summary>Returns a nested data reader for the requested column.</summary>
         <returns>A data reader.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -236,6 +242,7 @@
         <summary>Gets name of the data type of the specified column.</summary>
         <returns>The name of the data type.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -264,7 +271,8 @@
         <summary>Gets the value of the specified column as a <see cref="T:System.DateTime" /> object.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
+	<exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -293,6 +301,7 @@
         <summary>Gets the value of the specified column as a <see cref="T:System.Decimal" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -323,6 +332,7 @@
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -351,6 +361,7 @@
         <summary>Gets the data type of the specified column.</summary>
         <returns>The data type of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -435,11 +446,18 @@
         <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> contains the value of the specified column.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
- ## Remarks
+## Remarks
+ This asynchronous method is only needed to avoid blocking the calling thread when the reader is created in sequential mode.
  
- This asynchronous method should only be used to avoid using blocking I/O when the reader is created in sequential mode.
+ If sequential mode isn't specified, all column values should become available in memory each time ReadAsync completes, and calling the synchronous version of the method shouldn't block the calling thread.
+
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
  
- If sequential mode isn't specificied, the data for all column values is readily available in memory immediately after ReadAsync completes. 
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during data retrieval.  
@@ -459,9 +477,8 @@
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get_*_ methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
-        <exception cref="T:System.InvalidCastException">
-          The value returned by the database doesn't match or cannot be cast to <typeparamref name="T" />.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
+        <exception cref="T:System.InvalidCastException">The value returned by the database doesn't match or cannot be cast to <typeparamref name="T" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetFloat">
@@ -489,6 +506,7 @@
         <summary>Gets the value of the specified column as a single-precision floating point number.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -518,6 +536,7 @@
         <summary>Gets the value of the specified column as a globally unique identifier (GUID).</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -547,6 +566,7 @@
         <summary>Gets the value of the specified column as a 16-bit signed integer.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -576,6 +596,7 @@
         <summary>Gets the value of the specified column as a 32-bit signed integer.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -605,6 +626,7 @@
         <summary>Gets the value of the specified column as a 64-bit signed integer.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -639,6 +661,7 @@
         <summary>Gets the provider-specific type of the specified column.</summary>
         <returns>A provider-specific .NET type.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -669,10 +692,11 @@
       <Docs>
         <param name="reader">The data reader to get the column value from.</param>
         <param name="name">The name of the column.</param>
-        <summary>Gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
+        <summary>Gets the value of the specified column as an instance of a provider-specific type.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
+	<exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -724,7 +748,7 @@
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified column isn't a binary type that supports reading with a <see cref="T:System.IO.Stream" />.</exception>
       </Docs>
     </Member>
@@ -753,6 +777,7 @@
         <summary>Gets the value of the specified column as an instance of <see cref="T:System.String" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
@@ -805,7 +830,7 @@
 -or-
 
  There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <exception cref="T:System.InvalidCastException">The specified column isn't a text type that supports reading with a <see cref="T:System.IO.TextReader" />.</exception>
 
       </Docs>
@@ -835,6 +860,7 @@
         <summary>Gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -871,6 +897,7 @@
   
  ]]></format>
         </remarks>
+	<exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -902,10 +929,19 @@
         <remarks>
           <format type="text/markdown"><![CDATA[
  ## Remarks
+ ## Remarks
+ This asynchronous method is only needed to avoid blocking the calling thread when the reader is created in sequential mode.
  
- This asynchronous method should only be used to avoid using blocking I/O when the reader is created in sequential mode.
+ If sequential mode isn't specified, all column values should become available in memory each time ReadAsync completes, and calling the synchronous version of the method shouldn't block the calling thread.
+
+ The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
+
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
  
- If sequential mode isn't specificied, the data for all column values is readily available in memory immediately after ReadAsync completes. 
+ Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The connection was dropped or closed during the data retrieval.  
@@ -925,7 +961,7 @@
 -or-
   
  There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
-        <exception cref="T:System.IndexOutOfRangeException">Trying to read a column that does not exist.</exception>
+        <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
       </Docs>
     </Member>
   </Members>
