@@ -191,7 +191,7 @@
   
 -   The <xref:System.Text.StringBuilder.AppendLine%2A> method appends a line terminator or a string along with a line terminator to a <xref:System.Text.StringBuilder> object.  
   
--   The <xref:System.Text.StringBuilder.AppendFormat%2A> method appends a  to a <xref:System.Text.StringBuilder> object. The string representations of objects included in the result string can reflect the formatting conventions of the current system culture or a specified culture.  
+-   The <xref:System.Text.StringBuilder.AppendFormat%2A> method appends a [composite format string](~/docs/standard/base-types/composite-formatting.md) to a <xref:System.Text.StringBuilder> object. The string representations of objects included in the result string can reflect the formatting conventions of the current system culture or a specified culture.  
   
 -   The <xref:System.Text.StringBuilder.Insert%2A> method inserts a string, a substring, multiple repetitions of a string, a character array, a portion of a character array, or the string representation of a primitive data type at a specified position in the <xref:System.Text.StringBuilder> object. The position is defined by a zero-based index.  
   
@@ -1340,9 +1340,9 @@
         <Parameter Name="value" Type="System.ReadOnlyMemory&lt;System.Char&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The read-only character memory region to append.</param>
+        <summary>Appends the string representation of a specified read-only character memory region to this instance.</summary>
+        <returns>A reference to this instance after the append operation is completed.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1372,9 +1372,9 @@
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The read-only character span to append.</param>
+        <summary>Appends the string representation of a specified read-only character span to this instance.</summary>
+        <returns>A reference to this instance after the append operation is completed.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1597,9 +1597,9 @@
         <Parameter Name="value" Type="System.Text.StringBuilder" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The string builder to append.</param>
+        <summary>Appends the string representation of a specified string builder to this instance.</summary>
+        <returns>A reference to this instance after the append operation is completed.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2141,11 +2141,11 @@
         <Parameter Name="count" Type="System.Int32" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="startIndex">To be added.</param>
-        <param name="count">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The string builder that contains the substring to append.</param>
+        <param name="startIndex">The starting position of the substring within <paramref name="value" />.</param>
+        <param name="count">The number of characters in <paramref name="value" /> to append.</param>
+        <summary>Appends a copy of a substring within a specified string builder to this instance.</summary>
+        <returns>A reference to this instance after the append operation has completed.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3925,9 +3925,40 @@ The `Equals` method performs an ordinal comparison to determine whether the char
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns an object that can be used to iterate through the chunks of characters represented in a <see langword="ReadOnlyMemory&lt;Char&gt;" /> created from this <see cref="T:System.Text.StringBuilder" /> instance.</summary>
+        <returns>An enumerator for the chunks in the <see langword="ReadOnlyMemory&lt;Char&gt;" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+You can iterate the chunks in the memory range with code like the following: 
+
+```csharp
+foreach (ReadOnlyMemory<char> chunk in sb.GetChunks())
+    foreach(char ch in chunk.Span)
+        { /* operations on ch */ }
+```
+            
+The purpose of this method is to efficiently extract the data of a *constant* <xref:System.Text.StringBuilder>. If the <xref:System.Text.StringBuilder> is modified while the chunk enumeration is incomplete, the result is undefined. <xref:System.Text.StringBuilder> is also not thread-safe, so operating on it with concurrent threads is illegal.
+
+The <xref:System.ReadOnlyMemory%601> chunks returned are not guaranteed to remain unchanged if the <xref:System.Text.StringBuilder> is modified, so do not cache them for later use.
+             
+Creating a <xref:System.ReadOnlySpan%601> from a <xref:System.ReadOnlyMemory%601> (as the <xref:System.ReadOnlyMemory%601.Span?displayProperty=nameWithType> method does in the previous example, is expensive, so create a local variable for the span if you need to use it in a nested `for` statement. For example: 
+
+```csharp
+foreach (ReadOnlyMemory<char> chunk in sb.GetChunks())
+{
+    var span = chunk.Span;
+    for(int i = 0; i < span.Length; i++)
+    { 
+        /* operations on span[i] */ 
+    }
+}
+```
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="Insert">

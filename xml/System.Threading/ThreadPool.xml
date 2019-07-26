@@ -212,6 +212,39 @@
         <permission cref="T:System.Security.Permissions.SecurityPermission">for the ability to call unmanaged code. Associated enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode" />.</permission>
       </Docs>
     </Member>
+    <Member MemberName="CompletedWorkItemCount">
+      <MemberSignature Language="C#" Value="public static long CompletedWorkItemCount { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property int64 CompletedWorkItemCount" />
+      <MemberSignature Language="DocId" Value="P:System.Threading.ThreadPool.CompletedWorkItemCount" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property CompletedWorkItemCount As Long" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property long CompletedWorkItemCount { long get(); };" />
+      <MemberSignature Language="F#" Value="member this.CompletedWorkItemCount : int64" Usage="System.Threading.ThreadPool.CompletedWorkItemCount" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading.ThreadPool</AssemblyName>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the number of work items that have been processed so far.</summary>
+        <value>The number of work items that have been processed so far.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If a thread pool implementation may have different types of work items, the count includes all types.
+
+        ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="GetAvailableThreads">
       <MemberSignature Language="C#" Value="public static void GetAvailableThreads (out int workerThreads, out int completionPortThreads);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void GetAvailableThreads([out] int32&amp; workerThreads, [out] int32&amp; completionPortThreads) cil managed" />
@@ -413,6 +446,39 @@
         <altmember cref="M:System.Threading.ThreadPool.GetAvailableThreads(System.Int32@,System.Int32@)" />
       </Docs>
     </Member>
+    <Member MemberName="PendingWorkItemCount">
+      <MemberSignature Language="C#" Value="public static long PendingWorkItemCount { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property int64 PendingWorkItemCount" />
+      <MemberSignature Language="DocId" Value="P:System.Threading.ThreadPool.PendingWorkItemCount" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property PendingWorkItemCount As Long" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property long PendingWorkItemCount { long get(); };" />
+      <MemberSignature Language="F#" Value="member this.PendingWorkItemCount : int64" Usage="System.Threading.ThreadPool.PendingWorkItemCount" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading.ThreadPool</AssemblyName>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the number of work items that are currently queued to be processed.</summary>
+        <value>The number of work items that are currently queued to be processed.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If a thread pool implementation may have different types of work items, the count includes all types that can be tracked, which may only be the user work items, including tasks. Some implementations may also include queued timer and wait callbacks in the count. On Windows, the count is unlikely to include the number of pending IO completions, because they are posted directly to an IO completion port.
+
+        ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
     <MemberGroup MemberName="QueueUserWorkItem">
       <AssemblyInfo>
         <AssemblyName>System.Threading.ThreadPool</AssemblyName>
@@ -603,7 +669,7 @@
         <typeparam name="TState">The type of elements of <paramref name="state" />.</typeparam>
         <param name="callBack">An <see cref="T:System.Action`1" /> representing the method to execute.</param>
         <param name="state">An object containing data to be used by the method.</param>
-        <param name="preferLocal">Unlike other QueueUserWorkItem methods, prefer exeucting in the local thread pool and not the global thread pool.</param>
+        <param name="preferLocal"><see langword="true" /> to prefer queueing the work item in a queue close to the current thread; <see langword="false" /> to prefer queueing the work item to the thread pool's shared queue.</param>
         <summary>Queues a method specified by an <see cref="T:System.Action`1" /> delegate for execution, and provides data to be used by the method. The method executes when a thread pool thread becomes available.</summary>
         <returns>
           <see langword="true" /> if the method is successfully queued; <see cref="T:System.NotSupportedException" /> is thrown if the work item could not be queued.
@@ -686,7 +752,7 @@
  The <xref:System.Threading.ThreadPool.RegisterWaitForSingleObject%2A> method checks the current state of the specified object's <xref:System.Threading.WaitHandle>. If the object's state is unsignaled, the method registers a wait operation. The wait operation is performed by a thread from the thread pool. The delegate is executed by a worker thread when the object's state becomes signaled or the time-out interval elapses. If the `timeOutInterval` parameter is not 0 (zero) and the `executeOnlyOnce` parameter is `false`, the timer is reset every time the event is signaled or the time-out interval elapses.  
   
 > [!IMPORTANT]
->  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Win32 API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.  
+>  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.  
   
  To cancel the wait operation, call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method.  
   
@@ -768,7 +834,7 @@
  The <xref:System.Threading.ThreadPool.RegisterWaitForSingleObject%2A> method checks the current state of the specified object's <xref:System.Threading.WaitHandle>. If the object's state is unsignaled, the method registers a wait operation. The wait operation is performed by a thread from the thread pool. The delegate is executed by a worker thread when the object's state becomes signaled or the time-out interval elapses. If the `timeOutInterval` parameter is not 0 (zero) and the `executeOnlyOnce` parameter is `false`, the timer is reset every time the event is signaled or the time-out interval elapses.  
   
 > [!IMPORTANT]
->  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Win32 API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.  
+>  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.  
   
  To cancel the wait operation, call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method.  
   
@@ -850,7 +916,7 @@
  The <xref:System.Threading.ThreadPool.RegisterWaitForSingleObject%2A> method checks the current state of the specified object's <xref:System.Threading.WaitHandle>. If the object's state is unsignaled, the method registers a wait operation. The wait operation is performed by a thread from the thread pool. The delegate is executed by a worker thread when the object's state becomes signaled or the time-out interval elapses. If the `timeOutInterval` parameter is not 0 (zero) and the `executeOnlyOnce` parameter is `false`, the timer is reset every time the event is signaled or the time-out interval elapses.  
   
 > [!IMPORTANT]
->  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Win32 API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.  
+>  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.  
   
  To cancel the wait operation, call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method.  
   
@@ -936,7 +1002,7 @@
  The <xref:System.Threading.ThreadPool.RegisterWaitForSingleObject%2A> method checks the current state of the specified object's <xref:System.Threading.WaitHandle>. If the object's state is unsignaled, the method registers a wait operation. The wait operation is performed by a thread from the thread pool. The delegate is executed by a worker thread when the object's state becomes signaled or the time-out interval elapses. If the `timeOutInterval` parameter is not 0 (zero) and the `executeOnlyOnce` parameter is `false`, the timer is reset every time the event is signaled or the time-out interval elapses.  
   
 > [!IMPORTANT]
->  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Win32 API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.  
+>  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.  
   
  To cancel the wait operation, call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method.  
   
@@ -1085,7 +1151,7 @@
  If you specify a negative number or a number larger than the maximum number of active thread pool threads (obtained using <xref:System.Threading.ThreadPool.GetMaxThreads%2A>), <xref:System.Threading.ThreadPool.SetMinThreads%2A> returns `false` and does not change either of the minimum values.  
   
 > [!CAUTION]
->  By default, the minimum number of threads is set to the number of processors on a system. You can use the <xref:System.Threading.ThreadPool.SetMinThreads%2A> method to increase the minimum number ofthreads. However, unnecessarily increasing these values can cause performance problems. If too many tasks start at the same time, all of them might appear to be slow. In most cases, the thread pool will perform better with its own algorithm for allocating threads. Reducing the minimum to less than the number of processors can also hurt performance.  
+>  By default, the minimum number of threads is set to the number of processors on a system. You can use the <xref:System.Threading.ThreadPool.SetMinThreads%2A> method to increase the minimum number of threads. However, unnecessarily increasing these values can cause performance problems. If too many tasks start at the same time, all of them might appear to be slow. In most cases, the thread pool will perform better with its own algorithm for allocating threads. Reducing the minimum to less than the number of processors can also hurt performance.  
   
    
   
@@ -1102,6 +1168,39 @@
         <altmember cref="M:System.Threading.ThreadPool.GetMinThreads(System.Int32@,System.Int32@)" />
         <altmember cref="M:System.Threading.ThreadPool.GetMaxThreads(System.Int32@,System.Int32@)" />
         <altmember cref="M:System.Threading.ThreadPool.GetAvailableThreads(System.Int32@,System.Int32@)" />
+      </Docs>
+    </Member>
+    <Member MemberName="ThreadCount">
+      <MemberSignature Language="C#" Value="public static int ThreadCount { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property int32 ThreadCount" />
+      <MemberSignature Language="DocId" Value="P:System.Threading.ThreadPool.ThreadCount" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property ThreadCount As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property int ThreadCount { int get(); };" />
+      <MemberSignature Language="F#" Value="member this.ThreadCount : int" Usage="System.Threading.ThreadPool.ThreadCount" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading.ThreadPool</AssemblyName>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the number of thread pool threads that currently exist.</summary>
+        <value>The number of thread pool threads that currently exist.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If a thread pool implementation may have different types of threads, the count includes all types.
+
+        ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="UnsafeQueueNativeOverlapped">
@@ -1186,11 +1285,22 @@
         <Parameter Name="preferLocal" Type="System.Boolean" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="callBack">To be added.</param>
-        <param name="preferLocal">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="callBack">The work item to invoke when a thread in the thread pool picks up the work item.</param>
+        <param name="preferLocal"><see langword="true" /> to prefer queueing the work item in a queue close to the current thread; <see langword="false" /> to prefer queueing the work item to the thread pool's shared queue.</param>
+        <summary>Queues the specified work item object to the thread pool.</summary>
+        <returns><see langword="true" /> if the method succeeds; <see cref="T:System.OutOfMemoryException" /> is thrown if the work item could not be queued.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The thread pool will invoke the work item's <xref:System.Threading.IThreadPoolWorkItem.Execute> method. It is the responsibility of that work item to propagate <xref:System.Threading.ExecutionContext> if it's needed; the thread pool will not do so.
+
+         ]]></format>
+       </remarks>
+         <exception cref="T:System.ArgumentNullException"><paramref name="callback" /> is <see langword="null" />.</exception>
+         <exception cref="T:System.ArgumentOutOfRangeException">The work item is a <see cref="T:System.Threading.Tasks.Task" />.</exception>
+         <exception cref="T:System.OutOfMemoryException">The work item could not be queued.</exception>
       </Docs>
     </Member>
     <Member MemberName="UnsafeQueueUserWorkItem">
@@ -1289,11 +1399,13 @@
         <typeparam name="TState">The type of elements of <paramref name="state" />.</typeparam>
         <param name="callBack">A delegate representing the method to execute.</param>
         <param name="state">An object containing data to be used by the method.</param>
-        <param name="preferLocal">`true` to execute in the local threadpool; `false` to execute in the global thread pool.</param>
+        <param name="preferLocal"><see langword="true" /> to prefer queueing the work item in a queue close to the current thread; <see langword="false" /> to prefer queueing the work item to the thread pool's shared queue.</param>
         <summary>Queues a method specified by an <see cref="T:System.Action`1" /> delegate for execution, and specifies an object containing data to be used by the method. The method executes when a thread pool thread becomes available.</summary>
         <returns>
           <see langword="true" /> if the method is successfully queued; <see cref="T:System.NotSupportedException" /> is thrown if the work item could not be queued.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="callback" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.NotSupportedException">The work item could not be queued.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="UnsafeRegisterWaitForSingleObject">
@@ -1364,7 +1476,7 @@
 > [!CAUTION]
 >  Using <xref:System.Threading.ThreadPool.UnsafeRegisterWaitForSingleObject%2A> could inadvertently open up a security hole. Code access security bases its permission checks on the permissions of all the callers on the stack. When work is queued on a thread pool thread using <xref:System.Threading.ThreadPool.UnsafeRegisterWaitForSingleObject%2A>, the stack of the thread pool thread will not have the context of the actual callers. Malicious code might be able exploit this to avoid permission checks.  
   
- Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Win32 API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread.  
+ Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread.  
   
  When you are finished using the <xref:System.Threading.RegisteredWaitHandle> that is returned by this method, call its <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method to release references to the wait handle. We recommend that you always call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method, even if you specify `true` for `executeOnlyOnce`. Garbage collection works more efficiently if you call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method instead of depending on the registered wait handle's finalizer.  
   
@@ -1434,7 +1546,7 @@
 > [!CAUTION]
 >  Using <xref:System.Threading.ThreadPool.UnsafeRegisterWaitForSingleObject%2A> could inadvertently open up a security hole. Code access security bases its permission checks on the permissions of all the callers on the stack. When work is queued on a thread pool thread using <xref:System.Threading.ThreadPool.UnsafeRegisterWaitForSingleObject%2A>, the stack of the thread pool thread will not have the context of the actual callers. Malicious code might be able exploit this to avoid permission checks.  
   
- Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Win32 API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread.  
+ Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread.  
   
  When you are finished using the <xref:System.Threading.RegisteredWaitHandle> that is returned by this method, call its <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method to release references to the wait handle. We recommend that you always call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method, even if you specify `true` for `executeOnlyOnce`. Garbage collection works more efficiently if you call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method instead of depending on the registered wait handle's finalizer.  
   
@@ -1504,7 +1616,7 @@
 > [!CAUTION]
 >  Using <xref:System.Threading.ThreadPool.UnsafeRegisterWaitForSingleObject%2A> could inadvertently open up a security hole. Code access security bases its permission checks on the permissions of all the callers on the stack. When work is queued on a thread pool thread using <xref:System.Threading.ThreadPool.UnsafeRegisterWaitForSingleObject%2A>, the stack of the thread pool thread will not have the context of the actual callers. Malicious code might be able exploit this to avoid permission checks.  
   
- Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Win32 API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread.  
+ Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread.  
   
  When you are finished using the <xref:System.Threading.RegisteredWaitHandle> that is returned by this method, call its <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method to release references to the wait handle. We recommend that you always call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method, even if you specify `true` for `executeOnlyOnce`. Garbage collection works more efficiently if you call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method instead of depending on the registered wait handle's finalizer.  
   
@@ -1578,7 +1690,7 @@
 > [!CAUTION]
 >  Using <xref:System.Threading.ThreadPool.UnsafeRegisterWaitForSingleObject%2A> could inadvertently open up a security hole. Code access security bases its permission checks on the permissions of all the callers on the stack. When work is queued on a thread pool thread using <xref:System.Threading.ThreadPool.UnsafeRegisterWaitForSingleObject%2A>, the stack of the thread pool thread will not have the context of the actual callers. Malicious code might be able exploit this to avoid permission checks.  
   
- Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Win32 API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread.  
+ Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread.  
   
  When you are finished using the <xref:System.Threading.RegisteredWaitHandle> that is returned by this method, call its <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method to release references to the wait handle. We recommend that you always call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method, even if you specify `true` for `executeOnlyOnce`. Garbage collection works more efficiently if you call the <xref:System.Threading.RegisteredWaitHandle.Unregister%2A?displayProperty=nameWithType> method instead of depending on the registered wait handle's finalizer.  
   

@@ -246,6 +246,9 @@
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName>System.Security.SecuritySafeCritical</AttributeName>
         </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Diagnostics.CodeAnalysis.DoesNotReturn</AttributeName>
+        </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -492,6 +495,9 @@ goto :EOF
         <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netframework-4.8;netcore-2.0;dotnet-uwp-10.0">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Diagnostics.CodeAnalysis.DoesNotReturn</AttributeName>
+        </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -506,15 +512,15 @@ goto :EOF
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This method terminates a process without running any active `try`/`finally` blocks or finalizers.  
+ This method terminates a process without running any active `try`/`finally` blocks or finalizers.
   
- The <xref:System.Environment.FailFast%2A> method writes the `message` string to the Windows Application event log, creates a dump of your application, and then terminates the current process. The `message` string is also included in error reporting to Microsoft.  
+ The `Environment.FailFast` method writes the `message` string to the Windows Application event log, creates a dump of your application, and then terminates the current process. The `message` string is also included in error reporting to Microsoft.  
   
- Use the <xref:System.Environment.FailFast%2A> method instead of the <xref:System.Environment.Exit%2A> method to terminate your application if the state of your application is damaged beyond repair, and executing your application's `try`/`finally` blocks and finalizers will corrupt program resources.  
+ Use the `Environment.FailFast` method instead of the <xref:System.Environment.Exit%2A> method to terminate your application if the state of your application is damaged beyond repair, and executing your application's `try`/`finally` blocks and finalizers will corrupt program resources.  
   
  Information is reported to Microsoft by using Windows Error Reporting. For more information, see [Windows Error Reporting: Getting Started](https://msdn.microsoft.com/library/windows/hardware/dn641144.aspx).  
-  
-   
+
+Calling the `Environment.FailFast` method to terminate execution of an application running in the Visual Studio debugger throws an <xref:System.ExecutionEngineException> and automatically triggers the [fatalExecutionEngineError managed debugging assistant (MDA)](https://github.com/dotnet/docs/blob/master/docs/framework/debug-trace-profile/fatalexecutionengineerror-mda.md).
   
 ## Examples  
  The following example writes a log entry to the Windows Application event log and terminates the current process.  
@@ -556,6 +562,9 @@ goto :EOF
         <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.0;dotnet-uwp-10.0">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
+        <Attribute FrameworkAlternate="netcore-3.0">
+          <AttributeName>System.Diagnostics.CodeAnalysis.DoesNotReturn</AttributeName>
+        </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -574,13 +583,15 @@ goto :EOF
 ## Remarks  
  This method terminates the process without running any active `try`/`finally` blocks or finalizers.  
   
- The <xref:System.Environment.FailFast%2A> method writes the `message` string to the Windows Application event log, creates a dump of your application, and then terminates the current process.  
+ The `Environment.FailFast` method writes the `message` string to the Windows Application event log, creates a dump of your application, and then terminates the current process.  
   
  Information is reported to Microsoft by using Windows Error Reporting. For more information, see [Windows Error Reporting: Getting Started](https://msdn.microsoft.com/library/windows/hardware/dn641144.aspx). Error reporting to Microsoft includes `message` and `exception` information, which provides details used to classify the error. Although `exception` is not handled because the process is terminated, the contextual information that raised the exception is still obtained.  
   
  If `exception` is `null`, or if `exception` is not thrown, this method operates the same as the <xref:System.Environment.FailFast%28System.String%29> method overload.  
   
- Use the <xref:System.Environment.FailFast%2A> method instead of the <xref:System.Environment.Exit%2A> method to terminate your application if the state of your application is damaged beyond repair, and executing your application's `try`/`finally` blocks and finalizers will corrupt program resources.  
+ Use the `Environment.FailFast` method instead of the <xref:System.Environment.Exit%2A> method to terminate your application if the state of your application is damaged beyond repair, and executing your application's `try`/`finally` blocks and finalizers will corrupt program resources.  
+
+Calling the `Environment.FailFast` method to terminate execution of an application running in the Visual Studio debugger throws an <xref:System.ExecutionEngineException> and automatically triggers the [fatalExecutionEngineError managed debugging assistant (MDA)](https://github.com/dotnet/docs/blob/master/docs/framework/debug-trace-profile/fatalexecutionengineerror-mda.md).
   
  ]]></format>
         </remarks>
@@ -761,8 +772,8 @@ On macOS and Linux, the environment block of the current proccess includes the f
   
  The following example attempts to retrieve the value of an environment variable named `Test1` from the process environment block. If the variable doesn't exist, the example creates its and retrieves its value. The example displays the value of the variable. If the example created the variable, it also calls the <xref:System.Environment.GetEnvironmentVariables%28System.EnvironmentVariableTarget%29> method with each member of the <xref:System.EnvironmentVariableTarget> enumeration to establish that the variable can be retrieved only from the current process environment block. Finally, if the example created the variable, it deletes it.  
   
- [!code-csharp[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/cs/getenvironmentvariableex1.cs#2)]
- [!code-vb[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/vb/getenvironmentvariableex1.vb#2)]  
+ [!code-csharp[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/cs/getenvironmentvariableex1.cs)]
+ [!code-vb[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/vb/getenvironmentvariableex1.vb)]  
   
  ]]></format>
         </remarks>
@@ -813,7 +824,7 @@ On macOS and Linux, the environment block of the current proccess includes the f
       </Parameters>
       <Docs>
         <param name="variable">The name of an environment variable.</param>
-        <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values.</param>
+        <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values. Only <see cref="F:System.EnvironmentVariableTarget.Process" /> is supported on .NET Core running on Unix-bases systems.</param>
         <summary>Retrieves the value of an environment variable from the current process or from the Windows operating system registry key for the current user or local machine.</summary>
         <returns>The value of the environment variable specified by the <paramref name="variable" /> and <paramref name="target" /> parameters, or <see langword="null" /> if the environment variable is not found.</returns>
         <remarks>
@@ -839,12 +850,12 @@ Per-process environment variables are:
 
 - Those defined by calling either the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%29> method or the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> method with a `target` value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>. These environment variables persist only until the `dotnet` process or the .NET application terminates.   
   
-## Examples  
- The following example creates environment variables for the Process, User, and Machine targets, checks whether the operating system registry contains the User and Machine environment variables, then deletes the environment variables.  
-  
- [!code-cpp[environment.getsetenvar#1](~/samples/snippets/cpp/VS_Snippets_CLR/environment.getsetenvar/CPP/source.cpp#1)]
- [!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs#1)]
- [!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb#1)]  
+## Examples
+
+The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-based systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
+
+[!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs)]
+[!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb)]  
   
  ]]></format>
         </remarks>
@@ -921,7 +932,7 @@ Per-process environment variables are:
   
 ### On Windows systems
 
-On Windows systems, the `GetEnvironmentVariables` method returns the following environment variabless:
+On Windows systems, the `GetEnvironmentVariables` method returns the following environment variables:
   
 - All per-machine environment variables that are defined at the time the process is created, along with their values.  
   
@@ -933,7 +944,7 @@ On Windows systems, the `GetEnvironmentVariables` method returns the following e
 
 On MacOS and Linux, the `GetEnvironmentVariables` method retrieves the name and value of all environment variables that are inherited from the parent process that launched the `dotnet` process or that are defined within the scope of the `dotnet` process itself. Once the `dotnet` process ends, these latter environment variables cease to exist. 
 
-.NET Core does not support per-machine or per-user environment variables.   
+.NET Core running on Unix-based systems does not support per-machine or per-user environment variables.   
   
 ## Examples  
  The following example demonstrates the <xref:System.Environment.GetEnvironmentVariables%2A> method.  
@@ -986,7 +997,7 @@ On MacOS and Linux, the `GetEnvironmentVariables` method retrieves the name and 
         <Parameter Name="target" Type="System.EnvironmentVariableTarget" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values.</param>
+        <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values. Only <see cxref="F:System.EnvironmentVariableTarget.Process" /> is supported on .NET Core running on Unix-based systems. </param>
         <summary>Retrieves all environment variable names and their values from the current process, or from the Windows operating system registry key for the current user or local machine.</summary>
         <returns>A dictionary that contains all environment variable names and their values from the source specified by the <paramref name="target" /> parameter; otherwise, an empty dictionary if no environment variables are found.</returns>
         <remarks>
@@ -1006,12 +1017,12 @@ On macOS and Linux, only a `target` value of <xref:System.EnvironmentVariableTar
 
 Per-machine and per-user environment variables are not supported. A `target` value of <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType> or <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> returns an empty array.
   
-## Examples  
- The following example creates environment variables for the Process, User, and Machine targets, checks whether the operating system registry contains the User and Machine environment variables, then deletes the environment variables.  
-  
- [!code-cpp[environment.getsetenvar#1](~/samples/snippets/cpp/VS_Snippets_CLR/environment.getsetenvar/CPP/source.cpp#1)]
- [!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs#1)]
- [!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb#1)]  
+## Examples
+
+The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-based systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
+
+[!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs)]
+[!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb)]  
   
  ]]></format>
         </remarks>
@@ -1267,7 +1278,7 @@ Per-machine and per-user environment variables are not supported. A `target` val
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- When the CLR unloads an application domain, it runs the finalizers on all objects that have a finalizer method in that application domain. When the CLR shuts down, it starts the finalizer thread on all objects that have a finalizer method. The <xref:System.Environment.HasShutdownStarted%2A> property returns `true` only after the finalizer thread has been started. When the property returns `true`, you can determine whether an application domain is being unloaded or the CLR itself is shutting down by calling the <xref:System.AppDomain.IsFinalizingForUnload%2A?displayProperty=nameWithType> method. This method returns `true` if finalizers are called because the application domain is unloading or `false` if the CLR is shutting down.  
+ **.NET Framework only**: When the CLR unloads an application domain, it runs the finalizers on all objects that have a finalizer method in that application domain. When the CLR shuts down, it starts the finalizer thread on all objects that have a finalizer method. The <xref:System.Environment.HasShutdownStarted%2A> property returns `true` only after the finalizer thread has been started. When the property returns `true`, you can determine whether an application domain is being unloaded or the CLR itself is shutting down by calling the <xref:System.AppDomain.IsFinalizingForUnload%2A?displayProperty=nameWithType> method. This method returns `true` if finalizers are called because the application domain is unloading or `false` if the CLR is shutting down.  
   
  The <xref:System.Environment.HasShutdownStarted%2A> property returns `false` if the finalizer thread has not been started.  
   
@@ -1652,24 +1663,12 @@ The `Environment.OSVersion` property does not provide a reliable way to identify
   
 -   It consists of a single character whose value is U+0000.  
   
-   
+## Examples
+
+The following example attempts to retrieve the value of an environment variable named `Test1` from the process environment block. If the variable doesn't exist, the example creates the variable and retrieves its value. The example displays the value of the variable. For .NET implementations running on Windows systems, it also calls the <xref:System.Environment.GetEnvironmentVariables%28System.EnvironmentVariableTarget%29> method with each member of the <xref:System.EnvironmentVariableTarget> enumeration to establish that the variable can be retrieved only from the current process environment block. (.NET implementations on Unix-based systems only support variables in the process environment block.) Finally, if the example created the variable, it deletes it.  
   
-## Examples  
- The following example tests whether an environment variable named `APPDOMAIN` exists in the current process. If it does not, it creates it and sets its value to "True". If the value of the `APPDOMAIN` environment variable is "True", it calls the `Message.Display` method in a new application domain. Otherwise, it executes the `Message.Display` method in the current application domain.  
-  
- [!code-csharp[System.Environment.SetEnvironmentVariable#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.setenvironmentvariable/cs/setenvironmentvariable1.cs#1)]
- [!code-vb[System.Environment.SetEnvironmentVariable#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.setenvironmentvariable/vb/setenvironmentvariable1.vb#1)]  
-  
- If you run the example for the first time, the message "Executing in domain Domain2" displays to the console. If you set the environment variable from the command line by using the command:  
-  
- `Set AppDomain=False`  
-  
- the example displays the message "Executing in domain *exeName*.exe", where *exeName* is the name of the executable.  
-  
- The following example attempts to retrieve the value of an environment variable named `Test1` from the process environment block. If the variable doesn't exist, the example creates the variable and retrieves its value. The example displays the value of the variable. If the example created the variable, it also calls the <xref:System.Environment.GetEnvironmentVariables%28System.EnvironmentVariableTarget%29> method with each member of the <xref:System.EnvironmentVariableTarget> enumeration to establish that the variable can be retrieved only from the current process environment block. Finally, if the example created the variable, it deletes it.  
-  
- [!code-csharp[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/cs/getenvironmentvariableex1.cs#2)]
- [!code-vb[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/vb/getenvironmentvariableex1.vb#2)]  
+ [!code-csharp[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/cs/getenvironmentvariableex1.cs)]
+ [!code-vb[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/vb/getenvironmentvariableex1.vb)]  
   
  ]]></format>
         </remarks>
@@ -1770,12 +1769,12 @@ If `target` is <xref:System.EnvironmentVariableTarget.User?displayProperty=nameW
   
  If `target` is <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> or <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType>, we recommend that the length of `value` be less than 2048 characters.  
   
-## Examples  
- The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables.  
+## Examples
+
+The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-based systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
   
- [!code-cpp[environment.getsetenvar#1](~/samples/snippets/cpp/VS_Snippets_CLR/environment.getsetenvar/CPP/source.cpp#1)]
- [!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs#1)]
- [!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb#1)]  
+[!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs)]
+[!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb)]  
   
  ]]></format>
         </remarks>
@@ -2062,6 +2061,33 @@ If `target` is <xref:System.EnvironmentVariableTarget.User?displayProperty=nameW
   
  ]]></format>
         </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TickCount64">
+      <MemberSignature Language="C#" Value="public static long TickCount64 { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property int64 TickCount64" />
+      <MemberSignature Language="DocId" Value="P:System.Environment.TickCount64" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property TickCount64 As Long" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property long TickCount64 { long get(); };" />
+      <MemberSignature Language="F#" Value="member this.TickCount64 : int64" Usage="System.Environment.TickCount64" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the number of milliseconds elapsed since the system started.</summary>
+        <value>The elapsed milliseconds since the system started.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="UserDomainName">

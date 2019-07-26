@@ -194,8 +194,13 @@ public class GoodController : ApiController
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:System.Net.Http.HttpClient" /> class.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Initializes a new instance of the <see cref="T:System.Net.Http.HttpClient" /> class using a <see cref="T:System.Net.Http.HttpClientHandler" /> that is disposed when this instance is disposed.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[    
+## Remarks  
+Using this constructor is equivalent to calling the [`HttpClient(new HttpClientHandler(), true)`](xref:System.Net.Http.HttpClient.%23ctor(System.Net.Http.HttpMessageHandler,System.Boolean)) constructor.
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -224,14 +229,14 @@ public class GoodController : ApiController
       </Parameters>
       <Docs>
         <param name="handler">The HTTP handler stack to use for sending requests.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Net.Http.HttpClient" /> class with a specific handler.</summary>
+        <summary>Initializes a new instance of the <see cref="T:System.Net.Http.HttpClient" /> class with the specified handler. The handler is disposed when this instance is disposed.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[    
 ## Remarks  
- `handler` will be disposed of by calling [HttpClient.Dispose](xref:System.Net.Http.HttpMessageInvoker.Dispose).  
-  
- ]]></format>
+Using this constructor is equivalent to calling the [`HttpClient(handler, true)`](xref:System.Net.Http.HttpClient.%23ctor(System.Net.Http.HttpMessageHandler,System.Boolean)) constructor.
+
+The specified `handler` will be disposed of by calling [HttpClient.Dispose](xref:System.Net.Http.HttpMessageInvoker.Dispose).  
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="handler" /> is <see langword="null" />.</exception>
       </Docs>
@@ -264,8 +269,8 @@ public class GoodController : ApiController
       <Docs>
         <param name="handler">The <see cref="T:System.Net.Http.HttpMessageHandler" /> responsible for processing the HTTP response messages.</param>
         <param name="disposeHandler">
-          <see langword="true" /> if the inner handler should be disposed of by [HttpClient.Dispose](xref:System.Net.Http.HttpMessageInvoker.Dispose), <see langword="false" /> if you intend to reuse the inner handler.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Net.Http.HttpClient" /> class with a specific handler.</summary>
+          <see langword="true" /> if the inner handler should be disposed of by [HttpClient.Dispose](xref:System.Net.Http.HttpMessageInvoker.Dispose); <see langword="false" /> if you intend to reuse the inner handler.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Net.Http.HttpClient" /> class with the provided handler, and specifies whether that handler should be disposed when this instance is disposed.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="handler" /> is <see langword="null" />.</exception>
       </Docs>
@@ -344,6 +349,53 @@ public class GoodController : ApiController
         </remarks>
       </Docs>
     </Member>
+    <Member MemberName="DefaultProxy">
+      <MemberSignature Language="C#" Value="public static System.Net.IWebProxy DefaultProxy { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property class System.Net.IWebProxy DefaultProxy" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClient.DefaultProxy" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Property DefaultProxy As IWebProxy" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Net::IWebProxy ^ DefaultProxy { System::Net::IWebProxy ^ get(); void set(System::Net::IWebProxy ^ value); };" />
+      <MemberSignature Language="F#" Value="member this.DefaultProxy : System.Net.IWebProxy with get, set" Usage="System.Net.Http.HttpClient.DefaultProxy" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Net.IWebProxy</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the global Http proxy.</summary>
+        <value>A proxy used by every call that instantiates a <see cref="T:System.Net.HttpWebRequest" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks
+This static property determines the default proxy that all <xref:System.Net.Http.HttpClient> instances use if no proxy is set explicitly in the <xref:System.Net.Http.HttpClientHandler> passed through its constructor. 
+
+The default instance returned by this property will initialize following a different set of rules depending on your platform:
+* **For Windows:** Reads proxy configuration from environment variables or, if those are not defined, from the user's proxy settings.
+
+* **For macOS:** Reads proxy configuration from environment variables or, if those are not defined, from the system's proxy settings.
+
+* **For Linux:** Reads proxy configuration from environment variables or, in case those are not defined, this property initializes a non-configured instance that bypasses all addresses.
+
+The environment variables used for `DefaultProxy` initialization on Windows and Unix-based platforms are:
+* HTTP_PROXY: the hostname or IP address of the proxy server used on HTTP requests.
+* HTTPS_PROXY: the hostname or IP address of the proxy server used on HTTPS requests.
+* ALL_PROXY: the hostname or IP address of the proxy server used on HTTP and/or HTTPS requests in case HTTP_PROXY and/or HTTPS_PROXY are not defined.
+* NO_PROXY: a comma-separated list of hostnames that should be excluded from proxying.
+
+ ]]></format>
+      </remarks>
+      <exception cref="T:System.ArgumentNullException">
+          The value passed cannot be <see langword="null" />.
+      </exception>
+      </Docs>
+    </Member>
     <Member MemberName="DefaultRequestHeaders">
       <MemberSignature Language="C#" Value="public System.Net.Http.Headers.HttpRequestHeaders DefaultRequestHeaders { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.Http.Headers.HttpRequestHeaders DefaultRequestHeaders" />
@@ -380,6 +432,43 @@ public class GoodController : ApiController
  ]]></format>
         </remarks>
       </Docs>
+    </Member>
+    <Member MemberName="DefaultRequestVersion">
+      <MemberSignature Language="C#" Value="public Version DefaultRequestVersion { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Version DefaultRequestVersion" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClient.DefaultRequestVersion" />
+      <MemberSignature Language="VB.NET" Value="Public Property DefaultRequestVersion As Version" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Version ^ DefaultRequestVersion { Version ^ get(); void set(Version ^ value); };" />
+      <MemberSignature Language="F#" Value="member this.DefaultRequestVersion : Version with get, set" Usage="System.Net.Http.HttpClient.DefaultRequestVersion" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Version</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the default HTTP version used on subsequent requests made by this <see cref="T:System.Net.Http.HttpClient" /> instance.</summary>
+        <value>The default version to use for any requests made with this <see cref="T:System.Net.Http.HttpClient" /> instance.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+`DefaultRequestVersion` is <xref:System.Net.HttpVersion.Version11?displayProperty=nameWithType> by default.
+
+The `DefaultRequestVersion` property specifies the default HTTP version to use for any requests sent using this <xref:System.Net.Http.HttpClient> instance, such as calls to <xref:System.Net.Http.HttpClient.GetAsync%2A>, <xref:System.Net.Http.HttpClient.GetStringAsync%2A>, or <xref:System.Net.Http.HttpClient.SendAsync%2A>.
+
+The `DefaultRequestVersion` property can be changed as long as the <xref:System.Net.Http.HttpClient> instance has not started any request.
+ ]]></format>
+      </remarks>
+      <exception cref="T:System.ArgumentNullException">In a set operation, <see langword="DefaultRequestVersion" /> is <see langword="null" />.</exception>
+      <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Http.HttpClient" /> instance has already started one or more requests.</exception>
+      <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Http.HttpClient" /> instance has already been disposed.</exception>
+    </Docs>
     </Member>
     <MemberGroup MemberName="DeleteAsync">
       <AssemblyInfo>
@@ -1400,11 +1489,18 @@ public class GoodController : ApiController
         <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="content">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="content">The HTTP request content sent to the server.</param>
+        <summary>Sends a PATCH request to a Uri designated as a string as an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PatchAsync">
@@ -1431,17 +1527,25 @@ public class GoodController : ApiController
         <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="content">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="content">The HTTP request content sent to the server.</param>
+        <summary>Sends a PATCH request as an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PatchAsync">
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (string requestUri, System.Net.Http.HttpContent content, System.Threading.CancellationToken cancellationToken);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class System.Net.Http.HttpResponseMessage&gt; PatchAsync(string requestUri, class System.Net.Http.HttpContent content, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpClient.PatchAsync(System.String,System.Net.Http.HttpContent,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function PatchAsync (requestUri As String, content As HttpContent, cancellationToken as CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PatchAsync(System::String ^ requestUri, System::Net::Http::HttpContent ^ content, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="F#" Value="member this.PatchAsync : string * System.Net.Http.HttpContent * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PatchAsync (requestUri, content, cancellationToken)" />
       <MemberType>Method</MemberType>
@@ -1462,18 +1566,26 @@ public class GoodController : ApiController
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="content">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="content">The HTTP request content sent to the server.</param>
+        <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        <summary>Sends a PATCH request with a cancellation token to a Uri represented as a string as an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PatchAsync">
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (Uri requestUri, System.Net.Http.HttpContent content, System.Threading.CancellationToken cancellationToken);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class System.Net.Http.HttpResponseMessage&gt; PatchAsync(class System.Uri requestUri, class System.Net.Http.HttpContent content, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpClient.PatchAsync(System.Uri,System.Net.Http.HttpContent,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function PatchAsync (requestUri As Uri, content As HttpContent, cancellationToken as CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PatchAsync(Uri ^ requestUri, System::Net::Http::HttpContent ^ content, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="F#" Value="member this.PatchAsync : Uri * System.Net.Http.HttpContent * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PatchAsync (requestUri, content, cancellationToken)" />
       <MemberType>Method</MemberType>
@@ -1494,12 +1606,19 @@ public class GoodController : ApiController
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="content">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="content">The HTTP request content sent to the server.</param>
+        <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        <summary>Sends a PATCH request with a cancellation token as an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="PostAsync">
@@ -2144,6 +2263,15 @@ public class GoodController : ApiController
   
  The same timeout will apply for all requests using this <xref:System.Net.Http.HttpClient> instance.  You may also set different timeouts for individual requests using a <xref:System.Threading.CancellationTokenSource> on a task. Note that only the shorter of the two timeouts will apply.  
   
+ ## Example
+ 
+ The following example sets the `Timeout` property.
+  
+```csharp
+HttpClient httpClient = new HttpClient();
+httpClient.Timeout = TimeSpan.FromMinutes(10);
+```
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">The timeout specified is less than or equal to zero and is not <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</exception>

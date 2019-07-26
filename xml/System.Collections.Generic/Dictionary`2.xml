@@ -1010,10 +1010,12 @@
         <Parameter Name="capacity" Type="System.Int32" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="capacity">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="capacity">The number of entries.</param>
+        <summary>Ensures that the dictionary can hold up to a specified number of entries without any further expansion of its backing storage.</summary>
+        <returns>The current capacity of the <see cref="T:System.Collections.Generic.Dictionary`2" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="capacity" /> is less than 0.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -2715,8 +2717,19 @@ finally {
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Sets the capacity of this dictionary to what it would be if it had been originally initialized with all its entries.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+This method can be used to minimize memory overhead once it is known that no new elements will be added to the dictionary. To allocate  a minimum size storage array, execute the following statements:
+
+```csharp
+dictionary.Clear();
+dictionary.TrimExcess();
+```
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TrimExcess">
@@ -2745,9 +2758,11 @@ finally {
         <Parameter Name="capacity" Type="System.Int32" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="capacity">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="capacity">The new capacity.</param>
+        <summary>Sets the capacity of this dictionary to hold up a specified number of entries without any further expansion of its backing storage.</summary>
+        <remarks>This method can be used to minimize the memory overhead once it is known that no new elements will be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="capacity" /> is less than <see cref="T:System.Collections.Generic.Dictionary`2" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryAdd">
@@ -2778,11 +2793,22 @@ finally {
         <Parameter Name="value" Type="TValue" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="key">The key of the element to add.</param>
+        <param name="value">The value of the element to add. It can be <see langword="null" />.</param>
+        <summary>Attempts to add the specified key and value to the dictionary.</summary>
+        <returns>
+          <see langword="true" /> if the key/value pair was added to the dictionary successfully; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Unlike the <xref:System.Collections.Generic.Dictionary%602.Add%2A> method, this method doesn't throw an exception if the element with the given key exists in the dictionary. Unlike the Dictionary indexer, `TryAdd` doesn't override the element if the element with the given key exists in the dictionary. If the key already exists, `TryAdd` does nothing and returns `false`.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetValue">
