@@ -19,7 +19,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Provides a high-performance API for forward-only, read-only access to the UTF-8 encoded JSON text.</summary>
+    <summary>Provides a high-performance API for forward-only, read-only access to UTF-8 encoded JSON text.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
@@ -27,7 +27,7 @@
 
 `Utf8JsonReader` processes the text sequentially with no caching and by default adheres strictly to the [JSON RFC](https://tools.ietf.org/html/rfc8259).
 
-When `Utf8JsonReader` encounters invalid JSON, it throws a <xref:System.Text.Json.JsonException>  with basic error information like line number and byte position on the line.
+When `Utf8JsonReader` encounters invalid JSON, it throws a <xref:System.Text.Json.JsonException> with basic error information like line number and byte position on the line.
 
 Since this type is a ref struct, it doesn't directly support async. However, it does provide support for reentrancy to read incomplete data and to continue reading once more data is presented.
 
@@ -53,17 +53,17 @@ To be able to set max depth while reading OR allow skipping comments, create an 
         <Parameter Name="options" Type="System.Text.Json.JsonReaderOptions" />
       </Parameters>
       <Docs>
-        <param name="jsonData">The ReadOnlySequence&lt;byte&gt; containing the UTF-8 encoded JSON text to process.</param>
-        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonReader" /> that is different from the JSON RFC (for example how to handle comments or maximum depth allowed when reading). By default, the <see cref="T:System.Text.Json.Utf8JsonReader" /> follows the JSON RFC strictly (i.e. comments within the JSON are invalid) and reads up to a maximum depth of 64.</param>
-        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonReader" /> instance.</summary>
+        <param name="jsonData">The UTF-8 encoded JSON text to process.</param>
+        <param name="options">An object that defines customized behavior of the <see cref="T:System.Text.Json.Utf8JsonReader" /> that differs from the JSON RFC (for example how to handle comments or maximum depth allowed when reading). By default, the <see cref="T:System.Text.Json.Utf8JsonReader" /> follows the JSON RFC strictly; comments within the JSON are invalid, and the maximum depth is 64.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> structure that processes a read-only sequence of UTF-8 encoded text using the specified options.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-Since this type is a ref struct, it is a stack-only type and all the limitations of ref structs apply to it.
+Since this type is a ref struct, it is a stack-only type, and all the limitations of ref structs apply to it.
 
-This assumes that the entire JSON payload is passed in (equivalent to <xref:System.Text.Json.Utf8JsonReader.IsFinalBlock> = true)
+This constructor assumes that the entire JSON payload is contained in `jsonData`; it is equivalent to <xref:System.Text.Json.Utf8JsonReader.IsFinalBlock?displayProperty=nameWithType> = `true`.
               
           ]]></format>
         </remarks>
@@ -85,17 +85,17 @@ This assumes that the entire JSON payload is passed in (equivalent to <xref:Syst
         <Parameter Name="options" Type="System.Text.Json.JsonReaderOptions" />
       </Parameters>
       <Docs>
-        <param name="jsonData">The ReadOnlySpan&lt;byte&gt; containing the UTF-8 encoded JSON text to process.</param>
-        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonReader" /> that is different from the JSON RFC (for example how to handle comments or maximum depth allowed when reading). By default, the <see cref="T:System.Text.Json.Utf8JsonReader" /> follows the JSON RFC strictly (i.e. comments within the JSON are invalid) and reads up to a maximum depth of 64.</param>
-        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonReader" /> instance.</summary>
+        <param name="jsonData">The UTF-8 encoded JSON text to process.</param>
+        <param name="options">An object that defines customized behavior of the <see cref="T:System.Text.Json.Utf8JsonReader" /> that differs from the JSON RFC (for example how to handle comments or maximum depth allowed when reading). By default, the <see cref="T:System.Text.Json.Utf8JsonReader" /> follows the JSON RFC strictly; comments within the JSON are invalid, and the maximum depth is 64.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> structure that processes a read-only span of UTF-8 encoded text using the specified options.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-Since this type is a ref struct, it is a stack-only type and all the limitations of ref structs apply to it.
+Since this type is a ref struct, it is a stack-only type, and all the limitations of ref structs apply to it.
 
-This assumes that the entire JSON payload is passed in (equivalent to <xref:System.Text.Json.Utf8JsonReader.IsFinalBlock> = true)
+This constructor assumes that the entire JSON payload is contained in `jsonData`; it is equivalent to <xref:System.Text.Json.Utf8JsonReader.IsFinalBlock?displayProperty=nameWithType> = `true`.
               
           ]]></format>
         </remarks>
@@ -121,9 +121,9 @@ This assumes that the entire JSON payload is passed in (equivalent to <xref:Syst
       <Docs>
         <param name="jsonData">The UTF-8 encoded JSON text to process.</param>
         <param name="isFinalBlock">
-          <see langword="true" /> when the input sequence contains the entire data to process. <see langword="false" /> only if it's known that the input span contains partial data with more data to follow.</param>
-        <param name="state">If this is the first call to the constructor, pass in a default state. Otherwise, capture the state from the previous instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> and pass that back.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> class.</summary>
+          <see langword="true" /> if the input sequence contains the entire data to process. <see langword="false" /> only the input span contains partial data with more data to follow.</param>
+        <param name="state">An object that contains the reader state. If this is the first call to the constructor, pass in a default state. Otherwise, capture the state from the previous instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> and pass that back.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> structure that processes a read-only sequence of UTF-8 encoded text and indicates whether the input contains all the text to process.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -156,9 +156,9 @@ This is the reason why the constructor accepts a <xref:System.Text.Json.JsonRead
       <Docs>
         <param name="jsonData">The UTF-8 encoded JSON text to process.</param>
         <param name="isFinalBlock">
-          <see langword="true" /> when the input span contains the entire data to process. <see langword="false" /> only if it's known that the input span contains partial data with more data to follow.</param>
-        <param name="state">A struct that contains the reader state. On the first call to the constructor, it should reflect a default state; otherwise, it should capture the state from the previous instance instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> and pass that back.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> class.</summary>
+          <see langword="true" /> if the input sequence contains the entire data to process. <see langword="false" /> if the input span contains partial data with more data to follow.</param>
+        <param name="state">An object that contains the reader state. On the first call to the constructor, it should reflect a default state; otherwise, it should capture the state from the previous instance instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> and pass that back.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> class that processes a read-only span of UTF-8 encoded text and indicates whether the input contains all the text to process.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -187,8 +187,8 @@ This is the reason why the constructor accepts a <xref:System.Text.Json.JsonRead
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the total number of bytes consumed by the <see cref="T:System.Text.Json.Utf8JsonReader" /> so far for the current instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> with the given UTF-8 encoded input text.</summary>
-        <value>To be added.</value>
+        <summary>Gets the total number of bytes consumed so far by this instance of the <see cref="T:System.Text.Json.Utf8JsonReader" />.</summary>
+        <value>The total number of bytes consumed so far.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -215,7 +215,7 @@ This is the reason why the constructor accepts a <xref:System.Text.Json.JsonRead
 
 ## Remarks
 
-The `CurrentDepth` property tracks the recursive depth of the nested objects / arrays within the JSON text processed so far.
+The `CurrentDepth` property tracks the recursive depth of the nested objects or arrays within the JSON text processed so far.
 
  ]]></format>
         </remarks>
@@ -237,15 +237,14 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <ReturnType>System.Text.Json.JsonReaderState</ReturnType>
       </ReturnValue>
       <Docs>
-         <summary>Gets the current snapshot of the <see cref="T:System.Text.Json.Utf8JsonReader" /> state that must be captured by the caller and passed back in to the <see cref="T:System.Text.Json.Utf8JsonReader" /> constructor with more data.</summary>
-        <value>A JSON reader state instance.</value>
+         <summary>Gets the current <see cref="T:System.Text.Json.Utf8JsonReader" /> state to pass to a <see cref="T:System.Text.Json.Utf8JsonReader" /> constructor with more data.</summary>
+        <value>The current reader state.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-Unlike the <xref:System.Text.Json.Utf8JsonReader>, which is a ref struct, the state can survive across async/await boundaries, and hence this type is required to provide support for reading
-in more data asynchronously before continuing with a new instance of the <xref:System.Text.Json.Utf8JsonReader>.
+Unlike the <xref:System.Text.Json.Utf8JsonReader>, which is a ref struct, the state can survive across async/await boundaries. This type is required to provide support for reading in more data asynchronously before continuing with a new instance of the <xref:System.Text.Json.Utf8JsonReader>.
 
  ]]></format>
         </remarks>
@@ -293,18 +292,14 @@ in more data asynchronously before continuing with a new instance of the <xref:S
       <Parameters />
       <Docs>
         <summary>Parses the current JSON token value from the source as a <see cref="T:System.Byte" />.</summary>
-        <returns>The value if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.Byte" /> value. Throws exceptions otherwise.</returns>
+        <returns>The value of the UTF-8 encoded token.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or  is written in scientific notation) or, it represents a number less than <see cref="F:System.Byte.MinValue" /> or greater  than <see cref="F:System.Byte.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Byte.MinValue" /> or greater than <see cref="F:System.Byte.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Byte.MinValue" /> or greater than <see cref="F:System.Byte.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Byte.MinValue" /> or greater than <see cref="F:System.Byte.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Byte.MinValue" /> or greater than <see cref="F:System.Byte.MaxValue" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The value of the JSON token is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
+        <exception cref="T:System.FormatException">The numeric format of the JSON token value is incorrect (for example, it contains a fractional value or is written in scientific notation).
+          
+-or-
+
+The JSON token value represents a number less than <see cref="F:System.Byte.MinValue" /> or greater than <see cref="F:System.Byte.MaxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetBytesFromBase64">
@@ -510,18 +505,14 @@ The `GetDouble` method throws an exception if the entire UTF-8 encoded token val
       <Parameters />
       <Docs>
         <summary>Parses the current JSON token value from the source as a <see cref="T:System.Int16" />.</summary>
-        <returns>The value if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.Int16" /> value. Throws exceptions otherwise.</returns>
+        <returns>The UTF-8 encoded token value parsed to an <see cref="T:System.Int16" />.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Int16.MinValue" /> or greater than <see cref="F:System.Int16.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Int16.MinValue" /> or greater than <see cref="F:System.Int16.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Int16.MinValue" /> or greater than <see cref="F:System.Int16.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Int16.MinValue" /> or greater than <see cref="F:System.Int16.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.Int16.MinValue" /> or greater than <see cref="F:System.Int16.MaxValue" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The value of the JSON token is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
+        <exception cref="T:System.FormatException">The numeric format of the JSON token value is incorrect (for example, it contains a fractional value or is written in scientific notation).
+          
+-or-
+
+The JSON token value represents a number less than <see cref="F:System.Int16.MinValue" /> or greater than <see cref="F:System.Int16.MaxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetInt32">
@@ -555,7 +546,7 @@ The `GetInt32` method throws an exception if the entire UTF-8 encoded token valu
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
         <exception cref="T:System.FormatException">The JSON token value is of the incorrect numeric format. For example, it contains a decimal or is written in scientific notation.
             
-- or-
+-or-
 
 The JSON token value represents a number less than <see cref="F:System.Int32.MinValue" /> or greater than <see cref="F:System.Int32.MaxValue" />.</exception>
         <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
@@ -592,7 +583,7 @@ The `GetInt64` method throws an exception if the entire UTF-8 encoded token valu
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
         <exception cref="T:System.FormatException">The JSON token value is of the incorrect numeric format. For example, it contains a decimal or is written in scientific notation.
             
-- or-
+-or-
 
 The JSON token value represents a number less than <see cref="F:System.Int64.MinValue" /> or greater than <see cref="F:System.Int64.MaxValue" />.</exception>
         <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
@@ -621,18 +612,14 @@ The JSON token value represents a number less than <see cref="F:System.Int64.Min
       <Parameters />
       <Docs>
         <summary>Parses the current JSON token value from the source as an <see cref="T:System.SByte" />.</summary>
-        <returns>The value if the entire UTF-8 encoded token value can be successfully parsed to an <see cref="T:System.SByte" /> value. Throws exceptions otherwise.</returns>
+        <returns>The UTF-8 encoded token value parsed to an <see cref="T:System.SByte" />.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.SByte.MinValue" /> or greater than <see cref="F:System.SByte.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.SByte.MinValue" /> or greater than <see cref="F:System.SByte.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.SByte.MinValue" /> or greater than <see cref="F:System.SByte.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.SByte.MinValue" /> or greater than <see cref="F:System.SByte.MaxValue" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Trying to get the value of a JSON token that is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />. <seealso cref="P:System.Text.Json.Utf8JsonReader.TokenType" /></exception>
-        <exception cref="T:System.FormatException">The JSON token value is either of incorrect numeric format (for example if it contains a decimal or is written in scientific notation) or, it represents a number less than <see cref="F:System.SByte.MinValue" /> or greater than <see cref="F:System.SByte.MaxValue" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The value of the JSON token is not a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
+        <exception cref="T:System.FormatException">The numeric format of the JSON token value is incorrect (for example, it contains a fractional value or is written in scientific notation).
+          
+-or-
+
+The JSON token value represents a number less than <see cref="F:System.SByte.MinValue" /> or greater than <see cref="F:System.SByte.MaxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetSingle">
