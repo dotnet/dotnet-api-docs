@@ -383,7 +383,11 @@ This method is supported only on platforms that support misaligned memory access
 
 Neither `TFrom` nor `TTo` can contain pointers or references. `TFrom` and `TTo` are checked at runtime in order to preserve type safety.  
 
-The cast occurs in an unchecked context. If the range of `TTo` is less than the range of `TFrom`, data loss can occur. For example, if `TFrom` is <xref:System.Int64>, one of the `ReadOnlySpan<Int32>` values is 0x100001111110F0F, and `TTo` is <xref:System.Int32>, the resulting value is 11110F0F.
+If the sizes of the two types are different, the cast combines or splits values, which leads to a change in length.
+
+For example, if `TFrom` is <xref:System.Int64>, the `ReadOnlySpan<Int64>` contains a single value, 0x0100001111110F0F, and `TTo` is <xref:System.Int32>, the resulting `ReadOnlySpan<Int32>` contains two values. The values are 0x11110F0F and 0x01000011 on a little-endian architecture, such as x86. On a big-endian architecture, the order of the two values is reversed, i.e. 0x01000011, followed by 0x11110F0F.
+
+As another example, if `TFrom` is <xref:System.Int32>, the `ReadOnlySpan<Int32>` contains the values of 1, 2 and 3, and `TTo` is <xref:System.Int64>, the resulting `ReadOnlySpan<Int64>` contains a single value: 0x0000000200000001 on a little-endian architecture and 0x0000000100000002 on a big-endian architecture.
 
 This method is supported only on platforms that support misaligned memory access or when the memory block is aligned by other means.
 
