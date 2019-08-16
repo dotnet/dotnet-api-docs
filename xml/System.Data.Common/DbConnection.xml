@@ -36,12 +36,12 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>Represents a connection to a database.</summary>
+    <summary>Defines the core behavior of database connections and provides a base class for database-specific connections.</summary>
     <remarks>To be added.</remarks>
     <block subset="none" type="overrides">
       <para>When you inherit from <see cref="T:System.Data.Common.DbConnection" />, you must override the following members: <see cref="M:System.Data.Common.DbConnection.Close" />, <see cref="M:System.Data.Common.DbConnection.BeginDbTransaction(System.Data.IsolationLevel)" />, <see cref="M:System.Data.Common.DbConnection.ChangeDatabase(System.String)" />, <see cref="M:System.Data.Common.DbConnection.CreateDbCommand" />, <see cref="M:System.Data.Common.DbConnection.Open" />, and <see cref="E:System.Data.Common.DbConnection.StateChange" />. You must also provide the following properties: <see cref="P:System.Data.Common.DbConnection.ConnectionString" />, <see cref="P:System.Data.Common.DbConnection.Database" />, <see cref="P:System.Data.Common.DbConnection.DataSource" />, <see cref="P:System.Data.Common.DbConnection.ServerVersion" />, and <see cref="P:System.Data.Common.DbConnection.State" />.</para>
     </block>
-    <related type="Article" href="https://msdn.microsoft.com/library/2a8e2640-3a49-42a1-a3a9-b43026907ae1">DbProviderFactories (ADO.NET)</related>
+    <related type="Article" href="~/docs/framework/data/adonet/dbproviderfactories.md">DbProviderFactories (ADO.NET)</related>
     <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
   </Docs>
   <Members>
@@ -74,7 +74,7 @@
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Data.Common.DbConnection" /> class.</summary>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/2a8e2640-3a49-42a1-a3a9-b43026907ae1">DbProviderFactories (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/dbproviderfactories.md">DbProviderFactories (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -110,8 +110,8 @@
         <Parameter Name="isolationLevel" Type="System.Data.IsolationLevel" />
       </Parameters>
       <Docs>
-        <param name="isolationLevel">Specifies the isolation level for the transaction.</param>
-        <summary>Starts a database transaction.</summary>
+        <param name="isolationLevel">One of the enumeration values that specifies the isolation level for the transaction to use.</param>
+        <summary>When overridden in a derived class, starts a database transaction.</summary>
         <returns>An object representing the new transaction.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -149,12 +149,21 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="isolationLevel">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+        <param name="isolationLevel">One of the enumeration values that specifies the isolation level for the transaction to use.</param>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>Asynchronously starts a database transaction.</summary>
+        <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is an object representing the new transaction.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `Task`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+  
+ ]]></format>
+        </remarks>
+    </Docs>
     </Member>
     <MemberGroup MemberName="BeginTransaction">
       <AssemblyInfo>
@@ -171,7 +180,7 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/f46570de-9e50-4fe6-8710-a8c31fa8569b">Transactions (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/transactions-and-concurrency.md">Transactions and Concurrency (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </MemberGroup>
@@ -216,7 +225,7 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/f46570de-9e50-4fe6-8710-a8c31fa8569b">Transactions (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/transactions-and-concurrency.md">Transactions and Concurrency (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -252,11 +261,11 @@
         <Parameter Name="isolationLevel" Type="System.Data.IsolationLevel" />
       </Parameters>
       <Docs>
-        <param name="isolationLevel">Specifies the isolation level for the transaction.</param>
+        <param name="isolationLevel">One of the enumeration values that specifies the isolation level for the transaction to use.</param>
         <summary>Starts a database transaction with the specified isolation level.</summary>
         <returns>An object representing the new transaction.</returns>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/f46570de-9e50-4fe6-8710-a8c31fa8569b">Transactions (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/transactions-and-concurrency.md">Transactions and Concurrency (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -283,10 +292,21 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>Asynchronously begins a database transaction.</summary>
+        <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is an object representing the new transaction.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If you do not specify an isolation level, the default isolation level for the specific type of connection is used.
+
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `Task`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="BeginTransactionAsync">
@@ -313,11 +333,20 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="isolationLevel">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="isolationLevel">One of the enumeration values that specifies the isolation level for the transaction to use.</param>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>Asynchronously begins a database transaction.</summary>
+        <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is an object representing the new transaction.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `Task`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ChangeDatabase">
@@ -356,8 +385,8 @@
         <Parameter Name="databaseName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="databaseName">Specifies the name of the database for the connection to use.</param>
-        <summary>Changes the current database for an open connection.</summary>
+        <param name="databaseName">The name of the database for the connection to use.</param>
+        <summary>When overridden in a derived class, changes the current database for an open connection.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -393,11 +422,22 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="databaseName">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="databaseName">The name of the database for the connection to use.</param>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>Asynchronously changes the current database for an open connection.</summary>
+        <returns>A task representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The value supplied in the `databaseName` parameter must be a valid database name for the current instance.  
+
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `Task`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Close">
@@ -434,24 +474,24 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Closes the connection to the database. This is the preferred method of closing any open connection.</summary>
+        <summary>When overridden in a derived class, closes the connection to the database.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Data.Common.DbConnection.Close%2A> method rolls back any pending transactions. It then releases the connection to the connection pool, or closes the connection if connection pooling is disabled.  
+ The <xref:System.Data.Common.DbConnection.Close%2A> and <xref:System.Data.Common.DbConnection.CloseAsync%2A> methods roll back any pending transactions. They then release the connection to the connection pool, or close the connection if connection pooling is disabled.  
   
- An application can call <xref:System.Data.Common.DbConnection.Close%2A> more than one time. No exception is generated.  
+ An application can call <xref:System.Data.Common.DbConnection.Close%2A> or <xref:System.Data.Common.DbConnection.CloseAsync%2A> more than one time. No exception is generated.  
   
  If the <xref:System.Data.Common.DbConnection> goes out of scope, it is not closed. Therefore, you must explicitly close the connection by calling `Close` or `Dispose`, which are functionally equivalent. If the connection pooling value `Pooling` is set to `true` or `yes`, this also releases the physical connection.  
   
 > [!CAUTION]
->  Do not call `Close` or `Dispose` on a **Connection**, a **DataReader**, or any other managed object in the `Finalize` method of your class. In a finalizer, you should only release unmanaged resources that your class owns directly. If your class does not own any unmanaged resources, do not include a `Finalize` method in your class definition. For more information, see [Garbage Collection](~/docs/standard/garbage-collection/index.md).  
+>  Do not close or disipose a `DbConnection`, a `DbDataReader`, or any other managed object in the `Finalize` method of your class. In a finalizer, you should only release unmanaged resources that your class owns directly. If your class does not own any unmanaged resources, do not include a `Finalize` method in your class definition. For more information, see [Garbage Collection](~/docs/standard/garbage-collection/index.md).  
   
  ]]></format>
         </remarks>
         <altmember cref="M:System.Data.Common.DbConnection.Open" />
-        <related type="Article" href="https://msdn.microsoft.com/library/955c057f-aea8-4ba8-aa6d-e3dfa18ba8d5">Connection Pooling (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/connection-pooling.md">Connection Pooling (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -478,9 +518,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Asynchronously closes the connection to the database.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `Task`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+  
+ The <xref:System.Data.Common.DbConnection.Close%2A> and <xref:System.Data.Common.DbConnection.CloseAsync%2A> methods roll back any pending transactions. They then release the connection to the connection pool, or close the connection if connection pooling is disabled.  
+  
+ An application can call <xref:System.Data.Common.DbConnection.Close%2A> or <xref:System.Data.Common.DbConnection.CloseAsync%2A> more than one time. No exception is generated.  
+  
+ If the <xref:System.Data.Common.DbConnection> goes out of scope, it is not closed. Therefore, you must explicitly close the connection by calling `Close` or `Dispose`, which are functionally equivalent. If the connection pooling value `Pooling` is set to `true` or `yes`, this also releases the physical connection.  
+  
+> [!CAUTION]
+>  Do not close or dispose a `DbConnection`, a `DbDataReader`, or any other managed object in the `Finalize` method of your class. In a finalizer, you should only release unmanaged resources that your class owns directly. If your class does not own any unmanaged resources, do not include a `Finalize` method in your class definition. For more information, see [Garbage Collection](~/docs/standard/garbage-collection/index.md).  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ConnectionString">
@@ -530,7 +588,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the string used to open the connection.</summary>
+        <summary>When overridden in a derived class, gets or sets the string used to open the connection.</summary>
         <value>The connection string used to establish the initial connection. The exact contents of the connection string depend on the specific data source for this connection. The default value is an empty string.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -540,7 +598,7 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/745c5f95-2f02-4674-b378-6d51a7ec2490">Connection Strings (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/connection-strings.md">Connection Strings (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -652,7 +710,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates and returns a <see cref="T:System.Data.Common.DbCommand" /> object associated with the current connection.</summary>
+        <summary>When overridden in a derived class, creates and returns a <see cref="T:System.Data.Common.DbCommand" /> object associated with the current connection.</summary>
         <returns>A <see cref="T:System.Data.Common.DbCommand" /> object.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -699,7 +757,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the name of the current database after a connection is opened, or the database name specified in the connection string before the connection is opened.</summary>
+        <summary>When overridden in a derived class, gets the name of the current database after a connection is opened, or the database name specified in the connection string before the connection is opened.</summary>
         <value>The name of the current database or the name of the database to be used after a connection is opened. The default value is an empty string.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -742,7 +800,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the name of the database server to which to connect.</summary>
+        <summary>When overridden in a derived class, gets the name of the database server to which to connect.</summary>
         <value>The name of the database server to which to connect. The default value is an empty string.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -752,7 +810,7 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/745c5f95-2f02-4674-b378-6d51a7ec2490">Connection Strings (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/connection-strings.md">Connection Strings (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -875,9 +933,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Asynchronously diposes the connection object.</summary>
+        <returns>A <see cref="P:System.Threading.Tasks.ValueTask" /> representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `ValueTask`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+  
+ ]]></format>
+
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EnlistTransaction">
@@ -920,7 +988,7 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/f46570de-9e50-4fe6-8710-a8c31fa8569b">Transactions (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/transactions-and-concurrency.md">Transactions and Concurrency (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -1172,7 +1240,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Opens a database connection with the settings specified by the <see cref="P:System.Data.Common.DbConnection.ConnectionString" />.</summary>
+        <summary>When overridden in a derived class, opens a database connection with the settings specified by the <see cref="P:System.Data.Common.DbConnection.ConnectionString" />.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1338,7 +1406,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a string that represents the version of the server to which the object is connected.</summary>
+        <summary>When overridden in a derived class, gets a string that represents the version of the server to which the object is connected.</summary>
         <value>The version of the database. The format of the string returned depends on the specific type of connection you are using.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">
@@ -1523,8 +1591,8 @@
         <Parameter Name="isolationLevel" Type="System.Data.IsolationLevel" Index="0" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="isolationLevel">One of the <see cref="T:System.Data.IsolationLevel" /> values.</param>
-        <summary>Begins a database transaction with the specified <see cref="T:System.Data.IsolationLevel" /> value.</summary>
+        <param name="isolationLevel">One of the enumeration values that specifies the isolation level for the transaction to use.</param>
+        <summary>Begins a database transaction with the specified isolation level.</summary>
         <returns>An object that represents the new transaction.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
