@@ -44,7 +44,7 @@
   <Docs>
     <summary>Reads a forward-only stream of rows from a data source.</summary>
     <remarks>To be added.</remarks>
-    <related type="Article" href="https://msdn.microsoft.com/library/2a8e2640-3a49-42a1-a3a9-b43026907ae1">DbProviderFactories (ADO.NET)</related>
+    <related type="Article" href="~/docs/framework/data/adonet/dbproviderfactories.md">DbProviderFactories (ADO.NET)</related>
     <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
   </Docs>
   <Members>
@@ -77,7 +77,7 @@
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Data.Common.DbDataReader" /> class.</summary>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/2a8e2640-3a49-42a1-a3a9-b43026907ae1">DbProviderFactories (ADO.NET)</related>
+        <related type="Article" href="~/docs/framework/data/adonet/dbproviderfactories.md">DbProviderFactories (ADO.NET)</related>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -141,9 +141,18 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Asynchronously closes the <see cref="T:System.Data.Common.DbDataReader" /> object.</summary>
+        <returns>A task representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `Task`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
+   
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Depth">
@@ -247,12 +256,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Call `Dispose` when you are finished using the <xref:System.Data.Common.DbDataReader>. The `Dispose` method leaves the <xref:System.Data.Common.DbDataReader> in an unusable state. After calling `Dispose`, you must release all references to the <xref:System.Data.Common.DbDataReader> so the garbage collector can reclaim the memory that the <xref:System.Data.Common.DbDataReader> was occupying.  
+ Call `Dispose` or `DisposeAsync` when you've finished using the <xref:System.Data.Common.DbDataReader>. Calling one of these methods leaves the <xref:System.Data.Common.DbDataReader> in an unusable state. After disposing, you must release all references to the <xref:System.Data.Common.DbDataReader> so the garbage collector can reclaim the memory that the <xref:System.Data.Common.DbDataReader> was occupying.  
   
  For more information, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md) and [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).  
   
 > [!NOTE]
->  Always call `Dispose` before you release your last reference to the <xref:System.Data.Common.DbDataReader>. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Data.Common.DbDataReader> object's `Finalize` method.  
+>  Always dispose before you release your last reference to the <xref:System.Data.Common.DbDataReader>. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Data.Common.DbDataReader> object's `Finalize` method.  
   
  ]]></format>
         </remarks>
@@ -329,9 +338,25 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Asynchronously releases all resources used by the current instance of the <see cref="T:System.Data.Common.DbDataReader" /> class.</summary>
+        <returns>A <see cref="P:System.Threading.Tasks.ValueTask" /> representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Call `Dispose` or `DisposeAsync` when you've finished using the <xref:System.Data.Common.DbDataReader>. Calling one of these methods leaves the <xref:System.Data.Common.DbDataReader> in an unusable state. After disposing, you must release all references to the <xref:System.Data.Common.DbDataReader> so the garbage collector can reclaim the memory that the <xref:System.Data.Common.DbDataReader> was occupying.  
+  
+ For more information, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md) and [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).  
+  
+> [!NOTE]
+>  Always dispose before you release your last reference to the <xref:System.Data.Common.DbDataReader>. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Data.Common.DbDataReader> object's `Finalize` method.  
+  
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `ValueTask`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
+
+ ]]></format>
+        </remarks>        
       </Docs>
     </Member>
     <Member MemberName="FieldCount">
@@ -367,7 +392,7 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of columns in the current row.</summary>
+        <summary>When overridden in a derived class, gets the number of columns in the current row.</summary>
         <value>The number of columns in the current row.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -418,7 +443,7 @@
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a Boolean.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a Boolean.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -463,7 +488,7 @@
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a byte.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a byte.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -516,7 +541,7 @@
         <param name="buffer">The buffer into which to copy the data.</param>
         <param name="bufferOffset">The index with the buffer to which the data will be copied.</param>
         <param name="length">The maximum number of characters to read.</param>
-        <summary>Reads a specified number of bytes from the specified column starting at a specified index and writes them to a buffer starting at a specified position in the buffer.</summary>
+        <summary>When overridden in a derived class, reads a specified number of bytes from the specified column starting at a specified index and writes them to a buffer starting at a specified position in the buffer.</summary>
         <returns>The actual number of bytes read.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -561,7 +586,7 @@
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a single character.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a single character.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -614,7 +639,7 @@
         <param name="buffer">The buffer into which to copy the data.</param>
         <param name="bufferOffset">The index with the buffer to which the data will be copied.</param>
         <param name="length">The maximum number of characters to read.</param>
-        <summary>Reads a specified number of characters from a specified column starting at a specified index, and writes them to a buffer starting at a specified position.</summary>
+        <summary>When overridden in a derived class, reads a specified number of characters from a specified column starting at a specified index, and writes them to a buffer starting at a specified position.</summary>
         <returns>The actual number of characters read.</returns>
         <remarks>To be added.</remarks>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
@@ -703,27 +728,32 @@
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets name of the data type of the specified column.</summary>
+        <summary>When overridden in a derived class, gets name of the data type of the specified column.</summary>
         <returns>The name of the data type.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
   
-```  
-private static void GetDataTypes(String connectionString) {       
-   using (SqlConnection conn = new SqlConnection(connectionString)) {  
-      String queryString = "Select [CourseID],[Title],[Credits] from [MySchool].[dbo].[Course]";  
-      using (DbCommand command = new SqlCommand(queryString, conn)) {  
-         conn.Open();               
-         using (DbDataReader reader = command.ExecuteReader()) {  
-            for (Int32 i = 0; i < reader.FieldCount; i++) {  
-               Console.WriteLine("ColumnName:{0,-15}DataType:{1,-15}",reader.GetName(i),reader.GetDataTypeName(i));  
-            }  
-         }  
-      }  
-   }  
-}  
+```csharp
+private static void GetDataTypes(String connectionString) 
+{
+    using (SqlConnection conn = new SqlConnection(connectionString)) 
+    {
+        String queryString = "Select [CourseID],[Title],[Credits] from [MySchool].[dbo].[Course]";  
+        using (DbCommand command = new SqlCommand(queryString, conn)) 
+        {
+            conn.Open();               
+            using (DbDataReader reader = command.ExecuteReader()) 
+            {
+                for (Int32 i = 0; i < reader.FieldCount; i++)
+                {
+                    Console.WriteLine("ColumnName:{0,-15}DataType:{1,-15}",reader.GetName(i),reader.GetDataTypeName(i));
+                }
+            }
+        }
+    }
+}
 ```  
   
  ]]></format>
@@ -769,7 +799,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a <see cref="T:System.DateTime" /> object.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a <see cref="T:System.DateTime" /> object.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -854,7 +884,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a <see cref="T:System.Decimal" />.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a <see cref="T:System.Decimal" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -899,7 +929,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a double-precision floating point number.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a double-precision floating point number.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidCastException">The specified cast is not valid.</exception>
@@ -945,8 +975,8 @@ private static void GetDataTypes(String connectionString) {
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns an <see cref="T:System.Collections.IEnumerator" /> that can be used to iterate through the rows in the data reader.</summary>
-        <returns>An <see cref="T:System.Collections.IEnumerator" /> that can be used to iterate through the rows in the data reader.</returns>
+        <summary>When overridden in a derived class, returns an enumerator that can be used to iterate through the rows in the data reader.</summary>
+        <returns>An enumerator that can be used to iterate through the rows in the data reader.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -997,7 +1027,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the data type of the specified column.</summary>
+        <summary>When overridden in a derived class, gets the data type of the specified column.</summary>
         <returns>The data type of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -1124,7 +1154,7 @@ private static void GetDataTypes(String connectionString) {
 
  The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread.
 
- Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
 
  Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
 
@@ -1201,7 +1231,7 @@ private static void GetDataTypes(String connectionString) {
 
  The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
 
- Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
 
  This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
  
@@ -1267,7 +1297,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a single-precision floating point number.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a single-precision floating point number.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -1312,7 +1342,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a globally unique identifier (GUID).</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a globally unique identifier (GUID).</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -1357,7 +1387,7 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a 16-bit signed integer.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a 16-bit signed integer.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -1402,28 +1432,33 @@ private static void GetDataTypes(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a 32-bit signed integer.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a 32-bit signed integer.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
   
-```  
-private static void GetCredits(String connectionString) {  
-   using (SqlConnection conn = new SqlConnection(connectionString)) {  
-      String queryString = "Select [CourseID],[Title],[Credits] from [MySchool].[dbo].[Course]";   
-      using (DbCommand command = new SqlCommand(queryString, conn)) {  
-         conn.Open();   
-         using (DbDataReader reader = command.ExecuteReader()) {  
-            while (reader.Read()) {  
-               // Credits column is the integer column, and you can use the GetInt32 method                        
-               // to return a 32-bit signed integer.                       
-               Console.WriteLine("Course:{0,-15} Credits:{1}",reader[1],reader.GetInt32(2));   
-            }  
-         }  
-      }  
-   }  
+```csharp
+private static void GetCredits(String connectionString) 
+{
+    using (SqlConnection conn = new SqlConnection(connectionString)) 
+    {
+        String queryString = "Select [CourseID],[Title],[Credits] from [MySchool].[dbo].[Course]";   
+        using (DbCommand command = new SqlCommand(queryString, conn)) 
+        {
+            conn.Open();   
+            using (DbDataReader reader = command.ExecuteReader()) 
+            {
+                while (reader.Read()) 
+                {
+                    // Credits column is the integer column, and you can use the GetInt32 method                        
+                    // to return a 32-bit signed integer.                       
+                    Console.WriteLine("Course:{0,-15} Credits:{1}",reader[1],reader.GetInt32(2));   
+                }
+            }
+        }
+    }
 }  
 ```  
   
@@ -1471,7 +1506,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as a 64-bit signed integer.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as a 64-bit signed integer.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -1516,7 +1551,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the name of the column, given the zero-based column ordinal.</summary>
+        <summary>When overridden in a derived class, gets the name of the column, given the zero-based column ordinal.</summary>
         <returns>The name of the specified column.</returns>
         <remarks>To be added.</remarks>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
@@ -1559,7 +1594,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="name">The name of the column.</param>
-        <summary>Gets the column ordinal given the name of the column.</summary>
+        <summary>When overridden in a derived class, gets the column ordinal given the name of the column.</summary>
         <returns>The zero-based column ordinal.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
@@ -1746,6 +1781,7 @@ private static void GetCredits(String connectionString) {
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Data.Common.DbDataReader" /> is closed.</exception>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
+        <exception cref="T:System.NotSupportedException">.NET Core only: all cases.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
       </Docs>
     </Member>
@@ -1849,7 +1885,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as an instance of <see cref="T:System.String" />.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as an instance of <see cref="T:System.String" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -1957,7 +1993,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
         <returns>The value of the specified column.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -2001,7 +2037,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="values">An array of <see cref="T:System.Object" /> into which to copy the attribute columns.</param>
-        <summary>Populates an array of objects with the column values of the current row.</summary>
+        <summary>When overridden in a derived class, populates an array of objects with the column values of the current row.</summary>
         <returns>The number of instances of <see cref="T:System.Object" /> in the array.</returns>
         <remarks>To be added.</remarks>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">ADO.NET Overview</related>
@@ -2037,7 +2073,7 @@ private static void GetCredits(String connectionString) {
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value that indicates whether this <see cref="T:System.Data.Common.DbDataReader" /> contains one or more rows.</summary>
+        <summary>When overridden in a derived class, gets a value that indicates whether this <see cref="T:System.Data.Common.DbDataReader" /> contains one or more rows.</summary>
         <value>
           <see langword="true" /> if the <see cref="T:System.Data.Common.DbDataReader" /> contains one or more rows; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -2077,7 +2113,7 @@ private static void GetCredits(String connectionString) {
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value indicating whether the <see cref="T:System.Data.Common.DbDataReader" /> is closed.</summary>
+        <summary>When overridden in a derived class, gets a value indicating whether the <see cref="T:System.Data.Common.DbDataReader" /> is closed.</summary>
         <value>
           <see langword="true" /> if the <see cref="T:System.Data.Common.DbDataReader" /> is closed; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -2125,7 +2161,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets a value that indicates whether the column contains nonexistent or missing values.</summary>
+        <summary>When overridden in a derived class, gets a value that indicates whether the column contains nonexistent or missing values.</summary>
         <returns>
           <see langword="true" /> if the specified column is equivalent to <see cref="T:System.DBNull" />; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -2195,7 +2231,7 @@ private static void GetCredits(String connectionString) {
 
  The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread.
 
- Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
 
  Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
 
@@ -2267,7 +2303,7 @@ private static void GetCredits(String connectionString) {
 
  The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
 
- Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
 
  This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
  
@@ -2342,7 +2378,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="ordinal">The zero-based column ordinal.</param>
-        <summary>Gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
         <value>The value of the specified column.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
@@ -2386,7 +2422,7 @@ private static void GetCredits(String connectionString) {
       </Parameters>
       <Docs>
         <param name="name">The name of the column.</param>
-        <summary>Gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
+        <summary>When overridden in a derived class, gets the value of the specified column as an instance of <see cref="T:System.Object" />.</summary>
         <value>The value of the specified column.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">No column with the specified name was found.</exception>
@@ -2427,7 +2463,7 @@ private static void GetCredits(String connectionString) {
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Advances the reader to the next result when reading the results of a batch of statements.</summary>
+        <summary>When overridden in a derived class, advances the reader to the next result when reading the results of a batch of statements.</summary>
         <returns>
           <see langword="true" /> if there are more result sets; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -2490,13 +2526,13 @@ private static void GetCredits(String connectionString) {
       <Parameters />
       <Docs>
         <summary>Asynchronously advances the reader to the next result when reading the results of a batch of statements.</summary>
-        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is <see langword="true" /> if there are more result sets or <see langword="false" /> if there aren't.</returns>
+        <returns>A task whose <see cref="P:System.Threading.Tasks.Task`1.Result" /> property is <see langword="true" /> if there are more result sets or <see langword="false" /> if there aren't.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 ## Remarks  
  The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread.
 
- Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
 
  Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
  ]]></format>
@@ -2544,7 +2580,7 @@ private static void GetCredits(String connectionString) {
 ## Remarks  
  The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
 
- Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
 
  This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
  
@@ -2589,7 +2625,7 @@ private static void GetCredits(String connectionString) {
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Advances the reader to the next record in a result set.</summary>
+        <summary>When overridden in a derived class, advances the reader to the next record in a result set.</summary>
         <returns>
           <see langword="true" /> if there are more rows; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -2658,7 +2694,7 @@ private static void GetCredits(String connectionString) {
 ## Remarks  
  The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread.
 
- Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
  
  Other methods and properties of the DbDataReader object should not be invoked while the returned Task is not yet completed.
 
@@ -2707,7 +2743,7 @@ private static void GetCredits(String connectionString) {
 ## Remarks  
  The default implementation of this asynchronous method invokes its synchronous counterpart and returns a completed Task, potentially blocking the calling thread. The default implementation also returns a cancelled task if passed an already cancelled cancellation token.
 
- Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default inmplementation using asynchronous I/O operations.
+ Data providers that support [asynchronous programming](~/docs/framework/data/adonet/asynchronous-programming.md) should override the default implementation using asynchronous I/O operations.
 
  This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.
  
@@ -2752,7 +2788,7 @@ private static void GetCredits(String connectionString) {
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of rows changed, inserted, or deleted by execution of the SQL statement.</summary>
+        <summary>When overridden in a derived class, gets the number of rows changed, inserted, or deleted by execution of the SQL statement.</summary>
         <value>The number of rows changed, inserted, or deleted. -1 for SELECT statements; 0 if no rows were affected or the statement failed.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2793,7 +2829,7 @@ private static void GetCredits(String connectionString) {
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>For a description of this member, see <see cref="M:System.Data.IDataReader.Close()" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2822,8 +2858,8 @@ private static void GetCredits(String connectionString) {
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>For a description of this member, see <see cref="M:System.Data.IDataReader.GetSchemaTable()" /></summary>
+        <returns>A <see cref="T:System.Data.DataTable" /> that describes the column metadata.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
