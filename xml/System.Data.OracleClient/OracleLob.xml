@@ -73,8 +73,8 @@ If(myLob == OracleLob.Null)
   
  The following C# example demonstrates how to open a temporary `LOB`.  
   
-```  
-OracleConnection connection = new OracleConnection("server=MyServer; integrated security=yes;");  
+```csharp
+var connection = new OracleConnection("server=MyServer; integrated security=yes;");  
 connection.Open();  
 OracleTransaction transaction = connection.BeginTransaction();  
 OracleCommand command = connection.CreateCommand();  
@@ -82,8 +82,8 @@ command.Transaction = transaction;
 command.CommandText = "declare xx blob; begin dbms_lob.createtemporary(xx, false, 0); :tempblob := xx; end;";  
 command.Parameters.Add(new OracleParameter("tempblob", OracleType.Blob)).Direction = ParameterDirection.Output;  
 command.ExecuteNonQuery();  
-OracleLob tempLob = (OracleLob)command.Parameters[0].Value;  
-byte[] tempbuff = new byte[10000];  
+var tempLob = (OracleLob)command.Parameters[0].Value;  
+var tempbuff = new byte[10000];  
 tempLob.BeginBatch(OracleLobOpenMode.ReadWrite);  
 tempLob.Write(tempbuff,0,tempbuff.Length);  
 tempLob.EndBatch();  
@@ -93,7 +93,7 @@ command.CommandType = CommandType.StoredProcedure;
 command.Parameters.Add(new OracleParameter("ImportDoc", OracleType.Blob)).Value = tempLob;  
 command.ExecuteNonQuery();  
 transaction.Commit();  
-connection.Close  
+connection.Close(); 
 ```  
   
 > [!NOTE]
