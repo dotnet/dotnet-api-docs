@@ -1,4 +1,4 @@
-﻿<Type Name="DiagnosticListener" FullName="System.Diagnostics.DiagnosticListener">
+<Type Name="DiagnosticListener" FullName="System.Diagnostics.DiagnosticListener">
   <TypeSignature Language="C#" Value="public class DiagnosticListener : System.Diagnostics.DiagnosticSource, IDisposable, IObservable&lt;System.Collections.Generic.KeyValuePair&lt;string,object&gt;&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit DiagnosticListener extends System.Diagnostics.DiagnosticSource implements class System.IDisposable, class System.IObservable`1&lt;valuetype System.Collections.Generic.KeyValuePair`2&lt;string, object&gt;&gt;" />
   <TypeSignature Language="DocId" Value="T:System.Diagnostics.DiagnosticListener" />
@@ -29,7 +29,11 @@
     <summary>Provides an implementation of the abstract <see cref="T:System.Diagnostics.DiagnosticSource" /> class that represents a named place to which a source sends its information (events).</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
-        
+
+## Remarks
+
+`DiagnosticListener` is a NotificationSource, which means the returned result can be used to  log notifications, but it also has a <xref:System.Diagnostics.DiagnosticListener.Subscribe%2A> method so notifications can be forwarded arbitrarily. Thus, its job is to forward things from the producer to all the listeners (multi-casting). Generally, you should not be making your own <xref:System.Diagnostics.DiagnosticListener> but use the default, so that notifications are as public as possible.
+
 For more information on the <xref:System.Diagnostics.DiagnosticSource> and <xref:System.Diagnostics.DiagnosticListener> classes, see [DiagnosticSource User's Guide](https://github.com/dotnet/corefx/blob/d3942d4671919edb0cca6ddc1840190f524a809d/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md).
 
         ]]></format>
@@ -59,13 +63,7 @@ For more information on the <xref:System.Diagnostics.DiagnosticSource> and <xref
       <Docs>
         <param name="name">The name of this <see cref="T:System.Diagnostics.DiagnosticListener" />.</param>
         <summary>Creates a new <see cref="T:System.Diagnostics.DiagnosticListener" />.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-
-`DiagnosticListener` is a NotificationSource, which means the returned result can be used to  log notifications, but it also has a <xref:System.Diagnostics.DiagnosticListener.Subscribe%2A> method so notifications can be forwarded arbitrarily. Thus, its job is to forward things from the producer to all the listeners (multi-casting). Generally, you should not be making your own <see cref="T:System.Diagnostics.DiagnosticListener" /> but use the default, so that notifications are as public as possible.
- 
-         ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="AllListeners">
@@ -269,9 +267,9 @@ If setup for the notification is expensive, you can call `IsEnabled` before perf
         <Parameter Name="payload" Type="System.Object" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="activity">To be added.</param>
-        <param name="payload">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="activity">The activity affected by an external event.</param>
+        <param name="payload">An object that represents the outgoing request.</param>
+        <summary>Invokes the OnActivityExport method of all the subscribers.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -294,9 +292,9 @@ If setup for the notification is expensive, you can call `IsEnabled` before perf
         <Parameter Name="payload" Type="System.Object" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="activity">To be added.</param>
-        <param name="payload">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="activity">The activity affected by an external event.</param>
+        <param name="payload">An object that represents the incoming request.</param>
+        <summary>Invokes the OnActivityImport method of all the subscribers.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -440,10 +438,10 @@ If `isEnabled` is `null`, no filtering is done (all overloads of <xref:System.Di
         <Parameter Name="onActivityExport" Type="System.Action&lt;System.Diagnostics.Activity,System.Object&gt;" Index="3" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="observer">To be added.</param>
-        <param name="isEnabled">To be added.</param>
-        <param name="onActivityImport">To be added.</param>
-        <param name="onActivityExport">To be added.</param>
+        <param name="observer">A subscriber.</param>
+        <param name="isEnabled">A delegate that filters events based on their name and up to two context objects (which can be <see langword="null" />), or <see langword="null" /> if an event filter is not desirable.</param>
+        <param name="onActivityImport">An action delegate that receives the activity affected by an external event and an object that represents the incoming request.</param>
+        <param name="onActivityExport">An action delegate that receives the activity affected by an external event and an object that represents the outgoing request.</param>
         <summary>Adds a subscriber, optionally filters events based on their name and up to two context objects, and specifies methods to call when providers import or export activites from outside the process.</summary>
         <returns>A reference to an interface that allows the listener to stop receiving notifications before the <see cref="T:System.Diagnostics.DiagnosticSource" /> has finished sending them.</returns>
         <remarks>
