@@ -39,58 +39,64 @@
   
     -   Translates Americanism to Britishisms in the text to be spoken.  
   
-    -   If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId> event type, an event to drive a synthesizer progress meter is created.  
+    -   If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interface provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary?displayProperty=nameWithType> event type, an event to drive a synthesizer progress meter is created.  
   
 3.  A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.  
   
 ```csharp
-private const int WordBoundaryFlag = 1 << (int)TtsEventId.WordBoundary;  
-private readonly char[] spaces = new char[] { ' ', '\t', '\r', '\n' };  
-internal struct UsVsUk  
-{  
-  internal string UK;  
-  internal string US;  
-}  
-  
-override public void Speak (TextFragment [] frags, IntPtr wfx, ITtsEngineSite site)  
-{  
-  TextFragment [] newFrags=new TextFragment[frags.Length];  
-  
-  for (int i=0;i<frags.Length;i++){  
-    newFrags[i].State=frags[i].State;  
-    //truncate  
-    newFrags[i].TextToSpeak = frags[i].TextToSpeak.Substring(frags[i].TextOffset,  
-                               frags[i].TextLength);  
-    newFrags[i].TextLength = newFrags[i].TextToSpeak.Length;  
-    newFrags[i].TextOffset = 0;  
-    if (newFrags[i].State.Action == TtsEngineAction.Speak) {  
-      //Us to UK conversion  
-      foreach (UsVsUk term in TransList) {  
-      newFrags[i].TextToSpeak.Replace(term.US, term.UK);  
-      }  
-      //Generate progress meter events if supported  
-      if ((site.EventInterest & WordBoundaryFlag) != 0) {  
-      string[] subs = newFrags[i].TextToSpeak.Split(spaces);  
-  
-      foreach (string s in subs) {  
-        int offset = newFrags[i].TextOffset;  
-        SpeechEventInfo spEvent = new SpeechEventInfo((Int16)TtsEventId.WordBoundary,   
-                (Int16)EventParameterType.Undefined,   
-                 s.Length, new IntPtr(offset));  
-        offset += s.Length;  
-        if (s.Trim().Length > 0) {  
-          SpeechEventInfo[] events = new SpeechEventInfo[1];  
-          events[0] = spEvent;  
-          site.AddEvents(events, 1);  
-        }  
-      }  
-      }  
-    }  
-  }  
-  
-  _baseSynthesize.Speak(newFrags, wfx, site);  
-  
-}  
+private const int WordBoundaryFlag = 1 << (int)TtsEventId.WordBoundary;
+private readonly char[] spaces = new char[] { ' ', '\t', '\r', '\n' };
+internal struct UsVsUk
+{
+    internal string UK;
+    internal string US;
+}
+ 
+override public void Speak (TextFragment [] frags, IntPtr wfx, ITtsEngineSite site)
+{
+    TextFragment [] newFrags=new TextFragment[frags.Length];  
+    
+    for (int i=0;i<frags.Length;i++)
+    {
+        newFrags[i].State=frags[i].State;
+        //truncate
+        newFrags[i].TextToSpeak = frags[i].TextToSpeak.Substring(frags[i].TextOffset,
+                                  frags[i].TextLength);
+        newFrags[i].TextLength = newFrags[i].TextToSpeak.Length;
+        newFrags[i].TextOffset = 0;
+        if (newFrags[i].State.Action == TtsEngineAction.Speak) 
+        {
+            //US to UK conversion
+            foreach (UsVsUk term in TransList)
+            {
+                newFrags[i].TextToSpeak.Replace(term.US, term.UK);
+            }
+            //Generate progress meter events if supported
+            if ((site.EventInterest & WordBoundaryFlag) != 0)
+            {
+                string[] subs = newFrags[i].TextToSpeak.Split(spaces);
+
+                foreach (string s in subs)
+                {
+                    int offset = newFrags[i].TextOffset;
+                    SpeechEventInfo spEvent = new SpeechEventInfo((Int16)TtsEventId.WordBoundary,
+                          (Int16)EventParameterType.Undefined,
+                          s.Length, new IntPtr(offset));
+                    offset += s.Length;
+                    if (s.Trim().Length > 0) 
+                    {
+                        SpeechEventInfo[] events = new SpeechEventInfo[1];
+                        events[0] = spEvent;
+                        site.AddEvents(events, 1);
+                    }
+                }
+            }
+        }
+    }
+
+    _baseSynthesize.Speak(newFrags, wfx, site);
+
+}
 ```  
   
  ]]></format>
