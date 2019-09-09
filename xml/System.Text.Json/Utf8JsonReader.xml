@@ -1500,7 +1500,7 @@ The current depth exceeds the recursive limit set by the maximum depth.</excepti
         <ReturnType>System.Buffers.ReadOnlySequence&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the value of the last processed token as a <see cref="T:System.ReadOnlySpan`1" /> slice of the input payload. If the JSON is provided within a <see cref="T:System.Buffers.ReadOnlySequence`1" /> and the slice that represents the token value fits in a single segment, then <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> contains the sliced value since it can be represented as a span. Otherwise, <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> contains the token value.</summary>
+        <summary>Gets the raw value of the last processed token as a ReadOnlySequence&lt;byte&gt; slice of the input payload. If the JSON is provided within a ReadOnlySequence&lt;byte&gt; and the slice that represents the token value fits in a single segment, then <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> contains the sliced value since it can be represented as a span. Otherwise, <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> contains the token value.</summary>
         <value>A byte read-only sequence.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -1508,9 +1508,14 @@ The current depth exceeds the recursive limit set by the maximum depth.</excepti
 ## Remarks
 
 
-If <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `false`, `ValueSequence` is empty. 
+If <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `false`, <xref:System.Text.Json.Utf8JsonReader.ValueSequence> is empty. 
 Therefore, only access `ValueSequence` if <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `true`.
 Otherwise, the token value must be accessed from <xref:System.Text.Json.Utf8JsonReader.ValueSpan>.
+
+There is no guarantee that this property will always contain well-formed data. If the input JSON passed in to the Utf8JsonReader contains invalid UTF-8 bytes within JSON string tokens, this property will return back those invalid UTF-8 bytes as is.
+Therefore, if the input is untrusted or not previously validated, call <xref:System.Text.Json.Utf8JsonReader.GetString> to get the JSON string token.
+
+Since this property returns the raw bytes, avoid using it for text comparison. Instead call <xref:System.Text.Json.Utf8JsonReader.ValueTextEquals> which will unescape the text if necessary.
 
  ]]></format>
         </remarks>
@@ -1537,7 +1542,7 @@ Otherwise, the token value must be accessed from <xref:System.Text.Json.Utf8Json
         <ReturnType>System.ReadOnlySpan&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the value of the last processed token as a ReadOnlySpan&lt;byte&gt; slice of the input payload. If the JSON is provided within a ReadOnlySequence&lt;byte&gt; and the slice that represents the token value fits in a single segment, then <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> contains the sliced value since it can be represented as a span. Otherwise, the <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> contains the token value.</summary>
+        <summary>Gets the raw value of the last processed token as a ReadOnlySpan&lt;byte&gt; slice of the input payload. If the JSON is provided within a ReadOnlySequence&lt;byte&gt; and the slice that represents the token value fits in a single segment, then <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> contains the sliced value since it can be represented as a span. Otherwise, <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> contains the token value.</summary>
         <value>A read-only span of bytes.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -1547,6 +1552,11 @@ Otherwise, the token value must be accessed from <xref:System.Text.Json.Utf8Json
 If <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `true`, <xref:System.Text.Json.Utf8JsonReader.ValueSpan> is empty. 
 Therefore, only access `ValueSpan` if <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `false`.
 Otherwise, the token value must be accessed from <xref:System.Text.Json.Utf8JsonReader.ValueSequence>.
+
+There is no guarantee that this property will always contain well-formed data. If the input JSON passed in to the Utf8JsonReader contains invalid UTF-8 bytes within JSON string tokens, this property will return back those invalid UTF-8 bytes as is.
+Therefore, if the input is untrusted or not previously validated, call <xref:System.Text.Json.Utf8JsonReader.GetString> to get the JSON string token.
+
+Since this property returns the raw bytes, avoid using it for text comparison. Instead call <xref:System.Text.Json.Utf8JsonReader.ValueTextEquals> which will unescape the text if necessary.
 
  ]]></format>
         </remarks>
@@ -1596,13 +1606,13 @@ The comparison of the JSON token value in the source and the lookup text is done
 
 ## Remarks
 
-If the lookup text is invalid UTF-8 text, the method returns `false` since you can't have invalid UTF-8 within the JSON payload.
+The lookup text must be valid UTF-8 text. Otherwise, this method could return `true` if the source has a string token containing invalid UTF-8 text that matches.
               
 The comparison of the JSON token value in the source and the lookup text is done by first unescaping the JSON value in source, if required. The lookup text is matched as is, without any modifications to it.
               
           ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">The JSON token that is not a string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON token is not a JSON string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="ValueTextEquals">
@@ -1624,10 +1634,10 @@ The comparison of the JSON token value in the source and the lookup text is done
         <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="text">The UTF-8 encoded text to compare against.</param>
-        <summary>Compares the UTF-8 encoded text in a read-only character span to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
+        <param name="text">The text to compare against.</param>
+        <summary>Compares the text in a read-only character span to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
         <returns>
-          <see langword="true" /> if the JSON token value in the source matches the UTF-8 encoded lookup text; otherwise, <see langword="false" />.</returns>
+          <see langword="true" /> if the JSON token value in the source matches the lookup text; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1639,7 +1649,7 @@ The comparison of the JSON token value in the source and the lookup text is done
               
           ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">The JSON token that is not a string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON token is not a JSON string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="ValueTextEquals">
@@ -1662,7 +1672,7 @@ The comparison of the JSON token value in the source and the lookup text is done
       </Parameters>
       <Docs>
         <param name="text">The text to compare against.</param>
-        <summary>Compares the text in a character span to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
+        <summary>Compares the string text to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
         <returns>
           <see langword="true" /> if the JSON token value in the source matches the lookup text; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1670,13 +1680,13 @@ The comparison of the JSON token value in the source and the lookup text is done
 
 ## Remarks
 
-If the lookup text is invalid UTF-8 text, the method returns `false` since you can't have invalid UTF-8 within the JSON payload.
+If the lookup text is invalid or incomplete UTF-16 text (that is, unpaired surrogates), the method returns `false` since you can't have invalid UTF-16 within the JSON payload.
               
 The comparison of the JSON token value in the source and the lookup text is done by first unescaping the JSON value in source, if required. The lookup text is matched as is, without any modifications to it.
               
           ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">The JSON token that is not a string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON token is not a JSON string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
       </Docs>
     </Member>
   </Members>
