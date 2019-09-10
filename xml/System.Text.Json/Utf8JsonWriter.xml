@@ -30,9 +30,9 @@
 
 `Utf8JsonWriter` writes the text sequentially with no caching and by default adheres to the [JSON RFC](https://tools.ietf.org/html/rfc8259), with the exception of writing comments.
 
-A method that attempts to write invalid JSON when validation is enabled throws a <xref:System.InvalidOperationException> with a context-specific error message.
+A method that attempts to write invalid JSON when validation is enabled throws an <xref:System.InvalidOperationException> with a context-specific error message.
 
-To be able to format the output with indentation and white space OR to skip validation, create an instance of <xref:System.Text.Json.JsonWriterOptions> and pass it in to the writer.
+To be able to format the output with indentation and white space, to skip validation, OR to customize the escaping behavior, create an instance of <xref:System.Text.Json.JsonWriterOptions> and pass it in to the writer.
 
  ]]></format>
     </remarks>
@@ -55,8 +55,8 @@ To be able to format the output with indentation and white space OR to skip vali
       </Parameters>
       <Docs>
         <param name="bufferWriter">The destination for writing JSON text.</param>
-        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> By default, it writes minimized JSON (with no extra whitespace) and validates that the JSON being written is structurally valid according to the JSON RFC.</param>
-        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> instance with a specified <see langword="System.Buffers.IBufferWriter&lt;System.Byte&gt;" />.</summary>
+        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" />. By default, it writes minimized JSON (with no extra white space) and validates that the JSON being written is structurally valid according to the JSON RFC.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> class using the specified <see cref="T:System.Buffers.IBufferWriter`1" /> to write the output to and customization options.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="bufferWriter" /> is <see langword="null" />.</exception>
@@ -79,8 +79,8 @@ To be able to format the output with indentation and white space OR to skip vali
       </Parameters>
       <Docs>
         <param name="utf8Json">The destination for writing JSON text.</param>
-        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> By default, it writes minimized JSON (with no extra whitespace) and validates that the JSON being written is structurally valid according to the JSON RFC.</param>
-        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> instance with a specified <paramref name="utf8Json" />.</summary>
+        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" />. By default, it writes minimized JSON (with no extra white space) and validates that the JSON being written is structurally valid according to the JSON RFC.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> class using the specified stream to write the output to and customization options.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="utf8Json" /> is <see langword="null" />.</exception>
@@ -322,8 +322,8 @@ In the case of <xref:System.IO.Stream>, this writes the data to the stream and f
         <ReturnType>System.Text.Json.JsonWriterOptions</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the custom behavior when writing JSON using this instance, which indicates whether to format the output while writing and whether to skip structural JSON validation.</summary>
-        <value>An object that defines the behavior of this instance for formatting and validation.</value>
+        <summary>Gets the custom behavior when writing JSON using this instance, which indicates whether to format the output while writing, whether to skip structural JSON validation, and which characters to escape.</summary>
+        <value>The custom behavior of this instance of the writer for formatting, validating, and escaping.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -383,7 +383,7 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
 
 ## Remarks
 
-The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options but now writes to `bufferWriter` as the new destination.
+The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options but now write to `bufferWriter` as the new destination.
 
           ]]></format>
         </remarks>
@@ -806,7 +806,7 @@ The property name should already be escaped when the instance of <xref:System.Te
         <Parameter Name="utf8Value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON comment within /*..*/.</param>
+        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON comment within `/*..*/`.</param>
         <summary>Writes a UTF-8 text value as a JSON comment.</summary>
         <remarks>
           <format><![CDATA[
@@ -821,7 +821,7 @@ The comment value is not escaped before writing.
         
 -or-
 
-<paramref name="utf8Value" /> contains a comment delimiter (that is, */).</exception>
+<paramref name="utf8Value" /> contains a comment delimiter (that is, `*/`).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCommentValue">
@@ -843,7 +843,7 @@ The comment value is not escaped before writing.
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within /*..*/.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within `/*..*/`.</param>
         <summary>Writes a UTF-16 text value as a JSON comment.</summary>
         <remarks>
           <format><![CDATA[
@@ -854,11 +854,11 @@ The comment value is not escaped before writing.
 
           ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The specified value is too large OR.
+        <exception cref="T:System.ArgumentException">The specified value is too large.
         
 -or-
 
-<paramref name="value" /> contains a comment delimiter (that is, */).</exception>
+<paramref name="value" /> contains a comment delimiter (that is, `*/`).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCommentValue">
@@ -880,7 +880,7 @@ The comment value is not escaped before writing.
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within /*..*/.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within `/*..*/`.</param>
         <summary>Writes a string text value as a JSON comment.</summary>
         <remarks>
           <format><![CDATA[
@@ -895,7 +895,7 @@ The comment value is not escaped before writing.
         
 -or-
 
-<paramref name="value" /> contains a comment delimiter (that is, */).</exception>
+<paramref name="value" /> contains a comment delimiter (that is, `*/`).</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="value" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
@@ -1167,7 +1167,7 @@ The property name is escaped before writing.
 
 ## Remarks
 
-Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
 
 The property name is escaped before writing.
 
@@ -1281,7 +1281,7 @@ The property name is escaped before writing.
 
 ## Remarks
 
-Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
 
 The property name is escaped before writing.
 
@@ -1443,7 +1443,7 @@ The property name is escaped before writing.
 
 ## Remarks
 
-Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
 
 The property name is escaped before writing.
 
@@ -1557,7 +1557,7 @@ The property name is escaped before writing.
 
 ## Remarks
 
-Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
 
 The property name is escaped before writing.
 
@@ -1720,7 +1720,7 @@ The property name is escaped before writing.
 
 ## Remarks
 
-Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
 
 The property name is escaped before writing.
 
@@ -1837,7 +1837,7 @@ The property name is escaped before writing.
 
 ## Remarks
 
-Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
 
 The property name is escaped before writing.
 
@@ -2001,7 +2001,7 @@ The property name should already be escaped when the instance of <xref:System.Te
 
 ## Remarks
 
-Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
 
 The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
 
@@ -2112,7 +2112,7 @@ The property name should already be escaped when the instance of <xref:System.Te
 
 ## Remarks
 
-Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
 
 The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
 
@@ -2264,7 +2264,7 @@ This method writes the <xref:System.Decimal> value using the default <xref:Syste
 
 ## Remarks
 
-This method writes the <xref:System.Double> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+This method writes the <xref:System.Double> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
 
           ]]></format>
         </remarks>
@@ -2363,7 +2363,7 @@ This method writes the <xref:System.Int64> value using the default <xref:System.
 
 ## Remarks
 
-This method writes the <xref:System.Single> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+This method writes the <xref:System.Single> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
 
           ]]></format>
         </remarks>
@@ -2756,7 +2756,7 @@ The property name should already be escaped when the instance of <xref:System.Te
         </remarks>
         <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000.
     
-- or -
+-or-
 
 Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
@@ -2934,7 +2934,7 @@ The property name should already be escaped when the instance of <xref:System.Te
         </remarks>
         <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1000.
           
-- or -
+-or-
 
 Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
@@ -3154,6 +3154,8 @@ The property name and value are escaped before writing.
 ## Remarks
 
 The property name and value are escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.ReadOnlySpan{System.Byte})> method was called.
 
           ]]></format>
         </remarks>
@@ -3414,6 +3416,8 @@ The property name and value are escaped before writing.
 ## Remarks
 
 The property name and value are escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.ReadOnlySpan{System.Char})> method was called.
 
           ]]></format>
         </remarks>
@@ -3680,6 +3684,8 @@ The property name and value are escaped before writing.
 
 The property name and value are escaped before writing.
 
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.String)> method was called.
+
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
@@ -3909,6 +3915,8 @@ The property name should already be escaped when the instance of <xref:System.Te
 
 The value is escaped before writing.
 
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.Text.Json.JsonEncodedText)> method was called.
+
             ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
@@ -3946,6 +3954,8 @@ The value is escaped before writing.
 The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
 
 The value is escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.Text.Json.JsonEncodedText)> method was called.
 
             ]]></format>
         </remarks>
@@ -4184,6 +4194,8 @@ The value is escaped before writing.
 ## Remarks
 
 The value is escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNullValue> method was called.
 
           ]]></format>
         </remarks>
