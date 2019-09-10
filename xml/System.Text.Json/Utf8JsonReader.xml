@@ -31,7 +31,7 @@ When `Utf8JsonReader` encounters invalid JSON, it throws a <xref:System.Text.Jso
 
 Since this type is a ref struct, it doesn't directly support async. However, it does provide support for reentrancy to read incomplete data and to continue reading once more data is presented.
 
-To be able to set max depth while reading OR allow skipping comments, create an instance of <xref:System.Text.Json.JsonReaderState> and pass it to the reader.
+To be able to set max depth while reading OR allow skipping comments, create an instance of <xref:System.Text.Json.JsonReaderOptions> and pass it to the reader.
 
  ]]></format>
     </remarks>
@@ -54,7 +54,7 @@ To be able to set max depth while reading OR allow skipping comments, create an 
       </Parameters>
       <Docs>
         <param name="jsonData">The UTF-8 encoded JSON text to process.</param>
-        <param name="options">An object that defines customized behavior of the <see cref="T:System.Text.Json.Utf8JsonReader" /> that differs from the JSON RFC (for example how to handle comments or maximum depth allowed when reading). By default, the <see cref="T:System.Text.Json.Utf8JsonReader" /> follows the JSON RFC strictly; comments within the JSON are invalid, and the maximum depth is 64.</param>
+        <param name="options">Defines customized behavior of the <see cref="T:System.Text.Json.Utf8JsonReader" /> that differs from the JSON RFC (for example how to handle comments or maximum depth allowed when reading). By default, the <see cref="T:System.Text.Json.Utf8JsonReader" /> follows the JSON RFC strictly; comments within the JSON are invalid, and the maximum depth is 64.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> structure that processes a read-only sequence of UTF-8 encoded text using the specified options.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -86,7 +86,7 @@ This constructor assumes that the entire JSON payload is contained in `jsonData`
       </Parameters>
       <Docs>
         <param name="jsonData">The UTF-8 encoded JSON text to process.</param>
-        <param name="options">An object that defines customized behavior of the <see cref="T:System.Text.Json.Utf8JsonReader" /> that differs from the JSON RFC (for example how to handle comments or maximum depth allowed when reading). By default, the <see cref="T:System.Text.Json.Utf8JsonReader" /> follows the JSON RFC strictly; comments within the JSON are invalid, and the maximum depth is 64.</param>
+        <param name="options">Defines customized behavior of the <see cref="T:System.Text.Json.Utf8JsonReader" /> that differs from the JSON RFC (for example how to handle comments or maximum depth allowed when reading). By default, the <see cref="T:System.Text.Json.Utf8JsonReader" /> follows the JSON RFC strictly; comments within the JSON are invalid, and the maximum depth is 64.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> structure that processes a read-only span of UTF-8 encoded text using the specified options.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -121,8 +121,8 @@ This constructor assumes that the entire JSON payload is contained in `jsonData`
       <Docs>
         <param name="jsonData">The UTF-8 encoded JSON text to process.</param>
         <param name="isFinalBlock">
-          <see langword="true" /> if the input sequence contains the entire data to process; <see langword="false" /> only the input span contains partial data with more data to follow.</param>
-        <param name="state">An object that contains the reader state. If this is the first call to the constructor, pass in a default state. Otherwise, capture the state from the previous instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> and pass that back.</param>
+          <see langword="true" /> to indicate that the input sequence contains the entire data to process; <see langword="false" /> to indicate that the input span contains partial data with more data to follow.</param>
+        <param name="state">An object that contains the reader state. If this is the first call to the constructor, pass in a default state. Otherwise, capture the state from the previous instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> by getting the value of the <see cref="P:System.Text.Json.Utf8JsonReader.CurrentState" /> property and pass that back.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> structure that processes a read-only sequence of UTF-8 encoded text and indicates whether the input contains all the text to process.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -156,8 +156,8 @@ This is the reason why the constructor accepts a <xref:System.Text.Json.JsonRead
       <Docs>
         <param name="jsonData">The UTF-8 encoded JSON text to process.</param>
         <param name="isFinalBlock">
-          <see langword="true" /> if the input sequence contains the entire data to process; <see langword="false" /> if the input span contains partial data with more data to follow.</param>
-        <param name="state">An object that contains the reader state. If it's the first call to the constructor, it should reflect a default state; otherwise, it should capture the state from the previous instance instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> and pass that back.</param>
+          <see langword="true" /> to indicate that the input sequence contains the entire data to process; <see langword="false" /> to indicate that the input span contains partial data with more data to follow.</param>
+        <param name="state">An object that contains the reader state. If it's the first call to the constructor, pass in the default state. Otherwise, capture the state from the previous instance instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> by getting the value of the <see cref="P:System.Text.Json.Utf8JsonReader.CurrentState" /> property and pass that back.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonReader" /> structure that processes a read-only span of UTF-8 encoded text and indicates whether the input contains all the text to process.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -301,6 +301,7 @@ Unlike the <xref:System.Text.Json.Utf8JsonReader>, which is a ref struct, the st
 -or-
 
 The JSON token value represents a number less than <see cref="F:System.Byte.MinValue" /> or greater than <see cref="F:System.Byte.MaxValue" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetBytesFromBase64">
@@ -325,6 +326,7 @@ The JSON token value represents a number less than <see cref="F:System.Byte.MinV
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The type of the JSON token is not a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
         <exception cref="T:System.FormatException">The value is not encoded as Base64 text, so it can't be decoded to bytes.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetComment">
@@ -346,8 +348,9 @@ The JSON token value represents a number less than <see cref="F:System.Byte.MinV
       <Docs>
         <summary>Parses the current JSON token value from the source as a comment, transcoded it as a <see cref="T:System.String" />.</summary>
         <returns>The comment that represents the current JSON token value.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>This is only applicable when the reader is constructed using the <see cref="F:System.Text.Json.JsonCommentHandling.Allow" /> option. Otherwise, the <see cref="P:System.Text.Json.Utf8JsonReader.TokenType" /> will never be <see cref="F:System.Text.Json.JsonTokenType.Comment" />.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token is not a comment.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetDateTime">
@@ -368,10 +371,23 @@ The JSON token value represents a number less than <see cref="F:System.Byte.MinV
       <Parameters />
       <Docs>
         <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.DateTime" />.</summary>
-        <returns>The date and time, if the entire UTF-8 encoded token value can be successfully parsed.</returns>
-        <remarks>This method only creates a DateTime representation of JSON strings that conform to the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md)).</remarks>
+        <returns>The date and time value, if the entire UTF-8 encoded token value can be successfully parsed.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method only creates a DateTime representation of JSON strings that conform to the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md)).
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.InvalidOperationException">The value of the JSON token isn't a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
-        <exception cref="T:System.FormatException">The JSON token value cannot be read as a <see cref="T:System.DateTime" />.</exception>
+        <exception cref="T:System.FormatException">The JSON token value cannot be read as a <see cref="T:System.DateTime" />.
+        
+-or-
+        
+The entire UTF-8 encoded token value cannot be parsed to a <see cref="System.DateTime" /> value.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetDateTimeOffset">
@@ -392,10 +408,23 @@ The JSON token value represents a number less than <see cref="F:System.Byte.MinV
       <Parameters />
       <Docs>
         <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.DateTimeOffset" />.</summary>
-        <returns>The date and time value, if the entire UTF-8 encoded token value can be successfully parsed.</returns>
-        <remarks>This method only creates a DateTimeOffset representation of JSON strings that conform to the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md)).</remarks>
+        <returns>The date and time offset, if the entire UTF-8 encoded token value can be successfully parsed.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method only creates a DateTimeOffset representation of JSON strings that conform to the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md)).
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.InvalidOperationException">The value of the JSON token isn't a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
-        <exception cref="T:System.FormatException">The JSON token value cannot be read as a <see cref="T:System.DateTimeOffset" />.</exception>
+        <exception cref="T:System.FormatException">The JSON token value cannot be read as a <see cref="T:System.DateTimeOffset" />.
+
+-or-
+        
+The entire UTF-8 encoded token value cannot be parsed to a <see cref="System.DateTimeOffset" /> value.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetDecimal">
@@ -417,15 +446,7 @@ The JSON token value represents a number less than <see cref="F:System.Byte.MinV
       <Docs>
         <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Decimal" />.</summary>
         <returns>The UTF-8 encoded token value parsed to a <see cref="T:System.Decimal" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The `GetDecimal` method throws an exception if the entire UTF-8 encoded token value cannnot be parsed to a <xref:System.Decimal> value.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
         <exception cref="T:System.FormatException">The JSON token value represents a number less than <see cref="F:System.Decimal.MinValue" /> or greater than <see cref="F:System.Decimal.MaxValue" />.</exception>
         <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
@@ -450,15 +471,7 @@ The `GetDecimal` method throws an exception if the entire UTF-8 encoded token va
       <Docs>
         <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Double" />.</summary>
         <returns>The UTF-8 encoded token value parsed to a <see cref="T:System.Double" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The `GetDouble` method throws an exception if the entire UTF-8 encoded token value cannnot be parsed to a <xref:System.Double> value.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
         <exception cref="T:System.FormatException">The JSON token value represents a number less than <see cref="F:System.Double.MinValue" /> or greater than <see cref="F:System.Double.MaxValue" />.</exception>
         <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
@@ -485,7 +498,12 @@ The `GetDouble` method throws an exception if the entire UTF-8 encoded token val
         <returns>The GUID value, if the entire UTF-8 encoded token value can be successfully parsed.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The value of the JSON token isn't a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
-        <exception cref="T:System.FormatException">The JSON token value is in an unsupported format for a Guid.</exception>
+        <exception cref="T:System.FormatException">The JSON token value is in an unsupported format for a Guid.
+        
+-or-
+
+The entire UTF-8 encoded token value cannot be parsed to a <see cref="System.Guid" /> value.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetInt16">
@@ -514,6 +532,7 @@ The `GetDouble` method throws an exception if the entire UTF-8 encoded token val
 -or-
 
 The JSON token value represents a number less than <see cref="F:System.Int16.MinValue" /> or greater than <see cref="F:System.Int16.MaxValue" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetInt32">
@@ -535,15 +554,7 @@ The JSON token value represents a number less than <see cref="F:System.Int16.Min
       <Docs>
         <summary>Reads the next JSON token value from the source and parses it to an <see cref="T:System.Int32" />.</summary>
         <returns>The UTF-8 encoded token value parsed to an <see cref="T:System.Int32" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The `GetInt32` method throws an exception if the entire UTF-8 encoded token value cannnot be parsed to a <xref:System.Int32> value.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
         <exception cref="T:System.FormatException">The JSON token value is of the incorrect numeric format. For example, it contains a decimal or is written in scientific notation.
             
@@ -572,15 +583,7 @@ The JSON token value represents a number less than <see cref="F:System.Int32.Min
       <Docs>
         <summary>Reads the next JSON token value from the source and parses it to an <see cref="T:System.Int64" />.</summary>
         <returns>The UTF-8 encoded token value parsed to an <see cref="T:System.Int64" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The `GetInt64` method throws an exception if the entire UTF-8 encoded token value cannnot be parsed to a <xref:System.Int64> value.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
         <exception cref="T:System.FormatException">The JSON token value is of the incorrect numeric format. For example, it contains a decimal or is written in scientific notation.
             
@@ -621,6 +624,7 @@ The JSON token value represents a number less than <see cref="F:System.Int64.Min
 -or-
 
 The JSON token value represents a number less than <see cref="F:System.SByte.MinValue" /> or greater than <see cref="F:System.SByte.MaxValue" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetSingle">
@@ -642,15 +646,7 @@ The JSON token value represents a number less than <see cref="F:System.SByte.Min
       <Docs>
         <summary>Reads the next JSON token value from the source and parses it to a <see cref="T:System.Single" />.</summary>
         <returns>The UTF-8 encoded token value parsed to a <see cref="T:System.Single" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The `GetSingle` method throws an exception if the entire UTF-8 encoded token value cannnot be parsed to a <xref:System.Single> value.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
         <exception cref="T:System.FormatException">The JSON token value represents a number less than <see cref="F:System.Single.MinValue" /> or greater than <see cref="F:System.Single.MaxValue" />.</exception>
         <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
@@ -723,6 +719,7 @@ The JSON string contains invalid UTF-8 bytes or invalid UTF-16 surrogates.</exce
 -or-
 
 The JSON token value represents a number less than <see cref="F:System.UInt16.MinValue" /> or greater than <see cref="F:System.UInt16.MaxValue" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="GetUInt32">
@@ -970,7 +967,7 @@ The current depth exceeds the recursive limit set by the maximum depth.</excepti
 
 For JSON strings (including property names), this value points to before the start quote.
 
-For comments, this value points to before the first comment delimiter (that is, '/').
+For comments, this value points to before the first comment delimiter (that is, '/'). This is only applicable when the reader is constructed using the <xref:System.Text.Json.JsonCommentHandling.Allow?displayProperty=nameWithType> option.
 
             ]]></format>
         </remarks>
@@ -1022,6 +1019,7 @@ For comments, this value points to before the first comment delimiter (that is, 
           <see langword="true" /> if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.Byte" /> value; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="TryGetBytesFromBase64">
@@ -1049,6 +1047,7 @@ For comments, this value points to before the first comment delimiter (that is, 
           <see langword="true" /> if the entire token value is encoded as valid Base64 text and can be successfully decoded to bytes; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token is not a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="TryGetDateTime">
@@ -1076,6 +1075,7 @@ For comments, this value points to before the first comment delimiter (that is, 
           <see langword="true" /> if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.DateTime" /> value; otherwise, <see langword="false" />.</returns>
         <remarks>This method only creates a DateTime representation of JSON strings that conform to the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md)).</remarks>
         <exception cref="T:System.InvalidOperationException">The value of the JSON token isn't a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="TryGetDateTimeOffset">
@@ -1103,6 +1103,7 @@ For comments, this value points to before the first comment delimiter (that is, 
           <see langword="true" /> if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.DateTimeOffset" /> value; otherwise, <see langword="false" />.</returns>
         <remarks>This method only creates a DateTimeOffset representation of JSON strings that conform to the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md)).</remarks>
         <exception cref="T:System.InvalidOperationException">The value of the JSON token isn't a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="TryGetDecimal">
@@ -1194,6 +1195,7 @@ This method only parses <xref:System.Guid> values with hyphens and without any s
          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The value of the JSON token isn't a <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="TryGetInt16">
@@ -1221,6 +1223,7 @@ This method only parses <xref:System.Guid> values with hyphens and without any s
           <see langword="true" /> if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.Int16" /> value; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="TryGetInt32">
@@ -1309,6 +1312,7 @@ This method only parses <xref:System.Guid> values with hyphens and without any s
           <see langword="true" /> if the entire UTF-8 encoded token value can be successfully parsed to an <see cref="T:System.SByte" /> value; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="TryGetSingle">
@@ -1369,6 +1373,7 @@ This method only parses <xref:System.Guid> values with hyphens and without any s
           <see langword="true" /> if the entire UTF-8 encoded token value can be successfully parsed to a <see cref="T:System.UInt16" /> value; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">The JSON token value isn't a <see cref="F:System.Text.Json.JsonTokenType.Number" />.</exception>
+        <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
       </Docs>
     </Member>
     <Member MemberName="TryGetUInt32">
@@ -1500,17 +1505,23 @@ The current depth exceeds the recursive limit set by the maximum depth.</excepti
         <ReturnType>System.Buffers.ReadOnlySequence&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the value of the last processed token as a <see cref="T:System.ReadOnlySpan`1" /> slice of the input payload. If the JSON is provided within a <see cref="T:System.Buffers.ReadOnlySequence`1" /> and the slice that represents the token value fits in a single segment, then <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> contains the sliced value since it can be represented as a span. Otherwise, <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> contains the token value.</summary>
+        <summary>Gets the raw value of the last processed token as a ReadOnlySequence&lt;byte&gt; slice of the input payload, only if the token is contained within multiple segments.</summary>
         <value>A byte read-only sequence.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
+If the JSON is provided within a ReadOnlySequence&lt;byte&gt; and the slice that represents the token value fits in a single segment, then <xref:System.Text.Json.Utf8JsonReader.ValueSpan> contains the sliced value since it can be represented as a span. Otherwise, `ValueSequence` contains the token value.
 
 If <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `false`, `ValueSequence` is empty. 
 Therefore, only access `ValueSequence` if <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `true`.
 Otherwise, the token value must be accessed from <xref:System.Text.Json.Utf8JsonReader.ValueSpan>.
+
+There is no guarantee that this property will always contain well-formed data. If the input JSON passed in to the `Utf8JsonReader` contains invalid UTF-8 bytes within JSON string tokens, this property will return back those invalid UTF-8 bytes as is.
+Therefore, if the input is untrusted or not previously validated, call <xref:System.Text.Json.Utf8JsonReader.GetString> to get the JSON string token.
+
+Since this property returns the raw bytes, avoid using it for text comparison. Instead call <xref:System.Text.Json.Utf8JsonReader.ValueTextEquals%2A> which will unescape the text if necessary.
 
  ]]></format>
         </remarks>
@@ -1537,37 +1548,28 @@ Otherwise, the token value must be accessed from <xref:System.Text.Json.Utf8Json
         <ReturnType>System.ReadOnlySpan&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the value of the last processed token as a ReadOnlySpan&lt;byte&gt; slice of the input payload. If the JSON is provided within a ReadOnlySequence&lt;byte&gt; and the slice that represents the token value fits in a single segment, then <see cref="P:System.Text.Json.Utf8JsonReader.ValueSpan" /> contains the sliced value since it can be represented as a span. Otherwise, the <see cref="P:System.Text.Json.Utf8JsonReader.ValueSequence" /> contains the token value.</summary>
+        <summary>Gets the raw value of the last processed token as a ReadOnlySpan&lt;byte&gt; slice of the input payload, if the token fits in a single segment or if the reader was constructed with a JSON payload contained in a ReadOnlySpan&lt;byte&gt;.</summary>
         <value>A read-only span of bytes.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-If <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `true`, <xref:System.Text.Json.Utf8JsonReader.ValueSpan> is empty. 
+If the JSON is provided within a ReadOnlySequence&lt;byte&gt; and the slice that represents the token value fits in a single segment, then `ValueSpan` contains the sliced value since it can be represented as a span. Otherwise, <xref:System.Text.Json.Utf8JsonReader.ValueSequence> contains the token value.
+
+If <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `true`, `ValueSpan` is empty. 
 Therefore, only access `ValueSpan` if <xref:System.Text.Json.Utf8JsonReader.HasValueSequence> is `false`.
 Otherwise, the token value must be accessed from <xref:System.Text.Json.Utf8JsonReader.ValueSequence>.
+
+There is no guarantee that this property will always contain well-formed data. If the input JSON passed in to the `Utf8JsonReader` contains invalid UTF-8 bytes within JSON string tokens, this property will return back those invalid UTF-8 bytes as is.
+Therefore, if the input is untrusted or not previously validated, call <xref:System.Text.Json.Utf8JsonReader.GetString> to get the JSON string token.
+
+Since this property returns the raw bytes, avoid using it for text comparison. Instead call <xref:System.Text.Json.Utf8JsonReader.ValueTextEquals%2A> which will unescape the text if necessary.
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
-    <MemberGroup MemberName="ValueTextEquals">
-      <Docs>
-        <summary>Compares the specified text to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-
-## Remarks
-
-If the look-up text is invalid UTF-8 text, the method returns `false` since you can't have invalid UTF-8 within the JSON payload.
-
-The comparison of the JSON token value in the source and the lookup text is done by first unescaping the JSON value in source, if required. The look-up text is matched as is, without any modification.
-
-         ]]></format>
-        </remarks>
-      </Docs>
-    </MemberGroup>
     <Member MemberName="ValueTextEquals">
       <MemberSignature Language="C#" Value="public bool ValueTextEquals (ReadOnlySpan&lt;byte&gt; utf8Text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool ValueTextEquals(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; utf8Text) cil managed" />
@@ -1596,13 +1598,13 @@ The comparison of the JSON token value in the source and the lookup text is done
 
 ## Remarks
 
-If the lookup text is invalid UTF-8 text, the method returns `false` since you can't have invalid UTF-8 within the JSON payload.
+The lookup text must be valid UTF-8 text. Otherwise, this method could return `true` if the source has a string token containing invalid UTF-8 text that matches.
               
 The comparison of the JSON token value in the source and the lookup text is done by first unescaping the JSON value in source, if required. The lookup text is matched as is, without any modifications to it.
               
           ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">The JSON token that is not a string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON token is not a JSON string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="ValueTextEquals">
@@ -1624,10 +1626,10 @@ The comparison of the JSON token value in the source and the lookup text is done
         <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="text">The UTF-8 encoded text to compare against.</param>
-        <summary>Compares the UTF-8 encoded text in a read-only character span to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
+        <param name="text">The text to compare against.</param>
+        <summary>Compares the text in a read-only character span to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
         <returns>
-          <see langword="true" /> if the JSON token value in the source matches the UTF-8 encoded lookup text; otherwise, <see langword="false" />.</returns>
+          <see langword="true" /> if the JSON token value in the source matches the lookup text; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1639,7 +1641,7 @@ The comparison of the JSON token value in the source and the lookup text is done
               
           ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">The JSON token that is not a string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON token is not a JSON string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="ValueTextEquals">
@@ -1662,7 +1664,7 @@ The comparison of the JSON token value in the source and the lookup text is done
       </Parameters>
       <Docs>
         <param name="text">The text to compare against.</param>
-        <summary>Compares the text in a character span to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
+        <summary>Compares the string text to the unescaped JSON token value in the source and returns a value that indicates whether they match.</summary>
         <returns>
           <see langword="true" /> if the JSON token value in the source matches the lookup text; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1670,13 +1672,13 @@ The comparison of the JSON token value in the source and the lookup text is done
 
 ## Remarks
 
-If the lookup text is invalid UTF-8 text, the method returns `false` since you can't have invalid UTF-8 within the JSON payload.
+If the lookup text is invalid or incomplete UTF-16 text (that is, unpaired surrogates), the method returns `false` since you can't have invalid UTF-16 within the JSON payload.
               
 The comparison of the JSON token value in the source and the lookup text is done by first unescaping the JSON value in source, if required. The lookup text is matched as is, without any modifications to it.
               
           ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">The JSON token that is not a string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
+        <exception cref="T:System.InvalidOperationException">The JSON token is not a JSON string (that is, it is not <see cref="F:System.Text.Json.JsonTokenType.String" /> or <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
       </Docs>
     </Member>
   </Members>
