@@ -42,7 +42,16 @@
       </ReturnValue>
       <MemberValue>2</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Associated PDB file description.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+See https://github.com/dotnet/corefx/blob/master/src/System.Reflection.Metadata/specs/PE-COFF.md#codeview-debug-directory-entry-type-2 for specification.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Coff">
@@ -66,7 +75,16 @@
       </ReturnValue>
       <MemberValue>1</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The COFF debug information (line numbers, symbol table, and string table).</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This type of debug information is also pointed to by fields in the file headers.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EmbeddedPortablePdb">
@@ -89,7 +107,21 @@
       </ReturnValue>
       <MemberValue>17</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The entry points to a blob containing Embedded Portable PDB.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The Embedded Portable PDB blob has the following format:
+ 
+  blob ::= uncompressed-size data 
+  Data spans the remainder of the blob and contains a Deflate-compressed Portable PDB.
+ 
+See https://github.com/dotnet/corefx/blob/master/src/System.Reflection.Metadata/specs/PE-COFF.md#embedded-portable-pdb-debug-directory-entry-type-17 for specification.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PdbChecksum">
@@ -110,7 +142,20 @@
       </ReturnValue>
       <MemberValue>19</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The entry stores crypto hash of the content of the symbol file the PE/COFF file was built with.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The hash can be used to validate that a given PDB file was built with the PE/COFF file and not altered in any way.
+
+More than one entry can be present, in case multiple PDBs were produced during the build of the PE/COFF file (e.g. private and public symbols).
+ 
+ See https://github.com/dotnet/corefx/blob/master/src/System.Reflection.Metadata/specs/PE-COFF.md#pdb-checksum-debug-directory-entry-type-19 for specification.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Reproducible">
@@ -134,7 +179,25 @@
       </ReturnValue>
       <MemberValue>16</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Presence of this entry indicates deterministic PE/COFF file.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The tool that produced the deterministic PE/COFF file guarantees that the entire content of the file is based solely on documented inputs given to the tool (such as source files, resource files, compiler options, etc.) rather than ambient environment variables (such as the current time, the operating system, the bitness of the process running the tool, etc.).
+
+The value of field `TimeDateStamp` in COFF File Header of a deterministic PE/COFF file does not indicate the date and time when the file was produced and should not be interpreted that way.
+
+Instead the value of the field is derived from a hash of the file content. The algorithm to calculate this value is an implementation detail of the tool that produced the file.
+
+The debug directory entry of type <xref:System.Reflection.PortableExecutable.DebugDirectoryEntryType.Reproducible> must have all fields, except for Type zeroed.
+
+See https://github.com/dotnet/corefx/blob/master/src/System.Reflection.Metadata/specs/PE-COFF.md#deterministic-debug-directory-entry-type-16 for specification.
+ 
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Unknown">
@@ -158,7 +221,7 @@
       </ReturnValue>
       <MemberValue>0</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An unknown value that is ignored by all tools.</summary>
       </Docs>
     </Member>
   </Members>
