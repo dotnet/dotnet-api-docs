@@ -49,7 +49,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The name of the section.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -75,9 +75,17 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The number of line-number entries for the section.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This value should be zero for an image because COFF debugging information is deprecated.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="NumberOfRelocations">
@@ -101,7 +109,7 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The number of relocation entries for the section. This is set to zero for PE images.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -127,9 +135,18 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>The file pointer to the beginning of line-number entries for the section.
+ </summary>
+        <value>This is set to zero if there are no COFF line numbers.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This value should be zero for an image because COFF debugging information is deprecated.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PointerToRawData">
@@ -153,8 +170,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The file pointer to the first page of the section within the COFF file.</summary>
+        <value>For PE images, this must be a multiple of <see cref="P:System.Reflection.PortableExecutable.PEHeader.FileAlignment" />.
+ For object files, the value should be aligned on a 4 byte boundary for best performance. When a section contains only uninitialized data, this field should be zero.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -179,8 +197,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The file pointer to the beginning of relocation entries for the section.</summary>
+        <value>This is set to zero for PE images or if there are no relocations.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -205,7 +223,7 @@
         <ReturnType>System.Reflection.PortableExecutable.SectionCharacteristics</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The flags that describe the characteristics of the section.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -231,8 +249,11 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The size of the section (for object files) or the size of the initialized data on disk (for image files).</summary>
+        <value>For PE images, this must be a multiple of <see cref="P:System.Reflection.PortableExecutable.PEHeader.FileAlignment" />.
+ If this is less than <see cref="P:System.Reflection.PortableExecutable.SectionHeader.VirtualSize" />, the remainder of the section is zero-filled.
+ Because the <see cref="P:System.Reflection.PortableExecutable.SectionHeader.SizeOfRawData" /> field is rounded but the <see cref="P:System.Reflection.PortableExecutable.SectionHeader.VirtualSize" /> field is not, it is possible for <see cref="P:System.Reflection.PortableExecutable.SectionHeader.SizeOfRawData" /> to be greater than <see cref="P:System.Reflection.PortableExecutable.SectionHeader.VirtualSize" /> as well.
+ When a section contains only uninitialized data, this field should be zero.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -258,7 +279,7 @@
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
-        <value>To be added.</value>
+        <value>For PE images, the address of the first byte of the section relative to the image base when the section is loaded into memory. For object files, this field is the address of the first byte before relocation is applied; for simplicity, compilers should set this to zero. Otherwise, it is an arbitrary value that is subtracted from offsets during relocation.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -283,8 +304,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The total size of the section when loaded into memory.</summary>
+        <value>If this value is greater than <see cref="P:System.Reflection.PortableExecutable.SectionHeader.SizeOfRawData" />, the section is zero-padded.
+ This field is valid only for PE images and should be set to zero for object files.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
