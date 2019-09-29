@@ -1,4 +1,4 @@
-﻿<Type Name="BigInteger" FullName="System.Numerics.BigInteger">
+<Type Name="BigInteger" FullName="System.Numerics.BigInteger">
   <TypeSignature Language="C#" Value="public struct BigInteger : IComparable, IComparable&lt;System.Numerics.BigInteger&gt;, IEquatable&lt;System.Numerics.BigInteger&gt;, IFormattable" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi serializable sealed beforefieldinit BigInteger extends System.ValueType implements class System.IComparable, class System.IComparable`1&lt;valuetype System.Numerics.BigInteger&gt;, class System.IEquatable`1&lt;valuetype System.Numerics.BigInteger&gt;, class System.IFormattable" />
   <TypeSignature Language="DocId" Value="T:System.Numerics.BigInteger" />
@@ -1225,7 +1225,7 @@
       <MemberSignature Language="DocId" Value="M:System.Numerics.BigInteger.DivRem(System.Numerics.BigInteger,System.Numerics.BigInteger,System.Numerics.BigInteger@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DivRem (dividend As BigInteger, divisor As BigInteger, ByRef remainder As BigInteger) As BigInteger" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Numerics::BigInteger DivRem(System::Numerics::BigInteger dividend, System::Numerics::BigInteger divisor, [Runtime::InteropServices::Out] System::Numerics::BigInteger % remainder);" />
-      <MemberSignature Language="F#" Value="static member DivRem : System.Numerics.BigInteger * System.Numerics.BigInteger *  -&gt; System.Numerics.BigInteger" Usage="System.Numerics.BigInteger.DivRem (dividend, divisor, remainder)" />
+      <MemberSignature Language="F#" Value="static member DivRem : System.Numerics.BigInteger * System.Numerics.BigInteger * BigInteger -&gt; System.Numerics.BigInteger" Usage="System.Numerics.BigInteger.DivRem (dividend, divisor, remainder)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Numerics</AssemblyName>
@@ -1545,9 +1545,10 @@
         <Parameter Name="isUnsigned" Type="System.Boolean" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="isUnsigned">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="isUnsigned">
+          <see langword="true" /> to use unsigned encoding; otherwise, <see langword="false" />.</param>
+        <summary>Gets the number of bytes that will be output by <see cref="M:System.Numerics.BigInteger.ToByteArray(System.Boolean,System.Boolean)" /> and <see cref="M:System.Numerics.BigInteger.TryWriteBytes(System.Span{System.Byte},System.Int32@,System.Boolean,System.Boolean)" />.</summary>
+        <returns>The number of bytes.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -7134,11 +7135,29 @@ value Mod 2 = 0
         <Parameter Name="isBigEndian" Type="System.Boolean" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="isUnsigned">To be added.</param>
-        <param name="isBigEndian">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="isUnsigned">
+          <see langword="true" /> to use unsigned encoding; otherwise, <see langword="false" />.</param>
+        <param name="isBigEndian">
+          <see langword="true" /> to write the bytes in a big-endian byte order; otherwise, <see langword="false" />.</param>
+        <summary>Returns the value of this <see cref="T:System.Numerics.BigInteger" /> as a byte array using the fewest number of bytes possible. If the value is zero, returns an array of one byte whose element is 0x00.</summary>
+        <returns>The value of the current <see cref="T:System.Numerics.BigInteger" /> object converted to an array of bytes.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The integer value `33022` can be exported in four different arrays:
+
+| Properties                           | Result                          |
+|--------------------------------------|---------------------------------|
+| `isUnsigned: false, isBigEndian: false` | `new byte[] { 0xFE, 0x80, 0x00 }` |
+| `isUnsigned: false, isBigEndian: true`  | `new byte[] { 0x00, 0x80, 0xFE }` |
+| `isUnsigned: true, isBigEndian: false`  | `new byte[] { 0xFE, 0x80 } `      |
+| `isUnsigned: true, isBigEndian: true`   | `new byte[] { 0x80, 0xFE }`       |
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OverflowException">If <paramref name="isUnsigned" /> is <see langword="true" /> and <see cref="P:System.Numerics.BigInteger.Sign" /> is negative.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="ToString">
@@ -7440,7 +7459,7 @@ value Mod 2 = 0
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryFormat(valuetype System.Span`1&lt;char&gt; destination, [out] int32&amp; charsWritten, valuetype System.ReadOnlySpan`1&lt;char&gt; format, class System.IFormatProvider provider) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.BigInteger.TryFormat(System.Span{System.Char},System.Int32@,System.ReadOnlySpan{System.Char},System.IFormatProvider)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryFormat (destination As Span(Of Char), ByRef charsWritten As Integer, Optional format As ReadOnlySpan(Of Char) = null, Optional provider As IFormatProvider = null) As Boolean" />
-      <MemberSignature Language="F#" Value="member this.TryFormat : Span&lt;char&gt; *  * ReadOnlySpan&lt;char&gt; * IFormatProvider -&gt; bool" Usage="bigInteger.TryFormat (destination, charsWritten, format, provider)" />
+      <MemberSignature Language="F#" Value="member this.TryFormat : Span&lt;char&gt; * int * ReadOnlySpan&lt;char&gt; * IFormatProvider -&gt; bool" Usage="bigInteger.TryFormat (destination, charsWritten, format, provider)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Numerics</AssemblyName>
@@ -7488,7 +7507,7 @@ value Mod 2 = 0
       <MemberSignature Language="DocId" Value="M:System.Numerics.BigInteger.TryParse(System.ReadOnlySpan{System.Char},System.Numerics.BigInteger@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryParse (value As ReadOnlySpan(Of Char), ByRef result As BigInteger) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryParse(ReadOnlySpan&lt;char&gt; value, [Runtime::InteropServices::Out] System::Numerics::BigInteger % result);" />
-      <MemberSignature Language="F#" Value="static member TryParse : ReadOnlySpan&lt;char&gt; *  -&gt; bool" Usage="System.Numerics.BigInteger.TryParse (value, result)" />
+      <MemberSignature Language="F#" Value="static member TryParse : ReadOnlySpan&lt;char&gt; * BigInteger -&gt; bool" Usage="System.Numerics.BigInteger.TryParse (value, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Numerics</AssemblyName>
@@ -7522,7 +7541,7 @@ value Mod 2 = 0
       <MemberSignature Language="DocId" Value="M:System.Numerics.BigInteger.TryParse(System.String,System.Numerics.BigInteger@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryParse (value As String, ByRef result As BigInteger) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryParse(System::String ^ value, [Runtime::InteropServices::Out] System::Numerics::BigInteger % result);" />
-      <MemberSignature Language="F#" Value="static member TryParse : string *  -&gt; bool" Usage="System.Numerics.BigInteger.TryParse (value, result)" />
+      <MemberSignature Language="F#" Value="static member TryParse : string * BigInteger -&gt; bool" Usage="System.Numerics.BigInteger.TryParse (value, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Numerics</AssemblyName>
@@ -7601,7 +7620,7 @@ value Mod 2 = 0
       <MemberSignature Language="DocId" Value="M:System.Numerics.BigInteger.TryParse(System.ReadOnlySpan{System.Char},System.Globalization.NumberStyles,System.IFormatProvider,System.Numerics.BigInteger@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryParse (value As ReadOnlySpan(Of Char), style As NumberStyles, provider As IFormatProvider, ByRef result As BigInteger) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryParse(ReadOnlySpan&lt;char&gt; value, System::Globalization::NumberStyles style, IFormatProvider ^ provider, [Runtime::InteropServices::Out] System::Numerics::BigInteger % result);" />
-      <MemberSignature Language="F#" Value="static member TryParse : ReadOnlySpan&lt;char&gt; * System.Globalization.NumberStyles * IFormatProvider *  -&gt; bool" Usage="System.Numerics.BigInteger.TryParse (value, style, provider, result)" />
+      <MemberSignature Language="F#" Value="static member TryParse : ReadOnlySpan&lt;char&gt; * System.Globalization.NumberStyles * IFormatProvider * BigInteger -&gt; bool" Usage="System.Numerics.BigInteger.TryParse (value, style, provider, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Numerics</AssemblyName>
@@ -7639,7 +7658,7 @@ value Mod 2 = 0
       <MemberSignature Language="DocId" Value="M:System.Numerics.BigInteger.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,System.Numerics.BigInteger@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryParse (value As String, style As NumberStyles, provider As IFormatProvider, ByRef result As BigInteger) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryParse(System::String ^ value, System::Globalization::NumberStyles style, IFormatProvider ^ provider, [Runtime::InteropServices::Out] System::Numerics::BigInteger % result);" />
-      <MemberSignature Language="F#" Value="static member TryParse : string * System.Globalization.NumberStyles * IFormatProvider *  -&gt; bool" Usage="System.Numerics.BigInteger.TryParse (value, style, provider, result)" />
+      <MemberSignature Language="F#" Value="static member TryParse : string * System.Globalization.NumberStyles * IFormatProvider * BigInteger -&gt; bool" Usage="System.Numerics.BigInteger.TryParse (value, style, provider, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Numerics</AssemblyName>
@@ -7777,7 +7796,7 @@ value Mod 2 = 0
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryWriteBytes(valuetype System.Span`1&lt;unsigned int8&gt; destination, [out] int32&amp; bytesWritten, bool isUnsigned, bool isBigEndian) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.BigInteger.TryWriteBytes(System.Span{System.Byte},System.Int32@,System.Boolean,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryWriteBytes (destination As Span(Of Byte), ByRef bytesWritten As Integer, Optional isUnsigned As Boolean = false, Optional isBigEndian As Boolean = false) As Boolean" />
-      <MemberSignature Language="F#" Value="member this.TryWriteBytes : Span&lt;byte&gt; *  * bool * bool -&gt; bool" Usage="bigInteger.TryWriteBytes (destination, bytesWritten, isUnsigned, isBigEndian)" />
+      <MemberSignature Language="F#" Value="member this.TryWriteBytes : Span&lt;byte&gt; * int * bool * bool -&gt; bool" Usage="bigInteger.TryWriteBytes (destination, bytesWritten, isUnsigned, isBigEndian)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Numerics</AssemblyName>
@@ -7800,13 +7819,18 @@ value Mod 2 = 0
         <Parameter Name="isBigEndian" Type="System.Boolean" Index="3" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <param name="isUnsigned">To be added.</param>
-        <param name="isBigEndian">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The destination span to which the resulting bytes should be written.</param>
+        <param name="bytesWritten">The number of bytes written to <paramref name="destination" />.</param>
+        <param name="isUnsigned">
+          <see langword="true" /> to use unsigned encoding; otherwise, <see langword="false" />.</param>
+        <param name="isBigEndian">
+          <see langword="true" /> to write the bytes in a big-endian byte order; otherwise, <see langword="false" />.</param>
+        <summary>Copies the value of this <see cref="T:System.Numerics.BigInteger" /> as little-endian twos-complement bytes, using the fewest number of bytes possible. If the value is zero, outputs one byte whose element is 0x00.</summary>
+        <returns>
+          <see langword="true" /> if the bytes fit in <paramref name="destination" />; <see langword="false" /> if not all bytes could be written due to lack of space.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.OverflowException">
+          <paramref name="isUnsigned" /> is <see langword="true" /> and <see cref="P:System.Numerics.BigInteger.Sign" /> is negative.</exception>
       </Docs>
     </Member>
     <Member MemberName="Zero">

@@ -1,4 +1,4 @@
-﻿<Type Name="Activity" FullName="System.Diagnostics.Activity">
+<Type Name="Activity" FullName="System.Diagnostics.Activity">
   <TypeSignature Language="C#" Value="public class Activity" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Activity extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Diagnostics.Activity" />
@@ -17,8 +17,24 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents an operation with context to be used for logging.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+An `Activity` has an operation name, an ID, a start time and duration, tags, and baggage.
+
+The current activity can be accessed with the static <xref:System.Diagnostics.Activity.Current?displayProperty=nameWithType> property.
+
+Activities should be created by calling the constructor, configured as necessary, and then started with the <xref:System.Diagnostics.Activity.Start%2A> method, which maintains parent-child relationships for the activities and sets <xref:System.Diagnostics.Activity.Current?displayProperty=nameWithType>.
+
+When an activity is finished, it should be stopped with the <xref:System.Diagnostics.Activity.Stop?displayProperty=nameWithType> method.
+
+No `Activity` methods allow exceptions to escape as a response to bad inputs. They are thrown and caught (which allows debuggers and monitors to see the error), but the exception is suppressed, and the operation does something reasonable (typically it does nothing).
+
+         ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -69,8 +85,8 @@ Note that <xref:System.Diagnostics.Activity> has a "builder" pattern: you call t
         <ReturnType>System.Diagnostics.ActivityTraceFlags</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the flags (defined by the W3C ID specification) associated with the activity.</summary>
+        <value>the flags associated with the activity.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -189,12 +205,16 @@ This key/value pair is included in the collection returned by the <see cref="P:S
       </Docs>
     </Member>
     <Member MemberName="Current">
-      <MemberSignature Language="C#" Value="public static System.Diagnostics.Activity Current { get; set; }" />
+      <MemberSignature Language="C#" Value="public static System.Diagnostics.Activity Current { get; }" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2" />
       <MemberSignature Language="ILAsm" Value=".property class System.Diagnostics.Activity Current" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.Activity.Current" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Property Current As Activity" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Diagnostics::Activity ^ Current { System::Diagnostics::Activity ^ get(); void set(System::Diagnostics::Activity ^ value); };" />
-      <MemberSignature Language="F#" Value="member this.Current : System.Diagnostics.Activity with get, set" Usage="System.Diagnostics.Activity.Current" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Current As Activity" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Diagnostics::Activity ^ Current { System::Diagnostics::Activity ^ get(); };" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2" />
+      <MemberSignature Language="F#" Value="member this.Current : System.Diagnostics.Activity" Usage="System.Diagnostics.Activity.Current" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2" />
+      <MemberSignature Language="C#" Value="public static System.Diagnostics.Activity Current { get; set; }" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Property Current As Activity" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Diagnostics::Activity ^ Current { System::Diagnostics::Activity ^ get(); void set(System::Diagnostics::Activity ^ value); };" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="F#" Value="member this.Current : System.Diagnostics.Activity with get, set" Usage="System.Diagnostics.Activity.Current" FrameworkAlternate="netcore-3.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
@@ -228,9 +248,15 @@ This key/value pair is included in the collection returned by the <see cref="P:S
         <ReturnType>System.Diagnostics.ActivityIdFormat</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the default ID format for the <see cref="T:System.Diagnostics.Activity" />.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+The `Activity` instance tries to use the same format for IDs as its parent. If the activity has no parent, this property determines the default format to use.
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Duration">
@@ -273,9 +299,16 @@ This key/value pair is included in the collection returned by the <see cref="P:S
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a valud that detrmines if the <see cref="P:System.Diagnostics.Activity.DefaultIdFormat" /> is always used to define the default ID format. </summary>
+        <value>
+          <see langword="true" /> to always use the <see cref="P:System.Diagnostics.Activity.DefaultIdFormat" />; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+Normally if the <xref:System.Diagnostics.Activity.ParentId> is defined, its format determines the format used by the current <xref:System.Diagnostics.Activity>. However, if `ForceDefaultFormat` is set to `true`, the ID format is always defined by the <xref:System.Diagnostics.Activity.DefaultIdFormat> property even if the <xref:System.Diagnostics.Activity.ParentId> is defined and the parent has a different format.
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetBaggageItem">
@@ -354,8 +387,8 @@ An ID has a hierarchical structure: `root-id.id1_id2.id3_`. The ID is generated 
         <ReturnType>System.Diagnostics.ActivityIdFormat</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the format for the <see cref="P:System.Diagnostics.Activity.Id" />.</summary>
+        <value>The format for the <see cref="P:System.Diagnostics.Activity.Id" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -443,7 +476,7 @@ An operation name is the *coarsest* name that is useful for grouping/filtering. 
 
 If the parent for this <xref:System.Diagnostics.Activity> comes from outside the process, the <xref:System.Diagnostics.Activity> does not have a parent but *may* have a parent ID (which was deserialized from the parent).  
 
-This property value can be `null` if this is a root <see cref="T:System.Diagnostics.Activity" /> (i.e. it has no <xref:System.Diagnostics.Activity.Parent>).  See [Id Format](href="https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/ActivityUserGuide.md#id-format) for more details.
+This property value can be `null` if this is a root <see cref="T:System.Diagnostics.Activity" /> (i.e. it has no <xref:System.Diagnostics.Activity.Parent>).  See [Id Format](href="https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/ActivityUserGuide.md#id-format") for more details.
 
 ]]></format>
         </remarks>
@@ -451,23 +484,29 @@ This property value can be `null` if this is a root <see cref="T:System.Diagnost
     </Member>
     <Member MemberName="ParentSpanId">
       <MemberSignature Language="C#" Value="public System.Diagnostics.ActivitySpanId ParentSpanId { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class System.Diagnostics.ActivitySpanId ParentSpanId" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Diagnostics.ActivitySpanId ParentSpanId" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.Activity.ParentSpanId" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ParentSpanId As ActivitySpanId" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Diagnostics::ActivitySpanId ^ ParentSpanId { System::Diagnostics::ActivitySpanId ^ get(); };" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Diagnostics::ActivitySpanId ParentSpanId { System::Diagnostics::ActivitySpanId get(); };" />
       <MemberSignature Language="F#" Value="member this.ParentSpanId : System.Diagnostics.ActivitySpanId" Usage="System.Diagnostics.Activity.ParentSpanId" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue RefType="Ref">
+      <ReturnValue>
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the parent's <see cref="P:System.Diagnostics.Activity.SpanId" />.</summary>
+        <value>The parent's <see cref="P:System.Diagnostics.Activity.SpanId" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+If the <xref:System.Diagnostics.Activity.ParentId?displayProperty=nameWithType> is in the W3C format, this property returns the <xref:System.Diagnostics.Activity.SpanId> part of the ParentId.  Otherwise it returns a zero <xref:System.Diagnostics.Activity.SpanId>.
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Recorded">
@@ -486,8 +525,9 @@ This property value can be `null` if this is a root <see cref="T:System.Diagnost
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the W3CIdFlags.Recorded flag is set.</summary>
+        <value>
+          <see langword="true" /> if the W3CIdFlags.Recorded flag is set; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -552,6 +592,40 @@ The root ID is a substring from the <xref:System.Diagnostics.Activity.Id> or the
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="SetIdFormat">
+      <MemberSignature Language="C#" Value="public System.Diagnostics.Activity SetIdFormat (System.Diagnostics.ActivityIdFormat format);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Diagnostics.Activity SetIdFormat(valuetype System.Diagnostics.ActivityIdFormat format) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Activity.SetIdFormat(System.Diagnostics.ActivityIdFormat)" />
+      <MemberSignature Language="VB.NET" Value="Public Function SetIdFormat (format As ActivityIdFormat) As Activity" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Diagnostics::Activity ^ SetIdFormat(System::Diagnostics::ActivityIdFormat format);" />
+      <MemberSignature Language="F#" Value="member this.SetIdFormat : System.Diagnostics.ActivityIdFormat -&gt; System.Diagnostics.Activity" Usage="activity.SetIdFormat format" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
+        <AssemblyVersion>4.0.4.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Diagnostics.Activity</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="format" Type="System.Diagnostics.ActivityIdFormat" Index="0" FrameworkAlternate="netcore-3.0" />
+      </Parameters>
+      <Docs>
+        <param name="format">One of the enumeration values that specifies the format of the <see cref="P:System.Diagnostics.Activity.Id" /> property.</param>
+        <summary>Sets the ID format on this <see cref="T:System.Diagnostics.Activity" /> before it is started.</summary>
+        <returns>
+          <see langword="this" /> for convenient chaining.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The specified format will take precedence over `Parent.IdFormat`, the <xref:System.Diagnostics.Activity.ParentId> format, <xref:System.Diagnostics.Activity.DefaultIdFormat>, and <xref:System.Diagnostics.Activity.ForceDefaultIdFormat>.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="SetParentId">
       <MemberSignature Language="C#" Value="public System.Diagnostics.Activity SetParentId (string parentId);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Diagnostics.Activity SetParentId(string parentId) cil managed" />
@@ -590,10 +664,10 @@ This property should only be used in 'boundary' scenarios where an <see cref="T:
       </Docs>
     </Member>
     <Member MemberName="SetParentId">
-      <MemberSignature Language="C#" Value="public System.Diagnostics.Activity SetParentId (ref System.Diagnostics.ActivityTraceId traceId, ref System.Diagnostics.ActivitySpanId spanId, System.Diagnostics.ActivityTraceFlags activityTraceFlags = System.Diagnostics.ActivityTraceFlags.None);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Diagnostics.Activity SetParentId([in]valuetype System.Diagnostics.ActivityTraceId&amp; traceId, [in]valuetype System.Diagnostics.ActivitySpanId&amp; spanId, valuetype System.Diagnostics.ActivityTraceFlags activityTraceFlags) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Activity.SetParentId(System.Diagnostics.ActivityTraceId@,System.Diagnostics.ActivitySpanId@,System.Diagnostics.ActivityTraceFlags)" />
-      <MemberSignature Language="F#" Value="member this.SetParentId :  *  * System.Diagnostics.ActivityTraceFlags -&gt; System.Diagnostics.Activity" Usage="activity.SetParentId (traceId, spanId, activityTraceFlags)" />
+      <MemberSignature Language="C#" Value="public System.Diagnostics.Activity SetParentId (System.Diagnostics.ActivityTraceId traceId, System.Diagnostics.ActivitySpanId spanId, System.Diagnostics.ActivityTraceFlags activityTraceFlags = System.Diagnostics.ActivityTraceFlags.None);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Diagnostics.Activity SetParentId(valuetype System.Diagnostics.ActivityTraceId traceId, valuetype System.Diagnostics.ActivitySpanId spanId, valuetype System.Diagnostics.ActivityTraceFlags activityTraceFlags) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Activity.SetParentId(System.Diagnostics.ActivityTraceId,System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivityTraceFlags)" />
+      <MemberSignature Language="F#" Value="member this.SetParentId : System.Diagnostics.ActivityTraceId * System.Diagnostics.ActivitySpanId * System.Diagnostics.ActivityTraceFlags -&gt; System.Diagnostics.Activity" Usage="activity.SetParentId (traceId, spanId, activityTraceFlags)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
@@ -603,17 +677,26 @@ This property should only be used in 'boundary' scenarios where an <see cref="T:
         <ReturnType>System.Diagnostics.Activity</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="traceId" Type="System.Diagnostics.ActivityTraceId" RefType="ref" Index="0" FrameworkAlternate="netcore-3.0" />
-        <Parameter Name="spanId" Type="System.Diagnostics.ActivitySpanId" RefType="ref" Index="1" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="traceId" Type="System.Diagnostics.ActivityTraceId" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="spanId" Type="System.Diagnostics.ActivitySpanId" Index="1" FrameworkAlternate="netcore-3.0" />
         <Parameter Name="activityTraceFlags" Type="System.Diagnostics.ActivityTraceFlags" Index="2" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="traceId">To be added.</param>
-        <param name="spanId">To be added.</param>
-        <param name="activityTraceFlags">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="traceId">The parent activity's TraceId.</param>
+        <param name="spanId">The parent activity's SpanId.</param>
+        <param name="activityTraceFlags">One of the enumeration values that specifies flags defined by the W3C standard that are associated with an activity.</param>
+        <summary>Sets the parent ID using the W3C convention of a TraceId and a SpanId.</summary>
+        <returns>
+          <see langword="this" /> for convenient chaining.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+This method has the advantage that no string manipulation is needed to set the ID.
+
+        ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SetStartTime">
@@ -647,22 +730,22 @@ This property should only be used in 'boundary' scenarios where an <see cref="T:
     </Member>
     <Member MemberName="SpanId">
       <MemberSignature Language="C#" Value="public System.Diagnostics.ActivitySpanId SpanId { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class System.Diagnostics.ActivitySpanId SpanId" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Diagnostics.ActivitySpanId SpanId" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.Activity.SpanId" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property SpanId As ActivitySpanId" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Diagnostics::ActivitySpanId ^ SpanId { System::Diagnostics::ActivitySpanId ^ get(); };" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Diagnostics::ActivitySpanId SpanId { System::Diagnostics::ActivitySpanId get(); };" />
       <MemberSignature Language="F#" Value="member this.SpanId : System.Diagnostics.ActivitySpanId" Usage="System.Diagnostics.Activity.SpanId" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue RefType="Ref">
+      <ReturnValue>
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the SPAN part of the <see cref="P:System.Diagnostics.Activity.Id" />.</summary>
+        <value>The ID for the SPAN part of <see cref="P:System.Diagnostics.Activity.Id" />, if the <see cref="T:System.Diagnostics.Activity" /> has the W3C format; otherwise, a zero <see langword="SpanId" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -802,22 +885,22 @@ Call <xref:System.Diagnostics.DiagnosticSource.StopActivity%2A?displayProperty=n
     </Member>
     <Member MemberName="TraceId">
       <MemberSignature Language="C#" Value="public System.Diagnostics.ActivityTraceId TraceId { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class System.Diagnostics.ActivityTraceId TraceId" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Diagnostics.ActivityTraceId TraceId" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.Activity.TraceId" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property TraceId As ActivityTraceId" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Diagnostics::ActivityTraceId ^ TraceId { System::Diagnostics::ActivityTraceId ^ get(); };" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Diagnostics::ActivityTraceId TraceId { System::Diagnostics::ActivityTraceId get(); };" />
       <MemberSignature Language="F#" Value="member this.TraceId : System.Diagnostics.ActivityTraceId" Usage="System.Diagnostics.Activity.TraceId" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue RefType="Ref">
+      <ReturnValue>
         <ReturnType>System.Diagnostics.ActivityTraceId</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the TraceId part of the <see cref="P:System.Diagnostics.Activity.Id" />.</summary>
+        <value>The ID for the TraceId part of the <see cref="P:System.Diagnostics.Activity.Id" />, if the ID has the W3C format; otherwise, a zero TraceId.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -837,9 +920,17 @@ Call <xref:System.Diagnostics.DiagnosticSource.StopActivity%2A?displayProperty=n
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the W3C <see langword="tracestate" /> header.</summary>
+        <value>The W3C <see langword="tracestate" /> header.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+The `tracestate` header is intended to carry supplemental information to trace identity contained in the trace parent. `tracestate` consists of a list of key/value pairs that convey information about the request position in multiple distributed tracing graphs. This information is typically used by distributed tracing systems and should not be used for general purpose baggage, since this may break the correlation of a distributed trace.
+            
+Logically `TraceStateString` is just a kind of baggage (if flows just like baggage), but because it is expected to be special-cased (it has its own HTTP header), it is more convenient/efficient if it is not lumped in with other baggage.
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

@@ -1,10 +1,10 @@
-﻿<Type Name="Utf8JsonWriter" FullName="System.Text.Json.Utf8JsonWriter">
+<Type Name="Utf8JsonWriter" FullName="System.Text.Json.Utf8JsonWriter">
   <TypeSignature Language="C#" Value="public sealed class Utf8JsonWriter : IAsyncDisposable, IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Utf8JsonWriter extends System.Object implements class System.IAsyncDisposable, class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Text.Json.Utf8JsonWriter" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class Utf8JsonWriter&#xA;Implements IAsyncDisposable, IDisposable" />
   <TypeSignature Language="C++ CLI" Value="public ref class Utf8JsonWriter sealed : IAsyncDisposable, IDisposable" />
-  <TypeSignature Language="F#" Value="type Utf8JsonWriter = class&#xA;    interface IDisposable&#xA;    interface IAsyncDisposable" />
+  <TypeSignature Language="F#" Value="type Utf8JsonWriter = class&#xA;    interface IAsyncDisposable&#xA;    interface IDisposable" />
   <AssemblyInfo>
     <AssemblyName>System.Text.Json</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -24,17 +24,15 @@
   <Docs>
     <summary>Provides a high-performance API for forward-only, non-cached writing of UTF-8 encoded JSON text.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
+      <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
 `Utf8JsonWriter` writes the text sequentially with no caching and by default adheres to the [JSON RFC](https://tools.ietf.org/html/rfc8259), with the exception of writing comments.
 
-A method that attempts to write invalid JSON when validation is enabled throws a <xref:System.InvalidOperationException> with a context-specific error message.
+A method that attempts to write invalid JSON when validation is enabled throws an <xref:System.InvalidOperationException> with a context-specific error message.
 
-Since this type is a ref struct, it does not directly support async. However, it does provide support for reentrancy to write partial data and to continue writing in chunks.
-
-To be able to format the output with indentation and white space OR to skip validation, create an instance of <xref:System.Text.Json.JsonWriterOptions> and pass it in to the writer.
+To be able to format the output with indentation and white space, to skip validation, OR to customize the escaping behavior, create an instance of <xref:System.Text.Json.JsonWriterOptions> and pass it in to the writer.
 
  ]]></format>
     </remarks>
@@ -57,11 +55,11 @@ To be able to format the output with indentation and white space OR to skip vali
       </Parameters>
       <Docs>
         <param name="bufferWriter">The destination for writing JSON text.</param>
-        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> By default, it writes minimized JSON (with no extra whitespace) and validates that the JSON being written is structurally valid according to the JSON RFC.</param>
-        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> instance with a specified <see langword="System.Buffers.IBufferWriter&lt;System.Byte&gt;" />.</summary>
+        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" />. By default, it writes minimized JSON (with no extra white space) and validates that the JSON being written is structurally valid according to the JSON RFC.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> class using the specified <see cref="T:System.Buffers.IBufferWriter`1" /> to write the output to and customization options.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="bufferWriter" />  is <see langword="null" />.</exception>
+          <paramref name="bufferWriter" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -81,8 +79,8 @@ To be able to format the output with indentation and white space OR to skip vali
       </Parameters>
       <Docs>
         <param name="utf8Json">The destination for writing JSON text.</param>
-        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> By default, it writes minimized JSON (with no extra whitespace) and validates that the JSON being written is structurally valid according to the JSON RFC.</param>
-        <summary>Constructs a new <see cref="T:System.Text.Json.Utf8JsonWriter" /> instance with a specified <paramref name="utf8Json" />.</summary>
+        <param name="options">Defines the customized behavior of the <see cref="T:System.Text.Json.Utf8JsonWriter" />. By default, it writes minimized JSON (with no extra white space) and validates that the JSON being written is structurally valid according to the JSON RFC.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Utf8JsonWriter" /> class using the specified stream to write the output to and customization options.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="utf8Json" /> is <see langword="null" />.</exception>
@@ -108,7 +106,9 @@ To be able to format the output with indentation and white space OR to skip vali
         <value>The total number of bytes committed to the output by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far.</value>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 In the case of an <xref:System.Buffers.IBufferWriter%601>, this property indicates how much the IBufferWriter has advanced.
 
 In the case of a <xref:System.IO.Stream>, this property indicates how much data has been written to the stream.
@@ -134,7 +134,7 @@ In the case of a <xref:System.IO.Stream>, this property indicates how much data 
       </ReturnValue>
       <Docs>
         <summary>Gets the number of bytes written by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> so far that have not yet been flushed to the output and committed.</summary>
-        <value>To be added.</value>
+        <value>The number of bytes written so far by the <see cref="T:System.Text.Json.Utf8JsonWriter" /> that have not yet been flushed to the output and committed.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -157,7 +157,7 @@ In the case of a <xref:System.IO.Stream>, this property indicates how much data 
         <summary>Gets the depth of the current token.</summary>
         <value>The depth of the current token.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
@@ -190,7 +190,9 @@ The `CurrentDepth` property tracks the recursive depth of the nested objects / a
         <summary>Commits any leftover JSON text that has not yet been flushed and releases all resources used by the current instance.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 In the case of IBufferWriter, this advances the underlying <xref:System.Buffers.IBufferWriter`1> based on what has been written so far.
 
 In the case of Stream, this writes the data to the stream and flushes it.
@@ -222,17 +224,19 @@ The <xref:System.Text.Json.Utf8JsonWriter> instance cannot be reused after dispo
       <Parameters />
       <Docs>
         <summary>Asynchronously commits any leftover JSON text that has not yet been flushed and releases all resources used by the current instance.</summary>
-        <returns>To be added.</returns>
+        <returns>A task representing the asynchronous dispose operation.</returns>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 In the case of IBufferWriter, this advances the underlying <xref:System.Buffers.IBufferWriter`1> based on what has been written so far.
           
 In the case of Stream, this writes the data to the stream and flushes it.
 
 The <xref:System.Text.Json.Utf8JsonWriter> instance cannot be reused after disposing.
-            
-            ]]></format>
+
+          ]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -256,7 +260,9 @@ The <xref:System.Text.Json.Utf8JsonWriter> instance cannot be reused after dispo
         <summary>Commits the JSON text written so far, which makes it visible to the output destination.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 In the case of IBufferWriter, this advances the underlying <xref:System.Buffers.IBufferWriter`1> based on what has been written so far.
 
 In the case of <xref:System.IO.Stream>, this writes the data to the stream and flushes it.
@@ -283,12 +289,14 @@ In the case of <xref:System.IO.Stream>, this writes the data to the stream and f
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="T:System.Threading.CancellationToken.None" />.</param>
         <summary>Asynchronously commits the JSON text written so far, which makes it visible to the output destination.</summary>
-        <returns>To be added.</returns>
+        <returns>A task representing the asynchronous flush operation.</returns>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 In the case of IBufferWriter, this advances the underlying <xref:System.Buffers.IBufferWriter`1> based on what has been written so far.
 
 In the case of <xref:System.IO.Stream>, this writes the data to the stream and flushes it asynchronously, while monitoring cancellation requests.
@@ -314,8 +322,8 @@ In the case of <xref:System.IO.Stream>, this writes the data to the stream and f
         <ReturnType>System.Text.Json.JsonWriterOptions</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the custom behavior when writing JSON using this instance, which indicates whether to format the output while writing and whether to skip structural JSON validation.</summary>
-        <value>To be added.</value>
+        <summary>Gets the custom behavior when writing JSON using this instance, which indicates whether to format the output while writing, whether to skip structural JSON validation, and which characters to escape.</summary>
+        <value>The custom behavior of this instance of the writer for formatting, validating, and escaping.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -339,7 +347,9 @@ In the case of <xref:System.IO.Stream>, this writes the data to the stream and f
         <summary>Resets the internal state of this instance so that it can be reused.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options and the original output (either <xref:System.Buffers.IBufferWriter`1> or <xref:System.IO.Stream>) as the destination.
 
           ]]></format>
@@ -370,7 +380,9 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
         <summary>Resets the internal state of this instance so that it can be reused with a new instance of <see cref="T:System.Buffers.IBufferWriter`1" />.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options but now writes to `bufferWriter` as the new destination.
 
           ]]></format>
@@ -403,8 +415,10 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
         <summary>Resets the internal state of this instance so that it can be reused with a new instance of <see cref="T:System.IO.Stream" />.</summary>
         <remarks>
           <format><![CDATA[
-          
-The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options but now write to `utf8Json` as the new destination.
+
+## Remarks
+
+The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original writer options but now writes to `utf8Json` as the new destination.
 
           ]]></format>
         </remarks>
@@ -433,10 +447,22 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
         <Parameter Name="bytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="bytes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded name of the property to write.</param>
+        <param name="bytes">The binary data to write as Base64 encoded text.</param>
+        <summary>Writes the property name and raw bytes value (as a Base64 encoded JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The maximum allowed size of the binary data to write as Base64 is 125,000,000 bytes (or approximately 125 MB). Exceeding this limit results in an <xref:System.ArgumentException> being thrown.
+
+The property name is escaped and the bytes are encoded before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBase64String">
@@ -459,10 +485,22 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
         <Parameter Name="bytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="bytes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="bytes">The binary data to write as Base64 encoded text.</param>
+        <summary>Writes the property name and raw bytes value (as a Base64 encoded JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The maximum allowed size of the binary data to write as Base64 is 125,000,000 bytes (or approximately 125 MB). Exceeding this limit results in an <xref:System.ArgumentException> being thrown.
+
+The property name is escaped and the bytes are encoded before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBase64String">
@@ -485,10 +523,23 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
         <Parameter Name="bytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="bytes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="bytes">The binary data to write as Base64 encoded text.</param>
+        <summary>Writes the property name and raw bytes value (as a Base64 encoded JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The maximum allowed size of the binary data to write as Base64 is 125,000,000 bytes (or approximately 125 MB). Exceeding this limit results in an <xref:System.ArgumentException> being thrown.
+
+The property name is escaped and the bytes are encoded before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBase64String">
@@ -511,10 +562,24 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
         <Parameter Name="bytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="bytes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON-encoded name of the property to write.</param>
+        <param name="bytes">The binary data to write as Base64 encoded text.</param>
+        <summary>Writes the pre-encoded property name and raw bytes value (as a Base64 encoded JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The maximum allowed size of the binary data to write as Base64 is 125,000,000 bytes (or approximately 125 MB). Exceeding this limit results in an <xref:System.ArgumentException> being thrown.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+The bytes are encoded before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBase64StringValue">
@@ -536,9 +601,21 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
         <Parameter Name="bytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="bytes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="bytes">The binary data to be written as a Base64 encoded JSON string element of a JSON array.</param>
+        <summary>Writes the raw bytes value as a Base64 encoded JSON string as an element of a JSON array.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The maximum allowed size of the binary data to write as Base64 is 125,000,000 bytes (or approximately 125 MB). Exceeding this limit results in an <xref:System.ArgumentException> being thrown.
+
+The bytes are encoded before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBoolean">
@@ -562,11 +639,13 @@ The <xref:System.Text.Json.Utf8JsonWriter> will continue to use the original wri
       </Parameters>
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
-        <param name="value">The value to be written as a JSON literal "true" or "false" as part of the name/value pair.</param>
-        <summary>Writes a property name specified as a read-only span of bytes and a <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as part of a name/value pair of a JSON object.</summary>
+        <param name="value">The value to be written as a JSON literal <b>true</b> or <b>false</b> as part of the name/value pair.</param>
+        <summary>Writes a property name specified as a read-only span of bytes and a <see cref="T:System.Boolean" /> value (as a JSON literal <b>true</b> or <b>false</b>) as part of a name/value pair of a JSON object.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The property name is escaped before writing.
 
           ]]></format>
@@ -596,13 +675,15 @@ The property name is escaped before writing.
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
-        <param name="value">The value to be written as a JSON literal "true" or "false" as part of the name/value pair.</param>
-        <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as part of a name/value pair of a JSON object.</summary>
+        <param name="value">The value to be written as a JSON literal <b>true</b> or <b>false</b> as part of the name/value pair.</param>
+        <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.Boolean" /> value (as a JSON literal <b>true</b> or <b>false</b>) as part of a name/value pair of a JSON object.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The property name is escaped before writing.
-          
+
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
@@ -630,17 +711,20 @@ The property name is escaped before writing.
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
-        <param name="value">The value to be written as a JSON literal "true" or "false" as part of the name/value pair.</param>
-        <summary>Writes a property name specified as a string and a <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as part of a name/value pair of a JSON object.</summary>
+        <param name="value">The value to be written as a JSON literal <b>true</b> or <b>false</b> as part of the name/value pair.</param>
+        <summary>Writes a property name specified as a string and a <see cref="T:System.Boolean" /> value (as a JSON literal <b>true</b> or <b>false</b>) as part of a name/value pair of a JSON object.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The property name is escaped before writing.
-          
+
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the operation would result in writing invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBoolean">
@@ -663,10 +747,19 @@ The property name is escaped before writing.
         <Parameter Name="value" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON literal <b>true</b> or <b>false</b> as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.Boolean" /> value (as a JSON literal <b>true</b> or <b>false</b>) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBooleanValue">
@@ -688,8 +781,8 @@ The property name is escaped before writing.
         <Parameter Name="value" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="value">The value to be written as a JSON literal "true" or "false" as an element of a JSON array.</param>
-        <summary>Writes a <see cref="T:System.Boolean" /> value (as a JSON literal "true" or "false") as an element of a JSON array.</summary>
+        <param name="value">The value to be written as a JSON literal <b>true</b> or <b>false</b> as an element of a JSON array.</param>
+        <summary>Writes a <see cref="T:System.Boolean" /> value (as a JSON literal <b>true</b> or <b>false</b>) as an element of a JSON array.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the operation would result in writing invalid JSON.</exception>
       </Docs>
@@ -713,20 +806,22 @@ The property name is escaped before writing.
         <Parameter Name="utf8Value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON comment within /*..*/.</param>
+        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON comment within `/*..*/`.</param>
         <summary>Writes a UTF-8 text value as a JSON comment.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The comment value is not escaped before writing.
-          
+
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified value is too large.
         
 -or-
 
-<paramref name="utf8Value" /> contains a comment delimiter (i.e. */).</exception>
+<paramref name="utf8Value" /> contains a comment delimiter (that is, `*/`).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCommentValue">
@@ -748,20 +843,22 @@ The comment value is not escaped before writing.
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within /*..*/.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within `/*..*/`.</param>
         <summary>Writes a UTF-16 text value as a JSON comment.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The comment value is not escaped before writing.
-          
+
           ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The specified value is too large OR.
+        <exception cref="T:System.ArgumentException">The specified value is too large.
         
 -or-
 
-<paramref name="value" /> contains a comment delimiter (i.e. */).</exception>
+<paramref name="value" /> contains a comment delimiter (that is, `*/`).</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCommentValue">
@@ -783,20 +880,23 @@ The comment value is not escaped before writing.
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within /*..*/.</param>
+        <param name="value">The UTF-16 encoded value to be written as a UTF-8 transcoded JSON comment within `/*..*/`.</param>
         <summary>Writes a string text value as a JSON comment.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The comment value is not escaped before writing.
-          
+
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified value is too large.
         
 -or-
 
-<paramref name="value" /> contains a comment delimiter (i.e. */).</exception>
+<paramref name="value" /> contains a comment delimiter (that is, `*/`).</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="value" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteEndArray">
@@ -863,12 +963,14 @@ The comment value is not escaped before writing.
       </Parameters>
       <Docs>
         <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
-        <summary>Writes a property name specified as a read-only span of bytes and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
+        <summary>Writes a property name specified as a read-only span of bytes and the JSON literal <b>null</b> as part of a name/value pair of a JSON object.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The property name is escaped before writing.
-          
+
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
@@ -895,12 +997,14 @@ The property name is escaped before writing.
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
-        <summary>Writes a property name specified as a read-only character span and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
+        <summary>Writes a property name specified as a read-only character span and the JSON literal <b>null</b> as part of a name/value pair of a JSON object.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The property name is escaped before writing.
-          
+
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
@@ -927,16 +1031,19 @@ The property name is escaped before writing.
       </Parameters>
       <Docs>
         <param name="propertyName">The UTF-16 encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
-        <summary>Writes a property name specified as a string and the JSON literal "null" as part of a name/value pair of a JSON object.</summary>
+        <summary>Writes a property name specified as a string and the JSON literal <b>null</b> as part of a name/value pair of a JSON object.</summary>
         <remarks>
           <format><![CDATA[
-          
+
+## Remarks
+
 The property name is escaped before writing.
-          
+
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNull">
@@ -958,9 +1065,18 @@ The property name is escaped before writing.
         <Parameter Name="propertyName" Type="System.Text.Json.JsonEncodedText" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the pre-encoded property name and the JSON literal <b>null</b> as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNullValue">
@@ -980,7 +1096,7 @@ The property name is escaped before writing.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Writes the JSON literal "null" as an element of a JSON array.</summary>
+        <summary>Writes the JSON literal <b>null</b> as an element of a JSON array.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the operation would result in writing invalid JSON.</exception>
       </Docs>
@@ -1009,9 +1125,13 @@ The property name is escaped before writing.
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only span of bytes and a <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[ 
 
-Writes the <xref:System.Decimal> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Decimal> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1043,9 +1163,13 @@ Writes the <xref:System.Decimal> using the default <xref:System.Buffers.Standard
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only span of bytes and a <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1077,9 +1201,13 @@ Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only span of bytes and an <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1111,9 +1239,13 @@ Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFo
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only span of bytes and an <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1145,9 +1277,13 @@ Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFo
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only span of bytes and a <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1184,9 +1320,13 @@ Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only span of bytes and a <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1223,9 +1363,13 @@ Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only span of bytes and a <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1257,9 +1401,13 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Decimal> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Decimal> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1291,9 +1439,13 @@ Writes the <xref:System.Decimal> using the default <xref:System.Buffers.Standard
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1325,9 +1477,13 @@ Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and an <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1359,9 +1515,13 @@ Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFo
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and an <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1393,9 +1553,13 @@ Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFo
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1432,9 +1596,13 @@ Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1471,9 +1639,13 @@ Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -1505,14 +1677,19 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and a <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Decimal> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Decimal> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1539,14 +1716,19 @@ Writes the <xref:System.Decimal> using the default <xref:System.Buffers.Standard
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and a <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1573,14 +1755,19 @@ Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and an <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1607,14 +1794,19 @@ Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFo
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and an <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1641,14 +1833,19 @@ Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFo
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and a <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'). The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1680,14 +1877,19 @@ Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and a <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1719,14 +1921,19 @@ Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and a <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardFormat> (i.e. 'G'), for example: 32767. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1749,10 +1956,21 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <Parameter Name="value" Type="System.Decimal" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.Decimal" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.Decimal> using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1775,10 +1993,21 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <Parameter Name="value" Type="System.Double" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.Double" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.Double> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1801,10 +2030,21 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <Parameter Name="value" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.Int32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.Int32> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1827,10 +2067,21 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <Parameter Name="value" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.Int64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.Int64> using the default <xref:System.Buffers.StandardFormat> (this is, 'G'); for example, 32767.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1853,10 +2104,21 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <Parameter Name="value" Type="System.Single" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.Single" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.Single> using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1884,10 +2146,21 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.UInt32" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.UInt32> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumber">
@@ -1915,10 +2188,21 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <Parameter Name="value" Type="System.UInt64" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON number as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.UInt64" /> value (as a JSON number) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardFormat> (that is, 'G'); for example, 32767.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNumberValue">
@@ -1943,7 +2227,9 @@ Writes the <xref:System.UInt64> using the default <xref:System.Buffers.StandardF
         <param name="value">The value to be written as a JSON number as an element of a JSON array.</param>
         <summary>Writes a <see cref="T:System.Decimal" /> value (as a JSON number) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
+
+## Remarks
 
 This method writes the <xref:System.Decimal> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
 
@@ -1974,9 +2260,11 @@ This method writes the <xref:System.Decimal> value using the default <xref:Syste
         <param name="value">The value to be written as a JSON number as an element of a JSON array.</param>
         <summary>Writes a <see cref="T:System.Double" /> value (as a JSON number) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-This method writes the <xref:System.Double> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+## Remarks
+
+This method writes the <xref:System.Double> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G17' on any other framework.
 
           ]]></format>
         </remarks>
@@ -2005,7 +2293,9 @@ This method writes the <xref:System.Double> value using the default <xref:System
         <param name="value">The value to be written as a JSON number as an element of a JSON array.</param>
         <summary>Writes an <see cref="T:System.Int32" /> value (as a JSON number) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
+
+## Remarks
 
 This method writes the <xref:System.Int32> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G'). For example, 32767.
 
@@ -2036,7 +2326,9 @@ This method writes the <xref:System.Int32> value using the default <xref:System.
         <param name="value">The value to be written as a JSON number as an element of a JSON array.</param>
         <summary>Writes an <see cref="T:System.Int64" /> value (as a JSON number) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
+
+## Remarks
 
 This method writes the <xref:System.Int64> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G'). For example, 32767.
 
@@ -2067,9 +2359,11 @@ This method writes the <xref:System.Int64> value using the default <xref:System.
         <param name="value">The value to be written as a JSON number as an element of a JSON array.</param>
         <summary>Writes a <see cref="T:System.Single" /> value (as a JSON number) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-This method writes the <xref:System.Single> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G').
+## Remarks
+
+This method writes the <xref:System.Single> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G') on .NET Core 3.0 or later versions. Uses 'G9' on any other framework.
 
           ]]></format>
         </remarks>
@@ -2103,7 +2397,9 @@ This method writes the <xref:System.Single> value using the default <xref:System
         <param name="value">The value to be written as a JSON number as an element of a JSON array.</param>
         <summary>Writes a <see cref="T:System.UInt32" /> value (as a JSON number) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
+
+## Remarks
 
 This method writes the <xref:System.UInt32> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G'). For example, 32767.
 
@@ -2139,13 +2435,152 @@ This method writes the <xref:System.UInt32> value using the default <xref:System
         <param name="value">The value to be written as a JSON number as an element of a JSON array.</param>
         <summary>Writes a <see cref="T:System.UInt64" /> value (as a JSON number) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
+
+## Remarks
 
 This method writes the <xref:System.UInt64> value using the default <xref:System.Buffers.StandardFormat> (that is, 'G'). For example, 32767.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the operation would result in writing invalid JSON.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="WritePropertyName">
+      <MemberSignature Language="C#" Value="public void WritePropertyName (ReadOnlySpan&lt;byte&gt; utf8PropertyName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void WritePropertyName(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; utf8PropertyName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.Json.Utf8JsonWriter.WritePropertyName(System.ReadOnlySpan{System.Byte})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub WritePropertyName (utf8PropertyName As ReadOnlySpan(Of Byte))" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void WritePropertyName(ReadOnlySpan&lt;System::Byte&gt; utf8PropertyName);" />
+      <MemberSignature Language="F#" Value="member this.WritePropertyName : ReadOnlySpan&lt;byte&gt; -&gt; unit" Usage="utf8JsonWriter.WritePropertyName utf8PropertyName" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Json</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="utf8PropertyName" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <summary>Writes the UTF-8 property name (as a JSON string) as the first part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this write operation would produce invalid JSON.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="WritePropertyName">
+      <MemberSignature Language="C#" Value="public void WritePropertyName (ReadOnlySpan&lt;char&gt; propertyName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void WritePropertyName(valuetype System.ReadOnlySpan`1&lt;char&gt; propertyName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.Json.Utf8JsonWriter.WritePropertyName(System.ReadOnlySpan{System.Char})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub WritePropertyName (propertyName As ReadOnlySpan(Of Char))" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void WritePropertyName(ReadOnlySpan&lt;char&gt; propertyName);" />
+      <MemberSignature Language="F#" Value="member this.WritePropertyName : ReadOnlySpan&lt;char&gt; -&gt; unit" Usage="utf8JsonWriter.WritePropertyName propertyName" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Json</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="propertyName" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="propertyName">The property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the property name (as a JSON string) as the first part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this write operation would produce invalid JSON.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="WritePropertyName">
+      <MemberSignature Language="C#" Value="public void WritePropertyName (string propertyName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void WritePropertyName(string propertyName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.Json.Utf8JsonWriter.WritePropertyName(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub WritePropertyName (propertyName As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void WritePropertyName(System::String ^ propertyName);" />
+      <MemberSignature Language="F#" Value="member this.WritePropertyName : string -&gt; unit" Usage="utf8JsonWriter.WritePropertyName propertyName" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Json</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="propertyName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="propertyName">The property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the property name (as a JSON string) as the first part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name is escaped before writing.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="propertyName" /> is <see langword="null" />.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="WritePropertyName">
+      <MemberSignature Language="C#" Value="public void WritePropertyName (System.Text.Json.JsonEncodedText propertyName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void WritePropertyName(valuetype System.Text.Json.JsonEncodedText propertyName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.Json.Utf8JsonWriter.WritePropertyName(System.Text.Json.JsonEncodedText)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub WritePropertyName (propertyName As JsonEncodedText)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void WritePropertyName(System::Text::Json::JsonEncodedText propertyName);" />
+      <MemberSignature Language="F#" Value="member this.WritePropertyName : System.Text.Json.JsonEncodedText -&gt; unit" Usage="utf8JsonWriter.WritePropertyName propertyName" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Json</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="propertyName" Type="System.Text.Json.JsonEncodedText" />
+      </Parameters>
+      <Docs>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the pre-encoded property name (as a JSON string) as the first part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartArray">
@@ -2167,7 +2602,7 @@ This method writes the <xref:System.UInt64> value using the default <xref:System
       <Docs>
         <summary>Writes the beginning of a JSON array.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1000.
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1,000.
 
 -or-
 
@@ -2198,12 +2633,14 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
         <remarks>
           <format><![CDATA[
 
+## Remarks
+
 The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
-        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1000.
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1,000.
 
 -or-
        
@@ -2234,12 +2671,14 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
         <remarks>
           <format><![CDATA[
 
+## Remarks
+
 The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
-        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1000.
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1,000.
 
 -or-
        
@@ -2270,16 +2709,19 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
         <remarks>
           <format><![CDATA[
 
+## Remarks
+
 The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
-        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1000.
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1,000.
 
 -or-
        
 Validation is enabled, and this write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartArray">
@@ -2301,9 +2743,22 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
         <Parameter Name="propertyName" Type="System.Text.Json.JsonEncodedText" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON array to be transcoded and written as UTF-8.</param>
+        <summary>Writes the beginning of a JSON array with a pre-encoded property name as the key.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1,000.
+    
+-or-
+
+Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartObject">
@@ -2325,7 +2780,7 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
       <Docs>
         <summary>Writes the beginning of a JSON object.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1000.
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1,000.
 
 -or-
 
@@ -2356,12 +2811,14 @@ Validation is enabled, and the operation would result in writing invalid JSON.</
         <remarks>
           <format><![CDATA[
 
+## Remarks
+
 The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
-        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1000. 
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1,000. 
 
 -or-
        
@@ -2392,12 +2849,14 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
         <remarks>
           <format><![CDATA[
 
+## Remarks
+
 The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
-        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1000. 
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1,000. 
 
 -or-
        
@@ -2428,16 +2887,19 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
         <remarks>
           <format><![CDATA[
 
+## Remarks
+
 The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
-        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1000. 
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON exceeds the maximum depth of 1,000. 
 
 -or-
        
 Validation is enabled, and this write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStartObject">
@@ -2459,9 +2921,22 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
         <Parameter Name="propertyName" Type="System.Text.Json.JsonEncodedText" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <summary>Writes the beginning of a JSON object with a pre-encoded property name as the key.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The depth of the JSON has exceeded the maximum depth of 1,000.
+          
+-or-
+
+Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -2488,9 +2963,14 @@ Validation is enabled, and this write operation would produce invalid JSON.</exc
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a UTF-8 property name and a <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.DateTime> using the round-trippable ('O') <xref:System.Buffers.StandardFormat>. For example, 2017-06-12T05:30:45.7680000. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.DateTime> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2522,9 +3002,14 @@ Writes the <xref:System.DateTime> using the round-trippable ('O') <xref:System.B
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a UTF-8 property name and a <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.DateTimeOffset> using the round-trippable ('O') <xref:System.Buffers.StandardFormat> , for example: 2017-06-12T05:30:45.7680000-07:00. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.DateTimeOffset> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000-07:00.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2556,9 +3041,11 @@ Writes the <xref:System.DateTimeOffset> using the round-trippable ('O') <xref:Sy
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a UTF-8 property name and a <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFormat> (i.e. 'D'), as the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFormat> (that is, 'D'), in the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn. The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2592,7 +3079,9 @@ Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFor
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2626,7 +3115,9 @@ The property name and value is escaped before writing.
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2660,7 +3151,11 @@ The property name and value is escaped before writing.
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.ReadOnlySpan{System.Byte})> method was called.
 
           ]]></format>
         </remarks>
@@ -2688,10 +3183,22 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.Text.Json.JsonEncodedText" />
       </Parameters>
       <Docs>
-        <param name="utf8PropertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="utf8PropertyName">The UTF-8 encoded property name of the JSON object to be written.</param>
+        <param name="value">The JSON encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the UTF-8 property name and pre-encoded value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The value should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+The property name is escaped before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and this method would result in writing invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -2718,9 +3225,14 @@ The property name and value is escaped before writing.
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.DateTime> using the round-trippable ('O') <xref:System.Buffers.StandardFormat> , for example: 2017-06-12T05:30:45.7680000. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.DateTime> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2752,9 +3264,14 @@ Writes the <xref:System.DateTime> using the round-trippable ('O') <xref:System.B
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.DateTimeOffset> using the round-trippable ('O') <xref:System.Buffers.StandardFormat> , for example: 2017-06-12T05:30:45.7680000-07:00. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.DateTimeOffset> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000-07:00.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2786,9 +3303,11 @@ Writes the <xref:System.DateTimeOffset> using the round-trippable ('O') <xref:Sy
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a property name specified as a read-only character span and a <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFormat> (i.e. 'D'), as the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFormat> (that is, 'D'), in the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn. The property name is escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2822,7 +3341,9 @@ Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFor
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2856,7 +3377,9 @@ The property name and value is escaped before writing.
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
 
           ]]></format>
         </remarks>
@@ -2890,7 +3413,11 @@ The property name and value is escaped before writing.
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.ReadOnlySpan{System.Char})> method was called.
 
           ]]></format>
         </remarks>
@@ -2918,10 +3445,22 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.Text.Json.JsonEncodedText" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The JSON encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and pre-encoded value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The value should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+The property name is escaped before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -2948,14 +3487,20 @@ The property name and value is escaped before writing.
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and a <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.DateTime> using the round-trippable ('O') <xref:System.Buffers.StandardFormat> , for example: 2017-06-12T05:30:45.7680000. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.DateTime> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -2982,14 +3527,20 @@ Writes the <xref:System.DateTime> using the round-trippable ('O') <xref:System.B
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and a <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.DateTimeOffset> using the round-trippable ('O') <xref:System.Buffers.StandardFormat> , for example: 2017-06-12T05:30:45.7680000-07:00. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.DateTimeOffset> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000-07:00.
+
+The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3016,14 +3567,17 @@ Writes the <xref:System.DateTimeOffset> using the round-trippable ('O') <xref:Sy
         <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
         <summary>Writes a property name specified as a string and a <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFormat> (i.e. 'D'), as the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn. The property name is escaped before writing.
+## Remarks
+
+Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFormat> (that is, 'D'), in the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn. The property name is escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3052,12 +3606,15 @@ Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFor
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3086,12 +3643,15 @@ The property name and value is escaped before writing.
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3120,12 +3680,17 @@ The property name and value is escaped before writing.
         <remarks>
           <format><![CDATA[
 
-The property name and value is escaped before writing.
+## Remarks
+
+The property name and value are escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.String)> method was called.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The specified property name or value is too large.</exception>
         <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3148,10 +3713,23 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.Text.Json.JsonEncodedText" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The JSON encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the property name and pre-encoded value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The value should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+The property name is escaped before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified property name is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="propertyName" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3174,10 +3752,22 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.DateTime" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.DateTime" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.DateTime> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3200,10 +3790,22 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.DateTimeOffset" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.DateTimeOffset> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000-07:00.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3226,10 +3828,21 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.Guid" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and <see cref="T:System.Guid" /> value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Writes the <xref:System.Guid> using the default <xref:System.Buffers.StandardFormat> (that is, 'D'), in the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn.
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3252,10 +3865,22 @@ The property name and value is escaped before writing.
         <Parameter Name="utf8Value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="utf8Value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="utf8Value">The UTF-8 encoded value to be written as a JSON string as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and UTF-8 text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+The value is escaped before writing.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3278,10 +3903,24 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+The value is escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.Text.Json.JsonEncodedText)> method was called.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3304,10 +3943,24 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and string text value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+The value is escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNull(System.Text.Json.JsonEncodedText)> method was called.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The specified value is too large.</exception>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteString">
@@ -3330,10 +3983,19 @@ The property name and value is escaped before writing.
         <Parameter Name="value" Type="System.Text.Json.JsonEncodedText" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="propertyName">The JSON encoded property name of the JSON object to be transcoded and written as UTF-8.</param>
+        <param name="value">The JSON encoded value to be written as a UTF-8 transcoded JSON string as part of the name/value pair.</param>
+        <summary>Writes the pre-encoded property name and pre-encoded value (as a JSON string) as part of a name/value pair of a JSON object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property name and value should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteStringValue">
@@ -3358,9 +4020,12 @@ The property name and value is escaped before writing.
         <param name="value">The value to be written as a JSON string as an element of a JSON array.</param>
         <summary>Writes a <see cref="T:System.DateTime" /> value (as a JSON string) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-This method writes the <xref:System.DateTime> using the round-trippable ('O') <xref:System.Buffers.StandardFormat>. For example, 2017-06-12T05:30:45.7680000.
+## Remarks
+
+This method writes the <xref:System.DateTime> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000.
 
           ]]></format>
         </remarks>
@@ -3389,9 +4054,12 @@ This method writes the <xref:System.DateTime> using the round-trippable ('O') <x
         <param name="value">The value to be written as a JSON string as an element of a JSON array.</param>
         <summary>Writes a <see cref="T:System.DateTimeOffset" /> value (as a JSON string) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
 
-This method writes the <xref:System.DateTimeOffset> using the round-trippable ('O') <xref:System.Buffers.StandardFormat>. For example, 2017-06-12T05:30:45.7680000-07:00.
+## Remarks
+
+This method writes the <xref:System.DateTimeOffset> using the ISO 8601-1 extended format (see [DateTime and DateTimeOffset support in System.Text.Json](~/docs/standard/datetime/system-text-json-support.md));
+for example, 2017-06-12T05:30:45.7680000-07:00.
 
           ]]></format>
         </remarks>
@@ -3420,7 +4088,9 @@ This method writes the <xref:System.DateTimeOffset> using the round-trippable ('
         <param name="value">The value to be written as a JSON string as an element of a JSON array.</param>
         <summary>Writes a <see cref="T:System.Guid" /> value (as a JSON string) as an element of a JSON array.</summary>
         <remarks>
-          <format><![CDATA[  
+          <format><![CDATA[
+
+## Remarks
 
 This method writes the <xref:System.Guid> value using the default <xref:System.Buffers.StandardFormat> (that is, 'D'), as the form: nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn.
 
@@ -3452,6 +4122,8 @@ This method writes the <xref:System.Guid> value using the default <xref:System.B
         <summary>Writes a UTF-8 text value (as a JSON string) as an element of a JSON array.</summary>
         <remarks>
           <format><![CDATA[
+
+## Remarks
 
 The value is escaped before writing.
 
@@ -3485,6 +4157,8 @@ The value is escaped before writing.
         <remarks>
           <format><![CDATA[
 
+## Remarks
+
 The value is escaped before writing.
 
           ]]></format>
@@ -3517,7 +4191,11 @@ The value is escaped before writing.
         <remarks>
           <format><![CDATA[
 
+## Remarks
+
 The value is escaped before writing.
+
+If `value` is `null`, the JSON **null** value is written, as if the <xref:System.Text.Json.Utf8JsonWriter.WriteNullValue> method was called.
 
           ]]></format>
         </remarks>
@@ -3544,9 +4222,18 @@ The value is escaped before writing.
         <Parameter Name="value" Type="System.Text.Json.JsonEncodedText" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">The JSON encoded value to be written as a UTF-8 transcoded JSON string element of a JSON array.</param>
+        <summary>Writes the pre-encoded text value (as a JSON string) as an element of a JSON array.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The value should already be escaped when the instance of <xref:System.Text.Json.JsonEncodedText> was created.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Validation is enabled, and the write operation would produce invalid JSON.</exception>
       </Docs>
     </Member>
   </Members>

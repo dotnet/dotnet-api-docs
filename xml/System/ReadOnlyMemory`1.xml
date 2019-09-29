@@ -1,9 +1,9 @@
-﻿<Type Name="ReadOnlyMemory&lt;T&gt;" FullName="System.ReadOnlyMemory&lt;T&gt;">
-  <TypeSignature Language="C#" Value="public struct ReadOnlyMemory&lt;T&gt;" />
-  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit ReadOnlyMemory`1&lt;T&gt; extends System.ValueType" />
+<Type Name="ReadOnlyMemory&lt;T&gt;" FullName="System.ReadOnlyMemory&lt;T&gt;">
+  <TypeSignature Language="C#" Value="public struct ReadOnlyMemory&lt;T&gt; : IEquatable&lt;ReadOnlyMemory&lt;T&gt;&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit ReadOnlyMemory`1&lt;T&gt; extends System.ValueType implements class System.IEquatable`1&lt;valuetype System.ReadOnlyMemory`1&lt;!T&gt;&gt;" />
   <TypeSignature Language="DocId" Value="T:System.ReadOnlyMemory`1" />
-  <TypeSignature Language="VB.NET" Value="Public Structure ReadOnlyMemory(Of T)" />
-  <TypeSignature Language="C++ CLI" Value="generic &lt;typename T&gt;&#xA;public value class ReadOnlyMemory" />
+  <TypeSignature Language="VB.NET" Value="Public Structure ReadOnlyMemory(Of T)&#xA;Implements IEquatable(Of ReadOnlyMemory(Of T))" />
+  <TypeSignature Language="C++ CLI" Value="generic &lt;typename T&gt;&#xA;public value class ReadOnlyMemory : IEquatable&lt;ReadOnlyMemory&lt;T&gt;&gt;" />
   <TypeSignature Language="F#" Value="type ReadOnlyMemory&lt;'T&gt; = struct" />
   <AssemblyInfo>
     <AssemblyName>System.Runtime</AssemblyName>
@@ -22,15 +22,19 @@
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
-  <Interfaces></Interfaces>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IEquatable&lt;System.ReadOnlyMemory&lt;T&gt;&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
   <Attributes>
     <Attribute FrameworkAlternate="netcore-2.2;netcore-2.1;netcore-3.0;netstandard-2.1">
       <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
+    <typeparam name="T">The object type from which the contiguous region of memory will be read.</typeparam>
+    <summary>Represents a contiguous region of memory, similar to <see cref="T:System.ReadOnlySpan`1" />. Unlike <see cref="T:System.ReadOnlySpan`1" />, it is not a byref-like type.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -57,9 +61,19 @@
         <Parameter Name="array" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="array">The target array.</param>
+        <summary>Creates a new memory region over the entirety of the target array.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Returns `default` when `array` is `null`.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">
+          <paramref name="array" /> is covariant, and the type of array is not exactly <see langword="T[]" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -87,11 +101,23 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="array">The target array.</param>
+        <param name="start">The index at which to begin the memory region.</param>
+        <param name="length">The number of items in the memory region.</param>
+        <summary>Creates a new memory region over the portion of the target array beginning at a specified position and including a specified number of elements.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Returns `default` when `array` is `null`.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">
+          <paramref name="array" /> is covariant, and the type of array is not exactly <see langword="T[]" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="start" />, <paramref name="length" />, or <paramref name="start" /> + <paramref name="length" /> identify a position outside the range of the array.</exception>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -120,9 +146,20 @@
         <Parameter Name="destination" Type="System.Memory&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="destination">The memory region to copy items into.</param>
+        <summary>Copies the contents of the read-only memory region into a destination memory region.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+ 
+ ## Remarks
+ 
+ If `source` and `destination`, this method behaves as if the original values are in a temporary location before the destination is overwritten.
+
+         ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destination" /> is smaller than the source memory region.</exception>
       </Docs>
     </Member>
     <Member MemberName="Empty">
@@ -148,8 +185,8 @@
         <ReturnType>System.ReadOnlyMemory&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets an empty <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <value>An empty read-only memory region.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -184,20 +221,26 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="obj">The object to compare.</param>
+        <summary>Determines whether the specified object is equal to the current read-only memory region.</summary>
+        <returns>
+          <see langword="true" /> if the current instance and <paramref name="obj" /> are equal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Equals">
       <MemberSignature Language="C#" Value="public bool Equals (ReadOnlyMemory&lt;T&gt; other);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Equals(valuetype System.ReadOnlyMemory`1&lt;!T&gt; other) cil managed" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Equals(valuetype System.ReadOnlyMemory`1&lt;!T&gt; other) cil managed" FrameworkAlternate="netcore-2.1;netcore-2.2" />
       <MemberSignature Language="DocId" Value="M:System.ReadOnlyMemory`1.Equals(System.ReadOnlyMemory{`0})" />
       <MemberSignature Language="VB.NET" Value="Public Function Equals (other As ReadOnlyMemory(Of T)) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool Equals(ReadOnlyMemory&lt;T&gt; other);" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool Equals(ReadOnlyMemory&lt;T&gt; other);" FrameworkAlternate="netcore-2.1;netcore-2.2" />
       <MemberSignature Language="F#" Value="override this.Equals : ReadOnlyMemory&lt;'T&gt; -&gt; bool" Usage="readOnlyMemory.Equals other" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool Equals(valuetype System.ReadOnlyMemory`1&lt;!T&gt; other) cil managed" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool Equals(ReadOnlyMemory&lt;T&gt; other);" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.IEquatable`1.Equals(`0)</InterfaceMember>
+      </Implements>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
@@ -216,10 +259,21 @@
         <Parameter Name="other" Type="System.ReadOnlyMemory&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="other">The read-only memory to compare.</param>
+        <summary>Determines whether the current instance and a specified <see cref="T:System.ReadOnlyMemory`1" /> objects are equal.</summary>
+        <returns>
+          <see langword="true" /> if the current instance and <paramref name="other" /> are equal; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+[!IMPORTANT]
+
+Two <xref:System.ReadOnlyMemory%601> objects are equal if the memory regions point to the same array and have the same length. The method does not check to see if the contents are equal.
+
+            ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -251,8 +305,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the hash code for this <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <returns>The hash code.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -279,40 +333,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Item">
-      <MemberSignature Language="C#" Value="public ReadOnlyMemory&lt;T&gt; this[Range range] { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.ReadOnlyMemory`1&lt;!T&gt; Item(valuetype System.Range)" />
-      <MemberSignature Language="DocId" Value="P:System.ReadOnlyMemory`1.Item(System.Range)" />
-      <MemberSignature Language="VB.NET" Value="Default Public ReadOnly Property Item(range As Range) As ReadOnlyMemory(Of T)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property ReadOnlyMemory&lt;T&gt; default[Range] { ReadOnlyMemory&lt;T&gt; get(Range range); };" />
-      <MemberSignature Language="F#" Value="member this.Item(Range) : ReadOnlyMemory&lt;'T&gt;" Usage="System.ReadOnlyMemory&lt;'T&gt;.Item" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.1.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.ReadOnlyMemory&lt;T&gt;</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="range" Type="System.Range" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
-      </Parameters>
-      <Docs>
-        <param name="range">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether this read-only memory region is empty.</summary>
+        <value>
+          <see langword="true" /> if the read-only memory region is empty (that is, its <see cref="P:System.ReadOnlyMemory`1.Length" /> is 0); otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -339,8 +362,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the number of items in the memory region.</summary>
+        <value>The number of items in the memory region.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -370,9 +393,9 @@
         <Parameter Name="segment" Type="System.ArraySegment&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="segment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="segment">The array segment to convert.</param>
+        <summary>Defines an implicit conversion of a <see cref="T:System.ArraySegment`1" /> to a <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <returns>A read-only memory representation of the array segment.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -402,9 +425,9 @@
         <Parameter Name="array" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="array">An array of type T to convert.</param>
+        <summary>Defines an implicit conversion of an array to a <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <returns>The read-only memory representation of the array of type T.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -432,41 +455,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Slice">
-      <MemberSignature Language="C#" Value="public ReadOnlyMemory&lt;T&gt; Slice (Index startIndex);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.ReadOnlyMemory`1&lt;!T&gt; Slice(valuetype System.Index startIndex) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.ReadOnlyMemory`1.Slice(System.Index)" />
-      <MemberSignature Language="VB.NET" Value="Public Function Slice (startIndex As Index) As ReadOnlyMemory(Of T)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReadOnlyMemory&lt;T&gt; Slice(Index startIndex);" />
-      <MemberSignature Language="F#" Value="member this.Slice : Index -&gt; ReadOnlyMemory&lt;'T&gt;" Usage="readOnlyMemory.Slice startIndex" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.1.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.ReadOnlyMemory&lt;T&gt;</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="startIndex" Type="System.Index" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
-      </Parameters>
-      <Docs>
-        <param name="startIndex">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Creates a handle for the memory.</summary>
+        <returns>A handle for the memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!IMPORTANT]
+> The garbage collector will not move the memory until the returned <see cref="T:System.Buffers.MemoryHandle" /> is disposed, enabling taking and using the memory's address.
+
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">An instance with nonprimitive (non-blittable) members cannot be pinned.</exception>
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -495,41 +496,12 @@
         <Parameter Name="start" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="start">The index at which to begin this slice.</param>
+        <summary>Forms a slice out of the given memory region, beginning at a specified poisition and continuing to its end.</summary>
+        <returns>A read-only memory region representing the desired slice.</returns>
         <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Slice">
-      <MemberSignature Language="C#" Value="public ReadOnlyMemory&lt;T&gt; Slice (Range range);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.ReadOnlyMemory`1&lt;!T&gt; Slice(valuetype System.Range range) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.ReadOnlyMemory`1.Slice(System.Range)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReadOnlyMemory&lt;T&gt; Slice(Range range);" />
-      <MemberSignature Language="F#" Value="member this.Slice : Range -&gt; ReadOnlyMemory&lt;'T&gt;" Usage="readOnlyMemory.Slice range" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.1.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.ReadOnlyMemory&lt;T&gt;</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="range" Type="System.Range" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
-      </Parameters>
-      <Docs>
-        <param name="range">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="start" /> is less than 0 or greater than <see cref="P:System.ReadOnlyMemory`1.Length" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -559,11 +531,13 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="start">The index at which to begin this slice.</param>
+        <param name="length">The desired length for the slice.</param>
+        <summary>Forms a slice out of the given memory region starting at <paramref name="start" /> position for <paramref name="length" /> elements.</summary>
+        <returns>A read-only memory region representing the desired slice.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="start" />, <paramref name="length" />, or <paramref name="start" /> + <paramref name="length" /> are outside the range of the current instance.</exception>
       </Docs>
     </Member>
     <Member MemberName="Span">
@@ -589,8 +563,8 @@
         <ReturnType>System.ReadOnlySpan&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a span from the memory region.</summary>
+        <value>A memory span.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -618,9 +592,17 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Copies the contents from the memory region into a new array.</summary>
+        <returns>An array.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+`ToArray` allocates on the heap and so should generally be avoided. However, it is sometimes necessary to bridge the gap with APIs written in terms of arrays.
+
+            ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -647,8 +629,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the string representation of this read-only memory instance.</summary>
+        <returns>For <see cref="T:System.ReadOnlyMemory`1" />, returns a new instance of string that represents the characters pointed to by the memory. Otherwise, returns a <see cref="T:System.String" /> with the name of the type and the number of elements.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -678,10 +660,20 @@
         <Parameter Name="destination" Type="System.Memory&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">The memory region to copy items into.</param>
+        <summary>Tries to copy the contents of the readonly-only memory into the destination and returns a value that indicates whether the copy operation succeeded. </summary>
+        <returns>
+          <see langword="true" /> if the copy operation succeeded. <see langword="false" /> if <paramref name="destination" /> is smaller than the current instance, and no data is written to <paramref name="destination" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+
+## Remarks
+
+If the source and destination overlap, this method behaves as if the original values are in a temporary location before the destination is overwritten.
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

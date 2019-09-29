@@ -1,4 +1,4 @@
-﻿<Type Name="Pkcs12Info" FullName="System.Security.Cryptography.Pkcs.Pkcs12Info">
+<Type Name="Pkcs12Info" FullName="System.Security.Cryptography.Pkcs.Pkcs12Info">
   <TypeSignature Language="C#" Value="public sealed class Pkcs12Info" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Pkcs12Info extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Pkcs.Pkcs12Info" />
@@ -15,7 +15,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents the data from PKCS#12 PFX contents. This class cannot be inherited.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -36,8 +36,8 @@
         <ReturnType>System.Collections.ObjectModel.ReadOnlyCollection&lt;System.Security.Cryptography.Pkcs.Pkcs12SafeContents&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a read-only collection of the SafeContents values present in the PFX AuthenticatedSafe.</summary>
+        <value>A read-only collection of the SafeContents values present in the PFX AuthenticatedSafe.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -46,7 +46,7 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.Cryptography.Pkcs.Pkcs12Info Decode(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; encodedBytes, [out] int32&amp; bytesConsumed, bool skipCopy) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs12Info.Decode(System.ReadOnlyMemory{System.Byte},System.Int32@,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Decode (encodedBytes As ReadOnlyMemory(Of Byte), ByRef bytesConsumed As Integer, Optional skipCopy As Boolean = false) As Pkcs12Info" />
-      <MemberSignature Language="F#" Value="static member Decode : ReadOnlyMemory&lt;byte&gt; *  * bool -&gt; System.Security.Cryptography.Pkcs.Pkcs12Info" Usage="System.Security.Cryptography.Pkcs.Pkcs12Info.Decode (encodedBytes, bytesConsumed, skipCopy)" />
+      <MemberSignature Language="F#" Value="static member Decode : ReadOnlyMemory&lt;byte&gt; * int * bool -&gt; System.Security.Cryptography.Pkcs.Pkcs12Info" Usage="System.Security.Cryptography.Pkcs.Pkcs12Info.Decode (encodedBytes, bytesConsumed, skipCopy)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
@@ -62,12 +62,26 @@
         <Parameter Name="skipCopy" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="encodedBytes">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <param name="skipCopy">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="encodedBytes">The data to interpret as a PKCS#12 PFX.</param>
+        <param name="bytesConsumed">When this method returns, contains a value that indicates the number of bytes from <paramref name="encodedBytes" /> which were read by this method. This parameter is treated as uninitialized.</param>
+        <param name="skipCopy">
+          <see langword="true" /> to store <paramref name="encodedBytes" /> without making a defensive copy; otherwise, <see langword="false" />. The default is <see langword="false" />.</param>
+        <summary>Reads the provided data as a PKCS#12 PFX and returns an object view of the contents.</summary>
+        <returns>An object view of the PKCS#12 PFX decoded from the input.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+ The default behavior of this method is to make a defensive copy of the first `bytesConsumed` bytes from `encodedBytes`.
+ When the `skipCopy` parameter is `true`, this defensive copy is skipped.
+ If the defensive copy is skipped and the contents of the first `bytesConsumed` bytes of `encodedBytes` change during the lifetime of the returned value or of any object produced by its
+ methods or properties, then methods and properties on those objects may produce nonsense results or throw exceptions due to the corrupted state.
+ Callers are therefore advised to only use a `true` value for the `skipCopy` parameter when they can be reasonably assured that the data will stay intact.
+ 
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of the <paramref name="encodedBytes" /> parameter were not successfully decoded as a PKCS#12 PFX.</exception>
       </Docs>
     </Member>
     <Member MemberName="IntegrityMode">
@@ -87,11 +101,33 @@
         <ReturnType>System.Security.Cryptography.Pkcs.Pkcs12IntegrityMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates the type of tamper protection provided for the <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.AuthenticatedSafe" /> contents.</summary>
+        <value>One of the enumeration members that indicates the type of tamper protection provided for the <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.AuthenticatedSafe" /> contents.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="VerifyMac">
+      <AssemblyInfo>
+        <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
+        <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>Attempts to verify the integrity of the <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.AuthenticatedSafe" /> contents with a password.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ It's not possible to distinguish the error due to the password being incorrect from the error due to the contents having been altered.
+ 
+ It's usually the case that a password-protected PFX uses the same password for the MAC algorithm providing integrity and the encryption algorithm providing confidentiality,
+ but the file format doesn't make that a requirement.
+ Therefore, there is no guarantee that a password which results in a `true` return from this method will succeed on a call to <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeContents.Decrypt%2A>.
+
+       ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="VerifyMac">
       <MemberSignature Language="C#" Value="public bool VerifyMac (ReadOnlySpan&lt;char&gt; password);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool VerifyMac(valuetype System.ReadOnlySpan`1&lt;char&gt; password) cil managed" />
@@ -112,10 +148,22 @@
         <Parameter Name="password" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use to attempt to verify integrity.</param>
+        <summary>Attempts to verify the integrity of the <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.AuthenticatedSafe" /> contents with a password represented by a <see cref="T:System.ReadOnlySpan{System.Char}" />.</summary>
+        <returns>
+          <see langword="true" /> if the password successfully verifies the integrity of the <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.AuthenticatedSafe" /> contents; <see langword="false" /> if the password is not correct or the contents have been altered.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+ In the PKCS#12 specification, a distinction is made between a `null` password and an "empty" password, and that difference is reflected in the return value of this method.
+ `ReadOnlySpan<Char>.Empty` represents the `null` password and `String.Empty.AsSpan()` represents the "empty" password. If one of those two values returns `true`, the other won't.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.IntegrityMode" /> value is not <see cref="F:System.Security.Cryptography.Pkcs.Pkcs12IntegrityMode.Password" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The hash algorithm option specified by the PKCS#12 PFX contents could not be identified or is not supported by this platform.</exception>
       </Docs>
     </Member>
     <Member MemberName="VerifyMac">
@@ -138,10 +186,22 @@
         <Parameter Name="password" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use to attempt to verify integrity.</param>
+        <summary>Attempts to verify the integrity of the <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.AuthenticatedSafe" /> contents with a password represented by a <see cref="T:System.String" />.</summary>
+        <returns>
+          <see langword="true" /> if the password successfully verifies the integrity of the <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.AuthenticatedSafe" /> contents; <see langword="false" /> if the password is not correct or the contents have been altered.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+ In the PKCS#12 specification, a distinction is made between a `null` password and an "empty" password, and that difference is reflected in the return value of this method.
+ If the `null` string returns `true`, then <xref:System.String.Empty?displayProperty=nameWithType> returns `false`, and vice versa.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Info.IntegrityMode" /> value is not <see cref="F:System.Security.Cryptography.Pkcs.Pkcs12IntegrityMode.Password" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The hash algorithm option specified by the PKCS#12 PFX contents could not be identified or is not supported by this platform.</exception>
       </Docs>
     </Member>
   </Members>

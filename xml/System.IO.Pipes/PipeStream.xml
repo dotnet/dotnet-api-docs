@@ -1,4 +1,4 @@
-﻿<Type Name="PipeStream" FullName="System.IO.Pipes.PipeStream">
+<Type Name="PipeStream" FullName="System.IO.Pipes.PipeStream">
   <TypeSignature Language="C#" Value="public abstract class PipeStream : System.IO.Stream" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit PipeStream extends System.IO.Stream" />
   <TypeSignature Language="DocId" Value="T:System.IO.Pipes.PipeStream" />
@@ -1260,6 +1260,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1268,22 +1269,58 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="buffer" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="buffer" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A region of memory. When this method returns, the contents of this region are replaced by the bytes read from the current source.</param>
+        <summary>Reads a sequence of bytes from the current stream, writes them to a byte array, and advances the position within the stream by the number of bytes read.</summary>
+        <returns>The total number of bytes read into the <paramref name="buffer" />. This can be less than the number of bytes allocated in <paramref name="buffer" /> if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Use the <xref:System.IO.Pipes.PipeStream.CanRead%2A> property to determine whether the current <xref:System.IO.Pipes.PipeStream> object supports read operations.
+
+Use the <xref:System.IO.Pipes.PipeStream.ReadAsync%2A> method to read asynchronously from the current stream.
+
+This method reads a maximum of `buffer.Length` bytes from the current stream and stores them in `buffer`. The current position within the stream is advanced by the number of bytes read; however, if an exception occurs, the current position within the stream remains unchanged.
+
+This method will block until at least one byte of data can be read, in the event that no data is available.
+
+This method returns 0 only when there is no more data in the stream and no more is expected (such as a closed socket or end of file).
+
+This method is free to return fewer bytes than requested even if the end of the stream has not been reached.
+
+Use `BinaryReader` for reading primitive data types.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The number of bytes read was longer than the buffer length.</exception>
+        <exception cref="T:System.NotSupportedException">The stream does not support reading.</exception>
+        <exception cref="T:System.ObjectDisposedException">Cannot access a closed pipe.</exception>
+        <exception cref="T:System.InvalidOperationException">
+The pipe hasn't been connected yet.
+
+-or-
+
+The pipe is in a disconnected state.
+
+-or-
+
+The pipe handle has not been set.  (Did your <see cref="T:System.IO.Pipes.PipeStream" /> implementation call <see cref="T:System.IO.Pipes.PipeStream.InitializeHandle(Microsoft.Win32.SafeHandles.SafePipeHandle,System.Boolean,System.Boolean)" />?
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="Read">
       <MemberSignature Language="C#" Value="public override int Read (byte[] buffer, int offset, int count);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 Read([in]unsigned int8[] buffer, int32 offset, int32 count) cil managed" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 Read(unsigned int8[] buffer, int32 offset, int32 count) cil managed" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="DocId" Value="M:System.IO.Pipes.PipeStream.Read(System.Byte[],System.Int32,System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function Read (buffer As Byte(), offset As Integer, count As Integer) As Integer" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override int Read(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count);" />
       <MemberSignature Language="F#" Value="override this.Read : byte[] * int * int -&gt; int" Usage="pipeStream.Read (buffer, offset, count)" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 Read([out] unsigned int8[] buffer, int32 offset, int32 count) cil managed" FrameworkAlternate="netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 Read([in]unsigned int8[] buffer, int32 offset, int32 count) cil managed" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Pipes</AssemblyName>
@@ -1319,7 +1356,7 @@
         <param name="buffer">When this method returns, contains the specified byte array with the values between <paramref name="offset" /> and (<paramref name="offset" /> + <paramref name="count" /> - 1) replaced by the bytes read from the current source.</param>
         <param name="offset">The byte offset in the <paramref name="buffer" /> array at which the bytes that are read will be placed.</param>
         <param name="count">The maximum number of bytes to read.</param>
-        <summary>Reads a block of bytes from a stream and writes the data to a specified buffer.</summary>
+        <summary>Reads a block of bytes from a stream and writes the data to a specified buffer starting at a specified position for a specified length.</summary>
         <returns>The total number of bytes that are read into <paramref name="buffer" />. This might be less than the number of bytes requested if that number of bytes is not currently available, or 0 if the end of the stream is reached.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1368,6 +1405,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1376,15 +1414,40 @@
         <ReturnType>System.Threading.Tasks.ValueTask&lt;System.Int32&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="buffer" Type="System.Memory&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="buffer" Type="System.Memory&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The region of memory to write the data into.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously reads a sequence of bytes from the current stream, writes them to a byte memory range, advances the position within the stream by the number of bytes read, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous read operation. The value of its <see cref="P:System.Threading.Tasks.ValueTask`1.Result" /> property contains the total number of bytes read into the buffer. The result value can be less than the number of bytes allocated in the buffer if that many bytes are not currently available, or it can be 0 (zero) if the end of the stream has been reached.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The <xref:System.IO.Pipes.PipeStream.ReadAsync%2A> method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in a [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] app or [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] app where a time-consuming stream operation can block the UI thread and make your app appear as if it is not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.  
+
+Use the <xref:System.IO.Pipes.PipeStream.CanRead%2A> property to determine whether the current instance supports reading.  
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status> property.  
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotSupportedException">The stream does not support reading.</exception>
+        <exception cref="T:System.ObjectDisposedException">Cannot access a closed pipe.</exception>
+        <exception cref="T:System.InvalidOperationException">
+The pipe hasn't been connected yet.
+
+-or- 
+
+The pipe is in a disconnected state.
+
+-or-
+
+The pipe handle has not been set.  (Did your <see cref="T:System.IO.Pipes.PipeStream" /> implementation call <see cref="T:System.IO.Pipes.PipeStream.InitializeHandle(Microsoft.Win32.SafeHandles.SafePipeHandle,System.Boolean,System.Boolean)" />?
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ReadAsync">
@@ -1417,13 +1480,38 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The buffer to write the data into.</param>
+        <param name="offset">The byte offset in <paramref name="buffer" /> at which to begin writing data from the stream.</param>
+        <param name="count">The maximum number of bytes to read.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously reads a sequence of bytes from the current stream to a byte array starting at a specified position for a specified number of bytes, advances the position within the stream by the number of bytes read, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous read operation. The value of its <see cref="P:System.Threading.Tasks.Task`1.Result" /> property contains the total number of bytes read into the buffer. The result value can be less than the number of bytes requested if the number of bytes currently available is less than the requested number, or it can be 0 (zero) if the end of the stream has been reached.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The <xref:System.IO.Pipes.PipeStream.ReadAsync%2A> method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in a [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] app or [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] app where a time-consuming stream operation can block the UI thread and make your app appear as if it is not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+Use the <xref:System.IO.Pipes.PipeStream.CanRead%2A> property to determine whether the current instance supports reading.
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status%2A> property.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotSupportedException">The stream does not support reading.</exception>
+        <exception cref="T:System.ObjectDisposedException">Cannot access a closed pipe.</exception>
+        <exception cref="T:System.InvalidOperationException">
+The pipe hasn't been connected yet.
+
+-or-
+
+The pipe is in a disconnected state.
+
+-or-
+
+The pipe handle has not been set.  (Did your <see cref="T:System.IO.Pipes.PipeStream" /> implementation call <see cref="T:System.IO.Pipes.PipeStream.InitializeHandle(Microsoft.Win32.SafeHandles.SafePipeHandle,System.Boolean,System.Boolean)" />?
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ReadByte">
@@ -1833,6 +1921,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1841,12 +1930,36 @@
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="buffer" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="buffer" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A region of memory. This method copies the contents of this region to the current stream.</param>
+        <summary>Writes a sequence of bytes to the current stream and advances the current position within this stream by the number of bytes written.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+Use the <xref:System.IO.Pipes.PipeStream.CanWrite%2A> property to determine whether the current instance supports writing. Use the <xref:System.IO.Pipes.PipeStream.WriteAsync%2A> method to write asynchronously to the current stream.  
+
+If the write operation is successful, the position within the stream advances by the number of bytes written. If an exception occurs, the position within the stream remains unchanged.  
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotSupportedException">The stream does not support writing.</exception>
+        <exception cref="T:System.ObjectDisposedException">Cannot access a closed pipe.</exception>
+        <exception cref="T:System.IOException">The pipe is broken.</exception>
+        <exception cref="T:System.InvalidOperationException">
+The pipe hasn't been connected yet.
+
+-or-
+
+The pipe is in a disconnected state.
+
+-or-
+
+The pipe handle has not been set.  (Did your <see cref="T:System.IO.Pipes.PipeStream" /> implementation call <see cref="T:System.IO.Pipes.PipeStream.InitializeHandle(Microsoft.Win32.SafeHandles.SafePipeHandle,System.Boolean,System.Boolean)" />?
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -1929,6 +2042,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1937,15 +2051,41 @@
         <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="buffer" Type="System.ReadOnlyMemory&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="buffer" Type="System.ReadOnlyMemory&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The region of memory to write data from.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously writes a sequence of bytes to the current stream, advances the current position within this stream by the number of bytes written, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The <xref:System.IO.Pipes.PipeStream.WriteAsync%2A> method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in a [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] app or [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] app where a time-consuming stream operation can block the UI thread and make your app appear as if it is not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+Use the <xref:System.IO.Pipes.PipeStream.CanWrite%2A> property to determine whether the current instance supports writing.
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithtype> value for the <xref:System.Threading.Tasks.Task.Status%2A> property.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotSupportedException">Stream does not support writing.</exception>
+        <exception cref="T:System.ObjectDisposedException">Cannot access a closed pipe.</exception>
+        <exception cref="T:System.IOException">The pipe is broken.</exception>
+        <exception cref="T:System.InvalidOperationException">
+The pipe hasn't been connected yet.
+
+-or-
+
+The pipe is in a disconnected state.
+
+-or-
+
+The pipe handle has not been set.  (Did your <see cref="T:System.IO.Pipes.PipeStream" /> implementation call <see cref="T:System.IO.Pipes.PipeStream.InitializeHandle(Microsoft.Win32.SafeHandles.SafePipeHandle,System.Boolean,System.Boolean)" />?
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="WriteAsync">
@@ -1978,13 +2118,50 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The buffer to write data from.</param>
+        <param name="offset">The zero-based byte offset in <paramref name="buffer" /> from which to begin copying bytes to the stream.</param>
+        <param name="count">The maximum number of bytes to write.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously writes a specified number of bytes from a byte array starting at a specified position, advances the current position within this stream by the number of bytes written, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+The <xref:System.IO.Pipes.PipeStream.WriteAsync%2A> method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in a [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] app or [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] app where a time-consuming stream operation can block the UI thread and make your app appear as if it is not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+Use the <xref:System.IO.Pipes.PipeStream.CanWrite%2A> property to determine whether the current instance supports writing.
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status%2A> property.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="buffer" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+The <paramref name="offset" /> is negative.
+
+-or-
+
+The <paramref name="count" /> is negative.
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="buffer" />.Length - <paramref name="offset" /> is less than <paramref name="count" />.</exception>
+        <exception cref="T:System.NotSupportedException">Stream does not support writing.</exception>
+        <exception cref="T:System.ObjectDisposedException">Cannot access a closed pipe.</exception>
+        <exception cref="T:System.IOException">The pipe is broken.</exception>
+        <exception cref="T:System.InvalidOperationException">
+The pipe hasn't been connected yet.
+
+-or-
+
+The pipe is in a disconnected state.
+
+-or-
+
+The pipe handle has not been set.  (Did your <see cref="T:System.IO.Pipes.PipeStream" /> implementation call <see cref="T:System.IO.Pipes.PipeStream.InitializeHandle(Microsoft.Win32.SafeHandles.SafePipeHandle,System.Boolean,System.Boolean)" />?
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="WriteByte">

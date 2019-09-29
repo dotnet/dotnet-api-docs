@@ -1,10 +1,10 @@
-﻿<Type Name="PreserializedResourceWriter" FullName="System.Resources.Extensions.PreserializedResourceWriter">
+<Type Name="PreserializedResourceWriter" FullName="System.Resources.Extensions.PreserializedResourceWriter">
   <TypeSignature Language="C#" Value="public sealed class PreserializedResourceWriter : IDisposable, System.Resources.IResourceWriter" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit PreserializedResourceWriter extends System.Object implements class System.IDisposable, class System.Resources.IResourceWriter" />
   <TypeSignature Language="DocId" Value="T:System.Resources.Extensions.PreserializedResourceWriter" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class PreserializedResourceWriter&#xA;Implements IDisposable, IResourceWriter" />
   <TypeSignature Language="C++ CLI" Value="public ref class PreserializedResourceWriter sealed : IDisposable, System::Resources::IResourceWriter" />
-  <TypeSignature Language="F#" Value="type PreserializedResourceWriter = class&#xA;    interface IResourceWriter&#xA;    interface IDisposable" />
+  <TypeSignature Language="F#" Value="type PreserializedResourceWriter = class&#xA;    interface IDisposable&#xA;    interface IResourceWriter" />
   <AssemblyInfo>
     <AssemblyName>System.Resources.Extensions</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -21,7 +21,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides APIs similar to <see cref="T:System.Resources.ResourceWriter" /> that can write pre-serialized resource data.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -40,9 +40,13 @@
         <Parameter Name="stream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="stream">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="stream">The output stream.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Resources.Extensions.PreserializedResourceWriter" /> class that writes the resources to the provided stream.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="stream" /> is not writable.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stream" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -61,17 +65,18 @@
         <Parameter Name="fileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="fileName">The output file name.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Resources.Extensions.PreserializedResourceWriter" /> class that writes the resources to the specified file.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="fileName" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddActivatorResource">
-      <MemberSignature Language="C#" Value="public void AddActivatorResource (string name, string typeName, System.IO.Stream value, bool closeAfterWrite = false);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddActivatorResource(string name, string typeName, class System.IO.Stream value, bool closeAfterWrite) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Resources.Extensions.PreserializedResourceWriter.AddActivatorResource(System.String,System.String,System.IO.Stream,System.Boolean)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub AddActivatorResource (name As String, typeName As String, value As Stream, Optional closeAfterWrite As Boolean = false)" />
-      <MemberSignature Language="F#" Value="member this.AddActivatorResource : string * string * System.IO.Stream * bool -&gt; unit" Usage="preserializedResourceWriter.AddActivatorResource (name, typeName, value, closeAfterWrite)" />
+      <MemberSignature Language="C#" Value="public void AddActivatorResource (string name, System.IO.Stream value, string typeName, bool closeAfterWrite = false);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddActivatorResource(string name, class System.IO.Stream value, string typeName, bool closeAfterWrite) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Resources.Extensions.PreserializedResourceWriter.AddActivatorResource(System.String,System.IO.Stream,System.String,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddActivatorResource (name As String, value As Stream, typeName As String, Optional closeAfterWrite As Boolean = false)" />
+      <MemberSignature Language="F#" Value="member this.AddActivatorResource : string * System.IO.Stream * string * bool -&gt; unit" Usage="preserializedResourceWriter.AddActivatorResource (name, value, typeName, closeAfterWrite)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Resources.Extensions</AssemblyName>
@@ -82,26 +87,28 @@
       </ReturnValue>
       <Parameters>
         <Parameter Name="name" Type="System.String" />
-        <Parameter Name="typeName" Type="System.String" />
         <Parameter Name="value" Type="System.IO.Stream" />
+        <Parameter Name="typeName" Type="System.String" />
         <Parameter Name="closeAfterWrite" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="typeName">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="closeAfterWrite">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="name">The resource name.</param>
+        <param name="value">The value of the resource in <see cref="T:System.IO.Stream" /> form understood by the type's constructor.</param>
+        <param name="typeName">The assembly qualified type name of the resource.</param>
+        <param name="closeAfterWrite">An optional value that indicates whether, after resources have been written, the stream should be closed (<see langword="true" />) or left open (<see langword="false" />, the default value).</param>
+        <summary>Adds a resource of the specified type represented by a <see cref="T:System.IO.Stream" /> value that is passed to the type's constructor when reading the resource.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <see paramref="name" />, <see paramref="typeName" />, or <see paramref="value" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The object's type is <see cref="T:System.IO.Stream" />, but it is unseekable.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddBinaryFormattedResource">
-      <MemberSignature Language="C#" Value="public void AddBinaryFormattedResource (string name, string typeName, byte[] value);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddBinaryFormattedResource(string name, string typeName, unsigned int8[] value) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Resources.Extensions.PreserializedResourceWriter.AddBinaryFormattedResource(System.String,System.String,System.Byte[])" />
-      <MemberSignature Language="VB.NET" Value="Public Sub AddBinaryFormattedResource (name As String, typeName As String, value As Byte())" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddBinaryFormattedResource(System::String ^ name, System::String ^ typeName, cli::array &lt;System::Byte&gt; ^ value);" />
-      <MemberSignature Language="F#" Value="member this.AddBinaryFormattedResource : string * string * byte[] -&gt; unit" Usage="preserializedResourceWriter.AddBinaryFormattedResource (name, typeName, value)" />
+      <MemberSignature Language="C#" Value="public void AddBinaryFormattedResource (string name, byte[] value, string typeName = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddBinaryFormattedResource(string name, unsigned int8[] value, string typeName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Resources.Extensions.PreserializedResourceWriter.AddBinaryFormattedResource(System.String,System.Byte[],System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddBinaryFormattedResource (name As String, value As Byte(), Optional typeName As String = null)" />
+      <MemberSignature Language="F#" Value="member this.AddBinaryFormattedResource : string * byte[] * string -&gt; unit" Usage="preserializedResourceWriter.AddBinaryFormattedResource (name, value, typeName)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Resources.Extensions</AssemblyName>
@@ -112,15 +119,17 @@
       </ReturnValue>
       <Parameters>
         <Parameter Name="name" Type="System.String" />
-        <Parameter Name="typeName" Type="System.String" />
         <Parameter Name="value" Type="System.Byte[]" />
+        <Parameter Name="typeName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="typeName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="name">The resource name.</param>
+        <param name="value">A byte array containing the value of the resource in <see cref="T:System.Byte[]" /> form understood by <see cref="T:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter" />.</param>
+        <param name="typeName">The optional assembly qualified type name of the resource. The default value is <see langword="null" />.</param>
+        <summary>Adds a resource of the specified type, represented by a byte array, that will be  passed to <see cref="T:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter" /> when reading the resource.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <see paramref="name" /> or <see paramref="value" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddResource">
@@ -143,10 +152,20 @@
         <Parameter Name="value" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">The resource name.</param>
+        <param name="value">The byte array to add as a resource.</param>
+        <summary>Adds a byte array as a named resource to the list of resources to be written to a file.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The resources are not written until <xref:System.Resources.Extensions.PreserializedResourceWriter.Generate> is called.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The name is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The resource list is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddResource">
@@ -169,10 +188,21 @@
         <Parameter Name="value" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">The resource name.</param>
+        <param name="value">The object to add as a resource.</param>
+        <summary>Adds an object as a named resource to the list of resources to be written to a file.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The resources are not written until <xref:System.Resources.Extensions.PreserializedResourceWriter.Generate> is called.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The name is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The resource list is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The stream is unseekable.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddResource">
@@ -195,10 +225,20 @@
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">The resource name.</param>
+        <param name="value">The string to add as a resource.</param>
+        <summary>Adds a string as a named resource to the list of resources to be written to a file.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The resources are not written until <xref:System.Resources.Extensions.PreserializedResourceWriter.Generate> is called.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The name is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The resource list is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddResource">
@@ -221,20 +261,28 @@
         <Parameter Name="closeAfterWrite" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="closeAfterWrite">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">The resource name.</param>
+        <param name="value">The stream to add as a resource.</param>
+        <param name="closeAfterWrite">An optional value that indicates whether, after resources have been written, the stream should be closed (<see langword="true" />) or left open (<see langword="false" />, the default value).</param>
+        <summary>Adds a <see cref="T:System.IO.Stream" /> as a named resource to the list of resources to be written to a file.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The resources are not written until <xref:System.Resources.Extensions.PreserializedResourceWriter.Generate> is called.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
-    <Member MemberName="AddTypeConverterResource">
-      <MemberSignature Language="C#" Value="public void AddTypeConverterResource (string name, string typeName, byte[] value);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddTypeConverterResource(string name, string typeName, unsigned int8[] value) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Resources.Extensions.PreserializedResourceWriter.AddTypeConverterResource(System.String,System.String,System.Byte[])" />
-      <MemberSignature Language="VB.NET" Value="Public Sub AddTypeConverterResource (name As String, typeName As String, value As Byte())" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddTypeConverterResource(System::String ^ name, System::String ^ typeName, cli::array &lt;System::Byte&gt; ^ value);" />
-      <MemberSignature Language="F#" Value="member this.AddTypeConverterResource : string * string * byte[] -&gt; unit" Usage="preserializedResourceWriter.AddTypeConverterResource (name, typeName, value)" />
+    <Member MemberName="AddResource">
+      <MemberSignature Language="C#" Value="public void AddResource (string name, string value, string typeName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddResource(string name, string value, string typeName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Resources.Extensions.PreserializedResourceWriter.AddResource(System.String,System.String,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddResource (name As String, value As String, typeName As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddResource(System::String ^ name, System::String ^ value, System::String ^ typeName);" />
+      <MemberSignature Language="F#" Value="member this.AddResource : string * string * string -&gt; unit" Usage="preserializedResourceWriter.AddResource (name, value, typeName)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Resources.Extensions</AssemblyName>
@@ -245,42 +293,50 @@
       </ReturnValue>
       <Parameters>
         <Parameter Name="name" Type="System.String" />
-        <Parameter Name="typeName" Type="System.String" />
-        <Parameter Name="value" Type="System.Byte[]" />
-      </Parameters>
-      <Docs>
-        <param name="name">To be added.</param>
-        <param name="typeName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddTypeConverterResource">
-      <MemberSignature Language="C#" Value="public void AddTypeConverterResource (string name, string typeName, string value);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddTypeConverterResource(string name, string typeName, string value) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Resources.Extensions.PreserializedResourceWriter.AddTypeConverterResource(System.String,System.String,System.String)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub AddTypeConverterResource (name As String, typeName As String, value As String)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddTypeConverterResource(System::String ^ name, System::String ^ typeName, System::String ^ value);" />
-      <MemberSignature Language="F#" Value="member this.AddTypeConverterResource : string * string * string -&gt; unit" Usage="preserializedResourceWriter.AddTypeConverterResource (name, typeName, value)" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Resources.Extensions</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="name" Type="System.String" />
-        <Parameter Name="typeName" Type="System.String" />
         <Parameter Name="value" Type="System.String" />
+        <Parameter Name="typeName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="typeName">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="name">The resource name.</param>
+        <param name="value">The value of the resource in string form understood by the type's <see cref="T:System.ComponentModel.TypeConverter" />.</param>
+        <param name="typeName">The assembly qualified type name of the resource.</param>
+        <summary>Adds a resource of the specified type represented by a string value. </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+If the type is a primitive type, the value will be converted using <xref:System.ComponentModel.TypeConverter> by the writer to that primitive type and stored in the resources in binary format. If the type is not a primitive type, the string value will be stored in the resources as a string and converted with a <xref:System.ComponentModel.TypeConverter> for the type when reading the resource. This conversion is done to avoid activating arbitrary types during resource writing.
+
+         ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddTypeConverterResource">
+      <MemberSignature Language="C#" Value="public void AddTypeConverterResource (string name, byte[] value, string typeName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddTypeConverterResource(string name, unsigned int8[] value, string typeName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Resources.Extensions.PreserializedResourceWriter.AddTypeConverterResource(System.String,System.Byte[],System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddTypeConverterResource (name As String, value As Byte(), typeName As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddTypeConverterResource(System::String ^ name, cli::array &lt;System::Byte&gt; ^ value, System::String ^ typeName);" />
+      <MemberSignature Language="F#" Value="member this.AddTypeConverterResource : string * byte[] * string -&gt; unit" Usage="preserializedResourceWriter.AddTypeConverterResource (name, value, typeName)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Resources.Extensions</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="value" Type="System.Byte[]" />
+        <Parameter Name="typeName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">The resource name.</param>
+        <param name="value">A byte array containing the resource in a form understood by the type's <see cref="T:System.ComponentModel.TypeConverter" />.</param>
+        <param name="typeName">The assembly qualified type name of the resource.</param>
+        <summary>Adds a resource of the specified type represented by a byte array that is passed to the type's <see cref="T:System.ComponentModel.TypeConverter" /> when reading the resource.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -301,8 +357,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Calls <see cref="M:System.Resources.Extensions.PreserializedResourceWriter.Dispose" /> to dispose the resource writer.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The resource list is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -325,8 +382,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Calls <see cref="M:System.Resources.Extensions.PreserializedResourceWriter.Generate" /> to write out all resources to the output stream in the system default format.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The resource list is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Generate">
@@ -346,8 +404,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Writes all resources to the output stream.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+If the resources added to the writer can be represented in the system default format understood by the <xref:System.Resources.ResourceReader>, they will be written as such. If the resources require runtime deserialization other than that supported by the system default format (<xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter>) then we will write them using the format understood by <xref:System.Resources.Extensions.DeserializingResourceReader>.
+
+If an exception occurs during object serialization or during IO, the .resources file is closed and deleted, since it is most likely invalid.
+
+         ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The resource list is <see langword="null" />.</exception>
       </Docs>
     </Member>
   </Members>

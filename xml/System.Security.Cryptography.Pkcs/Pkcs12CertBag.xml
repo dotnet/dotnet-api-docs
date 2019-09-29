@@ -1,4 +1,4 @@
-﻿<Type Name="Pkcs12CertBag" FullName="System.Security.Cryptography.Pkcs.Pkcs12CertBag">
+<Type Name="Pkcs12CertBag" FullName="System.Security.Cryptography.Pkcs.Pkcs12CertBag">
   <TypeSignature Language="C#" Value="public sealed class Pkcs12CertBag : System.Security.Cryptography.Pkcs.Pkcs12SafeBag" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Pkcs12CertBag extends System.Security.Cryptography.Pkcs.Pkcs12SafeBag" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Pkcs.Pkcs12CertBag" />
@@ -15,7 +15,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents the PKCS#12 CertBag. This class cannot be inherited.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -43,12 +43,16 @@
         <remarks>
           <format type="text/markdown"><![CDATA[
 
+## Remarks 
+
 No validation is done to ensure that the `encodedCertificate` value is correct for the indicated `certificateType`.
 
 Note that for X.509 public-key certificates, the correct encoding for a CertBag value is to wrap the DER-encoded certificate in an OCTET STRING.
 
           ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="certificateType" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="encodedCertificate" /> parameter does not represent a single ASN.1 BER-encoded value.</exception>
       </Docs>
     </Member>
     <Member MemberName="EncodedCertificate">
@@ -68,9 +72,18 @@ Note that for X.509 public-key certificates, the correct encoding for a CertBag 
         <ReturnType>System.ReadOnlyMemory&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the uninterpreted certificate contents of the CertSafeBag.</summary>
+        <value>The uninterpreted certificate contents of the CertSafeBag.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+For X.509 public-key certificates, the value of this property is a BER-encoded OCTET STRING value encompassing the certificate's DER encoded value.
+
+          ]]></format>
+        </remarks>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Pkcs12CertBag.GetCertificate" />
       </Docs>
     </Member>
     <Member MemberName="GetCertificate">
@@ -91,9 +104,12 @@ Note that for X.509 public-key certificates, the correct encoding for a CertBag 
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets the contents of the CertBag interpreted as an X.509 public key certificate.</summary>
+        <returns>A certificate decoded from the contents of the CertBag.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InalidOperationException">The content type is not the X.509 public key certificate content type.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents were not valid for the X.509 certificate content type.</exception>
+        <altmember cref="P:System.Security.Cryptography.Pkcs.Pkcs12CertBag.IsX509Certificate" />
       </Docs>
     </Member>
     <Member MemberName="GetCertificateType">
@@ -114,9 +130,18 @@ Note that for X.509 public-key certificates, the correct encoding for a CertBag 
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the Object Identifier (OID) which identifies the content type of the encoded certificte value.</summary>
+        <returns>The Object Identifier (OID) which identifies the content type of the encoded certificate value.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks 
+
+IETF RFC 7292 defines two content types for a CertBag: X.509 Public Key Certificate (1.2.840.113549.1.9.22.1) and SDSI Certificate (1.2.840.113549.1.9.22.2), as well as indicating other types could be added in the future. This type has special support for X.509 Public Key Certificates, which are represented in .NET by the <xref:System.Security.Cryptography.X509Certificates.X509Certificate2> class, via the <xref:System.Security.Cryptography.Pkcs.Pkcs12CertBag.IsX509Certificate> and <xref:System.Security.Cryptography.Pkcs.Pkcs12CertBag.GetCertificate> members. This type does not have special support for SDSI certificates, but callers expecting an SDSI certificate (or a certificate type defined after IETF RFC 7292) can process the value directly via the <xref:System.Security.Cryptography.Pkcs.Pkcs12CertBag.EncodedCertificate> property.
+
+          ]]></format>
+        </remarks>
+        <altmember cref="P:System.Security.Cryptography.Pkcs.Pkcs12CertBag.IsX509Certificate" />
       </Docs>
     </Member>
     <Member MemberName="IsX509Certificate">
@@ -136,9 +161,11 @@ Note that for X.509 public-key certificates, the correct encoding for a CertBag 
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value indicating whether the content type of the encoded certificate value is the X.509 public key certificate content type.</summary>
+        <value>
+          <see langword="true" /> if the content type is the X.509 public key certificate content type (1.2.840.113549.1.9.22.1); otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Pkcs12CertBag.GetCertificateType" />
       </Docs>
     </Member>
   </Members>

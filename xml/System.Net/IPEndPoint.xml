@@ -1,4 +1,4 @@
-﻿<Type Name="IPEndPoint" FullName="System.Net.IPEndPoint">
+<Type Name="IPEndPoint" FullName="System.Net.IPEndPoint">
   <TypeSignature Language="C#" Value="public class IPEndPoint : System.Net.EndPoint" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable beforefieldinit IPEndPoint extends System.Net.EndPoint" />
   <TypeSignature Language="DocId" Value="T:System.Net.IPEndPoint" />
@@ -540,6 +540,32 @@
         </remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="Parse">
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+The number of parts (each part is separated by a period) in `s` determines how the endpoint's IP address is constructed. A one-part address is stored directly in the network address. A two-part address, convenient for specifying a class A address, puts the leading part in the first byte and the trailing part in the right-most three bytes of the network address. A three-part address, convenient for specifying a class B address, puts the first part in the first byte, the second part in the second byte, and the final part in the right-most two bytes of the network address. For example:
+
+|Number of parts and example `s`|IPv4 address for IPEndPoint.Address|Port|
+|-------------------------|--------------------------------|-------------------------|  
+|1 -- "1"|0.0.0.1|0|  
+|2 -- "20.2:80"|20.0.0.2|80|  
+|2 -- "20.65535:23"|20.0.255.255|23|  
+|3 -- "128.1.2:443"|128.1.0.2|443|  
+
+> [!IMPORTANT]
+> Note that this method accepts as valid a value that can be parsed as an <xref:System.Int64>, and then treats that <xref:System.Int64> as the long value of an IP address in network byte order, similar to the way that the IPAddress constructor does. This means that this method returns true if the Int64 is parsed successfully, even if it represents an address that's not a valid IP address. For example, if s is "1", this method returns true even though "1" (or 0.0.0.1) is not a valid IP address and you might expect this method to return false. Fixing this bug would break existing apps, so the current behavior will not be changed. Your code can avoid this behavior by ensuring that it only uses this method to parse IP addresses in dotted-decimal format.
+ 
+Literal IPv6 addresses require to be enclosed in square brackets [] when passing an endpoint that specifies a port number; otherwise, square braces are not mandatory.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="Parse">
       <MemberSignature Language="C#" Value="public static System.Net.IPEndPoint Parse (ReadOnlySpan&lt;char&gt; s);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Net.IPEndPoint Parse(valuetype System.ReadOnlySpan`1&lt;char&gt; s) cil managed" />
@@ -568,10 +594,14 @@
         <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="s">A read-only span that contains an IP endpoint in dotted-quad notation or network byte order for IPv4 and in colon-hexadecimal notation for IPv6.</param>
+        <summary>Converts an IP network endpoint (address and port) represented as a read-only span to an <see cref="T:System.Net.IPEndPoint" /> instance.</summary>
+        <returns>The object representation of an IP network endpoint.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="s" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.FormatException">
+          <paramref name="s" /> is not a valid IP endpoint.</exception>
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -602,10 +632,14 @@
         <Parameter Name="s" Type="System.String" Index="0" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="s">A string that contains an IP endpoint in dotted-quad notation or network byte order for IPv4 and in colon-hexadecimal notation for IPv6.</param>
+        <summary>Converts an IP network endpoint (address and port) represented as a string to an <see cref="T:System.Net.IPEndPoint" /> instance.</summary>
+        <returns>The object representation of an IP network endpoint.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="s" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.FormatException">
+          <paramref name="s" /> is not a valid IP endpoint.</exception>
       </Docs>
     </Member>
     <Member MemberName="Port">
@@ -764,13 +798,38 @@
         </remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="TryParse">
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+The number of parts (each part is separated by a period) in `s` determines how the endpoint's IP address is constructed. A one-part address is stored directly in the network address. A two-part address, convenient for specifying a class A address, puts the leading part in the first byte and the trailing part in the right-most three bytes of the network address. A three-part address, convenient for specifying a class B address, puts the first part in the first byte, the second part in the second byte, and the final part in the right-most two bytes of the network address. For example:
+
+|Number of parts and example `s`|IPv4 address for IPEndPoint.Address|Port|
+|-------------------------|--------------------------------|-------------------------|  
+|1 -- "1"|0.0.0.1|0|  
+|2 -- "20.2:80"|20.0.0.2|80|  
+|2 -- "20.65535:23"|20.0.255.255|23|  
+|3 -- "128.1.2:443"|128.1.0.2|443|  
+
+> [!IMPORTANT]
+> Note that this method accepts as valid a value that can be parsed as an <xref:System.Int64>, and then treats that <xref:System.Int64> as the long value of an IP address in network byte order, similar to the way that the IPAddress constructor does. This means that this method returns true if the Int64 is parsed successfully, even if it represents an address that's not a valid IP address. For example, if s is "1", this method returns true even though "1" (or 0.0.0.1) is not a valid IP address and you might expect this method to return false. Fixing this bug would break existing apps, so the current behavior will not be changed. Your code can avoid this behavior by ensuring that it only uses this method to parse IP addresses in dotted-decimal format.
+ 
+Literal IPv6 addresses require to be enclosed in square brackets [] when passing an endpoint that specifies a port number; otherwise, square braces are not mandatory.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="TryParse">
       <MemberSignature Language="C#" Value="public static bool TryParse (ReadOnlySpan&lt;char&gt; s, out System.Net.IPEndPoint result);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryParse(valuetype System.ReadOnlySpan`1&lt;char&gt; s, [out] class System.Net.IPEndPoint&amp; result) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.IPEndPoint.TryParse(System.ReadOnlySpan{System.Char},System.Net.IPEndPoint@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryParse (s As ReadOnlySpan(Of Char), ByRef result As IPEndPoint) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryParse(ReadOnlySpan&lt;char&gt; s, [Runtime::InteropServices::Out] System::Net::IPEndPoint ^ % result);" />
-      <MemberSignature Language="F#" Value="static member TryParse : ReadOnlySpan&lt;char&gt; *  -&gt; bool" Usage="System.Net.IPEndPoint.TryParse (s, result)" />
+      <MemberSignature Language="F#" Value="static member TryParse : ReadOnlySpan&lt;char&gt; * IPEndPoint -&gt; bool" Usage="System.Net.IPEndPoint.TryParse (s, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Primitives</AssemblyName>
@@ -793,10 +852,11 @@
         <Parameter Name="result" Type="System.Net.IPEndPoint" RefType="out" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="s">The IP endpoint to validate.</param>
+        <param name="result">When this method returns, the <see cref="T:System.Net.IPEndPoint" /> version of <paramref name="s" />.</param>
+        <summary>Tries to convert an IP network endpoint (address and port) represented as a read-only span to its <see cref="T:System.Net.IPEndPoint" /> equivalent, and returns a value that indicates whether the conversion succeeded.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="s" /> can be parsed as an IP endpoint; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -806,7 +866,7 @@
       <MemberSignature Language="DocId" Value="M:System.Net.IPEndPoint.TryParse(System.String,System.Net.IPEndPoint@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryParse (s As String, ByRef result As IPEndPoint) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryParse(System::String ^ s, [Runtime::InteropServices::Out] System::Net::IPEndPoint ^ % result);" />
-      <MemberSignature Language="F#" Value="static member TryParse : string *  -&gt; bool" Usage="System.Net.IPEndPoint.TryParse (s, result)" />
+      <MemberSignature Language="F#" Value="static member TryParse : string * IPEndPoint -&gt; bool" Usage="System.Net.IPEndPoint.TryParse (s, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Primitives</AssemblyName>
@@ -829,10 +889,11 @@
         <Parameter Name="result" Type="System.Net.IPEndPoint" RefType="out" Index="1" FrameworkAlternate="netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="s">The IP endpoint to validate.</param>
+        <param name="result">When this method returns, the <see cref="T:System.Net.IPEndPoint" /> version of <paramref name="s" />.</param>
+        <summary>Tries to convert an IP network endpoint (address and port) represented as a string to its <see cref="T:System.Net.IPEndPoint" /> equivalent, and returns a value that indicates whether the conversion succeeded.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="s" /> can be parsed as an IP endpoint; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

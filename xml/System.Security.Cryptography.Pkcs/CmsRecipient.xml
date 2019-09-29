@@ -1,4 +1,4 @@
-﻿<Type Name="CmsRecipient" FullName="System.Security.Cryptography.Pkcs.CmsRecipient">
+<Type Name="CmsRecipient" FullName="System.Security.Cryptography.Pkcs.CmsRecipient">
   <TypeSignature Language="C#" Value="public sealed class CmsRecipient" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit CmsRecipient extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Pkcs.CmsRecipient" />
@@ -36,7 +36,7 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Constructs an instance of the <see cref="T:System.Security.Cryptography.Pkcs.CmsRecipient" /> class.</summary>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Pkcs.CmsRecipient" /> class.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName=".ctor">
@@ -66,8 +66,8 @@
         <Parameter Name="certificate" Type="System.Security.Cryptography.X509Certificates.X509Certificate2" />
       </Parameters>
       <Docs>
-        <param name="certificate">An <see cref="T:System.Security.Cryptography.X509Certificates.X509Certificate2" /> object that represents the recipient certificate.</param>
-        <summary>The <see cref="M:System.Security.Cryptography.Pkcs.CmsRecipient.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2)" /> constructor constructs an instance of the <see cref="T:System.Security.Cryptography.Pkcs.CmsRecipient" /> class by using the specified recipient certificate.</summary>
+        <param name="certificate">The certificate to use when encrypting for this recipient.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Pkcs.CmsRecipient" /> class with a specified certificate, using the default encryption mode for the public key algorithm and an <see cref="F:System.Security.Cryptography.Pkcs.SubjectIdentifierType.IssuerAndSerialNumber" /> subject identifier.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -77,12 +77,13 @@
 |Property|Default value|  
 |--------------|-------------------|  
 |<xref:System.Security.Cryptography.Pkcs.CmsRecipient.RecipientIdentifierType%2A>|<xref:System.Security.Cryptography.Pkcs.SubjectIdentifierType.IssuerAndSerialNumber>|  
+|<xref:System.Security.Cryptography.Pkcs.CmsRecipient.RSAEncryptionPadding%2A>|null|  
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">A null reference was passed to a method that does not accept it as a valid argument.</exception>
-        <exception cref="T:System.Security.Cryptography.CryptographicException">A cryptographic operation could not be completed.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="certificate" /> parameter is <see langword="null" />.</exception>
         <altmember cref="M:System.Security.Cryptography.Pkcs.CmsRecipient.#ctor(System.Security.Cryptography.Pkcs.SubjectIdentifierType,System.Security.Cryptography.X509Certificates.X509Certificate2)" />
+        <altmember cref="M:System.Security.Cryptography.Pkcs.CmsRecipient.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.RSAEncryptionPadding)" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -113,13 +114,14 @@
         <Parameter Name="certificate" Type="System.Security.Cryptography.X509Certificates.X509Certificate2" />
       </Parameters>
       <Docs>
-        <param name="recipientIdentifierType">A member of the <see cref="T:System.Security.Cryptography.Pkcs.SubjectIdentifierType" /> enumeration that specifies the type of the identifier of the recipient.</param>
-        <param name="certificate">An <see cref="T:System.Security.Cryptography.X509Certificates.X509Certificate2" /> object that represents the recipient certificate.</param>
-        <summary>The <see cref="M:System.Security.Cryptography.Pkcs.CmsRecipient.#ctor(System.Security.Cryptography.Pkcs.SubjectIdentifierType,System.Security.Cryptography.X509Certificates.X509Certificate2)" /> constructor constructs an instance of the <see cref="T:System.Security.Cryptography.Pkcs.CmsRecipient" /> class by using the specified recipient identifier type and recipient certificate.</summary>
+        <param name="recipientIdentifierType">The scheme to use for identifying which recipient certificate was used.</param>
+        <param name="certificate">The certificate to use when encrypting for this recipient.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Pkcs.CmsRecipient" /> class with a specified certificate and recipient identifier type, using the default encryption mode for the public key algorithm.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentNullException">A null reference was passed to a method that does not accept it as a valid argument.</exception>
-        <exception cref="T:System.Security.Cryptography.CryptographicException">A cryptographic operation could not be completed.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="certificate" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="recipientIdentifierType" /> value is not supported.</exception>
         <altmember cref="M:System.Security.Cryptography.Pkcs.CmsRecipient.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2)" />
+        <altmember cref="M:System.Security.Cryptography.Pkcs.CmsRecipient.#ctor(System.Security.Cryptography.Pkcs.SubjectIdentifierType,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.RSAEncryptionPadding)" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -137,14 +139,31 @@
         <AssemblyName>System.Security</AssemblyName>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="certificate" Type="System.Security.Cryptography.X509Certificates.X509Certificate2" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="rsaEncryptionPadding" Type="System.Security.Cryptography.RSAEncryptionPadding" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0" />
+        <Parameter Name="certificate" Type="System.Security.Cryptography.X509Certificates.X509Certificate2" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0;netcore-3.0" />
+        <Parameter Name="rsaEncryptionPadding" Type="System.Security.Cryptography.RSAEncryptionPadding" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0;netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="certificate">To be added.</param>
-        <param name="rsaEncryptionPadding">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="certificate">The certificate to use when encrypting for this recipient.</param>
+        <param name="rsaEncryptionPadding">The RSA padding mode to use when encrypting for this recipient.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Pkcs.CmsRecipient" /> class with a specified RSA certificate and RSA encryption padding, using an <see cref="F:System.Security.Cryptography.Pkcs.SubjectIdentifierType.IssuerAndSerialNumber" /> subject identifier.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Security.Cryptography.Pkcs.CmsRecipient> class has the following default property values.  
+  
+|Property|Default value|  
+|--------------|-------------------|  
+|<xref:System.Security.Cryptography.Pkcs.CmsRecipient.RecipientIdentifierType%2A>|<xref:System.Security.Cryptography.Pkcs.SubjectIdentifierType.IssuerAndSerialNumber>|  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="certificate" /> or <paramref name="rsaEncryptionPadding" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="certificate" /> parameter public key is not recognized as an RSA public key.
+
+-or-
+
+The <paramref name="recipientIdentifierType" /> value is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -162,16 +181,19 @@
         <AssemblyName>System.Security</AssemblyName>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="recipientIdentifierType" Type="System.Security.Cryptography.Pkcs.SubjectIdentifierType" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="certificate" Type="System.Security.Cryptography.X509Certificates.X509Certificate2" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="rsaEncryptionPadding" Type="System.Security.Cryptography.RSAEncryptionPadding" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0" />
+        <Parameter Name="recipientIdentifierType" Type="System.Security.Cryptography.Pkcs.SubjectIdentifierType" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0;netcore-3.0" />
+        <Parameter Name="certificate" Type="System.Security.Cryptography.X509Certificates.X509Certificate2" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0;netcore-3.0" />
+        <Parameter Name="rsaEncryptionPadding" Type="System.Security.Cryptography.RSAEncryptionPadding" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0;netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="recipientIdentifierType">To be added.</param>
-        <param name="certificate">To be added.</param>
-        <param name="rsaEncryptionPadding">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="recipientIdentifierType">The scheme to use for identifying which recipient certificate was used.</param>
+        <param name="certificate">The certificate to use when encrypting for this recipient.</param>
+        <param name="rsaEncryptionPadding">The RSA padding mode to use when encrypting for this recipient.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Pkcs.CmsRecipient" /> class with a specified RSA certificate, RSA encryption padding, and subject identifier.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="certificate" /> or <paramref name="rsaEncryptionPadding" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="certificate" /> parameter public key is not recognized as an RSA public key.</exception>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.CmsRecipient.#ctor(System.Security.Cryptography.Pkcs.SubjectIdentifierType,System.Security.Cryptography.X509Certificates.X509Certificate2)" />
       </Docs>
     </Member>
     <Member MemberName="Certificate">
@@ -201,10 +223,9 @@
         <ReturnType>System.Security.Cryptography.X509Certificates.X509Certificate2</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The <see cref="P:System.Security.Cryptography.Pkcs.CmsRecipient.Certificate" /> property retrieves the certificate associated with the recipient.</summary>
-        <value>An <see cref="T:System.Security.Cryptography.X509Certificates.X509Certificate2" /> object that holds the certificate associated with the recipient.</value>
+        <summary>Gets the certificate to use when encrypting for this recipient.</summary>
+        <value>The certificate to use when encrypting for this recipient.</value>
         <remarks>To be added.</remarks>
-        <altmember cref="P:System.Security.Cryptography.Pkcs.CmsRecipient.RecipientIdentifierType" />
       </Docs>
     </Member>
     <Member MemberName="RecipientIdentifierType">
@@ -234,10 +255,9 @@
         <ReturnType>System.Security.Cryptography.Pkcs.SubjectIdentifierType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The <see cref="P:System.Security.Cryptography.Pkcs.CmsRecipient.RecipientIdentifierType" /> property retrieves the type of the identifier of the recipient.</summary>
-        <value>A member of the <see cref="T:System.Security.Cryptography.Pkcs.SubjectIdentifierType" /> enumeration that specifies the type of the identifier of the recipient.</value>
+        <summary>Gets the scheme to use for identifying which recipient certificate was used.</summary>
+        <value>The scheme to use for identifying which recipient certificate was used.</value>
         <remarks>To be added.</remarks>
-        <altmember cref="P:System.Security.Cryptography.Pkcs.CmsRecipient.Certificate" />
       </Docs>
     </Member>
     <Member MemberName="RSAEncryptionPadding">
@@ -259,9 +279,16 @@
         <ReturnType>System.Security.Cryptography.RSAEncryptionPadding</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the RSA encryption padding to use when encrypting for this recipient.</summary>
+        <value>The RSA encryption padding to use when encrypting for this recipient.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ A `null` value indicates that the default encryption padding for the certificate's public key should be used.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

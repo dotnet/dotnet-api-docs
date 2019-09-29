@@ -1,4 +1,4 @@
-﻿<Type Name="DirectoryInfo" FullName="System.IO.DirectoryInfo">
+<Type Name="DirectoryInfo" FullName="System.IO.DirectoryInfo">
   <TypeSignature Language="C#" Value="public sealed class DirectoryInfo : System.IO.FileSystemInfo" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable sealed beforefieldinit DirectoryInfo extends System.IO.FileSystemInfo" />
   <TypeSignature Language="DocId" Value="T:System.IO.DirectoryInfo" />
@@ -1643,7 +1643,7 @@
         <value>A string containing the full path.</value>
         <remarks>To be added.</remarks>
       </Docs>
-    </Member>    
+    </Member>
     <MemberGroup MemberName="GetAccessControl">
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2988,23 +2988,33 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the parent directory of a specified subdirectory.</summary>
-        <value>The parent directory, or <see langword="null" /> if the path is null or if the file path denotes a root (such as "\\", "C:", or * "\\\server\share").</value>
+        <value>The parent directory, or <see langword="null" /> if the path is null or if the file path denotes a root (such as `\`, `C:\`, or `\\server\share`).</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).  
-  
-   
-  
-## Examples  
- The following example demonstrates referring to the parent directory of a specified directory.  
-  
- [!code-cpp[directoryinfoparent#1](~/samples/snippets/cpp/VS_Snippets_CLR/directoryinfoparent/CPP/directoryinfoparent.cpp#1)]
- [!code-csharp[directoryinfoparent#1](~/samples/snippets/csharp/VS_Snippets_CLR/directoryinfoparent/CS/directoryinfoparent.cs#1)]
- [!code-vb[directoryinfoparent#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/directoryinfoparent/VB/directoryinfoparent.vb#1)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!IMPORTANT]
+> In .NET Framework, `Parent` returns a relative path.
+> In .NET Core, `Parent` returns a fully qualified path.
+
+To ensure consistent behavior across versions and to make your intent explicit, retrieve the value of one of the following properties on the <xref:System.IO.DirectoryInfo> instance returned by `Parent`.
+- <xref:System.IO.DirectoryInfo.Name>, which returns the simple name of the directory (such as `bin`).
+- <xref:System.IO.DirectoryInfo.FullName>, which returns the absolute path of the directory. 
+
+
+For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).
+
+
+## Examples
+
+The following example refers to the parent directory of a specified directory.
+
+[!code-cpp[directoryinfoparent#1](~/samples/snippets/cpp/VS_Snippets_CLR/directoryinfoparent/CPP/directoryinfoparent.cpp#1)]
+[!code-csharp[directoryinfoparent#1](~/samples/snippets/csharp/VS_Snippets_CLR/directoryinfoparent/CS/directoryinfoparent.cs#1)]
+[!code-vb[directoryinfoparent#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/directoryinfoparent/VB/directoryinfoparent.vb#1)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <permission cref="T:System.Security.Permissions.FileIOPermission">for reading from files and directories and for access to the path. Associated enumerations: <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />, <see cref="T:System.Security.Permissions.FileIOPermissionAccess" /></permission>
@@ -3177,9 +3187,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the original path that was passed by the user.</summary>
+        <summary>Returns the original path that was passed to the <see cref="T:System.IO.DirectoryInfo" /> constructor. Use the <see cref="P:System.IO.DirectoryInfo.FullName" /> or <see cref="P:System.IO.DirectoryInfo.Name" /> properties for the full path or file/directory name instead of this method.</summary>
         <returns>The original path that was passed by the user.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!IMPORTANT]
+> The string returned by the <xref:System.IO.DirectoryInfo.ToString%2A> method represents the path that was passed to the <xref:System.IO.DirectoryInfo> constructor. Instead of calling the `ToString` method, you should retrieve the value of either of the following properties, depending on your intent:
+> - <xref:System.IO.DirectoryInfo.Name>, to get the name of the directory, without any parent path information.
+> - <xref:System.IO.DirectoryInfo.FullName>, to get the fully qualified path of the directory.
+
+          ]]></format>
+        </remarks>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>

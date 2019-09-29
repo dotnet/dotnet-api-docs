@@ -1,4 +1,4 @@
-﻿<Type Name="PipeWriter" FullName="System.IO.Pipelines.PipeWriter">
+<Type Name="PipeWriter" FullName="System.IO.Pipelines.PipeWriter">
   <TypeSignature Language="C#" Value="public abstract class PipeWriter : System.Buffers.IBufferWriter&lt;byte&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit PipeWriter extends System.Object implements class System.Buffers.IBufferWriter`1&lt;unsigned int8&gt;" />
   <TypeSignature Language="DocId" Value="T:System.IO.Pipelines.PipeWriter" />
@@ -74,12 +74,11 @@
       </Docs>
     </Member>
     <Member MemberName="AsStream">
-      <MemberSignature Language="C#" Value="public virtual System.IO.Stream AsStream ();" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.IO.Stream AsStream() cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.IO.Pipelines.PipeWriter.AsStream" />
-      <MemberSignature Language="VB.NET" Value="Public Overridable Function AsStream () As Stream" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::IO::Stream ^ AsStream();" />
-      <MemberSignature Language="F#" Value="abstract member AsStream : unit -&gt; System.IO.Stream&#xA;override this.AsStream : unit -&gt; System.IO.Stream" Usage="pipeWriter.AsStream " />
+      <MemberSignature Language="C#" Value="public virtual System.IO.Stream AsStream (bool leaveOpen = false);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.IO.Stream AsStream(bool leaveOpen) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Pipelines.PipeWriter.AsStream(System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function AsStream (Optional leaveOpen As Boolean = false) As Stream" />
+      <MemberSignature Language="F#" Value="abstract member AsStream : bool -&gt; System.IO.Stream&#xA;override this.AsStream : bool -&gt; System.IO.Stream" Usage="pipeWriter.AsStream leaveOpen" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Pipelines</AssemblyName>
@@ -88,10 +87,13 @@
       <ReturnValue>
         <ReturnType>System.IO.Stream</ReturnType>
       </ReturnValue>
-      <Parameters />
+      <Parameters>
+        <Parameter Name="leaveOpen" Type="System.Boolean" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0" />
+      </Parameters>
       <Docs>
-        <summary>Returns a write-only <see cref="T:System.IO.Stream" /> that wraps the <see cref="T:System.IO.Pipelines.PipeWriter" />.</summary>
-        <returns>The <see cref="T:System.IO.Stream" />.</returns>
+        <param name="leaveOpen">An optional flag that indicates whether disposing the returned <see cref="T:System.IO.Stream" /> leaves <see cref="T:System.IO.Pipelines.PipeReader" /> open (<see langword="true" />) or completes <see cref="T:System.IO.Pipelines.PipeReader" /> (<see langword="false" />).</param>
+        <summary> Returns the underlying <see cref="T:System.IO.Stream" /> wrapped by the <see cref="T:System.IO.Pipelines.PipeWriter" />.</summary>
+        <returns>The underlying stream.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -139,6 +141,29 @@
       <Docs>
         <param name="exception">Optional <see cref="T:System.Exception" /> indicating a failure that's causing the pipeline to complete.</param>
         <summary>Marks the <see cref="T:System.IO.Pipelines.PipeWriter" /> as being complete, meaning no more items will be written to it.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CompleteAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.ValueTask CompleteAsync (Exception exception = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance valuetype System.Threading.Tasks.ValueTask CompleteAsync(class System.Exception exception) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Pipelines.PipeWriter.CompleteAsync(System.Exception)" />
+      <MemberSignature Language="F#" Value="abstract member CompleteAsync : Exception -&gt; System.Threading.Tasks.ValueTask&#xA;override this.CompleteAsync : Exception -&gt; System.Threading.Tasks.ValueTask" Usage="pipeWriter.CompleteAsync exception" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Pipelines</AssemblyName>
+        <AssemblyVersion>4.0.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="exception" Type="System.Exception" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0" />
+      </Parameters>
+      <Docs>
+        <param name="exception">An optional exception that indicates the failure that caused the pipeline to complete.</param>
+        <summary>Marks the current pipe writer instance as being complete, meaning no more data will be written to it.</summary>
+        <returns>A value task that represents the asynchronous complete operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -211,9 +236,9 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="T:System.Threading.CancellationToken.None" />.</param>
         <summary>Makes bytes written available to <see cref="T:System.IO.Pipelines.PipeReader" /> and runs <see cref="M:System.IO.Pipelines.PipeReader.ReadAsync(System.Threading.CancellationToken)" /> continuation.</summary>
-        <returns>To be added.</returns>
+        <returns>A task that represents and wraps the asynchronous flush operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -300,12 +325,16 @@ You must request a new buffer after calling <xref:System.IO.Pipelines.PipeWriter
       </Docs>
     </Member>
     <Member MemberName="OnReaderCompleted">
-      <MemberSignature Language="C#" Value="public abstract void OnReaderCompleted (Action&lt;Exception,object&gt; callback, object state);" />
+      <MemberSignature Language="C#" Value="public abstract void OnReaderCompleted (Action&lt;Exception,object&gt; callback, object state);" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void OnReaderCompleted(class System.Action`2&lt;class System.Exception, object&gt; callback, object state) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.Pipelines.PipeWriter.OnReaderCompleted(System.Action{System.Exception,System.Object},System.Object)" />
-      <MemberSignature Language="VB.NET" Value="Public MustOverride Sub OnReaderCompleted (callback As Action(Of Exception, Object), state As Object)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; abstract void OnReaderCompleted(Action&lt;Exception ^, System::Object ^&gt; ^ callback, System::Object ^ state);" />
-      <MemberSignature Language="F#" Value="abstract member OnReaderCompleted : Action&lt;Exception, obj&gt; * obj -&gt; unit" Usage="pipeWriter.OnReaderCompleted (callback, state)" />
+      <MemberSignature Language="VB.NET" Value="Public MustOverride Sub OnReaderCompleted (callback As Action(Of Exception, Object), state As Object)" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; abstract void OnReaderCompleted(Action&lt;Exception ^, System::Object ^&gt; ^ callback, System::Object ^ state);" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2" />
+      <MemberSignature Language="F#" Value="abstract member OnReaderCompleted : Action&lt;Exception, obj&gt; * obj -&gt; unit" Usage="pipeWriter.OnReaderCompleted (callback, state)" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2" />
+      <MemberSignature Language="C#" Value="public virtual void OnReaderCompleted (Action&lt;Exception,object&gt; callback, object state);" FrameworkAlternate="dotnet-plat-ext-3.0" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub OnReaderCompleted (callback As Action(Of Exception, Object), state As Object)" FrameworkAlternate="dotnet-plat-ext-3.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void OnReaderCompleted(Action&lt;Exception ^, System::Object ^&gt; ^ callback, System::Object ^ state);" FrameworkAlternate="dotnet-plat-ext-3.0" />
+      <MemberSignature Language="F#" Value="abstract member OnReaderCompleted : Action&lt;Exception, obj&gt; * obj -&gt; unit&#xA;override this.OnReaderCompleted : Action&lt;Exception, obj&gt; * obj -&gt; unit" Usage="pipeWriter.OnReaderCompleted (callback, state)" FrameworkAlternate="dotnet-plat-ext-3.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Pipelines</AssemblyName>
@@ -313,6 +342,11 @@ You must request a new buffer after calling <xref:System.IO.Pipelines.PipeWriter
         <AssemblyVersion>4.0.0.1</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-3.0">
+          <AttributeName>System.Obsolete("OnReaderCompleted may not be invoked on all implementations of PipeWriter. This will be removed in a future release.")</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -321,10 +355,19 @@ You must request a new buffer after calling <xref:System.IO.Pipelines.PipeWriter
         <Parameter Name="state" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="callback">To be added.</param>
-        <param name="state">To be added.</param>
-        <summary>Registers a callback that gets executed when the <see cref="T:System.IO.Pipelines.PipeReader" /> side of the pipe is completed.</summary>
-        <remarks>To be added.</remarks>
+        <param name="callback">The callback to register.</param>
+        <param name="state">The state object to pass to <paramref name="callback" /> when it's invoked.</param>
+        <summary>Registers a callback that executes when the <see cref="T:System.IO.Pipelines.PipeReader" /> side of the pipe is completed.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!IMPORTANT]
+> `OnReaderCompleted` may not be invoked on all implementations of <xref:System.IO.Pipelines.PipeWriter>. This method will be removed in a future release.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="WriteAsync">
@@ -347,10 +390,10 @@ You must request a new buffer after calling <xref:System.IO.Pipelines.PipeWriter
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>Writes <paramref name="source" /> to the pipe and makes data accessible to <see cref="T:System.IO.Pipelines.PipeReader" /></summary>
-        <returns>To be added.</returns>
+        <param name="source">The read-only byte memory region to write.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="T:System.Threading.CancellationToken.None" />.</param>
+        <summary>Writes the specified byte memory range to the pipe and makes data accessible to the <see cref="T:System.IO.Pipelines.PipeReader" />.</summary>
+        <returns>A task that represents the asynchronous write operation, and wraps the flush asynchronous operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

@@ -1,4 +1,4 @@
-﻿<Type Name="AssemblyLoadContext" FullName="System.Runtime.Loader.AssemblyLoadContext">
+<Type Name="AssemblyLoadContext" FullName="System.Runtime.Loader.AssemblyLoadContext">
   <TypeSignature Language="C#" Value="public abstract class AssemblyLoadContext" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit AssemblyLoadContext extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Runtime.Loader.AssemblyLoadContext" />
@@ -71,7 +71,7 @@
  ]]></format>
     </remarks>
     <related type="Article" href="https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md">AssemblyLoadContext CoreCLR design document</related>
-    <related type="Article" href="~/docs/standard/assembly/unloadability-howto.md">How to use and debug assembly unloadability in .NET Core</related>
+    <related type="Article" href="~/docs/standard/assembly/unloadability.md">How to use and debug assembly unloadability in .NET Core</related>
     <related type="Article" href="https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/unloadability.md">AssemblyLoadContext unloadability design document</related>
   </Docs>
   <Members>
@@ -319,6 +319,27 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
         </remarks>
       </Docs>
     </Member>
+    <Member MemberName="Finalize">
+      <MemberSignature Language="C#" Value="~AssemblyLoadContext ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Finalize() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.Finalize" />
+      <MemberSignature Language="VB.NET" Value="Finalize ()" />
+      <MemberSignature Language="C++ CLI" Value="!AssemblyLoadContext ()" />
+      <MemberSignature Language="F#" Value="override this.Finalize : unit -&gt; unit" Usage="assemblyLoadContext.Finalize " />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Loader</AssemblyName>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Allows the object to try to free resources and perform other cleanup operations before it's reclaimed by garbage collection.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="GetAssemblyName">
       <MemberSignature Language="C#" Value="public static System.Reflection.AssemblyName GetAssemblyName (string assemblyPath);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Reflection.AssemblyName GetAssemblyName(string assemblyPath) cil managed" />
@@ -411,18 +432,21 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
-For more information, see [How to use and debug assembly unloadability in .NET Core](~/docs/standard/assembly/unloadability-howto.md).
+For more information, see [How to use and debug assembly unloadability in .NET Core](~/docs/standard/assembly/unloadability.md).
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="Load">
-      <MemberSignature Language="C#" Value="protected abstract System.Reflection.Assembly Load (System.Reflection.AssemblyName assemblyName);" />
+      <MemberSignature Language="C#" Value="protected abstract System.Reflection.Assembly Load (System.Reflection.AssemblyName assemblyName);" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Reflection.Assembly Load(class System.Reflection.AssemblyName assemblyName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::Reflection::Assembly ^ Load(System::Reflection::AssemblyName ^ assemblyName);" />
-      <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::Reflection::Assembly ^ Load(System::Reflection::AssemblyName ^ assemblyName);" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="C#" Value="protected virtual System.Reflection.Assembly Load (System.Reflection.AssemblyName assemblyName);" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Reflection::Assembly ^ Load(System::Reflection::AssemblyName ^ assemblyName);" FrameworkAlternate="netcore-3.0" />
+      <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly&#xA;override this.Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" FrameworkAlternate="netcore-3.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
@@ -709,12 +733,12 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
       <Docs>
         <param name="unmanagedDllName">Name of the unmanaged library. Typically this is the filename without its path or extensions. </param>
         <summary>Allows derived class to load an unmanaged library by name.</summary>
-        <returns>A handle to the loaded library, or <see langword="null" />.</returns>
+        <returns>A handle to the loaded library, or <see cref="F:System.IntPtr.Zero" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The default implementation always return `null`. When `null` is returned, the runtime loads the library with its default policy.
+ The default implementation always returns <xref:System.IntPtr.Zero?displayProperty=nameWithType>. When <xref:System.IntPtr.Zero?displayProperty=nameWithType> is returned, the runtime loads the library with its default policy.
  
  This virtual method can be overridden to customize the unmanaged library search algorithm. When overridden the name can be used to identify the library. The loaded library does not need to match the requested name, but can be transformed as needed. This could include adjusting the name for platform specific naming.
  
@@ -783,9 +807,10 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
       <MemberSignature Language="C#" Value="public event Func&lt;System.Runtime.Loader.AssemblyLoadContext,System.Reflection.AssemblyName,System.Reflection.Assembly&gt; Resolving;" />
       <MemberSignature Language="ILAsm" Value=".event class System.Func`3&lt;class System.Runtime.Loader.AssemblyLoadContext, class System.Reflection.AssemblyName, class System.Reflection.Assembly&gt; Resolving" />
       <MemberSignature Language="DocId" Value="E:System.Runtime.Loader.AssemblyLoadContext.Resolving" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event Resolving As Func(Of AssemblyLoadContext, AssemblyName, Assembly) " />
+      <MemberSignature Language="VB.NET" Value="Public Event Resolving As Func(Of AssemblyLoadContext, AssemblyName, Assembly) " FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event Func&lt;System::Runtime::Loader::AssemblyLoadContext ^, System::Reflection::AssemblyName ^, System::Reflection::Assembly ^&gt; ^ Resolving;" />
       <MemberSignature Language="F#" Value="member this.Resolving : Func&lt;System.Runtime.Loader.AssemblyLoadContext, System.Reflection.AssemblyName, System.Reflection.Assembly&gt; " Usage="member this.Resolving : System.Func&lt;System.Runtime.Loader.AssemblyLoadContext, System.Reflection.AssemblyName, System.Reflection.Assembly&gt; " />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event Resolving As Func(Of AssemblyLoadContext, AssemblyName, Assembly) " FrameworkAlternate="netcore-3.0;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
@@ -836,8 +861,14 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <ReturnType>System.Func&lt;System.Reflection.Assembly,System.String,System.IntPtr&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Occurs when the resolution of a native library fails.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+This event is raised if the native library cannot be resolved by the default resolution logic (including <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll%2A>).
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SetProfileOptimizationRoot">
@@ -866,9 +897,17 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <Parameter Name="directoryPath" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="directoryPath">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="directoryPath">The full path to the directory where the optimization profiles are stored.</param>
+        <summary>Sets the root path where the optimization profiles for this load context are stored.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[ 
+
+## Remarks		  
+
+The profile optimization improves the startup performance of the load context on multicore computers by performing background compilation of methods that are likely to be executed, based on profiles created during previous compilations. For more information, see <xref:System.Runtime.ProfileOptimization>.
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="StartProfileOptimization">
@@ -897,8 +936,38 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <Parameter Name="profile" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="profile">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="profile">The name of the optimization profile.</param>
+        <summary>Starts the profile optimization for the specified profile.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[ 
+
+## Remarks		  
+
+The profile optimization improves the startup performance of the load context on multicore computers by performing background compilation of methods that are likely to be executed, based on profiles created during previous compilations. For more information, see <xref:System.Runtime.ProfileOptimization>.
+
+         ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.ToString" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ToString () As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::String ^ ToString();" />
+      <MemberSignature Language="F#" Value="override this.ToString : unit -&gt; string" Usage="assemblyLoadContext.ToString " />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Loader</AssemblyName>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Returns the string representation of this load context.</summary>
+        <returns>The string representation of this load context.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -938,9 +1007,10 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
       <MemberSignature Language="C#" Value="public event Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; Unloading;" />
       <MemberSignature Language="ILAsm" Value=".event class System.Action`1&lt;class System.Runtime.Loader.AssemblyLoadContext&gt; Unloading" />
       <MemberSignature Language="DocId" Value="E:System.Runtime.Loader.AssemblyLoadContext.Unloading" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event Unloading As Action(Of AssemblyLoadContext) " />
+      <MemberSignature Language="VB.NET" Value="Public Event Unloading As Action(Of AssemblyLoadContext) " FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event Action&lt;System::Runtime::Loader::AssemblyLoadContext ^&gt; ^ Unloading;" />
       <MemberSignature Language="F#" Value="member this.Unloading : Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; " Usage="member this.Unloading : System.Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; " />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event Unloading As Action(Of AssemblyLoadContext) " FrameworkAlternate="netcore-3.0;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>

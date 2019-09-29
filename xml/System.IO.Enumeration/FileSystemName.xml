@@ -1,4 +1,4 @@
-﻿<Type Name="FileSystemName" FullName="System.IO.Enumeration.FileSystemName">
+<Type Name="FileSystemName" FullName="System.IO.Enumeration.FileSystemName">
   <TypeSignature Language="C#" Value="public static class FileSystemName" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit FileSystemName extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.IO.Enumeration.FileSystemName" />
@@ -18,7 +18,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides methods for matching file system names.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -46,11 +46,13 @@
         <Parameter Name="ignoreCase" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="expression">To be added.</param>
-        <param name="name">To be added.</param>
-        <param name="ignoreCase">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="expression">The expression to match with.</param>
+        <param name="name">The name to check against the expression.</param>
+        <param name="ignoreCase">
+          <see langword="true" /> to ignore case (default); <see langword="false" /> if the match should be case-sensitive.</param>
+        <summary>Verifies if the given expression matches the given name. Supports the following wildcards: '*' and '?'. The backslash character '\' escapes.</summary>
+        <returns>
+          <see langword="true" /> if the given expression matches the given name; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -78,12 +80,24 @@
         <Parameter Name="ignoreCase" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="expression">To be added.</param>
-        <param name="name">To be added.</param>
-        <param name="ignoreCase">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="expression">The expression to match with, such as "*.foo".</param>
+        <param name="name">The name to check against the expression.</param>
+        <param name="ignoreCase">
+          <see langword="true" /> to ignore case (default), <see langword="false" /> if the match should be case-sensitive.</param>
+        <summary> Verifies if the given Win32 expression matches the given name. Supports the following wildcards: '*', '?', '&lt;', '&gt;', '"'. The backslash character '\' escapes.</summary>
+        <returns>
+          <see langword="true" /> if the given expression matches the given name; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The syntax of the `expression` parameter is based on the syntax used by <xref:System.IO.FileSystemWatcher>, which is based on [RtlIsNameInExpression](/windows/win32/devnotes/rtlisnameinexpression), which defines the rules for matching DOS wildcards (`'*'`, `'?'`, `'<'`, `'>'`, `'"'`).
+ 
+Matching will not correspond to Win32 behavior unless you transform the expression using <xref:System.IO.Enumeration.FileSystemName.TranslateWin32Expression(System.String)>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TranslateWin32Expression">
@@ -109,10 +123,18 @@
         <Parameter Name="expression" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="expression">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="expression">The expression to translate.</param>
+        <summary>Translates the given Win32 expression. Change '*' and '?' to '&lt;', '&gt;' and '"' to match Win32 behavior.</summary>
+        <returns>A string with the translated Win32 expression.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+For compatibility, Windows changes some wildcards to provide a closer match to historical DOS 8.3 filename matching.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
