@@ -1041,14 +1041,14 @@
       </Parameters>
       <Docs>
         <param name="input">A read-only span containing the bytes representing a GUID.</param>
-        <summary>Converts the byte representation of a GUID to the equivalent <see cref="T:System.Guid" /> structure.</summary>
+        <summary>Converts a read-only character span that represents a GUID to the equivalent <see cref="T:System.Guid" /> structure.</summary>
         <returns>A structure that contains the value that was parsed.</returns>
         <remarks>
         <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-The <xref:System.Guid.Parse%2A> method trims any leading or trailing white space from `input` and converts the string representation of a GUID to a <xref:System.Guid> value. This method can convert strings in any of the five formats produced by the <xref:System.Guid.ToString%28System.String%29> and <xref:System.Guid.ToString%28System.String%2CSystem.IFormatProvider%29> methods, as shown in the following table.
+The <xref:System.Guid.Parse%2A> method trims any leading or trailing white space characters from `input` and converts the remaining characters in `input` to a <xref:System.Guid> value. This method can convert a character span that represents any of the five formats produced by the <xref:System.Guid.ToString%2A> methods, as shown in the following table.
 
 |Specifier|Description|Format|
 |---------------|-----------------|------------|
@@ -1072,8 +1072,12 @@ Use the <xref:System.Guid.TryParse%2A> method to catch any unsuccessful parse op
 
         ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException"><paramref name="input" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.FormatException"><paramref name="input" /> is not in a recognized format.</exception>
+        <exception cref="T:System.FormatException"><paramref name="input" /> is not in a recognized format.
+
+-or-
+
+After trimming, the length of the read-only character span is 0.                  
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -1191,7 +1195,7 @@ Use the <xref:System.Guid.TryParse%2A> method to catch any unsuccessful parse op
 
 ## Remarks
 
-The <xref:System.Guid.ParseExact%2A> method requires the string to convert to be exactly in the format specified by the `format` parameter, after leading and trailing white-space characters are removed. The following table shows the accepted format specifiers for the `format` parameter. "0" represents a digit; hyphens ("-"), braces ("{", "}"), and parentheses ("(", ")") appear as shown.
+The <xref:System.Guid.ParseExact%2A> method requires the read-only character span to convert to be exactly in the format specified by the `format` parameter, after leading and trailing white-space characters are removed. The following table shows the accepted format specifiers for the `format` parameter. "0" represents a digit; hyphens ("-"), braces ("{", "}"), and parentheses ("(", ")") appear as shown.
 
 |Specifier|Format of the `input` parameter|
 |---------------|-------------------------------------|
@@ -1340,7 +1344,9 @@ The following example calls the <xref:System.Guid.ToString%28System.String%29> m
 
 ## Remarks
 
-The <xref:System.Guid.CompareTo%2A> method compares the GUIDs as if they were values provided to the <xref:System.Guid.%23ctor%28System.Int32%2CSystem.Int16%2CSystem.Int16%2CSystem.Byte%5B%5D%29> constructor, as follows:
+This member is an explicit interface member implementation. It can only be used when the <xref:System.Guid" /> instance is cast to an <xref:System.IComparable> interface. 
+
+The `CompareTo` method compares the GUIDs as if they were values provided to the <xref:System.Guid.%23ctor%28System.Int32%2CSystem.Int16%2CSystem.Int16%2CSystem.Byte%5B%5D%29> constructor, as follows:
 
 -   It compares the <xref:System.UInt32> values, and returns a result if they are unequal. If they are equal, it performs the next comparison.
 -   It compares the first <xref:System.UInt16> values, and returns a result if they are unequal. If they are equal, it performs the next comparison.
@@ -1418,7 +1424,7 @@ The following table shows the accepted format specifiers for the `format` parame
 
 The hexadecimal digits a through f are lowercase in the returned string. To convert them to uppercase, call the <xref:System.String.ToUpper%2A?displayProperty=nameWithType> method on the returned string.
 
-Because the `provider` parameter is ignored, you cannot use it to provide a custom formatting solution. To represent a <xref:System.Guid> value as a string in a format that isn't supported by the standard GUID format strings, call the <xref:System.String.Format%28System.IFormatProvider%2CSystem.String%2CSystem.Object%5B%5D%29?displayProperty=nameWithType> method with a `provider` object that implements both the <xref:System.ICustomFormatter> and <xref:System.IFormatProvider> interfaces. For more information, see the "Custom Formatting with ICustomFormatter" section in the [Formatting Types](~/docs/standard/base-types/formatting-types.md) article.
+Because the `provider` parameter is ignored, you cannot use it to provide a custom formatting solution. To represent a <xref:System.Guid> value as a string in a format that isn't supported by the standard GUID format strings, call the <xref:System.String.Format%28System.IFormatProvider%2CSystem.String%2CSystem.Object%5B%5D%29?displayProperty=nameWithType> method with a `provider` object that implements both the <xref:System.ICustomFormatter> and <xref:System.IFormatProvider> interfaces. For more information, see the ["Custom Formatting with ICustomFormatter"](~/docs/standard/base-types/formatting-types.md#custom-formatting-with-icustomformatter) section in the [Formatting Types](~/docs/standard/base-types/formatting-types.md) article.
 
           ]]></format>
         </remarks>
@@ -1703,9 +1709,9 @@ Because the `provider` parameter is ignored, you cannot use it to provide a cust
       <Docs>
         <param name="destination">When this method returns, the GUID as a span of characters.</param>
         <param name="charsWritten">When this method returns, the number of characters written into the span.</param>
-        <param name="format">A read-only span containing the characters representing one of the following specifiers that indicates the exact format to use when interpreting <paramref name="input" />: "N", "D", "B", "P", or "X".</param>
-        <summary>Tries to format the current GUID instance into the provided span.</summary>
-        <returns><see langword="true" /> if the formatting was successful; <see langword="false" /> otherwise.</returns>
+        <param name="format">A read-only span containing the character representing one of the following specifiers that indicates the exact format to use when interpreting <paramref name="input" />: "N", "D", "B", "P", or "X".</param>
+        <summary>Tries to format the current GUID instance into the provided character span.</summary>
+        <returns><see langword="true" /> if the formatting operation was successful; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1737,8 +1743,8 @@ Because the `provider` parameter is ignored, you cannot use it to provide a cust
       </Parameters>
       <Docs>
         <param name="input">A span containing the characters representing GUID to convert.</param>
-        <param name="result">The structure that will contain the parsed value. If the method returns <see langword="true" />, <paramref name="result" /> contains a valid <see cref="T:System.Guid" />. If the method returns <see langword="false" />, <paramref name="result" /> equals <see cref="F:System.Guid.Empty" />.</param>
-        <summary>Converts the provided read-only span of characters containing the representation of a GUID to the equivalent <see cref="T:System.Guid" /> structure.</summary>
+        <param name="result">The structure to contain the parsed value. If the method returns <see langword="true" />, <paramref name="result" /> contains a valid <see cref="T:System.Guid" />. If the method returns <see langword="false" />, <paramref name="result" /> equals <see cref="F:System.Guid.Empty" />.</param>
+        <summary>Converts the specified read-only span of characters containing the representation of a GUID to the equivalent <see cref="T:System.Guid" /> structure.</summary>
         <returns><see langword="true" /> if the parse operation was successful; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1838,8 +1844,8 @@ Because the `provider` parameter is ignored, you cannot use it to provide a cust
       </Parameters>
       <Docs>
         <param name="input">A read-only span containing the characters representing the GUID to convert.</param>
-        <param name="format">A read-only span containing the characters representing one of the following specifiers that indicates the exact format to use when interpreting <paramref name="input" />: "N", "D", "B", "P", or "X".</param>
-        <param name="result">The structure that will contain the parsed value. If the method returns <see langword="true" />, <paramref name="result" /> contains a valid <see cref="T:System.Guid" />. If the method returns <see langword="false" />, <paramref name="result" /> equals <see cref="F:System.Guid.Empty" />.</param>
+        <param name="format">A read-only span containing a character representing one of the following specifiers that indicates the exact format to use when interpreting <paramref name="input" />: "N", "D", "B", "P", or "X".</param>
+        <param name="result">The structure to contain the parsed value. If the method returns <see langword="true" />, <paramref name="result" /> contains a valid <see cref="T:System.Guid" />. If the method returns <see langword="false" />, <paramref name="result" /> equals <see cref="F:System.Guid.Empty" />.</param>
         <summary>Converts span of characters representing the GUID to the equivalent <see cref="T:System.Guid" /> structure, provided that the string is in the specified format.</summary>
         <returns><see langword="true" /> if the parse operation was successful; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -1943,7 +1949,7 @@ Because the `provider` parameter is ignored, you cannot use it to provide a cust
       <Docs>
         <param name="destination">When this method returns, the GUID as a span of bytes.</param>
         <summary>Tries to write the current GUID instance into a span of bytes.</summary>
-        <returns><see langword="true" /> if the GUID is sucessfully written to given span; <see langword="false" /> otherwise.</returns>
+        <returns><see langword="true" /> if the GUID is sucessfully written to the specified span; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
