@@ -24,8 +24,38 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides string comparison helpers to query strings in metadata while avoiding allocation if possible.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+No allocation is performed unless both the handle argument and the value argument contain non-ASCII text.
+
+Obtain instances using <xref:System.Reflection.Metadata.MetadataReader.StringComparer>. A default-initialized instance is useless and behaves as a `null` reference.
+
+The code is optimized so that there is no additional overhead in re-obtaining a comparer over assigning it to a local. That is to say that a construct like:
+
+```cs
+if (reader.StringComparer.Equals(typeDef.Namespace, "System") && reader.StringComparer.Equals(typeDef.Name, "Object")
+{
+    /* found System.Object */
+}
+```
+is no less efficient than:
+
+```cs
+var comparer = reader.StringComparer;
+if (comparer.Equals(typeDef.Namespace, "System") && comparer.Equals(typeDef.Name, "Object") 
+{ 
+    /* found System.Object */
+}
+```
+
+The choice between them is therefore one of style and not performance.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Equals">
