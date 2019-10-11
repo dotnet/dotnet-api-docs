@@ -22,7 +22,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides methods and static methods to encode and decode data in a streamless, non-allocating, and performant manner using the Brotli data format specification.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -47,10 +47,17 @@
         <Parameter Name="window" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="quality">To be added.</param>
-        <param name="window">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="quality">A number representing quality of the Brotli compression. 0 is the minimum (no compression), 11 is the maximum.</param>
+        <param name="window">A number representing the encoder window bits. The minimum value is 10, and the maximum value is 24.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.IO.Compression.BrotliEncoder" /> structure using the specified quality and window.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="quality" /> is not between the minimum value of 0 and the maximum value of 11.
+
+-or-
+
+<paramref name="window" /> is not between the minimum value of 10 and the maximum value of 24.
+        </exception>
+        <exception cref="T:System.IO.IOException">Failed to create the <see cref="T:System.IO.Compression.BrotliEncoder" /> instance.</exception>
       </Docs>
     </Member>
     <Member MemberName="Compress">
@@ -80,13 +87,13 @@
         <Parameter Name="isFinalBlock" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <param name="isFinalBlock">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">A read-only span of bytes containing the source data to compress.</param>
+        <param name="destination">When this method returns, a byte span where the compressed is stored.</param>
+        <param name="bytesConsumed">When this method returns, the total number of bytes that were read from <paramref name="source" />.</param>
+        <param name="bytesWritten">When this method returns, the total number of bytes that were written to <paramref name="destination" />.</param>
+        <param name="isFinalBlock"><see langword="true" /> to finalize the internal stream, which prevents adding more input data when this method returns; <see langword="false" /> to allow the encoder to postpone the production of output until it has processed enough input.</param>
+        <summary>Compresses a read-only byte span into a destination span.</summary>
+        <returns>One of the enumeration values that describes the status with which the span-based operation finished.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -114,7 +121,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Frees and disposes unmanaged resources.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -142,10 +149,10 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">When this method returns, a span of bytes where the compressed data will be stored.</param>
+        <param name="bytesWritten">When this method returns, the total number of bytes that were written to <paramref name="destination" />.</param>
+        <summary>Compresses an empty read-only span of bytes into its destination, which ensures that output is produced for all the processed input. An actual flush is performed when the source is depleted and there is enough space in the destination for the remaining data.</summary>
+        <returns>One of the enumeration values that describes the status with which the operation finished.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -172,10 +179,19 @@
         <Parameter Name="inputSize" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="inputSize">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="inputSize">The input size to get the maximum expected compressed length from. Must be greater or equal than 0 and less or equal than <see cref="P:System.Int32.MaxValue" /> - 515.</param>
+        <summary>Gets the maximum expected compressed length for the provided input size.</summary>
+        <returns>A number representing the maximum compressed length for the provided input size.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Returns 1 if `inputSize` is 0.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="inputSize" /> is less than 0, the minimum allowed input size, or greater than <see cref="P:System.Int32.MaxValue" /> - 515, the maximum allowed input size.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryCompress">
@@ -203,11 +219,11 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">A read-only span of bytes containing the source data to compress.</param>
+        <param name="destination">When this method returns, a span of bytes where the compressed data is stored.</param>
+        <param name="bytesWritten">When this method returns, the total number of bytes that were written to <paramref name="destination" />.</param>
+        <summary>Tries to compress a source byte span into a destination span.</summary>
+        <returns><see langword="true" /> if the compression operation was successful; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -238,13 +254,13 @@
         <Parameter Name="window" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <param name="quality">To be added.</param>
-        <param name="window">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">A read-only span of bytes containing the source data to compress.</param>
+        <param name="destination">When this method returns, a span of bytes where the compressed data is stored.</param>
+        <param name="bytesWritten">When this method returns, the total number of bytes that were written to <paramref name="destination" />.</param>
+        <param name="quality">A number representing quality of the Brotli compression. 0 is the minimum (no compression), 11 is the maximum.</param>
+        <param name="window">A number representing the encoder window bits. The minimum value is 10, and the maximum value is 24.</param>
+        <summary>Tries to compress a source byte span into a destination byte span, using the provided compression quality leven and encoder window bits.</summary>
+        <returns><see langword="true" /> if the compression operation was successful; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
