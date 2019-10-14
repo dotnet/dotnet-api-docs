@@ -19,7 +19,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Defines a type that reads PE (Portable Executable) and COFF (Common Object File Format) headers from a stream.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -44,9 +44,13 @@
         <Parameter Name="peStream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="peStream">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="peStream">A stream containing the PE image starting at the stream's current position and ending at the end of the stream.</param>
+        <summary>Instantiates a new instance of the <see cref="T:System.Reflection.PortableExecutable.PEHeaders" /> class that reads the PE headers from the current location in the specified stream.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.BadImageFormatException">The data read from the stream has an invalid format.</exception>
+        <exception cref="T:System.IO.IOException">Error reading from the stream.</exception>
+        <exception cref="T:System.ArgumentException">The stream does not support seek operations.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="peStream" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -71,10 +75,15 @@
         <Parameter Name="size" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="peStream">To be added.</param>
-        <param name="size">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="peStream">A stream containing PE image of the given size starting at its current position.</param>
+        <param name="size">The size of the PE image.</param>
+        <summary>Instantiates a new instance of the <see cref="T:System.Reflection.PortableExecutable.PEHeaders" /> class that reads the PE headers from a stream that represents a PE image of a specified size.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.BadImageFormatException">The data read from the stream has an invalid format.</exception>
+        <exception cref="T:System.IO.IOException">Error reading from the stream.</exception>
+        <exception cref="T:System.ArgumentException">The stream does not support seek operations.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="peStream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="size" /> is negative or extends past the end of the stream.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -98,11 +107,16 @@
         <Parameter Name="isLoadedImage" Type="System.Boolean" Index="2" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
       </Parameters>
       <Docs>
-        <param name="peStream">To be added.</param>
-        <param name="size">To be added.</param>
-        <param name="isLoadedImage">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="peStream">The stream containing PE image of the given size starting at its current position.</param>
+        <param name="size">The size of the PE image.</param>
+        <param name="isLoadedImage"><see langword="true" /> if the PE image has been loaded into memory by the OS loader; otherwise, <see langword="false" />.</param>
+        <summary>Instantiates a new instance of the <see cref="T:System.Reflection.PortableExecutable.PEHeaders" /> class that reads the PE headers from a stream that represents a PE image of a specified size and indicates whether the PE image has been loaded into memory.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.BadImageFormatException">The data read from the stream has invalid format.</exception>
+        <exception cref="T:System.IO.IOException">Error reading from the stream.</exception>
+        <exception cref="T:System.ArgumentException">The stream does not support seek operations.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="peStream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="size" /> is negative or extends past the end of the stream.</exception>
       </Docs>
     </Member>
     <Member MemberName="CoffHeader">
@@ -126,8 +140,8 @@
         <ReturnType>System.Reflection.PortableExecutable.CoffHeader</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the COFF header of the image.</summary>
+        <value>The COFF header of the image.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -152,8 +166,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the byte offset from the start of the PE image to the start of the COFF header.</summary>
+        <value>The byte offset from the start of the PE image to the start of the COFF header.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -178,8 +192,8 @@
         <ReturnType>System.Reflection.PortableExecutable.CorHeader</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the COR header.</summary>
+        <value>The COR header, or <see langword="null" /> if the image does not have one.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -204,8 +218,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the byte offset from the start of the image to the COR header.</summary>
+        <value>The byte offset from the start of the image to the COR header, or -1 if the image does not have a COR header.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -233,9 +247,9 @@
         <Parameter Name="relativeVirtualAddress" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="relativeVirtualAddress">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="relativeVirtualAddress">The relative virtual address to search for.</param>
+        <summary>Searches sections of the PE image for the section that contains the specified Relative Virtual Address.</summary>
+        <returns>The index of the section that contains <paramref name="relativeVirtualAddress" />, or -1 if there the search is unsuccessful.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -260,8 +274,8 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the image is Coff only.</summary>
+        <value><see langword="true" /> if the image is Coff only; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -286,8 +300,8 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the image represents a Windows console application.</summary>
+        <value><see langword="true" /> if the image is a Windows console applications; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -312,8 +326,8 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the image represents a dynamic link library.</summary>
+        <value><see langword="true" /> if the image is a DLL; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -338,8 +352,8 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the image represents an executable.</summary>
+        <value><see langword="true" /> if the image is an executable; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -364,8 +378,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the size of the CLI metadata.</summary>
+        <value>the size of the CLI metadata, or 0 if the image does not contain metadata.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -390,8 +404,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the offset (in bytes) from the start of the PE image to the start of the CLI metadata.</summary>
+        <value>The offset (in bytes) from the start of the PE image to the start of the CLI metadata, or -1 if the image does not contain metadata.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -416,8 +430,8 @@
         <ReturnType>System.Reflection.PortableExecutable.PEHeader</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the image's PE header.</summary>
+        <value>The image's PE header, or <see langword="null" /> if the image is COFF only.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -442,8 +456,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the byte offset of the header from the start of the image.</summary>
+        <value>The byte offset of the header from the start of the image.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -468,8 +482,8 @@
         <ReturnType>System.Collections.Immutable.ImmutableArray&lt;System.Reflection.PortableExecutable.SectionHeader&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the PE section headers.</summary>
+        <value>An array containing the PE section headers.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -498,10 +512,10 @@
         <Parameter Name="offset" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="directory">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="directory">The PE directory entry.</param>
+        <param name="offset">When the method returns, contains the offset from the start of the image to the given directory data.</param>
+        <summary>Gets the offset (in bytes) from the start of the image to the given directory data.</summary>
+        <returns><see langword="true" /> if the directory data is found; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
