@@ -21,7 +21,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Represents the runtime's concept of a scope for binding. This class is abstract.</summary>
+    <summary>Represents the runtime's concept of a scope for assembly loading.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
@@ -30,18 +30,18 @@
  
  <xref:System.Runtime.Loader.AssemblyLoadContext> is an abstract class. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> needs to be implemented to create a concrete class.
  
- The <xref:System.Runtime.Loader.AssemblyLoadContext> exists primarily to provide assembly binding isolation. It allows multiple versions of the same assembly to be loaded within a single process. It replaces the isolation mechanisms provided by multiple <xref:System.AppDomain> instances in the .NET Framework.
+ The <xref:System.Runtime.Loader.AssemblyLoadContext> exists primarily to provide assembly loading isolation. It allows multiple versions of the same assembly to be loaded within a single process. It replaces the isolation mechanisms provided by multiple <xref:System.AppDomain> instances in the .NET Framework.
  
  > [!NOTE]
  > <xref:System.Runtime.Loader.AssemblyLoadContext> does not provide any security features. All code has full permissions of the process.
 
 ### Usage in the runtime
  The runtime implements two assembly load contexts:
- * <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> represents the runtime's default binding context which is used for the application main assembly and its static dependencies.
+ * <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> represents the runtime's default context which is used for the application main assembly and its static dependencies.
  * The <xref:System.Reflection.Assembly.LoadFile(System.String)?displayProperty=nameWithType> method isolates the assemblies it loads by instantiating the most basic <xref:System.Runtime.Loader.AssemblyLoadContext>. It has a simplistic isolation scheme which loads each assembly in its own <xref:System.Runtime.Loader.AssemblyLoadContext> with no dependency resolution.
  
 ### Application usage
- An application can create its own <xref:System.Runtime.Loader.AssemblyLoadContext> to create a custom solution for advanced binding scenarios. The customization focuses on defining dependency resolution mechanisms.
+ An application can create its own <xref:System.Runtime.Loader.AssemblyLoadContext> to create a custom solution for advanced scenarios. The customization focuses on defining dependency resolution mechanisms.
  
  The <xref:System.Runtime.Loader.AssemblyLoadContext> provides two extension points to implement managed assembly resolution:
  1. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> provides the first chance for the <xref:System.Runtime.Loader.AssemblyLoadContext> to resolve the assembly, load it and return it. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> returns `null`, the loader will try to load the assembly into the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType>.
@@ -64,8 +64,8 @@
  
  * The implementation of <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> can add new dependencies which may need to be isolated to allow different versions to exist. The most natural implementation would place these dependencies in the default context. Careful design can isolate the new dependencies.
  
- * The binding isolation process creates multiple types with the same type name.
-     * This can lead to confusing error messages, for example "type Foo.Foo cannot be cast to type Foo.Foo."
+ * The same assembly is loaded multiple times into different contexts.
+     * This can lead to confusing error messages, for example "Unable to cast object of type 'Sample.Plugin' to type 'Sample.Plugin'."
      * Marshaling across isolation boundaries is non-trivial. A typical solution would be to use an interface defined in an assembly which is only loaded into the default load context.
  
  ]]></format>
