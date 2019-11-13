@@ -1,4 +1,4 @@
-﻿<Type Name="WindowsRuntimeStorageExtensions" FullName="System.IO.WindowsRuntimeStorageExtensions">
+<Type Name="WindowsRuntimeStorageExtensions" FullName="System.IO.WindowsRuntimeStorageExtensions">
   <TypeSignature Language="C#" Value="public static class WindowsRuntimeStorageExtensions" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit WindowsRuntimeStorageExtensions extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.IO.WindowsRuntimeStorageExtensions" />
@@ -20,10 +20,58 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Contains extension methods for the <see cref="T:Windows.Storage.IStorageFile" /> and <see cref="T:Windows.Storage.IStorageFolder" /> interfaces in the Windows Runtime when developing Windows Store apps.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+These extension methods are available only when you develop Windows Store apps. The methods provide convenient ways of opening files for reading or writing in Windows Store apps. You do not create an instance of the `WindowsRuntimeStorageExtensions` class; instead, you use these methods from instances of the <xref:Windows.Storage.IStorageFile> and <xref:Windows.Storage.IStorageFolder> interfaces.
+
+The `WindowsRuntimeStorageExtensions` class contains two methods that extend <xref:Windows.Storage.IStorageFile> for reading or writing:
+
+  - <xref:System.IO.WindowsRuntimeStorageExtensions.OpenStreamForReadAsync(Windows.Storage.IStorageFile)>
+  - <xref:System.IO.WindowsRuntimeStorageExtensions.OpenStreamForWriteAsync(Windows.Storage.IStorageFile)>
+
+The WindowsRuntimeStorageExtensions class contains two methods that extend <xref:Windows.Storage.IStorageFolder> for reading and writing:
+  - <xref:System.IO.WindowsRuntimeStorageExtensions.OpenStreamForReadAsync(Windows.Storage.IStorageFolder,System.String)>
+  - <xref:System.IO.WindowsRuntimeStorageExtensions.OpenStreamForWriteAsync(Windows.Storage.IStorageFolder,System.String,Windows.Storage.CreationCollisionOption)>
+
+## Examples
+
+The following example shows how to open a file in the application data as a <xref:System.IO.Stream> in a Windows Store app, and write to it by using an instance of the <xref:System.IO.StreamWriter> class. It then reads the contents for the file by using an instance of the <xref:System.IO.StreamReader> class.
+
+[!code-csharp[windowsruntimestorageextensions#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage4.xaml.cs#8)]
+[!code-vb[windowsruntimestorageextensions#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/vb/blankpage4.xaml.vb#8)]
+
+The next example shows the XAML code that is associated with the previous example. 
+
+[!code-xaml[windowsruntimestorageextensions#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage4.xaml#7)]
+
+]]></format>
+    </remarks>
   </Docs>
   <Members>
+    <MemberGroup MemberName="CreateSafeFileHandle">
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
+        <AssemblyVersion>4.0.14.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>Creates and returns a reference to a safe file handle for the IStorage instance that is being extended.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+With the Windows 10 Anniversary Update, new interfaces were added to <xref:Windows.Storage.IStorageFolder> and <xref:Windows.Storage.IStorageFile> that allow creating a standard Win32 file handle: `IStorageFolderHandleAccess` and `IStorageItemHandleAccess`. The `CreateSafeFileHandle` group of extension methods take advantage of the `Create` methods of these interfaces.
+
+The key benefit of the API is access to a brokered `SafeFileHandle`. This is critically important if you want to create a <xref:System.IO.FileStream> around an <xref:Windows.Storage.IStorageItem> or <xref:Windows.Storage.IStorageFolder> when you are running in an [AppContainer](https://docs.microsoft.com/windows/win32/secauthz/appcontainer-isolation). When running in an AppContainer, the application has very limited file access rights. Things like picture and document folders require the native file handle to be proxied via `RuntimeBroker.exe`, as the application process itself doesn't have rights to most files. This API gets the proxied handle. If accessing user data folders or using a file picker, this API should always be used to create <xref:System.IO.FileStream>. Using a path will often throw <xref:System.AccessViolationException> in these cases.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="CreateSafeFileHandle">
       <MemberSignature Language="C#" Value="public static Microsoft.Win32.SafeHandles.SafeFileHandle CreateSafeFileHandle (this Windows.Storage.IStorageFolder rootDirectory, string relativePath, System.IO.FileMode mode);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Microsoft.Win32.SafeHandles.SafeFileHandle CreateSafeFileHandle(class Windows.Storage.IStorageFolder rootDirectory, string relativePath, valuetype System.IO.FileMode mode) cil managed" />
@@ -50,12 +98,28 @@
         <Parameter Name="mode" Type="System.IO.FileMode" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0" />
       </Parameters>
       <Docs>
-        <param name="rootDirectory">To be added.</param>
-        <param name="relativePath">To be added.</param>
-        <param name="mode">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="rootDirectory">The current storage folder instance.</param>
+        <param name="relativePath">The name of the file that you want to get a handle to.</param>
+        <param name="mode">The mode in which the operating system should open the file.</param>
+        <summary>Creates a safe file handle for a file that is in the current storage folder instance.</summary>
+        <returns>A safe file handle instance if the operation succeeds; <see langword="null" /> if the conversion of the <paramref name="rootDirectory" /> to an IStorageFolderHandleAccess returns <see langword="null" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When calling this method, if the specified mode is <xref:System.IO.FileMode.Append?displayProperty=nameWithType>, the file will be opened with <xref:System.IO.FileAccess.Read?displayProperty=nameWithType> access permission. For any other modes, the file will be opened with <xref:System.IO.FileAccess.ReadWrite?displayProperty=nameWithType> access permission.
+
+Additionally, this method will open the file with <xref:System.IO.FileShare.Read?displayProperty=nameWithType> stream sharing access and with <xref:System.IO.FileOptions.None?displayProperty=nameWithType> advanced file creation options.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="rootDirectory" /> is <see langword="null" />.
+
+ -or-
+
+<paramref name="relativePath" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateSafeFileHandle">
@@ -84,13 +148,15 @@
         <Parameter Name="options" Type="System.IO.FileOptions" Index="3" FrameworkAlternate="dotnet-plat-ext-3.0" />
       </Parameters>
       <Docs>
-        <param name="windowsRuntimeFile">To be added.</param>
-        <param name="access">To be added.</param>
-        <param name="share">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="windowsRuntimeFile">A storage file instance.</param>
+        <param name="access">The kind of access that should be used when opening the file. The default value is <see cref="F:System.IO.FileAccess.ReadWrite" />.</param>
+        <param name="share">The kind of stream sharing access other <see cref="T:System.IO.FileStream" /> objects can have to the same file. The default value is <see cref="F:System.IO.FileShare.Read" />.</param>
+        <param name="options">Advanced options for creating the <see cref="T:System.IO.FileStream" /> object. The default value is <see cref="F:System.IO.FileOptions.None" />.</param>
+        <summary>Creates a safe file handle for a the current storage file instance.</summary>
+        <returns>A safe file handle instance if the operation succeeds; <see langword="null" /> if the conversion of the <paramref name="windowsRuntimeFile" /> to an IStorageItemHandleAccess returns <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="windowsRuntimeFile" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateSafeFileHandle">
@@ -121,15 +187,21 @@
         <Parameter Name="options" Type="System.IO.FileOptions" Index="5" FrameworkAlternate="dotnet-plat-ext-3.0" />
       </Parameters>
       <Docs>
-        <param name="rootDirectory">To be added.</param>
-        <param name="relativePath">To be added.</param>
-        <param name="mode">To be added.</param>
-        <param name="access">To be added.</param>
-        <param name="share">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="rootDirectory">The current storage folder instance.</param>
+        <param name="relativePath">The name of the file that you want to get a handle to.</param>
+        <param name="mode">The mode in which the operating system should open the file.</param>
+        <param name="access">The kind of access that should be used when opening the file.</param>
+        <param name="share">The kind of stream sharing access other <see cref="T:System.IO.FileStream" /> objects can have to the same file. The default value is <see cref="F:System.IO.FileShare.Read" />.</param>
+        <param name="options">Advanced options for creating the <see cref="T:System.IO.FileStream" /> object. The default value is <see cref="F:System.IO.FileOptions.None" />.</param>
+        <summary>Creates a safe file handle for a file that is in the current storage folder instance.</summary>
+        <returns>A safe file handle instance if the operation succeeds; <see langword="null" /> if the conversion of the <paramref name="rootDirectory" /> to an IStorageFolderHandleAccess returns <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="rootDirectory" /> is <see langword="null" />.
+
+ -or-
+
+<paramref name="relativePath" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="OpenStreamForReadAsync">
@@ -157,10 +229,32 @@
         <Parameter Name="windowsRuntimeFile" Type="Windows.Storage.IStorageFile" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="windowsRuntimeFile">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="windowsRuntimeFile">The Windows Runtime <see cref="T:Windows.Storage.IStorageFile" /> object to read from.</param>
+        <summary>Retrieves a stream for reading from a specified file.</summary>
+        <returns>A task that represents the asynchronous read operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+## Remarks
+
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFile>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](~/docs/visual-basic/programming-guide/language-features/procedures/extension-methods.md) or [Extension Methods (C# Programming Guide)](~/docs/csharp/programming-guide/classes-and-structs/extension-methods.md).
+
+## Examples
+
+The following example shows how to open a file as a <xref:System.IO.Stream> in a Windows Store app, and read its contents by using an instance of the <xref:System.IO.StreamReader> class.
+
+[!code-csharp[windowsruntimestorageextensions#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage.xaml.cs#2)]
+[!code-vb[windowsruntimestorageextensions#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/vb/blankpage.xaml.vb#2)]
+
+The next example shows the XAML code that is associated with the previous example. 
+
+[!code-xaml[windowsruntimestorageextensions#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage.xaml#1)]
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="windowsRuntimeFile" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.IOException">The file could not be opened or retrieved as a stream.</exception>
       </Docs>
     </Member>
     <Member MemberName="OpenStreamForReadAsync">
@@ -189,11 +283,36 @@
         <Parameter Name="relativePath" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="rootDirectory">To be added.</param>
-        <param name="relativePath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="rootDirectory">The Windows Runtime <see cref="T:Windows.Storage.IStorageFile" /> object that contains the file to read from.</param>
+        <param name="relativePath">The path, relative to the root folder, to the file to read from.</param>
+        <summary>Retrieves a stream for reading from a file in the specified parent folder.</summary>
+        <returns>A task that represents the asynchronous read operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type IStorageFolder. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](~/docs/visual-basic/programming-guide/language-features/procedures/extension-methods.md) or [Extension Methods (C# Programming Guide)](~/docs/csharp/programming-guide/classes-and-structs/extension-methods.md).
+
+## Examples
+
+The following example shows how to open a file as a <xref:System.IO.Stream> in a Windows Store app, and read its contents by using an instance of the <xref:System.IO.StreamReader> class.
+
+[!code-csharp[windowsruntimestorageextensions#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage2.xaml.cs#4)]
+[!code-vb[windowsruntimestorageextensions#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/vb/blankpage2.xaml.vb#4)]
+
+The next example shows the XAML code that is associated with the previous example. 
+
+[!code-xaml[windowsruntimestorageextensions#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage2.xaml#3)]
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="rootDirectory" /> or <paramref name="relativePath" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="relativePath" /> is empty or contains only white-space characters.</exception>
+        <exception cref="T:System.IO.IOException">The file could not be opened or retrieved as a stream.</exception>
       </Docs>
     </Member>
     <Member MemberName="OpenStreamForWriteAsync">
@@ -221,10 +340,32 @@
         <Parameter Name="windowsRuntimeFile" Type="Windows.Storage.IStorageFile" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="windowsRuntimeFile">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="windowsRuntimeFile">The Windows Runtime <see cref="T:Windows.Storage.IStorageFile" /> object to write to.</param>
+        <summary>Retrieves a stream for writing to a specified file.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+## Remarks
+
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFile>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](~/docs/visual-basic/programming-guide/language-features/procedures/extension-methods.md) or [Extension Methods (C# Programming Guide)](~/docs/csharp/programming-guide/classes-and-structs/extension-methods.md).
+
+## Examples
+
+The following example shows how to open a file as a <xref:System.IO.Stream> in a Windows Store app, and write to it by using an instance of the <xref:System.IO.StreamReader> class.
+
+[!code-csharp[windowsruntimestorageextensions#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage3.xaml.cs#6)]
+[!code-vb[windowsruntimestorageextensions#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/vb/blankpage3.xaml.vb#6)]
+
+The next example shows the XAML code that is associated with the previous example. 
+
+[!code-xaml[windowsruntimestorageextensions#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage3.xaml#5)]
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="windowsRuntimeFile" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.IOException">The file could not be opened or retrieved as a stream.</exception>
       </Docs>
     </Member>
     <Member MemberName="OpenStreamForWriteAsync">
@@ -253,12 +394,37 @@
         <Parameter Name="creationCollisionOption" Type="Windows.Storage.CreationCollisionOption" />
       </Parameters>
       <Docs>
-        <param name="rootDirectory">To be added.</param>
-        <param name="relativePath">To be added.</param>
-        <param name="creationCollisionOption">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="rootDirectory">The Windows Runtime <see cref="T:Windows.Storage.IStorageFile" /> object that contains the file to write to.</param>
+        <param name="relativePath">The path, relative to the root folder, to the file to write to.</param>
+        <param name="creationCollisionOption">The Windows Runtime <see cref="T:Windows.Storage.CreationCollisionOption" /> enumeration value that specifies the behavior to use when the name of the file to create is the same as the name of an existing file.</param>
+        <summary>Retrieves a stream for writing to a file in the specified parent folder.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!NOTE]
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFolder>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](~/docs/visual-basic/programming-guide/language-features/procedures/extension-methods.md) or [Extension Methods (C# Programming Guide)](~/docs/csharp/programming-guide/classes-and-structs/extension-methods.md).
+
+## Examples
+
+The following example shows how to open a file as a <xref:System.IO.Stream> in a Windows Store app, and write to it by using an instance of the <xref:System.IO.StreamReader> class.
+
+[!code-csharp[windowsruntimestorageextensions#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage4.xaml.cs#8)]
+[!code-vb[windowsruntimestorageextensions#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/vb/blankpage4.xaml.vb#8)]
+
+The next example shows the XAML code that is associated with the previous example. 
+
+[!code-xaml[windowsruntimestorageextensions#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage4.xaml#7)]
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="rootDirectory" /> or <paramref name="relativePath" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="relativePath" /> is empty or contains only white-space characters.</exception>
+        <exception cref="T:System.IO.IOException">The file could not be opened or retrieved as a stream.</exception>
       </Docs>
     </Member>
   </Members>

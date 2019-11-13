@@ -1,4 +1,4 @@
-﻿<Type Name="AesCcm" FullName="System.Security.Cryptography.AesCcm">
+<Type Name="AesCcm" FullName="System.Security.Cryptography.AesCcm">
   <TypeSignature Language="C#" Value="public sealed class AesCcm : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit AesCcm extends System.Object implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.AesCcm" />
@@ -9,6 +9,10 @@
     <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
     <AssemblyVersion>4.3.1.0</AssemblyVersion>
   </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
@@ -18,7 +22,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents an Advanced Encryption Standard (AES) key to be used with the Counter with CBC-MAC (CCM) mode of operation.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -34,13 +38,19 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <Parameters>
         <Parameter Name="key" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="key">The secret key to use for this instance.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.AesCcm" /> class with a provided key.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="key" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="key" /> parameter length is other than 16, 24, or 32 bytes (128, 192, or 256 bits).</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -55,13 +65,18 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <Parameters>
         <Parameter Name="key" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="key">The secret key to use for this instance.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.AesCcm" /> class with a provided key.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="key" /> parameter length is other than 16, 24, or 32 bytes (128, 192, or 256 bits).</exception>
       </Docs>
     </Member>
     <Member MemberName="Decrypt">
@@ -75,6 +90,10 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -86,13 +105,32 @@
         <Parameter Name="associatedData" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="nonce">To be added.</param>
-        <param name="ciphertext">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="plaintext">To be added.</param>
-        <param name="associatedData">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="nonce">The nonce associated with this message, which must match the value provided during encryption.</param>
+        <param name="ciphertext">The encrypted content to decrypt.</param>
+        <param name="tag">The authentication tag produced for this message during encryption.</param>
+        <param name="plaintext">The byte array to receive the decrypted contents.</param>
+        <param name="associatedData">Extra data associated with this message, which must match the value provided during encryption.</param>
+        <summary>Decrypts the ciphertext into the provided destination buffer if the authentication tag can be validated.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If `tag` cannot be validated (using the key, `nonce`, `ciphertext`, and `associatedData` values), then `plaintext` is cleared.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="plaintext" /> parameter and the <paramref name="ciphertext" /> do not have the same length.
+
+-or-
+
+The <paramref name="nonce" /> parameter length is not permitted by <see cref="P:System.Security.Cryptography.AesCcm.NonceByteSizes" />.
+
+-or-
+
+The <paramref name="tag" /> parameter length is not permitted by <see cref="P:System.Security.Cryptography.AesCcm.TagByteSizes" />.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="nonce" />, <paramref name="ciphertext" />, <paramref name="tag" />, or <paramref name="plaintext" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The tag value could not be verified, or the decryption operation otherwise failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Decrypt">
@@ -106,6 +144,10 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -117,13 +159,31 @@
         <Parameter Name="associatedData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="nonce">To be added.</param>
-        <param name="ciphertext">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="plaintext">To be added.</param>
-        <param name="associatedData">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="nonce">The nonce associated with this message, which must match the value provided during encryption.</param>
+        <param name="ciphertext">The encrypted content to decrypt.</param>
+        <param name="tag">The authentication tag produced for this message during encryption.</param>
+        <param name="plaintext">The byte span to receive the decrypted contents.</param>
+        <param name="associatedData">Extra data associated with this message, which must match the value provided during encryption.</param>
+        <summary>Decrypts the ciphertext into the provided destination buffer if the authentication tag can be validated.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If `tag` cannot be validated (using the key, `nonce`, `ciphertext`, and `associatedData` values), then `plaintext` is cleared.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="plaintext" /> parameter and the <paramref name="ciphertext" /> do not have the same length.
+
+-or-
+
+The <paramref name="nonce" /> parameter length is not permitted by <see cref="P:System.Security.Cryptography.AesCcm.NonceByteSizes" />.
+
+-or-
+
+The <paramref name="tag" /> parameter length is not permitted by <see cref="P:System.Security.Cryptography.AesCcm.TagByteSizes" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The tag value could not be verified, or the decryption operation otherwise failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -141,12 +201,16 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Releases the resources used by the current instance of the <see cref="T:System.Security.Cryptography.AesCcm" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -161,6 +225,10 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -172,13 +240,32 @@
         <Parameter Name="associatedData" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="nonce">To be added.</param>
-        <param name="plaintext">To be added.</param>
-        <param name="ciphertext">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="associatedData">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="nonce">The nonce associated with this message, which should be a unique value for every operation with the same key.</param>
+        <param name="plaintext">The content to encrypt.</param>
+        <param name="ciphertext">The byte array to receive the encrypted contents.</param>
+        <param name="tag">The byte array to receive the generated authentication tag.</param>
+        <param name="associatedData">Extra data associated with this message, which must also be provided during decryption.</param>
+        <summary>Encrypts the plaintext into the ciphertext destination buffer and generates the authentication tag into a separate buffer.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The security guarantees of the AES-CCM algorithm mode require that the same nonce value is never used twice with the same key.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="plaintext" /> parameter and the <paramref name="ciphertext" /> do not have the same length.
+
+-or-
+
+The <paramref name="nonce" /> parameter length is not permitted by <see cref="P:System.Security.Cryptography.AesCcm.NonceByteSizes" />.
+
+-or-
+
+The <paramref name="tag" /> parameter length is not permitted by <see cref="P:System.Security.Cryptography.AesCcm.TagByteSizes" />.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="nonce" />, <paramref name="ciphertext" />, <paramref name="tag" />, or <paramref name="plaintext" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The encryption operation failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Encrypt">
@@ -192,6 +279,10 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -203,13 +294,31 @@
         <Parameter Name="associatedData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="nonce">To be added.</param>
-        <param name="plaintext">To be added.</param>
-        <param name="ciphertext">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="associatedData">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="nonce">The nonce associated with this message, which should be a unique value for every operation with the same key.</param>
+        <param name="plaintext">The content to encrypt.</param>
+        <param name="ciphertext">The byte span to receive the encrypted contents.</param>
+        <param name="tag">The byte span to receive the generated authentication tag.</param>
+        <param name="associatedData">Extra data associated with this message, which must also be provided during decryption.</param>
+        <summary>Encrypts the plaintext into the ciphertext destination buffer and generates the authentication tag into a separate buffer.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The security guarantees of the AES-CCM algorithm mode require that the same nonce value is never used twice with the same key.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="plaintext" /> parameter and the <paramref name="ciphertext" /> do not have the same length.
+
+-or-
+
+The <paramref name="nonce" /> parameter length is not permitted by <see cref="P:System.Security.Cryptography.AesCcm.NonceByteSizes" />.
+
+-or-
+
+The <paramref name="tag" /> parameter length is not permitted by <see cref="P:System.Security.Cryptography.AesCcm.TagByteSizes" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The encryption operation failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="NonceByteSizes">
@@ -224,12 +333,16 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.KeySizes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the nonce sizes, in bytes, supported by this instance.</summary>
+        <value>The nonce sizes supported by this instance: 7, 8, 9, 10, 11, 12, or 13 bytes (56, 64, 72, 80, 88, 96, or 104 bits).</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -245,12 +358,16 @@
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>4.3.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.KeySizes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the tag sizes, in bytes, supported by this instance.</summary>
+        <value>The tag sizes supported by this instance: 4, 6, 8, 10, 12, 14, or 16 bytes (32, 48, 64, 80, 96, 112, or 128 bits).</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

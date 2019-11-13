@@ -1,4 +1,4 @@
-﻿<Type Name="FrameworkElement" FullName="System.Windows.FrameworkElement">
+<Type Name="FrameworkElement" FullName="System.Windows.FrameworkElement">
   <TypeSignature Language="C#" Value="public class FrameworkElement : System.Windows.UIElement, System.ComponentModel.ISupportInitialize, System.Windows.IFrameworkInputElement, System.Windows.Markup.IQueryAmbient" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi FrameworkElement extends System.Windows.UIElement implements class System.ComponentModel.ISupportInitialize, class System.Windows.IFrameworkInputElement, class System.Windows.IInputElement, class System.Windows.Markup.IQueryAmbient" />
   <TypeSignature Language="DocId" Value="T:System.Windows.FrameworkElement" />
@@ -259,7 +259,7 @@
 ## Remarks  
  Use this method for the implementation of collections on objects that represent logical child elements of an element. Collection maintenance for child element collections might be done in property getters or setters, class handling of Changed events, constructors, or within the collection types themselves.  
   
- For control authors, manipulating the logical tree at this level is not the recommended practice, unless none of the content models for available base control classes are appropriate for your control scenario. Consider subclassing at the level of <xref:System.Windows.Controls.ContentControl>, <xref:System.Windows.Controls.ItemsControl>, and <xref:System.Windows.Controls.HeaderedItemsControl>. These classes provide a content model with particular enforcement of logical tree child elements through dedicated [!INCLUDE[TLA2#tla_api#plural](~/includes/tla2sharptla-apisharpplural-md.md)], as well as support for other features typically desirable in a [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] control such as styling through templates. For more information on how to use <xref:System.Windows.FrameworkElement.LogicalChildren%2A> and <xref:System.Windows.FrameworkElement.AddLogicalChild%2A>, see [Trees in WPF](~/docs/framework/wpf/advanced/trees-in-wpf.md).  
+ For control authors, manipulating the logical tree at this level is not the recommended practice, unless none of the content models for available base control classes are appropriate for your control scenario. Consider subclassing at the level of <xref:System.Windows.Controls.ContentControl>, <xref:System.Windows.Controls.ItemsControl>, and <xref:System.Windows.Controls.HeaderedItemsControl>. These classes provide a content model with particular enforcement of logical tree child elements through dedicated APIs, as well as support for other features typically desirable in a [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] control such as styling through templates. For more information on how to use <xref:System.Windows.FrameworkElement.LogicalChildren%2A> and <xref:System.Windows.FrameworkElement.AddLogicalChild%2A>, see [Trees in WPF](~/docs/framework/wpf/advanced/trees-in-wpf.md).  
   
  <xref:System.Windows.FrameworkElement.AddLogicalChild%2A> may throw an exception if called at a time when the logical tree is being iterated by another process.  
   
@@ -618,7 +618,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- A <xref:System.Windows.Data.BindingGroup> can be used to validate the values of multiple properties of an object. For example, suppose that an application prompts the user to enter an address and then populates an object of type `Address`, which has the properties `Street`, `City`, `ZipCode`, and `Country`, with the values that the user provided. The application has a panel that contains four <xref:System.Windows.Controls.TextBox> controls, each of which is bound to one of the object's properties. You can use a <xref:System.Windows.Controls.ValidationRule> in a <xref:System.Windows.Data.BindingGroup> to validate the `Address` object. For example, the <xref:System.Windows.Controls.ValidationRule> can ensure that the zip code is valid for the country of the address.  
+ A <xref:System.Windows.Data.BindingGroup> can be used to validate the values of multiple properties of an object. For example, suppose that an application prompts the user to enter an address and then populates an object of type `Address`, which has the properties `Street`, `City`, `ZipCode`, and `Country`, with the values that the user provided. The application has a panel that contains four <xref:System.Windows.Controls.TextBox> controls, each of which is bound to one of the object's properties. You can use a <xref:System.Windows.Controls.ValidationRule> in a <xref:System.Windows.Data.BindingGroup> to validate the `Address` object. For example, the <xref:System.Windows.Controls.ValidationRule> can ensure that the zip code is valid for the country/region of the address.  
   
  Child elements inherit the <xref:System.Windows.Data.BindingGroup> from their parent elements, just as with any other inheritable property.  
   
@@ -713,7 +713,7 @@
    
   
 ## Examples  
- The following example implements a handler for an application navigation event that responds whenever the [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)] being navigated to includes a fragment. The fragment is named in the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] following the hash sign (#), and the implemented behavior causes the element to scroll into view within the frame. <xref:System.Windows.FrameworkElement.BringIntoView%2A> and <xref:System.Windows.FrameworkElement.RequestBringIntoView> request that scrolling behavior in the example.  
+ The following example implements a handler for an application navigation event that responds whenever the uniform resource identifier (URI) being navigated to includes a fragment. The fragment is named in the URI following the hash sign (#), and the implemented behavior causes the element to scroll into view within the frame. <xref:System.Windows.FrameworkElement.BringIntoView%2A> and <xref:System.Windows.FrameworkElement.RequestBringIntoView> request that scrolling behavior in the example.  
   
  [!code-csharp[FragmentNavigationSample#FEBringIntoView](~/samples/snippets/csharp/VS_Snippets_Wpf/FragmentNavigationSample/CSharp/MainWindow.xaml.cs#febringintoview)]
  [!code-vb[FragmentNavigationSample#FEBringIntoView](~/samples/snippets/visualbasic/VS_Snippets_Wpf/FragmentNavigationSample/VisualBasic/MainWindow.xaml.vb#febringintoview)]  
@@ -1135,11 +1135,15 @@
 <a name="xamlAttributeUsage_DataContext"></a>   
 ## XAML Attribute Usage  
   
-```  
+```xaml  
 <object DataContext="bindingUsage"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object DataContext="{resourceExtension contextResourceKey}"/>  
-```  
+```
   
 <a name="xamlValues_DataContext"></a>   
 ## XAML Values  
@@ -1563,7 +1567,7 @@
  The key that identifies the style being requested. The key refers to an existing resource in a <xref:System.Windows.ResourceDictionary>.  
   
 > [!NOTE]
->  Property element syntax is technically possible, but not recommended. See [Inline Styles and Templates](~/docs/framework/wpf/advanced/inline-styles-and-templates.md). A binding reference using  or <xref:System.Windows.Data.Binding> is also possible, but uncommon.  
+>  Property element syntax is technically possible, but not recommended. See [Inline Styles and Templates](~/docs/framework/wpf/advanced/inline-styles-and-templates.md). A binding reference using [TemplateBinding](~/docs/framework/wpf/advanced/templatebinding-markup-extension.md) or <xref:System.Windows.Data.Binding> is also possible, but uncommon.  
   
 <a name="dependencyPropertyInfo_FocusVisualStyle"></a>   
 ## Dependency Property Information  
@@ -1937,11 +1941,19 @@
 <a name="xamlAttributeUsage_Height"></a>   
 ## XAML Attribute Usage  
   
-```  
+```xaml
 <object Height="double"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object Height="qualifiedDouble"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object Height="Auto"/>  
 ```  
   
@@ -2555,14 +2567,22 @@
 <a name="xamlAttributeUsage_Margin"></a>   
 ## XAML Attribute Usage  
   
-```  
+```xaml  
 <object Margin="left,top,right,bottom"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object Margin="left,top"/>  
-- or -  
+```
+
+-or-  
+
+```xaml
 <object Margin="thicknessReference"/>  
-```  
-  
+```
+
 <a name="xamlPropertyElementUsage_Margin"></a>   
 ## XAML Property Element Usage  
   
@@ -2660,12 +2680,16 @@
 <a name="xamlAttributeUsage_MaxHeight"></a>   
 ## XAML Attribute Usage  
   
-```  
+```xaml  
 <object MaxHeight="double"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object MaxHeight ="qualifiedDouble"/>  
-```  
-  
+```
+
 <a name="xamlValues_MaxHeight"></a>   
 ## XAML Values  
  *double*  
@@ -2757,12 +2781,16 @@
 <a name="xamlAttributeUsage_MaxWidth"></a>   
 ## XAML Attribute Usage  
   
-```  
+```xaml 
 <object MaxWidth="double"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object MaxWidth="qualifiedDouble"/>  
-```  
-  
+```
+
 <a name="xamlValues_MaxWidth"></a>   
 ## XAML Values  
  *double*  
@@ -2894,7 +2922,7 @@
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>The following non-compiling code shows this implementation pattern.  <c>VisualChildren</c> represents an enumerable collection property of children that your own element should define. The property can be named anything. <c>VisualChildren</c> is a placeholder name for purposes of this example, <c>VisualChildren</c> is not an [!INCLUDE[TLA#tla_api](~/includes/tlasharptla-api-md.md)] as provided by [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] or a part of a naming pattern. 
+          <para>The following non-compiling code shows this implementation pattern.  <c>VisualChildren</c> represents an enumerable collection property of children that your own element should define. The property can be named anything. <c>VisualChildren</c> is a placeholder name for purposes of this example, <c>VisualChildren</c> is not an API as provided by [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] or a part of a naming pattern. 
   
  [!code-csharp[CorePseudocode#FEMeasureOverride](~/samples/snippets/csharp/VS_Snippets_Wpf/CorePseudocode/CSharp/corepseudocode.cs#femeasureoverride)]
  [!code-vb[CorePseudocode#FEMeasureOverride](~/samples/snippets/visualbasic/VS_Snippets_Wpf/CorePseudocode/visualbasic/corepseudocode.vb#femeasureoverride)]</para>
@@ -2939,12 +2967,16 @@
 <a name="xamlAttributeUsage_MinHeight"></a>   
 ## XAML Attribute Usage  
   
-```  
+```xaml
 <object MinHeight="double"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object MinHeight="qualifiedDouble"/>  
-```  
-  
+```
+
 <a name="xamlValues_MinHeight"></a>   
 ## XAML Values  
  *double*  
@@ -3036,11 +3068,15 @@
 <a name="xamlAttributeUsage_MinWidth"></a>   
 ## XAML Attribute Usage  
   
-```  
+```xaml 
 <object MinWidth="double"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object MinWidth="qualifiedDouble"/>  
-```  
+```
   
 <a name="xamlValues_MinWidth"></a>   
 ## XAML Values  
@@ -3161,11 +3197,8 @@
         <Attribute>
           <AttributeName>System.Windows.Localizability(System.Windows.LocalizationCategory.NeverLocalize)</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
+        <Attribute FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netcore-3.0">
           <AttributeName>System.Windows.Markup.DesignerSerializationOptions(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="netcore-3.0">
-          <AttributeName>System.Windows.Markup.DesignerSerializationOptions</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -3190,7 +3223,7 @@
   
  Setting <xref:System.Windows.FrameworkElement.Name%2A> from code has limited applications, but getting an element by <xref:System.Windows.FrameworkElement.Name%2A> is more common. One particular scenario is if your application supports a navigation model where pages reload into the application, and the run time code is not necessarily code-behind defined for that page. The utility method <xref:System.Windows.FrameworkElement.FindName%2A>, which is available from any <xref:System.Windows.FrameworkElement>, can find any element by <xref:System.Windows.FrameworkElement.Name%2A> in the logical tree for that element, searching the tree recursively as necessary. Or you can use the <xref:System.Windows.LogicalTreeHelper.FindLogicalNode%2A> static method of <xref:System.Windows.LogicalTreeHelper>, which also takes a <xref:System.Windows.FrameworkElement.Name%2A> string as an argument.  
   
- Typically used root elements (<xref:System.Windows.Window>, <xref:System.Windows.Controls.Page> for example) implement the interface <xref:System.Windows.Markup.INameScope>. Implementations of this interface are expected to enforce that names be unambiguous within their scope. The root elements that define this interface also define the namescope behavior boundaries for all the related [!INCLUDE[TLA2#tla_api#plural](~/includes/tla2sharptla-apisharpplural-md.md)].  
+ Typically used root elements (<xref:System.Windows.Window>, <xref:System.Windows.Controls.Page> for example) implement the interface <xref:System.Windows.Markup.INameScope>. Implementations of this interface are expected to enforce that names be unambiguous within their scope. The root elements that define this interface also define the namescope behavior boundaries for all the related APIs.  
   
  The <xref:System.Windows.FrameworkElement.Name%2A> property also serves as an identifier for other processes. For instance, the [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] automation model will use <xref:System.Windows.FrameworkElement.Name%2A> as the AutomationId for clients and providers.  
   
@@ -3931,7 +3964,7 @@
 ## Remarks  
  Use this method for the implementation of collections on objects that represent logical children of an element. This might be done in property getters or setters, class handlers of `Changed` events, constructors, or within the collection types themselves.  
   
- For control authors, manipulating the logical tree at this level is not the recommended practice, unless none of the provided base control class' content models are appropriate. Consider subclassing at the level of <xref:System.Windows.Controls.ContentControl>, <xref:System.Windows.Controls.ItemsControl>, and <xref:System.Windows.Controls.HeaderedItemsControl>. These classes provide a content model with particular enforcement of logical children through dedicated [!INCLUDE[TLA2#tla_api#plural](~/includes/tla2sharptla-apisharpplural-md.md)], as well as support for other features typically desirable in a [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] control such as styling through templates.  
+ For control authors, manipulating the logical tree at this level is not the recommended practice, unless none of the provided base control class' content models are appropriate. Consider subclassing at the level of <xref:System.Windows.Controls.ContentControl>, <xref:System.Windows.Controls.ItemsControl>, and <xref:System.Windows.Controls.HeaderedItemsControl>. These classes provide a content model with particular enforcement of logical children through dedicated APIs, as well as support for other features typically desirable in a [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] control such as styling through templates.  
   
    
   
@@ -4041,7 +4074,7 @@
   
  Note that this property returns only the resource dictionary declared directly within that element. This is different than the actual resource lookup process, where a child element can access any of the resources defined in each parent element, searching recursively upwards.  
   
- Resources can also be referenced by code from within the collection, but be aware that resources created in [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] will definitely not be accessible until after <xref:System.Windows.FrameworkElement.Loaded> is raised by the element that declares the dictionary. In fact, resources are parsed asynchronously and not even the <xref:System.Windows.FrameworkElement.Loaded> event is an assurance that you can reference a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] defined resource. For this reason you should generally only access [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] defined resources as part of run-time code, or through other [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] techniques such as styles or resource extension references for attribute values. When you access resources through code, it is essentially equivalent to a  reference made from [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)].  
+ Resources can also be referenced by code from within the collection, but be aware that resources created in [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] will definitely not be accessible until after <xref:System.Windows.FrameworkElement.Loaded> is raised by the element that declares the dictionary. In fact, resources are parsed asynchronously and not even the <xref:System.Windows.FrameworkElement.Loaded> event is an assurance that you can reference a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] defined resource. For this reason you should generally only access [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] defined resources as part of run-time code, or through other [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] techniques such as styles or resource extension references for attribute values. When you access resources through code, it is essentially equivalent to a [DynamicResource](~/docs/framework/wpf/advanced/dynamicresource-markup-extension.md) reference made from [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)].  
   
  The underlying <xref:System.Windows.ResourceDictionary> supports the methods required to add, remove or query resources from within the collection by using code. The <xref:System.Windows.FrameworkElement.Resources%2A> property is settable to support the scenario of completely replacing the resources collection of an element to be a new or different <xref:System.Windows.ResourceDictionary>.  
   
@@ -4496,7 +4529,7 @@
  The key that identifies the style being requested. The key refers to an existing resource in a <xref:System.Windows.ResourceDictionary>.  
   
 > [!NOTE]
->  Property element syntax is technically possible, but not recommended for most style scenarios. See [Inline Styles and Templates](~/docs/framework/wpf/advanced/inline-styles-and-templates.md). A binding reference using  or <xref:System.Windows.Data.Binding> is also possible, but uncommon.  
+>  Property element syntax is technically possible, but not recommended for most style scenarios. See [Inline Styles and Templates](~/docs/framework/wpf/advanced/inline-styles-and-templates.md). A binding reference using [TemplateBinding](~/docs/framework/wpf/advanced/templatebinding-markup-extension.md) or <xref:System.Windows.Data.Binding> is also possible, but uncommon.  
   
 <a name="dependencyPropertyInfo_Style"></a>   
 ## Dependency Property Information  
@@ -4559,7 +4592,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="propertyName" Type="System.String" />
+        <Parameter Name="propertyName" Type="System.String" Index="0" FrameworkAlternate="netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
         <param name="propertyName">The name of the requested ambient property.</param>
@@ -4764,13 +4797,17 @@
 <a name="xamlPropertyElementUsage_ToolTip"></a>   
 ## XAML Property Element Usage  
   
-```  
+```xaml 
 <object>  
   <object.ToolTip>  
     <ToolTip .../>  
   </object.ToolTip>  
-</object>  
-- or -  
+</object>
+```
+
+-or-
+
+```xaml
 <object>  
   <object.ToolTip>  
     toolTipObjectContent  
@@ -5460,14 +5497,22 @@
 <a name="xamlAttributeUsage_Width"></a>   
 ## XAML Attribute Usage  
   
-```  
+```xaml 
 <object Width="double"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object Width ="qualifiedDouble"/>  
-- or -  
+```
+
+-or-
+
+```xaml
 <object Width ="Auto"/>  
 ```  
-  
+
 <a name="xamlValues_Width"></a>   
 ## XAML Values  
  *double*  

@@ -1,4 +1,4 @@
-﻿<Type Name="PathAssemblyResolver" FullName="System.Reflection.PathAssemblyResolver">
+<Type Name="PathAssemblyResolver" FullName="System.Reflection.PathAssemblyResolver">
   <TypeSignature Language="C#" Value="public class PathAssemblyResolver : System.Reflection.MetadataAssemblyResolver" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit PathAssemblyResolver extends System.Reflection.MetadataAssemblyResolver" />
   <TypeSignature Language="DocId" Value="T:System.Reflection.PathAssemblyResolver" />
@@ -14,8 +14,23 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a metadata assembly resolver that uses paths to every assembly that may be loaded.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The file name is expected to be the same as the assembly's simple name. Multiple assemblies can exist on disk with the same name but in different directories. A single instance of `PathAssemblyResolver` can be used with multiple <xref:System.Reflection.MetadataAssemblyResolver> instances.
+
+In order for an <xref:System.Reflection.AssemblyName> to match a loaded assembly, <xref:System.Reflection.AssemblyName.Name?displayProperty=nameWithType> must be equal (casing ignored).
+
+* If a public key token is specified for the <xref:System.Reflection.AssemblyName>, it must be equal.
+* If a public key token is not specified for <xref:System.Reflection.AssemblyName>, assemblies with no public key token are selected over those with a public key token.
+* If more than one assembly matches, the assembly with the highest <xref:System.Reflection.AssemblyName.Version?displayProperty=nameWithType> is returned.
+* <xref:System.Reflection.AssemblyName.CultureName?displayProperty=nameWithType> is ignored.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -34,9 +49,12 @@
         <Parameter Name="assemblyPaths" Type="System.Collections.Generic.IEnumerable&lt;System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="assemblyPaths">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="assemblyPaths">A collection of assembly path strings.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Reflection.PathAssemblyResolver" /> class.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="assemblyPaths" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">One of the paths in <paramref name="assemblyPaths" /> is invalid.</exception>
       </Docs>
     </Member>
     <Member MemberName="Resolve">
@@ -58,11 +76,19 @@
         <Parameter Name="assemblyName" Type="System.Reflection.AssemblyName" />
       </Parameters>
       <Docs>
-        <param name="context">To be added.</param>
-        <param name="assemblyName">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="context">The metadata load context object that represents the closed universe of <see cref="T:System.Type" /> objects loaded for inspection-only purposes.</param>
+        <param name="assemblyName">The name of the assembly.</param>
+        <summary>Returns an assembly from a given assembly name.</summary>
+        <returns>The assembly for the provided <paramref name="assemblyName" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+For more information, see the <xref:System.Reflection.MetadataAssemblyResolver> remarks.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

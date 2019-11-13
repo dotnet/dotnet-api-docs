@@ -1,4 +1,4 @@
-﻿<Type Name="BatchedJoinBlock&lt;T1,T2&gt;" FullName="System.Threading.Tasks.Dataflow.BatchedJoinBlock&lt;T1,T2&gt;">
+<Type Name="BatchedJoinBlock&lt;T1,T2&gt;" FullName="System.Threading.Tasks.Dataflow.BatchedJoinBlock&lt;T1,T2&gt;">
   <TypeSignature Language="C#" Value="public sealed class BatchedJoinBlock&lt;T1,T2&gt; : System.Threading.Tasks.Dataflow.IReceivableSourceBlock&lt;Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;&gt;, System.Threading.Tasks.Dataflow.ISourceBlock&lt;Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit BatchedJoinBlock`2&lt;T1, T2&gt; extends System.Object implements class System.Threading.Tasks.Dataflow.IDataflowBlock, class System.Threading.Tasks.Dataflow.IReceivableSourceBlock`1&lt;class System.Tuple`2&lt;class System.Collections.Generic.IList`1&lt;!T1&gt;, class System.Collections.Generic.IList`1&lt;!T2&gt;&gt;&gt;, class System.Threading.Tasks.Dataflow.ISourceBlock`1&lt;class System.Tuple`2&lt;class System.Collections.Generic.IList`1&lt;!T1&gt;, class System.Collections.Generic.IList`1&lt;!T2&gt;&gt;&gt;" />
   <TypeSignature Language="DocId" Value="T:System.Threading.Tasks.Dataflow.BatchedJoinBlock`2" />
@@ -111,7 +111,10 @@
         <param name="dataflowBlockOptions">The options with which to configure this <see cref="T:System.Threading.Tasks.Dataflow.BatchedJoinBlock`2" />.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Dataflow.BatchedJoinBlock`2" /> with the specified configuration.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="dataflowBlockOptions" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="dataflowBlockOptions" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="batchSize" /> is less than one.</exception>
       </Docs>
     </Member>
     <Member MemberName="BatchSize">
@@ -302,7 +305,13 @@
       <Docs>
         <param name="exception">The <see cref="T:System.Exception" /> that caused the faulting.</param>
         <summary>Causes the <see cref="T:System.Threading.Tasks.Dataflow.IDataflowBlock" /> to complete in a  <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" /> state.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+          
+After `Fault` has been called on a dataflow block, that block will complete, such that its <xref:System.Threading.Tasks.Dataflow.BatchedJoinBlock%602.Completion> task will enter a final state. Faulting a block, as with canceling a block, causes buffered messages (unprocessed input messages as well as unoffered output messages) to be lost.
+
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="exception" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
@@ -501,7 +510,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Tasks.Dataflow.BatchedJoinBlock`2.TryReceive(System.Predicate{System.Tuple{System.Collections.Generic.IList{`0},System.Collections.Generic.IList{`1}}},System.Tuple{System.Collections.Generic.IList{`0},System.Collections.Generic.IList{`1}}@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryReceive (filter As Predicate(Of Tuple(Of IList(Of T1), IList(Of T2))), ByRef item As Tuple(Of IList(Of T1), IList(Of T2))) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool TryReceive(Predicate&lt;Tuple&lt;System::Collections::Generic::IList&lt;T1&gt; ^, System::Collections::Generic::IList&lt;T2&gt; ^&gt; ^&gt; ^ filter, [Runtime::InteropServices::Out] Tuple&lt;System::Collections::Generic::IList&lt;T1&gt; ^, System::Collections::Generic::IList&lt;T2&gt; ^&gt; ^ % item);" />
-      <MemberSignature Language="F#" Value="abstract member TryReceive : Predicate&lt;System.Collections.Generic.IList&lt;'T1&gt; * System.Collections.Generic.IList&lt;'T2&gt;&gt; *  -&gt; bool&#xA;override this.TryReceive : Predicate&lt;System.Collections.Generic.IList&lt;'T1&gt; * System.Collections.Generic.IList&lt;'T2&gt;&gt; *  -&gt; bool" Usage="batchedJoinBlock.TryReceive (filter, item)" />
+      <MemberSignature Language="F#" Value="abstract member TryReceive : Predicate&lt;System.Collections.Generic.IList&lt;'T1&gt; * System.Collections.Generic.IList&lt;'T2&gt;&gt; * Tuple -&gt; bool&#xA;override this.TryReceive : Predicate&lt;System.Collections.Generic.IList&lt;'T1&gt; * System.Collections.Generic.IList&lt;'T2&gt;&gt; * Tuple -&gt; bool" Usage="batchedJoinBlock.TryReceive (filter, item)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading.Tasks.Dataflow</AssemblyName>
@@ -543,7 +552,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Tasks.Dataflow.BatchedJoinBlock`2.TryReceiveAll(System.Collections.Generic.IList{System.Tuple{System.Collections.Generic.IList{`0},System.Collections.Generic.IList{`1}}}@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryReceiveAll (ByRef items As IList(Of Tuple(Of IList(Of T1), IList(Of T2)))) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool TryReceiveAll([Runtime::InteropServices::Out] System::Collections::Generic::IList&lt;Tuple&lt;System::Collections::Generic::IList&lt;T1&gt; ^, System::Collections::Generic::IList&lt;T2&gt; ^&gt; ^&gt; ^ % items);" />
-      <MemberSignature Language="F#" Value="abstract member TryReceiveAll :  -&gt; bool&#xA;override this.TryReceiveAll :  -&gt; bool" Usage="batchedJoinBlock.TryReceiveAll items" />
+      <MemberSignature Language="F#" Value="abstract member TryReceiveAll : IList -&gt; bool&#xA;override this.TryReceiveAll : IList -&gt; bool" Usage="batchedJoinBlock.TryReceiveAll items" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading.Tasks.Dataflow</AssemblyName>
