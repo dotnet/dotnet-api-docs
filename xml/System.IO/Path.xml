@@ -1402,15 +1402,41 @@ The following example defines a variable, `basePath`, to represent an applicatio
         <Parameter Name="path" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="path">The path from which to obtain root directory information.</param>
+        <param name="path">A read-only span of characters containing the path from which to obtain root directory information.</param>
         <summary>Gets the root directory information from the path contained in the specified character span.</summary>
-        <returns>A character span containing the root directory of `path`.</returns>
+        <returns>A read-only span of characters containing the root directory of <paramref name="path" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
+This method does not verify that the path or file exists.
+
 Unlike the string overload, this method doesn't normalize directory separators.
+
+A `ReadOnlySpan<System.Char>` is "effectively empty" if:
+
+- In Windows, calling <xref:System.ReadOnlySpan%601.IsEmpty?displayProperty=nameWithType> on this span of characters returns `true`, or all its characters are spaces (' ').
+- In Unix, calling <xref:System.ReadOnlySpan%601.IsEmpty?displayProperty=nameWithType> on this span of characters returns `true`.
+
+Possible patterns for the read-only character span returned by this method are as follows:
+
+- <xref:System.ReadOnlySpan%601.Empty?displayProperty=nameWithType> (`path` was <xref:System.ReadOnlySpan%601.Empty?displayProperty=nameWithType>.
+
+- <xref:System.ReadOnlySpan%601.Empty?displayProperty=nameWithType> (`path` specified a relative path on the current drive or volume).
+
+- "\" (Unix: `path` specified an absolute path on the current drive).
+
+- "X:" (Windows: `path` specified a relative path on a drive, where *X* represents a drive or volume letter).
+
+- "X:\" (Windows: `path` specified an absolute path on a given drive).
+
+- "\\\ComputerName\SharedFolder" (Windows: a UNC path).
+
+- "\\\\\?\C:" (Windows: a DOS device path, supported in .NET Core 1.1 and later versions, and in .NET Framework 4.6.2 and later versions).
+ 
+For more information on file paths on Windows, see [File path formats on Windows systems](~/docs/standard/io/file-path-formats.md). For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).
+
 
           ]]></format>
         </remarks>
@@ -1457,47 +1483,64 @@ Unlike the string overload, this method doesn't normalize directory separators.
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">The path from which to obtain root directory information.</param>
-        <summary>Gets the root directory information of the specified path.</summary>
-        <returns>The root directory of <paramref name="path" />, or <see langword="null" /> if <paramref name="path" /> is <see langword="null" />, or an empty string if <paramref name="path" /> does not contain root directory information.</returns>
+        <param name="path">A string containing the path from which to obtain root directory information.</param>
+        <summary>Gets the root directory information from the path contained in the specified string.</summary>
+        <returns>The root directory of <paramref name="path" /> if it is rooted.
+
+ -or-
+ 
+<see cref="P:System.String.Empty" /> if <paramref name="path" /> does not contain root directory information.
+
+ -or-
+ 
+<see langword="null" /> if <paramref name="path" /> is <see langword="null" /> or is effectively empty.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method does not verify that the path or file name exists.  
-  
- Possible patterns for the string returned by this method are as follows:  
-  
-- An empty string (`path` specified a relative path on the current drive or volume).  
-  
-- "\" (`path` specified an absolute path on the current drive).  
-  
-- "X:" (`path` specified a relative path on a drive, where X represents a drive or volume letter).  
-  
-- "X:\" (`path` specified an absolute path on a given drive).  
-  
-- "\\\ComputerName\SharedFolder" (a UNC path).  
-  
-- "\\\\\?\C:" (a DOS device path, supported in .NET Core 1.1 and later versions and in .NET Framework 4.6.2 and later versions)
-   
- For more information on file paths on Windows, see [File path formats on Windows systems](~/docs/standard/io/file-path-formats.md). For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).  
-  
-## Examples  
- The following example demonstrates a use of the `GetPathRoot` method.  
-  
- [!code-cpp[System.IO.Path Members#8](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.IO.Path Members/CPP/pathmembers.cpp#8)]
- [!code-csharp[System.IO.Path Members#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.IO.Path Members/CS/pathmembers.cs#8)]
- [!code-vb[System.IO.Path Members#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.IO.Path Members/VB/pathmembers.vb#8)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method does not verify that the path or file exists.
+
+This method will normalize directory separators.
+
+A string is "effectively empty" if:
+
+- In Windows, calling `IsEmpty` on this string returns `true`, or all its characters are spaces (' ').
+- In Unix, calling <xref:System.String.IsNullOrEmpty%2A> on this string returns `true`.
+
+Possible patterns for the string returned by this method are as follows:
+
+- `null` (`path` was null or an empty string).
+
+- An empty string (`path` specified a relative path on the current drive or volume).
+
+- "\" (Unix: `path` specified an absolute path on the current drive).
+
+- "X:" (Windows: `path` specified a relative path on a drive, where *X* represents a drive or volume letter).
+
+- "X:\" (Windows: `path` specified an absolute path on a given drive).
+
+- "\\\ComputerName\SharedFolder" (Windows: a UNC path).
+
+- "\\\\\?\C:" (Windows: a DOS device path, supported in .NET Core 1.1 and later versions, and in .NET Framework 4.6.2 and later versions).
+ 
+For more information on file paths on Windows, see [File path formats on Windows systems](~/docs/standard/io/file-path-formats.md). For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).
+
+## Examples
+The following example demonstrates a use of the `GetPathRoot` method.
+
+[!code-cpp[System.IO.Path Members#8](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.IO.Path Members/CPP/pathmembers.cpp#8)]
+[!code-csharp[System.IO.Path Members#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.IO.Path Members/CS/pathmembers.cs#8)]
+[!code-vb[System.IO.Path Members#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.IO.Path Members/VB/pathmembers.vb#8)]
+
+          ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.  
-  
- -or-  
-  
- <see cref="F:System.String.Empty" /> was passed to <paramref name="path" />.</exception>
-        <related type="article" href="~/docs/standard/io/file-path-formats.md">File path formats on Windows systems</related>
+        <exception cref="T:System.ArgumentException">.NET Framework only: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.
+
+-or-
+
+.NET Framework only: <see cref="F:System.String.Empty" /> was passed to <paramref name="path" />.</exception>
+        <related type="Article" href="~/docs/standard/io/file-path-formats.md">File path formats on Windows systems</related>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
