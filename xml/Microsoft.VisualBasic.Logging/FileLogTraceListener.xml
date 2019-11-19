@@ -227,21 +227,26 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Determines whether to append the output to the current file or write it to a new file.</summary>
+        <summary>Determines whether to append the output to the current file or write it to a new or existing file.</summary>
         <value>
           <see langword="Boolean" />, with <see langword="True" /> indicating that the output is appended to the current file, and <see langword="False" /> indicating that output is written to a new file. The default setting for this property is <see langword="True" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
-  
+   
 ## Remarks  
- When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Append%2A> property is `False`, the output is written to a new file. When the property is `True`, the output is appended to the current file, unless:  
+
+When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Append%2A> property is `True`, the log file is opened in <xref:System.IO.FileMode.Append> mode, to keep existing logs. The current writing position starts at the end of the file, so that any new logs are appended to the end of the file.
+
+When the `Append` property is `False`, the log file is opened in <xref:System.IO.FileMode.Truncate> mode, where all log data is deleted when the log file is opened. The `FileLogTraceListener` deletes existing contents of the log file once after the `Append` propery is set to `False` or the file is opened and before it writes the first log. After that, `FileLogTraceListener` appends additional trace data to the end of the file. If the `FileLogTraceListener` instance is closed and then reopened while Append is set to False, it erases the log file data before writing additional logs. This can lead to missing data, particularly if you set the value of the `Append` property to `False` in a configuration file.
+
+This behavior is overridden in the following scenarios:
+
+- The output file is locked by another process. A new log file is created with a version number that is incorporated into the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> name.  
   
--   The output file is locked by another process. In this situation, a new log file is created with a version number that is incorporated into the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> name.  
+- The current file size is greater than what the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize%2A> property allows.  Additional messages are discarded. Depending on the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property, an exception is thrown.
   
--   The current file size is greater than what the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize%2A> property allows. In this situation, additional messages are discarded and, depending on the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property, an exception is thrown.  
-  
--   The existing file name is out of date according to the log-creation schedule specified by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> property. In this situation, a new log file is created and the date stamp is incorporated into the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> name.  
-  
+- The existing file name is out of date according to the log-creation schedule specified by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> property. A new log file is created. The date stamp is incorporated into the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> name.  
+
  ]]></format>
         </remarks>
         <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize" />
