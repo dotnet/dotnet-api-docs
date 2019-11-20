@@ -19,70 +19,79 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>
-             The LoggingEventSource is the bridge from all ILogger based logging to EventSource/EventListener logging.
+    <summary>The LoggingEventSource is the bridge from all ILogger based logging to EventSource/EventListener logging.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+You turn this logging on by enabling the EventSource called `Microsoft-Extensions-Logging`.
             
-             You turn this logging on by enabling the EventSource called
+When you enabled the EventSource, the EventLevel you set is translated in the obvious way to the level
+associated with the ILogger (thus Debug = verbose, Informational = Informational ... Critical == Critical)
             
-                  Microsoft-Extensions-Logging
+This allows you to filter by event level in a straightforward way.
             
-             When you enabled the EventSource, the EventLevel you set is translated in the obvious way to the level
-             associated with the ILogger (thus Debug = verbose, Informational = Informational ... Critical == Critical)
+For finer control you can specify a EventSource Argument called `FilterSpecs`.
             
-             This allows you to filter by event level in a straightforward way.
+The `FilterSpecs` argument is a semicolon separated list of specifications. Where each specification is
+
+```
+SPEC =                          // empty spec, same as *
+     | NAME                     // Just a name the level is the default level
+     | NAME : LEVEL            // specifies level for a particular logger (can have a * suffix).
+```
             
-             For finer control you can specify a EventSource Argument called
+Where Name is the name of a ILoggger (case matters), Name can have a \* which acts as a wildcard
+AS A SUFFIX. Thus, Net\* will match any loggers that start with the 'Net'.
             
-             FilterSpecs
+The LEVEL is a number or a LogLevel string. 0=Trace, 1=Debug, 2=Information, 3=Warning,  4=Error, Critical=5
+This specifies the level for the associated pattern.  If the number is not specified, (first form
+of the specification) it is the default level for the EventSource.
             
-             The FilterSpecs argument is a semicolon separated list of specifications.   Where each specification is
+First match is used if a particular name matches more than one pattern.
             
-             SPEC =                          // empty spec, same as *
-                  | NAME                     // Just a name the level is the default level
-                  | NAME : LEVEL            // specifies level for a particular logger (can have a * suffix).
+In addition to the level and FilterSpec argument, you can also set EventSource Keywords. See the Keywords
+definition below, but basically you get to decide if you wish to have
             
-             Where Name is the name of a ILoggger (case matters), Name can have a * which acts as a wildcard
-             AS A SUFFIX.   Thus Net* will match any loggers that start with the 'Net'.
+* Keywords.Message - You get the event with the data in parsed form.
+* Keywords.JsonMessage - you get an event with the data in parse form but as a JSON blob (not broken up by argument ...)
+* Keywords.FormattedMessage - you get an event with the data formatted as a string
             
-             The LEVEL is a number or a LogLevel string. 0=Trace, 1=Debug, 2=Information, 3=Warning,  4=Error, Critical=5
-             This specifies the level for the associated pattern.  If the number is not specified, (first form
-             of the specification) it is the default level for the EventSource.
+It is expected that you will turn only one of these keywords on at a time, but you can turn them all on and get
+the same data logged three different ways.
             
-             First match is used if a particular name matches more than one pattern.
+## Examples
             
-             In addition the level and FilterSpec argument, you can also set EventSource Keywords.  See the Keywords
-             definition below, but basically you get to decide if you wish to have
+The following example shows how to use an EventListener to get ILogging information:
             
-               * Keywords.Message - You get the event with the data in parsed form.
-               * Keywords.JsonMessage - you get an event with the data in parse form but as a JSON blob (not broken up by argument ...)
-               * Keywords.FormattedMessage - you get an event with the data formatted as a string
-            
-             It is expected that you will turn only one of these keywords on at a time, but you can turn them all on (and get
-             the same data logged three different ways.
-            
-             Example Usage
-            
-             This example shows how to use an EventListener to get ILogging information
-            
-             class MyEventListener : EventListener {
-                 protected override void OnEventSourceCreated(EventSource eventSource) {
-                     if (eventSource.Name == "Microsoft-Extensions-Logging") {
-                         // initialize a string, string dictionary of arguments to pass to the EventSource.
-                         // Turn on loggers matching App* to Information, everything else (*) is the default level (which is EventLevel.Error)
-                         var args = new Dictionary&lt;string, string&gt;() { { "FilterSpecs", "App*:Information;*" } };
-                         // Set the default level (verbosity) to Error, and only ask for the formatted messages in this case.
-                         EnableEvents(eventSource, EventLevel.Error, LoggingEventSource.Keywords.FormattedMessage, args);
-                     }
-                 }
-                 protected override void OnEventWritten(EventWrittenEventArgs eventData) {
-                     // Look for the formatted message event, which has the following argument layout (as defined in the LoggingEventSource.
-                     // FormattedMessage(LogLevel Level, int FactoryID, string LoggerName, string EventId, string FormattedMessage);
-                     if (eventData.EventName == "FormattedMessage")
-                         Console.WriteLine("Logger {0}: {1}", eventData.Payload[2], eventData.Payload[4]);
-                 }
-             }
-             </summary>
-    <remarks>To be added.</remarks>
+```csharp
+class MyEventListener : EventListener 
+{
+    protected override void OnEventSourceCreated(EventSource eventSource) 
+    {
+        if (eventSource.Name == "Microsoft-Extensions-Logging") 
+        {
+            // initialize a string, string dictionary of arguments to pass to the EventSource.
+            // Turn on loggers matching App* to Information, everything else (*) is the default level (which is EventLevel.Error)
+            var args = new Dictionary&lt;string, string&gt;() { { "FilterSpecs", "App*:Information;*" } };
+            // Set the default level (verbosity) to Error, and only ask for the formatted messages in this case.
+            EnableEvents(eventSource, EventLevel.Error, LoggingEventSource.Keywords.FormattedMessage, args);
+        }
+    }
+
+    protected override void OnEventWritten(EventWrittenEventArgs eventData) 
+    {
+        // Look for the formatted message event, which has the following argument layout (as defined in the LoggingEventSource.
+        // FormattedMessage(LogLevel Level, int FactoryID, string LoggerName, string EventId, string FormattedMessage);
+        if (eventData.EventName == "FormattedMessage")
+            Console.WriteLine("Logger {0}: {1}", eventData.Payload[2], eventData.Payload[4]);
+    }
+}
+```
+
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="OnEventCommand">
