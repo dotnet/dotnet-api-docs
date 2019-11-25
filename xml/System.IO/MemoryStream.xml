@@ -544,14 +544,26 @@
         <Parameter Name="state" Type="System.Object" Index="4" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="callback">To be added.</param>
-        <param name="state">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The buffer to read the data into.</param>
+        <param name="offset">The byte offset in <paramref name="buffer" /> at which to begin writing data read from the memory stream.</param>
+        <param name="count">The maximum number of bytes to read.</param>
+        <param name="callback">An optional asynchronous callback, to be called when the read is complete.</param>
+        <param name="state">A user-provided object that distinguishes this particular asynchronous read request from other requests.</param>
+        <summary>Begins an asynchronous read operation. (Consider using <see cref="M:System.IO.MemoryStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)" /> instead.)</summary>
+        <returns>An <see cref="T:System.IAsyncResult" /> that represents the asynchronous read, which could still be pending.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Refer to the <xref:System.IO.Stream.BeginRead%2A> remarks for additional usage information for this method.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">Attempted an asynchronous read past the end of the memory stream, or a disk error occurred.</exception>
+        <exception cref="T:System.ArgumentException">One or more of the arguments is invalid.</exception>
+        <exception cref="T:System.ObjectDisposedException">Methods were called after the memory stream was closed.</exception>
+        <exception cref="T:System.NotSupportedException">The current memory stream implementation does not support the read operation.</exception>
       </Docs>
     </Member>
     <Member MemberName="BeginWrite">
@@ -588,14 +600,26 @@
         <Parameter Name="state" Type="System.Object" Index="4" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="callback">To be added.</param>
-        <param name="state">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The buffer to write data from.</param>
+        <param name="offset">The byte offset in <paramref name="buffer" /> from which to begin writing.</param>
+        <param name="count">The maximum number of bytes to write.</param>
+        <param name="callback">An optional asynchronous callback, to be called when the write is complete.</param>
+        <param name="state">A user-provided object that distinguishes this particular asynchronous write request from other requests.</param>
+        <summary>Begins an asynchronous write operation. (Consider using <see cref="M:System.IO.MemoryStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)" /> instead.)</summary>
+        <returns>An <see langword="IAsyncResult" /> that represents the asynchronous write, which could still be pending.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Refer to the <xref:System.IO.Stream.BeginWrite%2A> remarks for additional usage information for this method.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">Attempted an asynchronous write past the end of the memory stream, or a disk error occurred.</exception>
+        <exception cref="T:System.ArgumentException">One or more of the arguments is invalid.</exception>
+        <exception cref="T:System.ObjectDisposedException">Methods were called after the memory stream was closed.</exception>
+        <exception cref="T:System.NotSupportedException">The current memory stream implementation does not support the write operation.</exception>
       </Docs>
     </Member>
     <Member MemberName="CanRead">
@@ -911,10 +935,18 @@ End Try
         <Parameter Name="bufferSize" Type="System.Int32" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bufferSize">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The stream to which the contents of the current memory stream will be copied.</param>
+        <param name="bufferSize">The size of the buffer. This value must be greater than zero. The default size is 81920.</param>
+        <summary>Reads the bytes from the current memory stream and writes them to another stream, using a specified buffer size.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="destination" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="bufferSize" /> is not a positive number.</exception>
+        <exception cref="T:System.ObjectDisposedException">Either the underlying memory stream or the <paramref name="destination" /> stream is closed.</exception>
+        <exception cref="T:System.NotSupportedException">The underlying memory stream is unreadable.
+
+-or-
+
+The <paramref name="destination" /> stream is unwritable.</exception>
       </Docs>
     </Member>
     <Member MemberName="CopyToAsync">
@@ -1055,10 +1087,26 @@ End Try
         <Parameter Name="asyncResult" Type="System.IAsyncResult" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="asyncResult">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="asyncResult">The reference to the pending asynchronous request to finish.</param>
+        <summary>Waits for the pending asynchronous read to complete. (Consider using <see cref="M:System.IO.MemoryStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)" /> instead.)</summary>
+        <returns>The number of bytes read from the memory stream, between zero (0) and the number of bytes you requested. Returns zero (0) only at the end of the memory stream, otherwise, it should block until at least one byte is available.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Refer to the <xref:System.IO.Stream.EndRead%2A> remarks for additional usage information for this method.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="asyncResult" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">A handle to the pending read operation is not available.
+
+-or-
+
+The pending operation does not support reading.</exception>
+        <exception cref="T:System.InvalidOperationException"><paramref name="asyncResult" /> did not originate from a <see cref="M:System.IO.MemoryStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)" /> method on the current memory stream.</exception>
+        <exception cref="T:System.IO.IOException">The stream is closed or an internal error has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="EndWrite">
@@ -1091,9 +1139,25 @@ End Try
         <Parameter Name="asyncResult" Type="System.IAsyncResult" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="asyncResult">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="asyncResult">A reference to the outstanding asynchronous I/O request.</param>
+        <summary>Ends an asynchronous write operation. (Consider using <see cref="M:System.IO.MemoryStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)" /> instead.)</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Refer to the <xref:System.IO.Stream.EndWrite%2A> remarks for additional usage information for this method.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="asyncResult" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">A handle to the pending write operation is not available.
+
+-or-
+
+The pending operation does not support writing.</exception>
+        <exception cref="T:System.InvalidOperationException"><paramref name="asyncResult" /> did not originate from a <see cref="M:System.IO.Stream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)" /> method on the current stream.</exception>
+        <exception cref="T:System.IO.IOException">The stream is closed or an internal error has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="Flush">
@@ -1449,9 +1513,9 @@ End Try
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">A region of memory. When this method returns, the contents of this span are replaced by the bytes read from the current memory stream source.</param>
+        <summary>Reads a sequence of bytes from the current memory stream and advances the position within the memory stream by the number of bytes read.</summary>
+        <returns>The total number of bytes read into the buffer. This can be less than the number of bytes allocated in the buffer if that many bytes are not currently available, or zero (0) if the end of the memory stream has been reached.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1574,10 +1638,10 @@ End Try
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The region of memory to write the data into.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously reads a sequence of bytes from the current memory stream, writes the sequence into <paramref name="destination" />, advances the position within the memory stream by the number of bytes read, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous read operation. The value of its <see cref="P:System.Threading.Tasks.ValueTask`1.Result" /> property contains the total number of bytes read into the <paramref name="destination" />. The result value can be less than the number of bytes allocated in <paramref name="destination" /> if that many bytes are not currently available, or it can be 0 (zero) if the end of the memory stream has been reached.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1988,8 +2052,8 @@ End Try
         <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">A region of memory. This method copies the contents of this region to the current memory stream.</param>
+        <summary>Writes the sequence of bytes contained in <paramref name="source" /> into the current memory stream and advances the current position within this memory stream by the number of bytes written.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2109,10 +2173,10 @@ End Try
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The region of memory to write data from.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously writes the sequence of bytes contained in <paramref name="source" /> into the current memory stream, advances the current position within this memory stream by the number of bytes written, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
