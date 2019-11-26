@@ -17,8 +17,16 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides an implementation of the Elliptic Curve Digital Signature Algorithm (ECDSA) backed by OpenSSL.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+This class should only be used directly when doing platform interop with the system OpenSSL library.
+When platform interop is not needed, you should use the <xref:System.Security.Cryptography.ECDsa.Create%2A?displayProperty=nameWithType> factory methods instead of a specific derived implementation.
+  
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -37,8 +45,20 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDsaOpenSsl" /> class.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This constructor does not generate a new public/private keypair immediately.
+This constructor sets the <xref:System.Security.Cryptography.ECDsaOpenSsl.KeySize> property to 521 and when a key is needed the saved size is used to identify the target curve.
+If a key is loaded via the <xref:System.Security.Cryptography.ECDsaOpenSsl.ImportParameters%2A> method, or other key import method, the key size from this constructor has no meaning.
+ 
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Security.Cryptography.ECDsa.Create"/>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -60,9 +80,23 @@
         <Parameter Name="keySize" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="keySize">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="keySize">The size of the key. Valid key sizes are 256, 384, and 521 bits.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDsaOpenSsl" /> class with a specified target key size.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This constructor does not generate a new public/private keypair immediately.
+This constructor sets the <xref:System.Security.Cryptography.ECDsaOpenSsl.KeySize> property to the provided value and when a key is needed the saved size is used to identify the target curve.
+If a key is loaded via the <xref:System.Security.Cryptography.ECDsaOpenSsl.ImportParameters%2A> method, or other key import method, the key size from this constructor has no meaning.
+ 
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="keySize" /> specifies an invalid length.</exception>
+        <altmember cref="Overload:System.Security.Cryptography.ECDsa.Create"/>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -84,9 +118,23 @@
         <Parameter Name="handle" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="handle">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="handle">The OpenSSL <c>EC_KEY*</c> value to use as the key.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDsaOpenSsl" /> class from an existing OpenSSL key represented as an <c>EC_KEY*</c>.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+> [!IMPORTANT]
+> OpenSSL supports multiple library versions being loaded within the same process.
+> Before calling this constructor verify your pointer value came from the same version of OpenSSL that this class uses, see <xref:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion> for more information.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="handle" /> is <see cref="F:System.IntPtr.Zero"/>.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="handle"/> is not a valid <c>EC_KEY*</c>.</exception>
+        <altmember cref="P:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -108,9 +156,12 @@
         <Parameter Name="curve" Type="System.Security.Cryptography.ECCurve" />
       </Parameters>
       <Docs>
-        <param name="curve">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="curve">The curve used to generate an ephemeral public/private key pair.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDsaOpenSsl" /> class and generates a new key on the specified curve.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="curve" /> does not validate.</exception>
+        <altmember cref="M:System.Security.Cryptography.ECCurve.Validate"/>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -132,9 +183,26 @@
         <Parameter Name="pkeyHandle" Type="System.Security.Cryptography.SafeEvpPKeyHandle" />
       </Parameters>
       <Docs>
-        <param name="pkeyHandle">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="pkeyHandle">The OpenSSL <c>EVP_PKEY*</c> value to use as the key, represented as a <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDsaOpenSsl" /> class from an existing OpenSSL key represented as an <c>EVP_PKEY*</c>.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+> [!IMPORTANT]
+> OpenSSL supports multiple library versions being loaded within the same process.
+> Before calling this constructor, verify your pointer value came from the same version of OpenSSL that this class uses.
+> For more information, see <xref:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion>.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="pkeyHandle" /> represents an invalid handle.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pkeyHandle" /> is <see langword="null"/>.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="pkeyHandle" /> does not represent a elliptic curve (EC) key.</exception>
+        <seealso cref="P:System.Security.Cryptography.SafeEvpPKeyValue.OpenSslVersion" />
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -159,8 +227,9 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="disposing">
+          <see langword="true"/> to release managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        <summary>Releases the resources used by the current instance of the <see cref="T:System.Security.Cryptography.ECDsaOpenSsl"/> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -184,9 +253,17 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle"/> representation of the cryptographic key.</summary>
+        <returns>A <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle"/> representation of the cryptographic key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks
+Each call to this method produces a new <xref:System.Security.Cryptography.SafeEvpPKeyHandle> object with its own lifetime.
+The objects returned by this method can safely be used even after this <xref:System.Security.Cryptography.ECDsaOpenSsl> instance has been disposed.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ExportExplicitParameters">
@@ -211,10 +288,12 @@
         <Parameter Name="includePrivateParameters" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="includePrivateParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="includePrivateParameters">
+          <see langword="true" /> to include private parameters; otherwise, <see langword="false" />.</param>
+        <summary>Exports the key and explicit curve parameters used by the Elliptic curve cryptography (ECC) object into an <see cref="T:System.Security.Cryptography.ECParameters" /> object.</summary>
+        <returns>The key and explicit curve parameters used by the ECC object.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while obtaining the curve values.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportParameters">
@@ -239,10 +318,12 @@
         <Parameter Name="includePrivateParameters" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="includePrivateParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="includePrivateParameters">
+          <see langword="true" /> to include private parameters; otherwise, <see langword="false" />.</param>
+        <summary>Exports the key used by the Elliptic curve cryptography (ECC) object into an <see cref="T:System.Security.Cryptography.ECParameters" /> object. If the key was created as a named curve, the <see cref="F:System.Security.Cryptography.ECParameters.Curve" /> field contains named curve parameters; otherwise, it contains explicit parameters.</summary>
+        <returns>The key and named curve parameters used by the ECC object.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while obtaining the curve values.</exception>
       </Docs>
     </Member>
     <Member MemberName="GenerateKey">
@@ -267,8 +348,8 @@
         <Parameter Name="curve" Type="System.Security.Cryptography.ECCurve" />
       </Parameters>
       <Docs>
-        <param name="curve">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="curve">The curve to use to generate the key.</param>
+        <summary>Generates a new ephemeral public/private key pair for the specified curve, replacing the current key.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -295,10 +376,10 @@
         <Parameter Name="hashAlgorithm" Type="System.Security.Cryptography.HashAlgorithmName" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="data">The binary stream to hash.</param>
+        <param name="hashAlgorithm">The algorithm to use to hash the data.</param>
+        <summary>Computes the hash value of the specified binary stream by using the specified hashing algorithm.</summary>
+        <returns>The hashed data.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -327,12 +408,12 @@
         <Parameter Name="hashAlgorithm" Type="System.Security.Cryptography.HashAlgorithmName" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="data">The data to be hashed.</param>
+        <param name="offset">The index of the first byte in <paramref name="data" /> to be hashed.</param>
+        <param name="count">The number of bytes to hash.</param>
+        <param name="hashAlgorithm">The algorithm to use to hash the data.</param>
+        <summary>Computes the hash value of the specified portion of a byte array by using the specified hashing algorithm.</summary>
+        <returns>The hashed data.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -358,9 +439,18 @@
         <Parameter Name="parameters" Type="System.Security.Cryptography.ECParameters" />
       </Parameters>
       <Docs>
-        <param name="parameters">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="parameters">The curve parameters.</param>
+        <summary>Replaces the current key for this instance with one using the specified key parameters.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If `parameters` contains only <xref:System.Security.Cryptography.ECParameters.Q>, only a public key is imported. If `parameters` also contains <xref:System.Security.Cryptography.ECParameters.D>, a full key pair is imported. The <xref:System.Security.Cryptography.ECParameters.Curve> field specifies the type of the curve to import.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="parameters" /> does not contain valid values.</exception>
       </Docs>
     </Member>
     <Member MemberName="KeySize">
@@ -382,9 +472,23 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the size, in bits, of the key modulus used by the asymmetric algorithm.</summary>
+        <value>The size, in bits, of the key modulus used by the asymmetric algorithm.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Setting this property to its current value has no visible effect.
+Setting this property to a new legal value discards the current key, but defers creation of a new key until one is needed.
+
+Because key sizes do not uniquely identify elliptic curves, the use of the property setter is discouraged. To generate a new key on a specific curve, use the <xref:System.Security.Cryptography.ECDsaOpenSsl.GenerateKey%2A> method.
+
+]]></format>
+        </remarks> 
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="value" /> is not permitted by <see cref="P:System.Security.Cryptography.ECDsaOpenSsl.LegalKeySizes" />.</exception>
+        <altmember cref="M:System.Security.Cryptography.ECDsaOpenSsl.GenerateKey(System.Security.Cryptography.ECCurve)" />
       </Docs>
     </Member>
     <Member MemberName="LegalKeySizes">
@@ -406,9 +510,22 @@
         <ReturnType>System.Security.Cryptography.KeySizes[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the key sizes, in bits, that are supported by the <see cref="P:System.Security.Cryptography.ECDsaCng.KeySize"/> property setter.</summary>
+        <value>An array that contains the key sizes supported by the <see cref="P:System.Security.Cryptography.ECDsaCng.KeySize"/> property setter.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+In Elliptic Curve Cryptography (ECC) the key size is not the only input into the key generation process,
+it is derived from the curve parameters for a specific elliptic curve.
+This property reports only three legal key sizes: 256, 384, and 521 bits.
+When the key size is used alone as a basis for key generation,
+the supported sizes map to the named curves secp256r1 (aka NIST P-256), secp384r1 (aka NIST P-384), and secp521r1 (aka NIST P-521).
+
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Security.Cryptography.ECDsaCng.GenerateKey(System.Security.Cryptography.ECCurve)" />
       </Docs>
     </Member>
     <Member MemberName="SignHash">
@@ -433,10 +550,11 @@
         <Parameter Name="hash" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="hash">The hash value of the data that is being signed.</param>
+        <summary>Generates a digital signature for the specified hash value.</summary>
+        <returns>A digital signature for the specified hash value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="hash" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="VerifyHash">
@@ -462,11 +580,13 @@
         <Parameter Name="signature" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <param name="signature">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="hash">The hash value of the data to be verified.</param>
+        <param name="signature">The digital signature of the data to be verified against the hash value.</param>
+        <summary>Verifies that a digital signature is appropriate for the current key and provided data hash.</summary>
+        <returns>
+          <see langword="true" /> if the signature is valid; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException"><paramref name="hash"/> or <paramref name="signature"/> is <see langword="null"/>.</exception>
       </Docs>
     </Member>
   </Members>
