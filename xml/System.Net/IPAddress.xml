@@ -196,9 +196,20 @@
         <Parameter Name="address" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="address">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="address">The byte representation of the IP address, in network byte order, with the most significant byte first in index position 0.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Net.IPAddress" /> class with the address specified as a byte span.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Net.IPAddress> is created with the <xref:System.Net.IPAddress.Address> property set to `address`.  
+  
+ If the length of `address` is 4, this method constructs an IPv4 address; otherwise, an IPv6 address with a scope of 0 is constructed.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="address" /> contains a bad IP address.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -285,10 +296,27 @@
         <Parameter Name="scopeid" Type="System.Int64" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="address">To be added.</param>
-        <param name="scopeid">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="address">The byte span value of the IP address.</param>
+        <param name="scopeid">The long value of the scope identifier.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Net.IPAddress" /> class with the address specified as a byte span and the specified scope identifier.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This constructor instantiates an IPv6 address. The `scopeid` identifies a network interface in the case of a link-local address. The scope is valid only for link-local and site-local addresses.  
+  
+ The byte span is assumed to be in network byte order with the most significant byte first in index position 0.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="address" /> contains a bad IP address.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="scopeid" /> &lt; 0 
+
+-or-
+
+<paramref name="scopeid" /> &gt; 0x00000000FFFFFFFF</exception>
       </Docs>
     </Member>
     <Member MemberName="Address">
@@ -321,7 +349,7 @@
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
-          <AttributeName>System.Obsolete("This property has been deprecated. It is address family dependent. Please use IPAddress.Equals method to perform comparisons. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
+          <AttributeName>System.Obsolete("This property has been deprecated. It is address family dependent. Please use IPAddress.Equals method to perform comparisons. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-1.1">
           <AttributeName>System.Obsolete("IPAddress.Address is address family dependant, use Equals method for comparison.")</AttributeName>
@@ -1686,10 +1714,12 @@
         <Parameter Name="ipString" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="ipString">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ipString">A character span that contains an IP address in dotted-quad notation for IPv4 and in colon-hexadecimal notation for IPv6.</param>
+        <summary>Converts an IP address represented as a character span to an <see cref="T:System.Net.IPAddress" /> instance.</summary>
+        <returns>The converted IP address.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.FormatException">
+          <paramref name="ipString" /> is not a valid IP address.</exception>
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -1837,7 +1867,7 @@
   
 -or-
   
--   <paramref name="scopeId" /> &gt; 0x00000000FFFFFFFF</exception>
+<paramref name="scopeId" /> &gt; 0x00000000FFFFFFFF</exception>
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -1917,10 +1947,10 @@
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">When this method returns, the IP address as a span of characters.</param>
+        <param name="charsWritten">When this method returns, the number of characters written into the span.</param>
+        <summary>Tries to format the current IP address into the provided span.</summary>
+        <returns><see langword="true" /> if the formatting was successful; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1954,10 +1984,10 @@
         <Parameter Name="address" Type="System.Net.IPAddress" RefType="out" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="ipString">To be added.</param>
-        <param name="address">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ipString">The byte span to validate.</param>
+        <param name="address">When this method returns, the <see cref="T:System.Net.IPAddress" /> version of the byte span.</param>
+        <summary>Determines whether the specified byte span represents a valid IP address.</summary>
+        <returns><see langword="true" /> if <paramref name="ipString" /> was able to be parsed as an IP address; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2044,10 +2074,11 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">When this method returns, the IP address as a span of bytes.</param>
+        <param name="bytesWritten">When this method returns, the number of bytes written into the span.</param>
+        <summary>Tries to write the current IP address into a span of bytes.</summary>
+        <returns>
+          <see langword="true" /> if the IP address is sucessfully written to the given span; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

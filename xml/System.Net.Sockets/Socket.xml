@@ -6672,10 +6672,41 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <Parameter Name="buffer" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A span of bytes that is the storage location for the received data.</param>
+        <summary>Receives data from a bound <see cref="T:System.Net.Sockets.Socket" /> into a receive buffer.</summary>
+        <returns>The number of bytes received.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks
+
+The <xref:System.Net.Sockets.Socket.Receive%2A> method reads data into the buffer parameter and returns the number of bytes successfully read. You can call <xref:System.Net.Sockets.Socket.Receive%2A> from both connection-oriented and connectionless sockets.
+
+This overload only requires you to provide a receive buffer. The buffer offset defaults to 0, the size defaults to the length of the buffer parameter, and the <xref:System.Net.Sockets.SocketFlags> value defaults to <xref:System.Net.Sockets.SocketFlags.None>.
+
+If you're using a connection-oriented protocol, you must either call <xref:System.Net.Sockets.Socket.Connect%2A> to establish a remote host connection, or <xref:System.Net.Sockets.Socket.Accept%2A> to accept an incoming connection before calling <xref:System.Net.Sockets.Socket.Receive%2A>. The <xref:System.Net.Sockets.Socket.Receive%2A> method will only read data that arrives from the remote host established in the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.Accept%2A> method. If you're using a connectionless protocol, you can also use the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method. <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> will allow you to receive data arriving from any host.
+
+If no data is available for reading, the <xref:System.Net.Sockets.Socket.Receive%2A> method will block until data is available, unless a time-out value was set by using <xref:System.Net.Sockets.Socket.ReceiveTimeout%2A?displayProperty=nameWithType>. When the time-out value is exceeded, the <xref:System.Net.Sockets.Socket.Receive%2A> call will throw a <xref:System.Net.Sockets.SocketException>. If you're in non-blocking mode, and there's no data available in the protocol stack buffer, the <xref:System.Net.Sockets.Socket.Receive%2A> method will complete immediately and throw a <xref:System.Net.Sockets.SocketException>. You can use the <xref:System.Net.Sockets.Socket.Available%2A> property to determine if data is available for reading. When <xref:System.Net.Sockets.Socket.Available%2A> is non-zero, retry the receive operation.
+
+If you're using a connection-oriented <xref:System.Net.Sockets.Socket>, the <xref:System.Net.Sockets.Socket.Receive%2A> method will read as much data as is available, up to the size of the buffer. If the remote host shuts down the <xref:System.Net.Sockets.Socket> connection with the <xref:System.Net.Sockets.Socket.Shutdown%2A> method, and all available data has been received, the <xref:System.Net.Sockets.Socket.Receive%2A> method will complete immediately and return zero bytes.
+
+If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.Net.Sockets.Socket.Receive%2A> will read the first queued datagram from the destination address you specify in the <xref:System.Net.Sockets.Socket.Connect%2A> method. If the datagram you receive is larger than the size of the `buffer` parameter, `buffer` gets filled with the first part of the message, the excess data is lost, and a <xref:System.Net.Sockets.SocketException> is thrown.
+
+> [!NOTE]
+> If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.
+
+This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.Security.SecurityException">A caller in the call stack does not have the required permissions.</exception>
+        <permission cref="T:System.Net.SocketPermission">Accepting connections from the network. Associated enumeration: <see cref="F:System.Net.NetworkAccess.Accept" />.</permission>
+        <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />
+        <altmember cref="M:System.Net.Sockets.Socket.ReceiveFrom(System.Byte[],System.Int32,System.Int32,System.Net.Sockets.SocketFlags,System.Net.EndPoint@)" />
+        <altmember cref="P:System.Net.Sockets.Socket.Available" />
+        <altmember cref="M:System.Net.Sockets.Socket.Shutdown(System.Net.Sockets.SocketShutdown)" />
+        <altmember cref="M:System.Net.Sockets.Socket.Close" />
       </Docs>
     </Member>
     <Member MemberName="Receive">
@@ -6756,7 +6787,7 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller in the call stack does not have the required permissions.</exception>
-        <permission cref="T:System.Net.SocketPermission">for accepting connections from the network. Associated enumeration: <see cref="F:System.Net.NetworkAccess.Accept" />.</permission>
+        <permission cref="T:System.Net.SocketPermission">Accepting connections from the network. Associated enumeration: <see cref="F:System.Net.NetworkAccess.Accept" />.</permission>
         <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />
         <altmember cref="M:System.Net.Sockets.Socket.ReceiveFrom(System.Byte[],System.Int32,System.Int32,System.Net.Sockets.SocketFlags,System.Net.EndPoint@)" />
         <altmember cref="P:System.Net.Sockets.Socket.Available" />
@@ -6886,11 +6917,42 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <Parameter Name="socketFlags" Type="System.Net.Sockets.SocketFlags" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="socketFlags">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A span of bytes that is the storage location for the received data.</param>
+        <param name="socketFlags">A bitwise combination of the enumeration values that specifies send and receive behaviors.</param>
+        <summary>Receives data from a bound <see cref="T:System.Net.Sockets.Socket" /> into a receive buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />.</summary>
+        <returns>The number of bytes received.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+## Remarks
+
+The <xref:System.Net.Sockets.Socket.Receive%2A> method reads data into the buffer parameter and returns the number of bytes successfully read. You can call <xref:System.Net.Sockets.Socket.Receive%2A> from both connection-oriented and connectionless sockets.
+
+This overload only requires you to provide a receive buffer. The buffer offset defaults to 0, the size defaults to the length of the buffer parameter, and the <xref:System.Net.Sockets.SocketFlags> value defaults to <xref:System.Net.Sockets.SocketFlags.None>.
+
+If you're using a connection-oriented protocol, you must either call <xref:System.Net.Sockets.Socket.Connect%2A> to establish a remote host connection, or <xref:System.Net.Sockets.Socket.Accept%2A> to accept an incoming connection prior to calling <xref:System.Net.Sockets.Socket.Receive%2A>. The <xref:System.Net.Sockets.Socket.Receive%2A> method will only read data that arrives from the remote host established in the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.Accept%2A> method. If you're using a connectionless protocol, you can also use the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method. <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> will allow you to receive data arriving from any host.
+
+If no data is available for reading, the <xref:System.Net.Sockets.Socket.Receive%2A> method will block until data is available, unless a time-out value was set by using <xref:System.Net.Sockets.Socket.ReceiveTimeout%2A?displayProperty=nameWithType>. When the time-out value is exceeded, the <xref:System.Net.Sockets.Socket.Receive%2A> call will throw a <xref:System.Net.Sockets.SocketException>. If you're in non-blocking mode, and there is no data available in the protocol stack buffer, the <xref:System.Net.Sockets.Socket.Receive%2A> method will complete immediately and throw a <xref:System.Net.Sockets.SocketException>. You can use the <xref:System.Net.Sockets.Socket.Available%2A> property to determine if data is available for reading. When <xref:System.Net.Sockets.Socket.Available%2A> is non-zero, retry the receive operation.
+
+If you're using a connection-oriented <xref:System.Net.Sockets.Socket>, the <xref:System.Net.Sockets.Socket.Receive%2A> method will read as much data as is available, up to the size of the buffer. If the remote host shuts down the <xref:System.Net.Sockets.Socket> connection with the <xref:System.Net.Sockets.Socket.Shutdown%2A> method, and all available data has been received, the <xref:System.Net.Sockets.Socket.Receive%2A> method will complete immediately and return zero bytes.
+
+If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.Net.Sockets.Socket.Receive%2A> will read the first queued datagram from the destination address you specify in the <xref:System.Net.Sockets.Socket.Connect%2A> method. If the datagram you receive is larger than the size of the `buffer` parameter, `buffer` gets filled with the first part of the message, the excess data is lost, and a <xref:System.Net.Sockets.SocketException> is thrown.
+
+> [!NOTE]
+> If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.
+
+This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.Security.SecurityException">A caller in the call stack does not have the required permissions.</exception>
+        <permission cref="T:System.Net.SocketPermission">for accepting connections from the network. Associated enumeration: <see cref="F:System.Net.NetworkAccess.Accept" />.</permission>
+        <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />
+        <altmember cref="M:System.Net.Sockets.Socket.ReceiveFrom(System.Byte[],System.Int32,System.Int32,System.Net.Sockets.SocketFlags,System.Net.EndPoint@)" />
+        <altmember cref="P:System.Net.Sockets.Socket.Available" />
+        <altmember cref="M:System.Net.Sockets.Socket.Shutdown(System.Net.Sockets.SocketShutdown)" />
+        <altmember cref="M:System.Net.Sockets.Socket.Close" />
       </Docs>
     </Member>
     <Member MemberName="Receive">
@@ -7105,12 +7167,44 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <Parameter Name="errorCode" Type="System.Net.Sockets.SocketError" RefType="out" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="socketFlags">To be added.</param>
-        <param name="errorCode">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A span of bytes that is the storage location for the received data.</param>
+        <param name="socketFlags">A bitwise combination of the enumeration values that specifies send and receive behaviors.</param>
+        <param name="errorCode">When this method returns, contains one of the enumeration values that defines error codes for the socket.</param>
+        <summary>Receives data from a bound <see cref="T:System.Net.Sockets.Socket" /> into a receive buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />.</summary>
+        <returns>The number of bytes received.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+## Remarks
+
+The <xref:System.Net.Sockets.Socket.Receive%2A> method reads data into the buffer parameter and returns the number of bytes successfully read. You can call <xref:System.Net.Sockets.Socket.Receive%2A> from both connection-oriented and connectionless sockets.  
+
+This overload only requires you to provide a receive buffer. The buffer offset defaults to 0, the size defaults to the length of the buffer parameter, and the <xref:System.Net.Sockets.SocketFlags> value defaults to <xref:System.Net.Sockets.SocketFlags.None>.  
+
+If you're using a connection-oriented protocol, you must either call <xref:System.Net.Sockets.Socket.Connect%2A> to establish a remote host connection, or <xref:System.Net.Sockets.Socket.Accept%2A> to accept an incoming connection prior to calling <xref:System.Net.Sockets.Socket.Receive%2A>. The <xref:System.Net.Sockets.Socket.Receive%2A> method will only read data that arrives from the remote host established in the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.Accept%2A> method. If you're using a connectionless protocol, you can also use the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method. <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> will allow you to receive data arriving from any host.  
+
+If no data is available for reading, the <xref:System.Net.Sockets.Socket.Receive%2A> method will block until data is available, unless a time-out value was set by using <xref:System.Net.Sockets.Socket.ReceiveTimeout%2A?displayProperty=nameWithType>. When the time-out value is exceeded, the <xref:System.Net.Sockets.Socket.Receive%2A> call will throw a <xref:System.Net.Sockets.SocketException>. If you're in non-blocking mode, and there's no data available in the protocol stack buffer, the <xref:System.Net.Sockets.Socket.Receive%2A> method will complete immediately and throw a <xref:System.Net.Sockets.SocketException>. You can use the <xref:System.Net.Sockets.Socket.Available%2A> property to determine if data is available for reading. When <xref:System.Net.Sockets.Socket.Available%2A> is non-zero, retry the receive operation.  
+
+If you're using a connection-oriented <xref:System.Net.Sockets.Socket>, the <xref:System.Net.Sockets.Socket.Receive%2A> method will read as much data as is available, up to the size of the buffer. If the remote host shuts down the <xref:System.Net.Sockets.Socket> connection with the <xref:System.Net.Sockets.Socket.Shutdown%2A> method, and all available data has been received, the <xref:System.Net.Sockets.Socket.Receive%2A> method will complete immediately and return zero bytes.  
+
+If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.Net.Sockets.Socket.Receive%2A> will read the first queued datagram from the destination address you specify in the <xref:System.Net.Sockets.Socket.Connect%2A> method. If the datagram you receive is larger than the size of the `buffer` parameter, `buffer` gets filled with the first part of the message, the excess data is lost and a <xref:System.Net.Sockets.SocketException> is thrown.  
+
+> [!NOTE]
+>  If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.  
+
+> [!NOTE]
+>  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.Security.SecurityException">A caller in the call stack does not have the required permissions.</exception>
+        <permission cref="T:System.Net.SocketPermission">for accepting connections from the network. Associated enumeration: <see cref="F:System.Net.NetworkAccess.Accept" />.</permission>
+        <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />
+        <altmember cref="M:System.Net.Sockets.Socket.ReceiveFrom(System.Byte[],System.Int32,System.Int32,System.Net.Sockets.SocketFlags,System.Net.EndPoint@)" />
+        <altmember cref="P:System.Net.Sockets.Socket.Available" />
+        <altmember cref="M:System.Net.Sockets.Socket.Shutdown(System.Net.Sockets.SocketShutdown)" />
+        <altmember cref="M:System.Net.Sockets.Socket.Close" />
       </Docs>
     </Member>
     <Member MemberName="Receive">
@@ -8079,7 +8173,7 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <exception cref="T:System.ArgumentNullException">
           <paramref name="buffer" /> is <see langword="null" />.  
   
- \- or-  
+ -or-  
   
  <paramref name="remoteEP" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
@@ -8661,10 +8755,40 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <Parameter Name="buffer" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A span of bytes that contains the data to be sent.</param>
+        <summary>Sends data to a connected <see cref="T:System.Net.Sockets.Socket" />.</summary>
+        <returns>The number of bytes sent to the <see cref="T:System.Net.Sockets.Socket" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks
+
+<xref:System.Net.Sockets.Socket.Send%2A> synchronously sends data to the remote host specified in the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.Accept%2A> method and returns the number of bytes successfully sent. <xref:System.Net.Sockets.Socket.Send%2A> can be used for both connection-oriented and connectionless protocols.
+
+This overload requires a buffer that contains the data you want to send. The <xref:System.Net.Sockets.SocketFlags> value defaults to 0, the buffer offset defaults to 0, and the number of bytes to send defaults to the size of the buffer.
+
+If you're using a connectionless protocol, you must call <xref:System.Net.Sockets.Socket.Connect%2A> before calling this method, or <xref:System.Net.Sockets.Socket.Send%2A> will throw a <xref:System.Net.Sockets.SocketException>. If you're using a connection-oriented protocol, you must either use <xref:System.Net.Sockets.Socket.Connect%2A> to establish a remote host connection, or use <xref:System.Net.Sockets.Socket.Accept%2A> to accept an incoming connection.
+
+If you're using a connectionless protocol and plan to send data to several different hosts, you should use the <xref:System.Net.Sockets.Socket.SendTo%2A> method. If you don't use the <xref:System.Net.Sockets.Socket.SendTo%2A> method, you'll have to call <xref:System.Net.Sockets.Socket.Connect%2A> before each call to <xref:System.Net.Sockets.Socket.Send%2A>. You can use <xref:System.Net.Sockets.Socket.SendTo%2A> even after you have established a default remote host with <xref:System.Net.Sockets.Socket.Connect%2A>. You can also change the default remote host before calling <xref:System.Net.Sockets.Socket.Send%2A> by making another call to <xref:System.Net.Sockets.Socket.Connect%2A>.
+
+If you're using a connection-oriented protocol, <xref:System.Net.Sockets.Socket.Send%2A> will block until all of the bytes in the buffer are sent, unless a time-out was set by using <xref:System.Net.Sockets.Socket.SendTimeout%2A?displayProperty=nameWithType>. If the time-out value was exceeded, the <xref:System.Net.Sockets.Socket.Send%2A> call will throw a <xref:System.Net.Sockets.SocketException>. In nonblocking mode, <xref:System.Net.Sockets.Socket.Send%2A> may complete successfully even if it sends less than the number of bytes in the buffer. It is your application's responsibility to keep track of the number of bytes sent and to retry the operation until the application sends the bytes in the buffer. There's also no guarantee that the data you send will appear on the network immediately. To increase network efficiency, the underlying system may delay transmission until a significant amount of outgoing data is collected. A successful completion of the <xref:System.Net.Sockets.Socket.Send%2A> method means that the underlying system has had room to buffer your data for a network send.
+
+> [!NOTE]
+>If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.
+
+This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).
+
+> [!IMPORTANT]
+>The successful completion of a send does not indicate that the data was successfully delivered. If no buffer space is available within the transport system to hold the data to be transmitted, send will block unless the socket has been placed in nonblocking mode.
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />
+        <altmember cref="M:System.Net.Sockets.Socket.SendTo(System.Byte[],System.Int32,System.Int32,System.Net.Sockets.SocketFlags,System.Net.EndPoint)" />
+        <altmember cref="T:System.Net.Sockets.SocketFlags" />
+        <altmember cref="M:System.Net.Sockets.Socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel,System.Net.Sockets.SocketOptionName,System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName="Send">
@@ -8851,11 +8975,23 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <Parameter Name="socketFlags" Type="System.Net.Sockets.SocketFlags" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="socketFlags">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A span of bytes that contains the data to be sent.</param>
+        <param name="socketFlags">A bitwise combination of the enumeration values that specifies send and receive behaviors.</param>
+        <summary>Sends data to a connected <see cref="T:System.Net.Sockets.Socket" /> using the specified <see cref="T:System.Net.Sockets.SocketFlags" />.</summary>
+        <returns>The number of bytes sent to the <see cref="T:System.Net.Sockets.Socket" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />
+        <altmember cref="M:System.Net.Sockets.Socket.SendTo(System.Byte[],System.Int32,System.Int32,System.Net.Sockets.SocketFlags,System.Net.EndPoint)" />
+        <altmember cref="T:System.Net.Sockets.SocketFlags" />
+        <altmember cref="M:System.Net.Sockets.Socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel,System.Net.Sockets.SocketOptionName,System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName="Send">
@@ -8907,35 +9043,33 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <returns>The number of bytes sent to the <see cref="T:System.Net.Sockets.Socket" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Net.Sockets.Socket.Send%2A> synchronously sends data to the remote host established in the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.Accept%2A> method and returns the number of bytes successfully sent. <xref:System.Net.Sockets.Socket.Send%2A> can be used for both connection-oriented and connectionless protocols.  
-  
- This overload requires a buffer that contains the data you want to send, the number of bytes you want to send, and a bitwise combination of any <xref:System.Net.Sockets.SocketFlags>. If you specify the <xref:System.Net.Sockets.SocketFlags.DontRoute> flag as the `socketflags` parameter, the data you are sending will not be routed.  
-  
- If you are using a connectionless protocol, you must call <xref:System.Net.Sockets.Socket.Connect%2A> before calling this method, or <xref:System.Net.Sockets.Socket.Send%2A> will throw a <xref:System.Net.Sockets.SocketException>. If you are using a connection-oriented protocol, you must either use <xref:System.Net.Sockets.Socket.Connect%2A> to establish a remote host connection, or use <xref:System.Net.Sockets.Socket.Accept%2A> to accept an incoming connection.  
-  
- If you are using a connectionless protocol and plan to send data to several different hosts, you should use the <xref:System.Net.Sockets.Socket.SendTo%2A> method. If you do not use the <xref:System.Net.Sockets.Socket.SendTo%2A> method, you will have to call the <xref:System.Net.Sockets.Socket.Connect%2A> method before each call to the <xref:System.Net.Sockets.Socket.Send%2A> method. You can use <xref:System.Net.Sockets.Socket.SendTo%2A> even after you have established a default remote host with <xref:System.Net.Sockets.Socket.Connect%2A>. You can also change the default remote host prior to calling <xref:System.Net.Sockets.Socket.Send%2A> by making another call to <xref:System.Net.Sockets.Socket.Connect%2A>.  
-  
- With a connection-oriented protocol, <xref:System.Net.Sockets.Socket.Send%2A> will block until the requested number of bytes are sent, unless a time-out was set by using <xref:System.Net.Sockets.Socket.SendTimeout%2A?displayProperty=nameWithType>. If the time-out value was exceeded, the <xref:System.Net.Sockets.Socket.Send%2A> call will throw a <xref:System.Net.Sockets.SocketException>. In nonblocking mode, <xref:System.Net.Sockets.Socket.Send%2A> may complete successfully even if it sends less than the number of bytes you request. It is your application's responsibility to keep track of the number of bytes sent and to retry the operation until the application sends the requested number of bytes. There is also no guarantee that the data you send will appear on the network immediately. To increase network efficiency, the underlying system may delay transmission until a significant amount of outgoing data is collected. A successful completion of the <xref:System.Net.Sockets.Socket.Send%2A> method means that the underlying system has had room to buffer your data for a network send.  
-  
+## Remarks
+
+<xref:System.Net.Sockets.Socket.Send%2A> synchronously sends data to the remote host established in the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.Accept%2A> method and returns the number of bytes successfully sent. <xref:System.Net.Sockets.Socket.Send%2A> can be used for both connection-oriented and connectionless protocols.
+
+This overload requires a buffer that contains the data you want to send, the number of bytes you want to send, and a bitwise combination of any <xref:System.Net.Sockets.SocketFlags>. If you specify the <xref:System.Net.Sockets.SocketFlags.DontRoute> flag as the `socketflags` parameter, the data you're sending won't be routed.
+
+If you're using a connectionless protocol, you must call <xref:System.Net.Sockets.Socket.Connect%2A> before calling this method, or <xref:System.Net.Sockets.Socket.Send%2A> will throw a <xref:System.Net.Sockets.SocketException>. If you're using a connection-oriented protocol, you must either use <xref:System.Net.Sockets.Socket.Connect%2A> to establish a remote host connection, or use <xref:System.Net.Sockets.Socket.Accept%2A> to accept an incoming connection.
+
+If you're using a connectionless protocol and plan to send data to several different hosts, you should use the <xref:System.Net.Sockets.Socket.SendTo%2A> method. If you don'tuse the <xref:System.Net.Sockets.Socket.SendTo%2A> method, you'll have to call the <xref:System.Net.Sockets.Socket.Connect%2A> method before each call to the <xref:System.Net.Sockets.Socket.Send%2A> method. You can use <xref:System.Net.Sockets.Socket.SendTo%2A> even after you've established a default remote host with <xref:System.Net.Sockets.Socket.Connect%2A>. You can also change the default remote host before calling <xref:System.Net.Sockets.Socket.Send%2A> by making another call to <xref:System.Net.Sockets.Socket.Connect%2A>.
+
+With a connection-oriented protocol, <xref:System.Net.Sockets.Socket.Send%2A> will block until the requested number of bytes are sent, unless a time-out was set by using <xref:System.Net.Sockets.Socket.SendTimeout%2A?displayProperty=nameWithType>. If the time-out value was exceeded, the <xref:System.Net.Sockets.Socket.Send%2A> call will throw a <xref:System.Net.Sockets.SocketException>. In nonblocking mode, <xref:System.Net.Sockets.Socket.Send%2A> may complete successfully even if it sends less than the number of bytes you request. It is your application's responsibility to keep track of the number of bytes sent and to retry the operation until the application sends the requested number of bytes. There is also no guarantee that the data you send will appear on the network immediately. To increase network efficiency, the underlying system may delay transmission until a significant amount of outgoing data is collected. A successful completion of the <xref:System.Net.Sockets.Socket.Send%2A> method means that the underlying system has had room to buffer your data for a network send.
+
 > [!NOTE]
->  You must ensure that the size does not exceed the maximum packet size of the underlying service provider. If it does, the datagram will not be sent and <xref:System.Net.Sockets.Socket.Send%2A> will throw a <xref:System.Net.Sockets.SocketException>. If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.  
-  
-> [!NOTE]
->  The successful completion of a send does not indicate that the data was successfully delivered. If no buffer space is available within the transport system to hold the data to be transmitted, send will block unless the socket has been placed in nonblocking mode.  
-  
-> [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
-  
-## Examples  
- The following code example sends the data found in buffer, and specifies <xref:System.Net.Sockets.SocketFlags.None> for <xref:System.Net.Sockets.SocketFlags>.  
-  
- [!code-cpp[Socket_Sync_Send_Receive#3](~/samples/snippets/cpp/VS_Snippets_Remoting/Socket_Sync_Send_Receive/CPP/source.cpp#3)]
- [!code-csharp[Socket_Sync_Send_Receive#3](~/samples/snippets/csharp/VS_Snippets_Remoting/Socket_Sync_Send_Receive/CS/source.cs#3)]
- [!code-vb[Socket_Sync_Send_Receive#3](~/samples/snippets/visualbasic/VS_Snippets_Remoting/Socket_Sync_Send_Receive/VB/source.vb#3)]  
+> You must ensure that the size does not exceed the maximum packet size of the underlying service provider. If it does, the datagram won't be sent and <xref:System.Net.Sockets.Socket.Send%2A> will throw a <xref:System.Net.Sockets.SocketException>. If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.
+
+This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).
+
+> [!IMPORTANT]
+>The successful completion of a send does not indicate that the data was successfully delivered. If no buffer space is available within the transport system to hold the data to be transmitted, send will block unless the socket has been placed in nonblocking mode.
+
+## Examples
+
+The following code example sends the data found in buffer, and specifies <xref:System.Net.Sockets.SocketFlags.None> for <xref:System.Net.Sockets.SocketFlags>.
+
+[!code-cpp[Socket_Sync_Send_Receive#3](~/samples/snippets/cpp/VS_Snippets_Remoting/Socket_Sync_Send_Receive/CPP/source.cpp#3)]
+[!code-csharp[Socket_Sync_Send_Receive#3](~/samples/snippets/csharp/VS_Snippets_Remoting/Socket_Sync_Send_Receive/CS/source.cs#3)]
+[!code-vb[Socket_Sync_Send_Receive#3](~/samples/snippets/visualbasic/VS_Snippets_Remoting/Socket_Sync_Send_Receive/VB/source.vb#3)]
   
  ]]></format>
         </remarks>
@@ -9064,12 +9198,41 @@ The GetHashCode method returns a hash code of this instance. This value can be u
         <Parameter Name="errorCode" Type="System.Net.Sockets.SocketError" RefType="out" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="socketFlags">To be added.</param>
-        <param name="errorCode">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A span of bytes that contains the data to be sent.</param>
+        <param name="socketFlags">A bitwise combination of the enumeration values that specifies send and receive behaviors.</param>
+        <param name="errorCode">When this method returns, contains one of the enumeration values that defines error codes for the socket.</param>
+        <summary>Sends data to a connected <see cref="T:System.Net.Sockets.Socket" /> using the specified <see cref="T:System.Net.Sockets.SocketFlags" />.</summary>
+        <returns>The number of bytes sent to the <see cref="T:System.Net.Sockets.Socket" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+## Remarks
+
+<xref:System.Net.Sockets.Socket.Send%2A> synchronously sends data to the remote host specified in the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.Accept%2A> method and returns the number of bytes successfully sent. <xref:System.Net.Sockets.Socket.Send%2A> can be used for both connection-oriented and connectionless protocols.
+
+This overload requires a buffer that contains the data you want to send. The <xref:System.Net.Sockets.SocketFlags> value defaults to 0, the buffer offset defaults to 0, and the number of bytes to send defaults to the size of the buffer.
+
+If you're using a connectionless protocol, you must call <xref:System.Net.Sockets.Socket.Connect%2A> before calling this method, or <xref:System.Net.Sockets.Socket.Send%2A> will throw a <xref:System.Net.Sockets.SocketException>. If you're using a connection-oriented protocol, you must either use <xref:System.Net.Sockets.Socket.Connect%2A> to establish a remote host connection, or use <xref:System.Net.Sockets.Socket.Accept%2A> to accept an incoming connection.
+
+If you're using a connectionless protocol and plan to send data to several different hosts, you should use the <xref:System.Net.Sockets.Socket.SendTo%2A> method. If you don't use the <xref:System.Net.Sockets.Socket.SendTo%2A> method, you'll have to call <xref:System.Net.Sockets.Socket.Connect%2A> before each call to <xref:System.Net.Sockets.Socket.Send%2A>. You can use <xref:System.Net.Sockets.Socket.SendTo%2A> even after you've established a default remote host with <xref:System.Net.Sockets.Socket.Connect%2A>. You can also change the default remote host before calling <xref:System.Net.Sockets.Socket.Send%2A> by making another call to <xref:System.Net.Sockets.Socket.Connect%2A>.
+
+If you're using a connection-oriented protocol, <xref:System.Net.Sockets.Socket.Send%2A> will block until all of the bytes in the buffer are sent, unless a time-out was set by using <xref:System.Net.Sockets.Socket.SendTimeout%2A?displayProperty=nameWithType>. If the time-out value was exceeded, the <xref:System.Net.Sockets.Socket.Send%2A> call will throw a <xref:System.Net.Sockets.SocketException>. In nonblocking mode, <xref:System.Net.Sockets.Socket.Send%2A> may complete successfully even if it sends less than the number of bytes in the buffer. It is your application's responsibility to keep track of the number of bytes sent and to retry the operation until the application sends the bytes in the buffer. There's also no guarantee that the data you send will appear on the network immediately. To increase network efficiency, the underlying system may delay transmission until a significant amount of outgoing data is collected. A successful completion of the <xref:System.Net.Sockets.Socket.Send%2A> method means that the underlying system has had room to buffer your data for a network send.
+
+> [!NOTE]
+>If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you've obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.
+
+This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).
+
+> [!IMPORTANT]
+>The successful completion of a send does not indicate that the data was successfully delivered. If no buffer space is available within the transport system to hold the data to be transmitted, send will block unless the socket has been placed in nonblocking mode.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />
+        <altmember cref="M:System.Net.Sockets.Socket.SendTo(System.Byte[],System.Int32,System.Int32,System.Net.Sockets.SocketFlags,System.Net.EndPoint)" />
+        <altmember cref="T:System.Net.Sockets.SocketFlags" />
+        <altmember cref="M:System.Net.Sockets.Socket.SetSocketOption(System.Net.Sockets.SocketOptionLevel,System.Net.Sockets.SocketOptionName,System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName="Send">
@@ -10873,7 +11036,7 @@ The GetHashCode method returns a hash code of this instance. This value can be u
           <AttributeName>System.Obsolete("Use OSSupportsIPv4 instead")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
-          <AttributeName>System.Obsolete("SupportsIPv4 is obsoleted for this type, please use OSSupportsIPv4 instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
+          <AttributeName>System.Obsolete("SupportsIPv4 is obsoleted for this type, please use OSSupportsIPv4 instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
           <AttributeName>System.Obsolete("SupportsIPv4 is obsoleted for this type, please use OSSupportsIPv4 instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
@@ -10930,7 +11093,7 @@ The GetHashCode method returns a hash code of this instance. This value can be u
           <AttributeName>System.Obsolete("Use OSSupportsIPv6 instead")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;netframework-4.8;netcore-2.2">
-          <AttributeName>System.Obsolete("SupportsIPv6 is obsoleted for this type, please use OSSupportsIPv6 instead. http://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
+          <AttributeName>System.Obsolete("SupportsIPv6 is obsoleted for this type, please use OSSupportsIPv6 instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
           <AttributeName>System.Obsolete("SupportsIPv6 is obsoleted for this type, please use OSSupportsIPv6 instead. https://go.microsoft.com/fwlink/?linkid=14202")</AttributeName>
