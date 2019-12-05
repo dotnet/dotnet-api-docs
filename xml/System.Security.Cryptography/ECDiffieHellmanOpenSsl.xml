@@ -15,8 +15,16 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides an implementation of the Elliptic Curve Diffie-Hellman (ECDH) algorithm backed by OpenSSL.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This class should only be used directly when doing platform interop with the system OpenSSL library. When platform interop is not needed, you should use the <xref:System.Security.Cryptography.ECDiffieHellman.Create%2A?displayProperty=nameWithType> factory methods instead of a specific derived implementation.
+
+ ]]></format>
+   </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -33,8 +41,18 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDiffieHellmanOpenSsl" /> class with a default curve of NIST P-521/secp521r1.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This constructor does not generate a new public/private keypair immediately, it just sets the size which will be used to generate a key when one is needed.
+If key is loaded via the <xref:System.Security.Cryptography.ECDiffieHellmanOpenSsl.ImportParameters%2A> method, or other key import method, the key size from this constructor has no meaning.
+
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Security.Cryptography.ECDiffieHellman.Create" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -54,9 +72,26 @@
         <Parameter Name="keySize" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="keySize">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="keySize">The size of the key to generate, when a key is needed.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDiffieHellmanOpenSsl" /> class defaulting to the NIST prime curve of the specified size.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Only three key sizes are supported by this constructor: 256 (NIST P-256/secp256r1), 384 (NIST P-384/secp384r1), and 521 (NIST P-521/secp521r1).
+To generate keys For any other curve, use the <xref:System.Security.Cryptography.ECDiffieHellmanOpenSsl.%23ctor(System.Security.Cryptography.ECCurve)> constructor
+or the <xref:System.Security.Cryptography.ECDiffieHellmanOpenSsl.GenerateKey(System.Security.Cryptography.ECCurve)> method.
+
+This constructor does not generate a new public/private keypair immediately, it just sets the size which will be used to generate a key when one is needed.
+If key is loaded via the <xref:System.Security.Cryptography.ECDiffieHellmanOpenSsl.ImportParameters%2A> method, or other key import method, the key size from this constructor has no meaning.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="keySize" /> value is not supported by this implementation.</exception>
+        <altmember cref="M:System.Security.Cryptography.ECDiffieHellman.Create" />
+        <altmember cref="M:System.Security.Cryptography.ECDiffieHellmanOpenSsl.#ctor(System.Security.Cryptography.ECCurve)" />
+        <altmember cref="M:System.Security.Cryptography.ECDiffieHellmanOpenSsl.GenerateKey(System.Security.Cryptography.ECCurve)" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -76,9 +111,24 @@
         <Parameter Name="handle" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="handle">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="handle">The OpenSSL <c>EC_KEY*</c> value to use as the key.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDiffieHellmanOpenSsl" /> class from an existing OpenSSL key represented as an <c>EC_KEY*</c>.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+> [!IMPORTANT]
+> OpenSSL supports multiple library versions being loaded within the same process.
+> Before calling this constructor verify your pointer value came from the same version of OpenSSL that this class uses, see <xref:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion> for more information.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="handle" /> is <see cref="F:System.IntPtr.Zero"/>.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="handle"/> is not a valid <c>EC_KEY*</c>.</exception>
+        <altmember cref="P:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -98,9 +148,12 @@
         <Parameter Name="curve" Type="System.Security.Cryptography.ECCurve" />
       </Parameters>
       <Docs>
-        <param name="curve">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="curve">The curve used to generate an ephemeral public/private key pair.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDiffieHellmanOpenSsl" /> class and generates a new key on the specified curve.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="curve" /> does not validate.</exception>
+        <altmember cref="M:System.Security.Cryptography.ECCurve.Validate"/>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -120,9 +173,25 @@
         <Parameter Name="pkeyHandle" Type="System.Security.Cryptography.SafeEvpPKeyHandle" />
       </Parameters>
       <Docs>
-        <param name="pkeyHandle">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="pkeyHandle">The OpenSSL <c>EVP_PKEY*</c> value to use as the key, represented as a <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ECDiffieHellmanOpenSsl" /> class from an existing OpenSSL key represented as an <c>EVP_PKEY*</c>.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+> [!IMPORTANT]
+> OpenSSL supports multiple library versions being loaded within the same process.
+> Before calling this constructor, verify your pointer value came from the same version of OpenSSL that this class uses.
+> For more information, see <xref:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion>.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="pkeyHandle" /> represents an invalid handle.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pkeyHandle" /> is <see langword="null"/>.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="pkeyHandle" /> does not represent a elliptic curve (EC) key.</exception>
+        <seealso cref="P:System.Security.Cryptography.SafeEvpPKeyValue.OpenSslVersion" />
       </Docs>
     </Member>
     <Member MemberName="DeriveKeyFromHash">
@@ -148,13 +217,27 @@
         <Parameter Name="secretAppend" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="otherPartyPublicKey">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="secretPrepend">To be added.</param>
-        <param name="secretAppend">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="otherPartyPublicKey">The other party's public key.</param>
+        <param name="hashAlgorithm">The hash algorithm to use to derive the key material.</param>
+        <param name="secretPrepend">A value to prepend to the derived secret before hashing.</param>
+        <param name="secretAppend">A value to append to the derived secret before hashing.</param>
+        <summary>Performs key derivation using a specified hash algorithm with optional prepended or appended data.</summary>
+        <returns>The hash of the shared secret after prepending or appending data as requested.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          The curve used by <paramref name="otherPartyPublicKey" /> has a different size than the curve from this key.
+
+-or-
+
+The <paramref name="hashAlgorithm"/> parameter does not specify a hash.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="otherPartyPublicKey" /> is <see langword="null"/>.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          The curve used by <paramref name="otherPartyPublicKey" /> is different than the curve from this key.
+
+-or-
+
+This instance represents only a public key.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeriveKeyFromHmac">
@@ -181,14 +264,28 @@
         <Parameter Name="secretAppend" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="otherPartyPublicKey">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="hmacKey">To be added.</param>
-        <param name="secretPrepend">To be added.</param>
-        <param name="secretAppend">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="otherPartyPublicKey">The other party's public key.</param>
+        <param name="hashAlgorithm">The hash algorithm to use to derive the key material.</param>
+        <param name="hmacKey">The key for the HMAC.</param>
+        <param name="secretPrepend">A value to prepend to the derived secret before hashing.</param>
+        <param name="secretAppend">A value to append to the derived secret before hashing.</param>
+        <summary>Performs key derivation using a specified HMAC (Hash-based Message Authentication Code) algorithm with optional prepended or appended data.</summary>
+        <returns>The HMAC of the shared secret after prepending or appending data as requested.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          The curve used by <paramref name="otherPartyPublicKey" /> has a different size than the curve from this key.
+
+-or-
+
+The <paramref name="hashAlgorithm"/> parameter does not specify a hash.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="otherPartyPublicKey" /> is <see langword="null"/>.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          The curve used by <paramref name="otherPartyPublicKey" /> is different than the curve from this key.
+
+-or-
+
+This instance represents only a public key.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeriveKeyMaterial">
@@ -211,10 +308,18 @@
         <Parameter Name="otherPartyPublicKey" Type="System.Security.Cryptography.ECDiffieHellmanPublicKey" />
       </Parameters>
       <Docs>
-        <param name="otherPartyPublicKey">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="otherPartyPublicKey">The other party's public key.</param>
+        <summary>Performs a key derivation on the shared secret.</summary>
+        <returns>The SHA-256 hash of the shared secret.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The curve used by <paramref name="otherPartyPublicKey" /> has a different size than the curve from this key.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="otherPartyPublicKey" /> is <see langword="null"/>.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The curve used by <paramref name="otherPartyPublicKey" /> is different than the curve from this key.
+
+-or-
+
+This instance represents only a public key.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeriveKeyTls">
@@ -239,12 +344,26 @@
         <Parameter Name="prfSeed" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="otherPartyPublicKey">To be added.</param>
-        <param name="prfLabel">To be added.</param>
-        <param name="prfSeed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="otherPartyPublicKey">The other party's public key.</param>
+        <param name="prfLabel">The ASCII-encoded PRF label.</param>
+        <param name="prfSeed">The 64-byte PRF seed.</param>
+        <summary>Performs key derivation using the TLS (Transport Layer Security) 1.1 PRF (Pseudo-Random Function).</summary>
+        <returns>The first 48 bytes from the TLS 1.1 PRF, using the shared secret as the key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.NotImplementedException">A derived class must override this method.</exception>
+        <exception cref="T:System.ArgumentException">The curve used by <paramref name="otherPartyPublicKey" /> has a different size than the curve from this key.</exception>
+        <exception cref="T:System.ArgumentNullException">
+            <paramref name="otherPartyPublicKey"/>, <paramref name="prfLabel" /> or <paramref name="prfSeed" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="prfSeed" /> is not exactly 64 bytes in length.
+
+-or-
+
+The curve used by <paramref name="otherPartyPublicKey" /> is different than the curve from this key.
+
+-or-
+
+This instance represents only a public key.</exception>
       </Docs>
     </Member>
     <Member MemberName="DuplicateKeyHandle">
@@ -265,9 +384,18 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle"/> representation of the cryptographic key.</summary>
+        <returns>A <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle"/> representation of the cryptographic key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks
+
+Each call to this method produces a new <xref:System.Security.Cryptography.SafeEvpPKeyHandle> object with its own lifetime.
+The objects returned by this method can safely be used even after this <xref:System.Security.Cryptography.ECDiffieHellmanOpenSsl> instance has been disposed.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ExportExplicitParameters">
@@ -290,10 +418,12 @@
         <Parameter Name="includePrivateParameters" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="includePrivateParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="includePrivateParameters">
+          <see langword="true" /> to include private parameters; otherwise, <see langword="false" />.</param>
+        <summary>Exports either the public or the public and private key information using the explicit curve form from the current key to an <see cref="T:System.Security.Cryptography.ECParameters" /> structure so that it can be passed to the <see cref="M:System.Security.Cryptography.ECDiffieHellman.ImportParameters(System.Security.Cryptography.ECParameters)" /> method.</summary>
+        <returns>An object that represents the point on the curve for this key, using the explicit curve format.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The method cannot obtain curve values.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportParameters">
@@ -316,10 +446,19 @@
         <Parameter Name="includePrivateParameters" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="includePrivateParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="includePrivateParameters">
+          <see langword="true" /> to include private parameters; otherwise, <see langword="false" />.</param>
+        <summary>Exports the key used by the <see cref="T:System.Security.Cryptography.ECCurve" /> object into an <see cref="T:System.Security.Cryptography.ECParameters" /> object.</summary>
+        <returns>The key and named curve parameters used by the <see cref="T:System.Security.Cryptography.ECCurve" /> object.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If the key was created as a named curve, the <xref:System.Security.Cryptography.ECParameters.Curve?displayProperty=nameWithType> field contains named curve parameters; otherwise,  it contains explicit parameters.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The method cannot obtain curve values.</exception>
       </Docs>
     </Member>
     <Member MemberName="GenerateKey">
@@ -342,9 +481,18 @@
         <Parameter Name="curve" Type="System.Security.Cryptography.ECCurve" />
       </Parameters>
       <Docs>
-        <param name="curve">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="curve">The curve used to generate an ephemeral public/private key pair.</param>
+        <summary>Generates a new ephemeral public/private key pair for the specified curve.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ `curve` must validate (that is, it must return true when passed to the <xref:System.Security.Cryptography.ECCurve.Validate?displayProperty=nameWithType> method) and must not be implicit.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="curve" /> does not validate.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportParameters">
@@ -367,9 +515,22 @@
         <Parameter Name="parameters" Type="System.Security.Cryptography.ECParameters" />
       </Parameters>
       <Docs>
-        <param name="parameters">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="parameters">The curve's parameters to import.</param>
+        <summary>Imports the specified parameters for an <see cref="T:System.Security.Cryptography.ECCurve" /> object as a key into the current instance.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Security.Cryptography.ECDiffieHellmanCng.ImportParameters%2A> method replaces the existing key that this object is working with by creating a         new <xref:System.Security.Cryptography.CngKey> object. If `parameters` contains only the <xref:System.Security.Cryptography.ECParameters.Q> field, then only a public key is imported.         If `parameters` also contains <xref:System.Security.Cryptography.ECParameters.D>, then a full key pair is be imported. The `parameter` <xref:System.Security.Cryptography.ECParameters.Curve> value specifies the type of the curve to import.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="parameters" /> does not validate.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="parameters" /> references a curve that cannot be imported.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <paramref name="parameters" /> references a curve that is not supported by this platform.</exception>
       </Docs>
     </Member>
     <Member MemberName="PublicKey">
@@ -389,8 +550,8 @@
         <ReturnType>System.Security.Cryptography.ECDiffieHellmanPublicKey</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the public key that can be used by another <see cref="T:System.Security.Cryptography.ECDiffieHellman" /> object to generate a shared secret agreement.</summary>
+        <value>The public key that is associated with this instance of the <see cref="T:System.Security.Cryptography.ECDiffieHellmanOpenSsl" /> object.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
