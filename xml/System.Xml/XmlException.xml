@@ -347,9 +347,39 @@ The `XmlException` is a generic XML-related error that is thrown if problems occ
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the zero-based line number indicating where the error occurred.</summary>
-        <value>The zero-based line number indicating where the error occurred.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the 1-based line number indicating where the error occurred.</summary>
+        <value>The 1-based line number indicating where the error occurred.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Example
+
+The code below throws the following exception message, showing that line number is 1-based (the error is found in the first line):
+
+`System.Xml.XmlException: 'Name cannot begin with the '<' character, hexadecimal value 0x3C. Line 1, position 2.'`
+
+```cs
+using System.IO;
+using System.Text;
+using System.Xml.Linq;
+
+namespace ConsoleApp
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes("<<foo>\r\nbar</foo>")))
+            {
+                XDocument xdoc = XDocument.Load(ms, LoadOptions.SetLineInfo);
+            }
+        }
+    }
+}
+```
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="LinePosition">
@@ -389,9 +419,39 @@ The `XmlException` is a generic XML-related error that is thrown if problems occ
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the zero-based line position indicating where the error occurred.</summary>
-        <value>The zero-based line position indicating where the error occurred.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the 1-based line position indicating where the error occurred.</summary>
+        <value>The 1-based line position indicating where the error occurred.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Example
+
+The code below throws the following exception message, showing that line position is 1-based (the error is found in the second character):
+
+`System.Xml.XmlException: 'Name cannot begin with the '<' character, hexadecimal value 0x3C. Line 1, position 2.'`
+
+```cs
+using System.IO;
+using System.Text;
+using System.Xml.Linq;
+
+namespace ConsoleApp
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes("<<foo>\r\nbar</foo>")))
+            {
+                XDocument xdoc = XDocument.Load(ms, LoadOptions.SetLineInfo);
+            }
+        }
+    }
+}
+```
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Message">
