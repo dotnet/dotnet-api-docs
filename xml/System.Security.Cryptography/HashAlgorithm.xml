@@ -714,9 +714,18 @@ The following example calculates the <xref:System.Security.Cryptography.SHA256> 
         <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">The input to compute the hash code for.</param>
+        <summary>Routes data written to the object into the hash algorithm for computing the hash.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+The default implementation of this method copies `source` to a temporary array and calls <xref:System.Security.Cryptography.HashAlgorithm.HashCore(System.Byte[],System.Int32,System.Int32)>.
+    
+Derived types should override this method to avoid the intermediate data copying.
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="HashCore">
@@ -764,7 +773,7 @@ The following example calculates the <xref:System.Security.Cryptography.SHA256> 
 ## Remarks  
  This method is not called by application code.  
   
- This abstract method performs the hash computation. Every write to the cryptographic stream object passes the data through this method. For each block of data, this method updates the state of the hash object so a correct hash value is returned at the end of the data stream.  
+ This abstract method performs the hash computation. Every write to the cryptographic hash algorithm passes the data through this method. For each block of data, this method updates the state of the hash object so a correct hash value is returned at the end of the data.  
   
  ]]></format>
         </remarks>
@@ -801,13 +810,13 @@ The following example calculates the <xref:System.Security.Cryptography.SHA256> 
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>When overridden in a derived class, finalizes the hash computation after the last data is processed by the cryptographic stream object.</summary>
+        <summary>When overridden in a derived class, finalizes the hash computation after the last data is processed by the cryptographic hash algorithm.</summary>
         <returns>The computed hash code.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This method finalizes any partial computation and returns the correct hash value for the data stream.  
+ This method finalizes any partial computation and returns the correct hash value for the data.  
   
  ]]></format>
         </remarks>
@@ -965,7 +974,7 @@ The following example calculates the <xref:System.Security.Cryptography.SHA256> 
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.</summary>
+        <summary>Resets the hash algorithm to its initial state.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1333,11 +1342,12 @@ For more information about Dispose and Finalize, see [Cleaning Up Unmanaged Reso
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The input to compute the hash code for.</param>
+        <param name="destination">The buffer to receive the hash value.</param>
+        <param name="bytesWritten">When this method returns, the total number of bytes written into <paramref name="destination"/>. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to compute the hash value for the specified byte array.</summary>
+        <returns>
+          <see langword="true"/> if <paramref name="destination"/> is long enough to receive the hash value; otherwise, <see langword="false"/>.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1368,11 +1378,24 @@ For more information about Dispose and Finalize, see [Cleaning Up Unmanaged Reso
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">The buffer to receive the hash value.</param>
+        <param name="bytesWritten">When this method returns, the total number of bytes written into <paramref name="destination"/>. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to finalize the hash computation after the last data is processed by the hash algorithm.</summary>
+        <returns>
+          <see langword="true"/> if <paramref name="destination"/> is long enough to receive the hash value; otherwise, <see langword="false"/>.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+The default implementation of this method is to call <xref:System.Security.Cryptography.HashAlgorithm.HashFinal> and copy the result to `destination`.
+    
+Derived types should override this method to avoid the intermediate array creation.
+
+All calls to this method by the <xref:System.Security.Cryptography.HashAlgorithm> class have already verified that `destination` is long enough based on the <xref:System.Security.Cryptography.HashAlgorithm.HashSize> property,
+so `false` return values are unexpected.
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
