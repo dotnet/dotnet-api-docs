@@ -43,9 +43,9 @@
         <Parameter Name="bExpand" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="hItem">To be added.</param>
-        <param name="bExpand">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="hItem">A handle to the item to expand.</param>
+        <param name="bExpand">A value that specifies whether to expand or collapse the item. <see langword="true" /> expands the item. <see langword="false" /> collapses the item.</param>
+        <summary>Enables the snap-in to expand or collapse an item in the scope pane.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -68,8 +68,8 @@
         <Parameter Name="phwnd" Type="System.IntPtr" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="phwnd">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="phwnd">A pointer to a variable that receives the window handle.</param>
+        <summary>Retrieves a handle to the main frame window.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -116,11 +116,56 @@
         <Parameter Name="piRetval" Type="System.Int32" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="lpszText">To be added.</param>
-        <param name="lpszTitle">To be added.</param>
-        <param name="fuStyle">To be added.</param>
-        <param name="piRetval">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="lpszText">A pointer to a null-terminated string that contains the message to be displayed.</param>
+        <param name="lpszTitle">A pointer to a null-terminated string used for the message box title. If this parameter is <see langword="null" />, the default title "Error" is used.</param>
+        <param name="fuStyle">A value that specifies a set of bit flags that determine the contents and behavior of the message box. This parameter can be a combination of flags from the following groups of flags.
+        
+Specify one of the following flags to indicate which buttons appear in the message box:
+| Value | Description |
+| --- | --- |
+| MB\_ABORTRETRYIGNORE | The message box contains three buttons: Abort, Retry, and Ignore. |
+| MB\_OK | The message box contains one button: OK. This is the default. |
+| MB\_OKCANCEL | The message box contains two buttons: OK and Cancel. |
+| MB\_RETRYCANCEL | The message box contains two buttons: Retry and Cancel. |
+| MB\_YESNO | The message box contains two buttons: Yes and No. |
+| MB\_YESNOCANCEL | The message box contains three buttons: Yes, No, and Cancel. |
+
+Specify one of the following flags to indicate which icon appears in the message box:
+| Value | Description |
+| --- | --- |
+| MB\_ICONEXCLAMATION, MB\_ICONWARNING | An exclamation point icon appears in the message box. |
+| MB\_ICONINFORMATION, MB\_ICONASTERISK | An icon consisting of an "I" in a circle appears in the message box. |
+| MB\_ICONQUESTION | A question-mark icon appears in the message box. |
+| MB\_ICONSTOP, MB\_ICONERROR, MB\_ICONHAND | A stop sign icon appears in the message box. |
+
+Specify one of the following flags to indicate the default button:
+| Value | Description |
+| --- | --- |
+| MB\_DEFBUTTON1 | The first button is the default button unless one of the other flags in this group is specified as the default. |
+| MB\_DEFBUTTON2 | The second button is the default button. |
+| MB\_DEFBUTTON3 | The third button is the default button. |
+| MB\_DEFBUTTON4 | The fourth button is the default button. |
+
+Specify one of the following flags to indicate the modality of the dialog box:
+| Value | Description |
+| --- | --- |
+| MB\_APPLMODAL | The user must respond to the message box before continuing work in the current window. However, the user can move to the windows of other applications and work in those windows. The default is MB\_APPLMODAL if neither MB\_SYSTEMMODAL nor MB\_TASKMODAL is specified. |
+| MB\_SYSTEMMODAL | All applications are suspended until the user responds to the message box. System-modal message boxes are used to notify the user of serious, potentially damaging errors that require immediate attention and should be used sparingly. |
+| MB\_TASKMODAL | This flag is reserved for a calling application or library that does not have a window handle available. |
+
+In addition, you can specify the following flags:
+| Value | Description |
+| --- | --- |
+| MB\_DEFAULT\_DESKTOP\_ONLY | The desktop currently receiving input must be a default desktop; otherwise, the function fails. A default desktop is one an application runs on after the user has logged on. |
+| MB\_HELP | Adds a Help button to the message box. Choosing the Help button or pressing F1 generates a Help event. |
+| MB\_RIGHT | The text is right-justified. |
+| MB\_RTLREADING | Displays message and caption text using right-to-left reading order for Hebrew and Arabic systems. |
+| MB\_SETFOREGROUND | The message box becomes the foreground window. |
+| MB\_TOPMOST | The message box is created with the WS\_EX\_TOPMOST window style. |
+| MB\_SERVICE\_NOTIFICATION | The caller is a service notifying the user of an event. The function displays a message box on the current active desktop, even if there is no user logged on to the computer. |
+| MB\_SERVICE\_NOTIFICATION\_NT3x | This value corresponds to the value defined for MB\_SERVICE\_NOTIFICATION for earlier versions of Windows. |</param>
+        <param name="piRetval">A pointer to the return value.</param>
+        <summary>Displays a message box.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -144,9 +189,17 @@
         <Parameter Name="lOptions" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="hScopeItem">To be added.</param>
-        <param name="lOptions">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="hScopeItem">The scope item that forms the root of the new window.</param>
+        <param name="lOptions">Options used to create the new window are listed in the following list.
+| Value | Description |
+| --- | --- |
+| MMC\_NW\_OPTION\_NONE | Display a new window with default window settings. This is the programmatic equivalent to selecting the New Window From Here command from the View context menu. |
+| MMC\_NW\_OPTION\_NOSCOPEPANE | Hide the scope pane (Console Tree pane) in the new window. |
+| MMC\_NW\_OPTION\_NOTOOLBARS | Hide the standard toolbars in the new window. If the snap-in has custom toolbar buttons and menus, they will appear. |
+| MMC\_NW\_OPTION\_SHORTTITLE | This option is not supported and its definition exists only for backward compatibility. |
+| MMC\_NW\_OPTION\_CUSTOMTITLE | Use the custom title provided by the snap-in. Title bar text contains the display name specified by the item data object implementation of the CCF\_DISPLAY\_NAME. |
+| MMC\_NW\_OPTION\_NOPERSIST | Do not save the new window to the .msc file. |</param>
+        <summary>Creates a new multiple-document interface (MDI) child window rooted at the specified scope item.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -169,8 +222,8 @@
         <Parameter Name="ppConsoleVerb" Type="Microsoft.CLRAdmin.IConsoleVerb" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="ppConsoleVerb">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="ppConsoleVerb">A pointer to the address of a variable that receives the <see cref="T:Microsoft.CLRAdmin.IConsoleVerb" /> interface pointer.</param>
+        <summary>Queries for the <see cref="T:Microsoft.CLRAdmin.IConsoleVerb" /> interface.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -193,8 +246,8 @@
         <Parameter Name="ppImageList" Type="Microsoft.CLRAdmin.IImageList" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="ppImageList">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="ppImageList">Address of a variable that receives the <see cref="T:Microsoft.CLRAdmin.IImageList" /> interface pointer.</param>
+        <summary>Retrieves the console-provided result-view image list. This image list should be used only if the snap-in is using the default list view.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -241,8 +294,8 @@
         <Parameter Name="ppImageList" Type="Microsoft.CLRAdmin.IImageList" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="ppImageList">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="ppImageList">The address of a variable that receives the scope pane <see cref="T:Microsoft.CLRAdmin.IImageList" /> interface pointer.</param>
+        <summary>Queries the console-provided scope pane image list.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -265,8 +318,8 @@
         <Parameter Name="hScopeItem" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="hScopeItem">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="hScopeItem">A handle to the item in the scope pane to be selected.</param>
+        <summary>Selects the given scope item.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -289,8 +342,8 @@
         <Parameter Name="pHeader" Type="Microsoft.CLRAdmin.IHeaderCtrl" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="pHeader">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="pHeader">A pointer to the <see cref="T:Microsoft.CLRAdmin.IHeaderCtrl" /> interface.</param>
+        <summary>Sets the header interface to use for this instance of <see cref="T:Microsoft.CLRAdmin.IComponent" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -313,8 +366,8 @@
         <Parameter Name="pszStatusText" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="pszStatusText">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="pszStatusText">A pointer to a null-terminated string that contains text to be displayed in the status bar.</param>
+        <summary>Enables the snap-in to change the text in the status bar. Be aware that this is used only by instances of <see cref="T:Microsoft.CLRAdmin.IComponent" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -337,8 +390,8 @@
         <Parameter Name="pToolbar" Type="System.Object" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="pToolbar">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="pToolbar">A pointer to the <see cref="T:Microsoft.CLRAdmin.IToolbar" /> interface.</param>
+        <summary>Sets the toolbar interface to use for this instance of <see cref="T:Microsoft.CLRAdmin.IComponent" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -363,10 +416,10 @@
         <Parameter Name="hint" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="lpDataObject">To be added.</param>
-        <param name="data">To be added.</param>
-        <param name="hint">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="lpDataObject">A pointer to a user-supplied data object.</param>
+        <param name="data">A user-defined value, for example a pointer to the modified content.</param>
+        <param name="hint">A user-defined value, for example information about the type of content change.</param>
+        <summary>Called by a snap-in when there is a content change in the result pane.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
