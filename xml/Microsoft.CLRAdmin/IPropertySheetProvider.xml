@@ -40,8 +40,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <summary>Collects the pages from the extension snap-ins.</summary>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="AddPrimaryPages">
@@ -66,12 +67,15 @@
         <Parameter Name="bScopePane" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="lpUnknown">To be added.</param>
-        <param name="bCreateHandle">To be added.</param>
-        <param name="hNotifyWindow">To be added.</param>
-        <param name="bScopePane">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="lpUnknown">A pointer to snap-in interface that will be queried for the <see cref="T:Microsoft.CLRAdmin.IExtendPropertySheet" /> interface. If <paramref name="bCreateHandle" />< is set to <see langword="true" />, this should also be a pointer to the snap-in's <see cref="T:Microsoft.CLRAdmin.IComponent" /> or <see cref="T:Microsoft.CLRAdmin.IComponentData" /> interface that will be queried for <see cref="T:Microsoft.CLRAdmin.IExtendPropertySheet" />. Be aware that this value can be <see langword="null" />.</param>
+        <param name="bCreateHandle">A value that specifies whether to create a console-provided notification handle that is used to route the <see cref="F:Microsoft.CLRAdmin.MMCN.PROPERTY_CHANGE" /> notification to the appropriate <see cref="T:Microsoft.CLRADmin.IComponent" /> or <see cref="T:Microsoft.CLRADmin.IComponentData" /> interface.
+        
+If <paramref name="bCreateHandle" /> is set to <see langword="true" />, the <paramref name="lpUnknown" /> parameter should be a pointer to the <see cref="T:Microsoft.CLRADmin.IComponent" /> or <see cref="T:Microsoft.CLRADmin.IComponentData" /> that receives the <see cref="F:Microsoft.CLRAdmin.MMCN.PROPERTY_CHANGE" /> notification.</param>
+        <param name="hNotifyWindow">Reserved for future use. This value should be <see langword="null" />.</param>
+        <param name="bScopePane">Set to <see langword="true" /> if the item is in the scope pane. Set to <see langword="false" /> if it is in the result pane.</param>
+        <summary>Collects the pages from the primary snap-in.</summary>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="CreatePropertySheet">
@@ -97,13 +101,21 @@
         <Parameter Name="dwOptions" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="title">To be added.</param>
-        <param name="type">To be added.</param>
-        <param name="cookie">To be added.</param>
-        <param name="pIDataObjectm">To be added.</param>
-        <param name="dwOptions">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="title">A pointer to a null-terminated string that contains the title of the property page. This parameter cannot be <see langword="null" />.</param>
+        <param name="type">
+          <see langword="true" /> creates a property sheet and <see langword="false" /> creates a wizard.</param>
+        <param name="cookie">Cookie value of the currently selected item. This can be <see langword="null" /> when this method is called by an extension snap-in.</param>
+        <param name="pIDataObjectm">A pointer to the <see cref="T:Microsoft.CLRAdmin.IDataObject" /> interface on the data object for the cookie. If the value of this parameter is <see langword="null" />, MMC will not call any of the <see cref="T:Microsoft.CLRAdmin.IExtendPropertySheet2" /> methods implemented by extension snap-ins.</param>
+        <param name="dwOptions">A value that specifies the flags that can be set by the method call. The parameter can be a combination of the following values:
+| Value | Description |
+| --- | --- |
+| MMC\_PSO\_NOAPPLYNOW | Remove Apply Now button. |
+| MMC\_PSO\_HASHELP | Add a Help button. |
+| MMC\_PSO\_NO\_PROPTITLE | Ignored for wizards. For property sheets, if this option is specified, then the words "Properties for" will not be inserted at the beginning of the property sheet title bar. |
+| MMC\_PSO\_NEWWIZARDTYPE | Use Wizard 97 style. |</param>
+        <summary>Creates a property sheet frame.</summary>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="FindPropertySheet">
@@ -127,12 +139,13 @@
         <Parameter Name="lpDataObject" Type="Microsoft.CLRAdmin.IDataObject" />
       </Parameters>
       <Docs>
-        <param name="cookie">To be added.</param>
-        <param name="lpComponent">To be added.</param>
-        <param name="lpDataObject">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="cookie">Cookie value of the currently selected item.</param>
+        <param name="lpComponent">A pointer to the <see cref="T:Microsoft.CLRAdmin.IComponent" /> interface on the selected object.</param>
+        <param name="lpDataObject">A pointer to the <see cref="T:Microsoft.CLRAdmin.IDataObject" /> interface on the data object.</param>
+        <summary>Determines whether a specific property sheet exists.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="Show">
@@ -155,10 +168,11 @@
         <Parameter Name="page" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="window">To be added.</param>
-        <param name="page">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
+        <param name="window">A value that specifies the handle to the parent window.</param>
+        <param name="page">A value that specifies which page on the property sheet is shown. It is zero-indexed.</param>
+        <summary>If the type that has been set in <see cref="M:Microsoft.CLRAdmin.IPropertySheetProvider.CreatePropertySheet(System.String,System.Int32,System.Int32,Microsoft.CLRAdmin.IDataObject,System.UInt32)" /> is a property sheet, this method displays a property sheet frame that is parented to a hidden window. If the type that has been set in <see cref="M:Microsoft.CLRAdmin.IPropertySheetProvider.CreatePropertySheet(System.String,System.Int32,System.Int32,Microsoft.CLRAdmin.IDataObject,System.UInt32)" /> is a wizard, this method displays a property sheet frame parented to the handle that is passed to this method.</summary>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
   </Members>
