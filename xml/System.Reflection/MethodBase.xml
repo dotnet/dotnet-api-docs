@@ -1599,14 +1599,21 @@
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- To determine if a method is overridable, it is not sufficient to check that <xref:System.Reflection.MethodBase.IsVirtual%2A> is `true`. For a method to be overridable, `IsVirtual` must be `true` and `IsFinal` must be `false`. For example, a method might be non-virtual, but it implements an interface method. The common language runtime requires that all methods that implement interface members must be marked as `virtual`; therefore, the compiler marks the method `virtual final`. So there are cases where a method is marked as `virtual` but is still not overridable.  
-  
- To establish with certainty whether a method is overridable, use code such as this:  
-  
- `if (MethodInfo.IsVirtual && !MethodInfo.IsFinal)`  
-  
- If `IsVirtual` is `false` or `IsFinal` is `true`, then the method cannot be overridden.  
+## Remarks
+
+If the virtual method is marked `final`, it can't be overridden in derived classes. The overridden virtual method can be marked `final` using the [sealed](~/docs/csharp/language-reference/keywords/sealed.md) keyword in C#, [NotOverridable](~/docs/visual-basic/language-reference/modifiers/notoverridable.md) keyword in Visual Basic, or [sealed](/cpp/extensions/sealed-cpp-component-extensions) keyword in C++/CLI. The method can also be marked `final` implicitly by the compiler. For example, a method might be defined as non-virtual in your code, but it implements an interface method. The Common Language Runtime requires that all methods that implement interface members must be marked as `virtual`; therefore, the compiler marks the method `virtual final`.
+
+You can use this property, in conjunction with the <xref:System.Reflection.MethodBase.IsVirtual%2A> property, to determine if a method is overridable. For a method to be overridable, <xref:System.Reflection.MethodBase.IsVirtual%2A> property must be `true` and `IsFinal` property must be `false`. To establish with certainty whether a method is overridable, use code such as this:
+
+```csharp
+if (MethodInfo.IsVirtual && !MethodInfo.IsFinal)
+```
+
+```vb
+If MethodInfo.IsVirtual AndAlso Not MethodInfo.IsFinal Then
+```
+
+If `IsVirtual` is `false` or `IsFinal` is `true`, then the method cannot be overridden.  
   
    
   
