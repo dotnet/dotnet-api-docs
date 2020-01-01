@@ -74,19 +74,19 @@
 
  In this section:
 
- [Instantiating a String object](#Instantiation)
- [Char objects and Unicode characters](#Characters)
- [Strings and The Unicode Standard](#Unicode)
- [Strings and embedded null characters](#EmbeddedNulls)
- [Strings and indexes](#Indexes)
- [Null strings and empty strings](#Nulls)
- [Immutability and the StringBuilder class](#Immutability)
- [Ordinal vs. culture-sensitive operations](#CultureSensitive)
- [Normalization](#Normalization)
- [String operations by category](#ByCategory)
+ [Instantiate a String object](#Instantiation)\
+ [Char objects and Unicode characters](#Characters)\
+ [Strings and The Unicode Standard](#Unicode)\
+ [Strings and embedded null characters](#EmbeddedNulls)\
+ [Strings and indexes](#Indexes)\
+ [Null strings and empty strings](#Nulls)\
+ [Immutability and the StringBuilder class](#Immutability)\
+ [Ordinal vs. culture-sensitive operations](#CultureSensitive)\
+ [Normalization](#Normalization)\
+ [String operations by category](#ByCategory)\
 
 <a name="Instantiation"></a>
-## Instantiating a String object
+## Instantiate a String object
  You can instantiate a <xref:System.String> object in the following ways:
 
 -   By assigning a string literal to a <xref:System.String> variable. This is the most commonly used method for creating a string. The following example uses assignment to create several strings. Note that in C#, because the backslash (\\) is an escape character, literal backslashes in a string must be escaped or the entire string must be @-quoted.
@@ -559,22 +559,24 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- In this section:
+In this section:
 
- [Overloaded constructor syntax](#Syntax)
- [Parameters](#Params)
- [Exceptions](#Exceptions)
- [Which method do I call?](#Tasks)
- [Creating strings](#Creating_Strings)
- [Handling repetitive strings](#Repetitive)
- Examples of instantiating strings:
- [Using string assignment](#Ctor1_Example)
- [Using a character array](#Ctor2_Example)
- [Using a portion of a character array and repeating a single character](#Ctor3_Example)
- [Using a pointer to a character array](#Ctor4_Example)
- [Using  a pointer and a range of an array](#Ctor5_Example)
- [Using a pointer to a signed byte array](#Ctor6_Example)
-[Version information](#Versions)
+[Overloaded constructor syntax](#Syntax)\
+[Parameters](#Params)\
+[Exceptions](#Exceptions)\
+[Which method do I call?](#Tasks)\
+[Creating strings](#Creating_Strings)\
+[Handling repetitive strings](#Repetitive)\
+
+Examples of instantiating strings:
+
+[Use string assignment](#Ctor1_Example)\
+[Use a character array](#Ctor2_Example)\
+[Use a portion of a character array and repeating a single character](#Ctor3_Example)\
+[Use a pointer to a character array](#Ctor4_Example)\
+[Use  a pointer and a range of an array](#Ctor5_Example)\
+[Use a pointer to a signed byte array](#Ctor6_Example)\
+[Version information](#Versions)\
 
 <a name="Syntax"></a>
 ## Overloaded constructor syntax
@@ -670,7 +672,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
 |Create a string from ASCII characters.|<xref:System.Text.ASCIIEncoding.GetString%2A?displayProperty=nameWithType>|
 
 <a name="Creating_Strings"></a>
-## Creating strings
+## Create strings
  The most commonly used technique for creating strings programmatically is simple assignment, as illustrated in [this example](#Ctor1_Example). The <xref:System.String> class also includes four types of constructor overloads that let you create strings from the following values:
 
 -   From a character array (an array of UTF-16-encoded characters). You can create a new <xref:System.String> object from the characters in the entire array or a portion of it. The <xref:System.String.%23ctor%28System.Char%5B%5D%29> constructor copies all the characters in the array to the new string. The <xref:System.String.%23ctor%28System.Char%5B%5D%2CSystem.Int32%2CSystem.Int32%29> constructor copies the characters from index `startIndex` to index `startIndex` + `length` - 1 to the new string. If `length` is zero, the value of the new string is <xref:System.String.Empty?displayProperty=nameWithType>.
@@ -704,7 +706,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
      Because the <xref:System.String.%23ctor%28System.SByte%2A%29> and <xref:System.String.%23ctor%28System.SByte%2A%2CSystem.Int32%2CSystem.Int32%29> constructors interpret `value` by using the default ANSI code page, calling these constructors with identical byte arrays may create strings that have different values on different systems.
 
 <a name="Repetitive"></a>
-## Handling repetitive strings
+## Handle repetitive strings
  Apps that parse or decode streams of text often use the <xref:System.String.%23ctor%28System.Char%5B%5D%2CSystem.Int32%2CSystem.Int32%29> constructor or the <xref:System.Text.StringBuilder.Append%28System.Char%5B%5D%2CSystem.Int32%2CSystem.Int32%29?displayProperty=nameWithType> method to convert sequences of characters into a string. Repeatedly creating new strings with the same value instead of creating and reusing one string wastes memory. If you are likely to create the same string value repeatedly by calling the <xref:System.String.%23ctor%28System.Char%5B%5D%2CSystem.Int32%2CSystem.Int32%29> constructor, even if you don't know in advance what those identical string values may be, you can use a lookup table instead.
 
  For example, suppose you read and parse a stream of characters from a file that contains XML tags and attributes. When you parse the stream, you repeatedly encounter certain tokens (that is, sequences of characters that have a symbolic meaning). Tokens equivalent to the strings "0", "1", "true", and "false" are likely to occur frequently in an XML stream.
@@ -712,7 +714,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
  Instead of converting each token into a new string, you can create a <xref:System.Xml.NameTable?displayProperty=nameWithType> object to hold commonly occurring strings. The <xref:System.Xml.NameTable> object improves performance, because it retrieves stored strings without allocating temporary memory. When you encounter a token, use the <xref:System.Xml.NameTable.Get%28System.Char%5B%5D%2CSystem.Int32%2CSystem.Int32%29?displayProperty=nameWithType> method to retrieve the token from the table. If the token exists, the method returns the corresponding string. If the token does not exist, use the <xref:System.Xml.NameTable.Add%28System.Char%5B%5D%2CSystem.Int32%2CSystem.Int32%29?displayProperty=nameWithType> method to insert the token into the table and to get the corresponding string.
 
 <a name="Ctor1_Example"></a>
-## Example 1: Using string assignment
+## Example 1: Use string assignment
  The following example creates a new string by assigning it a string literal. It creates a second string by assigning the value of the first string to it. These are the two most common ways to instantiate a new <xref:System.String> object.
 
  [!code-cpp[System.String.ctor#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.string.ctor/cpp/assignment.cpp#1)]
@@ -720,7 +722,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
  [!code-vb[System.String.ctor#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.ctor/vb/ctor1.vb#1)]
 
 <a name="Ctor2_Example"></a>
-## Example 2: Using a character array
+## Example 2: Use a character array
  The following example demonstrates how to create a new <xref:System.String> object from a character array.
 
  [!code-cpp[stringexample1#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringexample1/CPP/source.cpp#1)]
@@ -728,7 +730,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
  [!code-vb[stringexample1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringexample1/VB/source.vb#1)]
 
 <a name="Ctor3_Example"></a>
-## Example 3: Using a portion of a character array and repeating a single character
+## Example 3: Use a portion of a character array and repeating a single character
  The following example demonstrates how to create a new <xref:System.String> object from a portion of a character array, and how to create a new <xref:System.String> object that contains multiple occurrences of a single character.
 
  [!code-cpp[stringexample1#3](~/samples/snippets/cpp/VS_Snippets_CLR/stringexample1/CPP/source.cpp#3)]
@@ -736,21 +738,21 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
  [!code-vb[stringexample1#3](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringexample1/VB/source.vb#3)]
 
 <a name="Ctor4_Example"></a>
-## Example 4: Using a pointer to a character array
+## Example 4: Use a pointer to a character array
  The following example demonstrates how to create a new <xref:System.String> object from a pointer to an array of characters. The C# example must be compiled by using the `/unsafe` compiler switch.
 
  [!code-cpp[System.String.Ctor#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.string.ctor/cpp/char1_ctor.cpp#2)]
  [!code-csharp[System.String.Ctor#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.ctor/cs/ctor2.cs#2)]
 
 <a name="Ctor5_Example"></a>
-## Example 5: Instantiating a string from a pointer and a range of an array
+## Example 5: Instantiate a string from a pointer and a range of an array
  The following example examines the elements of a character array for either a period or an exclamation point. If one is found, it instantiates a string from the characters in the array that precede the punctuation symbol. If not, it instantiates a string with the entire contents of the array. The C# example must be compiled using the `/unsafe` compiler switch.
 
  [!code-cpp[System.String.Ctor#3](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.string.ctor/cpp/char2_ctor.cpp#3)]
  [!code-csharp[System.String.Ctor#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.ctor/cs/char2_ctor.cs#3)]
 
 <a name="Ctor6_Example"></a>
-## Example 6: Instantiating a string from a pointer to a signed byte array
+## Example 6: Instantiate a string from a pointer to a signed byte array
  The following example demonstrates how you can create an instance of the <xref:System.String> class with the <xref:System.String.%23ctor%28System.SByte%2A%29> constructor.
 
  [!code-cpp[stringexample1#2](~/samples/snippets/cpp/VS_Snippets_CLR/stringexample1/CPP/source.cpp#2)]
@@ -2019,7 +2021,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
 
 
 ## Examples
- The following example compares two strings in three different ways: using linguistic comparison for the en-US culture; using linguistic case-sensitive comparison for the en-US culture; and using an ordinal comparison. It illustrates how the three methods of comparison produce three different results.
+ The following example compares two strings in three different ways: Use linguistic comparison for the en-US culture; using linguistic case-sensitive comparison for the en-US culture; and using an ordinal comparison. It illustrates how the three methods of comparison produce three different results.
 
  [!code-cpp[System.String.Compare#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Compare/cpp/example.cpp#1)]
  [!code-csharp[System.String.Compare#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Compare/cs/Example.cs#1)]
@@ -5190,7 +5192,7 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 
  Besides formatting, you can also control alignment and spacing.
 
- ### Inserting a string
+ ### Insert a string
 
  <xref:System.String.Format%2A?displayProperty=nameWithType> starts with a format string, followed by one or more objects or expressions that will be converted to strings and inserted at a specified place in the format string. For example:
 
@@ -5208,7 +5210,7 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 
  You can have as many format items and as many objects in the object list as you want, as long as the index of every format item has a matching object in the object list. You also don't have to worry about which overload you call; the compiler will select the appropriate one for you.
 
- ### Controlling formatting
+ ### Control formatting
  You can follow the index in a format item with a format string to control how an object is formatted. For example, `{0:d}` applies the "d" format string to the first object in the object list. Here is an example with a single object and two format items:
 
  [!code-cpp[System.String.Format#32](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Format/cpp/starting1.cpp#32)]
@@ -5217,7 +5219,7 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 
  A number of types support format strings, including all numeric types (both [standard](~/docs/standard/base-types/standard-numeric-format-strings.md) and [custom](~/docs/standard/base-types/custom-numeric-format-strings.md) format strings), all dates and times (both [standard](~/docs/standard/base-types/standard-date-and-time-format-strings.md) and [custom](~/docs/standard/base-types/custom-date-and-time-format-strings.md) format strings) and time intervals (both [standard](~/docs/standard/base-types/standard-timespan-format-strings.md) and [custom](~/docs/standard/base-types/custom-timespan-format-strings.md) format strings), all enumeration types [enumeration types](~/docs/standard/base-types/enumeration-format-strings.md), and [GUIDs](https://msdn.microsoft.com/library/97af8hh4.aspx). You can also add support for format strings to your own types.
 
- ### Controlling spacing
+ ### Control spacing
  You can define the width of the string that is inserted into the result string by using syntax such as `{0,12}`, which inserts a 12-character string. In this case, the string representation of the first object is right-aligned in the 12-character field.  (If the string representation of the first object is more than 12 characters in length, though, the preferred field width is ignored, and the entire string is inserted into the result string.)
 
  The following example defines a 6-character field to hold the string "Year" and some year strings, as well as an 15-character field to hold the string "Population" and some population data. Note that the characters are right-aligned in the field.
@@ -5226,7 +5228,7 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
  [!code-csharp[System.String.Format#33](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Format/cs/starting3.cs#33)]
  [!code-vb[System.String.Format#33](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Format/vb/starting1.vb#33)]
 
- ### Controlling alignment
+ ### Control alignment
  By default, strings are right-aligned within their field if you specify a field width. To left-align strings in a field, you preface the field width with a negative sign, such as `{0,-12}` to define a 12-character left-aligned field.
 
  The following example is similar to the previous one, except that it left-aligns both labels and data.
@@ -5326,7 +5328,7 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
  [!code-vb[System.String.Format2#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Format2/vb/Example1.vb#1)]
 
 <a name="Format_Culture"></a>
-## Formatting and culture
+## Format and culture
  Generally, objects in the argument list are converted to their string representations by using the conventions of the current culture, which is returned by the <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property. You can control this behavior by calling one of the overloads of <xref:System.String.Format%2A> that includes a `provider` parameter. The `provider` parameter is an <xref:System.IFormatProvider> implementation that supplies custom and culture-specific formatting information that is used to moderate the formatting process.
 
  The <xref:System.IFormatProvider> interface has a single member, <xref:System.IFormatProvider.GetFormat%2A>, which is responsible for returning the object that provides formatting information. .NET has three <xref:System.IFormatProvider> implementations that provide culture-specific formatting:
@@ -5648,7 +5650,7 @@ This method uses the [composite formatting feature](~/docs/standard/base-types/c
 
 [!INCLUDE[simple-string-format](~/includes/simple-string-format.md)]
 
-## Example: Formatting more than three arguments
+## Example: Format more than three arguments
 
  This example creates a string that contains data on the high and low temperature on a particular date. The composite format string has five format items in the C# example and six in the Visual Basic example. Two of the format items define the width of their corresponding value's string representation, and the first format item also includes a standard date and time format string.
 
@@ -5899,7 +5901,7 @@ This method uses the [composite formatting feature](~/docs/standard/base-types/c
 
 [!INCLUDE[simple-string-format](~/includes/simple-string-format.md)]
 
-## Example: Formatting two arguments
+## Example: Format two arguments
 
  This example uses the <xref:System.String.Format%28System.String%2CSystem.Object%2CSystem.Object%29> method to display time and temperature data stored in a generic <xref:System.Collections.Generic.Dictionary%602> object. Note that the format string has three format items, although there are only two objects to format. This is because the first object in the list (a date and time value) is used by two format items: The first format item displays the time, and the second displays the date.
 
@@ -6048,7 +6050,7 @@ This method uses the [composite formatting feature](~/docs/standard/base-types/c
 
 [!INCLUDE[simple-string-format](~/includes/simple-string-format.md)]
 
-## Example: Formatting three arguments
+## Example: Format three arguments
 
  This example uses the <xref:System.String.Format%28System.String%2CSystem.Object%2CSystem.Object%2CSystem.Object%29> method to create a string that illustrates the result of a Boolean `And` operation with two integer values. Note that the format string includes six format items, but the method has only three items in its parameter list, because each item is formatted in two different ways.
 
