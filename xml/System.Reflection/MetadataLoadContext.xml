@@ -21,7 +21,7 @@
   <Docs>
     <summary>Represents a closed universe of Type objects loaded for inspection-only purposes. Each MetadataLoadContext can have its own binding rules and is isolated from all other MetadataLoadContexts.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
+      <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
@@ -81,18 +81,18 @@ Assemblies are treated strictly as metadata. There are no restrictions on loadin
 ## Remarks
 
 The core assembly is treated differently than other assemblies because references to these well-known types do not include the assembly reference, unlike normal types.
-            
+
 Typically, this assembly is named "mscorlib" or "netstandard". If the core assembly cannot be found, the value will be `null`, and many other reflection methods, including those that parse method signatures, will throw an exception.
-            
+
 The `CoreAssembly` is determined by passing the `coreAssemblyName` parameter passed to the <xref:System.Reflection.MetadataAssemblyResolver> constructor
 to the <xref:System.Reflection.MetadataAssemblyResolver.Resolve%2A?displayProperty=nameWithType> method.
 
 If no `coreAssemblyName` argument was specified in the constructor of <xref:System.Reflection.MetadataLoadContext>, then default values are used, including "mscorlib", "System.Runtime" and "netstandard".
-            
+
 The designated core assembly does not need to contain the core types directly. It can type forward them to other assemblies. Thus, it is perfectly permissible to use the mscorlib facade as the designated core assembly.
-            
+
 Note that <xref:System.Runtime> is not an ideal core assembly because it excludes some of the interop-related pseudo-custom attribute types such as <xref:System.Runtime.InteropServices.DllImportAttribute>. However, it can serve if you have no interest in those attributes. The CustomAttributes API will skip those attributes if the core assembly does not include the necessary types.
-            
+
 The core assembly is not loaded until necessary. The following APIs do not trigger the search for the core assembly:
 
 * <xref:System.Reflection.MetadataLoadContext.LoadFromStream%2A?displayProperty=nameWithType>
@@ -109,9 +109,9 @@ The core assembly is not loaded until necessary. The following APIs do not trigg
 * <xref:System.Type.Name?displayProperty=nameWithType>
 * <xref:System.Type.FullName?displayProperty=nameWithType>
 * <xref:System.Type.AssemblyQualifiedName?displayProperty=nameWithType>
-            
+
 If a core assembly cannot be found or if the core assembly is missing types, this will affect the behavior of the <xref:System.Reflection.MetadataLoadContext> as follows:
-            
+
 * APIs that need to parse signatures or typespecs and return the results as <xref:System.Type> objects will throw an exception. For example:
 
   * <xref:System.Reflection.MethodInfo.ReturnType?displayProperty=nameWithType>
@@ -120,7 +120,7 @@ If a core assembly cannot be found or if the core assembly is missing types, thi
   * <xref:System.Type.GetInterfaces%2A?displayProperty=nameWithType>
 
 * APIs that need to compare types to well-known core types will not throw an exception, and the comparison will evaluate to `false`. For example, if you do not specify a core assembly, <xref:System.Type.IsPrimitive> will return `false` for everything, even types named <xref:System.Int32>. Similarly, <xref:System.Type.GetTypeCode%2A?displayProperty=nameWithType> will return <xref:System.TypeCode.Object> for everything.
-            
+
 * If a metadata entity sets flags that surface as a pseudo-custom attribute, and the core assembly does not contain the pseudo-custom attribute type, the necessary constructor or any of the parameter types of the constructor, the <xref:System.Reflection.MetadataLoadContext> will not throw. It will omit the pseudo-custom attribute from the list of returned attributes.
           ]]></format>
         </remarks>
@@ -149,7 +149,7 @@ If a core assembly cannot be found or if the core assembly is missing types, thi
       <Docs>
         <summary>Releases any native resources (such as file locks on assembly files). </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 After disposal, it is not safe to use any <xref:System.Reflection.Assembly> objects dispensed by the <xref:System.Reflection.MetadataLoadContext> or any reflection objects dispensed by those <xref:System.Reflection.Assembly> objects.
 
@@ -208,7 +208,8 @@ Some APIs may return fixed or previously cached data. Accessing objects *during*
         <remarks>
           <format type="text/markdown"><![CDATA[
 ## Remarks
-Note that the behavior of this method matches the behavior of the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName%2A?displayProperty=nameWithType> resolve event but does not match the behavior of <xref:System.Reflection.Assembly.ReflectionOnlyLoad%2A?displayProperty=nameWithType>. (The latter gives up without raising its resolve event.)
+
+Note that the behavior of this method matches the behavior of the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName%2A?displayProperty=nameWithType> resolve event, but does not match the behavior of <xref:System.Reflection.Assembly.ReflectionOnlyLoad%2A?displayProperty=nameWithType>. (The latter gives up without raising its resolve event.)
           ]]></format>
         </remarks>
         <exception cref="T:System.IO.FileNotFoundException">The resolver returns <see langword="null" />.</exception>
