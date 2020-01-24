@@ -589,8 +589,7 @@ Application code does not call this method; it is automatically invoked during g
  -or-  
   
  <paramref name="toWaitOn" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">The method was called on a thread that has <see cref="T:System.STAThreadAttribute" />.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">This method is not supported on Windows 98 or Windows Millennium Edition.</exception>
+        <exception cref="T:System.NotSupportedException">The method was called on a thread in <see cref="F:System.Threading.ApartmentState.STA" /> state.</exception>
         <exception cref="T:System.InvalidOperationException">
           <paramref name="toSignal" /> is a semaphore, and it already has a full count.</exception>
         <exception cref="T:System.Threading.AbandonedMutexException">The wait completed because a thread exited without releasing a mutex. This exception is not thrown on Windows 98 or Windows Millennium Edition.</exception>
@@ -667,8 +666,7 @@ Application code does not call this method; it is automatically invoked during g
  -or-  
   
  <paramref name="toWaitOn" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">The method is called on a thread that has <see cref="T:System.STAThreadAttribute" />.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">This method is not supported on Windows 98 or Windows Millennium Edition.</exception>
+        <exception cref="T:System.NotSupportedException">The method is called on a thread in <see cref="F:System.Threading.ApartmentState.STA" /> state.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Threading.WaitHandle" /> cannot be signaled because it would exceed its maximum count.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite time-out.</exception>
@@ -743,8 +741,7 @@ Application code does not call this method; it is automatically invoked during g
  -or-  
   
  <paramref name="toWaitOn" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">The method was called on a thread that has <see cref="T:System.STAThreadAttribute" />.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">This method is not supported on Windows 98 or Windows Millennium Edition.</exception>
+        <exception cref="T:System.NotSupportedException">The method was called on a thread in <see cref="F:System.Threading.ApartmentState.STA" /> state.</exception>
         <exception cref="T:System.InvalidOperationException">
           <paramref name="toSignal" /> is a semaphore, and it already has a full count.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
@@ -859,10 +856,10 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
 ## Remarks  
  <xref:System.Threading.AbandonedMutexException> is new in the .NET Framework version 2.0. In previous versions, the <xref:System.Threading.WaitHandle.WaitAll%2A> method returns `true` when a mutex is abandoned. An abandoned mutex often indicates a serious coding error. In the case of a system-wide mutex, it might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager). The exception contains information useful for debugging.  
   
- The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when all the handles are signaled. On some implementations, if more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If the array contains duplicates, the call fails with a <xref:System.DuplicateWaitObjectException>.  
+ The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when all the handles are signaled. If more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If the array contains duplicates, the call fails with a <xref:System.DuplicateWaitObjectException>.
   
 > [!NOTE]
->  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads that have <xref:System.STAThreadAttribute>.  
+>  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads in <xref:System.Threading.ApartmentState.STA> state.
   
  Calling this method overload is equivalent to calling the <xref:System.Threading.WaitHandle.WaitAll%28System.Threading.WaitHandle%5B%5D%2CSystem.Int32%2CSystem.Boolean%29> method overload and specifying -1 (or <xref:System.Threading.Timeout.Infinite?displayProperty=nameWithType>) for `millisecondsTimeout` and `true` for `exitContext`.  
   
@@ -897,7 +894,7 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
   
  -or-  
   
- The <see cref="T:System.STAThreadAttribute" /> attribute is applied to the thread procedure for the current thread, and <paramref name="waitHandles" /> contains more than one element.</exception>
+ The current thread is <see cref="F:System.Threading.ApartmentState.STA" /> state, and <paramref name="waitHandles" /> contains more than one element.</exception>
         <exception cref="T:System.ApplicationException">
           <paramref name="waitHandles" /> is an array with no elements and the .NET Framework version is 1.0 or 1.1.</exception>
         <exception cref="T:System.Threading.AbandonedMutexException">The wait terminated because a thread exited without releasing a mutex. This exception is not thrown on Windows 98 or Windows Millennium Edition.</exception>
@@ -957,10 +954,10 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
 ## Remarks  
  If `millisecondsTimeout` is zero, the method does not block. It tests the state of the wait handles and returns immediately.  
   
- The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when the wait terminates, which means either when all the handles are signaled or when time-out occurs. On some implementations, if more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If there are duplicates in the array, the call fails with a <xref:System.DuplicateWaitObjectException>.  
+ The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when the wait terminates, which means either when all the handles are signaled or when time-out occurs. If more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If there are duplicates in the array, the call fails with a <xref:System.DuplicateWaitObjectException>.  
   
 > [!NOTE]
->  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads that have <xref:System.STAThreadAttribute>.  
+>  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads in <xref:System.Threading.ApartmentState.STA> state.
   
  Calling this method overload is the same as calling the <xref:System.Threading.WaitHandle.WaitAll%28System.Threading.WaitHandle%5B%5D%2CSystem.Int32%2CSystem.Boolean%29> overload and specifying `false` for `exitContext`.  
   
@@ -988,7 +985,7 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
   
  -or-  
   
- The <see cref="T:System.STAThreadAttribute" /> attribute is applied to the thread procedure for the current thread, and <paramref name="waitHandles" /> contains more than one element.</exception>
+ The current thread is in <see cref="F:System.Threading.ApartmentState.STA" /> state, and <paramref name="waitHandles" /> contains more than one element.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite time-out.</exception>
         <exception cref="T:System.Threading.AbandonedMutexException">The wait completed because a thread exited without releasing a mutex. This exception is not thrown on Windows 98 or Windows Millennium Edition.</exception>
@@ -1048,10 +1045,10 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
 ## Remarks  
  If `timeout` is zero, the method does not block. It tests the state of the wait handles and returns immediately.  
   
- The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when the wait terminates, which means either all the handles are signaled or a time-out occurs. On some implementations, if more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If the array contains duplicates, the call will fail.  
+ The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when the wait terminates, which means either all the handles are signaled or a time-out occurs. If more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If the array contains duplicates, the call will fail.
   
 > [!NOTE]
->  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads that have <xref:System.STAThreadAttribute>.  
+>  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads in <xref:System.Threading.ApartmentState.STA> state.
   
  The maximum value for `timeout` is <xref:System.Int32.MaxValue?displayProperty=nameWithType>.  
   
@@ -1081,7 +1078,7 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
   
  -or-  
   
- The <see cref="T:System.STAThreadAttribute" /> attribute is applied to the thread procedure for the current thread, and <paramref name="waitHandles" /> contains more than one element.</exception>
+ The current thread is in <see cref="F:System.Threading.ApartmentState.STA" /> state, and <paramref name="waitHandles" /> contains more than one element.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents an infinite time-out.  
   
@@ -1147,10 +1144,10 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
   
  <xref:System.Threading.AbandonedMutexException> is new in the .NET Framework version 2.0. In previous versions, the <xref:System.Threading.WaitHandle.WaitAll%2A> method returns `true` when a mutex is abandoned. An abandoned mutex often indicates a serious coding error. In the case of a system-wide mutex, it might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager). The exception contains information useful for debugging.  
   
- The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when the wait terminates, which means either when all the handles are signaled or when time-out occurs. On some implementations, if more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If there are duplicates in the array, the call fails with a <xref:System.DuplicateWaitObjectException>.  
+ The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when the wait terminates, which means either when all the handles are signaled or when time-out occurs. If more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If there are duplicates in the array, the call fails with a <xref:System.DuplicateWaitObjectException>.
   
 > [!NOTE]
->  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads that have <xref:System.STAThreadAttribute>.  
+>  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads in <xref:System.Threading.ApartmentState.STA> state.
   
 ## Notes on Exiting the Context  
  The `exitContext` parameter has no effect unless the <xref:System.Threading.WaitHandle.WaitAll%2A> method is called from inside a nondefault managed context. This can happen if your thread is inside a call to an instance of a class derived from <xref:System.ContextBoundObject>. Even if you are currently executing a method on a class that is not derived from <xref:System.ContextBoundObject>, like <xref:System.String>, you can be in a nondefault context if a <xref:System.ContextBoundObject> is on your stack in the current application domain.  
@@ -1184,7 +1181,7 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
   
  -or-  
   
- The <see cref="T:System.STAThreadAttribute" /> attribute is applied to the thread procedure for the current thread, and <paramref name="waitHandles" /> contains more than one element.</exception>
+ The current thread is in <see cref="F:System.Threading.ApartmentState.STA" /> state, and <paramref name="waitHandles" /> contains more than one element.</exception>
         <exception cref="T:System.ApplicationException">
           <paramref name="waitHandles" /> is an array with no elements and the .NET Framework version is 1.0 or 1.1.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
@@ -1243,10 +1240,10 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
   
  <xref:System.Threading.AbandonedMutexException> is new in the .NET Framework version 2.0. In previous versions, the <xref:System.Threading.WaitHandle.WaitAll%2A> method returns `true` when a mutex is abandoned. An abandoned mutex often indicates a serious coding error. In the case of a system-wide mutex, it might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager). The exception contains information useful for debugging.  
   
- The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when the wait terminates, which means either all the handles are signaled or a time-out occurs. On some implementations, if more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If the array contains duplicates, the call will fail.  
+ The <xref:System.Threading.WaitHandle.WaitAll%2A> method returns when the wait terminates, which means either all the handles are signaled or a time-out occurs. If more than 64 handles are passed, a <xref:System.NotSupportedException> is thrown. If the array contains duplicates, the call will fail.
   
 > [!NOTE]
->  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads that have <xref:System.STAThreadAttribute>.  
+>  The <xref:System.Threading.WaitHandle.WaitAll%2A> method is not supported on threads in <xref:System.Threading.ApartmentState.STA> state.
   
  The maximum value for `timeout` is <xref:System.Int32.MaxValue?displayProperty=nameWithType>.  
   
@@ -1364,8 +1361,10 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
 > [!NOTE]
 >  In versions of the .NET Framework earlier than version 2.0, if a thread exits or aborts without explicitly releasing a <xref:System.Threading.Mutex>, and that `Mutex` is at index 0 (zero) in a `WaitAny` array on another thread, the index returned by `WaitAny` is 128 instead of 0.  
   
- This method returns when any handle is signaled. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects. On some implementations, if more that 64 handles are passed, a <xref:System.NotSupportedException> is thrown.  
-  
+ This method returns when any handle is signaled. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects.
+
+ The maximum number of the wait handles is 64, and 63 if the current thread is in <xref:System.Threading.ApartmentState.STA> state.
+
  Calling this method overload is equivalent to calling the <xref:System.Threading.WaitHandle.WaitAny%28System.Threading.WaitHandle%5B%5D%2CSystem.Int32%2CSystem.Boolean%29> method overload and specifying -1 (or <xref:System.Threading.Timeout.Infinite?displayProperty=nameWithType>) for `millisecondsTimeout` and `true` for `exitContext`.  
   
    
@@ -1447,7 +1446,9 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
   
  The <xref:System.Threading.WaitHandle.WaitAny%2A> method throws an <xref:System.Threading.AbandonedMutexException> only when the wait completes because of an abandoned mutex. If `waitHandles` contains a released mutex with a lower index number than the abandoned mutex, the <xref:System.Threading.WaitHandle.WaitAny%2A> method completes normally and the exception is not thrown.  
   
- This method returns when the wait terminates, either when any of the handles are signaled or when a timeout occurs. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects. On some implementations, if more that 64 handles are passed, a <xref:System.NotSupportedException> is thrown.  
+ This method returns when the wait terminates, either when any of the handles are signaled or when a timeout occurs. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects.
+
+ The maximum number of the wait handles is 64, and 63 if the current thread is in <xref:System.Threading.ApartmentState.STA> state.
   
  Calling this method overload is the same as calling the <xref:System.Threading.WaitHandle.WaitAny%28System.Threading.WaitHandle%5B%5D%2CSystem.Int32%2CSystem.Boolean%29> overload and specifying `false` for `exitContext`.  
   
@@ -1521,8 +1522,10 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
   
  The <xref:System.Threading.WaitHandle.WaitAny%2A> method throws an <xref:System.Threading.AbandonedMutexException> only when the wait completes because of an abandoned mutex. If `waitHandles` contains a released mutex with a lower index number than the abandoned mutex, the <xref:System.Threading.WaitHandle.WaitAny%2A> method completes normally and the exception is not thrown.  
   
- This method returns when the wait terminates, either when any of the handles are signaled or when a time-out occurs. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects. On some implementations, if more that 64 handles are passed, a <xref:System.NotSupportedException> is thrown.  
-  
+ This method returns when the wait terminates, either when any of the handles are signaled or when a time-out occurs. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects.
+
+ The maximum number of the wait handles is 64, and 63 if the current thread is in <xref:System.Threading.ApartmentState.STA> state.
+
  The maximum value for `timeout` is <xref:System.Int32.MaxValue?displayProperty=nameWithType>.  
   
  Calling this method overload is the same as calling the <xref:System.Threading.WaitHandle.WaitAny%28System.Threading.WaitHandle%5B%5D%2CSystem.TimeSpan%2CSystem.Boolean%29> overload and specifying `false` for `exitContext`.  
@@ -1609,7 +1612,9 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
 > [!NOTE]
 >  In versions of the .NET Framework earlier than version 2.0, if a thread exits or aborts without explicitly releasing a <xref:System.Threading.Mutex>, and that `Mutex` is at index 0 (zero) in a `WaitAny` array on another thread, the index returned by `WaitAny` is 128 instead of 0.  
   
- This method returns when the wait terminates, either when any of the handles are signaled or when a timeout occurs. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects. On some implementations, if more that 64 handles are passed, a <xref:System.NotSupportedException> is thrown.  
+ This method returns when the wait terminates, either when any of the handles are signaled or when a timeout occurs. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects.
+
+ The maximum number of the wait handles is 64, and 63 if the current thread is in <xref:System.Threading.ApartmentState.STA> state.
   
 ## Notes on Exiting the Context  
  The `exitContext` parameter has no effect unless the <xref:System.Threading.WaitHandle.WaitAny%2A> method is called from inside a nondefault managed context. This can happen if your thread is inside a call to an instance of a class derived from <xref:System.ContextBoundObject>. Even if you are currently executing a method on a class that does not derive from <xref:System.ContextBoundObject>, like <xref:System.String>, you can be in a nondefault context if a <xref:System.ContextBoundObject> is on your stack in the current application domain.  
@@ -1704,8 +1709,10 @@ Calling `Dispose` allows the resources used by the <xref:System.Threading.WaitHa
 > [!NOTE]
 >  In versions of the .NET Framework earlier than version 2.0, if a thread exits or aborts without explicitly releasing a <xref:System.Threading.Mutex>, and that `Mutex` is at index 0 (zero) in a `WaitAny` array on another thread, the index returned by `WaitAny` is 128 instead of 0.  
   
- This method returns when the wait terminates, either when any of the handles are signaled or when a time-out occurs. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects. On some implementations, if more that 64 handles are passed, a <xref:System.NotSupportedException> is thrown.  
-  
+ This method returns when the wait terminates, either when any of the handles are signaled or when a time-out occurs. If more than one object becomes signaled during the call, the return value is the array index of the signaled object with the smallest index value of all the signaled objects.
+
+ The maximum number of the wait handles is 64, and 63 if the current thread is in <xref:System.Threading.ApartmentState.STA> state.
+
  The maximum value for `timeout` is <xref:System.Int32.MaxValue?displayProperty=nameWithType>.  
   
 ## Notes on Exiting the Context  
