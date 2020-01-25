@@ -45,13 +45,22 @@
         <Parameter Name="d" Type="System.UInt32" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <param name="c">To be added.</param>
-        <param name="d">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
-        <returns>To be added.</returns>
+        <param name="a">A pointer to the <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> defining the format, medium, and target device for notifications.</param>
+        <param name="b">An <see cref="T:System.Runtime.InteropServices.ComTypes.ADVF" /> value specifying the requested behavior for the connection.</param>
+        <param name="c">A pointer to the <see cref="T:System.Runtime.InteropServices.ComTypes.IAdviseSink" /> on the caller object.</param>
+        <param name="d">A pointer to the connection set up by this call to the DAdvise method.</param>
+        <summary>Creates a notification connection between a data object implementing the <see cref="T:Microsoft.CLRAdmin.IDataObject" /> interface and a caller object, letting the caller receive notification of changes in the data for the data object.</summary>
+        <returns>The DAdvise method supports the standard returns values E_INVALIDARG, E_UNEXPECTED, and E_OUTOFMEMORY, as well as the following return values:  
+
+| Return value | Description |
+| --- | --- |
+| S\_OK | The DAdvise method successfully created the connection. |
+| E\_NOTIMPL | The data object does not implement the DAdvise method. |
+| DV\_E\_LINDEX | lindex is not valid. |
+| DV\_E\_FORMATETC | The data pointer value is not valid. |
+| OLE\_E\_ADVISENOTSUPPORTED | The object does not support change notification. |</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="DUnadvise">
@@ -73,10 +82,15 @@
         <Parameter Name="a" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
-        <returns>To be added.</returns>
+        <param name="a">The connection to destroy.</param>
+        <summary>Destroys a notification connection that was created by an earlier call to the <see cref="M:Microsoft.CLRAdmin.IDataObject.DAdvise(System.IntPtr,System.UInt32,System.IntPtr,System.UInt32@)" /> method.</summary>
+        <returns>| Return value | Description |
+| --- | --- |
+| S\_OK | The DUnadvise method successfully deleted the specified connection. |
+| OLE\_E\_NOCONNECTION | The specified connection is not a valid connection. |
+| OLE\_E\_ADVISENOTSUPPORTED | The object does not support change notification. |</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="EnumDAdvise">
@@ -98,10 +112,18 @@
         <Parameter Name="a" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
-        <returns>To be added.</returns>
+        <param name="a">The address of the <see cref="T:System.Runtime.InteropServices.ComTypes.IEnumSTATDATA" /> receiving the interface pointer to the new enumerator object. There are no connections if this call to the EnumDAdvise method sets <paramref name="a" /> to <see langword="null" />.</param>
+        <summary>Retrieves a pointer to an object that can enumerate the notification connections that are currently maintained by this <see cref="T:Microsoft.CLRAdmin.IDataObject" /> interface.</summary>
+        <returns>The EnumDAdvise method supports the standard return value E_OUTOFMEMORY, as well as the following return values:  
+
+
+
+| Return value | Description |
+| --- | --- |
+| S\_OK | This call to the EnumDAdvise method successfully created the instance of the enumerator object.-or-There are no connections. |
+| OLE\_E\_ADVISENOTSUPPORTED | The object does not support change notification. |</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="EnumFormatEtc">
@@ -151,11 +173,22 @@
         <Parameter Name="b" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
-        <returns>To be added.</returns>
+        <param name="a">A pointer to the <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> defining the format, medium, and target device for calls to retrieve data.</param>
+        <param name="b">An output pointer to a FORMATETC containing the most general information possible for a specific rendering, or <see langword="null" /> if the GetCanonicalFormatEtc method returns DATA_S_SAMEFORMATETC.</param>
+        <summary>Retrieves a pointer to a standard <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> structure that is logically equivalent to, but not necessarily equal to, the <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> structure that is referenced by the <paramref name="a" /> parameter.</summary>
+        <returns>The GetCanonicalFormatEtc method supports the standard return values E_INVALIDARG, E_UNEXPECTED, and E_OUTOFMEMORY, as well as the following return values:  
+
+
+
+| Return value | Description |
+| --- | --- |
+| S\_OK | The returned FORMATETC is different from the structure passed in the parameters. |
+| DATA\_S\_SAMEFORMATETC | The returned FORMATETC is the same as the structure passed in the parameters and <see langword="null" /> is returned in <paramref name="b" />. |
+| DV\_E\_LINDEX | lindex is not valid. |
+| DV\_E\_FORMATETC | <paramref name="a" /> is not valid. |
+| OLE\_E\_NOTRUNNING | The object application is not running. |</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="GetData">
@@ -178,11 +211,22 @@
         <Parameter Name="b" Type="Microsoft.CLRAdmin.STGMEDIUM" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="pFormatEtc">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
-        <returns>To be added.</returns>
+        <param name="pFormatEtc">A pointer to the <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> defining the format, medium, and target device for calls to retrieve data.</param>
+        <param name="b">A pointer to the <see cref="T:Microsoft.CLRAdmin.STGMEDIUM" /> indicating the storage medium containing the returned data.</param>
+        <summary>Obtains data from a source data object. The <see cref="M:Microsoft.CLRAdmin.IDataObject.GetData(Microsoft.CLRAdmin.FORMATETC@,Microsoft.CLRAdmin.STGMEDIUM@)" /> method, which is called by a data consumer, renders the data described in the specified <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> structure and transfers it through the specified <see cref="T:Microsoft.CLRAdmin.STGMEDIUM" /> structure. The caller then assumes responsibility for releasing the <see cref="T:Microsoft.CLRAdmin.STGMEDIUM" /> structure.</summary>
+        <returns>The GetData method supports the standard return values E_INVALIDARG, E_UNEXPECTED, and E_OUTOFMEMORY, as well as the following return values:  
+
+| Return value | Description |
+| --- | --- |
+| S\_OK | This call to the GetData method successfully retrieved and placed data in the provided storage medium. |
+| DV\_E\_LINDEX | lindex is not valid. |
+| DV\_E\_FORMATETC | <paramref name="pFormatEtc" /> is not valid. |
+| DV\_E\_TYMED | tymed is not valid. |
+| DV\_E\_DVASPECT | dwAspect is not valid. |
+| OLE\_E\_NOTRUNNING | The object application is not running. |
+| STG\_E\_MEDIUMFULL | An error occurred when allocating the medium. |</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="GetDataHere">
@@ -205,11 +249,22 @@
         <Parameter Name="b" Type="Microsoft.CLRAdmin.STGMEDIUM" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="pFormatEtc">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
-        <returns>To be added.</returns>
+        <param name="pFormatEtc">A pointer to the <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> defining the format, medium, and target device for calls to retrieve data.</param>
+        <param name="b">A pointer to the <see cref="T:Microsoft.CLRAdmin.STGMEDIUM" /> indicating the storage medium containing the returned data.</param>
+        <summary>Obtains data from a source data object. This method, which is called by a data consumer, differs from the <see cref="M:Microsoft.CLRAdmin.IDataObject.GetData(Microsoft.CLRAdmin.FORMATETC@,Microsoft.CLRAdmin.STGMEDIUM@)" /> method in that the caller must allocate and free the specified storage medium.</summary>
+        <returns>The GetDataHere method supports the standard return values E_INVALIDARG, E_UNEXPECTED, and E_OUTOFMEMORY, as well as the following return values:  
+
+| Return value | Description |
+| --- | --- |
+| S\_OK | This call to the GetDataHere method successfully retrieved and placed data in the provided storage medium. |
+| DV\_E\_LINDEX | lindex is not valid. |
+| DV\_E\_FORMATETC | <paramref name="pFormatEtc" /> is not valid. |
+| DV\_E\_TYMED | tymed is not valid. |
+| DV\_E\_DVASPECT | dwAspect is not valid. |
+| OLE\_E\_NOTRUNNING | The object application is not running. |
+| STG\_E\_MEDIUMFULL | An error occurred when allocating the medium. |</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="QueryGetData">
@@ -231,10 +286,20 @@
         <Parameter Name="a" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
-        <returns>To be added.</returns>
+        <param name="a">A pointer to the <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> defining the format, medium, and target device for calls to retrieve data.</param>
+        <summary>Determines whether the data object is capable of rendering the data described in the <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> structure. Objects attempting a paste or drop operation can call this method before calling <see cref="M:Microsoft.CLRAdmin.CDO.GetData(Microsoft.CLRAdmin.FORMATETC@,Microsoft.CLRAdmin.STGMEDIUM@)" /> to get an indication of whether the operation may be successful.</summary>
+        <returns>The QueryGetData method supports the standard return values E_INVALIDARG, E_UNEXPECTED, and E_OUTOFMEMORY, as well as the following return values:  
+
+| Return value | Description |
+| --- | --- |
+| S\_OK | A subsequent call to the <see cref="M:Microsoft.CLRAdmin.IDataObject.GetData(Microsoft.CLRAdmin.FORMATETC@,Microsoft.CLRAdmin.STGMEDIUM@)" /> method probably will be successful. |
+| DV\_E\_LINDEX | lindex is not valid. |
+| DV\_E\_FORMATETC | <paramref name="a" /> is not valid. |
+| DV\_E\_TYMED | tymed is not valid. |
+| DV\_E\_DVASPECT | dwAspect value. |
+| OLE\_E\_NOTRUNNING | The object application is not running. |</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="SetData">
@@ -258,12 +323,24 @@
         <Parameter Name="c" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <param name="c">To be added.</param>
-        <summary>This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.</summary>
-        <returns>To be added.</returns>
+        <param name="a">A pointer to the <see cref="T:Microsoft.CLRAdmin.FORMATETC" /> defining the format for the data object implementing the <see cref="T:Microsoft.CLRAdmin.IDataObject" /> to use when interpreting the data contained in the storage medium.</param>
+        <param name="b">A pointer to the <see cref="T:Microsoft.CLRAdmin.STGMEDIUM" /> defining the storage medium for the SetData method to use to pass the data.</param>
+        <param name="c">
+          <see langword="true" /> to specify that the called data object implementing the <see cref="T:Microsoft.CLRAdmin.IDataObject" /> owns the storage medium after the call and must free the medium after it has been used; otherwise, <see langword="false" /> to specify the caller retains ownership of the storage medium and the data object uses the medium for the duration of the call only.</param>
+        <summary>Transfers the data that is contained in the <see cref="T:Microsoft.CLRAdmin.STGMEDIUM" /> structure, referenced by <paramref name="a" />, to this instance of the <see cref="T:Microsoft.Aspnet.Snapin.IDataObject" /> interface.</summary>
+        <returns>The SetData method supports the standard return values E_FAIL, E_INVALIDARG, E_UNEXPECTED, and E_OUTOFMEMORY, as well as the following return values:  
+
+| Return value | Description |
+| --- | --- |
+| S\_OK | This call to the SetData method successfully transferred the data. |
+| E\_NOTIMPL | The SetData method is not implemented for the data object implementing the <see cref="T:Microsoft.CLRAdmin.IDataObject" />. |
+| DV\_E\_LINDEX | lindex is not valid. |
+| DV\_E\_FORMATETC | pFormatEtc is not valid. |
+| DV\_E\_TYMED | tymed is not valid. |
+| DV\_E\_DVASPECT | dwAspect is not valid. |
+| OLE\_E\_NOTRUNNING | The object application is not running. |</returns>
         <remarks>To be added.</remarks>
+        <forInternalUseOnly />
       </Docs>
     </Member>
   </Members>
