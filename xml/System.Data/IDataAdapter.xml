@@ -248,25 +248,29 @@
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
+## Examples  
   
-```  
-private static void GetParameters(String connectionString) {  
-           using (SqlConnection conn = new SqlConnection(connectionString)) {  
-              String queryString = "Select [CourseID],[Title],[Credits] from [MySchool].[dbo].[Course] where [Year]=@Year and [Credits]>=@Credits";   
-              SqlParameter year = new SqlParameter("@Year", 2012);   
-              SqlParameter credits = new SqlParameter("@Credits", SqlDbType.Int, 4, "Credits");   
-              credits.Value = 4; SqlCommand command = new SqlCommand(queryString, conn);   
-              command.Parameters.Add(year);   
-              command.Parameters.Add(credits);   
-              IDbDataAdapter mySchool = new SqlDataAdapter(command);   
-              IDataParameter[] parameters = mySchool.GetFillParameters();  
-              Console.WriteLine("{0,-15}{1,-15}{2,-15}{3,-15}{4,-15}", "ParameterName", "SourceColumn", "Direction", "DbType", "Value");   
-              foreach (IDataParameter parameter in parameters) {   
-                 Console.WriteLine("{0,-15}{1,-15}{2,-15}{3,-15}{4,-15}", parameter.ParameterName, parameter.SourceColumn, parameter.Direction, parameter.DbType, parameter.Value);   
-              }  
-           }  
-        }  
+```csharp
+private static void GetParameters(string connectionString)
+{
+    using (var conn = new SqlConnection(connectionString))
+	{
+        var queryString = "SELECT [CourseID],[Title],[Credits] FROM [MySchool].[dbo].[Course] WHERE [Year]=@Year AND [Credits]>=@Credits";
+	    var year = new SqlParameter("@Year", 2012);
+	    var credits = new SqlParameter("@Credits", SqlDbType.Int, 4, "Credits");
+	    credits.Value = 4;
+		var command = new SqlCommand(queryString, conn);
+	    command.Parameters.Add(year);
+	    command.Parameters.Add(credits);
+	    IDbDataAdapter mySchool = new SqlDataAdapter(command);
+	    IDataParameter[] parameters = mySchool.GetFillParameters();
+	    Console.WriteLine("{0,-15}{1,-15}{2,-15}{3,-15}{4,-15}", "ParameterName", "SourceColumn", "Direction", "DbType", "Value");
+	    foreach (IDataParameter parameter in parameters)
+		{
+		    Console.WriteLine("{0,-15}{1,-15}{2,-15}{3,-15}{4,-15}", parameter.ParameterName, parameter.SourceColumn, parameter.Direction, parameter.DbType, parameter.Value);
+	    }
+    }
+}
 ```  
   
  ]]></format>
