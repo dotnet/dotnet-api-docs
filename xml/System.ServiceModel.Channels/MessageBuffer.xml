@@ -180,15 +180,15 @@
 ## Examples  
  The following example demonstrates how to properly close a message buffer.  
   
-```  
+```csharp
 public void AfterReceiveReply(ref Message reply, object correlationState)  
 {  
-    // Create the buffer  
+    // Create the buffer.
     MessageBuffer buffer = reply.CreateBufferedCopy(13000);  
-    // Inspect the response (for example, extract the body contents)  
-    Message thisReply = buffer.CreateMessage();  
-    XmlDictionaryReader reader = thisReply.GetReaderAtBodyContents();  
-    StringBuilder info = new StringBuilder();  
+    // Inspect the response (for example, extract the body contents).
+    Message thisReply = buffer.CreateMessage();
+    XmlDictionaryReader reader = thisReply.GetReaderAtBodyContents();
+    var info = new StringBuilder();
     XmlWriter writer = XmlWriter.Create(info);  
     writer.WriteNode(reader, true);  
     writer.Close();  
@@ -196,10 +196,9 @@ public void AfterReceiveReply(ref Message reply, object correlationState)
     // closing.  
     reply = buffer.CreateMessage();  
     // You can close the buffer after the message has been recreated.  
-    buffer.Close();  
+    buffer.Close();
+}
 ```  
-  
- }  
   
  ]]></format>
         </remarks>
@@ -553,30 +552,30 @@ public void AfterReceiveReply(ref Message reply, object correlationState)
   
 ## Examples  
   
-```  
+```csharp
 private byte[] ConvertMessageToByteArray(ref Message message)   
 {  
-....//Memory stream that contains the message  
-....MemoryStream stream = new MemoryStream();  
-....//Create an XmlWriter to serialize the message into a byte array  
-....XmlWriterSettings settings = new XmlWriterSettings();  
-....settings.Encoding = System.Text.Encoding.UTF8;  
-....XmlWriter writer = XmlWriter.Create(stream, settings);  
-....//Copy the message into a buffer   
-....//Note: This call changes the original message's state  
-....MessageBuffer buffer = message.CreateBufferedCopy(int.MaxValue);  
-....//Create a copy of the message  
-....message = buffer.CreateMessage();  
-....//Serialize the message to the XmlWriter   
-....message.WriteMessage(writer);  
-....//Recreate the message   
-....message = buffer.CreateMessage();  
-....//Flush the contents of the writer so that the stream gets updated  
-....writer.Flush();  
-....stream.Flush();  
-....//Convert the stream to an array  
-....byte[] retval = stream.ToArray();  
-    return retval;  
+    // Memory stream that contains the message.
+    var stream = new MemoryStream();  
+    // Create an XmlWriter to serialize the message into a byte array.
+    var settings = new XmlWriterSettings();
+    settings.Encoding = System.Text.Encoding.UTF8;
+    XmlWriter writer = XmlWriter.Create(stream, settings);
+    // Copy the message into a buffer.
+    // Note: This call changes the original message's state.
+    MessageBuffer buffer = message.CreateBufferedCopy(int.MaxValue);  
+    // Create a copy of the message.
+    message = buffer.CreateMessage();  
+    // Serialize the message to the XmlWriter.
+    message.WriteMessage(writer);  
+    // Recreate the message.
+    message = buffer.CreateMessage();
+    // Flush the contents of the writer so that the stream gets updated.
+    writer.Flush();  
+    stream.Flush();  
+    // Convert the stream to an array.
+    byte[] retval = stream.ToArray();
+    return retval;
 }  
 ```  
   
