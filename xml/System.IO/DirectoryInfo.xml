@@ -275,6 +275,35 @@
   
  For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).  
   
+> [!IMPORTANT]
+> This method was ported to .NET Core 3.1 as an extension method of the `FileSystemAclExtensions` class as part of the `System.Security.AccessControl` assembly: <xref:System.IO.FileSystemAclExtensions.Create(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)>.
+
+## Examples
+
+The following code example creates a new directory inside the user's temporary folder with the specified directory security attributes:
+
+```csharp
+using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
+namespace ConsoleApp
+{
+    class Program
+    {
+        static void Main()
+        {
+            DirectorySecurity security = new DirectorySecurity();
+            SecurityIdentifier identity = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
+            FileSystemAccessRule accessRule = new FileSystemAccessRule(identity, FileSystemRights.FullControl, AccessControlType.Allow);
+            security.AddAccessRule(accessRule);
+            string path = Path.Combine(Path.GetTempPath(), "directoryToCreate");
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            dirInfo.Create(security);
+        }
+    }
+}
+```
+
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">The directory specified by <paramref name="path" /> is read-only or is not empty.</exception>
