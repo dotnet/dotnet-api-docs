@@ -160,7 +160,6 @@
         <exception cref="T:System.ArgumentException">
           <paramref name="path" /> contains invalid characters such as ", &lt;, &gt;, or |.</exception>
         <exception cref="T:System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. </exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading from files and directories. Associated enumeration: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" /></permission>
         <altmember cref="T:System.IO.DriveInfo" />
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
@@ -231,7 +230,6 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">The directory cannot be created.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for writing files. Associated enumeration: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Write" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -275,6 +273,35 @@
   
  For a list of common I/O tasks, see [Common I/O Tasks](~/docs/standard/io/common-i-o-tasks.md).  
   
+> [!IMPORTANT]
+> This method was ported to .NET Core 3.1 as an extension method of the `FileSystemAclExtensions` class as part of the `System.Security.AccessControl` assembly: <xref:System.IO.FileSystemAclExtensions.Create(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)>.
+
+## Examples
+
+The following code example creates a new directory inside the user's temporary folder with the specified directory security attributes:
+
+```csharp
+using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
+namespace ConsoleApp
+{
+    class Program
+    {
+        static void Main()
+        {
+            DirectorySecurity security = new DirectorySecurity();
+            SecurityIdentifier identity = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
+            FileSystemAccessRule accessRule = new FileSystemAccessRule(identity, FileSystemRights.FullControl, AccessControlType.Allow);
+            security.AddAccessRule(accessRule);
+            string path = Path.Combine(Path.GetTempPath(), "directoryToCreate");
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            dirInfo.Create(security);
+        }
+    }
+}
+```
+
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">The directory specified by <paramref name="path" /> is read-only or is not empty.</exception>
@@ -286,7 +313,6 @@
         <exception cref="T:System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. </exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid, such as being on an unmapped drive.</exception>
         <exception cref="T:System.NotSupportedException">Creating a directory with only the colon (:) character was attempted.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for permission to create a directory. Security action: <see cref="F:System.Security.Permissions.SecurityAction.Demand" />. Associated enumeration: <see cref="F:System.Security.Permissions.EnvironmentPermissionAccess.Read" /></permission>
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateSubdirectory">
@@ -379,7 +405,6 @@
  The caller does not have code access permission to read the directory described by the returned <see cref="T:System.IO.DirectoryInfo" /> object.  This can occur when the <paramref name="path" /> parameter describes an existing directory.</exception>
         <exception cref="T:System.NotSupportedException">
           <paramref name="path" /> contains a colon character (:) that is not part of a drive label ("C:\\").</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading and writing files. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" />, <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Write" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -449,7 +474,6 @@
  The caller does not have code access permission to read the directory described by the returned <see cref="T:System.IO.DirectoryInfo" /> object.  This can occur when the <paramref name="path" /> parameter describes an existing directory.</exception>
         <exception cref="T:System.NotSupportedException">
           <paramref name="path" /> contains a colon character (:) that is not part of a drive label ("C:\\").</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading and writing files. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" />, <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Write" /></permission>
       </Docs>
     </Member>
     <MemberGroup MemberName="Delete">
@@ -530,7 +554,6 @@
   
  There is an open handle on the directory, and the operating system is Windows XP or earlier. This open handle can result from enumerating directories. For more information, see [How to: Enumerate Directories and Files](~/docs/standard/io/how-to-enumerate-directories-and-files.md).</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for writing directories. Associated enumeration: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Write" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -614,7 +637,6 @@
   
  There is an open handle on the directory or on one of its files, and the operating system is Windows XP or earlier. This open handle can result from enumerating directories and files. For more information, see [How to: Enumerate Directories and Files](~/docs/standard/io/how-to-enumerate-directories-and-files.md).</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermissionAccess">Write flag required for write permission to the <see langword="DirectoryInfo" /> and subdirectories to be deleted.</permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -1876,8 +1898,6 @@
   
  The caller does not have the required permission.</exception>
         <exception cref="T:System.IO.IOException">An I/O error occurred while opening the directory.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">The current operating system is not Microsoft Windows 2000 or later.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for permission to enumerate an access control list (ACL) for a directory. Security action: <see cref="F:System.Security.Permissions.SecurityAction.Demand" />. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.NoAccess" />, <see cref="F:System.Security.AccessControl.AccessControlActions.View" /></permission>
       </Docs>
     </Member>
     <Member MemberName="GetAccessControl">
@@ -1923,8 +1943,6 @@
   
  </description></item><item><term><see cref="T:System.IO.IOException" /></term><description> An I/O error occurred while opening the directory.  
   
- </description></item><item><term><see cref="T:System.PlatformNotSupportedException" /></term><description> The current operating system is not Microsoft Windows 2000 or later.  
-  
  </description></item><item><term><see cref="T:System.UnauthorizedAccessException" /></term><description> The directory is read-only.  
   
  -or-  
@@ -1946,7 +1964,6 @@
   
  ]]></format>
         </remarks>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for permission to enumerate an access control list (ACL) for a directory. Security action: <see cref="F:System.Security.Permissions.SecurityAction.Demand" />. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.NoAccess" />, <see cref="F:System.Security.AccessControl.AccessControlActions.View" /></permission>
       </Docs>
     </Member>
     <MemberGroup MemberName="GetDirectories">
@@ -2035,7 +2052,6 @@
         <exception cref="T:System.IO.DirectoryNotFoundException">The path encapsulated in the <see cref="T:System.IO.DirectoryInfo" /> object is invalid, such as being on an unmapped drive.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading directories. Associated enumeration: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -2130,7 +2146,6 @@
           <paramref name="searchPattern" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The path encapsulated in the <see langword="DirectoryInfo" /> object is invalid (for example, it is on an unmapped drive).</exception>
         <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading from files and directories and for access to the path. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" />, <see cref="F:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -2299,7 +2314,6 @@
           <paramref name="searchOption" /> is not a valid <see cref="T:System.IO.SearchOption" /> value.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The path encapsulated in the <see langword="DirectoryInfo" /> object is invalid (for example, it is on an unmapped drive).</exception>
         <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading from files and directories and for access to the path. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" />, <see cref="F:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -2400,7 +2414,6 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.DirectoryNotFoundException">The path is invalid, such as being on an unmapped drive.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading directories. Associated enumeration: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -2523,7 +2536,6 @@
           <paramref name="searchPattern" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The path is invalid (for example, it is on an unmapped drive).</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for access to the path and for reading from files and directories. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" />, <see cref="F:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -2748,7 +2760,6 @@
           <paramref name="searchOption" /> is not a valid <see cref="T:System.IO.SearchOption" /> value.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The path is invalid (for example, it is on an unmapped drive).</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for access to the path and for reading from files and directories. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" />, <see cref="F:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -2942,7 +2953,6 @@
           <paramref name="searchPattern" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive).</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading from files and directories and for access to the path. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" />, <see cref="F:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery" /></permission>
         <altmember cref="T:System.IO.FileSystemInfo" />
         <altmember cref="T:System.IO.FileSystemWatcher" />
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
@@ -3196,7 +3206,6 @@
  The directory being moved and the destination directory have the same name.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The destination directory cannot be found.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading and writing files and directories and for access to the destination directory. Security action: <see cref="F:System.Security.Permissions.SecurityAction.Demand" />. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Read" />, <see cref="F:System.Security.Permissions.FileIOPermissionAccess.Write" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -3330,7 +3339,6 @@ The following example refers to the parent directory of a specified directory.
           ]]></format>
         </remarks>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading from files and directories and for access to the path. Associated enumerations: <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />, <see cref="T:System.Security.Permissions.FileIOPermissionAccess" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -3387,7 +3395,6 @@ The following example refers to the parent directory of a specified directory.
  ]]></format>
         </remarks>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for reading from files and directories and for access to the path. Associated enumerations: <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />, <see cref="T:System.Security.Permissions.FileIOPermissionAccess" /></permission>
         <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
         <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
         <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
@@ -3465,8 +3472,6 @@ The following example refers to the parent directory of a specified directory.
         <exception cref="T:System.ArgumentNullException">The <paramref name="directorySecurity" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.SystemException">The file could not be found or modified.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The current process does not have access to open the file.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">The current operating system is not Microsoft Windows 2000 or later.</exception>
-        <permission cref="T:System.Security.Permissions.FileIOPermission">for permission to enumerate access control list (ACL) for a directory. Security action: <see cref="F:System.Security.Permissions.SecurityAction.Demand" />. Associated enumerations: <see cref="F:System.Security.Permissions.FileIOPermissionAccess.NoAccess" />, <see cref="F:System.Security.AccessControl.AccessControlActions.View" /></permission>
       </Docs>
     </Member>
     <Member MemberName="ToString">
