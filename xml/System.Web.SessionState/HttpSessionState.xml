@@ -25,40 +25,40 @@
   <Docs>
     <summary>Provides access to session-state values as well as session-level settings and lifetime management methods.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- ASP.NET provides session-state management to enable you to store information associated with a unique browser session across multiple requests. You can store a collection of values referenced by a key name or by numerical index. Access to session values and functionality is available using the <xref:System.Web.SessionState.HttpSessionState> class, which is accessible through the <xref:System.Web.HttpContext.Session%2A> property of the current <xref:System.Web.HttpContext>, or the <xref:System.Web.UI.Page.Session%2A> property of the <xref:System.Web.UI.Page>.  
-  
- Session data is associated with a specific browser session using a unique identifier. By default, this identifier is stored in a non-expiring session cookie in the browser, but you can also configure your application to store the session identifier in the URL by setting the `cookieless` attribute to `true` or <xref:System.Web.HttpCookieMode.UseUri> in the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) element of your application configuration. You can have ASP.NET determine whether cookies are supported by the browser by specifying a value of <xref:System.Web.HttpCookieMode.UseDeviceProfile> for the `cookieless` attribute. You can also have ASP.NET determine whether cookies are enabled for the browser by specifying a value of <xref:System.Web.HttpCookieMode.AutoDetect> for the `cookieless` attribute. If cookies are supported when <xref:System.Web.HttpCookieMode.UseDeviceProfile> is specified, or enabled when <xref:System.Web.HttpCookieMode.AutoDetect> is specified, then the session identifier will be stored in a cookie; otherwise the session identifier will be stored in the URL.  
-  
- Sessions are started during the first request and session values will persist as long as a new request is made by the browser before the number of minutes specified in the <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> property pass. When a new session begins, the session <xref:System.Web.SessionState.SessionStateModule.Start> event is raised. You can use this event to perform any additional work at the start of a session, such as setting default session values. When a session times out, the <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> method is called, or the ASP.NET application is shut down, the session <xref:System.Web.SessionState.SessionStateModule.End> event is raised. You can use this event to perform any necessary cleanup. The <xref:System.Web.SessionState.SessionStateModule.End> event is raised only when the session state `mode` is set to <xref:System.Web.SessionState.SessionStateMode.InProc>.  
-  
- To improve performance, sessions that use cookies do not allocate session storage until data is actually stored in the <xref:System.Web.UI.Page.Session%2A> object. For more information, see the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> property.  
-  
- Session state does not persist across ASP.NET application boundaries. If a browser navigates to another application, the session information is not available to the new application.  
-  
- Session values are stored in memory on the Web server, by default. You can also store session values in a SQL Server database, an ASP.NET state server, or a custom server. This enables you to preserve session values in cases where the ASP.NET or IIS process or the ASP.NET application restarts and to make session values available across all the servers in a Web farm. This behavior is configured by setting the `mode` attribute to a valid <xref:System.Web.SessionState.SessionStateMode> value in the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) element of your application configuration. For more information, see [Session-State Modes](https://msdn.microsoft.com/library/0bb0a3a3-650f-4c47-a0c5-b08b9b591bb4).  
-  
- Alternatives to session state include application state (see the <xref:System.Web.HttpApplication.Application%2A> property) and the ASP.NET cache (see the <xref:System.Web.Caching> namespace), which store variables that can be accessed by all users of an ASP.NET application; the ASP.NET profile (see the <xref:System.Web.Profile> namespace), which persists user values in a data store without expiring them using a time-out; ASP.NET <xref:System.Web.UI.WebControls?displayProperty=nameWithType>, which persist control values in the <xref:System.Web.UI.Control.ViewState%2A>; <xref:System.Web.HttpResponse.Cookies%2A>; the <xref:System.Web.HttpRequest.QueryString%2A> property; and fields on an HTML form that are available from an HTTP `POST` using the <xref:System.Web.HttpRequest.Form%2A> collection. For more details on the differences between session state and other state-management alternatives, see [ASP.NET State Management Recommendations](https://msdn.microsoft.com/library/af79fa0d-4bc8-47a6-9915-d8e355bfb732).  
-  
-   
-  
-## Examples  
- The following code example sets and retrieves values from session state.  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ ASP.NET provides session-state management to enable you to store information associated with a unique browser session across multiple requests. You can store a collection of values referenced by a key name or by numerical index. Access to session values and functionality is available using the <xref:System.Web.SessionState.HttpSessionState> class, which is accessible through the <xref:System.Web.HttpContext.Session%2A> property of the current <xref:System.Web.HttpContext>, or the <xref:System.Web.UI.Page.Session%2A> property of the <xref:System.Web.UI.Page>.
+
+ Session data is associated with a specific browser session using a unique identifier. By default, this identifier is stored in a non-expiring session cookie in the browser, but you can also configure your application to store the session identifier in the URL by setting the `cookieless` attribute to `true` or <xref:System.Web.HttpCookieMode.UseUri> in the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) element of your application configuration. You can have ASP.NET determine whether cookies are supported by the browser by specifying a value of <xref:System.Web.HttpCookieMode.UseDeviceProfile> for the `cookieless` attribute. You can also have ASP.NET determine whether cookies are enabled for the browser by specifying a value of <xref:System.Web.HttpCookieMode.AutoDetect> for the `cookieless` attribute. If cookies are supported when <xref:System.Web.HttpCookieMode.UseDeviceProfile> is specified, or enabled when <xref:System.Web.HttpCookieMode.AutoDetect> is specified, then the session identifier will be stored in a cookie; otherwise the session identifier will be stored in the URL.
+
+ Sessions are started during the first request and session values will persist as long as a new request is made by the browser before the number of minutes specified in the <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> property pass. When a new session begins, the session <xref:System.Web.SessionState.SessionStateModule.Start> event is raised. You can use this event to perform any additional work at the start of a session, such as setting default session values. When a session times out, the <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> method is called, or the ASP.NET application is shut down, the session <xref:System.Web.SessionState.SessionStateModule.End> event is raised. You can use this event to perform any necessary cleanup. The <xref:System.Web.SessionState.SessionStateModule.End> event is raised only when the session state `mode` is set to <xref:System.Web.SessionState.SessionStateMode.InProc>.
+
+ To improve performance, sessions that use cookies do not allocate session storage until data is actually stored in the <xref:System.Web.UI.Page.Session%2A> object. For more information, see the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> property.
+
+ Session state does not persist across ASP.NET application boundaries. If a browser navigates to another application, the session information is not available to the new application.
+
+ Session values are stored in memory on the Web server, by default. You can also store session values in a SQL Server database, an ASP.NET state server, or a custom server. This enables you to preserve session values in cases where the ASP.NET or IIS process or the ASP.NET application restarts and to make session values available across all the servers in a Web farm. This behavior is configured by setting the `mode` attribute to a valid <xref:System.Web.SessionState.SessionStateMode> value in the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) element of your application configuration. For more information, see [Session-State Modes](https://docs.microsoft.com/previous-versions/aspnet/ms178586(v=vs.100)).
+
+ Alternatives to session state include application state (see the <xref:System.Web.HttpApplication.Application%2A> property) and the ASP.NET cache (see the <xref:System.Web.Caching> namespace), which store variables that can be accessed by all users of an ASP.NET application; the ASP.NET profile (see the <xref:System.Web.Profile> namespace), which persists user values in a data store without expiring them using a time-out; ASP.NET <xref:System.Web.UI.WebControls?displayProperty=nameWithType>, which persist control values in the <xref:System.Web.UI.Control.ViewState%2A>; <xref:System.Web.HttpResponse.Cookies%2A>; the <xref:System.Web.HttpRequest.QueryString%2A> property; and fields on an HTML form that are available from an HTTP `POST` using the <xref:System.Web.HttpRequest.Form%2A> collection. For more details on the differences between session state and other state-management alternatives, see [ASP.NET State Management Recommendations](https://docs.microsoft.com/previous-versions/aspnet/z1hkazw7(v=vs.100)).
+
+
+
+## Examples
+ The following code example sets and retrieves values from session state.
+
 > [!IMPORTANT]
->  This example has a text box that accepts user input, which is a potential security threat. By default, ASP.NET Web pages validate that user input does not include script or HTML elements. For more information, see [Script Exploits Overview](https://msdn.microsoft.com/library/772c7312-211a-4eb3-8d6e-eec0aa1dcc07).  
-  
+>  This example has a text box that accepts user input, which is a potential security threat. By default, ASP.NET Web pages validate that user input does not include script or HTML elements. For more information, see [Script Exploits Overview](https://docs.microsoft.com/previous-versions/aspnet/w1sw53ds(v=vs.100)).
+
  [!code-aspx-csharp[HttpSessionState#30](~/samples/snippets/csharp/VS_Snippets_WebNet/HttpSessionState/CS/session2cs.aspx#30)]
- [!code-aspx-vb[HttpSessionState#30](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/session2vb.aspx#30)]  
-  
+ [!code-aspx-vb[HttpSessionState#30](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/session2vb.aspx#30)]
+
  ]]></format>
     </remarks>
     <altmember cref="N:System.Web.Profile" />
     <altmember cref="N:System.Web.Caching" />
-    <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
-    <related type="Article" href="https://msdn.microsoft.com/library/772c7312-211a-4eb3-8d6e-eec0aa1dcc07">Script Exploits Overview</related>
+    <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
+    <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/w1sw53ds(v=vs.100)">Script Exploits Overview</related>
   </Docs>
   <Members>
     <Member MemberName="Abandon">
@@ -82,18 +82,18 @@
       <Docs>
         <summary>Cancels the current session.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Once the <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> method is called, the current session is no longer valid and a new session can be started. <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> causes the <xref:System.Web.SessionState.SessionStateModule.End> event to be raised. A new <xref:System.Web.SessionState.SessionStateModule.Start> event will be raised on the next request.  
-  
- Session identifiers for abandoned or expired sessions are recycled by default. That is, if a request is made that includes the session identifier for an expired or abandoned session, a new session is started using the same session identifier. You can disable this by setting `regenerateExpiredSessionId` attribute of the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element to `true`. For more information, see [Session Identifiers](https://msdn.microsoft.com/library/146ca206-d151-4f2e-a548-bcca05ccf0cb).  
-  
- The <xref:System.Web.SessionState.SessionStateModule.End> event is supported only when the <xref:System.Web.SessionState.HttpSessionState.Mode%2A> property is set to <xref:System.Web.SessionState.SessionStateMode.InProc>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Once the <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> method is called, the current session is no longer valid and a new session can be started. <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> causes the <xref:System.Web.SessionState.SessionStateModule.End> event to be raised. A new <xref:System.Web.SessionState.SessionStateModule.Start> event will be raised on the next request.
+
+ Session identifiers for abandoned or expired sessions are recycled by default. That is, if a request is made that includes the session identifier for an expired or abandoned session, a new session is started using the same session identifier. You can disable this by setting `regenerateExpiredSessionId` attribute of the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element to `true`. For more information, see [Session Identifiers](https://docs.microsoft.com/previous-versions/aspnet/ms178582(v=vs.100)).
+
+ The <xref:System.Web.SessionState.SessionStateModule.End> event is supported only when the <xref:System.Web.SessionState.HttpSessionState.Mode%2A> property is set to <xref:System.Web.SessionState.SessionStateMode.InProc>.
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -122,26 +122,26 @@
         <param name="value">The value of the item to add to the session-state collection.</param>
         <summary>Adds a new item to the session-state collection.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the `name` parameter refers to an existing session state item, the existing item is overwritten with the specified `value`.  
-  
-   
-  
-## Examples  
- The following example shows how to store values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Add%2A> method. It also shows how to remove values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Remove%2A> method. A <xref:System.Web.UI.WebControls.Repeater> control is used to display the contents session state on the Web page. The <xref:System.Web.SessionState.HttpSessionState.GetEnumerator%2A> method is used to iterate through the session-state collection and populate the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If the `name` parameter refers to an existing session state item, the existing item is overwritten with the specified `value`.
+
+
+
+## Examples
+ The following example shows how to store values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Add%2A> method. It also shows how to remove values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Remove%2A> method. A <xref:System.Web.UI.WebControls.Repeater> control is used to display the contents session state on the Web page. The <xref:System.Web.SessionState.HttpSessionState.GetEnumerator%2A> method is used to iterate through the session-state collection and populate the <xref:System.Web.UI.WebControls.Repeater> control.
+
 > [!IMPORTANT]
->  This example has a text box that accepts user input, which is a potential security threat. By default, ASP.NET Web pages validate that user input does not include script or HTML elements. For more information, see [Script Exploits Overview](https://msdn.microsoft.com/library/772c7312-211a-4eb3-8d6e-eec0aa1dcc07).  
-  
+>  This example has a text box that accepts user input, which is a potential security threat. By default, ASP.NET Web pages validate that user input does not include script or HTML elements. For more information, see [Script Exploits Overview](https://docs.microsoft.com/previous-versions/aspnet/w1sw53ds(v=vs.100)).
+
  [!code-aspx-csharp[HttpSessionState#13](~/samples/snippets/csharp/VS_Snippets_WebNet/HttpSessionState/CS/HttpSessionStateAddCS.aspx#13)]
- [!code-aspx-vb[HttpSessionState#13](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/HttpSessionStateAddVB.aspx#13)]  
-  
+ [!code-aspx-vb[HttpSessionState#13](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/HttpSessionStateAddVB.aspx#13)]
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
-        <related type="Article" href="https://msdn.microsoft.com/library/772c7312-211a-4eb3-8d6e-eec0aa1dcc07">Script Exploits Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/w1sw53ds(v=vs.100)">Script Exploits Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Clear">
@@ -165,7 +165,7 @@
       <Docs>
         <summary>Removes all keys and values from the session-state collection.</summary>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="CodePage">
@@ -189,16 +189,16 @@
         <summary>Gets or sets the character-set identifier for the current session.</summary>
         <value>The character-set identifier for the current session.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A character set (code page) is used to interpret multi-byte character data, determining character value, and therefore sort order. Code-page settings apply only to multi-byte character data, not to Unicode character data.  
-  
- This <xref:System.Web.SessionState.IHttpSessionState.CodePage%2A> property is provided for compatibility with earlier versions of ASP only. If you do not need to maintain backward compatibility with ASP pages, use the <xref:System.Web.HttpResponse.ContentEncoding%2A> property instead.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A character set (code page) is used to interpret multi-byte character data, determining character value, and therefore sort order. Code-page settings apply only to multi-byte character data, not to Unicode character data.
+
+ This <xref:System.Web.SessionState.IHttpSessionState.CodePage%2A> property is provided for compatibility with earlier versions of ASP only. If you do not need to maintain backward compatibility with ASP pages, use the <xref:System.Web.HttpResponse.ContentEncoding%2A> property instead.
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Contents">
@@ -222,22 +222,22 @@
         <summary>Gets a reference to the current session-state object.</summary>
         <value>The current <see cref="T:System.Web.SessionState.HttpSessionState" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.SessionState.HttpSessionState.Contents%2A> property is provided for compatibility with earlier versions of ASP.  
-  
-   
-  
-## Examples  
- The following code example lists the item names and values in the <xref:System.Web.SessionState.HttpSessionState.Contents%2A> property.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.SessionState.HttpSessionState.Contents%2A> property is provided for compatibility with earlier versions of ASP.
+
+
+
+## Examples
+ The following code example lists the item names and values in the <xref:System.Web.SessionState.HttpSessionState.Contents%2A> property.
+
  [!code-csharp[HttpSessionState#9](~/samples/snippets/csharp/VS_Snippets_WebNet/HttpSessionState/CS/snippetscs.aspx#9)]
- [!code-vb[HttpSessionState#9](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/snippetsvb.aspx#9)]  
-  
+ [!code-vb[HttpSessionState#9](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/snippetsvb.aspx#9)]
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="CookieMode">
@@ -260,30 +260,30 @@
         <summary>Gets a value that indicates whether the application is configured for cookieless sessions.</summary>
         <value>One of the <see cref="T:System.Web.HttpCookieMode" /> values that indicate whether the application is configured for cookieless sessions. The default is <see cref="F:System.Web.HttpCookieMode.UseCookies" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When <xref:System.Web.SessionState.HttpSessionState.IsCookieless%2A> is `true`, the <xref:System.Web.SessionState.HttpSessionState.CookieMode%2A> property returns <xref:System.Web.HttpCookieMode.UseUri>; otherwise the <xref:System.Web.SessionState.HttpSessionState.CookieMode%2A> property returns <xref:System.Web.HttpCookieMode.UseCookies>.  
-  
-   
-  
-## Examples  
- The following code example sets the `cookieless` session attribute to `true` in the Web.config file. For this sample application configuration, the <xref:System.Web.SessionState.HttpSessionState.CookieMode%2A> property would return <xref:System.Web.HttpCookieMode.UseUri>.  
-  
-```  
-<configuration>  
-  <system.web>  
-    <sessionState   
-      mode="InProc"  
-      cookieless="true"  
-      timeout="30" />  
-  </system.web>  
-</configuration>  
-```  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When <xref:System.Web.SessionState.HttpSessionState.IsCookieless%2A> is `true`, the <xref:System.Web.SessionState.HttpSessionState.CookieMode%2A> property returns <xref:System.Web.HttpCookieMode.UseUri>; otherwise the <xref:System.Web.SessionState.HttpSessionState.CookieMode%2A> property returns <xref:System.Web.HttpCookieMode.UseCookies>.
+
+
+
+## Examples
+ The following code example sets the `cookieless` session attribute to `true` in the Web.config file. For this sample application configuration, the <xref:System.Web.SessionState.HttpSessionState.CookieMode%2A> property would return <xref:System.Web.HttpCookieMode.UseUri>.
+
+```
+<configuration>
+  <system.web>
+    <sessionState
+      mode="InProc"
+      cookieless="true"
+      timeout="30" />
+  </system.web>
+</configuration>
+```
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -314,7 +314,7 @@
         <param name="index">The zero-based index in <paramref name="array" /> from which copying starts.</param>
         <summary>Copies the collection of session-state values to a one-dimensional array, starting at the specified index in the array.</summary>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Count">
@@ -341,7 +341,7 @@
         <summary>Gets the number of items in the session-state collection.</summary>
         <value>The number of items in the collection.</value>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -369,17 +369,17 @@
         <summary>Returns an enumerator that can be used to read all the session-state variable names in the current session.</summary>
         <returns>An <see cref="T:System.Collections.IEnumerator" /> that can iterate through the variable names in the session-state collection.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example shows how to store values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Add%2A> method. It also shows how to remove values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Remove%2A> method. A <xref:System.Web.UI.WebControls.Repeater> control is used to display the contents of session state on the Web page. The <xref:System.Web.SessionState.HttpSessionState.GetEnumerator%2A> method is used to iterate through the session-state collection and populate the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example shows how to store values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Add%2A> method. It also shows how to remove values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Remove%2A> method. A <xref:System.Web.UI.WebControls.Repeater> control is used to display the contents of session state on the Web page. The <xref:System.Web.SessionState.HttpSessionState.GetEnumerator%2A> method is used to iterate through the session-state collection and populate the <xref:System.Web.UI.WebControls.Repeater> control.
+
  [!code-aspx-csharp[HttpSessionState#13](~/samples/snippets/csharp/VS_Snippets_WebNet/HttpSessionState/CS/HttpSessionStateAddCS.aspx#13)]
- [!code-aspx-vb[HttpSessionState#13](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/HttpSessionStateAddVB.aspx#13)]  
-  
+ [!code-aspx-vb[HttpSessionState#13](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/HttpSessionStateAddVB.aspx#13)]
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="IsCookieless">
@@ -404,49 +404,49 @@
         <value>
           <see langword="true" /> if the session is embedded in the URL; otherwise, <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- ASP.NET identifies sessions uniquely with each browser. By default, the unique identifier for a session is stored in a non-expiring session cookie in the browser. You can specify that session identifiers not be stored in a cookie by setting the `cookieless` attribute to `true` in the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ ASP.NET identifies sessions uniquely with each browser. By default, the unique identifier for a session is stored in a non-expiring session cookie in the browser. You can specify that session identifiers not be stored in a cookie by setting the `cookieless` attribute to `true` in the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element.
+
 > [!NOTE]
->  To improve the security of your application, your application should allow users to log out, at which point it should call the <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> method. This reduces the potential for an unwanted source using the unique identifier in the URL to retrieve private data stored in the session for a user.  
-  
- ASP.NET maintains cookieless session state by automatically inserting a unique session ID into the page's URL. For example, the following URL has been modified by ASP.NET to include the unique session ID lit3py55t21z5v55vlm25s55:  
-  
-```  
-http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx  
-```  
-  
- ASP.NET modifies the links contained in all requested pages by embedding a session-ID value in the links just before sending each page to the browser. Session state is maintained as long as the user follows the path of links that the site provides. However, if the user agent rewrites a URL, the session-state instance will be lost.  
-  
- The session ID is embedded in the URL after the slash that follows the application name and before any remaining file or virtual-directory identifier. This allows ASP.NET to resolve the application name before involving the <xref:System.Web.SessionState.SessionStateModule> in the request.  
-  
- By default, session identifiers used in cookieless sessions are recycled. That is, if a request is made with a session ID that has expired, a new session is started using the session ID supplied with the request. This behavior can result in the unwanted sharing of session data when a link that contains a cookieless session ID is shared with multiple browsers, perhaps through a search engine or other program. You can reduce the possibility of session data being shared by multiple clients by disabling the recycling of session identifiers. To do this, set the `regenerateExpiredSessionId` attribute of the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element to `true`. This will result in a new session ID being generated when a cookieless session request is made with an expired session ID. Note that if the request made with the expired session ID uses the HTTP `POST` method, then any posted data will be lost when `regenerateExpiredSessionId` is `true`, as ASP.NET performs a redirect to ensure that the browser has the new session identifier in the URL.  
-  
+>  To improve the security of your application, your application should allow users to log out, at which point it should call the <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> method. This reduces the potential for an unwanted source using the unique identifier in the URL to retrieve private data stored in the session for a user.
+
+ ASP.NET maintains cookieless session state by automatically inserting a unique session ID into the page's URL. For example, the following URL has been modified by ASP.NET to include the unique session ID lit3py55t21z5v55vlm25s55:
+
+```
+http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
+```
+
+ ASP.NET modifies the links contained in all requested pages by embedding a session-ID value in the links just before sending each page to the browser. Session state is maintained as long as the user follows the path of links that the site provides. However, if the user agent rewrites a URL, the session-state instance will be lost.
+
+ The session ID is embedded in the URL after the slash that follows the application name and before any remaining file or virtual-directory identifier. This allows ASP.NET to resolve the application name before involving the <xref:System.Web.SessionState.SessionStateModule> in the request.
+
+ By default, session identifiers used in cookieless sessions are recycled. That is, if a request is made with a session ID that has expired, a new session is started using the session ID supplied with the request. This behavior can result in the unwanted sharing of session data when a link that contains a cookieless session ID is shared with multiple browsers, perhaps through a search engine or other program. You can reduce the possibility of session data being shared by multiple clients by disabling the recycling of session identifiers. To do this, set the `regenerateExpiredSessionId` attribute of the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element to `true`. This will result in a new session ID being generated when a cookieless session request is made with an expired session ID. Note that if the request made with the expired session ID uses the HTTP `POST` method, then any posted data will be lost when `regenerateExpiredSessionId` is `true`, as ASP.NET performs a redirect to ensure that the browser has the new session identifier in the URL.
+
 > [!NOTE]
->  While setting the `regenerateExpiredSessionId` attribute to `true` reduces the possibility of unwanted sharing of session data, it does not protect against an unwanted source gaining access to the session of another user by obtaining the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> value and including it in requests to the server. If you are storing private or sensitive information in session state, it is recommended that you use SSL to encrypt any communication between the browser and server that includes the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A>.  
-  
-   
-  
-## Examples  
- The following code example sets the `cookieless` session attribute to true in the Web.config file.  
-  
-```  
-<configuration>  
-  <system.web>  
-    <sessionState   
-      mode="InProc"  
-      cookieless="true"  
-      regenerateExpiredSessionId="true"  
-      timeout="30" />  
-  </system.web>  
-</configuration>  
-```  
-  
+>  While setting the `regenerateExpiredSessionId` attribute to `true` reduces the possibility of unwanted sharing of session data, it does not protect against an unwanted source gaining access to the session of another user by obtaining the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> value and including it in requests to the server. If you are storing private or sensitive information in session state, it is recommended that you use SSL to encrypt any communication between the browser and server that includes the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A>.
+
+
+
+## Examples
+ The following code example sets the `cookieless` session attribute to true in the Web.config file.
+
+```
+<configuration>
+  <system.web>
+    <sessionState
+      mode="InProc"
+      cookieless="true"
+      regenerateExpiredSessionId="true"
+      timeout="30" />
+  </system.web>
+</configuration>
+```
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="IsNewSession">
@@ -471,7 +471,7 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <value>
           <see langword="true" /> if the session was created with the current request; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">
@@ -496,7 +496,7 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <value>
           <see langword="true" /> if the session is read-only; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="IsSynchronized">
@@ -524,7 +524,7 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <value>
           <see langword="true" /> if access to the collection is synchronized (thread safe); otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="Item">
@@ -534,7 +534,7 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
       </AssemblyInfo>
       <Docs>
         <summary>Gets or sets individual session values.</summary>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </MemberGroup>
     <Member MemberName="Item">
@@ -562,7 +562,7 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets or sets a session value by numerical index.</summary>
         <value>The session-state value stored at the specified index, or <see langword="null" /> if the item does not exist.</value>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Item">
@@ -590,7 +590,7 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets or sets a session value by name.</summary>
         <value>The session-state value with the specified name, or <see langword="null" /> if the item does not exist.</value>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Keys">
@@ -614,7 +614,7 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets a collection of the keys for all values stored in the session-state collection.</summary>
         <value>The <see cref="T:System.Collections.Specialized.NameObjectCollectionBase.KeysCollection" /> that contains all the session keys.</value>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="LCID">
@@ -638,16 +638,16 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets or sets the locale identifier (LCID) of the current session.</summary>
         <value>A <see cref="T:System.Globalization.CultureInfo" /> instance that specifies the culture of the current session.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.SessionState.HttpSessionState.LCID%2A> property is provided for compatibility with earlier versions of ASP only. If you do not need to maintain backward compatibility with ASP pages, use the <xref:System.Globalization.CultureInfo.LCID%2A> property instead.  
-  
- ASP.NET does not store the locale identifier in session state. The <xref:System.Web.SessionState.HttpSessionState.LCID%2A> property accesses the <xref:System.Globalization.CultureInfo.LCID%2A> property to get and set the identifier.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.SessionState.HttpSessionState.LCID%2A> property is provided for compatibility with earlier versions of ASP only. If you do not need to maintain backward compatibility with ASP pages, use the <xref:System.Globalization.CultureInfo.LCID%2A> property instead.
+
+ ASP.NET does not store the locale identifier in session state. The <xref:System.Web.SessionState.HttpSessionState.LCID%2A> property accesses the <xref:System.Globalization.CultureInfo.LCID%2A> property to get and set the identifier.
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Mode">
@@ -671,31 +671,31 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets the current session-state mode.</summary>
         <value>One of the <see cref="T:System.Web.SessionState.SessionStateMode" /> values.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For information about how to configure your server for <xref:System.Web.SessionState.SessionStateMode.StateServer> or <xref:System.Web.SessionState.SessionStateMode.SQLServer> session-state storage, see [ASP.NET Session State Overview](https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc).  
-  
-   
-  
-## Examples  
- The following code example sets the `mode` session attribute to <xref:System.Web.SessionState.SessionStateMode.SQLServer> in the Web.config file. For SQL Server session mode, the `sqlConnectionString` attribute is also required.  
-  
-```  
-<configuration>  
-  <system.web>  
-    <sessionState   
-      mode="SQLServer"  
-      sqlConnectionString="Data Source=localhost;Integrated Security=SSPI"  
-      cookieless="true"  
-      timeout="30" />  
-  </system.web>  
-</configuration>  
-```  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For information about how to configure your server for <xref:System.Web.SessionState.SessionStateMode.StateServer> or <xref:System.Web.SessionState.SessionStateMode.SQLServer> session-state storage, see [ASP.NET Session State Overview](https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)).
+
+
+
+## Examples
+ The following code example sets the `mode` session attribute to <xref:System.Web.SessionState.SessionStateMode.SQLServer> in the Web.config file. For SQL Server session mode, the `sqlConnectionString` attribute is also required.
+
+```
+<configuration>
+  <system.web>
+    <sessionState
+      mode="SQLServer"
+      sqlConnectionString="Data Source=localhost;Integrated Security=SSPI"
+      cookieless="true"
+      timeout="30" />
+  </system.web>
+</configuration>
+```
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">ASP.NET Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">ASP.NET Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Remove">
@@ -722,22 +722,22 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <param name="name">The name of the item to delete from the session-state collection.</param>
         <summary>Deletes an item from the session-state collection.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the session-state collection does not contain an element with the specified `name`, the collection remains unchanged. No exception is thrown.  
-  
-   
-  
-## Examples  
- The following example shows how to store values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Add%2A> method. It also shows how to remove values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Remove%2A> method. A <xref:System.Web.UI.WebControls.Repeater> control is used to display the contents of session state on the Web page. The <xref:System.Web.SessionState.HttpSessionState.GetEnumerator%2A> method is used to iterate through the session-state collection and populate the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If the session-state collection does not contain an element with the specified `name`, the collection remains unchanged. No exception is thrown.
+
+
+
+## Examples
+ The following example shows how to store values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Add%2A> method. It also shows how to remove values in session state by using the <xref:System.Web.SessionState.HttpSessionState.Remove%2A> method. A <xref:System.Web.UI.WebControls.Repeater> control is used to display the contents of session state on the Web page. The <xref:System.Web.SessionState.HttpSessionState.GetEnumerator%2A> method is used to iterate through the session-state collection and populate the <xref:System.Web.UI.WebControls.Repeater> control.
+
  [!code-aspx-csharp[HttpSessionState#13](~/samples/snippets/csharp/VS_Snippets_WebNet/HttpSessionState/CS/HttpSessionStateAddCS.aspx#13)]
- [!code-aspx-vb[HttpSessionState#13](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/HttpSessionStateAddVB.aspx#13)]  
-  
+ [!code-aspx-vb[HttpSessionState#13](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/HttpSessionStateAddVB.aspx#13)]
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="RemoveAll">
@@ -766,14 +766,14 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
       <Docs>
         <summary>Removes all keys and values from the session-state collection.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Web.SessionState.HttpSessionState.RemoveAll%2A> performs the same function as <xref:System.Web.SessionState.HttpSessionState.Clear%2A>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.Web.SessionState.HttpSessionState.RemoveAll%2A> performs the same function as <xref:System.Web.SessionState.HttpSessionState.Clear%2A>.
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="RemoveAt">
@@ -801,12 +801,12 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Deletes an item at a specified index from the session-state collection.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="index" /> is less than zero.  
-  
+          <paramref name="index" /> is less than zero.
+
 -or-
-  
+
  <paramref name="index" /> is equal to or greater than <see cref="P:System.Web.SessionState.HttpSessionState.Count" />.</exception>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="SessionID">
@@ -830,38 +830,38 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets the unique identifier for the session.</summary>
         <value>The unique session identifier.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> property is used to uniquely identify a browser with session data on the server. The <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> value is randomly generated by ASP.NET and stored in a non-expiring session cookie in the browser. The <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> value is then sent in a cookie with each request to the ASP.NET application.  
-  
- If you want to disable the use of cookies in your ASP.NET application and still make use of session state, you can configure your application to store the session identifier in the URL instead of a cookie by setting the `cookieless` attribute of the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element to `true`, or to <xref:System.Web.HttpCookieMode.UseUri>, in the Web.config file for your application. You can have ASP.NET determine whether cookies are supported by the browser by specifying a value of <xref:System.Web.HttpCookieMode.UseDeviceProfile> for the `cookieless` attribute. You can also have ASP.NET determine whether cookies are enabled for the browser by specifying a value of <xref:System.Web.HttpCookieMode.AutoDetect> for the `cookieless` attribute. If cookies are supported when <xref:System.Web.HttpCookieMode.UseDeviceProfile> is specified, or enabled when <xref:System.Web.HttpCookieMode.AutoDetect> is specified, then the session identifier will be stored in a cookie; otherwise the session identifier will be stored in the URL. For more information, see the <xref:System.Web.SessionState.HttpSessionState.IsCookieless%2A> property.  
-  
- The <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> is sent between the server and the browser in clear text, either in a cookie or in the URL. As a result, an unwanted source could gain access to the session of another user by obtaining the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> value and including it in requests to the server. If you are storing private or sensitive information in session state, it is recommended that you use SSL to encrypt any communication between the browser and server that includes the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A>.  
-  
- When using cookie-based session state, ASP.NET does not allocate storage for session data until the <xref:System.Web.UI.Page.Session%2A> object is used. As a result, a new session ID is generated for each page request until the session object is accessed. If your application requires a static session ID for the entire session, you can either implement the `Session_Start` method in the application's Global.asax file and store data in the <xref:System.Web.UI.Page.Session%2A> object to fix the session ID, or you can use code in another part of your application to explicitly store data in the <xref:System.Web.UI.Page.Session%2A> object.  
-  
- If your application uses cookieless session state, the session ID is generated on the first page view and is maintained for the entire session.  
-  
-   
-  
-## Examples  
- The following code example shows a Web.config file that configures session state to use cookieless session identifiers. For more information, see the <xref:System.Web.SessionState.HttpSessionState.IsCookieless%2A> property.  
-  
-```  
-<configuration>  
-  <system.web>  
-    <sessionState   
-      cookieless="true"  
-      regenerateExpiredSessionId="true"  
-      timeout="30" />  
-  </system.web>  
-</configuration>  
-```  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> property is used to uniquely identify a browser with session data on the server. The <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> value is randomly generated by ASP.NET and stored in a non-expiring session cookie in the browser. The <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> value is then sent in a cookie with each request to the ASP.NET application.
+
+ If you want to disable the use of cookies in your ASP.NET application and still make use of session state, you can configure your application to store the session identifier in the URL instead of a cookie by setting the `cookieless` attribute of the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element to `true`, or to <xref:System.Web.HttpCookieMode.UseUri>, in the Web.config file for your application. You can have ASP.NET determine whether cookies are supported by the browser by specifying a value of <xref:System.Web.HttpCookieMode.UseDeviceProfile> for the `cookieless` attribute. You can also have ASP.NET determine whether cookies are enabled for the browser by specifying a value of <xref:System.Web.HttpCookieMode.AutoDetect> for the `cookieless` attribute. If cookies are supported when <xref:System.Web.HttpCookieMode.UseDeviceProfile> is specified, or enabled when <xref:System.Web.HttpCookieMode.AutoDetect> is specified, then the session identifier will be stored in a cookie; otherwise the session identifier will be stored in the URL. For more information, see the <xref:System.Web.SessionState.HttpSessionState.IsCookieless%2A> property.
+
+ The <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> is sent between the server and the browser in clear text, either in a cookie or in the URL. As a result, an unwanted source could gain access to the session of another user by obtaining the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> value and including it in requests to the server. If you are storing private or sensitive information in session state, it is recommended that you use SSL to encrypt any communication between the browser and server that includes the <xref:System.Web.SessionState.HttpSessionState.SessionID%2A>.
+
+ When using cookie-based session state, ASP.NET does not allocate storage for session data until the <xref:System.Web.UI.Page.Session%2A> object is used. As a result, a new session ID is generated for each page request until the session object is accessed. If your application requires a static session ID for the entire session, you can either implement the `Session_Start` method in the application's Global.asax file and store data in the <xref:System.Web.UI.Page.Session%2A> object to fix the session ID, or you can use code in another part of your application to explicitly store data in the <xref:System.Web.UI.Page.Session%2A> object.
+
+ If your application uses cookieless session state, the session ID is generated on the first page view and is maintained for the entire session.
+
+
+
+## Examples
+ The following code example shows a Web.config file that configures session state to use cookieless session identifiers. For more information, see the <xref:System.Web.SessionState.HttpSessionState.IsCookieless%2A> property.
+
+```
+<configuration>
+  <system.web>
+    <sessionState
+      cookieless="true"
+      regenerateExpiredSessionId="true"
+      timeout="30" />
+  </system.web>
+</configuration>
+```
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="StaticObjects">
@@ -885,24 +885,24 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets a collection of objects declared by <see langword="&lt;object Runat=&quot;Server&quot; Scope=&quot;Session&quot;/&gt;" /> tags within the ASP.NET application file Global.asax.</summary>
         <value>An <see cref="T:System.Web.HttpStaticObjectsCollection" /> containing objects declared in the Global.asax file.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If an object on a page does not support serialization and <xref:System.Web.SessionState.HttpSessionState.Mode%2A> is out-of-process (<xref:System.Web.SessionState.SessionStateMode.SQLServer> or <xref:System.Web.SessionState.SessionStateMode.StateServer>), the object will not be created and will not be added to this collection.  
-  
- The <xref:System.Web.SessionState.HttpSessionState.StaticObjects%2A> property is provided for compatibility with earlier versions of ASP.  
-  
-   
-  
-## Examples  
- The following code example lists the `id` and object type of the objects in the <xref:System.Web.SessionState.HttpSessionState.StaticObjects%2A> collection.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If an object on a page does not support serialization and <xref:System.Web.SessionState.HttpSessionState.Mode%2A> is out-of-process (<xref:System.Web.SessionState.SessionStateMode.SQLServer> or <xref:System.Web.SessionState.SessionStateMode.StateServer>), the object will not be created and will not be added to this collection.
+
+ The <xref:System.Web.SessionState.HttpSessionState.StaticObjects%2A> property is provided for compatibility with earlier versions of ASP.
+
+
+
+## Examples
+ The following code example lists the `id` and object type of the objects in the <xref:System.Web.SessionState.HttpSessionState.StaticObjects%2A> collection.
+
  [!code-csharp[HttpSessionState#10](~/samples/snippets/csharp/VS_Snippets_WebNet/HttpSessionState/CS/snippetscs.aspx#10)]
- [!code-vb[HttpSessionState#10](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/snippetsvb.aspx#10)]  
-  
+ [!code-vb[HttpSessionState#10](~/samples/snippets/visualbasic/VS_Snippets_WebNet/HttpSessionState/VB/snippetsvb.aspx#10)]
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="SyncRoot">
@@ -929,7 +929,7 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets an object that can be used to synchronize access to the collection of session-state values.</summary>
         <value>An object that can be used to synchronize access to the collection.</value>
         <remarks>To be added.</remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
     <Member MemberName="Timeout">
@@ -953,32 +953,32 @@ http://www.example.com/(S(4danlfat035muve4g0mvgfrr))/orderform.aspx
         <summary>Gets or sets the amount of time, in minutes, allowed between requests before the session-state provider terminates the session.</summary>
         <value>The time-out period, in minutes.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> property can be set in the Web.config file for an application using the `timeout` attribute of the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element, or you can set the <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> property value directly using application code.  
-  
- The <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> property cannot be set to a value greater than 525,600 minutes (1 year). The default value is 20 minutes.  
-  
-   
-  
-## Examples  
- The following code example sets the `timeout` session attribute to 30 minutes in the Web.config file.  
-  
-```  
-<configuration>  
-  <system.web>  
-    <sessionState   
-      mode="InProc"  
-      cookieless="true"  
-      timeout="30" />  
-  </system.web>  
-</configuration>  
-```  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> property can be set in the Web.config file for an application using the `timeout` attribute of the [sessionState](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/h6bb9cz9(v%3dvs.100)) configuration element, or you can set the <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> property value directly using application code.
+
+ The <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> property cannot be set to a value greater than 525,600 minutes (1 year). The default value is 20 minutes.
+
+
+
+## Examples
+ The following code example sets the `timeout` session attribute to 30 minutes in the Web.config file.
+
+```
+<configuration>
+  <system.web>
+    <sessionState
+      mode="InProc"
+      cookieless="true"
+      timeout="30" />
+  </system.web>
+</configuration>
+```
+
  ]]></format>
         </remarks>
-        <related type="Article" href="https://msdn.microsoft.com/library/6d60d381-6521-4e1d-9089-da6464f2a9bc">Session State Overview</related>
+        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ms178581(v=vs.100)">Session State Overview</related>
       </Docs>
     </Member>
   </Members>
