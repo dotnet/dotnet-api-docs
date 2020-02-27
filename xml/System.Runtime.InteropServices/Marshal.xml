@@ -6585,10 +6585,18 @@ There is a difference in the behavior of the `GetLastWin32Error` method on .NET 
         <Parameter Name="ptr" Type="System.IntPtr" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="ptr">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="ptr">The address of the first character of the unmanaged string.</param>
+        <summary>Allocates a managed <see cref="T:System.String" /> and copies all characters up to the first null character from an unmanaged UTF-8 string into it.</summary>
+        <returns>A managed string that holds a copy of the unmanaged string if the value of the <paramref name="ptr" /> parameter is not <see langword="null" />; otherwise, this method returns <see langword="null" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.Runtime.InteropServices.Marshal.PtrToStringUTF8%2A> is useful for custom marshaling or for use when mixing managed and unmanaged code. Because this method creates a copy of the unmanaged string's contents, you must free the original string as appropriate. This method provides the opposite functionality of the <xref:System.Runtime.InteropServices.Marshal.StringToCoTaskMemUTF8%2A?displayProperty=nameWithType> methods.
+ ]]></format>
+
+        </remarks>
+        <altmember cref="M:System.Runtime.InteropServices.Marshal.StringToCoTaskMemUTF8(System.String)" />
       </Docs>
     </Member>
     <Member MemberName="PtrToStringUTF8">
@@ -6626,11 +6634,19 @@ There is a difference in the behavior of the `GetLastWin32Error` method on .NET 
         <Parameter Name="byteLen" Type="System.Int32" Index="1" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="ptr">To be added.</param>
-        <param name="byteLen">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="ptr">The address of the first character of the unmanaged string.</param>
+        <param name="byteLen">The number of bytes to copy.</param>
+        <summary>Allocates a managed <see cref="T:System.String" /> and copies a specified number of bytes from an unmanaged UTF8 string into it.</summary>
+        <returns>A managed string that holds a copy of the unmanaged string if the value of the <paramref name="ptr" /> parameter is not <see langword="null" />; otherwise, this method returns <see langword="null" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.Runtime.InteropServices.Marshal.PtrToStringUTF8%2A> is useful for custom marshaling or when mixing managed and unmanaged code. Because this method creates a copy of the unmanaged string's contents, you must free the original string as appropriate. This method provides the opposite functionality of the <xref:System.Runtime.InteropServices.Marshal.StringToCoTaskMemUTF8%2A?displayProperty=nameWithType> methods.  
+
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Runtime.InteropServices.Marshal.StringToCoTaskMemUTF8(System.String)" />
       </Docs>
     </Member>
     <MemberGroup MemberName="PtrToStructure">
@@ -9477,10 +9493,22 @@ There is a difference in the behavior of the `GetLastWin32Error` method on .NET 
         <Parameter Name="s" Type="System.String" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="s">A managed string to be copied.</param>
+        <summary>Copies the contents of a managed <see cref="T:System.String" /> to a block of memory allocated from the unmanaged COM task allocator.</summary>
+        <returns>An integer representing a pointer to the block of memory allocated for the string, or 0 if <paramref name="s" /> is <see langword="null" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.Runtime.InteropServices.Marshal.StringToCoTaskMemUTF8%2A> is useful for custom marshaling or for use when mixing managed and unmanaged code. Because this method allocates the unmanaged memory required for a string including a null terminator, always free the memory by calling <xref:System.Runtime.InteropServices.Marshal.FreeCoTaskMem%2A?displayProperty=nameWithType>. This method provides the opposite functionality of <xref:System.Runtime.InteropServices.Marshal.PtrToStringUTF8%2A?displayProperty=nameWithType>. The characters of the string are copied as UTF-8 characters.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="s" /> parameter exceeds the maximum length allowed by the operating system.</exception>
+        <exception cref="T:System.OutOfMemoryException">There is insufficient memory available.</exception>
+        <altmember cref="M:System.Runtime.InteropServices.Marshal.FreeCoTaskMem(System.IntPtr)" />
+        <altmember cref="M:System.Runtime.InteropServices.Marshal.ZeroFreeCoTaskMemUTF8(System.IntPtr)" />
+        <altmember cref="M:System.Runtime.InteropServices.Marshal.PtrToStringUTF8(System.IntPtr,System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName="StringToHGlobalAnsi">
@@ -11871,9 +11899,16 @@ public static void ThrowExceptionForHR(interrorCode,IntPtrerrorInfo)
         <Parameter Name="s" Type="System.IntPtr" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="s">The address of the unmanaged string to free.</param>
+        <summary>Frees an unmanaged string pointer that was allocated using the <see cref="M:System.Runtime.InteropServices.Marshal.StringToCoTaskMemUTF8(System.String)" /> method.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Runtime.InteropServices.Marshal.ZeroFreeCoTaskMemUTF8%2A> method first zeros out and then frees unmanaged memory that was allocated using the <xref:System.Runtime.InteropServices.Marshal.StringToCoTaskMemUTF8%2A> method.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ZeroFreeGlobalAllocAnsi">
