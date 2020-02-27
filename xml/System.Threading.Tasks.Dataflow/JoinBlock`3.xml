@@ -323,12 +323,25 @@
         <Parameter Name="messageConsumed" Type="System.Boolean" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="messageHeader">To be added.</param>
-        <param name="target">To be added.</param>
-        <param name="messageConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="messageHeader">The <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> of the message that is to be consumed.</param>
+        <param name="target">The <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" /> for which the message is to be consumed.</param>
+        <param name="messageConsumed">
+          <see langword="true" /> if the message was successfully consumed. <see langword="false" /> otherwise.</param>
+        <summary>Passes the ownership of the message identified by the <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> from this  <see cref="T:System.Threading.Tasks.Dataflow.ISourceBlock`1" /> instance to the <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" />.</summary>
+        <returns> The value of the consumed message. This may correspond to a different <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> instance than was previously reserved and passed as the <paramref name="messageHeader" /> to <see cref="M:ConsumeMessage" />. The consuming <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" /> must  use the returned value instead of the value passed as messageValue through <see cref="M:OfferMessage" />.
+  If the message requested is not available, the return value will be <see langword="null" /> (Nothing in Visual Basic).
+ </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ The <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1> for which the message is to be consumed need not be linked from this  <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance. Moreover, this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1>  instance may have never offered the message directly to the <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.  
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="messageHeader" /> is not valid.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="target" /> is <see langword="null" /> (Nothing in Visual Basic).</exception>
       </Docs>
     </Member>
     <Member MemberName="System.Threading.Tasks.Dataflow.ISourceBlock&lt;System.Tuple&lt;T1,T2,T3&gt;&gt;.ReleaseReservation">
@@ -359,10 +372,23 @@
         <Parameter Name="target" Type="System.Threading.Tasks.Dataflow.ITargetBlock&lt;System.Tuple&lt;T1,T2,T3&gt;&gt;" />
       </Parameters>
       <Docs>
-        <param name="messageHeader">To be added.</param>
-        <param name="target">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="messageHeader">The <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> of the reserved message.</param>
+        <param name="target">The <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" /> that currently holds the reservation.</param>
+        <summary>Releases the right to pass the ownership of the message identified by the <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> from this <see cref="T:System.Threading.Tasks.Dataflow.ISourceBlock`1" /> to the <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" />.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ The <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1> that holds the reservation need not be linked from this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance. Moreover, this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance may have never offered the message directly to the <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.
+  It is required that this message has been previously reserved for the same <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.
+ 
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="messageHeader" /> is not valid.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="target" /> is <see langword="null" /> (Nothing in Visual Basic).</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="target" /> did not have the message reserved.</exception>
       </Docs>
     </Member>
     <Member MemberName="System.Threading.Tasks.Dataflow.ISourceBlock&lt;System.Tuple&lt;T1,T2,T3&gt;&gt;.ReserveMessage">
@@ -393,11 +419,26 @@
         <Parameter Name="target" Type="System.Threading.Tasks.Dataflow.ITargetBlock&lt;System.Tuple&lt;T1,T2,T3&gt;&gt;" />
       </Parameters>
       <Docs>
-        <param name="messageHeader">To be added.</param>
-        <param name="target">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="messageHeader">The <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> of the message that is to be reserved.</param>
+        <param name="target">The <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" /> for which the message is to be reserved.</param>
+        <summary>Reserves the right to pass the ownership of the message identified by the <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> from this <see cref="T:System.Threading.Tasks.Dataflow.ISourceBlock`1" /> to the <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" />.</summary>
+        <returns>
+          <see langword="true" /> if the message was successfully reserved; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ The <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1> for which the message is to be reserved need not be linked from this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance. Moreover, this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance may have never offered the message directly to the <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.
+  If `true` is returned, either <xref:ConsumeMessage> or <xref:ReleaseReservation> for this message must be subsequently called  with the same <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> and <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.
+ Failure to do so may result in the source being unable to propagate any further messages to any target.
+  <xref:ReserveMessage> must not be called while the target is holding any internal locks.  Doing so will violate the lock hierarchy necessary to avoid deadlocks in a dataflow network.
+ 
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="messageHeader" /> is not valid.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="target" /> is <see langword="null" /> (Nothing in Visual Basic).</exception>
       </Docs>
     </Member>
     <Member MemberName="Target1">
