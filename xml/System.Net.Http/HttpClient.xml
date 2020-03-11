@@ -37,7 +37,8 @@
   
  If an app using <xref:System.Net.Http.HttpClient> and related classes in the <xref:System.Net.Http> namespace intends to download large amounts of data (50 megabytes or more), then the app should stream those downloads and not use the default buffering. If the default buffering is used the client memory usage will get very large, potentially resulting in substantially reduced performance.  
 
- Properties of <xref:System.Net.Http.HttpClient> should not be modified once any request has been sent.
+ Properties of <xref:System.Net.Http.HttpClient> should not be modified while there are outstanding requests, because it is not thread-safe.
+
    
  The following methods are thread safe:  
   
@@ -457,7 +458,7 @@ The environment variables used for `DefaultProxy` initialization on Windows and 
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Headers set on this property don't need to be set on request messages again. `DefaultRequestHeaders` should not be modified after any request has been sent, because it is not thread-safe.
+ Headers set on this property don't need to be set on request messages again. `DefaultRequestHeaders` should not be modified while there are outstanding requests, because it is not thread-safe.
   
  ]]></format>
         </remarks>
