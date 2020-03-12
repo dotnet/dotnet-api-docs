@@ -36,7 +36,10 @@
  By default on .NET Framework and Mono, <xref:System.Net.HttpWebRequest> is used to send requests to the server. This behavior can be modified by specifying a different channel in one of the constructor overloads taking a <xref:System.Net.Http.HttpMessageHandler> instance as parameter. If features like authentication or caching are required, <xref:System.Net.Http.WebRequestHandler> can be used to configure settings and the instance can be passed to the constructor. The returned handler can be passed to one of the constructor overloads taking a <xref:System.Net.Http.HttpMessageHandler> parameter.  
   
  If an app using <xref:System.Net.Http.HttpClient> and related classes in the <xref:System.Net.Http> namespace intends to download large amounts of data (50 megabytes or more), then the app should stream those downloads and not use the default buffering. If the default buffering is used the client memory usage will get very large, potentially resulting in substantially reduced performance.  
-  
+
+ Properties of <xref:System.Net.Http.HttpClient> should not be modified while there are outstanding requests, because it is not thread-safe.
+
+   
  The following methods are thread safe:  
   
 1.  <xref:System.Net.Http.HttpClient.CancelPendingRequests%2A>  
@@ -455,7 +458,7 @@ The environment variables used for `DefaultProxy` initialization on Windows and 
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Headers set on this property don't need to be set on request messages again.  
+ Headers set on this property don't need to be set on request messages again. `DefaultRequestHeaders` should not be modified while there are outstanding requests, because it is not thread-safe.
   
  ]]></format>
         </remarks>
