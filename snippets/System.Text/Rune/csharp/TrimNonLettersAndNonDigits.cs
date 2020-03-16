@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RuneSamples
 {
-    class TrimLettersAndNondigits
+    class TrimNonLettersAndNonDigits
     {
         public static void Run()
         {

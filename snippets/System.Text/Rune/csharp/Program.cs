@@ -30,7 +30,7 @@ namespace RuneSamples
             InstantiateRunes.Run();
 
             Console.WriteLine("\n----- Trim letters and nondigits");
-            TrimLettersAndNondigits.Run();
+            TrimNonLettersAndNonDigits.Run();
 
             Console.WriteLine("\n----- Encode a Rune");
             EncodeRune.Run();
