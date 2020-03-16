@@ -69,9 +69,9 @@ If your code iterates through the `char` instances in a `string` or a `ReadOnlyS
 
 The following examples show code that won't work correctly if any of the `char` instances are surrogate code points:
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/CountLettersInString.cs" id="SnippetBadExample":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInString.cs" id="SnippetBadExample":::
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/CountLettersInSpan.cs" id="SnippetBadExample":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInSpan.cs" id="SnippetBadExample":::
 
 The preceding code works correctly with some languages such as English:
 
@@ -91,9 +91,9 @@ The reason this method returns incorrect results for Osage text is that the `cha
 
 If you change this code to use `Rune` instead of `char`, the method works correctly with code points outside the Basic Multilingual Plane:
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/CountLettersInString.cs" id="SnippetGoodExample":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInString.cs" id="SnippetGoodExample":::
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/CountLettersInSpan.cs" id="SnippetGoodExample":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInSpan.cs" id="SnippetGoodExample":::
 
 The preceding code counts Osage letters correctly:
 
@@ -115,11 +115,11 @@ Consider using the `Rune` type if your code calls APIs that explicitly operate o
 
 For example, the following method has special logic to deal with surrogate `char` pairs:
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/WorkWithSurrogates.cs" id="SnippetUseChar":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/WorkWithSurrogates.cs" id="SnippetUseChar":::
 
 Such code is simpler if it uses `Rune`, as in the following example:
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/WorkWithSurrogates.cs" id="SnippetUseRune":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/WorkWithSurrogates.cs" id="SnippetUseRune":::
 
 ### When not to use `Rune`
 
@@ -136,13 +136,13 @@ Using the `Rune` type may return incorrect results if your code:
 
 The following code iterates through a `string` looking for specific characters, returning the index of the first match. There's no need to change this code to use `Rune`, as the code is looking for characters that are represented by a single `char`.
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/FindFirstLetter.cs" id="SnippetExample":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/FindFirstLetter.cs" id="SnippetExample":::
 
 #### Split a string on a known `char`
 
 It's common to call `string.Split` and use delimiters such as `' '` (space) or `','` (comma), as in the following example:
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/SplitStringOnChar.cs" id="SnippetExample":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/SplitStringOnChar.cs" id="SnippetExample":::
 
 There is no need to use `Rune` here, because the code is looking for characters that are represented by a single `char`.
 
@@ -162,15 +162,15 @@ There are several ways to get a `Rune` instance. You can use a constructor to cr
 
 * A code point.
 
-  :::code language="csharp" source="../../snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetCodePoint":::
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetCodePoint":::
 
 * A single `char`.
 
-  :::code language="csharp" source="../../snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetChar":::
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetChar":::
 
 * A surrogate `char` pair.
 
-  :::code language="csharp" source="../../snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetSurrogate":::
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetSurrogate":::
 
 All of the constructors throw an `ArgumentException` if the input doesn't represent a valid Unicode scalar value.
 
@@ -182,13 +182,13 @@ There are <xref:System.Text.Rune.TryCreate%2A?displayProperty=nameWithType> meth
 
 To get the integer code point value of a `Rune` instance, use the <xref:System.Text.Rune.Value?displayProperty=nameWithType> property.
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetValue":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetValue":::
 
 Many of the static APIs available on the `char` type are also available on the `Rune` type. For instance, <xref:System.Text.Rune.IsWhiteSpace%2A?displayProperty=nameWithType> and <xref:System.Text.Rune.GetUnicodeCategory%2A?displayProperty=nameWithType> are equivalents to <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> and <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType> methods. The `Rune` methods correctly handle surrogate pairs.
 
 The following example code takes a `ReadOnlySpan<char>` as input and trims from both the start and the end of the span every `Rune` which isn't a letter or a digit.
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/TrimNonLettersAndNonDigits.cs" id="SnippetExample":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/TrimNonLettersAndNonDigits.cs" id="SnippetExample":::
 
 There are some API differences between `char` and `Rune`. For example:
 
@@ -203,15 +203,15 @@ The <xref:System.Text.Rune.EncodeToUtf16%2A?displayProperty=nameWithType> conver
 
 The following example converts a `Rune` instance to a `char` array. The code assumes you have a `Rune` instance in the `rune` variable:
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf16CharArray":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf16CharArray":::
 
 Since a `string` is a sequence of UTF-16 chars, the following example also converts a `Rune` instance to UTF-16:
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf16String":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf16String":::
 
 The following example converts a `Rune` instance to a `UTF-8` byte array:
 
-:::code language="csharp" source="../../snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf18ByteArray":::
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf18ByteArray":::
 
 The <xref:System.Text.Rune.EncodeToUtf16%2A?displayProperty=nameWithType> and <xref:System.Text.Rune.EncodeToUtf8%2A?displayProperty=nameWithType> methods return the actual number of elements written. They throw an exception if the destination buffer is too short to contain the result. There are non-throwing <xref:System.Text.Rune.TryEncodeToUtf8%2A> and <xref:System.Text.Rune.EncodeToUtf16%2A> methods as well for callers who want to avoid exceptions.
 
