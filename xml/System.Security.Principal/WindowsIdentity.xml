@@ -1241,6 +1241,9 @@ Application code does not call this method; it is automatically invoked during g
 ## Remarks  
  On Windows NT platforms, the current user must have sufficient rights to allow impersonation.  
   
+> [!WARNING]
+>  Avoid using this method with the async/await pattern. In some cases it may lead to reliability issues due to impersonation not being reverted even if the resulting `WindowsImpersonationContext` is disposed. Use `RunImpersonated` instead.  
+  
    
   
 ## Examples  
@@ -1305,6 +1308,9 @@ Application code does not call this method; it is automatically invoked during g
 >  Calling the <xref:System.Security.Principal.WindowsIdentity.Impersonate%28System.IntPtr%29> method with a `userToken` value of <xref:System.IntPtr.Zero> is equivalent to calling the Win32 `RevertToSelf` function. If another user is currently being impersonated, control reverts to the original user.  
   
  For more information about calls to unmanaged code, see [Consuming Unmanaged DLL Functions](~/docs/framework/interop/consuming-unmanaged-dll-functions.md).  
+  
+> [!WARNING]
+>  Avoid using this method with the async/await pattern. In some cases it may lead to reliability issues due to impersonation not being reverted even if the resulting `WindowsImpersonationContext` is disposed. Use `RunImpersonated` instead.  
   
    
   
@@ -1709,6 +1715,13 @@ Application code does not call this method; it is automatically invoked during g
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
+## Remarks  
+  
+> [!NOTE]
+>  This method may be used reliably with the async/await pattern, unlike `Impersonate`. In an async method, the generic overload of this method may be used with an async delegate argument so that the resulting task may be awaited.  
+  
+   
+  
 ## Examples  
  The following example demonstrates the use of the <xref:System.Security.Principal.WindowsIdentity> class to impersonate a user.  
   
@@ -1833,6 +1846,13 @@ public class ImpersonationDemo
         <returns>The result of the function.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+  
+> [!NOTE]
+>  This method may be used reliably with the async/await pattern, unlike `Impersonate`. In an async method, this method may be used with an async delegate argument so that the resulting task may be awaited.  
+  
+   
   
 ## Examples  
  The following example demonstrates the use of the <xref:System.Security.Principal.WindowsIdentity> class to impersonate a user.  
