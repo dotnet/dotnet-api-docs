@@ -9,7 +9,7 @@ namespace RuneSamples
         public static void Run()
         {
             Console.WriteLine("Converting ox emoji to UTF-16 and UTF-8");
-            var rune = new Rune("🐂".ToCharArray()[0], "🐂".ToCharArray()[1]);
+            Rune rune = Rune.GetRuneAt("🐂", 0);
             Console.WriteLine($"Rune value: {rune.Value}");
 
             // <SnippetUtf16CharArray>
