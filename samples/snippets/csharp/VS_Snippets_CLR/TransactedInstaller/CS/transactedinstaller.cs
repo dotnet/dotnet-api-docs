@@ -71,14 +71,13 @@ public class TransactedInstaller_Example
                      args[i]);
                   return;
                }
-// <Snippet2>         
+
                // Create a instance of 'AssemblyInstaller' that installs the given assembly.
                myAssemblyInstaller = 
                   new AssemblyInstaller(args[i], 
                   (string[]) myOptions.ToArray(typeof(string)));
                // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.  
                myTransactedInstaller.Installers.Add(myAssemblyInstaller);  
-// </Snippet2>
             }
          }
          // If user requested help or didn't provide any assemblies to install
