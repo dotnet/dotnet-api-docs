@@ -17,7 +17,7 @@ public class Test
         client.Encoding = System.Text.Encoding.UTF8;
         // Upload the data.
         string reply = client.UploadString (address, data);
-        // Disply the server's response.
+        // Display the server's response.
         Console.WriteLine (reply);
     }
 
