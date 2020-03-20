@@ -44,7 +44,7 @@ namespace RuneSamples
 
                 return span;
             }
-            // <SnippetExample>
+            // </SnippetExample>
         }
     }
 }
