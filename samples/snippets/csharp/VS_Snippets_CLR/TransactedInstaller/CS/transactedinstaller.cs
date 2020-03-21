@@ -15,6 +15,7 @@
    printed to the console.
  */
 
+// <Snippet1>
 using System;
 using System.ComponentModel;
 using System.Collections;
@@ -23,12 +24,9 @@ using System.IO;
 
 public class TransactedInstaller_Example
 {
+// <Snippet2>
    public static void Main(String[] args)
    {
-// <Snippet1>
-// <Snippet2>
-// <Snippet3>
-// <Snippet4>
       ArrayList myOptions = new ArrayList();
       String myOption;
       bool toUnInstall = false;
@@ -73,13 +71,13 @@ public class TransactedInstaller_Example
                      args[i]);
                   return;
                }
-            
+
                // Create a instance of 'AssemblyInstaller' that installs the given assembly.
                myAssemblyInstaller = 
                   new AssemblyInstaller(args[i], 
                   (string[]) myOptions.ToArray(typeof(string)));
                // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.  
-               myTransactedInstaller.Installers.Add(myAssemblyInstaller);
+               myTransactedInstaller.Installers.Add(myAssemblyInstaller);  
             }
          }
          // If user requested help or didn't provide any assemblies to install
@@ -105,13 +103,9 @@ public class TransactedInstaller_Example
       catch(Exception e)
       {
          Console.WriteLine("\nException raised : {0}", e.Message);
-      }  
-// </Snippet4>
-// </Snippet3>
-// </Snippet2>
-// </Snippet1>
+      }
    }  
-
+   
    public static void PrintHelpMessage()
    {
       Console.WriteLine("Usage : TransactedInstaller [/u | /uninstall] [option [...]] assembly" +
@@ -121,3 +115,4 @@ public class TransactedInstaller_Example
          " is given it uninstalls the assemblies.");
    }
 }
+// </Snippet1>
