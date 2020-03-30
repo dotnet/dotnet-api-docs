@@ -34,6 +34,7 @@ namespace MyInstallContextNamespace
 
       public override void Install( IDictionary mySavedState )
       {
+         base.Install( mySavedState );
 // <Snippet6>
          StringDictionary myStringDictionary = myInstallContext.Parameters;
          if( myStringDictionary.Count == 0 )
@@ -61,11 +62,13 @@ namespace MyInstallContextNamespace
 
       public override void Uninstall( IDictionary mySavedState )
       {
+         base.Uninstall( mySavedState );
          // The 'Uninstall' procedure should be added here.
       }
 
       public override void Rollback( IDictionary mySavedState )
       {
+         base.Rollback( mySavedState );
          if( myInstallContext.IsParameterTrue( "LogtoConsole" ) == true )
          {
             myInstallContext.LogMessage( "The 'Rollback' method has been called" );
@@ -76,6 +79,7 @@ namespace MyInstallContextNamespace
 
       public override void Commit( IDictionary mySavedState )
       {
+         base.Commit( mySavedState );
          if( myInstallContext.IsParameterTrue( "LogtoConsole" ) == true )
          {
             myInstallContext.LogMessage( "The 'Commit' method has been called" );
