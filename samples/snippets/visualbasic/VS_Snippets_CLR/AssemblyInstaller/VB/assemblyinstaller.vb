@@ -33,7 +33,6 @@ Class AssemblyInstaller_Example
 
          ' Commit the 'MyAssembly' assembly.
          myAssemblyInstaller.Commit(mySavedState)
-      Catch e As ArgumentException
       Catch e As Exception
          Console.WriteLine(e.Message)
       End Try
