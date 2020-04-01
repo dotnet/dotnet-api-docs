@@ -1,4 +1,4 @@
-<Type Name="ImmutableList&lt;T&gt;+Enumerator" FullName="System.Collections.Immutable.ImmutableList&lt;T&gt;+Enumerator">
+﻿<Type Name="ImmutableList&lt;T&gt;+Enumerator" FullName="System.Collections.Immutable.ImmutableList&lt;T&gt;+Enumerator">
   <TypeSignature Language="C#" Value="public struct ImmutableList&lt;T&gt;.Enumerator : System.Collections.Generic.IEnumerator&lt;T&gt;" />
   <TypeSignature Language="ILAsm" Value=".class nested public sequential ansi sealed beforefieldinit ImmutableList`1/Enumerator&lt;T&gt; extends System.ValueType implements class System.Collections.Generic.IEnumerator`1&lt;!T&gt;, class System.Collections.IEnumerator, class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Collections.Immutable.ImmutableList`1.Enumerator" />
@@ -84,7 +84,19 @@
       <Docs>
         <summary>Gets the element at the current position of the enumerator.</summary>
         <value>The element at the current position of the enumerator.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+<xref:System.Collections.Generic.IEnumerator%601.Current%2A> is undefined under any of the following conditions:   
+ -   The enumerator is positioned before the first element in the collection, immediately after the enumerator is created.   <xref:System.Collections.IEnumerator.MoveNext%2A> must be called to advance the enumerator to the first element of the collection before reading the value of <xref:System.Collections.Generic.IEnumerator%601.Current%2A>.   
+ -   The last call to <xref:System.Collections.IEnumerator.MoveNext%2A> returned `false`, which indicates the end of the collection.   
+ -   The enumerator is invalidated due to changes made in the collection, such as adding, modifying, or deleting elements.   
+ <xref:System.Collections.Generic.IEnumerator%601.Current%2A> returns the same object until <xref:System.Collections.IEnumerator.MoveNext%2A> is called. <xref:System.Collections.IEnumerator.MoveNext%2A> sets <xref:System.Collections.Generic.IEnumerator%601.Current%2A> to the next element.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -115,7 +127,29 @@
       <Parameters />
       <Docs>
         <summary>Releases the resources used by the current instance of the <see cref="T:System.Collections.Immutable.ImmutableList`1.Enumerator" /> class.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Use this method to close or release unmanaged resources such as files, streams, and handles held by an instance of the class that implements this interface. By convention, this method is used for all tasks associated with freeing resources held by an object, or preparing an object for reuse.   
+ > [!WARNING] >  If you are using a class that implements the <xref:System.IDisposable> interface, you should call its <xref:System.IDisposable.Dispose%2A> implementation when you are finished using the class. For more information, see the "Using an object that implements IDisposable" section in the <xref:System.IDisposable> topic.   
+ When implementing this method, ensure that all held resources are freed by propagating the call through the containment hierarchy. For example, if an object A allocates an object B, and object B allocates an object C, then A's <xref:System.IDisposable.Dispose%2A> implementation must call <xref:System.IDisposable.Dispose%2A> on B, which must in turn call <xref:System.IDisposable.Dispose%2A> on C.   
+ > [!IMPORTANT] >  The C++ compiler supports deterministic disposal of resources and does not allow direct implementation of the <xref:System.IDisposable.Dispose%2A> method.   
+ An object must also call the <xref:System.IDisposable.Dispose%2A> method of its base class if the base class implements <xref:System.IDisposable>. For more information about implementing <xref:System.IDisposable> on a base class and its subclasses, see the "IDisposable and the inheritance hierarchy" section in the <xref:System.IDisposable> topic.   
+ If an object's <xref:System.IDisposable.Dispose%2A> method is called more than once, the object must ignore all calls after the first one. The object must not throw an exception if its <xref:System.IDisposable.Dispose%2A> method is called multiple times. Instance methods other than <xref:System.IDisposable.Dispose%2A> can throw an <xref:System.ObjectDisposedException> when resources are already disposed.   
+ Users might expect a resource type to use a particular convention to denote an allocated state versus a freed state. An example of this is stream classes, which are traditionally thought of as open or closed. The implementer of a class that has such a convention might choose to implement a public method with a customized name, such as `Close`, that calls the <xref:System.IDisposable.Dispose%2A> method.   
+ Because the <xref:System.IDisposable.Dispose%2A> method must be called explicitly, there is always a danger that the unmanaged resources will not be released, because the consumer of an object fails to call its <xref:System.IDisposable.Dispose%2A> method. There are two ways to avoid this:   
+ -   Wrap the managed resource in an object derived from <xref:System.Runtime.InteropServices.SafeHandle?displayProperty=nameWithType>. Your <xref:System.IDisposable.Dispose%2A> implementation then calls the <xref:System.IDisposable.Dispose%2A> method of the <xref:System.Runtime.InteropServices.SafeHandle?displayProperty=nameWithType> instances. For more information, see "The SafeHandle alternative" section in the <xref:System.Object.Finalize%2A?displayProperty=nameWithType> topic.   
+ -   Implement a finalizer to free resources when <xref:System.IDisposable.Dispose%2A> is not called. By default, the garbage collector automatically calls an object's finalizer before reclaiming its memory. However, if the <xref:System.IDisposable.Dispose%2A> method has been called, it is typically unnecessary for the garbage collector to call the disposed object's finalizer. To prevent automatic finalization, <xref:System.IDisposable.Dispose%2A> implementations can call the <xref:System.GC.SuppressFinalize%2A?displayProperty=nameWithType> method.   
+ When you use an object that accesses unmanaged resources, such as a <xref:System.IO.StreamWriter>, a good practice is to create the instance with a `using` statement. The `using` statement automatically closes the stream and calls <xref:System.IDisposable.Dispose%2A> on the object when the code that is using it has completed. For an example, see the <xref:System.IO.StreamWriter> class.   
+ 
+ 
+ ## Examples   The following example shows how you can implement the <xref:System.IDisposable.Dispose%2A> method.   
+ [!code-cpp[System.IDisposable.Dispose Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.IDisposable.Dispose Example/CPP/idisposabledispose.cpp#1)] [!code-csharp[System.IDisposable.Dispose Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.IDisposable.Dispose Example/CS/idisposabledispose.cs#1)] [!code-vb[System.IDisposable.Dispose Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.IDisposable.Dispose Example/VB/idisposabledispose.vb#1)]
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MoveNext">
@@ -148,7 +182,21 @@
         <summary>Advances enumeration to the next element of the immutable list.</summary>
         <returns>
           <see langword="true" /> if the enumerator was successfully advanced to the next element; <see langword="false" /> if the enumerator has passed the end of the list.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+After an enumerator is created or after the <xref:System.Collections.IEnumerator.Reset%2A> method is called, an enumerator is positioned before the first element of the collection, and the first call to the <xref:System.Collections.IEnumerator.MoveNext%2A> method moves the enumerator over the first element of the collection.   
+ If <xref:System.Collections.IEnumerator.MoveNext%2A> passes the end of the collection, the enumerator is positioned after the last element in the collection and <xref:System.Collections.IEnumerator.MoveNext%2A> returns `false`. When the enumerator is at this position, subsequent calls to <xref:System.Collections.IEnumerator.MoveNext%2A> also return `false` until <xref:System.Collections.IEnumerator.Reset%2A> is called.   
+ If changes are made to the collection, such as adding, modifying, or deleting elements, the behavior of <xref:System.Collections.IEnumerator.MoveNext%2A> is undefined.   
+ 
+ 
+ ## Examples   The following code example demonstrates the implementation of the <xref:System.Collections.IEnumerator> interfaces for a custom collection. In this example, <xref:System.Collections.IEnumerator.MoveNext%2A> is not explicitly called, but it is implemented to support the use of `foreach` (`for each` in Visual Basic). This code example is part of a larger example for the <xref:System.Collections.IEnumerator> interface.   
+ [!code-csharp[System.Collections_EnumeratorInterfaces#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Collections_EnumeratorInterfaces/cs/ienumerator.cs#2)] [!code-vb[System.Collections_EnumeratorInterfaces#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Collections_EnumeratorInterfaces/vb/ienumerator.vb#2)]
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Reset">
@@ -179,7 +227,20 @@
       <Parameters />
       <Docs>
         <summary>Sets the enumerator to its initial position, which is before the first element in the immutable list.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If changes are made to the collection, such as adding, modifying, or deleting elements, the behavior of <xref:System.Collections.IEnumerator.Reset%2A> is undefined.   
+ The <xref:System.Collections.IEnumerator.Reset%2A> method is provided for COM interoperability. It does not necessarily need to be implemented; instead, the implementer can simply throw a <xref:System.NotSupportedException>.   
+ 
+ 
+ ## Examples   The following code example demonstrates the implementation of the <xref:System.Collections.IEnumerator> interfaces for a custom collection. In this example, <xref:System.Collections.IEnumerator.Reset%2A> is not explicitly called, but it is implemented to support the use of `foreach` (`for each` in Visual Basic). This code example is part of a larger example for the <xref:System.Collections.IEnumerator> interface.   
+ [!code-csharp[System.Collections_EnumeratorInterfaces#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Collections_EnumeratorInterfaces/cs/ienumerator.cs#2)] [!code-vb[System.Collections_EnumeratorInterfaces#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Collections_EnumeratorInterfaces/vb/ienumerator.vb#2)]
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="System.Collections.IEnumerator.Current">
@@ -210,7 +271,27 @@
       <Docs>
         <summary>The current element.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This member is an explicit interface member implementation. It can be used only when the <xref:System.Collections.Immutable.ImmutableList`1.Enumerator> instance is cast to an <xref:System.Collections.IEnumerator> interface.
+ 
+ 
+ 
+ <xref:System.Collections.IEnumerator.Current%2A> is undefined under any of the following conditions:   
+ -   The enumerator is positioned before the first element in the collection, immediately after the enumerator is created.   <xref:System.Collections.IEnumerator.MoveNext%2A> must be called to advance the enumerator to the first element of the collection before reading the value of <xref:System.Collections.IEnumerator.Current%2A>.   
+ -   The last call to <xref:System.Collections.IEnumerator.MoveNext%2A> returned `false`, which indicates the end of the collection.   
+ -   The enumerator is invalidated due to changes made in the collection, such as adding, modifying, or deleting elements.   
+ <xref:System.Collections.IEnumerator.Current%2A> returns the same object until <xref:System.Collections.IEnumerator.MoveNext%2A> is called. <xref:System.Collections.IEnumerator.MoveNext%2A> sets <xref:System.Collections.IEnumerator.Current%2A> to the next element.   
+ 
+ 
+ ## Examples   The following code example demonstrates the implementation of the <xref:System.Collections.IEnumerator> interfaces for a custom collection. In this example, <xref:System.Collections.IEnumerator.Current%2A> is not explicitly called, but it is implemented to support the use of `foreach` (`for each` in Visual Basic). This code example is part of a larger example for the <xref:System.Collections.IEnumerator> interface.   
+ [!code-csharp[System.Collections_EnumeratorInterfaces#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Collections_EnumeratorInterfaces/cs/ienumerator.cs#2)] [!code-vb[System.Collections_EnumeratorInterfaces#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Collections_EnumeratorInterfaces/vb/ienumerator.vb#2)]
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
