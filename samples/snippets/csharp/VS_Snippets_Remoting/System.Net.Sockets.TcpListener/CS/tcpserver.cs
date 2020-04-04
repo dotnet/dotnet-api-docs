@@ -47,7 +47,7 @@ class MyTcpListener
         Console.Write("Waiting for a connection... ");
         
         // Perform a blocking call to accept requests.
-        // You could also user server.AcceptSocket() here.
+        // You could also use server.AcceptSocket() here.
         TcpClient client = server.AcceptTcpClient();            
         Console.WriteLine("Connected!");
 
