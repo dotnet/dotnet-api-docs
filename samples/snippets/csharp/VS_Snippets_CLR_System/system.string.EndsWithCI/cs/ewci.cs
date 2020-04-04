@@ -57,8 +57,7 @@ class Sample
 }
 
 /*
-This code example produces the following results when run 
-on an en-us culture:
+This code example produces the following results (for en-us culture):
 
 Search for the target string "Å" in the string "xyza°".
 
