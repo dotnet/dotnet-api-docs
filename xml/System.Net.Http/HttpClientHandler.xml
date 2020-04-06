@@ -35,11 +35,11 @@ The `HttpClientHandler` class and classes derived from it enable developers to c
 
 ### HttpClientHandler in .NET Core
 
-Starting with .NET Core 2.1, higher-level HTTP networking APIs use the implementation provided by the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of `HttpClientHandler`.
+Starting in .NET Core 2.1, the implementation of the `HttpClientHandler` class was changed to be based on the HTTP protocol stack used by the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class. The <xref:System.Net.Http.SocketsHttpHandler> class is a cross-platform, HTTP protocol stack. Prior to .NET Core 2.1, the `HttpClientHandler` class used older HTTP protocol stacks (<xref:System.Net.Http.WinHttpHandler> on Windows and `CurlHandler`, an internal class implemented on top of Linux's native libcurl component, on Linux).
 
-You can configure your application to use `HttpClientHandler` instead, however, `HttpClientHandler` uses <xref:System.Net.Http.SocketsHttpHandler> internally. To configure your app to use `HttpClientHandler`, use one of the following mechanisms:
+You can configure your app to use the older HTTP protocol stacks in one of the following three ways:
 
-- By calling the <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> method as follows:
+- Call the <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> method:
 
   ```csharp
   AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
@@ -49,7 +49,7 @@ You can configure your application to use `HttpClientHandler` instead, however, 
   AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", False)
   ```
 
-- By defining the `System.Net.Http.UseSocketsHttpHandler` switch in the *.netcore.runtimeconfig.json* configuration file:
+- Define the `System.Net.Http.UseSocketsHttpHandler` switch in the *.netcore.runtimeconfig.json* configuration file:
 
   ```json
   "runtimeOptions": {
@@ -59,7 +59,9 @@ You can configure your application to use `HttpClientHandler` instead, however, 
   }
   ```
 
-- By defining an environment variable named `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` and setting it to either `false` or 0.
+- Define an environment variable named `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` and set it to either `false` or **0**.
+
+Starting in .NET Core 2.1, higher-level HTTP networking APIs also started using the implementation provided by the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of the `HttpClientHandler` class.
 
 ## Examples
  [!code-csharp[System.Net.Http.HttpClientHandler#1](~/samples/snippets/csharp/VS_Snippets_Misc/system.net.http.httpclienthandler/cs/source.cs#1)]
