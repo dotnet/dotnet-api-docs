@@ -6,6 +6,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
+using System.Runtime.InteropServices;
 
 namespace WindowsApplication3
 {
@@ -283,8 +284,15 @@ namespace WindowsApplication3
     protected int currentPageNumber = 1;
     // <Snippet6>
 
-    private void MyButtonPrint_OnClick(object sender, System.EventArgs e)
-    {
+    [DllImport("winspool.drv", SetLastError = true, CharSet = CharSet.Unicode, ExactSpelling = true)]
+    private static extern int DeviceCapabilitiesW(string pDevice, string pPort, short fwCapabilities, IntPtr pOutput, IntPtr pDevMode);
+    private const short DC_COLORDEVICE = 32;
+
+    private static bool GetColorDeviceCapability(string printerName) {
+        return DeviceCapabilitiesW(printerName, null, DC_COLORDEVICE, IntPtr.Zero, IntPtr.Zero) == 1;
+    }
+
+    private void MyButtonPrint_OnClick(object sender, System.EventArgs e) {
         
         // Set the printer name and ensure it is valid. If not, provide a message to the user.
         printDoc.PrinterSettings.PrinterName = "\\mynetworkprinter";
@@ -292,7 +300,7 @@ namespace WindowsApplication3
         if (printDoc.PrinterSettings.IsValid) {
         
             // If the printer supports printing in color, then override the printer's default behavior.
-            if (printDoc.PrinterSettings.SupportsColor) {
+            if (GetColorDeviceCapability("\\mynetworkprinter")) {
 
                 // Set the page default's to not print in color.
                 printDoc.DefaultPageSettings.Color = false;
