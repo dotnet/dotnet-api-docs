@@ -22,10 +22,7 @@ Class Sample
         ' RING ABOVE (U+0061, U+030a) is linguistically equivalent to the character 
         ' LATIN SMALL LETTER A WITH RING ABOVE (U+00e5).
         Dim xyzARing As String = "xyz" & "å"
-        
-        ' Clear the screen and display an introduction.
-        Console.Clear()
-        
+               
         ' Display the string to search for and the string to search.
         Console.WriteLine(msg1, capitalARing, xyzARing)
         
@@ -57,11 +54,7 @@ Class Sample
     End Sub
 End Class
 
-'
-'Note: This code example was executed on a console whose user interface 
-'culture is "en-US" (English-United States).
-'
-'This code example produces the following results:
+'This code example produces the following results (for en-us culture):
 '
 'Search for the target string "Å" in the string "xyza°".
 '
