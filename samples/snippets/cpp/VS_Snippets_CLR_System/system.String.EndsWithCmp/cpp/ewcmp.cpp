@@ -32,7 +32,6 @@ int main()
         StringComparison::Ordinal,
         StringComparison::OrdinalIgnoreCase};
 
-    Console::Clear();
     Console::WriteLine(introMessage);
 
     // Display the current culture because the culture-specific comparisons

@@ -16,8 +16,7 @@ Class Sample
                         StringComparison.InvariantCultureIgnoreCase, _
                         StringComparison.Ordinal, _
                         StringComparison.OrdinalIgnoreCase }
-        '
-        Console.Clear()
+
         Console.WriteLine(intro)
         
         ' Display the current culture because the culture-specific comparisons
