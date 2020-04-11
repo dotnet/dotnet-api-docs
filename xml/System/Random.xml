@@ -191,11 +191,11 @@ To avoid this problem, create a single <xref:System.Random> object instead of mu
 <a name="Unique"></a>   
 ### Retrieve unique sequences of random numbers  
  Providing different seed values to instances of the <xref:System.Random> class causes each random number generator to produce a different sequence of values. You can provide a seed value either explicitly by calling the <xref:System.Random.%23ctor%28System.Int32%29> constructor, or implicitly by calling the <xref:System.Random.%23ctor> constructor. Most developers call the parameterless constructor, which uses the system clock. The following example uses this approach to instantiate two <xref:System.Random> instances. Each instance displays a series of 10 random integers.  
-  
- [!code-cpp[System.Random#13](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/unique.cpp#13)]
- [!code-csharp[System.Random#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/unique.cs#13)]
- [!code-vb[System.Random#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/unique.vb#13)]  
-  
+
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/unique.cpp" id="Snippet13":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/unique.cs" interactive="try-dotnet" id="Snippet13":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/unique.vb" id="Snippet13":::
+
  However, because of its finite resolution, the system clock doesn't detect time differences that are less than approximately 15 milliseconds. Therefore, if your code calls the <xref:System.Random.%23ctor> overload on the .NET Framework to instantiate two <xref:System.Random> objects in succession, you might inadvertently be providing the objects with identical seed values. (The <xref:System.Random> class in .NET Core does not have this limitation.) To see this in the previous example, comment out the <xref:System.Threading.Thread.Sleep%2A?displayProperty=nameWithType> method call, and compile and run the example again.  
   
  To prevent this from happening, we recommend that you instantiate a single <xref:System.Random> object rather than multiple ones. However, since <xref:System.Random> isn't thread safe, you must use some synchronization device if you access a <xref:System.Random> instance from multiple threads; for more information, see [The Random class and thread safety](#ThreadSafety) earlier in this topic. Alternately, you can use a delay mechanism, such as the <xref:System.Threading.Thread.Sleep%2A> method used in the previous example, to ensure that the instantiations occur more than 15 millisecond apart.  
@@ -247,10 +247,10 @@ Random.NextDouble() * (maxValue - minValue) + minValue
 <a name="Boolean"></a>   
 ### Generate random Boolean values  
  The <xref:System.Random> class doesn't provide methods that generate <xref:System.Boolean> values. However, you can define your own class or method to do that. The following example defines a class, `BooleanGenerator`, with a single method, `NextBoolean`. The `BooleanGenerator` class stores a <xref:System.Random> object as a private variable. The `NextBoolean` method calls the <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29?displayProperty=nameWithType> method and passes the result to the <xref:System.Convert.ToBoolean%28System.Int32%29?displayProperty=nameWithType> method. Note that 2 is used as the argument to specify the upper bound of the random number. Since this is an exclusive value, the method call returns either 0 or 1.  
-  
- [!code-cpp[System.Random#8](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/booleans1.cpp#8)]
- [!code-csharp[System.Random#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/booleans1.cs#8)]
- [!code-vb[System.Random#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/booleans1.vb#8)]  
+
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/booleans1.cpp" id="Snippet8":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/booleans1.cs" interactive="try-dotnet" id="Snippet8":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/booleans1.vb" id="Snippet8":::
   
  Instead of creating a separate class to generate random <xref:System.Boolean> values, the example could simply have defined a single method. In that case, however, the <xref:System.Random> object should have been defined as a class-level variable to avoid instantiating a new <xref:System.Random> instance in each method call. In Visual Basic, the Random instance can be defined as a [Static](~/docs/visual-basic/language-reference/modifiers/static.md) variable in the `NextBoolean` method.  The following example provides an implementation.  
   
@@ -282,10 +282,10 @@ Random.NextDouble() * (maxValue - minValue) + minValue
 ### Retrieve bytes in a specified range  
  The overloads of the <xref:System.Random.Next%2A> method allow you to specify the range of random numbers, but the <xref:System.Random.NextBytes%2A> method does not. The following example implements a `NextBytes` method that lets you specify the range of the returned bytes. It defines a `Random2` class that derives from <xref:System.Random> and overloads its `NextBytes` method.  
   
- [!code-cpp[System.Random#9](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/bytes1.cpp#9)]
- [!code-csharp[System.Random#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/bytes1.cs#9)]
- [!code-vb[System.Random#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/bytes1.vb#9)]  
-  
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/bytes1.cpp" id="Snippet9":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/bytes1.cs" interactive="try-dotnet" id="Snippet9":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/bytes1.vb" id="Snippet9":::
+
  The `NextBytes(Byte[], Byte, Byte)` method wraps a call to the <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29> method and specifies the minimum value and one greater than the maximum value (in this case, 0 and 101) that we want returned in the byte array. Because we are sure that the integer values returned by the <xref:System.Random.Next%2A> method are within the range of the <xref:System.Byte> data type, we can safely cast them (in C#) or convert them (in Visual Basic) from integers to bytes.  
   
 <a name="Array"></a>   
@@ -305,12 +305,10 @@ Random.NextDouble() * (maxValue - minValue) + minValue
  For example, if you're developing a Solitaire game, you want to ensure that each card is used only once. Instead of generating random numbers to retrieve a card and tracking whether that card has already been dealt, you can create a parallel array of random numbers that can be used to sort the deck. Once the deck is sorted, your app can maintain a pointer to indicate the index of the next card on the deck.  
   
  The following example illustrates this approach. It defines a `Card` class that represents a playing card and a `Dealer` class that deals a deck of shuffled cards. The `Dealer` class constructor populates two arrays: a `deck` array that has class scope and that represents all the cards in the deck; and a local `order` array that has the same number of elements as the `deck` array and is populated with randomly generated <xref:System.Double> values.  The <xref:System.Array.Sort%28System.Array%2CSystem.Array%29?displayProperty=nameWithType> method is then called to sort the `deck` array based on the values in the `order` array.  
-  
- [!code-cpp[System.Random#11](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/uniquearray1.cpp#11)]
- [!code-csharp[System.Random#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/uniquearray1.cs#11)]
- [!code-vb[System.Random#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/uniquearray1.vb#11)]  
-  
-   
+
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/uniquearray1.cpp" id="Snippet11":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/uniquearray1.cs" interactive="try-dotnet" id="Snippet11":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/uniquearray1.vb" id="Snippet11":::
   
 ## Examples  
 
