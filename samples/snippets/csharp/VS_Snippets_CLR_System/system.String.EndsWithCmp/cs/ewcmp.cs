@@ -9,44 +9,42 @@ class Sample
 {
     public static void Main() 
     {
-    string intro = "Determine whether a string ends with another string, " +
+        string intro = "Determine whether a string ends with another string, " +
                    "using\n  different values of StringComparison.";
 
-    StringComparison[] scValues = {
-        StringComparison.CurrentCulture,
-        StringComparison.CurrentCultureIgnoreCase,
-        StringComparison.InvariantCulture,
-        StringComparison.InvariantCultureIgnoreCase,
-        StringComparison.Ordinal,
-        StringComparison.OrdinalIgnoreCase };
+        StringComparison[] scValues = {
+            StringComparison.CurrentCulture,
+            StringComparison.CurrentCultureIgnoreCase,
+            StringComparison.InvariantCulture,
+            StringComparison.InvariantCultureIgnoreCase,
+            StringComparison.Ordinal,
+            StringComparison.OrdinalIgnoreCase };
 
-//
-    Console.Clear();
-    Console.WriteLine(intro);
+        Console.WriteLine(intro);
 
-// Display the current culture because the culture-specific comparisons
-// can produce different results with different cultures.
-    Console.WriteLine("The current culture is {0}.\n", 
+        // Display the current culture because the culture-specific comparisons
+        // can produce different results with different cultures.
+        Console.WriteLine("The current culture is {0}.\n", 
                        Thread.CurrentThread.CurrentCulture.Name);
-
-// Determine whether three versions of the letter I are equal to each other. 
-    foreach (StringComparison sc in scValues)
+        
+        // Determine whether three versions of the letter I are equal to each other. 
+        foreach (StringComparison sc in scValues)
         {
-        Console.WriteLine("StringComparison.{0}:", sc);
-        Test("abcXYZ", "XYZ", sc);
-        Test("abcXYZ", "xyz", sc);
-        Console.WriteLine();
+            Console.WriteLine("StringComparison.{0}:", sc);
+            Test("abcXYZ", "XYZ", sc);
+            Test("abcXYZ", "xyz", sc);
+            Console.WriteLine();
         }
     }
 
     protected static void Test(string x, string y, StringComparison comparison)
     {
-    string resultFmt = "\"{0}\" {1} with \"{2}\".";
-    string result = "does not end";
-//
-    if (x.EndsWith(y, comparison))
-        result = "ends";
-    Console.WriteLine(resultFmt, x, result, y);
+        string resultFmt = "\"{0}\" {1} with \"{2}\".";
+        string result = "does not end";
+
+        if (x.EndsWith(y, comparison))
+            result = "ends";
+        Console.WriteLine(resultFmt, x, result, y);
     }
 }
 
