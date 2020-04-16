@@ -20,7 +20,7 @@ namespace CustAttrs3CS {
                 if (attr.GetType() == typeof(GuidAttribute)) {
                     // Display the GUID.
                     Console.WriteLine("Class {0} has a GUID.", clsType.Name);
-                    Console.WriteLine("GUID: {" + 
+                    Console.WriteLine("GUID: {" +
                         ((GuidAttribute)attr).Value + "}.");
                 }
 
@@ -36,7 +36,7 @@ namespace CustAttrs3CS {
     }
 }
 
-/* 
+/*
  * Output:
  * Class ClassWithGuidAndProgId has a GUID.
  * GUID: {BF235B41-52D1-46CC-9C55-046793DB363F}.

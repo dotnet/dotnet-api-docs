@@ -1,12 +1,12 @@
 ﻿/*
    System.Configuration.Install.Installer.BeforeUninstall
 
-   The following example demonstrates the event 'BeforeUninstall' of the 
+   The following example demonstrates the event 'BeforeUninstall' of the
    'Installer' class. This event is raised by the method 'OnBeforeUninstall'.
-   
-   Use the installer process 'InstallUtil -u' to run the assembly 
+
+   Use the installer process 'InstallUtil -u' to run the assembly
    'Installer_BeforeUninstall.exe'.
-   
+
 */
 
 using System;
@@ -26,10 +26,10 @@ public class MyInstaller: Installer
    private void BeforeUninstallEventHandler(object sender, InstallEventArgs e)
    {
       // Add steps to perform any actions before the Uninstall process.
-      Console.WriteLine("Code for BeforeUninstallEventHandler"); 
+      Console.WriteLine("Code for BeforeUninstallEventHandler");
    }
 // </Snippet1>
-   
+
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)
    {

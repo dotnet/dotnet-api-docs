@@ -27,7 +27,7 @@ public class MyEnumBuilderSample
    static AssemblyBuilder myAssemblyBuilder;
    static ModuleBuilder myModuleBuilder;
    static EnumBuilder myEnumBuilder;
-   
+
    public static void Main()
    {
       try
@@ -36,15 +36,15 @@ public class MyEnumBuilderSample
          Type[] myTypeArray = myModuleBuilder.GetTypes();
          foreach(Type myType in myTypeArray)
          {
-            Console.WriteLine("Enum Builder defined in the module builder is: " 
+            Console.WriteLine("Enum Builder defined in the module builder is: "
                + myType.Name);
          }
 
-         Console.WriteLine("Enum TypeToken is :" +  
+         Console.WriteLine("Enum TypeToken is :" +
                                        myEnumBuilder.TypeToken.ToString());
-         Console.WriteLine("Enum UnderLyingField is :" +  
+         Console.WriteLine("Enum UnderLyingField is :" +
                                     myEnumBuilder.UnderlyingField.ToString());
-         Console.WriteLine("Enum UnderLyingSystemType is :" +  
+         Console.WriteLine("Enum UnderLyingSystemType is :" +
                               myEnumBuilder.UnderlyingSystemType.ToString());
          Console.WriteLine("Enum GUID is :" + myEnumBuilder.GUID.ToString());
          myAssemblyBuilder.Save("EmittedAssembly.dll");
@@ -66,13 +66,13 @@ public class MyEnumBuilderSample
       myAssemblyName.Name = "EmittedAssembly";
 
       // Create the dynamic assembly.
-      myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(myAssemblyName, 
+      myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(myAssemblyName,
                                              AssemblyBuilderAccess.Save);
       // Create a dynamic module.
-      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule", 
+      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule",
                                                          "EmittedModule.mod");
       // Create a dynamic Enum.
-      myEnumBuilder = myModuleBuilder.DefineEnum("MyNamespace.MyEnum", 
+      myEnumBuilder = myModuleBuilder.DefineEnum("MyNamespace.MyEnum",
                                  TypeAttributes.Public, typeof(Int32));
 
       FieldBuilder myFieldBuilder1 = myEnumBuilder.DefineLiteral("FieldOne", 1);

@@ -2,18 +2,18 @@
 using System;
 using System.IO;
 
-class Test 
+class Test
 {
 	
-    public static void Main() 
+    public static void Main()
     {
         string path = @"c:\temp\MyTest.txt";
         FileInfo fi1 = new FileInfo(path);
 
-        if (!fi1.Exists) 
+        if (!fi1.Exists)
         {
             //Create a file to write to.
-            using (StreamWriter sw = fi1.CreateText()) 
+            using (StreamWriter sw = fi1.CreateText())
             {
                 sw.WriteLine("Hello");
                 sw.WriteLine("And");
@@ -22,16 +22,16 @@ class Test
         }
 
         //Open the file to read from.
-        using (StreamReader sr = fi1.OpenText()) 
+        using (StreamReader sr = fi1.OpenText())
         {
             string s = "";
-            while ((s = sr.ReadLine()) != null) 
+            while ((s = sr.ReadLine()) != null)
             {
                 Console.WriteLine(s);
             }
         }
 
-        try 
+        try
         {
             string path2 = path + "temp";
             FileInfo fi2 = new FileInfo(path2);
@@ -46,14 +46,14 @@ class Test
             //Delete the newly created file.
             fi2.Delete();
             Console.WriteLine("{0} was successfully deleted.", path2);
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             Console.WriteLine("The process failed: {0}", e.ToString());
         }
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //Hello

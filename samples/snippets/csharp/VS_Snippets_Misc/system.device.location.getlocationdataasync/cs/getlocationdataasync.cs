@@ -11,7 +11,7 @@ namespace GetLocationEvent
             CLocation myLocation = new CLocation();
             myLocation.GetLocationEvent();
             Console.WriteLine("Enter any key to quit.");
-            Console.ReadLine();            
+            Console.ReadLine();
         }
 //<Snippet2>
         class CLocation

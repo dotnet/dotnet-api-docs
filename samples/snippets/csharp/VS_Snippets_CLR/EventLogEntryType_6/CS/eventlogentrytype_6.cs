@@ -5,9 +5,9 @@
 // System.Diagnostics.EventLogEntryType.FailureAudit
 // System.Diagnostics.EventLogEntryType.SuccessAudit
 
-/* The following program demonstrates 'Error', 'Warning', 
-   'Information', 'FailureAudit' and 'SuccessAudit' members of 
-   'EventLogEntryType' enumerator. It creates new source with a 
+/* The following program demonstrates 'Error', 'Warning',
+   'Information', 'FailureAudit' and 'SuccessAudit' members of
+   'EventLogEntryType' enumerator. It creates new source with a
    specified event log, new ID, EventLogEntryType and message,
    if does not exist.
 */

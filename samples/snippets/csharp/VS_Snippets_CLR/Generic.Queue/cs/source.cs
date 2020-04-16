@@ -20,7 +20,7 @@ class Example
         }
 
         Console.WriteLine("\nDequeuing '{0}'", numbers.Dequeue());
-        Console.WriteLine("Peek at next item to dequeue: {0}", 
+        Console.WriteLine("Peek at next item to dequeue: {0}",
             numbers.Peek());
         Console.WriteLine("Dequeuing '{0}'", numbers.Dequeue());
 
@@ -33,13 +33,13 @@ class Example
         {
             Console.WriteLine(number);
         }
-        
+
         // Create an array twice the size of the queue and copy the
-        // elements of the queue, starting at the middle of the 
-        // array. 
+        // elements of the queue, starting at the middle of the
+        // array.
         string[] array2 = new string[numbers.Count * 2];
         numbers.CopyTo(array2, numbers.Count);
-        
+
         // Create a second queue, using the constructor that accepts an
         // IEnumerable(Of T).
         Queue<string> queueCopy2 = new Queue<string>(array2);
@@ -50,7 +50,7 @@ class Example
             Console.WriteLine(number);
         }
 
-        Console.WriteLine("\nqueueCopy.Contains(\"four\") = {0}", 
+        Console.WriteLine("\nqueueCopy.Contains(\"four\") = {0}",
             queueCopy.Contains("four"));
 
         Console.WriteLine("\nqueueCopy.Clear()");
