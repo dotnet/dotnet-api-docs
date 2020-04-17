@@ -459,7 +459,7 @@ namespace CsCsrefProgrammingAttributes
         {
             // ...
         }
-        //</Snippet25>    
+        //</Snippet25>
     }
 }
 namespace WrapObsolete

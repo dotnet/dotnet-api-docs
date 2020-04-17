@@ -10,7 +10,7 @@ namespace RemotingSamples
    {
       static void Main()
       {
-        
+
          RemotingConfiguration.Configure("Server.config");
          Console.WriteLine("Server started.");
          Console.WriteLine("Hit enter to terminate...");

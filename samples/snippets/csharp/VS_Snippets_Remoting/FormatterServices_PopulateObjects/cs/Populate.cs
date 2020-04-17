@@ -9,7 +9,7 @@ using System.Security.Permissions;
 [assembly: SecurityPermission(SecurityAction.RequestMinimum)]
 namespace Examples
 {
-    // The SerializableAttribute specifies that instances of the class 
+    // The SerializableAttribute specifies that instances of the class
     // can be serialized by the BinaryFormatter or SoapFormatter.
     [Serializable]
     class Book
@@ -47,19 +47,19 @@ namespace Examples
 
         static void Run()
         {
-            // Create an instance of a Book class 
+            // Create an instance of a Book class
             // with a title and author.
             Book Book1 = new Book("Book Title 1",
                 "Masato Kawai");
 
-            // Store data about the serializable members in a 
-            // MemberInfo array. The MemberInfo type holds 
+            // Store data about the serializable members in a
+            // MemberInfo array. The MemberInfo type holds
             // only type data, not instance data.
             MemberInfo[] members =
                FormatterServices.GetSerializableMembers
                (typeof(Book));
 
-            // Copy the data from the first book into an 
+            // Copy the data from the first book into an
             // array of objects.
             object[] data =
                 FormatterServices.GetObjectData(Book1, members);

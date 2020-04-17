@@ -12,8 +12,8 @@ public class Example
         RegistryKey rk = Registry.CurrentUser.CreateSubKey("RegistryOpenSubKeyExample");
         rk.Close();
 
-        // Obtain an instance of RegistryKey for the CurrentUser registry 
-        // root. 
+        // Obtain an instance of RegistryKey for the CurrentUser registry
+        // root.
         RegistryKey rkCurrentUser = Registry.CurrentUser;
 
         // Obtain the test key (read-only) and display it.
@@ -22,7 +22,7 @@ public class Example
         rkTest.Close();
         rkCurrentUser.Close();
 
-        // Obtain the test key in one step, using the CurrentUser registry 
+        // Obtain the test key in one step, using the CurrentUser registry
         // root.
         rkTest = Registry.CurrentUser.OpenSubKey("RegistryOpenSubKeyExample");
         Console.WriteLine("Test key: {0}", rkTest);

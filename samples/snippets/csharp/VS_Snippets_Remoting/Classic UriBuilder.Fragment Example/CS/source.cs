@@ -13,7 +13,7 @@ uBuild.Path = "index.htm";
 uBuild.Fragment = "main";
 
 Uri myUri = uBuild.Uri;
-   
+
 // </Snippet1>
  }
 }

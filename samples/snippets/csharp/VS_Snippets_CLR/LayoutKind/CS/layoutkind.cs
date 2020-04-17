@@ -1,7 +1,7 @@
 ﻿/*
    System.Runtime.InteropServices.LayoutKind.Sequential
    System.Runtime.InteropServices.LayoutKind.Explicit
-   
+
    The program shows a managed declaration of the PtInRect function and defines Point
    structure with sequential layout and Rect structure with explicit layout. The PtInRect
    checks the point lies within the rectangle or not.
@@ -19,20 +19,20 @@ namespace InteropSample
       True
    };
    [StructLayout(LayoutKind.Sequential)]
-   public struct Point 
+   public struct Point
    {
       public int x;
       public int y;
-   }   
+   }
 
    [StructLayout(LayoutKind.Explicit)]
-   public struct Rect 
+   public struct Rect
    {
       [FieldOffset(0)] public int left;
       [FieldOffset(4)] public int top;
       [FieldOffset(8)] public int right;
       [FieldOffset(12)] public int bottom;
-   }   
+   }
 
    internal static class NativeMethods
    {

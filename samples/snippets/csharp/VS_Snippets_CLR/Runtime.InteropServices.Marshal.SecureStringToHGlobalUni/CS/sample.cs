@@ -95,7 +95,7 @@ class Example
          IntPtr passwordPtr = IntPtr.Zero;
          bool returnValue = false;
          int error = 0;
-         
+
          // Marshal the SecureString to unmanaged memory.
          passwordPtr = Marshal.SecureStringToGlobalAllocUnicode(password);
 
@@ -116,7 +116,7 @@ class Example
          if (error != 0) {
              throw new System.ComponentModel.Win32Exception(error);
          }
-         // The token that is passed to the following constructor must 
+         // The token that is passed to the following constructor must
          // be a primary token in order to use it for impersonation.
          WindowsIdentity newId = new WindowsIdentity(tokenHandle);
 

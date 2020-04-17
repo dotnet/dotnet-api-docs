@@ -22,9 +22,9 @@ class Sample
     // Create the reader.
     XmlReaderSettings settings = new XmlReaderSettings();
     settings.XmlResolver = resolver;
-    XmlReader reader = 
+    XmlReader reader =
          XmlReader.Create("http://serverName/data/books.xml", settings);
-   
+
 //</snippet1>
     }
 
@@ -41,7 +41,7 @@ class Sample
     // Create a resolver and specify the necessary credentials.
     XmlUrlResolver resolver = new XmlUrlResolver();
     System.Net.NetworkCredential myCred;
-    myCred  = new System.Net.NetworkCredential(UserName,SecurelyStoredPassword,Domain);  
+    myCred  = new System.Net.NetworkCredential(UserName,SecurelyStoredPassword,Domain);
     resolver.Credentials = myCred;
 
         //</snippet2>

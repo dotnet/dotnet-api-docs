@@ -9,7 +9,7 @@ using System.Net;
 	// response for the XML Web service method the SOAP extension is
 	// applied to.
 
-	public class TraceExtension : SoapExtension 
+	public class TraceExtension : SoapExtension
 	{
 		Stream oldStream;
 		Stream newStream;
@@ -27,7 +27,7 @@ using System.Net;
 		// When the SOAP extension is accessed for the first time, the XML Web
 		// service method it is applied to is accessed to store the file
 		// name passed in, using the corresponding SoapExtensionAttribute.	
-		public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute attribute) 
+		public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute attribute)
 		{
 			return ((TraceExtensionAttribute) attribute).Filename;
 		}
@@ -35,16 +35,16 @@ using System.Net;
 		// The SOAP extension was configured to run using a configuration file
 		// instead of an attribute applied to a specific XML Web service
 		// method.
-		public override object GetInitializer(Type WebServiceType) 
+		public override object GetInitializer(Type WebServiceType)
 		{
 			// Return a file name to log the trace information to, based on the
 			// type.
-			return "C:\\" + WebServiceType.FullName + ".log";    
+			return "C:\\" + WebServiceType.FullName + ".log";
 		}
 
 		// Receive the file name stored by GetInitializer and store it in a
 		// member variable for this specific instance.
-		public override void Initialize(object initializer) 
+		public override void Initialize(object initializer)
 		{
 			filename = (string) initializer;
 		}
@@ -52,9 +52,9 @@ using System.Net;
 		//  If the SoapMessageStage is such that the SoapRequest or
 		//  SoapResponse is still in the SOAP format to be sent or received,
 		//  save it out to a file.
-		public override void ProcessMessage(SoapMessage message) 
+		public override void ProcessMessage(SoapMessage message)
 		{
-			switch (message.Stage) 
+			switch (message.Stage)
 			{
 				case SoapMessageStage.BeforeSerialize:
 					break;
@@ -94,7 +94,7 @@ using System.Net;
 
 			string soapString = (message is SoapServerMessage) ?
 				"SoapRequest" : "SoapResponse";
-			w.WriteLine("-----" + soapString + 
+			w.WriteLine("-----" + soapString +
 				" at " + DateTime.Now);
 			w.Flush();
 			newStream.Position = 0;
@@ -103,7 +103,7 @@ using System.Net;
 			newStream.Position = 0;
 		}
 
-		void Copy(Stream from, Stream to) 
+		void Copy(Stream from, Stream to)
 		{
 			TextReader reader = new StreamReader(from);
 			TextWriter writer = new StreamWriter(to);
@@ -115,30 +115,30 @@ using System.Net;
 	// Create a SoapExtensionAttribute for the SOAP Extension that can be
 	// applied to an XML Web service method.
 	[AttributeUsage(AttributeTargets.Method)]
-	public class TraceExtensionAttribute : SoapExtensionAttribute 
+	public class TraceExtensionAttribute : SoapExtensionAttribute
 	{
 
 		private string filename = "c:\\log.txt";
 		private int priority;
 
-		public override Type ExtensionType 
+		public override Type ExtensionType
 		{
 			get { return typeof(TraceExtension); }
 		}
 
-		public override int Priority 
+		public override int Priority
 		{
 			get { return priority; }
 			set { priority = value; }
 		}
 
-		public string Filename 
+		public string Filename
 		{
-			get 
+			get
 			{
 				return filename;
 			}
-			set 
+			set
 			{
 				filename = value;
 			}

@@ -18,7 +18,7 @@
 // Generation date: 5/21/2008 3:50:32 PM
 namespace AdventureWorksModel
 {
-    
+
     /// <summary>
     /// There are no comments for AdventureWorksEntities in the schema.
     /// </summary>
@@ -27,7 +27,7 @@ namespace AdventureWorksModel
         /// <summary>
         /// Initializes a new AdventureWorksEntities object using the connection string found in the 'AdventureWorksEntities' section of the application configuration file.
         /// </summary>
-        public AdventureWorksEntities() : 
+        public AdventureWorksEntities() :
                 base("name=AdventureWorksEntities", "AdventureWorksEntities")
         {
             this.OnContextCreated();
@@ -35,7 +35,7 @@ namespace AdventureWorksModel
         /// <summary>
         /// Initialize a new AdventureWorksEntities object.
         /// </summary>
-        public AdventureWorksEntities(string connectionString) : 
+        public AdventureWorksEntities(string connectionString) :
                 base(connectionString, "AdventureWorksEntities")
         {
             this.OnContextCreated();
@@ -43,7 +43,7 @@ namespace AdventureWorksModel
         /// <summary>
         /// Initialize a new AdventureWorksEntities object.
         /// </summary>
-        public AdventureWorksEntities(global::System.Data.EntityClient.EntityConnection connection) : 
+        public AdventureWorksEntities(global::System.Data.EntityClient.EntityConnection connection) :
                 base(connection, "AdventureWorksEntities")
         {
             this.OnContextCreated();

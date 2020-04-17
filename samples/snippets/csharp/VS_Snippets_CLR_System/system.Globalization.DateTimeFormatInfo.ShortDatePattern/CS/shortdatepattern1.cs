@@ -9,12 +9,12 @@ public class Example
       DateTimeFormatInfo dtfi = CultureInfo.CreateSpecificCulture("en-US").DateTimeFormat;
       DateTime date1 = new DateTime(2011, 5, 1);
       Console.WriteLine("Original Short Date Pattern:");
-      Console.WriteLine("   {0}: {1}", dtfi.ShortDatePattern, 
+      Console.WriteLine("   {0}: {1}", dtfi.ShortDatePattern,
                                        date1.ToString("d", dtfi));
       dtfi.DateSeparator = "-";
       dtfi.ShortDatePattern = @"yyyy/MM/dd";
       Console.WriteLine("Revised Short Date Pattern:");
-      Console.WriteLine("   {0}: {1}", dtfi.ShortDatePattern, 
+      Console.WriteLine("   {0}: {1}", dtfi.ShortDatePattern,
                                        date1.ToString("d", dtfi));
    }
 }

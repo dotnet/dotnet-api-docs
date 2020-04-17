@@ -19,7 +19,7 @@ public class OrderedItem
       LineTotal = UnitPrice * Quantity;
    }
 }
- 
+
 public class Test{
    public static void Main()
    {
@@ -27,12 +27,12 @@ public class Test{
       // Write a purchase order.
       t.SerializeObject("simple.xml");
    }
- 
+
    private void SerializeObject(string filename)
    {
       Console.WriteLine("Writing With XmlTextWriter");
- 
-      XmlSerializer serializer = 
+
+      XmlSerializer serializer =
       new XmlSerializer(typeof(OrderedItem));
       OrderedItem i = new OrderedItem();
       i.ItemName = "Widget";
@@ -42,12 +42,12 @@ public class Test{
       i.Calculate();
       // Create an XmlTextWriter using a FileStream.
       Stream fs = new FileStream(filename, FileMode.Create);
-      XmlWriter writer = 
+      XmlWriter writer =
       new XmlTextWriter(fs, Encoding.Unicode);
       // Serialize using the XmlTextWriter.
       serializer.Serialize(writer, i);
       writer.Close();
    }
 }
-   
+
 // </Snippet1>

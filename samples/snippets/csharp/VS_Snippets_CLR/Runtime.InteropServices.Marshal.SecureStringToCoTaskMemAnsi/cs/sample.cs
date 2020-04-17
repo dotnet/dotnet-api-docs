@@ -26,7 +26,7 @@ class MarshalExample
               Marshal.ZeroFreeCoTaskMemAnsi(unmanagedRef);
           }
           passWord.Dispose();
-          
+
          Console.WriteLine("Done.");
      }
 

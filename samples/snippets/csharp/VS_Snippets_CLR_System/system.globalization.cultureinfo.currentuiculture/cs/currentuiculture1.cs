@@ -6,11 +6,11 @@ public class Example
 {
    public static void Main()
    {
-      Console.WriteLine("The current UI culture: {0}", 
+      Console.WriteLine("The current UI culture: {0}",
                         CultureInfo.CurrentUICulture.Name);
-      
+
       CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture("fr-FR");
-      Console.WriteLine("The current UI culture: {0}", 
+      Console.WriteLine("The current UI culture: {0}",
                         CultureInfo.CurrentUICulture.Name);
    }
 }

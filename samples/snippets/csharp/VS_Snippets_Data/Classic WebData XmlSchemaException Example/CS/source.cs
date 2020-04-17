@@ -32,7 +32,7 @@ public class ValidXSD
 
             if (schema.IsCompiled)
             {
-                // Schema is successfully compiled. 
+                // Schema is successfully compiled.
                 // Do something with it here.
             }
             return 0;

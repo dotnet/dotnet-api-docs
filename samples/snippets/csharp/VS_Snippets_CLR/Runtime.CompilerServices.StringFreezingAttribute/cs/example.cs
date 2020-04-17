@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 
 class Program
 {
-    
+
     string frozenString = "This is a frozen string after Ngen is run.";
-    
+
     static void Main(string[] args)
     {
 

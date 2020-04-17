@@ -2,9 +2,9 @@
 // This example demonstrates Math.Sign()
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         string str = "{0}: {1,3} is {2} zero.";
         string nl = Environment.NewLine;
@@ -34,11 +34,11 @@ class Sample
 
     public static string Test(int compare)
     {
-        if (compare == 0) 
+        if (compare == 0)
             return "equal to";
-        else if (compare < 0)  
+        else if (compare < 0)
             return "less than";
-        else 
+        else
             return "greater than";
     }
 }

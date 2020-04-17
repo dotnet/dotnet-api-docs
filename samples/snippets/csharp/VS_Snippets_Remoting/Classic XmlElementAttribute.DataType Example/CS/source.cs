@@ -7,13 +7,13 @@ using System.Xml.Serialization;
 public class Group
 {
    /* Apply two XmlElementAttributes to the field. Set the DataType
-      to string an int to allow the ArrayList to accept 
+      to string an int to allow the ArrayList to accept
       both types. The Namespace is also set to different values
-      for each type. */ 
+      for each type. */
    [XmlElement(DataType = "string",
    Type = typeof(string),
    Namespace = "http://www.cpandl.com"),
-   XmlElement(DataType = "int", 
+   XmlElement(DataType = "int",
    Namespace = "http://www.cohowinery.com",
    Type = typeof(int))]
    public ArrayList ExtraInfo;
@@ -33,7 +33,7 @@ public class Run
       TextWriter writer = new StreamWriter(filename);
 
       // Create the XmlSerializer using the XmlAttributeOverrides.
-      XmlSerializer s = 
+      XmlSerializer s =
       new XmlSerializer(typeof(Group));
 
       // Create the object to serialize.

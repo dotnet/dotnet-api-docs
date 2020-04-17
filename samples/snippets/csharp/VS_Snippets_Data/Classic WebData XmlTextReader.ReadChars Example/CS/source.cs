@@ -9,16 +9,16 @@ public class Sample {
   private const String filename = "items.xml";
 
   public static void Main() {
-  
+
     XmlTextReader reader = null;
 
     try {
-          
+
       // Declare variables used by ReadChars
       Char []buffer;
       int iCnt = 0;
       int charbuffersize;
-     
+
       // Load the reader with the data file.  Ignore white space.
       reader = new XmlTextReader(filename);
       reader.WhitespaceHandling = WhitespaceHandling.None;

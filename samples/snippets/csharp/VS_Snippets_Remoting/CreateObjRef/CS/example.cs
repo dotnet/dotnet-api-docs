@@ -13,20 +13,20 @@ public class ObjRefExample  {
 
       ChannelServices.RegisterChannel(new HttpChannel(8090));
 
-      RemotingConfiguration.RegisterWellKnownServiceType(typeof(RemoteObject), 
-                                                         "RemoteObject", 
+      RemotingConfiguration.RegisterWellKnownServiceType(typeof(RemoteObject),
+                                                         "RemoteObject",
                                                          WellKnownObjectMode.Singleton);
 
-      RemoteObject RObj = 
-         (RemoteObject)Activator.GetObject(typeof(RemoteObject), 
+      RemoteObject RObj =
+         (RemoteObject)Activator.GetObject(typeof(RemoteObject),
                                            "http://localhost:8090/RemoteObject");
-      
+
       LocalObject  LObj = new LocalObject();
-      
+
       RObj.Method1( LObj );
 
       Console.WriteLine("Press Return to exit...");
-   
+
       Console.ReadLine();
    }
 }
@@ -44,7 +44,7 @@ public class RemoteObject : MarshalByRefObject {
 // a custom ObjRef class that outputs its status
 [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class MyObjRef : ObjRef {
-   
+
    // only instantiate via marshaling or deserialization
    private MyObjRef() { }
 
@@ -74,7 +74,7 @@ public class MyObjRef : ObjRef {
          Console.WriteLine("Returning proxy to remote object.");
          return RemotingServices.Unmarshal(this);
       }
-   }   
+   }
 
    public void ORDump() {
 
@@ -83,13 +83,13 @@ public class MyObjRef : ObjRef {
       Console.WriteLine("URI is {0}.", URI);
 
       Console.WriteLine("\nWriting EnvoyInfo: ");
-      
+
       if ( EnvoyInfo != null) {
 
          IMessageSink EISinks = EnvoyInfo.EnvoySinks;
 
          while (EISinks != null) {
-            Console.WriteLine("\tSink: " + EISinks.ToString());  
+            Console.WriteLine("\tSink: " + EISinks.ToString());
             EISinks = EISinks.NextSink;
          }
       }
@@ -101,7 +101,7 @@ public class MyObjRef : ObjRef {
         Console.WriteLine("\nWriting ChannelInfo: ");
       for (int i = 0; i < ChannelInfo.ChannelData.Length; i++)
          Console.WriteLine ("\tChannel: {0}", ChannelInfo.ChannelData[i]);
-      
+
       Console.WriteLine(" ----------------------------- ");
    }
 }

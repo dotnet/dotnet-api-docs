@@ -18,7 +18,7 @@ public class Test{
    private void DeserializeObject(string filename){
       XmlSerializer mySerializer = new XmlSerializer(typeof(Group));
       FileStream fs = new FileStream(filename, FileMode.Open);
-      mySerializer.UnknownNode += new 
+      mySerializer.UnknownNode += new
       XmlNodeEventHandler(serializer_UnknownNode);
       Group myGroup = (Group) mySerializer.Deserialize(fs);
       fs.Close();
@@ -36,7 +36,7 @@ public class Test{
 
       XmlNodeType myNodeType = e.NodeType;
       Console.WriteLine("NodeType: {0}", myNodeType);
- 
+
       Group myGroup = (Group) e.ObjectBeingDeserialized;
       Console.WriteLine("GroupName: {0}", myGroup.GroupName);
       Console.WriteLine();
@@ -44,9 +44,9 @@ public class Test{
 }
 /* Paste this XML into a file named UnknownNodes:
 <?xml version="1.0" encoding="utf-8"?>
-<Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:coho = "http://www.cohowinery.com" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:coho = "http://www.cohowinery.com"
 
 xmlns:cp="http://www.cpandl.com">
    <coho:GroupName>MyGroup</coho:GroupName>
@@ -61,5 +61,5 @@ xmlns:cp="http://www.cpandl.com">
       </Elmo>
    </coho:ThingInfo>
 </Group>
-*/   
+*/
 // </Snippet1>

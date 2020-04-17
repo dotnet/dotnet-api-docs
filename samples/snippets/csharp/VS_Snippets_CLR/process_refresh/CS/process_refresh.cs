@@ -6,7 +6,7 @@
 // The following example starts an instance of Notepad. It then
 // retrieves the physical memory usage of the associated process at
 // 2 second intervals for a maximum of 10 seconds. The example detects
-// whether the process exits before 10 seconds have elapsed.  
+// whether the process exits before 10 seconds have elapsed.
 // The example closes the process if it is still running after
 // 10 seconds.
 

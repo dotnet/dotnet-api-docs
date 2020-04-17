@@ -88,7 +88,7 @@ public class App
             int value = r.Next(1, 10);
             Console.Write(j + " = " + value);
 
-            // Increment the base every time, because the counter measures the number 
+            // Increment the base every time, because the counter measures the number
             // of high hits (raw fraction value) against all the hits (base value).
             BPC.Increment();
 
@@ -133,14 +133,14 @@ public class App
     // Formula from MSDN -
     //      Description - This counter type shows the ratio of a subset to its set as a percentage.
     //			For example, it compares the number of bytes in use on a disk to the
-    //			total number of bytes on the disk. Counters of this type display the 
+    //			total number of bytes on the disk. Counters of this type display the
     //			current percentage only, not an average over time.
     //
-    // Generic type - Instantaneous, Percentage 
+    // Generic type - Instantaneous, Percentage
     //	    Formula - (N0 / D0), where D represents a measured attribute and N represents one
     //			component of that attribute.
     //
-    //		Average - SUM (N / D) /x 
+    //		Average - SUM (N / D) /x
     //		Example - Paging File\% Usage Peak
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
     private static Single MyComputeCounterValue(CounterSample rfSample)

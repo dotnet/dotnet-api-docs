@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-public class Sample 
+public class Sample
 {
   public static void Main(){
 
@@ -11,7 +11,7 @@ public class Sample
     string xmlFrag ="<book> " +
                     "  <title>Pride And Prejudice</title>" +
                     "  <genre>novel</genre>" +
-                    "</book>"; 
+                    "</book>";
 
     //Create the XmlNamespaceManager.
     NameTable nt = new NameTable();
@@ -26,7 +26,7 @@ public class Sample
     Console.WriteLine("\r\nRead the XML including white space nodes...");
     ReadXML(context, xmlFrag, WhitespaceHandling.All);
   }
-  
+
   public static void ReadXML(XmlParserContext context, string xmlFrag, WhitespaceHandling ws){
 
     //Create the reader and specify the WhitespaceHandling setting.
@@ -53,11 +53,11 @@ public class Sample
            case XmlNodeType.SignificantWhitespace:
              Console.WriteLine("{0}:", reader.NodeType);
              break;
-         }       
-      }           
-  
+         }
+      }
+
     //Close the reader.
-    reader.Close();     
+    reader.Close();
   }
 } // End class
 

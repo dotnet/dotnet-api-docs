@@ -4,8 +4,8 @@
 
 /*
    The following example demonstrates the property 'RegisteredChannels'
-   of the class 'ChannelServices', its method 'UnregisterChannel', 
-   and usage of the class 'ChannelServices'. The example demonstrates 
+   of the class 'ChannelServices', its method 'UnregisterChannel',
+   and usage of the class 'ChannelServices'. The example demonstrates
    the remoting version of a server. When a client calls the
    'HelloMethod' on the 'HelloServer' class, the server object appends the
    string passed from the client to the string "Hi There" and returns the
@@ -18,12 +18,12 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels.Http;
 using System.Security.Permissions;
 
-namespace RemotingSamples 
+namespace RemotingSamples
 {
    public class MyChannelServices_Server
    {
       [PermissionSet(SecurityAction.LinkDemand)]
-      public static void Main() 
+      public static void Main()
       {
          try
          {
@@ -45,16 +45,16 @@ namespace RemotingSamples
             }
 // </Snippet2>
             RemotingConfiguration.RegisterWellKnownServiceType(Type.GetType
-               ("RemotingSamples.HelloServer,ChannelServices_RegisteredChannels_Share"), 
+               ("RemotingSamples.HelloServer,ChannelServices_RegisteredChannels_Share"),
                "SayHello", WellKnownObjectMode.SingleCall);
-// <Snippet3>   
+// <Snippet3>
             System.Console.WriteLine("Hit <enter> to unregister the channels...");
             System.Console.ReadLine();
             // Unregister the 'HttpChannel' and 'TcpChannel' channels.
             ChannelServices.UnregisterChannel(myTcpChannel);
             ChannelServices.UnregisterChannel(myHttpChannel);
             Console.WriteLine("Unregistered the channels.");
-// </Snippet3>   
+// </Snippet3>
             System.Console.WriteLine("Hit <enter> to exit...");
             System.Console.ReadLine();
 // </Snippet1>

@@ -27,14 +27,14 @@ class HttpWebRequestBeginGetRequest
 
         // Keep the main thread from continuing while the asynchronous
         // operation completes. A real world application
-        // could do something useful such as updating its user interface. 
+        // could do something useful such as updating its user interface.
         allDone.WaitOne();
     }
 
     private static void GetRequestStreamCallback(IAsyncResult asynchronousResult)
     {
         HttpWebRequest request = (HttpWebRequest)asynchronousResult.AsyncState;
-        
+
         // End the operation
         Stream postStream = request.EndGetRequestStream(asynchronousResult);
 
