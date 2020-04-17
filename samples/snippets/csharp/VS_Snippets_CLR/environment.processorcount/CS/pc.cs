@@ -1,14 +1,14 @@
 ﻿//<snippet1>
-// This example demonstrates the 
+// This example demonstrates the
 //     Environment.ProcessorCount property.
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     Console.WriteLine("The number of processors " +
-        "on this computer is {0}.", 
+        "on this computer is {0}.",
         Environment.ProcessorCount);
     }
 }

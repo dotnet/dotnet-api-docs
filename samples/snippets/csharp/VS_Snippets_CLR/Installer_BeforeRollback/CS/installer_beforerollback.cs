@@ -1,10 +1,10 @@
 ﻿// System.Configuration.Install.Installer.BeforeRollback
 
-/* The following program demonstrates the 'BeforeRollback' event of the 
+/* The following program demonstrates the 'BeforeRollback' event of the
    'Installer' class. It overrides the Install method, explicitly throws
-   arguement exception so that 'Rollback' method is called. When the 
+   arguement exception so that 'Rollback' method is called. When the
    'RollBack' is about to complete, 'BeforeRollback' event occurs and
-   a message is displayed when the event occurs.   
+   a message is displayed when the event occurs.
 */
 
 // <Snippet1>
@@ -29,14 +29,14 @@ public class MyInstallerClass: Installer
    {
       Console.WriteLine("");
       Console.WriteLine("BeforeRollback Event occurred.");
-      Console.WriteLine("");        
+      Console.WriteLine("");
    }
    // Event handler for 'AfterRollback' event.
    private void MyInstaller_AfterRollback(object sender, InstallEventArgs e)
    {
       Console.WriteLine("");
       Console.WriteLine("AfterRollback Event occurred.");
-      Console.WriteLine("");        
+      Console.WriteLine("");
    }
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)
@@ -57,7 +57,7 @@ public class MyInstallerClass: Installer
    }
    public static void Main()
    {
-      Console.WriteLine("Usage : installutil.exe Installer_BeforeRollback.exe ");      
+      Console.WriteLine("Usage : installutil.exe Installer_BeforeRollback.exe ");
    }
 }
 // </Snippet1>

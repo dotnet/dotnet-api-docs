@@ -2,15 +2,15 @@
 using System;
 using System.IO;
 
-class Test 
+class Test
 {
 	
-    public static void Main() 
+    public static void Main()
     {
         string path = @"c:\MyTest.txt";
         FileInfo fi1 = new FileInfo(path);
 
-        try 
+        try
         {
             using (StreamWriter sw = fi1.CreateText()) {}
             string path2 = path + "temp";
@@ -26,14 +26,14 @@ class Test
             //Delete the newly created file.
             fi2.Delete();
             Console.WriteLine("{0} was successfully deleted.", path2);
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             Console.WriteLine("The process failed: {0}", e.ToString());
         }
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //c:\MyTest.txt was copied to c:\MyTest.txttemp.

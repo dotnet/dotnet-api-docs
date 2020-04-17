@@ -33,14 +33,14 @@ namespace ManipulationAPI
         private readonly ManipulationPivot2D pivot;
         private readonly DispatcherTimer inertiaTimer;
         private Point dragCenter = new Point(double.NaN, double.NaN);
-        
+
         // This is used only to demo the ManipulationProcessor2D snippet
         // This (and the snippet) isn't actually used in this app.
         private Point elementPosition = new Point(0, 0);
         #endregion
 
         /******************************************************************************/
-  
+
         #region Constructor
         public ManipulationItem()
         {
@@ -74,7 +74,7 @@ namespace ManipulationAPI
             inertiaProcessor.ExpansionBehavior.DesiredDeceleration = 0.0001F;
             inertiaProcessor.Delta += OnManipulationDelta;
             inertiaProcessor.Completed += OnInertiaCompleted;
-                        
+
             inertiaTimer = new DispatcherTimer(
                 DispatcherPriority.Input,
                 Dispatcher.CurrentDispatcher);
@@ -102,7 +102,7 @@ namespace ManipulationAPI
         /// </summary>
         public UIElement Container
         {
-            get; 
+            get;
             set;
         }
 
@@ -230,7 +230,7 @@ namespace ManipulationAPI
             if ((mouse.Captured == this))
             {
                 Point position = mouse.GetPosition(Container);
-                
+
                 List<Manipulator2D> manipulators = new List<Manipulator2D>();
                 manipulators.Add(new Manipulator2D(
                     0,
@@ -474,7 +474,7 @@ namespace ManipulationAPI
         {
             ScreenMessage(String.Format("Started: Origin: {0}x{1} {2}", e.OriginX, e.OriginY, Timestamp));
         }
-         
+
         #endregion
 
         /******************************************************************************/

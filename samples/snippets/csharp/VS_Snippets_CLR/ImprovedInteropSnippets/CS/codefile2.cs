@@ -37,22 +37,22 @@ namespace MyModule
 
 	[ComImport]
 	[Guid("73EB4AF8-BE9C-4b49-B3A4-24F4FF657B26")]
-	public interface IMyStorage  
+	public interface IMyStorage
 	{
 		[DispId(1)]
 		[return : MarshalAs( UnmanagedType.Interface )]
 		Object GetItem( [In, MarshalAs( UnmanagedType.BStr )] String bstrName );
 
 		[DispId(2)]
-		void GetItems( [In, MarshalAs( UnmanagedType.BStr )] String bstrLocation, 
-			[Out, MarshalAs( UnmanagedType.SafeArray, 
+		void GetItems( [In, MarshalAs( UnmanagedType.BStr )] String bstrLocation,
+			[Out, MarshalAs( UnmanagedType.SafeArray,
 					  SafeArraySubType = VarEnum.VT_VARIANT )] out Object[] Items );
 
 		[DispId(3)]
-		void GetItemDescriptions( [In] String bstrLocation, 
+		void GetItemDescriptions( [In] String bstrLocation,
 			[In, Out, MarshalAs( UnmanagedType.SafeArray )] ref Object[] varDescriptions );
 
-		bool IsEmpty 
+		bool IsEmpty
 		{
 			[DispId(4)]
 			[return : MarshalAs( UnmanagedType.VariantBool )]

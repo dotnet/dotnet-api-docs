@@ -3,13 +3,13 @@
 using System;
 using System.Collections;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
        Console.WriteLine();
        Console.WriteLine("GetEnvironmentVariables: ");
-       foreach (DictionaryEntry de in Environment.GetEnvironmentVariables()) 
+       foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
            Console.WriteLine("  {0} = {1}", de.Key, de.Value);
     }
 }

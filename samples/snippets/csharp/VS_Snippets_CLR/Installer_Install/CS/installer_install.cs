@@ -2,7 +2,7 @@
    System.Configuration.Install.Installer.Install
    System.Configuration.Install.Installer.Commit
 
-   The following example demonstrates the 'Install' and 'Commit' methods 
+   The following example demonstrates the 'Install' and 'Commit' methods
    of the 'Installer' class.
    A class is derived from the 'Installer' base class and the Install
    and Commit methods are overridden.

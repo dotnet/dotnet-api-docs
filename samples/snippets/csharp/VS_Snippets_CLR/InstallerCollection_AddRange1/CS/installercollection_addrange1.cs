@@ -2,9 +2,9 @@
 
 /*
    The following example demonstrates the 'AddRange(Installer[])'
-   method of the 'InstallerCollection' class. It Creates 'AssemblyInstaller' 
-   instances for 'MyAssembly1.exe' and for 'MyAssembly2.exe'. These 
-   instances are added to an instance of 'TransactedInstaller'. The installation 
+   method of the 'InstallerCollection' class. It Creates 'AssemblyInstaller'
+   instances for 'MyAssembly1.exe' and for 'MyAssembly2.exe'. These
+   instances are added to an instance of 'TransactedInstaller'. The installation
    process installs both 'MyAssembly1.exe' and 'MyAssembly2.exe'.
 */
 
@@ -27,17 +27,17 @@ public class InstallerCollection_AddRange1
          InstallContext myInstallContext;
 
          // Create a instance of 'AssemblyInstaller' that installs 'MyAssembly1.exe'.
-         myAssemblyInstaller = 
+         myAssemblyInstaller =
             new AssemblyInstaller("MyAssembly1.exe", null);
 
-         // Add the instance of 'AssemblyInstaller' to the list of installers.  
+         // Add the instance of 'AssemblyInstaller' to the list of installers.
          myInstallers.Add(myAssemblyInstaller);
 
          // Create a instance of 'AssemblyInstaller' that installs 'MyAssembly2.exe'.
-         myAssemblyInstaller = 
+         myAssemblyInstaller =
             new AssemblyInstaller("MyAssembly2.exe", null);
 
-         // Add the instance of 'AssemblyInstaller' to the list of installers.  
+         // Add the instance of 'AssemblyInstaller' to the list of installers.
          myInstallers.Add(myAssemblyInstaller);
 
          // Add the installers to the 'TransactedInstaller' instance.
@@ -45,7 +45,7 @@ public class InstallerCollection_AddRange1
 // </Snippet1>
 
          // Create a instance of 'InstallContext' with log file named 'Install.log'.
-         myInstallContext = 
+         myInstallContext =
             new InstallContext("Install.log", null);
          myTransactedInstaller.Context = myInstallContext;
 
@@ -56,5 +56,5 @@ public class InstallerCollection_AddRange1
       {
          Console.WriteLine("Exception raised : {0}", e.Message);
       }
-   }  
+   }
 }

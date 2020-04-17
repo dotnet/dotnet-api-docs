@@ -8,7 +8,7 @@ public class Program
     static string directoryPath = @"c:\temp";
     public static void Main()
     {
-        
+
         DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
            Compress(directorySelected);
 

@@ -2,9 +2,9 @@
 // Sample for the Environment.ExpandEnvironmentVariables method
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     String str;
     String nl = Environment.NewLine;

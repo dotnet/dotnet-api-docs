@@ -31,7 +31,7 @@ public class Example
       throw new AppException("Exception in ThrowInner method.");
    }
 
-   public void CatchInner() 
+   public void CatchInner()
    {
       try {
          this.ThrowInner();
