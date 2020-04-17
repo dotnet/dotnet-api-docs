@@ -5,7 +5,7 @@
    class. Exception is raised by passing two integer values which are out of range,
    the same is caught in the 'BeginExceptionBlock' which is non-filtered. First it
    checks for the exception thrown in the 'BeginFaultBlock' and then emits the MSIL
-   instructions in 'BeginExceptFilterBlock'. 
+   instructions in 'BeginExceptFilterBlock'.
 */
 
 // <Snippet1>
@@ -85,7 +85,7 @@ public class ILGenerator_BeginFaultBlock
 
       // Call finally block.
       myAdderIL.BeginFinallyBlock();
-      
+
       myAdderIL.Emit(OpCodes.Ldstr, "{0}");
       myAdderIL.Emit(OpCodes.Ldloc_S, myLocalBuilder2);
       myAdderIL.EmitCall(OpCodes.Callvirt, myExToStrMI, null);
@@ -108,7 +108,7 @@ public class ILGenerator_BeginFaultBlock
       Type myAddType = AddType();
       object myObject1 = Activator.CreateInstance(myAddType);
       object[] myObject2 = new object[]{11,12};
-      
+
       // Invoke member.
       myAddType.InvokeMember("DoAdd",BindingFlags.InvokeMethod,null,myObject1,myObject2);
    }

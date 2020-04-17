@@ -23,7 +23,7 @@ public class EqualsTest {
         Console.WriteLine();
         Console.WriteLine("The value of my color ({0}) is {1}", myColor, Enum.Format(typeof(Colors), myColor, "d"));
         Console.WriteLine("The value of my pet (a {0}) is {1}", myPet, Enum.Format(typeof(Mammals), myPet, "d"));
-        Console.WriteLine("Even though they have the same value, are they equal? {0}", 
+        Console.WriteLine("Even though they have the same value, are they equal? {0}",
                     myColor.Equals(myPet) ? "Yes" : "No");
     }
 }
@@ -31,11 +31,11 @@ public class EqualsTest {
 //    My favorite animal is a Cat
 //    Your favorite animal is a Dog
 //    Do we like the same animal? No
-//    
+//
 //    My favorite color is Red
 //    Your favorite color is Red
 //    Do we like the same color? Yes
-//    
+//
 //    The value of my color (Red) is 0
 //    The value of my pet (a Cat) is 0
 //    Even though they have the same value, are they equal? No

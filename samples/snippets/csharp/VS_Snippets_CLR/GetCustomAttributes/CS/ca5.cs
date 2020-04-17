@@ -23,7 +23,7 @@ namespace CustAttrs5CS {
                 ParameterInfo[] pInfo = mInfo.GetParameters();
                 if (pInfo != null) {
                     // Iterate through all the attributes for the parameter.
-                    foreach(Attribute attr in 
+                    foreach(Attribute attr in
                         Attribute.GetCustomAttributes(pInfo[0])) {
                         // Check for the ParamArray attribute.
                         if (attr.GetType() == typeof(ParamArrayAttribute))
@@ -31,7 +31,7 @@ namespace CustAttrs5CS {
                                 "has the ParamArray attribute.",
                                 pInfo[0].Name, mInfo.Name);
                         // Check for the Description attribute.
-                        else if (attr.GetType() == 
+                        else if (attr.GetType() ==
                             typeof(DescriptionAttribute)) {
                             Console.WriteLine("Parameter {0} for method {1} " +
                                 "has a description attribute.",

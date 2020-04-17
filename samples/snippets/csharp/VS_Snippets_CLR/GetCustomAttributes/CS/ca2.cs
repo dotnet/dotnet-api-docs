@@ -22,13 +22,13 @@ namespace CustAttrs2CS {
                 // Check for the Description attribute.
                 if (attr.GetType() == typeof(DescriptionAttribute))
                     Console.WriteLine("Module {0} has the description " +
-                        "\"{1}\".", module.Name, 
+                        "\"{1}\".", module.Name,
                         ((DescriptionAttribute)attr).Description);
                 // Check for the CLSCompliant attribute.
                 else if (attr.GetType() == typeof(CLSCompliantAttribute))
                     Console.WriteLine("Module {0} {1} CLSCompliant.",
                         module.Name,
-                        ((CLSCompliantAttribute)attr).IsCompliant ? 
+                        ((CLSCompliantAttribute)attr).IsCompliant ?
                             "is" : "is not");
             }
         }

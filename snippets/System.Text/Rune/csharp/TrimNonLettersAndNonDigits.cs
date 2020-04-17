@@ -21,7 +21,7 @@ namespace RuneSamples
                 // First, trim from the front.
                 // If any Rune can't be decoded
                 // (return value is anything other than "Done"),
-                // or if the Rune is a letter or digit, 
+                // or if the Rune is a letter or digit,
                 // stop trimming from the front and
                 // instead work from the end.
                 while (Rune.DecodeFromUtf16(span, out Rune rune, out int charsConsumed) == OperationStatus.Done)
@@ -31,8 +31,8 @@ namespace RuneSamples
                     span = span[charsConsumed..];
                 }
 
-                // Next, trim from the end. 
-                // If any Rune can't be decoded, 
+                // Next, trim from the end.
+                // If any Rune can't be decoded,
                 // or if the Rune is a letter or digit,
                 // break from the loop, and we're finished.
                 while (Rune.DecodeLastFromUtf16(span, out Rune rune, out int charsConsumed) == OperationStatus.Done)

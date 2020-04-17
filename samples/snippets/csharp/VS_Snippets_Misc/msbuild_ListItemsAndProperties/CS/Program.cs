@@ -7,7 +7,7 @@ using Microsoft.Build.BuildEngine;
 namespace ListItemAndPropertiesCS
 {
     class Program
-    {        
+    {
         static void Main(string[] args)
         {
             // SET THIS TO POINT TO THE RIGHT LOCATION
@@ -22,7 +22,7 @@ namespace ListItemAndPropertiesCS
             Console.WriteLine("Project Properties");
             Console.WriteLine("----------------------------------");
 
-            // Iterate through the various property groups and subsequently 
+            // Iterate through the various property groups and subsequently
             // through the various properties
             foreach (BuildPropertyGroup propertyGroup in project.PropertyGroups)
             {
@@ -44,7 +44,7 @@ namespace ListItemAndPropertiesCS
                 {
                     Console.WriteLine("{0}:{1}", item.Name, item.Include);
                 }
-            }            
+            }
         }
     }
 }

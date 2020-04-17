@@ -17,11 +17,11 @@ namespace IndentedTextWriterExample
         {
             //<Snippet3>
             // Creates a TextWriter to use as the base output writer.
-            System.IO.StringWriter baseTextWriter = new System.IO.StringWriter();            
+            System.IO.StringWriter baseTextWriter = new System.IO.StringWriter();
 
-            // Create an IndentedTextWriter and set the tab string to use 
+            // Create an IndentedTextWriter and set the tab string to use
             // as the indentation string for each indentation level.
-            System.CodeDom.Compiler.IndentedTextWriter indentWriter = new IndentedTextWriter(baseTextWriter, "    ");           
+            System.CodeDom.Compiler.IndentedTextWriter indentWriter = new IndentedTextWriter(baseTextWriter, "    ");
             //</Snippet3>
 
             //<Snippet4>
@@ -41,7 +41,7 @@ namespace IndentedTextWriterExample
         {
             // Output a test string with a new-line character at the end.
             indentWriter.WriteLine("This is a test phrase. Current indentation level: "+level.ToString());
-            
+
             // If not yet at the highest recursion level, call this output method for the next level of indentation.
             if( level < totalLevels )
             {
@@ -63,7 +63,7 @@ namespace IndentedTextWriterExample
             }
 
             // Outputs a test string with a new-line character at the end.
-            indentWriter.WriteLine("This is a test phrase. Current indentation level: "+level.ToString());           
+            indentWriter.WriteLine("This is a test phrase. Current indentation level: "+level.ToString());
         }
         //</Snippet5>
         //</Snippet2>
@@ -77,9 +77,9 @@ namespace IndentedTextWriterExample
         {
             System.Windows.Forms.Button button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();            
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-                | System.Windows.Forms.AnchorStyles.Left) 
+            this.SuspendLayout();
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                | System.Windows.Forms.AnchorStyles.Left)
                 | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(8, 40);
             this.textBox1.Multiline = true;
@@ -99,11 +99,11 @@ namespace IndentedTextWriterExample
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "IndentedTextWriter example";
-            this.ResumeLayout(false);        
+            this.ResumeLayout(false);
         }
 
         [STAThread]
-        static void Main() 
+        static void Main()
         {
             Application.Run(new Form1());
         }

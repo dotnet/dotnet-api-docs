@@ -14,7 +14,7 @@ public class Example
         dinosaurs.Add("Deinonychus");
         dinosaurs.Add("Compsognathus");
 
-        ReadOnlyCollection<string> readOnlyDinosaurs = 
+        ReadOnlyCollection<string> readOnlyDinosaurs =
             new ReadOnlyCollection<string>(dinosaurs);
 
         Console.WriteLine();
@@ -25,13 +25,13 @@ public class Example
 
         Console.WriteLine("\nCount: {0}", readOnlyDinosaurs.Count);
 
-        Console.WriteLine("\nContains(\"Deinonychus\"): {0}", 
+        Console.WriteLine("\nContains(\"Deinonychus\"): {0}",
             readOnlyDinosaurs.Contains("Deinonychus"));
 
-        Console.WriteLine("\nreadOnlyDinosaurs[3]: {0}", 
+        Console.WriteLine("\nreadOnlyDinosaurs[3]: {0}",
             readOnlyDinosaurs[3]);
 
-        Console.WriteLine("\nIndexOf(\"Compsognathus\"): {0}", 
+        Console.WriteLine("\nIndexOf(\"Compsognathus\"): {0}",
             readOnlyDinosaurs.IndexOf("Compsognathus"));
 
         Console.WriteLine("\nInsert into the wrapped List:");
@@ -47,7 +47,7 @@ public class Example
         string[] dinoArray = new string[readOnlyDinosaurs.Count + 2];
         readOnlyDinosaurs.CopyTo(dinoArray, 1);
 
-        Console.WriteLine("\nCopied array has {0} elements:", 
+        Console.WriteLine("\nCopied array has {0} elements:",
             dinoArray.Length);
         foreach( string dinosaur in dinoArray )
         {
