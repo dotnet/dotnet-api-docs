@@ -33,7 +33,7 @@ public sealed class ObjectWalker : IEnumerable, IEnumerator {
 
    // Return the enumeration's current object.
    public Object Current { get { return m_current; } }
-   
+
    // Walk the reference of the passed-in object.
    private void Schedule(Object toSchedule) {
       if (toSchedule == null) return;
@@ -92,7 +92,7 @@ public sealed class App {
       Int64 num = 0;
       foreach (Object o in ow) {
          // Display each object's type and value as a string.
-         Console.WriteLine("Object #{0}: Type={1}, Value's string={2}", 
+         Console.WriteLine("Object #{0}: Type={1}, Value's string={2}",
             num++, o.GetType(), o.ToString());
       }
    }

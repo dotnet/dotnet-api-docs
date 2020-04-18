@@ -24,7 +24,7 @@ public class GetValuesTest {
 //       1
 //       2
 //       3
-//       
+//
 //       The values of the Styles Enum are:
 //       0
 //       23

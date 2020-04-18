@@ -2,16 +2,16 @@
 using System;
 using System.IO;
 
-class Test 
+class Test
 {
-    public static void Main() 
+    public static void Main()
     {
         string path = @"c:\temp\MyTest.txt";
         // This text is added only once to the file.
-        if (!File.Exists(path)) 
+        if (!File.Exists(path))
         {
             // Create a file to write to.
-            using (StreamWriter sw = File.CreateText(path)) 
+            using (StreamWriter sw = File.CreateText(path))
             {
                 sw.WriteLine("Hello");
                 sw.WriteLine("And");
@@ -21,7 +21,7 @@ class Test
 
         // This text is always added, making the file longer over time
         // if it is not deleted.
-        using (StreamWriter sw = File.AppendText(path)) 
+        using (StreamWriter sw = File.AppendText(path))
         {
             sw.WriteLine("This");
             sw.WriteLine("is Extra");
@@ -29,10 +29,10 @@ class Test
         }	
 
         // Open the file to read from.
-        using (StreamReader sr = File.OpenText(path)) 
+        using (StreamReader sr = File.OpenText(path))
         {
             string s = "";
-            while ((s = sr.ReadLine()) != null) 
+            while ((s = sr.ReadLine()) != null)
             {
                 Console.WriteLine(s);
             }

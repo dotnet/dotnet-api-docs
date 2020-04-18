@@ -1,9 +1,9 @@
 ﻿/*
    System.Configuration.Install.Installer.HelpText
-   
+
    The following example demonstrates the property 'HelpText'. The
    'HelpText' property is defined in the 'Installer', which when called
-   returns the description of the 'Installer' and the command line 
+   returns the description of the 'Installer' and the command line
    options for the installation executable, such as the InstallUtil.exe utility,
    that can be passed to and understood by the 'Installer'.
 
@@ -15,7 +15,7 @@ using System.ComponentModel;
 using System.Configuration.Install;
 
 [RunInstaller(true)]
-public class MyInstaller: Installer 
+public class MyInstaller: Installer
 {
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)

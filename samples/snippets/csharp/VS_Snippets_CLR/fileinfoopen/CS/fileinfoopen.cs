@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-public class OpenTest 
+public class OpenTest
 {
-    public static void Main() 
+    public static void Main()
     {
         // Open an existing file, or create a new one.
         FileInfo fi = new FileInfo("temp.txt");
@@ -13,20 +13,20 @@ public class OpenTest
         FileStream fs = fi.Open( FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None );
 
         // Create another reference to the same file.
-        FileInfo nextfi = new FileInfo("temp.txt");        
+        FileInfo nextfi = new FileInfo("temp.txt");
 
-        try 
+        try
         {
             // Try opening the same file, which was locked by the previous process.
             nextfi.Open( FileMode.OpenOrCreate, FileAccess.Read );
 
             Console.WriteLine("The file was not locked, and was opened by a second process.");
-        } 
-        catch (IOException) 
+        }
+        catch (IOException)
         {
             Console.WriteLine("The file could not be opened because it was locked by another process.");
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             Console.WriteLine(e.ToString());
         }
@@ -36,7 +36,7 @@ public class OpenTest
     }
 }
 
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //The file could not be opened because it was locked by another process.

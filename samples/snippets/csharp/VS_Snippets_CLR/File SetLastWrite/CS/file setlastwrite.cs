@@ -2,18 +2,18 @@
 using System;
 using System.IO;
 
-class Test 
+class Test
 {
-    public static void Main() 
+    public static void Main()
     {
-        try 
+        try
         {
             string path = @"c:\Temp\MyTest.txt";
-            if (!File.Exists(path)) 
+            if (!File.Exists(path))
             {
                 File.Create(path);
-            } 
-            else 
+            }
+            else
             {
                 // Take an action that will affect the write time.
                 File.SetLastWriteTime(path, new DateTime(1985,4,3));
@@ -27,8 +27,8 @@ class Test
             File.SetLastWriteTime(path, DateTime.Now);
             dt = File.GetLastWriteTime(path);
             Console.WriteLine("The last write time for this file was {0}.", dt);
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             Console.WriteLine("The process failed: {0}", e.ToString());
         }

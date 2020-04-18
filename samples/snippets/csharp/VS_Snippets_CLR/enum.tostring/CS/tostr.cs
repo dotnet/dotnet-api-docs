@@ -2,11 +2,11 @@
 // Sample for Enum.ToString(String)
 using System;
 
-class Sample 
+class Sample
 {
     enum Colors {Red, Green, Blue, Yellow = 12};
 
-    public static void Main() 
+    public static void Main()
     {
     Colors myColor = Colors.Yellow;
 
@@ -24,7 +24,7 @@ class Sample
     Console.WriteLine("myColor.ToString(\"X\") = {0}", myColor.ToString("X"));
 
     Console.WriteLine("myColor.ToString(\"d\") = {0}", myColor.ToString("d"));
-    Console.WriteLine("myColor.ToString(\"D\") = {0}", myColor.ToString("D"));    
+    Console.WriteLine("myColor.ToString(\"D\") = {0}", myColor.ToString("D"));
 
     Console.WriteLine("myColor.ToString(\"f\") = {0}", myColor.ToString("f"));
     Console.WriteLine("myColor.ToString(\"F\") = {0}", myColor.ToString("F"));

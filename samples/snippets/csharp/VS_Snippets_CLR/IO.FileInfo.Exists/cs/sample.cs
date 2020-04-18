@@ -18,8 +18,8 @@ class Program
 
         // Check to see if the file exists.
         FileInfo fInfo = new FileInfo(FileName);
-        
-        // You can throw a personalized exception if 
+
+        // You can throw a personalized exception if
         // the file does not exist.
         if (!fInfo.Exists)
         {
