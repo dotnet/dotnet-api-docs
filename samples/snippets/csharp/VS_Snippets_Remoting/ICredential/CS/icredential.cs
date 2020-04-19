@@ -7,7 +7,7 @@
    'GetCredential' method of 'CredentialList' class. Then it sends the request and obtains a response.
 */
 
-namespace CrendentialSample
+namespace CredentialSample
 {
 	using System;
 	using System.Net;

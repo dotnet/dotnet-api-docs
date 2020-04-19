@@ -1,7 +1,7 @@
 ﻿// System.ArrayTypeMismatchException.ArrayTypeMismatchException
 /*
  * The following example demonstrates the 'ArrayTypeMismatchException()' constructor of class
- * ArrayTypeMismatchException class.It creates a function which takes two arrays as arguments.
+ * ArrayTypeMismatchException class. It creates a function which takes two arrays as arguments.
  * It checks whether the two arrays are of same type or not. If two arrays are not of same type
  * then a new  'ArrayTypeMismatchException' object is created and thrown. That exception is caught
  * in the calling method.

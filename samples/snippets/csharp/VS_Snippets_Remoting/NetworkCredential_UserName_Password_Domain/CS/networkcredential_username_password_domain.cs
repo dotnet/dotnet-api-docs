@@ -2,7 +2,7 @@
 
 /*This program demontrates the 'UserName','Domain' and 'Password' properties of 'NetworkCredential' class.
   It takes an URL, username, password and domainname from console. An empty 'NetworkCredential' object 
-  is created.The 'UserName' ,'Password' and 'Domain' porperties of 'NetworkCredential' class are initialised 
+  is created.The 'UserName' ,'Password' and 'Domain' properties of 'NetworkCredential' class are initialized 
   with the respective values taken from console. Then a 'WebRequest' object is created and the 'NetworkCredential'
   object is associated with it.A message is displayed onto the console on successful reception of response 
   otherwise an exception is thrown.
@@ -51,7 +51,7 @@ class CredentialCacheSnippet
     WebResponse myWebResponse = myWebRequest.GetResponse();
     
     // Process the response.
-    Console.WriteLine("\nResponse received sucessfully");
+    Console.WriteLine("\nResponse received successfully");
     
     // Release the resources of the response object.
     myWebResponse.Close();

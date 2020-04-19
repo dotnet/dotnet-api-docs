@@ -80,7 +80,7 @@ class WebRequest_BeginGetRequeststream
             RequestState myRequestState =(RequestState) asynchronousResult.AsyncState;
             WebRequest  myWebRequest = myRequestState.request;
 
-            // End the Asynchronus request.
+            // End the Asynchronous request.
             Stream streamResponse = myWebRequest.EndGetRequestStream(asynchronousResult);
 
             // Create a string that is to be posted to the uri.

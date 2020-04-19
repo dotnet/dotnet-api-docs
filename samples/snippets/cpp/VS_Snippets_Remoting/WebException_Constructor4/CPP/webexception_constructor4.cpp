@@ -1,4 +1,4 @@
-// System::Net::WebException::WebException(String, InnetException);
+// System::Net::WebException::WebException(String, InnerException);
 
 /*
 This program demonstrates the 'WebException(String, InnerException)' constructor of 'WebException' class.
@@ -54,7 +54,7 @@ int main()
       HttpConnect^ myHttpConnect = gcnew HttpConnect;
       
       // If the Uri is valid  then 'ConnectHttpServer' method will connect to the server.
-      myHttpConnect->ConnectHttpServer( "www.constoso.com" );
+      myHttpConnect->ConnectHttpServer( "www.contoso.com" );
    }
    catch ( WebException^ e ) 
    {

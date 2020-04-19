@@ -4,9 +4,9 @@
 // System::Web::Services::Description.MimeContentBinding
 
 /* The following program demonstrates properties 'Type', 'Part'
-and field 'NameSpace'of class 'MimeContentBinding'.It reads 'MimeContentSample_cs::wsdl'file
+and field 'NameSpace' of class 'MimeContentBinding'. It reads 'MimeContentSample_cs::wsdl' file
 and instantiates a ServiceDescription Object*.'MimeContentBinding' objects  are retrieved from Extension
-points of OutputBinding for one of the Binding Object* and its properties 'Type', 'Part'are displayed.It also        
+points of OutputBinding for one of the Binding Object* and its properties 'Type', 'Part' are displayed. It also        
 displays 'NameSpace' of the 'MimeContentBinding' Object*.
 */
 

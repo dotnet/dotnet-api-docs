@@ -69,7 +69,7 @@ namespace DataBindingTest
 
  public class SimpleDesigner : System.Web.UI.Design.ControlDesigner
    {
-   // The DesigneTime manipulation is done by this class.
+   // The DesignTime manipulation is done by this class.
      public string Text
       {
          get
@@ -193,7 +193,7 @@ namespace DataBindingTest
 // <Snippet15>
             string dataBindingOutput4,dataBindingOutput5,dataBindingOutput6,dataBindingOutput7,dataBindingOutput8;
             dataBindingOutput4=String.Concat("The Count of the collection is ",myDataBindingCollection1.Count);
-            dataBindingOutput5=String.Concat("The IsSynchronised property of the collection is ",myDataBindingCollection1.IsSynchronized,"-",dataBindingOutput4);
+            dataBindingOutput5=String.Concat("The IsSynchronized property of the collection is ",myDataBindingCollection1.IsSynchronized,"-",dataBindingOutput4);
             dataBindingOutput6=String.Concat("The IsReadOnly property of the collection is ",myDataBindingCollection1.IsReadOnly,"-",dataBindingOutput5);
             WriteToFile(dataBindingOutput6);
 // </Snippet15>

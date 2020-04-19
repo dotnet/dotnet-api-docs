@@ -118,7 +118,7 @@ class MyOperationBindingSample
                  Console.WriteLine("    Fault : " + myFaultBinding1.Name);
             }
          }
-         // Save the ServiceDescripition to an external file.
+         // Save the ServiceDescription to an external file.
          myServiceDescription.Write("MathService_new_cs.wsdl");
       }
       catch(Exception e)

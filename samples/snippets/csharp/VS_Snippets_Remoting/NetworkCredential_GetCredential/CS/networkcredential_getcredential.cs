@@ -39,7 +39,7 @@ class NetworkCredential_GetCredential
       Console.WriteLine("\n\nRequest to Url is sent.Waiting for response...Please wait ...");
       WebResponse myWebResponse = myWebRequest.GetResponse();
       // Process the response.
-         Console.WriteLine("\nResponse received sucessfully");
+         Console.WriteLine("\nResponse received successfully");
       // Release the resources of the response object.
       myWebResponse.Close();
 // </Snippet1>			

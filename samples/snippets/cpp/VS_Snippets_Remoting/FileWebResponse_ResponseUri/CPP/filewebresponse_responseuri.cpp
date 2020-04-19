@@ -1,7 +1,7 @@
 // System::Net::FileWebResponse::ResponseUri
 
 /* This program demonstrates the 'ResponseUri' property of the 'FileWebResponse' class.
-It creates a 'FileWebRequest' Object* and queries for a response.It then displays the Uri of the file
+It creates a 'FileWebRequest' Object* and queries for a response. It then displays the Uri of the file
 system resource that provided the response.
 */
 

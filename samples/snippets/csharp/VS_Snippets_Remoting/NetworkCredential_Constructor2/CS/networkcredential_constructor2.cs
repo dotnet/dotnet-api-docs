@@ -31,7 +31,7 @@ class NetworkCredentialSnippet {
     try 
     {
 // <Snippet1>
-       // Call the onstructor  to create an instance of NetworkCredential with the 
+       // Call the constructor  to create an instance of NetworkCredential with the 
        // specified user name and password.
        NetworkCredential myCredentials = new NetworkCredential(username,passwd);
   

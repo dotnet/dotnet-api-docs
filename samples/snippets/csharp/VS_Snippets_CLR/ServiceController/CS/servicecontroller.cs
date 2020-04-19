@@ -299,7 +299,7 @@ namespace ServiceControllerSample
                Console.WriteLine("    Display name:    {0}", scTemp.DisplayName);
 
                // Query WMI for additional information about this service.
-               // Display the start name (LocalSytem, etc) and the service
+               // Display the start name (LocalSystem, etc) and the service
                // description.
                ManagementObject wmiService;
                wmiService = new ManagementObject("Win32_Service.Name='" + scTemp.ServiceName + "'");
