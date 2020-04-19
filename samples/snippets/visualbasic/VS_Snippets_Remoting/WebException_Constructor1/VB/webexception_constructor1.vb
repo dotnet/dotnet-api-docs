@@ -17,7 +17,7 @@ Public shared Sub Main()
         Try
             Dim myHttpConnect As New HttpConnect()
             ' If the Uri is valid  then 'ConnectHttpServer' method will connect 
-	         ' to the server sucessfully.
+	         ' to the server successfully.
             myHttpConnect.ConnectHttpServer("www.contoso.com")
         Catch e As WebException
             Console.WriteLine(("The Exception is :" + e.Message))

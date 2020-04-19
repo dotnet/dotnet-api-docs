@@ -33,7 +33,7 @@ Class XMLDSIGDetached
          ' Sign the detached resourceand save the signature in an XML file.
          SignDetachedResource(resourceToSign, XmlFileName, Key)
          
-         Console.WriteLine("XML Signature was succesfully computed and saved to {0}.", XmlFileName)
+         Console.WriteLine("XML Signature was successfully computed and saved to {0}.", XmlFileName)
          
          ' Verify the signature of the signed XML.
          Console.WriteLine("Verifying signature...")
@@ -89,7 +89,7 @@ Class XMLDSIGDetached
    End Sub 
     
    
-   ' Verify the signature of an XML file against an asymetric 
+   ' Verify the signature of an XML file against an asymmetric 
    ' algorithm and return the result.
    Public Shared Function VerifyDetachedSignature(XmlSigFileName As String, Key As RSA) As [Boolean]
       ' Create a new XML document.
@@ -108,7 +108,7 @@ Class XMLDSIGDetached
       ' Load the signature node.
       signedXml.LoadXml(CType(nodeList(0), XmlElement))
       
-      ' Check the signature against the passed asymetric key
+      ' Check the signature against the passed asymmetric key
       ' and return the result.
       Return signedXml.CheckSignature(Key)
    End Function 

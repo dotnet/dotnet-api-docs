@@ -61,7 +61,7 @@ Class WebRequest_ContentLength
 ' </Snippet1>
 
             Console.WriteLine(ControlChars.Cr + "The value of ContentLength property after sending the data is {0}", myWebRequest.ContentLength)
-            Console.WriteLine(ControlChars.Cr + "The string entered has been succesfully posted to the Uri.")
+            Console.WriteLine(ControlChars.Cr + "The string entered has been successfully posted to the Uri.")
             Console.WriteLine(ControlChars.Cr + "Please wait for the response.......")
             Dim streamResponse As Stream = myWebResponse.GetResponseStream()
             Dim streamRead As New StreamReader(streamResponse)

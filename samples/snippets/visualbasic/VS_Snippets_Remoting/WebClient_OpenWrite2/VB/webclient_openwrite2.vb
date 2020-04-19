@@ -5,8 +5,8 @@
 'program makes a call to 'OpenWrite(String)' method and obtains a "Stream" instance
 'This stream is used to post data to the site. 
 '
-'Note : Behaviour of this program may not be the same with all other sites. Also certain 
-'sites would not accept "Post" method thereby leading to an error.It is advisable 
+'Note : Behavior of this program may not be the same with all other sites. Also certain 
+'sites would not accept "Post" method thereby leading to an error. It is advisable 
 'to construct a site using files accompanying this and provide
 'url name of this site to the program.
 '

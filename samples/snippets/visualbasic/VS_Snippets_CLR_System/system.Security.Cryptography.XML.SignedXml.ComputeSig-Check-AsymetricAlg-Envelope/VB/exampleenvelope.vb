@@ -95,7 +95,7 @@ Public Class SignVerifyEnvelope
    End Sub
    
    
-   ' Verify the signature of an XML file against an asymetric 
+   ' Verify the signature of an XML file against an asymmetric 
    ' algorithm and return the result.
    Public Shared Function VerifyXmlFile(Name As [String], Key As RSA) As [Boolean]
       ' Create a new XML document.

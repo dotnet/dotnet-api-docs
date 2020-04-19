@@ -21,7 +21,7 @@ Class HttpWebRequest_ContentLength
     
     Shared Sub Main()
         Try
-            ' Create a new WebRequest Object to the mentione Uri.				
+            ' Create a new WebRequest Object to the mentioned Uri.				
             Dim myHttpWebRequest As HttpWebRequest = CType(WebRequest.Create("http://www.contoso.com/codesnippets/next.asp"), HttpWebRequest)
             Console.WriteLine(ControlChars.Cr + "The value of 'ContentLength' property before sending the data is {0}", myHttpWebRequest.ContentLength)
             ' <Snippet1>
