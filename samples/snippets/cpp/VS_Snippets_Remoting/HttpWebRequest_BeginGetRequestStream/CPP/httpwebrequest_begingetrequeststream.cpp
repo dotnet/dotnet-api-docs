@@ -2,7 +2,7 @@
 
 This program demonstrates 'BeginGetRequestStream' and 'EndGetRequestStream' methods of 'HttpWebRequest' class.
 A new 'HttpWebRequest' Object is created . The 'Method' property of the 'HttpWebRequest' Object* is set to
-'POST'. The 'ContentType' property is set to S"application/x-www-form-urlencoded".Then 'BeginGetRequestStream'
+'POST'. The 'ContentType' property is set to S"application/x-www-form-urlencoded". Then 'BeginGetRequestStream'
 method of 'HttpWebRequest' class starts the Asynchronous writing to the 'HttpWebRequest' Object*. The
 'EndGetRequestStream' method of 'HttpWebRequest' class ends the Asynchronous writing of data and returns a
 stream Object*. The 'Stream' Object* is used to write data to the 'HttpWebRequest' Object*.
