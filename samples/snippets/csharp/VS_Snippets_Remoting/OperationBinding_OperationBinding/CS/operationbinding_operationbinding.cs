@@ -13,7 +13,7 @@
    input to the program is a WSDL file 'MathService_input_cs.wsdl' without the
    add operation binding for SOAP protocol. In the example the WSDL file is modified to insert 
    a new 'OperationBinding' instance for SOAP. The 'OperationBinding' instance 
-   is populated based on WSDL document structure defined in WSDL specification.The updated 
+   is populated based on WSDL document structure defined in WSDL specification. The updated 
    instance is then written to 'MathService_new_cs.wsdl'.
 */
 

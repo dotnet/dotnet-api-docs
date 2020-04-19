@@ -1,7 +1,7 @@
 /*System::Net::HttpWebRequest::Referer
 This program demonstrates 'Referer' property of the 'HttpWebRequest' class.
-A new 'HttpWebRequest' Object* is created.The 'Referer' property is displayed to the console.
-HTTP Request  and  Response Headers are displayed to the console.The contents of the page of the
+A new 'HttpWebRequest' Object* is created. The 'Referer' property is displayed to the console.
+HTTP Request  and  Response Headers are displayed to the console. The contents of the page of the
 requested URI are displayed to the console.
 
 Note:The 'Referer' property is used by the server to store the address of the Uri that has referred

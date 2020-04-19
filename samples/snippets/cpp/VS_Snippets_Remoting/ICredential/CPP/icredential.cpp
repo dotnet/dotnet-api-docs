@@ -1,7 +1,7 @@
 /*
 This program demonstrates 'GetCredential' method of 'ICredentials*' interface.
 The 'CredentialList' class implements 'ICredentials*' interface which stores credentials for multiple
-internet resources.The Program takes URL, Username, Password and Domain name from commandline and adds
+internet resources. The Program takes URL, Username, Password and Domain name from commandline and adds
 it to an instance of 'CredentialList' class.An instance of 'WebRequest' class is obtained and 'Credentials'
 property of 'WebRequest' class is set to an instance of 'NetworkCredential' class obtained by calling
 'GetCredential' method of 'CredentialList' class. Then it sends the request and obtains a response.
