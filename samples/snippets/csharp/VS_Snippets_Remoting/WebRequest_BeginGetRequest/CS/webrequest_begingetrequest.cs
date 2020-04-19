@@ -1,7 +1,7 @@
 ﻿/* System.Net.WebRequest.BeginGetRequestStream System.Net.WebRequest.EndGetRequestStream System.Net.WebRequest.Method
   This program demonstrates 'BeginGetRequestStream','EndGetRequestStream' methods and 'Method' property of 
     'WebRequest' class. 
-   A new 'WebRequest' object is created .The method property of the 'WebRequest' object is set to POST. An 
+   A new 'WebRequest' object is created . The method property of the 'WebRequest' object is set to POST. An 
    asynchronous request for writing data is started  using the 'BeginGetRequestStream' method of 'WebRequest'
    class.A 'Stream' object is obtained using the 'EndGetRequestStream' method in the callback function. The 
    stream object is  used to write the requested data to the mentioned uri. After data writing is over the 

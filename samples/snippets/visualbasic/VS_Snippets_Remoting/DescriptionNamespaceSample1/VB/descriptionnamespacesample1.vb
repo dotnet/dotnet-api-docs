@@ -20,7 +20,7 @@
 
 ' IN this example the WSDL file is modified to insert a new Binding for SOAP. The binding is 
 ' populated based on WSDL document structure defined in WSDL specification. The ServiceDescription
-' instance is loaded with values for 'Messages', 'PortTypes','Bindings' and 'Port'.The instance is 
+' instance is loaded with values for 'Messages', 'PortTypes','Bindings' and 'Port'. The instance is 
 ' then written to an external file 'MathService_new.wsdl'.
 
 Imports System.Web.Services.Description
