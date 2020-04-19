@@ -6,7 +6,7 @@ It accepts the base Uri from the user and assigns it to the 'BaseAddress' proper
 user. WebClient internally combines the 'BaseAddress' and specific page name to retrieve the page.
 
 The 'ResponseHeaders' property is a 'WebHeaderCollection' that contains the
-header information of the response received from the server.This is displayed to the console.
+header information of the response received from the server. This is displayed to the console.
 */
 
 #using <System.dll>
