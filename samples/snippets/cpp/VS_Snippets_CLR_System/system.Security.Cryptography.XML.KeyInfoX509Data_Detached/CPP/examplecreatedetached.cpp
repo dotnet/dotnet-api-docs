@@ -88,7 +88,7 @@ int main()
       
       // Sign the detached resource and save the signature in an XML file.
       SignDetachedResource( resourceToSign, XmlFileName, Key, Certificate );
-      Console::WriteLine( "XML signature was succesfully computed and saved to {0}.", XmlFileName );
+      Console::WriteLine( "XML signature was successfully computed and saved to {0}.", XmlFileName );
    }
    catch ( CryptographicException^ e ) 
    {

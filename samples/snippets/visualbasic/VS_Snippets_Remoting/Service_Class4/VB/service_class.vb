@@ -4,7 +4,7 @@
 ' System.Web.Services.Description.Service.Name
 
 ' The following sample demonstrates the properties 'Ports','Extensions','Name' and
-' constructor 'Service()'.This sample reads the contents of a file 'MathService_VB.wsdl'
+' constructor 'Service()'. This sample reads the contents of a file 'MathService_VB.wsdl'
 ' into a 'ServiceDescription' instance. It gets the collection of Service 
 ' instances from 'ServiceDescription'. It then removes a 'Service' from the collection and
 ' creates a new 'Service' and adds it into collection. It writes a new web service description 
