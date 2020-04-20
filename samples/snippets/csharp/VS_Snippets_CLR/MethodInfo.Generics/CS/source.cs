@@ -28,7 +28,7 @@ public class Test
 
         DisplayGenericMethodInfo(mi);
 
-        // Assign the int type to the type parameter of the Example 
+        // Assign the int type to the type parameter of the Example
         // method.
         //
         MethodInfo miConstructed = mi.MakeGenericMethod(typeof(int));
@@ -52,23 +52,23 @@ public class Test
             miDef == mi);
         //</Snippet4>
     }
-        
+
     private static void DisplayGenericMethodInfo(MethodInfo mi)
     {
         Console.WriteLine("\r\n{0}", mi);
 
         //<Snippet5>
-        Console.WriteLine("\tIs this a generic method definition? {0}", 
+        Console.WriteLine("\tIs this a generic method definition? {0}",
             mi.IsGenericMethodDefinition);
         //</Snippet5>
 
         //<Snippet6>
-        Console.WriteLine("\tIs it a generic method? {0}", 
+        Console.WriteLine("\tIs it a generic method? {0}",
             mi.IsGenericMethod);
         //</Snippet6>
 
         //<Snippet7>
-        Console.WriteLine("\tDoes it have unassigned generic parameters? {0}", 
+        Console.WriteLine("\tDoes it have unassigned generic parameters? {0}",
             mi.ContainsGenericParameters);
         //</Snippet7>
 
@@ -79,7 +79,7 @@ public class Test
         {
             Type[] typeArguments = mi.GetGenericArguments();
 
-            Console.WriteLine("\tList type arguments ({0}):", 
+            Console.WriteLine("\tList type arguments ({0}):",
                 typeArguments.Length);
 
             foreach (Type tParam in typeArguments)

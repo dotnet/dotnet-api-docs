@@ -8,12 +8,12 @@ public class Sample{
   public static void Main(){
 
     // Create the XML fragment to be parsed.
-    string xmlFrag  = 
-    @"<book> 
+    string xmlFrag  =
+    @"<book>
          <misc>
-           <style>paperback</style> 
+           <style>paperback</style>
            <pages>240</pages>
-         </misc> 
+         </misc>
         </book>";
 
     // Create the XmlNamespaceManager.
@@ -41,11 +41,11 @@ public class Sample{
            Console.Write("{0} {1},{2}  ", reader.Depth, reader.LineNumber, reader.LinePosition);
            Console.WriteLine("</{0}>", reader.Name);
            break;
-       }       
-    }           
+       }
+    }
 
     // Close the reader.
-    reader.Close();      
+    reader.Close();
   }
 }
 //</snippet1>

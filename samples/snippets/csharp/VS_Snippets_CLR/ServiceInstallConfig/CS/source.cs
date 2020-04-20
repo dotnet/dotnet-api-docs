@@ -75,9 +75,9 @@ namespace ServiceChangeSample
             bool serviceValid = false;
             scInfo = "";
 
-            try 
+            try
             {
-                if ((sc.ServiceName.Length > 0) || 
+                if ((sc.ServiceName.Length > 0) ||
                     (sc.DisplayName.Length > 0)   )
                 {
 
@@ -115,7 +115,7 @@ namespace ServiceChangeSample
                 serviceValid = false;
                 scInfo = "";
             }
-            
+
             return serviceValid;
         }
 
@@ -126,7 +126,7 @@ namespace ServiceChangeSample
             wmiService = new ManagementObject("Win32_Service.Name='" + sc.ServiceName + "'");
             wmiService.Get();
             String origStartMode = wmiService["StartMode"].ToString();
-            
+
             scInfo = "";
 
             startMode = startMode.ToUpper(CultureInfo.InvariantCulture);
@@ -154,11 +154,11 @@ namespace ServiceChangeSample
                     retVal = wmiService.InvokeMethod("ChangeStartMode", startArgs);
                     if (retVal.ToString() != "0")
                     {
-                        scInfo += String.Format("Warning:  Win32_Service.ChangeStartMode failed with return value {0}", 
+                        scInfo += String.Format("Warning:  Win32_Service.ChangeStartMode failed with return value {0}",
                             retVal.ToString());
                         scInfo += Environment.NewLine;
                     }
-                    else 
+                    else
                     {
                         scInfo += String.Format("Service {0} start mode changed to {1}",
                             sc.ServiceName, startMode);
@@ -166,7 +166,7 @@ namespace ServiceChangeSample
                     }
                 }
             }
-            else 
+            else
             {
                 scInfo += String.Format("Invalid start mode.");
                 scInfo += Environment.NewLine;
@@ -211,7 +211,7 @@ namespace ServiceChangeSample
                     svcInst.Password = null;
                     accountSet  = true;
                 }
-                    
+
                 if (!accountSet )
                 {
                     // Display a message box.  Tell the user to
@@ -220,7 +220,7 @@ namespace ServiceChangeSample
                     DialogResult result;
                     result = MessageBox.Show("Invalid user name or password for service installation."+
                                              "  Press Cancel to leave the service account unchanged.",
-                                             "Change Service Account", 
+                                             "Change Service Account",
                                              MessageBoxButtons.OKCancel,
                                              MessageBoxIcon.Hand);
 
@@ -249,7 +249,7 @@ namespace ServiceChangeSample
         private System.Windows.Forms.ComboBox modeComboBox = new System.Windows.Forms.ComboBox();
 
         private ServiceController currentService = new ServiceController();
-        
+
         private void query_button_Click(object sender, System.EventArgs e)
         {
             textBox.Text = "Querying service configuration...";
@@ -258,7 +258,7 @@ namespace ServiceChangeSample
             currentService.DisplayName = "TelNet";
 
             if (ServiceChange.QueryService(ref currentService, out scInfo))
-            {    
+            {
                 textBox.Text = scInfo;
 
                 this.startName_button.Enabled = true;
@@ -267,13 +267,13 @@ namespace ServiceChangeSample
                 this.modeLabel.Visible = true;
                 this.modeComboBox.Visible = true;
             }
-            else 
+            else
             {
                 textBox.Text = "Could not read configuration information for service.";
             }
         }
 
-        private void startMode_button_Click(object sender, 
+        private void startMode_button_Click(object sender,
             System.EventArgs e)
         {
             String scInfo;
@@ -293,15 +293,15 @@ namespace ServiceChangeSample
             }
 
             if (ServiceChange.ChangeServiceStartMode(ref currentService, wmiStartMode, out scInfo))
-            {            
+            {
                 textBox.Text = "Service start mode updated successfully.";
             }
-            else 
+            else
             {
                 textBox.Text = scInfo;
             }
         }
-        
+
         private void startName_button_Click(object sender, System.EventArgs e)
         {
             ServiceProcessInstaller svcProcInst = new ServiceProcessInstaller();
@@ -309,30 +309,30 @@ namespace ServiceChangeSample
             textBox.Text = "Displaying service installer dialog...";
 
             if (ServiceChange.GetServiceAccount(ref svcProcInst))
-            { 
+            {
                 textBox.Text = "Changing the service account is not currently implemented in this application.";
             }
-            else 
+            else
             {
                 textBox.Text = "No change made to service account.";
             }
 
             String scInfo;
             if (ServiceChange.QueryService(ref currentService, out scInfo))
-            {    
+            {
                 textBox.Text += Environment.NewLine + scInfo;
             }
         }
 
         public ServiceSampleForm()
         {
-            this.SuspendLayout();            
+            this.SuspendLayout();
 
-            // Set properties for query_button. 
+            // Set properties for query_button.
             this.query_button.Enabled = true;
             this.query_button.Location = new System.Drawing.Point(8, 16);
             this.query_button.Name = "query_button";
-            this.query_button.Size = new System.Drawing.Size(124, 30);            
+            this.query_button.Size = new System.Drawing.Size(124, 30);
             this.query_button.Text = "Query Service";
             this.query_button.Click += new System.EventHandler(this.query_button_Click);            
             

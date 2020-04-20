@@ -27,7 +27,7 @@ public class Sample {
 
    // Create a validating reader that wraps the XmlNodeReader object.
    XmlReader reader = XmlReader.Create(nodeReader, settings);
-    
+
    // Parse the XML file.
    while (reader.Read());
   }

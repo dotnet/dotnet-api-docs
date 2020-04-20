@@ -1,9 +1,9 @@
 ﻿// System.Reflection.Emit.ModuleBuilder.DefineInitializedData
 
 /*
-The following example demonstrates the 'DefineInitializedData' method of 
+The following example demonstrates the 'DefineInitializedData' method of
 'ModuleBuilder' class.
-A dynamic assembly with a module in it is created in 'CodeGenerator' class. 
+A dynamic assembly with a module in it is created in 'CodeGenerator' class.
 A initialized data field is created using  'DefineInitializedData'
 method for creating the initialized data.
 */
@@ -29,7 +29,7 @@ using System.Reflection.Emit;
          myAssemblyName.Name = "TempAssembly";
 
          // Define a dynamic assembly in the 'currentDomain'.
-         myAssemblyBuilder = 
+         myAssemblyBuilder =
             currentDomain.DefineDynamicAssembly
                         (myAssemblyName, AssemblyBuilderAccess.Run);
 
@@ -37,7 +37,7 @@ using System.Reflection.Emit;
          myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("TempModule");
 
          // Define the initialized data field in the .sdata section of the PE file.
-         FieldBuilder myFieldBuilder = 
+         FieldBuilder myFieldBuilder =
              myModuleBuilder.DefineInitializedData("MyField",new byte[]{01,00,01},
                         FieldAttributes.Static|FieldAttributes.Public);
           myModuleBuilder.CreateGlobalFunctions();

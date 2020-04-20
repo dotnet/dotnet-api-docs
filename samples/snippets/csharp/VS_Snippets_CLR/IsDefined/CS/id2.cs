@@ -13,7 +13,7 @@ namespace IsDef2CS
             // Get the class type to access its metadata.
             Type clsType = typeof(DemoClass);
             // See if the Debuggable attribute is defined for this module.
-            bool isDef = Attribute.IsDefined(clsType.Module, 
+            bool isDef = Attribute.IsDefined(clsType.Module,
                 typeof(DebuggableAttribute));
             // Display the result.
             Console.WriteLine("The Debuggable attribute {0} " +
@@ -25,7 +25,7 @@ namespace IsDef2CS
             {
                 // Retrieve the attribute itself.
                 DebuggableAttribute dbgAttr = (DebuggableAttribute)
-                    Attribute.GetCustomAttribute(clsType.Module, 
+                    Attribute.GetCustomAttribute(clsType.Module,
                     typeof(DebuggableAttribute));
                 if (dbgAttr != null)
                 {

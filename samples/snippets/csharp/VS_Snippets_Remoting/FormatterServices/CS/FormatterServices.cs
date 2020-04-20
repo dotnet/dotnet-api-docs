@@ -1,5 +1,5 @@
 ﻿//Types:System.Runtime.Serialization.FormatterServices
-//Types:System.Runtime.Serialization.SerializationInfoEnumerator 
+//Types:System.Runtime.Serialization.SerializationInfoEnumerator
 //<snippet1>
 using System;
 using System.IO;
@@ -49,12 +49,12 @@ public class Manager : Employee, ISerializable
 {
     private String title;
 
-    public Manager() : base("Employee") 
+    public Manager() : base("Employee")
     {
         this.title = "Manager";
     }
 
-    //<snippet2> 
+    //<snippet2>
     [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
     public void GetObjectData(SerializationInfo info, StreamingContext context)
     {
@@ -74,7 +74,7 @@ public class Manager : Employee, ISerializable
 
             // Skip this field if it is marked NonSerialized.
             if (Attribute.IsDefined(mi[i], typeof(NonSerializedAttribute))) continue;
-         
+
             // Get the value of this field and add it to the SerializationInfo object.
             info.AddValue(mi[i].Name, ((FieldInfo) mi[i]).GetValue(this));
         }
@@ -83,7 +83,7 @@ public class Manager : Employee, ISerializable
         DisplaySerializationInfo(info);
     }
     //</snippet2>
- 
+
     //<snippet3>
     private void DisplaySerializationInfo(SerializationInfo info)
     {

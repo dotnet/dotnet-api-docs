@@ -3,14 +3,14 @@ using System;
 using System.EnterpriseServices;
 using System.Reflection;
 
-[assembly: ApplicationName("ReceiptNumberGenerator")] 
-[assembly: ApplicationActivation(ActivationOption.Library)] 
+[assembly: ApplicationName("ReceiptNumberGenerator")]
+[assembly: ApplicationActivation(ActivationOption.Library)]
 
 public class ReceiptNumberGeneratorClass
 {
     // Generates a new receipt number based on the receipt number
     // stored by the Shared Property Manager (SPM)
-    public int GetNextReceiptNumber() 
+    public int GetNextReceiptNumber()
     {
         bool groupExists,propertyExists;
         int nextReceiptNumber = 0;
@@ -32,7 +32,7 @@ public class ReceiptNumberGeneratorClass
         ReceiptNumber = group.CreateProperty("ReceiptNumber",out propertyExists);
 // </snippet21>
 // <snippet3>
-        // Retrieve the value from shared property, and increment the shared 
+        // Retrieve the value from shared property, and increment the shared
         // property value.
         nextReceiptNumber = (int) ReceiptNumber.Value;
         ReceiptNumber.Value = nextReceiptNumber + 1;

@@ -13,28 +13,28 @@ public class Example
         // AssemblyBuilderAccess.Save is specified.
         //
         AppDomain myDomain = AppDomain.CurrentDomain;
-        AssemblyName myAsmName = new 
+        AssemblyName myAsmName = new
             AssemblyName("MakeXxxGenericTypeParameterExample");
         AssemblyBuilder myAssembly = myDomain.DefineDynamicAssembly(
             myAsmName, AssemblyBuilderAccess.Save);
 
         // An assembly is made up of executable modules. For a single-
-        // module assembly, the module name and file name are the same 
-        // as the assembly name. 
+        // module assembly, the module name and file name are the same
+        // as the assembly name.
         //
         ModuleBuilder myModule = myAssembly.DefineDynamicModule(
             myAsmName.Name, myAsmName.Name + ".dll");
 
         // Define the sample type.
-        TypeBuilder myType = myModule.DefineType("Sample", 
+        TypeBuilder myType = myModule.DefineType("Sample",
             TypeAttributes.Public | TypeAttributes.Abstract);
 
         // Make the sample type a generic type, by defining a type
         // parameter T. All type parameters are defined at the same
         // time, by passing an array containing the type parameter
-        // names. 
+        // names.
         string[] typeParamNames = {"T"};
-        GenericTypeParameterBuilder[] typeParams = 
+        GenericTypeParameterBuilder[] typeParams =
             myType.DefineGenericParameters(typeParamNames);
 
         // Define a method that takes a ByRef argument of type T, a
@@ -42,7 +42,7 @@ public class Example
         // method returns a two-dimensional array of type T.
         //
         // To create this method, you need Type objects that represent the
-        // parameter types and the return type. Use the MakeByRefType, 
+        // parameter types and the return type. Use the MakeByRefType,
         // MakePointerType, and MakeArrayType methods to create the Type
         // objects, using the generic type parameter T.
         //
@@ -61,14 +61,14 @@ public class Example
         // the TestMethod method.
         //
         MethodBuilder myMethodBuilder = myType.DefineMethod(
-            "TestMethod", 
+            "TestMethod",
             MethodAttributes.Abstract | MethodAttributes.Virtual
-            | MethodAttributes.Public, 
-            twoDimArrayType, 
+            | MethodAttributes.Public,
+            twoDimArrayType,
             parameterTypes);
 
-        // Create the type and save the assembly. For a single-file 
-        // assembly, there is only one module to store the manifest 
+        // Create the type and save the assembly. For a single-file
+        // assembly, there is only one module to store the manifest
         // information in.
         //
         myType.CreateType();

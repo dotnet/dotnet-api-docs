@@ -9,7 +9,7 @@ public class MyClass
    public string Name;
 }
 
-public class Run 
+public class Run
 {
    public static void Main()
    {
@@ -46,8 +46,8 @@ public class Run
       // Set the XmlRoot property to the XmlRoot object.
       attrs.XmlRoot = xRoot;
       XmlAttributeOverrides xOver = new XmlAttributeOverrides();
-      
-      /* Add the XmlAttributes object to the 
+
+      /* Add the XmlAttributes object to the
       XmlAttributeOverrides object. */
       xOver.Add(typeof(MyClass), attrs);
 

@@ -13,7 +13,7 @@
     string filename;
 
     // When the SOAP extension is accessed for the first time the XML Web service method it is applied
-    // is accessed store the filename passed in using the corresponding SoapExtensionAttribute.    
+    // is accessed store the filename passed in using the corresponding SoapExtensionAttribute.
     public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute attribute) {
         return ((TraceExtensionAttribute) attribute).Filename;
     }
@@ -30,7 +30,7 @@
     }
 // </Snippet1>
 
-    //  If the SoapMessageStage is such that the SoapRequest or SoapResponse is still in the SOAP 
+    //  If the SoapMessageStage is such that the SoapRequest or SoapResponse is still in the SOAP
     //  format to be sent or received over the wire, save it out to filename passed in using the SoapExtensionAttribute
     public override void ProcessMessage(SoapMessage message) {
         switch (message.Stage) {

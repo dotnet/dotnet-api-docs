@@ -2,10 +2,10 @@
 using System;
 using System.Reflection;
 
-namespace DefAttrCS 
+namespace DefAttrCS
 {
     // An enumeration of animals. Start at 1 (0 = uninitialized).
-    public enum Animal 
+    public enum Animal
     {
         // Pets.
         Dog = 1,
@@ -14,16 +14,16 @@ namespace DefAttrCS
     }
 
     // A custom attribute to allow a target to have a pet.
-    public class AnimalTypeAttribute : Attribute 
+    public class AnimalTypeAttribute : Attribute
     {
         // The constructor is called when the attribute is set.
-        public AnimalTypeAttribute(Animal pet) 
+        public AnimalTypeAttribute(Animal pet)
         {
             thePet = pet;
         }
 
         // Provide a default constructor and make Dog the default.
-        public AnimalTypeAttribute() 
+        public AnimalTypeAttribute()
         {
             thePet = Animal.Dog;
         }
@@ -32,14 +32,14 @@ namespace DefAttrCS
         protected Animal thePet;
 
         // .. and show a copy to the outside world.
-        public Animal Pet 
+        public Animal Pet
         {
             get { return thePet; }
             set { thePet = Pet; }
         }
 
         // Override IsDefaultAttribute to return the correct response.
-        public override bool IsDefaultAttribute() 
+        public override bool IsDefaultAttribute()
         {
             if (thePet == Animal.Dog)
                 return true;
@@ -48,7 +48,7 @@ namespace DefAttrCS
         }
     }
 
-    public class TestClass 
+    public class TestClass
     {
         // Use the default constructor.
         [AnimalType]
@@ -56,22 +56,22 @@ namespace DefAttrCS
         {}
     }
 
-    class DemoClass 
+    class DemoClass
     {
-        static void Main(string[] args) 
+        static void Main(string[] args)
         {
             // Get the class type to access its metadata.
             Type clsType = typeof(TestClass);
             // Get type information for the method.
             MethodInfo mInfo = clsType.GetMethod("Method1");
             // Get the AnimalType attribute for the method.
-            AnimalTypeAttribute atAttr = 
+            AnimalTypeAttribute atAttr =
                 (AnimalTypeAttribute)Attribute.GetCustomAttribute(mInfo,
                 typeof(AnimalTypeAttribute));
             // Check to see if the default attribute is applied.
             Console.WriteLine("The attribute {0} for method {1} in class {2}",
-                atAttr.Pet, mInfo.Name, clsType.Name); 
-            Console.WriteLine("{0} the default for the AnimalType attribute.", 
+                atAttr.Pet, mInfo.Name, clsType.Name);
+            Console.WriteLine("{0} the default for the AnimalType attribute.",
                 atAttr.IsDefaultAttribute() ? "is" : "is not");
         }
     }

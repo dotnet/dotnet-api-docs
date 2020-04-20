@@ -7,7 +7,7 @@ public class Sample {
 
   public static void Main() {
 
-//<snippet1> 
+//<snippet1>
 XmlWriterSettings settings = new XmlWriterSettings();
 settings.OmitXmlDeclaration = true;
 settings.ConformanceLevel = ConformanceLevel.Fragment;
@@ -23,5 +23,5 @@ writer.Close();
 
 // Do additional processing on the stream.
 //</snippet1>
-  } 
-} 
+  }
+}

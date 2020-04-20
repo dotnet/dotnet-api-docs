@@ -8,24 +8,24 @@ public class Example
 {
    public static void Main()
    {
-      Console.OutputEncoding = Encoding.UTF8; 
+      Console.OutputEncoding = Encoding.UTF8;
       // Change current culture
       CultureInfo culture;
       if (Thread.CurrentThread.CurrentCulture.Name == "fr-FR")
          culture = CultureInfo.CreateSpecificCulture("en-US");
       else
          culture = CultureInfo.CreateSpecificCulture("fr-FR");
-      
+
       CultureInfo.DefaultThreadCurrentCulture = culture;
       CultureInfo.DefaultThreadCurrentUICulture = culture;
 
       Thread.CurrentThread.CurrentCulture = culture;
       Thread.CurrentThread.CurrentUICulture = culture;
-      
+
       // Generate and display three random numbers on the current thread.
       DisplayRandomNumbers();
       Thread.Sleep(1000);
-      
+
       Thread workerThread = new Thread(new ThreadStart(Example.DisplayRandomNumbers));
       workerThread.Start();
    }
@@ -33,9 +33,9 @@ public class Example
    private static void DisplayRandomNumbers()
    {
       Console.WriteLine();
-      Console.WriteLine("Current Culture:    {0}", 
+      Console.WriteLine("Current Culture:    {0}",
                         Thread.CurrentThread.CurrentCulture);
-      Console.WriteLine("Current UI Culture: {0}", 
+      Console.WriteLine("Current UI Culture: {0}",
                         Thread.CurrentThread.CurrentUICulture);
 
       Console.Write("Random Values: ");
@@ -50,7 +50,7 @@ public class Example
 //    Current Culture:    fr-FR
 //    Current UI Culture: fr-FR
 //    Random Values:      0,78 €          0,80 €          0,37 €
-//    
+//
 //    Current Culture:    fr-FR
 //    Current UI Culture: fr-FR
 //    Random Values:      0,52 €          0,32 €          0,15 €

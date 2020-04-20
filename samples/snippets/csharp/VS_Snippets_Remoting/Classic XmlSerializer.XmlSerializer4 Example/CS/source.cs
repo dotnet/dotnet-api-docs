@@ -7,7 +7,7 @@ namespace HighSchool
       public string Name;
       public int ID;
    }
-    
+
    public class MyClass
    {
       public Student[] Students;
@@ -19,7 +19,7 @@ namespace College
    using System;
    using System.IO;
    using System.Xml;
-   using System.Xml.Serialization; 
+   using System.Xml.Serialization;
    using HighSchool;
 
     public class Graduate:HighSchool.Student
@@ -37,35 +37,35 @@ namespace College
          test.WriteOverriddenAttributes("College.xml");
          test.ReadOverriddenAttributes("College.xml");
       }
- 
+
       private void WriteOverriddenAttributes(string filename)
       {
          // Writing the file requires a TextWriter.
          TextWriter myStreamWriter = new StreamWriter(filename);
          // Create an XMLAttributeOverrides class.
-         XmlAttributeOverrides attrOverrides = 
+         XmlAttributeOverrides attrOverrides =
          new XmlAttributeOverrides();
          // Create the XmlAttributes class.
          XmlAttributes attrs = new XmlAttributes();
 
          /* Override the Student class. "Alumni" is the name
          of the overriding element in the XML output. */
-         XmlElementAttribute attr = 
+         XmlElementAttribute attr =
          new XmlElementAttribute("Alumni", typeof(Graduate));
 
          /* Add the XmlElementAttribute to the collection of
          elements in the XmlAttributes object. */
          attrs.XmlElements.Add(attr);
 
-         /* Add the XmlAttributes to the XmlAttributeOverrides. 
+         /* Add the XmlAttributes to the XmlAttributeOverrides.
          "Students" is the name being overridden. */
-         attrOverrides.Add(typeof(HighSchool.MyClass), 
+         attrOverrides.Add(typeof(HighSchool.MyClass),
          "Students", attrs);
-          
-         // Create the XmlSerializer. 
+
+         // Create the XmlSerializer.
          XmlSerializer mySerializer = new XmlSerializer
          (typeof(HighSchool.MyClass), attrOverrides);
- 
+
          MyClass myClass = new MyClass();
 
          Graduate g1 = new Graduate();
@@ -80,7 +80,7 @@ namespace College
 
          Student[] myArray = {g1,g2};
          myClass.Students = myArray;
- 
+
          mySerializer.Serialize(myStreamWriter, myClass);
          myStreamWriter.Close();
       }
@@ -90,30 +90,30 @@ namespace College
          /* The majority of the code here is the same as that in the
          WriteOverriddenAttributes method. Because the XML being read
          doesn't conform to the schema defined by the DLL, the
-         XMLAttributesOverrides must be used to create an 
+         XMLAttributesOverrides must be used to create an
          XmlSerializer instance to read the XML document.*/
-          
-         XmlAttributeOverrides attrOverrides = new 
+
+         XmlAttributeOverrides attrOverrides = new
          XmlAttributeOverrides();
          XmlAttributes attrs = new XmlAttributes();
-         XmlElementAttribute attr = 
+         XmlElementAttribute attr =
          new XmlElementAttribute("Alumni", typeof(Graduate));
          attrs.XmlElements.Add(attr);
-         attrOverrides.Add(typeof(HighSchool.MyClass), 
+         attrOverrides.Add(typeof(HighSchool.MyClass),
          "Students", attrs);
 
          XmlSerializer readSerializer = new XmlSerializer
          (typeof(HighSchool.MyClass), attrOverrides);
 
-         // To read the file, a FileStream object is required. 
+         // To read the file, a FileStream object is required.
          FileStream fs = new FileStream(filename, FileMode.Open);
-          
+
          MyClass myClass;
 
          myClass = (MyClass) readSerializer.Deserialize(fs);
 
-         /* Here is the difference between reading and writing an 
-         XML document: You must declare an object of the derived 
+         /* Here is the difference between reading and writing an
+         XML document: You must declare an object of the derived
          type (Graduate) and cast the Student instance to it.*/
          Graduate g;
 

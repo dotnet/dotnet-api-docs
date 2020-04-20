@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-public class Sample 
+public class Sample
 {
   public static void Main()
   {
@@ -18,12 +18,12 @@ public class Sample
        XmlParserContext context;
        string subset = "<!ENTITY h 'hardcover'>";
        context = new XmlParserContext(null, null, "book", null, null, subset, "", "", XmlSpace.None);
-        
-       //Create the reader and set it to not expand general entities. 
+
+       //Create the reader and set it to not expand general entities.
        reader = new XmlValidatingReader(xmlFrag, XmlNodeType.Element, context);
        reader.ValidationType = ValidationType.None;
        reader.EntityHandling = EntityHandling.ExpandCharEntities;
-  
+
        //Read the misc attribute. Because EntityHandling is set to
        //ExpandCharEntities, the attribute is parsed into multiple text
        //and entity reference nodes.
@@ -35,9 +35,9 @@ public class Sample
             Console.WriteLine("{0} {1}", reader.NodeType, reader.Name);
           else
              Console.WriteLine("{0} {1}", reader.NodeType, reader.Value);
-        } 
-     } 
-     finally 
+        }
+     }
+     finally
      {
         if (reader != null)
           reader.Close();
