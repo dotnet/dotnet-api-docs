@@ -1,10 +1,10 @@
 ﻿// System.Web.Services.Description.DocumentableItem.Documentation;
 
-/* 
+/*
    The following program demonstrates the property 'Documentation' of abstract class 'DocumentableItem'
    The program reads a wsdl document "MathService.wsdl" and instantiates a ServiceDescription instance
    from the WSDL document.
-   This program demonstrates a generic utility function which can accept any of Types,PortType and Binding 
+   This program demonstrates a generic utility function which can accept any of Types,PortType and Binding
    classes as parameters.
  */
 // <Snippet1>

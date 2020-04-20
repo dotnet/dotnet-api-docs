@@ -8,7 +8,7 @@ using System.Globalization;
 public class SamplesCompareOptions  {
 
    private class MyStringComparer: IComparer {
-      private CompareInfo myComp;   
+      private CompareInfo myComp;
       private CompareOptions myOptions = CompareOptions.None;
 
       // Constructs a comparer using the specified CompareOptions.
@@ -30,7 +30,7 @@ public class SamplesCompareOptions  {
          throw new ArgumentException("a and b should be strings.");
       }
    }
-   
+
    public static void Main()  {
 
       // Creates and initializes an array of strings to sort.

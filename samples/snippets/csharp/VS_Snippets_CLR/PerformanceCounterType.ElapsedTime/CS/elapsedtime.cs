@@ -12,7 +12,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-public class App 
+public class App
 {
     private static PerformanceCounter PC;
 
@@ -29,7 +29,7 @@ public class App
 
     private static bool SetupCategory()
     {
-        if ( !PerformanceCounterCategory.Exists("ElapsedTimeSampleCategory") ) 
+        if ( !PerformanceCounterCategory.Exists("ElapsedTimeSampleCategory") )
         {
 
             CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
@@ -38,11 +38,11 @@ public class App
             CounterCreationData ETimeData = new CounterCreationData();
             ETimeData.CounterType = PerformanceCounterType.ElapsedTime;
             ETimeData.CounterName = "ElapsedTimeSample";
-            CCDC.Add(ETimeData);	   
+            CCDC.Add(ETimeData);	
 		
             // Create the category.
-            PerformanceCounterCategory.Create("ElapsedTimeSampleCategory", 
-                "Demonstrates usage of the ElapsedTime performance counter type.",    
+            PerformanceCounterCategory.Create("ElapsedTimeSampleCategory",
+                "Demonstrates usage of the ElapsedTime performance counter type.",
                 CCDC);
 
             return(true);
@@ -57,10 +57,10 @@ public class App
     private static void CreateCounters()
     {
         // Create the counter.
-        PC = new PerformanceCounter("ElapsedTimeSampleCategory", 
-            "ElapsedTimeSample", 
+        PC = new PerformanceCounter("ElapsedTimeSampleCategory",
+            "ElapsedTimeSample",
             false);
-  
+
     }
 
     private static void CollectSamples(ArrayList samplesList)
@@ -75,10 +75,10 @@ public class App
         Start = DateTime.Now;
 
         // Loop for the samples.
-        for (int j = 0; j < 1000; j++) 
+        for (int j = 0; j < 1000; j++)
         {
             // Output the values.
-            if ((j % 10) == 9) 
+            if ((j % 10) == 9)
             {
                 Console.WriteLine("NextValue() = " + PC.NextValue().ToString());
                 Console.WriteLine("Actual elapsed time = " + DateTime.Now.Subtract(Start).ToString());
@@ -133,7 +133,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-public class App 
+public class App
 {
 
     public static void Main()
@@ -151,7 +151,7 @@ public class App
         // There is a latency time to enable the counters, they should be created
         // prior to executing the application that uses the counters.
         // Execute this sample a second time to use the category.
-        if ( !PerformanceCounterCategory.Exists(categoryName) ) 
+        if ( !PerformanceCounterCategory.Exists(categoryName) )
         {
 
             CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
@@ -160,7 +160,7 @@ public class App
             CounterCreationData ETimeData = new CounterCreationData();
             ETimeData.CounterType = PerformanceCounterType.ElapsedTime;
             ETimeData.CounterName = counterName;
-            CCDC.Add(ETimeData);	   
+            CCDC.Add(ETimeData);	
 		
             // Create the category.
             PerformanceCounterCategory.Create(categoryName,
@@ -172,12 +172,12 @@ public class App
         else
         {
             Console.WriteLine("Category exists - {0}", categoryName);
-        }        
+        }
 
         //<Snippet3>
         // Create the performance counter.
-        PerformanceCounter PC = new PerformanceCounter(categoryName, 
-                                                       counterName, 
+        PerformanceCounter PC = new PerformanceCounter(categoryName,
+                                                       counterName,
                                                        false);
         // Initialize the counter.
         PC.RawValue = Stopwatch.GetTimestamp();
@@ -186,10 +186,10 @@ public class App
         DateTime Start = DateTime.Now;
 
         // Loop for the samples.
-        for (int j = 0; j < 100; j++) 
+        for (int j = 0; j < 100; j++)
         {
             // Output the values.
-            if ((j % 10) == 9) 
+            if ((j % 10) == 9)
             {
                 Console.WriteLine("NextValue() = " + PC.NextValue().ToString());
                 Console.WriteLine("Actual elapsed time = " + DateTime.Now.Subtract(Start).ToString());

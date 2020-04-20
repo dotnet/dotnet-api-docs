@@ -1,7 +1,7 @@
 ﻿/*
    System.Web.Services.Discovery.DiscoveryClientProtocol.DiscoveryClientProtocol
    System.Web.Services.Discovery.DiscoveryClientProtocol.Download(ref String)
-   
+
    The following example demonstrates the 'constructor' and the
    method 'Download' of the 'DiscoveryClientProtocol' class. The
    'Download' method downloads a discovery document into a stream.

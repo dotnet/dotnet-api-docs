@@ -1,9 +1,9 @@
 ﻿// System.Net.FileWebRequest.BeginGetResponse;System.Net.FileWebRequest.EndGetResponse;
 // Snippet1 and Snippet2 go together
-/* 
+/*
   This program demonstrates 'BeginGetResponse' and 'EndGetResponse' methods of 'FileWebRequest' class.
-  The path of the file from where content is to be read  is obtained as a command line argument and a 
-  'WebRequest' object is created. Using the 'BeginGetResponse' method and 'EndGetResponse' of 'FileWebRequest' 
+  The path of the file from where content is to be read  is obtained as a command line argument and a
+  'WebRequest' object is created. Using the 'BeginGetResponse' method and 'EndGetResponse' of 'FileWebRequest'
   class a 'FileWebResponse' object is obtained which is used to print the content on the file.
 */
 
@@ -18,7 +18,7 @@ using System.Threading;
 	public class RequestDeclare
 	{
    	public FileWebRequest myFileWebRequest;	
-       
+
  		public RequestDeclare()
 		{
 			myFileWebRequest = null;
@@ -37,7 +37,7 @@ using System.Threading;
 		    {
 		       Console.WriteLine("\nPlease enter the file name as command line parameter:");
  		       Console.WriteLine("Usage:FileWebRequest_resbeginend <systemname>/<sharedfoldername>/<filename>\nExample:FileWebRequest_resbeginend shafeeque/shaf/hello.txt");
-		    }  
+		    }
 		    else
 		    {
 		      try
@@ -85,7 +85,7 @@ using System.Threading;
 
 				Console.WriteLine("The contents of the file are :\n");
 		
-				while (count > 0) 
+				while (count > 0)
 				{
 					String str = new String(readBuffer, 0, count);
 					Console.WriteLine(str);

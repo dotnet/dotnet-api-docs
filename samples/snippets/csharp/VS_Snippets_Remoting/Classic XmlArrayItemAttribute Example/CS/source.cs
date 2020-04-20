@@ -4,9 +4,9 @@ using System.IO;
 using System.Xml.Serialization;
 
 public class Group
-{  
+{
    /* The XmlArrayItemAttribute allows the XmlSerializer to insert
-      both the base type (Employee) and derived type (Manager) 
+      both the base type (Employee) and derived type (Manager)
       into serialized arrays. */
 
    [XmlArrayItem(typeof(Manager)),
@@ -22,7 +22,7 @@ public class Group
    ElementName = "MyString"),
    XmlArrayItem(typeof(Manager))]
    public object [] ExtraInfo;
-}   
+}
 
 public class Employee
 {
@@ -50,7 +50,7 @@ public class Run
       // Writing the XML file to disk requires a TextWriter.
       TextWriter writer = new StreamWriter(filename);
       Group group = new Group();
-      
+
       Manager manager = new Manager();
       Employee emp1 = new Employee();
       Employee emp2 = new Employee();
@@ -75,12 +75,12 @@ public class Run
       XmlSerializer x = new XmlSerializer(typeof(Group));
       Group g = (Group) x.Deserialize(fs);
       Console.WriteLine("Members:");
-      
-      foreach(Employee e in g.Employees) 
+
+      foreach(Employee e in g.Employees)
       {
          Console.WriteLine("\t" + e.Name);
       }
    }
 }
-   
+
 // </Snippet1>

@@ -20,7 +20,7 @@ public class Piece
 {
    public string PieceName;
 }
- 
+
 public class Test
 {
    public static void Main()
@@ -36,7 +36,7 @@ public class Test
       types[0] = typeof(Instrument);
       types[1] = typeof(Player);
       types[2] = typeof(Piece);
- 
+
       // Create an array for XmlSerializer objects.
       XmlSerializer[]serializers= new XmlSerializer[3];
       serializers = XmlSerializer.FromTypes(types);

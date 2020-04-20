@@ -19,9 +19,9 @@ public class Sample
         }
 // </Snippet1>
     }
-    
+
         public static void Main()
         {
 			SocketClose();
-        } 
+        }
 }

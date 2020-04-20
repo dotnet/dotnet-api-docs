@@ -4,7 +4,7 @@ The following example demonstrates 'PerformanceCounterInstaller' class.
 A class is inherited from 'Installer' having 'RunInstallerAttribute' set to true.
 A new instance of 'PerformanceCounterInstaller' is created and its 'CategoryName'
 is set. Then this instance is added to 'InstallerCollection'.
-Note: 
+Note:
 1)To run this example use the following command:
    InstallUtil.exe PerformanceCounterInstaller.exe
 2)To uninstall the perfomance counter use the following command:

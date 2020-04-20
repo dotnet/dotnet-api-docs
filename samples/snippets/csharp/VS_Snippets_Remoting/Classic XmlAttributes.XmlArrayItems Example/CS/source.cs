@@ -34,21 +34,21 @@ public class Run
       test.DeserializeObject("OverrideArrayItem.xml");
    }
 
-   // Return an XmlSerializer used for overriding. 
+   // Return an XmlSerializer used for overriding.
    public XmlSerializer CreateOverrider()
    {
       // Create XmlAttributeOverrides and XmlAttributes objects.
       XmlAttributeOverrides xOver = new XmlAttributeOverrides();
       XmlAttributes xAttrs = new XmlAttributes();
 
-      // Add an override for the XmlArrayItem.    
-      XmlArrayItemAttribute xArrayItem = 
+      // Add an override for the XmlArrayItem.
+      XmlArrayItemAttribute xArrayItem =
       new XmlArrayItemAttribute(typeof(NewMember));
       xArrayItem.Namespace = "http://www.cpandl.com";
       xAttrs.XmlArrayItems.Add(xArrayItem);
 
       // Add a second override.
-      XmlArrayItemAttribute xArrayItem2 = 
+      XmlArrayItemAttribute xArrayItem2 =
       new XmlArrayItemAttribute(typeof(RetiredMember));
       xArrayItem2.Namespace = "http://www.cpandl.com";
       xAttrs.XmlArrayItems.Add(xArrayItem2);
@@ -82,7 +82,7 @@ public class Run
       m2.RetireDate = new DateTime(2000, 10,10);
 
       myGroup.Members = new Member[2] {m, m2};
-      
+
       // Serialize the class, and close the TextWriter.
       mySerializer.Serialize(writer, myGroup);
       writer.Close();
@@ -92,7 +92,7 @@ public class Run
    {
       XmlSerializer mySerializer = CreateOverrider();
       FileStream fs = new FileStream(filename, FileMode.Open);
-      Group myGroup = (Group) 
+      Group myGroup = (Group)
       mySerializer.Deserialize(fs);
       foreach(Member m in myGroup.Members)
       {
@@ -100,5 +100,5 @@ public class Run
       }
    }
 }
-   
+
 // </Snippet1>

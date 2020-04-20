@@ -1,13 +1,13 @@
 ﻿/*System.Net.HttpWebRequest.HaveResponse
- 
+
 This program demonstrates 'HaveResponse' property of 'HttpWebRequest' Class.
 A new 'HttpWebRequest' is created.
-The 'HaveResponse' property is a ReadOnly, boolean property that indicates 
+The 'HaveResponse' property is a ReadOnly, boolean property that indicates
 whether the Request object has received any response or not.
 The default value of 'HaveResponse' property of the 'HttpWebRequest' is displayed to the console.
 The HttpWebResponse variable is assigned the response object of 'HttpWebRequest'.
 The HaveReponse property is tested for its value.
-If there is a response then the HTML contents of the page of the requested Uri are displayed to the console 
+If there is a response then the HTML contents of the page of the requested Uri are displayed to the console
 else a message 'The response is not received' is displayed to the console.
 
 */
@@ -39,7 +39,7 @@ class HttpWebRequest_HaveResponse
 				Char[] readBuff = new Char[256];
 				int count = streamRead.Read( readBuff, 0, 256 );
 				Console.WriteLine("\nThe contents of Html Page are :  \n");	
-				while (count > 0) 
+				while (count > 0)
 				{
 					String outputData = new String(readBuff, 0, count);
 					Console.Write(outputData);

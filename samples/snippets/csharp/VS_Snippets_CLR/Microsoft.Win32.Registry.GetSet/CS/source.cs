@@ -27,7 +27,7 @@ public class Example
         Registry.SetValue(keyName, "TestExpand2", "My path: %path%",
             RegistryValueKind.ExpandString);
 
-        // Arrays of strings are stored automatically as 
+        // Arrays of strings are stored automatically as
         // MultiString. Similarly, arrays of Byte are stored
         // automatically as Binary.
         string[] strings = {"One", "Two", "Three"};
@@ -35,12 +35,12 @@ public class Example
 
         // Your default value is returned if the name/value pair
         // does not exist.
-        string noSuch = (string) Registry.GetValue(keyName, 
+        string noSuch = (string) Registry.GetValue(keyName,
             "NoSuchName",
             "Return this default if NoSuchName does not exist.");
         Console.WriteLine("\r\nNoSuchName: {0}", noSuch);
 
-        // Retrieve the int and long values, specifying 
+        // Retrieve the int and long values, specifying
         // numeric default values in case the name/value pairs
         // do not exist. The int value is retrieved from the
         // default (nameless) name/value pair for the key.
@@ -51,7 +51,7 @@ public class Example
         Console.WriteLine("TestLong: {0}", tLong);
 
         // When retrieving a MultiString value, you can specify
-        // an array for the default return value. 
+        // an array for the default return value.
         string[] tArray = (string[]) Registry.GetValue(keyName,
             "TestArray",
             new string[] {"Default if TestArray does not exist."});
@@ -63,7 +63,7 @@ public class Example
         // A string with embedded environment variables is not
         // expanded if it was stored as an ordinary string.
         string tExpand = (string) Registry.GetValue(keyName,
-             "TestExpand", 
+             "TestExpand",
              "Default if TestExpand does not exist.");
         Console.WriteLine("TestExpand: {0}", tExpand);
 

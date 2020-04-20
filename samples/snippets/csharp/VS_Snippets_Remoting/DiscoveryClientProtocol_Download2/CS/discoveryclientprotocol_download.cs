@@ -2,9 +2,9 @@
 /*
 The following example demonstrates the usage of the 'Download' method
 of the class 'DiscoveryClientProtocol'. The input to the program is
-a discovery file 'MathService_cs.vsdisco'. It generates a 'Stream' 
-instance of the discovery file 'MathService_cs.vsdisco' from the 
-'Download' method of 'DiscoveryClientPrototocol' and prints out 
+a discovery file 'MathService_cs.vsdisco'. It generates a 'Stream'
+instance of the discovery file 'MathService_cs.vsdisco' from the
+'Download' method of 'DiscoveryClientPrototocol' and prints out
 the 'contentType' and length in bytes of the discoverydocument.
 */
 
@@ -20,7 +20,7 @@ public class DiscoveryClientProtocol_Download
 // <Snippet1>
       string myDiscoFile = "http://localhost/MathService_cs.vsdisco";
       string myEncoding = "";
-      DiscoveryClientProtocol myDiscoveryClientProtocol = 
+      DiscoveryClientProtocol myDiscoveryClientProtocol =
             new DiscoveryClientProtocol();
 
       Stream myStream = myDiscoveryClientProtocol.Download

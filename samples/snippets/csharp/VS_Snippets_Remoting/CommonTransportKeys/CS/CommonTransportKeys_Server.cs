@@ -12,10 +12,10 @@ public class Server
     public static void Main()
     {
         RemotingConfiguration.Configure("channels.config");
-        RemotingConfiguration.Configure("server.exe.config");               
+        RemotingConfiguration.Configure("server.exe.config");
 
         Console.WriteLine("Listening...");
-        
+
         String keyState = "";
         while (String.Compare(keyState,"0", true) != 0)
         {

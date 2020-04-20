@@ -14,9 +14,9 @@ public class Test
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 // </snippet1>
 
-        // Define a test string.        
+        // Define a test string.
         string text = "The the quick brown fox  fox jumps over the lazy dog dog.";
-        
+
 // <snippet2>
         // Find matches.
         MatchCollection matches = rx.Matches(text);
@@ -24,8 +24,8 @@ public class Test
 
 // <snippet3>
         // Report the number of matches found.
-        Console.WriteLine("{0} matches found in:\n   {1}", 
-                          matches.Count, 
+        Console.WriteLine("{0} matches found in:\n   {1}",
+                          matches.Count,
                           text);
 // </snippet3>
 
@@ -34,12 +34,12 @@ public class Test
         foreach (Match match in matches)
         {
             GroupCollection groups = match.Groups;
-            Console.WriteLine("'{0}' repeated at positions {1} and {2}",  
-                              groups["word"].Value, 
-                              groups[0].Index, 
+            Console.WriteLine("'{0}' repeated at positions {1} and {2}",
+                              groups["word"].Value,
+                              groups[0].Index,
                               groups[1].Index);
         }
-// </snippet4>        
+// </snippet4>
     }
 }
 // The example produces the following output to the console:

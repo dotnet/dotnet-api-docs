@@ -5,7 +5,7 @@ using System.Xml;
 
 public class Sample
 {
-  
+
   public static void Main()
   {
      //Create a writer to write XML to the console.
@@ -15,7 +15,7 @@ public class Sample
      //Use indentation for readability.
      writer.Formatting = Formatting.Indented;
      writer.Indentation = 4;
-        
+
      //Write an element (this one is the root).
      writer.WriteStartElement("book");
 
@@ -26,9 +26,9 @@ public class Sample
 
      //Write the close tag for the root element.
      writer.WriteEndElement();
-             
+
      //Write the XML to file and close the writer.
-     writer.Close();  
+     writer.Close();
   }
 }
    // </Snippet1>

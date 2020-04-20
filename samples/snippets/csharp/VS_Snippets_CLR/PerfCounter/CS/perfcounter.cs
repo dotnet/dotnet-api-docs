@@ -37,7 +37,7 @@ namespace PerfCounter
 		{
 			if( disposing )
 			{
-				if (components != null) 
+				if (components != null)
 				{
 					components.Dispose();
 				}
@@ -52,9 +52,9 @@ namespace PerfCounter
 		/// </summary>
 		private void InitializeComponent()
 		{
-			// 
+			//
 			// Form1
-			// 
+			//
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(292, 266);
 			this.Name = "Form1";
@@ -67,7 +67,7 @@ namespace PerfCounter
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main() 
+		static void Main()
 		{
 			Application.Run(new Form1());
 		}

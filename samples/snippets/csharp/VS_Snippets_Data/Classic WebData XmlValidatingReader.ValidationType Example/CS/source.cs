@@ -20,7 +20,7 @@ public class Sample
       Validate(doc1, ValidationType.XDR);  //Validation should fail.
       Validate(doc2, ValidationType.DTD);  //Validation should fail.
       Validate(doc3, ValidationType.None); //No validation performed.
-  }    
+  }
 
   public static void Main ()
   {
@@ -30,7 +30,7 @@ public class Sample
   private void Validate(String filename, ValidationType vt)
   {
     try
-    {    
+    {
         //Implement the readers.  Set the ValidationType.
         txtreader = new XmlTextReader(filename);
         reader = new XmlValidatingReader(txtreader);
@@ -63,9 +63,9 @@ public class Sample
         //Close the reader.
         if (reader != null)
           reader.Close();
-     } 
+     }
   }
-  
+
   //Display the validation errors.
   private void ValidationCallBack (object sender, ValidationEventArgs args)
   {

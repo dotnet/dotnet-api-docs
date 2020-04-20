@@ -5,11 +5,11 @@ using System.Xml.Serialization;
 
 // <Snippet1>
 public class Vehicle{}
- 
+
 public class Car:Vehicle{}
- 
+
 public class Truck:Vehicle{}
- 
+
 public class Sample
 {
 [WebMethodAttribute]
@@ -21,5 +21,5 @@ public Vehicle ReturnVehicle(int i){
    else
       return new Truck();
    }
-}   
+}
 // </Snippet1>

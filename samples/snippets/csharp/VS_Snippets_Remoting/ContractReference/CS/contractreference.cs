@@ -2,9 +2,9 @@
 /*
   The following example demonstrates the 'ContractReference' class .
   A new instance of 'ContractReference' class  is obtained. The
-  Contract reference object is added to the list of references 
-  contained within the discovery document and a '.disco' file is 
-  generated for the Webservice where the reference tags of 
+  Contract reference object is added to the list of references
+  contained within the discovery document and a '.disco' file is
+  generated for the Webservice where the reference tags of
   ContractReference are reflected.
   */
 // <Snippet1>
@@ -35,9 +35,9 @@ public class MyContractReference
          myBinding.Binding = new XmlQualifiedName("q1:Service1Soap");
          myBinding.Address = "http://localhost/service1.asmx";
 
-         // Add myContractReference to the list of references contained 
+         // Add myContractReference to the list of references contained
          // in the discovery document.
-         myDiscoveryDocument.References.Add(myContractReference); 
+         myDiscoveryDocument.References.Add(myContractReference);
 
          // Add Binding to the references collection.
          myDiscoveryDocument.References.Add(myBinding);

@@ -8,15 +8,15 @@ public class Example
    {
       string[] dateStrings = { "08/18/2014", "01/02/2015" };
       string[] cultureNames = { "en-US", "en-GB", "fr-FR", "fi-FI" };
-      
+
       foreach (var cultureName in cultureNames) {
          CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
-         Console.WriteLine("Parsing strings using the {0} culture.", 
+         Console.WriteLine("Parsing strings using the {0} culture.",
                            culture.Name);
          foreach (var dateStr in dateStrings) {
             try {
-               Console.WriteLine(String.Format(culture, 
-                                 "   '{0}' --> {1:D}", dateStr, 
+               Console.WriteLine(String.Format(culture,
+                                 "   '{0}' --> {1:D}", dateStr,
                                  DateTime.Parse(dateStr, culture)));
             }
             catch (FormatException) {
