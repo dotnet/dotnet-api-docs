@@ -2,10 +2,10 @@
 
  'This program demontrates the 'UserName','Domain' and 'Password' properties of 'NetworkCredential' class.
 '  It takes an URL, username, password and domainname from console. An empty 'NetworkCredential' object 
-'  is created. The 'UserName' ,'Password' and 'Domain' properties of 'NetworkCredential' class are initialized 
+'  is created. The 'UserName', 'Password', and 'Domain' properties of 'NetworkCredential' class are initialized 
 
 '  with the respective values taken from console. Then a 'WebRequest' object is created and the 'NetworkCredential'
-'  object is associated with it.A message is displayed onto the console on successful reception of response 
+'  object is associated with it. A message is displayed onto the console on successful reception of response 
 '  otherwise an exception is thrown.
 ' 
 
