@@ -7,7 +7,7 @@ public class Class1 {
 // <Snippet1>
 
     private void DeserializeItem(string filename) {
-        XmlSerializer mySerializer = 
+        XmlSerializer mySerializer =
             new XmlSerializer(typeof(ObjectToDeserialize));
         // Add an instance of the delegate to the event.
         mySerializer.UnknownNode += new XmlNodeEventHandler
@@ -16,10 +16,10 @@ public class Class1 {
         FileStream fs = new FileStream(filename, FileMode.Open);
         ObjectToDeserialize o = (ObjectToDeserialize)mySerializer.Deserialize(fs);
     }
-     
+
     private void Serializer_UnknownNode
         (object sender, XmlNodeEventArgs e) {
-        
+
         Console.WriteLine("UnknownNode Name: "
                           + e.Name);
         Console.WriteLine("UnknownNode LocalName: "
@@ -28,11 +28,11 @@ public class Class1 {
                           + e.NamespaceURI);
         Console.WriteLine("UnknownNode Text: "
                           + e.Text);
-     
+
         object o = e.ObjectBeingDeserialized;
-        Console.WriteLine("Object being deserialized " 
+        Console.WriteLine("Object being deserialized "
                           + o.ToString());
-           
+
         XmlNodeType myNodeType = e.NodeType;
         Console.WriteLine(myNodeType);
     }

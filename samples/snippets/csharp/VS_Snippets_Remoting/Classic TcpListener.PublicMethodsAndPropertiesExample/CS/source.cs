@@ -19,7 +19,7 @@ public class MyTcpListenerExample{
         //Creates an instance of the TcpListener class by providing a local endpoint.
 
         IPAddress ipAddress = Dns.Resolve(Dns.GetHostName()).AddressList[0];
-        IPEndPoint ipLocalEndPoint = new IPEndPoint(ipAddress, 11000); 
+        IPEndPoint ipLocalEndPoint = new IPEndPoint(ipAddress, 11000);
 
         try{
             TcpListener tcpListener = new TcpListener(ipLocalEndPoint);
@@ -37,21 +37,21 @@ public class MyTcpListenerExample{
         IPAddress ipAddress = Dns.Resolve("localhost").AddressList[0];
 
         try{
-            TcpListener tcpListener =  new TcpListener(ipAddress, 13);    
+            TcpListener tcpListener =  new TcpListener(ipAddress, 13);
         }
         catch ( Exception e){
             Console.WriteLine( e.ToString());
         }
-    
+
         //</Snippet2>
     }
     else if (args[0] == "portNumberExample"){
 
         //<Snippet3>
-        //Creates an instance of the TcpListener class by providing a local port number.  
+        //Creates an instance of the TcpListener class by providing a local port number.
 		IPAddress ipAddress = Dns.Resolve("localhost").AddressList[0];
         try{
-            TcpListener tcpListener =  new TcpListener(ipAddress, 13);    
+            TcpListener tcpListener =  new TcpListener(ipAddress, 13);
         }
         catch ( Exception e ){
             Console.WriteLine( e.ToString());
@@ -59,18 +59,18 @@ public class MyTcpListenerExample{
 
         //</Snippet3>
     	}
-      else { 
+      else {
       				IPAddress ipAddress = Dns.Resolve("localhost").AddressList[0];
 
-            		TcpListener tcpListener =  new TcpListener(ipAddress, 13);    
+            		TcpListener tcpListener =  new TcpListener(ipAddress, 13);
 
           			tcpListener.Start();
 
 		          Console.WriteLine("Waiting for a connection....");
-		                
+		
           try{
               //<Snippet4>
-	       
+	
               // Accepts the pending client connection and returns a socket for communciation.
                Socket socket = tcpListener.AcceptSocket();
 		 		Console.WriteLine("Connection accepted.");
@@ -81,7 +81,7 @@ public class MyTcpListenerExample{
                Byte[] sendBytes = Encoding.ASCII.GetBytes(responseString);
                int i = socket.Send(sendBytes);
                Console.WriteLine("Message Sent /> : " + responseString);
-               //</Snippet4>    
+               //</Snippet4>
                //Any communication with the remote client using the socket can go here.
 
                //Closes the tcpListener and the socket.

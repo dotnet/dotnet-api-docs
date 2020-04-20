@@ -77,7 +77,7 @@ namespace cs_kathytest081707c
             {
                 Customer Cust_File = new Customer();
                 string xmlFile = "";
-                
+
                 // Get the original object from the deserializer.
                 Customer c = SerializeHelper.Deserialize<Customer>
                     (xmlFile, Cust_File);
@@ -86,14 +86,14 @@ namespace cs_kathytest081707c
                 Customer c_updated = new Customer() { CustomerID = c.CustomerID,
                     Phone = "425-123-4567", CompanyName = "Microsoft" };
                 db2.Customers.Attach(c_updated, c);
-      
-                // Perform last minute updates, which will still take effect. 
+
+                // Perform last minute updates, which will still take effect.
                 c_updated.Phone = "425-765-4321";
 
                 // SubmitChanges()sets the phoneNumber and CompanyName of
                 // customer with customerID=Cust. to "425-765-4321" and
                 // "Microsoft" respectively.
-                db2.SubmitChanges();  
+                db2.SubmitChanges();
             }
             // </Snippet4>
         }
@@ -103,9 +103,9 @@ namespace cs_kathytest081707c
         //void method6()
         //{
         //    // s6: skip until it compiles
-            
+
         //    // This tier uses DataLoadOptions to disable deferred loading. Only the
-        //    // customer and orders are moved in a single serialization.       
+        //    // customer and orders are moved in a single serialization.
 
         //    DataLoadOptions shape = new DataLoadOptions();
         //    shape.LoadWith<Customer>(c => c.Orders);
@@ -232,26 +232,26 @@ namespace cs_kathytest081707c
         }
         // </Snippet2>
     }
-    
+
     public Northwind_Simplified(string connection) :
         base(connection, mappingSource)
     {
         OnCreated();
     }
 	
-	public Northwind_Simplified(System.Data.IDbConnection connection) : 
+	public Northwind_Simplified(System.Data.IDbConnection connection) :
 			base(connection, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public Northwind_Simplified(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+	public Northwind_Simplified(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) :
 			base(connection, mappingSource)
 	{
 		OnCreated();
 	}
 
-    public Northwind_Simplified(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+    public Northwind_Simplified(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) :
 			base(connection, mappingSource)
 	{
 		OnCreated();

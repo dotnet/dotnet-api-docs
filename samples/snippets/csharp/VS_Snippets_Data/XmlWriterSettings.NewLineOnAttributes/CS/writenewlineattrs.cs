@@ -5,7 +5,7 @@ using System.Xml;
 public class Sample {
 
   public static void Main() {
-  
+
     XmlWriter writer = null;
 
     try {
@@ -14,7 +14,7 @@ XmlWriterSettings settings = new XmlWriterSettings();
 settings.Indent = true;
 settings.OmitXmlDeclaration = true;
 settings.NewLineOnAttributes = true;
-       
+
 writer = XmlWriter.Create(Console.Out, settings);
 
 writer.WriteStartElement("order");
@@ -25,10 +25,10 @@ writer.WriteEndElement();
 	
 writer.Flush();
 //</snippet1>
-     } 
+     }
      finally  {
         if (writer != null)
           writer.Close();
      }
-  } 
-} 
+  }
+}

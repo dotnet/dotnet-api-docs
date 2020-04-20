@@ -12,11 +12,11 @@ public class Sample
   public Sample ()
   {
       //Validate the document using an external XSD schema.  Validation should fail.
-      Validate("notValidXSD.xml"); 
+      Validate("notValidXSD.xml");
 
       //Validate the document using an inline XSD. Validation should succeed.
       Validate("inlineXSD.xml");
-  }    
+  }
 
   public static void Main ()
   {
@@ -24,7 +24,7 @@ public class Sample
   }
 
   private void Validate(String filename)
-  {    
+  {
       m_success = true;
       Console.WriteLine("\r\n******");
       Console.WriteLine("Validating XML file " + filename.ToString());

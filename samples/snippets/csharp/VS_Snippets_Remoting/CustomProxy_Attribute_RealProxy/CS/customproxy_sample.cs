@@ -15,8 +15,8 @@
    'CreateInstance' and 'CreateProxy' of System.Runtime.Remoting.Proxies.ProxyAttribute and methods
    'SetStubData', 'Invoke', 'InitializeServerObject', 'CreateObjRef', 'GetStubData', 'GetObjectData',
    'GetTransparentProxy', 'GetProxiedType' of System.Runtime.Remoting.Proxies.RealProxy.
-   
-   The following program has derived from'ProxyAttribute','RealProxy' classes. CustomProxy is implemented by deriving 
+
+   The following program has derived from'ProxyAttribute','RealProxy' classes. CustomProxy is implemented by deriving
    from 'RealProxy' and overriding 'Invoke' method. The new statement for 'CustomServer' class is intercepted to
    derived 'CustomProxyAttribute' by setting 'ProxyAttribute' on the CustomServer class. Implementation of
    'RealProxy' and 'ProxyAttribute' methods are shown.
@@ -31,7 +31,7 @@ using System.Runtime.Remoting.Activation;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Proxies;
 using System.Runtime.Remoting.Messaging;
-using System.Runtime.Remoting.Contexts; 
+using System.Runtime.Remoting.Contexts;
 using System.Security.Permissions;
 
 namespace Samples
@@ -47,7 +47,7 @@ namespace Samples
 // <Snippet1>
       // Create an instance of ServicedComponentProxy
       public override MarshalByRefObject CreateInstance(Type serverType)
-      {  
+      {
          return base.CreateInstance(serverType);
       }
 // </Snippet1>
@@ -126,11 +126,11 @@ namespace Samples
             Console.WriteLine("IMethodReturnMessage");
          }
          if (myMessage is IConstructionCallMessage)
-         {  
+         {
             // Initialize a new instance of remote object
-            IConstructionReturnMessage myIConstructionReturnMessage = 
+            IConstructionReturnMessage myIConstructionReturnMessage =
                this.InitializeServerObject((IConstructionCallMessage)myMessage);
-            ConstructionResponse constructionResponse = new 
+            ConstructionResponse constructionResponse = new
                ConstructionResponse(null,(IMethodCallMessage) myMessage);
             return constructionResponse;
          }
@@ -148,8 +148,8 @@ namespace Samples
 // </Snippet4>
 // <Snippet6>
       public override ObjRef CreateObjRef(Type ServerType)
-      {  
-         Console.WriteLine ("CreateObjRef Method Called ..."); 
+      {
+         Console.WriteLine ("CreateObjRef Method Called ...");
          CustomObjRef myObjRef = new CustomObjRef(myMarshalByRefObject,ServerType);
          myObjRef.URI = myUri ;
          return myObjRef;
@@ -157,7 +157,7 @@ namespace Samples
 // </Snippet6>
 // <Snippet7>
       [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
-      public override void GetObjectData( SerializationInfo info, 
+      public override void GetObjectData( SerializationInfo info,
                                           StreamingContext context)
       {
          // Add your custom data if any here.
@@ -167,9 +167,9 @@ namespace Samples
       [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
       public class CustomObjRef :ObjRef
       {
-         public CustomObjRef(MarshalByRefObject myMarshalByRefObject,Type serverType): 
+         public CustomObjRef(MarshalByRefObject myMarshalByRefObject,Type serverType):
                            base(myMarshalByRefObject,serverType)
-         {  
+         {
             Console.WriteLine("ObjRef 'Constructor' called");
          }
          // Override this method to store custom data.
@@ -180,13 +180,13 @@ namespace Samples
             base.GetObjectData(info,context);
          }
       }
-   }      
+   }
    public class ProxySample
    {
       // Acts as a custom proxy user.
       [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
-      {  
+      {
          Console.WriteLine("");
          Console.WriteLine("CustomProxy Sample");
          Console.WriteLine("================");
@@ -200,10 +200,10 @@ namespace Samples
          CustomServer myHelloServer = (CustomServer)myProxyInstance.GetTransparentProxy();
 // </Snippet10>
          // Get stubdata.
-         Console.WriteLine("GetStubData = " + RealProxy.GetStubData(myProxyInstance).ToString()); 
+         Console.WriteLine("GetStubData = " + RealProxy.GetStubData(myProxyInstance).ToString());
 // </Snippet9>
          // Get ProxyType.
-         Console.WriteLine("Type of object represented by RealProxy is :" 
+         Console.WriteLine("Type of object represented by RealProxy is :"
                            + myProxyInstance.GetProxiedType());
 // </Snippet8>
          myHelloServer.HelloMethod("RealProxy Sample");

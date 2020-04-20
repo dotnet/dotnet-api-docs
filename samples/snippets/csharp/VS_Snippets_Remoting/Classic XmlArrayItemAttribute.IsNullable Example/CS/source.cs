@@ -4,12 +4,12 @@ using System.IO;
 using System.Xml.Serialization;
 
 public class Group
-{   
+{
    [XmlArray(IsNullable = true)]
    [XmlArrayItem(typeof(Manager), IsNullable = false),
    XmlArrayItem(typeof(Employee), IsNullable = false)]
    public Employee[] Employees;
-}   
+}
 
 public class Employee
 {
@@ -41,10 +41,10 @@ public class Run
 
       // Creates a null Manager object.
       Manager mgr = null;
-      
+
       // Creates a null Employee object.
       Employee y = null;
-      
+
       group.Employees = new Employee[2] {mgr, y};
 
       // Serializes the object and closes the TextWriter.

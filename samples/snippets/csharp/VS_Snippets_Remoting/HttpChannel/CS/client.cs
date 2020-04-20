@@ -24,7 +24,7 @@ public class SampleClient : MarshalByRefObject {
 
         ChannelServices.RegisterChannel(new HttpChannel(0));
 
-        SampleService service = (SampleService)Activator.GetObject(typeof(SampleService), 
+        SampleService service = (SampleService)Activator.GetObject(typeof(SampleService),
             "http://localhost:9000/MySampleService/SampleService.soap");
 
         // Subscribe to event so that the client can receive notification from ther server.

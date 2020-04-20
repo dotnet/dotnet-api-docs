@@ -11,7 +11,7 @@ public class Sample
     XmlTextReader txtreader = null;
 
     try
-    {           
+    {
         //Create the validating reader.
         txtreader = new XmlTextReader("http://localhost/uri.xml");
         reader = new XmlValidatingReader(txtreader);
@@ -21,7 +21,7 @@ public class Sample
         while (reader.Read())
         {
             Console.WriteLine("({0}) {1}", reader.NodeType, reader.BaseURI);
-         }           
+         }
      }
 
      finally

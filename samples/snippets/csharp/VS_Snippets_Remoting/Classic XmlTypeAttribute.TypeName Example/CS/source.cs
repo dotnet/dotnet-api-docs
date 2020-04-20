@@ -14,7 +14,7 @@ public class Person {
    public Job Position;
 }
 
-[XmlType(TypeName = "Occupation", 
+[XmlType(TypeName = "Occupation",
          Namespace = "http://www.cohowinery.com")]
 public class Job {
    public string JobName;

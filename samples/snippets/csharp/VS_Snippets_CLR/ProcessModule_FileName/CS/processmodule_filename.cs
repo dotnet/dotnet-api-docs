@@ -1,7 +1,7 @@
 ﻿// System.Diagnostics.ProcessModule.FileName
 
-/* The following program demonstrates the use of 'FileName' property of 
-   'ProcessModule' class. It creates a notepad, gets the 'MainModule' and 
+/* The following program demonstrates the use of 'FileName' property of
+   'ProcessModule' class. It creates a notepad, gets the 'MainModule' and
    all other modules of the process 'notepad.exe', displays 'FileName'
    for all the modules and the main module.
 */

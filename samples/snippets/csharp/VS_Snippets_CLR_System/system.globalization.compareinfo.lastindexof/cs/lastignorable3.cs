@@ -7,10 +7,10 @@ public class Example
    public static void Main()
    {
       CompareInfo ci = CultureInfo.CurrentCulture.CompareInfo;
-      
+
       string s1 = "ani\u00ADmal";
       string s2 = "animal";
-      
+
       // Find the last index of the soft hyphen using culture-sensitive comparison.
       Console.WriteLine(ci.LastIndexOf(s1, '\u00AD', CompareOptions.IgnoreCase));
       Console.WriteLine(ci.LastIndexOf(s2, '\u00AD', CompareOptions.IgnoreCase));

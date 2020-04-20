@@ -1,6 +1,6 @@
 // System.Web.Services.Description.Service
 
-/* The following sample demonstrates the class 'Service'.This sample reads the
+/* The following sample demonstrates the class 'Service'. This sample reads the
 contents of a file 'MathService_cs.wsdl' into a 'ServiceDescription' instance.
 It gets the collection of Service instances from 'ServiceDescription'. It
 then removes a 'Service' from the collection and creates a new 'Service' and

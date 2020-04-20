@@ -40,11 +40,11 @@ public class Sample {
          case XmlNodeType.EndElement:
            Console.Write("</{0}>", reader.Name);
            break;
-      }        
-    }           
+      }
+    }
 //</snippet1>
-  
+
     //Close the reader.
-    reader.Close();       
+    reader.Close();
   }
 } // End class

@@ -2,8 +2,8 @@
 // System.Web.Services.Discovery.ContractReference.Url
 
 /*
-  The following example demonstrates the 'DefaultFilename' and 'Url' properties of 
-  'ContractReference' class. It gets the 'DiscoveryDocument' object using the 
+  The following example demonstrates the 'DefaultFilename' and 'Url' properties of
+  'ContractReference' class. It gets the 'DiscoveryDocument' object using the
   'Discover' method of 'DiscoveryClientProtocol' class. It gets the 'ContractReference'
   object by using the 'References' property of 'DiscoveryDocument' object.Then it displays the
   'DefaultFileName' and 'Url' properties of 'ContractReference'.

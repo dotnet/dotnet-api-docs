@@ -6,13 +6,13 @@ using System.Xml;
 public class Sample {
 
   public static void Main() {
- 
+
      // Create an XmlWriter to write XML fragments.
      XmlWriterSettings settings = new XmlWriterSettings();
      settings.ConformanceLevel = ConformanceLevel.Fragment;
      settings.Indent = true;
      XmlWriter writer = XmlWriter.Create(Console.Out, settings);
-     
+
      // Write an XML fragment.
      writer.WriteStartElement("book");
      writer.WriteElementString("title", "Pride And Prejudice");
@@ -23,7 +23,7 @@ public class Sample {
      writer.WriteStartElement("cd");
      writer.WriteElementString("title", "Americana");
      writer.WriteEndElement();
-     writer.Flush();  
+     writer.Flush();
 
      // Close the writer.
      writer.Close();

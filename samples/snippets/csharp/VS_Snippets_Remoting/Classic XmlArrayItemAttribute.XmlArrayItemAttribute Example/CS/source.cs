@@ -3,23 +3,23 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
- 
+
 public class Vehicle
 {
    public string id;
 }
 public class Car:Vehicle
 {
-   public string Maker;   
+   public string Maker;
 }
- 
+
 public class Transportation
-{  
-   [XmlArrayItem(), 
+{
+   [XmlArrayItem(),
    XmlArrayItem(typeof(Car), ElementName = "Automobile")]
    public Vehicle[] MyVehicles;
 }
- 
+
 public class Run
 {
    public static void Main()
@@ -30,9 +30,9 @@ public class Run
    }
 
    private void SerializeObject(string filename){
-      // Creates an XmlSerializer for the Transportation class. 
+      // Creates an XmlSerializer for the Transportation class.
       XmlSerializer MySerializer = new XmlSerializer(typeof(Transportation));
-   
+
       // Writing the XML file to disk requires a TextWriter.
       TextWriter myTextWriter = new StreamWriter(filename);
 
@@ -47,14 +47,14 @@ public class Run
       myCar.id = "Car 34";
       myCar.Maker = "FamousCarMaker";
 
-      myTransportation.MyVehicles = 
+      myTransportation.MyVehicles =
       new Vehicle[2] {myVehicle, myCar};
-      
+
       // Serializes the object, and closes the StreamWriter.
       MySerializer.Serialize(myTextWriter, myTransportation);
       myTextWriter.Close();
    }
- 
+
    private void DeserializeObject(string filename)
    {
       // Creates an XmlSerializer instance.
@@ -62,7 +62,7 @@ public class Run
       FileStream myFileStream = new FileStream(filename,FileMode.Open);
       Transportation myTransportation =
       (Transportation) mySerializer.Deserialize(myFileStream);
- 
+
       for(int i = 0; i < myTransportation.MyVehicles.Length;i++)
       {
          Console.WriteLine(myTransportation.MyVehicles[i].id);

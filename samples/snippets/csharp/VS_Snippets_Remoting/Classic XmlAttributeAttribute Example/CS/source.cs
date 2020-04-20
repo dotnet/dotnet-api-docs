@@ -9,7 +9,7 @@ public class Group
 {
    [XmlAttribute (Namespace = "http://www.cpandl.com")]
    public string GroupName;
-   
+
    [XmlAttribute(DataType = "base64Binary")]
    public Byte [] GroupNumber;
 
@@ -28,7 +28,7 @@ public class Run
    public void SerializeObject(string filename)
    {
       // Create an instance of the XmlSerializer class.
-      XmlSerializer mySerializer =  
+      XmlSerializer mySerializer =
       new XmlSerializer(typeof(Group));
 
       // Writing the file requires a TextWriter.
@@ -52,5 +52,5 @@ public class Run
        writer.Close();
    }
 }
-   
+
 // </Snippet1>
