@@ -9,7 +9,7 @@
 '   ServiceDescription and ServiceCollection classes.
 '   A new WSDL is read and the existing service "MathService" in the 
 '   ServiceCollection is removed. The service by default is defined for 
-'   SOAP,HttpGet,HttpPost.A new Service defined for SOAP and HttpGet is 
+'   SOAP, HttpGet, HttpPost. A new Service defined for SOAP and HttpGet is 
 '   constructed and added to the ServiceCollection.
 '   The programs writes a new web service description file.
 
