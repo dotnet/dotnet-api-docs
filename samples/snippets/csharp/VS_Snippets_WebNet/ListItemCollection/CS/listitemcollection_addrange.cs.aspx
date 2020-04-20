@@ -10,7 +10,7 @@
 
     It create a 'ListBox' webcontrol with some list items in it and gives option to add two listitems at a time
     to the user. The values  entered in the textfields are added to the 'ListBox' by using 'AddRange' method. It 
-    also provides a  textfield to take the item  name to be removed from the 'ListBox'.
+    also provides a textfield to take the item  name to be removed from the 'ListBox'.
 */
            ListItemCollection ItemCollection;
            
