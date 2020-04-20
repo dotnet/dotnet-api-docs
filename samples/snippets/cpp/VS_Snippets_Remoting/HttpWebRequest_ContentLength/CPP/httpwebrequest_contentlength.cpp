@@ -5,7 +5,7 @@ This program demonstrates 'Method', 'ContentLength' and 'ContentType' properties
 method of HttpWebRequest Class.
 It creates a 'HttpWebRequest' Object*. The 'Method' property of 'HttpWebRequestClass' is set to 'POST'.
 The 'ContentType' property is set to 'application/x-www-form-urlencoded'. The 'ContentLength' property
-is set to the length of the Byte stream to be posted.A new 'Stream' Object* is obtained from the
+is set to the length of the Byte stream to be posted. A new 'Stream' Object* is obtained from the
 'GetRequestStream' method of the 'HttpWebRequest' class. Data to be posted is requested from the user.
 Data is posted using the stream Object*. The HTML contents of the page are then displayed to the console
 after the Posted data is accepted by the URL.
