@@ -37,7 +37,7 @@ class MyClass1
    public static void Main()
    {
 // <Snippet9>
-      ServiceDescription myServiceDescription = 
+      ServiceDescription myServiceDescription =
          ServiceDescription.Read("MathService_input_cs.wsdl");
 
       // Create SOAP messages.
@@ -47,7 +47,7 @@ class MyClass1
 // <Snippet14>
       MessagePart myMessagePart = new MessagePart();
       myMessagePart.Name = "parameters";
-      myMessagePart.Element = new 
+      myMessagePart.Element = new
          XmlQualifiedName("AddResponse",myServiceDescription.TargetNamespace);
       myMessage.Parts.Add(myMessagePart);
 // </Snippet14>
@@ -102,7 +102,7 @@ class MyClass1
       Binding myBinding = new Binding();
       myBinding.Name = myServiceDescription.Services[0].Name + "Soap";
 
-      // Pass the name of the existing PortType MathServiceSoap and the 
+      // Pass the name of the existing PortType MathServiceSoap and the
       // Xml TargetNamespace attribute of the Descriptions tag.
       myBinding.Type = new XmlQualifiedName("MathServiceSoap",
          myServiceDescription.TargetNamespace);
@@ -115,7 +115,7 @@ class MyClass1
       // Add tag soap:binding as an extensibility element.
       myBinding.Extensions.Add(mySoapBinding);
 
-      // Create OperationBindings for each of the operations defined 
+      // Create OperationBindings for each of the operations defined
       // in the .asmx file.
       OperationBinding addOperationBinding = CreateOperationBinding(
          "Add",myServiceDescription.TargetNamespace);
@@ -130,8 +130,8 @@ class MyClass1
          "Divide",myServiceDescription.TargetNamespace);
       myBinding.Operations.Add(divideOperationBinding);
       myServiceDescription.Bindings.Insert(0,myBinding);
-      Console.WriteLine("\nTarget namespace of the service description to " + 
-         "which the binding was added is: " + 
+      Console.WriteLine("\nTarget namespace of the service description to " +
+         "which the binding was added is: " +
          myServiceDescription.Bindings[0].ServiceDescription.TargetNamespace);
 
       // Create a Port.
@@ -145,7 +145,7 @@ class MyClass1
       mySoapAddressBinding.Location = "http://localhost/MathService.cs.asmx";
       soapPort.Extensions.Add(mySoapAddressBinding);
 
-      // Add the port to the MathService, which is the first service in 
+      // Add the port to the MathService, which is the first service in
       // the service collection.
       myServiceDescription.Services[0].Ports.Add(soapPort);
 
@@ -157,7 +157,7 @@ class MyClass1
          "as input to generate the proxy");
    }
 // <Snippet13>
-   // Creates a Message with name = messageName having one MessagePart 
+   // Creates a Message with name = messageName having one MessagePart
    // with name = partName.
    public static Message CreateMessage(string messageName,string partName,
       string element,string targetNamespace)

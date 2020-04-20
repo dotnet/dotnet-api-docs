@@ -13,10 +13,10 @@ public class Sample
 
   public Sample ()
   {
-        //Validate file against the XSD schema. 
+        //Validate file against the XSD schema.
         //The validation should fail.
-        Validate("notValidXSD.xml"); 
-  }    
+        Validate("notValidXSD.xml");
+  }
 
   public static void Main ()
   {
@@ -24,7 +24,7 @@ public class Sample
   }
 
   private void Validate(String filename)
-  {    
+  {
      try
      {
         Console.WriteLine("Validating XML file " + filename.ToString());
@@ -44,7 +44,7 @@ public class Sample
         //Close the reader.
         if (reader != null)
           reader.Close();
-     } 
+     }
   }
 
   //Display the validation error.

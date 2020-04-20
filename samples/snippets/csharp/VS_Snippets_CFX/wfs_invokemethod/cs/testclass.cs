@@ -80,7 +80,7 @@ namespace Microsoft.Samples.InvokeMethodUsage
         public void AsyncMethodSample(string message)
         {
             Console.WriteLine("....Called synchronous sample method with \"{0}\"", message);
-            Console.WriteLine("....This method will not be executed, BeginAsyncMethoSample / EndAsyncMethodSample will be executed instead");
+            Console.WriteLine(".... This method will not be executed, BeginAsyncMethoSample / EndAsyncMethodSample will be executed instead");
         }
 
         // begin the async operation

@@ -27,7 +27,7 @@ public class AutoCompleteAttribute_Example : ServicedComponent
     public void AutoCompleteAttribute_Value()
     {
         // Get information on the member.
-        System.Reflection.MemberInfo[] memberinfo = 
+        System.Reflection.MemberInfo[] memberinfo =
             this.GetType().GetMember(
             "AutoCompleteAttribute_Value");
 

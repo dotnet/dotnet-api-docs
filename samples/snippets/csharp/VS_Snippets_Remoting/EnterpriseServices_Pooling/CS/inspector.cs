@@ -19,9 +19,9 @@ public class ObjectInspector : ServicedComponent
         // Return this object to the pool after use.
         ContextUtil.DeactivateOnReturn = true;
 
-        // Get the supplied object's type.        
+        // Get the supplied object's type.
         Type objType = obj.GetType();
-        
+
         // Return its name.
         return(objType.FullName);
     }

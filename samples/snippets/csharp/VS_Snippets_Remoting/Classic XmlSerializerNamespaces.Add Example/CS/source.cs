@@ -8,7 +8,7 @@ public class Sample
 // <Snippet1>
 private XmlSerializerNamespaces AddNamespaces()
 {
-   XmlSerializerNamespaces xmlNamespaces = 
+   XmlSerializerNamespaces xmlNamespaces =
    new XmlSerializerNamespaces();
 
    // Add three prefix-namespace pairs.

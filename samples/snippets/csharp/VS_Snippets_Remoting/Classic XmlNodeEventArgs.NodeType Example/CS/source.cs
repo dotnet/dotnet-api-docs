@@ -12,6 +12,6 @@ private void serializer_UnknownNode
    XmlNodeType myNodeType = e.NodeType;
    Console.WriteLine(myNodeType);
 }
-   
+
 // </Snippet1>
 }

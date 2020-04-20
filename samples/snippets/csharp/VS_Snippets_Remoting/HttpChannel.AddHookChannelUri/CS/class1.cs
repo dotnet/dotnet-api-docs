@@ -49,7 +49,7 @@ namespace TempConvertServer {
          CustomChannel channel = new CustomChannel(8085);
          channel.AddHookChannelUri("TempConverter");
 
-         /*System.Runtime.Remoting.Channels.Http.HttpChannel channel = 
+         /*System.Runtime.Remoting.Channels.Http.HttpChannel channel =
             new System.Runtime.Remoting.Channels.Http.HttpChannel(8085);*/
 
          /*System.Runtime.Remoting.Channels.Tcp.TcpChannel channel =
@@ -152,7 +152,7 @@ namespace TempConvertServer {
                                    object remoteChannelData,
                                    out string objectURI) {
          Parse(url, out objectURI);
-         
+
          return null;
       }
 
@@ -195,7 +195,7 @@ namespace TempConvertServer {
                               out IMessage msg,
                               out ITransportHeaders responseHeaders,
                               out Stream responseStream
-                              ) {   
+                              ) {
             msg = null;
             responseHeaders = null;
             responseStream = null;
@@ -204,9 +204,9 @@ namespace TempConvertServer {
 
          public IDictionary Properties {
             get {
-               return null;      
+               return null;
             }
-         } 
+         }
       }
    }
 }

@@ -3,7 +3,7 @@
 The following example demonstrates the property 'SynchronizingObject'
 of 'Process' class.
 
-It starts a process 'mspaint.exe' on button click. 
+It starts a process 'mspaint.exe' on button click.
 It attaches 'MyProcessExited' method of 'MyButton' class as EventHandler to
 'Exited' event of the process.
 */
@@ -22,7 +22,7 @@ namespace ProcessSynchronizingObject
         {
             InitializeComponent();
         }
-        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -32,7 +32,7 @@ namespace ProcessSynchronizingObject
                     components.Dispose();
                 }
             }
-            
+
             base.Dispose(disposing);
         }
 
@@ -41,18 +41,18 @@ namespace ProcessSynchronizingObject
         {
             this.button1 = new process_SynchronizingObject.MyButton();
             this.SuspendLayout();
-            // 
+            //
             // button1
-            // 
+            //
             this.button1.Location = new System.Drawing.Point(40, 80);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(168, 32);
             this.button1.TabIndex = 0;
             this.button1.Text = "Click Me";
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
+            //
             // Form1
-            // 
+            //
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(292, 273);
             this.Controls.AddRange(new System.Windows.Forms.Control[] {

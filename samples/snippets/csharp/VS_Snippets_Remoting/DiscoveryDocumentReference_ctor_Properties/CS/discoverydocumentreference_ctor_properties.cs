@@ -21,7 +21,7 @@ public class DiscoveryDocumentReference_ctor_Properties
         try
         {
 // <Snippet1>
-            DiscoveryDocumentReference myDiscoveryDocumentReference = 
+            DiscoveryDocumentReference myDiscoveryDocumentReference =
                 new DiscoveryDocumentReference(
                 "http://localhost/Sample_cs.disco");
 // </Snippet1>

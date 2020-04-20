@@ -24,7 +24,7 @@ public class OrderedItem
       LineTotal = UnitPrice * Quantity;
    }
 }
- 
+
 public class Test{
    public static void Main()
    {
@@ -32,12 +32,12 @@ public class Test{
    // Write a purchase order.
    t.SerializeObject("simple.xml");
    }
- 
+
    private void SerializeObject(string filename)
    {
       Console.WriteLine("Writing With XmlTextWriter");
 
-      XmlSerializer serializer = 
+      XmlSerializer serializer =
       new XmlSerializer(typeof(OrderedItem));
       OrderedItem i = new OrderedItem();
       i.ItemName = "Widget";
@@ -45,16 +45,16 @@ public class Test{
       i.Quantity = 10;
       i.UnitPrice = (decimal) 2.30;
       i.Calculate();
- 
+
       // Create an XmlSerializerNamespaces object.
-      XmlSerializerNamespaces ns = 
+      XmlSerializerNamespaces ns =
       new XmlSerializerNamespaces();
       // Add two namespaces with prefixes.
       ns.Add("inventory", "http://www.cpandl.com");
       ns.Add("money", "http://www.cohowinery.com");
       // Create an XmlTextWriter using a FileStream.
       Stream fs = new FileStream(filename, FileMode.Create);
-      XmlWriter writer = 
+      XmlWriter writer =
       new XmlTextWriter(fs, new UTF8Encoding());
       // Serialize using the XmlTextWriter.
       serializer.Serialize(writer, i, ns);

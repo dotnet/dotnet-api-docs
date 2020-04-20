@@ -4,7 +4,7 @@ The following example demonstrates property 'StandardError' of
 'Process' class.
 
 It starts a process(net.exe) which writes an error message on to the standard
-error when a bad network path is given.This program gets 'StandardError' of
+error when a bad network path is given. This program gets 'StandardError' of
 net.exe process and reads output from its stream reader.*/
 
 using System;

@@ -1,20 +1,20 @@
 ﻿// <Snippet1>
 using System;
-using System.Xml; 
+using System.Xml;
 
 public class Sample {
 
   private static string filename = "tworeads.xml";
-   
+
   public static void Main() {
-  
+
     XmlTextReader reader = new XmlTextReader(filename);
     reader.WhitespaceHandling=WhitespaceHandling.None;
 
     // Read the first part of the XML document
     while(reader.Read()) {
       // Display the elements and stop reading on the book endelement tag
-      // then go to ReadPart2 to start another reader to read the rest of the file. 
+      // then go to ReadPart2 to start another reader to read the rest of the file.
       switch(reader.NodeType) {
        case XmlNodeType.Element:
         Console.WriteLine("Name: {0}", reader.Name);
@@ -26,12 +26,12 @@ public class Sample {
         // Stop reading when the reader gets to the end element of the book node.
         if ("book"==reader.LocalName) {
           Console.WriteLine("End reading first book...");
-          Console.WriteLine();      
+          Console.WriteLine();
           goto ReadPart2;
         }
         break;
-      } 
-    } 
+      }
+    }
 
     // Read the rest of the XML document
     ReadPart2:
@@ -60,7 +60,7 @@ public class Sample {
 
     Done:
     Console.WriteLine("Done.");
-    reader.Close(); 
+    reader.Close();
     reader2.Close();
   }
 }//End class

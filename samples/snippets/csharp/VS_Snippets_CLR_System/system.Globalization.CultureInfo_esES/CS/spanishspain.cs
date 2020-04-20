@@ -44,20 +44,20 @@ public class SamplesCultureInfo
 /*
 This code produces the following output.
 
-PROPERTY                       INTERNATIONAL                                  TRADITIONAL              
+PROPERTY                       INTERNATIONAL                                  TRADITIONAL
 CompareInfo                    CompareInfo - es-ES                            CompareInfo - es-ES_tradnl
-DisplayName                    Spanish (Spain)                                Spanish (Spain)          
+DisplayName                    Spanish (Spain)                                Spanish (Spain)
 EnglishName                    Spanish (Spain, International Sort)            Spanish (Spain, Traditional Sort)
-IsNeutralCulture               False                                          False                    
-IsReadOnly                     False                                          False                    
-LCID                           3082                                           1034                     
-Name                           es-ES                                          es-ES                    
+IsNeutralCulture               False                                          False
+IsReadOnly                     False                                          False
+LCID                           3082                                           1034
+Name                           es-ES                                          es-ES
 NativeName                     Español (España, alfabetización internacional) Español (España, alfabetización tradicional)
-Parent                         es                                             es                       
-TextInfo                       TextInfo - es-ES                               TextInfo - es-ES_tradnl  
-ThreeLetterISOLanguageName     spa                                            spa                      
-ThreeLetterWindowsLanguageName ESN                                            ESP                      
-TwoLetterISOLanguageName       es                                             es                       
+Parent                         es                                             es
+TextInfo                       TextInfo - es-ES                               TextInfo - es-ES_tradnl
+ThreeLetterISOLanguageName     spa                                            spa
+ThreeLetterWindowsLanguageName ESN                                            ESP
+TwoLetterISOLanguageName       es                                             es
 
 Comparing "llegar" and "lugar"
    With myCIintl.CompareInfo.Compare: -1

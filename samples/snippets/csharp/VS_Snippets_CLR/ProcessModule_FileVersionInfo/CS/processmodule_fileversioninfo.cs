@@ -1,7 +1,7 @@
 ﻿// System.Diagnostics.ProcessModule.FileVersionInfo
 
-/* The following program demonstrates the use of 'FileVersionInfo' property of 
-   'ProcessModule' class. It creates a notepad, gets the 'MainModule' and 
+/* The following program demonstrates the use of 'FileVersionInfo' property of
+   'ProcessModule' class. It creates a notepad, gets the 'MainModule' and
    all other modules of the process 'notepad.exe', displays 'FileVersionInfo'
    for all the modules and the main module.
 */

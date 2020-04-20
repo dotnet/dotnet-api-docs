@@ -3,7 +3,7 @@
 // Requires .NET Framework version 1.2 or higher.
 
 // The following example uses the sort command to sort a list
-// of input text lines, and displays the sorted list to the console. 
+// of input text lines, and displays the sorted list to the console.
 
 // <Snippet1>
 // Define the namespaces used by this sample.
@@ -34,7 +34,7 @@ namespace ProcessAsyncStreamSamples
             // Set UseShellExecute to false for redirection.
             sortProcess.StartInfo.UseShellExecute = false;
 
-            // Redirect the standard output of the sort command.  
+            // Redirect the standard output of the sort command.
             // This stream is read asynchronously using an event handler.
             sortProcess.StartInfo.RedirectStandardOutput = true;
             sortOutput = new StringBuilder();
@@ -55,7 +55,7 @@ namespace ProcessAsyncStreamSamples
             // Start the asynchronous read of the sort output stream.
             sortProcess.BeginOutputReadLine();
 
-            // Prompt the user for input text lines.  Write each 
+            // Prompt the user for input text lines.  Write each
             // line to the redirected input stream of the sort command.
             Console.WriteLine("Ready to sort up to 50 lines of text");
 

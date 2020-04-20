@@ -13,7 +13,7 @@ public class Example
    public static async Task Main()
    {
       var tasks = new List<Task>();
-      Console.WriteLine("The current UI culture is {0}", 
+      Console.WriteLine("The current UI culture is {0}",
                         Thread.CurrentThread.CurrentUICulture.Name);
       Thread.CurrentThread.CurrentUICulture = new CultureInfo("pt-BR");
       // Change the current UI culture to Portuguese (Brazil).
@@ -25,10 +25,10 @@ public class Example
       for (int ctr = 0; ctr <= 5; ctr++)
          tasks.Add(Task.Run( () => {
                                Console.WriteLine("UI Culture of task {0} on thread {1} is {2}",
-                                                 Task.CurrentId, 
+                                                 Task.CurrentId,
                                                  Thread.CurrentThread.ManagedThreadId,
                                                  Thread.CurrentThread.CurrentUICulture.Name);
-                            } ));                     
+                            } ));
 
       await Task.WhenAll(tasks.ToArray());
    }

@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 public class Orchestra
 {
    public Instrument[] Instruments;
-}   
+}
 
 public class Instrument
 {
@@ -30,13 +30,13 @@ public class Run
     {
       // To write the file, a TextWriter is required.
       TextWriter writer = new StreamWriter(filename);
-      
-      XmlAttributeOverrides attrOverrides = 
+
+      XmlAttributeOverrides attrOverrides =
          new XmlAttributeOverrides();
       XmlAttributes attrs = new XmlAttributes();
 
       // Creates an XmlElementAttribute that overrides the Instrument type.
-      XmlElementAttribute attr = new 
+      XmlElementAttribute attr = new
       XmlElementAttribute(typeof(Brass));
       attr.ElementName = "Brass";
 
@@ -45,12 +45,12 @@ public class Run
       attrOverrides.Add(typeof(Orchestra), "Instruments", attrs);
 
       // Creates the XmlSerializer using the XmlAttributeOverrides.
-      XmlSerializer s = 
+      XmlSerializer s =
       new XmlSerializer(typeof(Orchestra), attrOverrides);
 
       // Creates the object to serialize.
       Orchestra band = new Orchestra();
-      
+
       // Creates an object of the derived type.
       Brass i = new Brass();
       i.Name = "Trumpet";
@@ -63,12 +63,12 @@ public class Run
 
    public void DeserializeObject(string filename)
    {
-      XmlAttributeOverrides attrOverrides = 
+      XmlAttributeOverrides attrOverrides =
          new XmlAttributeOverrides();
       XmlAttributes attrs = new XmlAttributes();
 
       // Creates an XmlElementAttribute that override the Instrument type.
-      XmlElementAttribute attr = new 
+      XmlElementAttribute attr = new
       XmlElementAttribute(typeof(Brass));
       attr.ElementName = "Brass";
 
@@ -77,22 +77,22 @@ public class Run
       attrOverrides.Add(typeof(Orchestra), "Instruments", attrs);
 
       // Creates the XmlSerializer using the XmlAttributeOverrides.
-      XmlSerializer s = 
+      XmlSerializer s =
       new XmlSerializer(typeof(Orchestra), attrOverrides);
 
       FileStream fs = new FileStream(filename, FileMode.Open);
       Orchestra band = (Orchestra) s.Deserialize(fs);
       Console.WriteLine("Brass:");
 
-      /* Deserializing differs from serializing. To read the 
-         derived-object values, declare an object of the derived 
+      /* Deserializing differs from serializing. To read the
+         derived-object values, declare an object of the derived
          type (Brass) and cast the Instrument instance to it. */
       Brass b;
-      foreach(Instrument i in band.Instruments) 
+      foreach(Instrument i in band.Instruments)
       {
          b= (Brass)i;
          Console.WriteLine(
-         b.Name + "\n" + 
+         b.Name + "\n" +
          b.IsValved);
       }
    }

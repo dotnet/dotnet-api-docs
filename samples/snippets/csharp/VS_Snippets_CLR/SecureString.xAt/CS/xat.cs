@@ -4,7 +4,7 @@ using System.Security;
 
 class Example
 {
-    public static void Main() 
+    public static void Main()
     {
        string msg = "The curent length of the SecureString object: {0}\n";
        Console.WriteLine("1) Instantiate the SecureString object.");
@@ -38,7 +38,7 @@ class Example
        Console.WriteLine("8) Delete the value of the SecureString object:");
        ss.Clear();
        Console.WriteLine(msg, ss.Length);
-       
+
        ss.Dispose();
     }
 }

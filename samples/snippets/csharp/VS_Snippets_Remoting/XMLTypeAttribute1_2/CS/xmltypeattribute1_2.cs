@@ -3,7 +3,7 @@
 
 /* The following example demonstrates the 'XmlTypeAttribute()'
    and 'XmlTypeAttribute(string)' constructors of the 'XmlTypeAttribute' class.
-   This program demonstrates the 'Person' and 'Address' classes to 
+   This program demonstrates the 'Person' and 'Address' classes to
    which the 'XmlTypeAttribute' has been applied. This sample then 
    serializes an object of class 'Person' into an XML document.
  */
