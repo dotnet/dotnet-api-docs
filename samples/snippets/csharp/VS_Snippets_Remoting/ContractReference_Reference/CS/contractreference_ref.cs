@@ -5,7 +5,7 @@
    System.Web.Services.Discovery.ContractReference.Namespace
 
    The following example demonstrates the constructor, the
-   properties 'Ref', 'DocRef' and 'Namespace'. A sample discovery 
+   properties 'Ref', 'DocRef' and 'Namespace'. A sample discovery
    document is read and 'Ref', 'DocRef' and 'Namespace' properties
    are displayed.
 */
@@ -26,12 +26,12 @@ public class myContractReferenceSample
       ContractReference myContractReference = new ContractReference();
 // </Snippet1>
       XmlDocument myXmlDocument = new XmlDocument();
-      
+
       // Read the discovery document for the 'contractRef' tag.
       myXmlDocument.Load("http://localhost/Discoverydoc.disco");
-         
+
       XmlNode myXmlRoot = myXmlDocument.FirstChild;
-      XmlNode myXmlNode = myXmlRoot["scl:contractRef"]; 
+      XmlNode myXmlNode = myXmlRoot["scl:contractRef"];
       XmlAttributeCollection myAttributeCollection = myXmlNode.Attributes;
 
       myContractReference.Ref = myAttributeCollection[0].Value;

@@ -4,9 +4,9 @@ using System;
 using System.Text;
 using System.Globalization;
 
-public sealed class App 
+public sealed class App
 {
-    static void Main() 
+    static void Main()
     {
         // Parse the string as a hex value and display the value as a decimal.
         String num = "A";
@@ -15,7 +15,7 @@ public sealed class App
 
         // Parse the string, allowing a leading sign, and ignoring leading and trailing white spaces.
         num = "    -45   ";
-        val = int.Parse(num, NumberStyles.AllowLeadingSign | 
+        val = int.Parse(num, NumberStyles.AllowLeadingSign |
             NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
         Console.WriteLine("'{0}' parsed to an int is '{1}'.", num, val);
 

@@ -18,7 +18,7 @@ public class SamplesCultureInfo  {
       myCIclone.NumberFormat.CurrencySymbol = "USD";
       myCIclone.NumberFormat.NumberDecimalDigits = 4;
 
-      // Displays the properties of the DTFI and NFI instances associated with the original and with the clone. 
+      // Displays the properties of the DTFI and NFI instances associated with the original and with the clone.
       Console.WriteLine( "DTFI/NFI PROPERTY\tORIGINAL\tMODIFIED CLONE" );
       Console.WriteLine( "DTFI.AMDesignator\t{0}\t\t{1}", myCI.DateTimeFormat.AMDesignator, myCIclone.DateTimeFormat.AMDesignator );
       Console.WriteLine( "DTFI.DateSeparator\t{0}\t\t{1}", myCI.DateTimeFormat.DateSeparator, myCIclone.DateTimeFormat.DateSeparator );

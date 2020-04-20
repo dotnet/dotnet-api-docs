@@ -20,7 +20,7 @@ public struct CountVowels
     {
         // list of vowels to look for
         string vowels = "aeiou";
-        
+
         // for each character in the given parameter
         for (int i=0; i < value.ToString().Length; i++)
         {

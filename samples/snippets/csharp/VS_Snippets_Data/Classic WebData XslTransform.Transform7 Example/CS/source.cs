@@ -18,7 +18,7 @@ public class Sample
 
     //Load the file to transform.
     XPathDocument doc = new XPathDocument(filename);
-             
+
     //Create an XmlTextWriter which outputs to the console.
     XmlTextWriter writer = new XmlTextWriter(Console.Out);
 

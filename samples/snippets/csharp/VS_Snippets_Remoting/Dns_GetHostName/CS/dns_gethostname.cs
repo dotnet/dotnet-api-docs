@@ -1,6 +1,6 @@
 ﻿/*
    This program demonstrates the 'GetHostName' method of 'Dns' class.
-   It creates a 'DnsHostName' instance and calls 'GetHostName' method to get the local host 
+   It creates a 'DnsHostName' instance and calls 'GetHostName' method to get the local host
    computer name. Then prints the computer name on the console.
 */
 
@@ -15,8 +15,8 @@ class DnsHostName
       DnsHostName dnsHostNameObj = new DnsHostName();
       dnsHostNameObj.DisplayLocalHostName();
    }
-   
-// <Snippet1>   
+
+// <Snippet1>
    public void DisplayLocalHostName()
    {
       try {
@@ -36,5 +36,5 @@ class DnsHostName
 		  Console.WriteLine("Message : " + e.Message);
 	  }
    }
-// </Snippet1>   
+// </Snippet1>
 }

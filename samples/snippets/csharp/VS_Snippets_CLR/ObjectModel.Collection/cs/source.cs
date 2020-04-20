@@ -16,11 +16,11 @@ public class Demo
 
         Console.WriteLine("{0} dinosaurs:", dinosaurs.Count);
         Display(dinosaurs);
-    
-        Console.WriteLine("\nIndexOf(\"Muttaburrasaurus\"): {0}", 
+
+        Console.WriteLine("\nIndexOf(\"Muttaburrasaurus\"): {0}",
             dinosaurs.IndexOf("Muttaburrasaurus"));
 
-        Console.WriteLine("\nContains(\"Caudipteryx\"): {0}", 
+        Console.WriteLine("\nContains(\"Caudipteryx\"): {0}",
             dinosaurs.Contains("Caudipteryx"));
 
         Console.WriteLine("\nInsert(2, \"Nanotyrannus\")");
@@ -45,7 +45,7 @@ public class Demo
         dinosaurs.Clear();
         Console.WriteLine("Count: {0}", dinosaurs.Count);
     }
-    
+
     private static void Display(Collection<string> cs)
     {
         Console.WriteLine();

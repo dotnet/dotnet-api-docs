@@ -8,7 +8,7 @@ public class Sample
 // <Snippet1>
 private void SerializeObject(string filename)
 {
-   XmlSerializer serializer = 
+   XmlSerializer serializer =
    new XmlSerializer(typeof(OrderedItem));
 
    // Create an instance of the class to be serialized.

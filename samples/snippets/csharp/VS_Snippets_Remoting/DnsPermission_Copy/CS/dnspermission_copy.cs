@@ -12,18 +12,18 @@ using System.Collections;
 class DnsPermissionExample {
 
    public static void Main() {
-     try 
+     try
      {
        DnsPermissionExample dnsPermissionExampleObj = new DnsPermissionExample();
        dnsPermissionExampleObj.UseDns();
      }
-     catch(SecurityException e) 
+     catch(SecurityException e)
      {
        Console.WriteLine("SecurityException caught!!!");
        Console.WriteLine("Source : " + e.Source);
        Console.WriteLine("Message : " + e.Message);
      }
-     catch(Exception e) 
+     catch(Exception e)
      {
        Console.WriteLine("Exception caught!!!");
        Console.WriteLine("Source : " + e.Source);

@@ -12,7 +12,7 @@ public class Group
    public string GroupName;
    public int GroupNumber;
 }
- 
+
 public class Run
 {
    public static void Main()
@@ -21,14 +21,14 @@ public class Run
       test.SerializeObject("OverrideAttribute.xml");
       test.DeserializeObject("OverrideAttribute.xml");
    }
-   // Return an XmlSerializer used for overriding. 
+   // Return an XmlSerializer used for overriding.
    public XmlSerializer CreateOverrider()
    {
       // Create the XmlAttributeOverrides and XmlAttributes objects.
       XmlAttributeOverrides xOver = new XmlAttributeOverrides();
       XmlAttributes xAttrs = new XmlAttributes();
 
-      /* Create an overriding XmlAttributeAttribute set it to 
+      /* Create an overriding XmlAttributeAttribute set it to
       the XmlAttribute property of the XmlAttributes object.*/
       XmlAttributeAttribute xAttribute = new XmlAttributeAttribute("SplinterName");
       xAttrs.XmlAttribute = xAttribute;
@@ -39,7 +39,7 @@ public class Run
       // Create the XmlSerializer and return it.
       return new XmlSerializer(typeof(Group), xOver);
    }
- 
+
    public void SerializeObject(string filename)
    {
       // Create an instance of the XmlSerializer class.
@@ -50,7 +50,7 @@ public class Run
       // Create an instance of the class that will be serialized.
       Group myGroup = new Group();
 
-      /* Set the Name property, which will be generated 
+      /* Set the Name property, which will be generated
       as an XML attribute. */
       myGroup.GroupName = ".NET";
       myGroup.GroupNumber = 1;
@@ -63,12 +63,12 @@ public class Run
    {
       XmlSerializer mySerializer = CreateOverrider();
       FileStream fs = new FileStream(filename, FileMode.Open);
-      Group myGroup = (Group) 
+      Group myGroup = (Group)
       mySerializer.Deserialize(fs);
-      
+
       Console.WriteLine(myGroup.GroupName);
       Console.WriteLine(myGroup.GroupNumber);
    }
 }
-   
+
 // </Snippet1>

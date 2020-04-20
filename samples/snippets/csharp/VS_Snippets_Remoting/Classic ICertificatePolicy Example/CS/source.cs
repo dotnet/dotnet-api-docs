@@ -22,25 +22,25 @@ using System.Security.Cryptography.X509Certificates;
          CertWRONG_USAGE               = 0x800B0110,
          CertUNTRUSTEDCA               = 0x800B0112
  }
- 
+
  public class MyCertificateValidation : ICertificatePolicy
  {
      // Default policy for certificate validation.
-     public static bool DefaultValidate = false; 
- 
+     public static bool DefaultValidate = false;
+
      public bool CheckValidationResult(ServicePoint sp, X509Certificate cert,
         WebRequest request, int problem)
-     {        
+     {
          bool ValidationResult=false;
          Console.WriteLine("Certificate Problem with accessing " +
             request.RequestUri);
          Console.Write("Problem code 0x{0:X8},",(int)problem);
          Console.WriteLine(GetProblemMessage((CertificateProblem)problem));
- 
+
          ValidationResult = DefaultValidate;
-         return ValidationResult; 
+         return ValidationResult;
      }
-     
+
      private String GetProblemMessage(CertificateProblem Problem)
      {
          String ProblemMessage = "";
@@ -54,5 +54,5 @@ using System.Security.Cryptography.X509Certificates;
          return ProblemMessage;
       }
  }
-    
+
 // </Snippet1>

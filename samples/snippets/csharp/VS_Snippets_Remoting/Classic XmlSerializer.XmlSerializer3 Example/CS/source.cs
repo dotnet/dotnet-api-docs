@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 // This defines the object that will be serialized.
 public class Teacher
-{  
+{
    public string Name;
    public Teacher(){}
    /* Note that the Info field returns an array of objects.
@@ -16,10 +16,10 @@ public class Teacher
    public object[] Info;
    public Phone PhoneInfo;
 }
- 
+
 // This defines one of the extra types to be included.
 public class Address
-{  
+{
    public string City;
 
    public Address(){}
@@ -52,7 +52,7 @@ public class InternationalPhone:Phone
       CountryCode = countryCode;
    }
 }
-    
+
 public class Run
 {
    public static void Main()
@@ -61,12 +61,12 @@ public class Run
       test.SerializeObject("Teacher.xml");
       test.DeserializeObject("Teacher.xml");
    }
- 
+
    private void SerializeObject(string filename)
    {
       // Writing the file requires a TextWriter.
       TextWriter myStreamWriter = new StreamWriter(filename);
- 
+
       // Create a Type array.
       Type [] extraTypes= new Type[3];
       extraTypes[0] = typeof(Address);
@@ -76,22 +76,22 @@ public class Run
       // Create the XmlSerializer instance.
       XmlSerializer mySerializer = new XmlSerializer
       (typeof(Teacher),extraTypes);
-          
+
       Teacher teacher = new Teacher();
       teacher.Name = "Mike";
       // Add extra types to the Teacher object
       object [] info = new object[2];
       info[0] = new Address("Springville");
       info[1] = new Phone("555-0100");
-         
+
       teacher.Info = info;
 
-      teacher.PhoneInfo = new InternationalPhone("000"); 
+      teacher.PhoneInfo = new InternationalPhone("000");
 
       mySerializer.Serialize(myStreamWriter,teacher);
       myStreamWriter.Close();
    }
- 
+
    private void DeserializeObject(string filename)
    {
       // Create a Type array.
@@ -103,15 +103,15 @@ public class Run
       // Create the XmlSerializer instance.
       XmlSerializer mySerializer = new XmlSerializer
       (typeof(Teacher),extraTypes);
-      
+
       // Reading a file requires a FileStream.
       FileStream fs = new FileStream(filename, FileMode.Open);
       Teacher teacher = (Teacher) mySerializer.Deserialize(fs);
-         
+
       // Read the extra information.
       Address a = (Address)teacher.Info[0];
       Phone p = (Phone) teacher.Info[1];
-      InternationalPhone Ip = 
+      InternationalPhone Ip =
       (InternationalPhone) teacher.PhoneInfo;
 
       Console.WriteLine(teacher.Name);

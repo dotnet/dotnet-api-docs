@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-public class App 
+public class App
 {
     private static PerformanceCounter PC;
 
@@ -27,7 +27,7 @@ public class App
     private static bool SetupCategory()
     {
 		
-        if ( !PerformanceCounterCategory.Exists("RateOfCountsPerSecond32SampleCategory") ) 
+        if ( !PerformanceCounterCategory.Exists("RateOfCountsPerSecond32SampleCategory") )
         {
 
             CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
@@ -37,11 +37,11 @@ public class App
             rateOfCounts32.CounterType = PerformanceCounterType.RateOfCountsPerSecond32;
             rateOfCounts32.CounterName = "RateOfCountsPerSecond32Sample";
             CCDC.Add(rateOfCounts32);
-	        
+	
              // Create the category.
-            PerformanceCounterCategory.Create("RateOfCountsPerSecond32SampleCategory", 
+            PerformanceCounterCategory.Create("RateOfCountsPerSecond32SampleCategory",
                 "Demonstrates usage of the RateOfCountsPerSecond32 performance counter type.",
-                PerformanceCounterCategoryType.SingleInstance, CCDC); 
+                PerformanceCounterCategoryType.SingleInstance, CCDC);
               return(true);
         }
         else
@@ -54,8 +54,8 @@ public class App
     private static void CreateCounters()
     {
         // Create the counter.
-        PC = new PerformanceCounter("RateOfCountsPerSecond32SampleCategory", 
-            "RateOfCountsPerSecond32Sample", 
+        PC = new PerformanceCounter("RateOfCountsPerSecond32SampleCategory",
+            "RateOfCountsPerSecond32Sample",
             false);
 
         PC.RawValue=0;
@@ -70,14 +70,14 @@ public class App
         PC.NextSample();
 
         // Loop for the samples.
-        for (int j = 0; j < 100; j++) 
+        for (int j = 0; j < 100; j++)
         {
-	        
+	
             int value = r.Next(1, 10);
             PC.IncrementBy(value);
             Console.Write(j + " = " + value);
 
-            if ((j % 10) == 9) 
+            if ((j % 10) == 9)
             {
                 Console.WriteLine(";       NextValue() = " + PC.NextValue().ToString());
                 OutputSample(PC.NextSample());
@@ -101,12 +101,12 @@ public class App
 			OutputSample( (CounterSample)samplesList[i+1] );
 
             // Use .NET to calculate the counter value.
-			Console.WriteLine(".NET computed counter value = " + 
+			Console.WriteLine(".NET computed counter value = " +
 				CounterSampleCalculator.ComputeCounterValue((CounterSample)samplesList[i],
 				(CounterSample)samplesList[i+1]) );
 
             // Calculate the counter value manually.
-            Console.WriteLine("My computed counter value = " + 
+            Console.WriteLine("My computed counter value = " +
 				MyComputeCounterValue((CounterSample)samplesList[i],
 				(CounterSample)samplesList[i+1]) );
 		}
@@ -127,9 +127,9 @@ public class App
 	//		(D) represents the number of ticks elapsed during the last sample
 	//		interval, and F is the frequency of the ticks.
 	//
-	//	     Average - (Nx - N0) / ((Dx - D0) / F) 
+	//	     Average - (Nx - N0) / ((Dx - D0) / F)
 	//
-	//       Example - System\ File Read Operations/sec 
+	//       Example - System\ File Read Operations/sec
 	//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
 	private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
 	{

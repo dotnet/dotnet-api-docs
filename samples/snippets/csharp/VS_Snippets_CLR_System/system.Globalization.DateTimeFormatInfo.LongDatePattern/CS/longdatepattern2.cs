@@ -9,16 +9,16 @@ public class Example
    {
       DateTime date1 = new DateTime(2011, 8, 7);
       CultureInfo ci = CultureInfo.CreateSpecificCulture("ar-SY");
-      StreamWriter sw = new StreamWriter(@".\arSYCalendars.txt"); 
+      StreamWriter sw = new StreamWriter(@".\arSYCalendars.txt");
 
-      sw.WriteLine("{0,-32} {1,-21} {2}\n", 
+      sw.WriteLine("{0,-32} {1,-21} {2}\n",
                    "Calendar", "Long Date Pattern", "Example Date");
       foreach (var cal in ci.OptionalCalendars) {
          ci.DateTimeFormat.Calendar = cal;
-         sw.WriteLine("{0,-32} {1,-21} {2}", GetCalendarName(cal), 
+         sw.WriteLine("{0,-32} {1,-21} {2}", GetCalendarName(cal),
                                              ci.DateTimeFormat.LongDatePattern,
                                              date1.ToString("D", ci));
-      }     
+      }
       sw.Close();
    }
 
@@ -28,14 +28,14 @@ public class Example
       calName = cal.GetType().Name.Substring(0, cal.GetType().Name.IndexOf("Cal"));
       if (calName.Equals("Gregorian")) {
          GregorianCalendar grCal = cal as GregorianCalendar;
-         calName += String.Format("-{0}", grCal.CalendarType);    
+         calName += String.Format("-{0}", grCal.CalendarType);
       }
       return calName;
    }
 }
 // The example generates the following output:
 //    Calendar                         Long Date Pattern     Example Date
-//    
+//
 //    Gregorian-Localized              dd MMMM, yyyy         07 آب, 2011
 //    UmAlQura                         dd/MMMM/yyyy          07/رمضان/1432
 //    Hijri                            dd/MM/yyyy            08/09/1432

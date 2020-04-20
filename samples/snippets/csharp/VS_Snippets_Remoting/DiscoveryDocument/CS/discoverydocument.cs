@@ -1,7 +1,7 @@
 ﻿// System.Web.Services.Discovery.DiscoveryDocument
 // System.Web.Services.Discovery.DiscoveryDocument.Write(TextWriter)
 
-/* The following example deomonstrates DiscoveryDocument class and the 'Write(Stream)' method 
+/* The following example deomonstrates DiscoveryDocument class and the 'Write(Stream)' method
    of the 'DiscoveryDocument' class.
    A XmlTextReader object is created with a sample discovery file and this
    is passed to the Read method to create a DiscoveryDocument. The contents
@@ -26,7 +26,7 @@ public class DiscoveryDocument_Example
          DiscoveryDocument myDiscoveryDocument = new DiscoveryDocument();
 
          // Create an XmlTextReader with the sample file.
-         XmlTextReader myXmlTextReader = new 
+         XmlTextReader myXmlTextReader = new
             XmlTextReader( "http://localhost/example_cs.disco" );
 
          // Read the given XmlTextReader.
@@ -34,24 +34,24 @@ public class DiscoveryDocument_Example
 
 // <Snippet2>
          // Write the DiscoveryDocument into the 'TextWriter'.
-         FileStream myFileStream = new 
+         FileStream myFileStream = new
                   FileStream( "log.txt", FileMode.OpenOrCreate, FileAccess.Write );
          StreamWriter myStreamWriter = new StreamWriter( myFileStream );
          myDiscoveryDocument.Write( myStreamWriter );
 
-         myStreamWriter.Flush();  
-         myStreamWriter.Close(); 
+         myStreamWriter.Flush();
+         myStreamWriter.Close();
 // </Snippet2>
 
          // Display the contents of the DiscoveryDocument onto the console.
          FileStream myFileStream1 = new
                         FileStream( "log.txt", FileMode.OpenOrCreate, FileAccess.Read );
-         StreamReader myStreamReader = new StreamReader( myFileStream1 );        
+         StreamReader myStreamReader = new StreamReader( myFileStream1 );
 
          // Set the file pointer to the begin.
-         myStreamReader.BaseStream.Seek(0, SeekOrigin.Begin); 
+         myStreamReader.BaseStream.Seek(0, SeekOrigin.Begin);
          Console.WriteLine( "The contents of the DiscoveryDocument are-" );
-         while ( myStreamReader.Peek() > -1 ) 
+         while ( myStreamReader.Peek() > -1 )
          {
             Console.WriteLine( myStreamReader.ReadLine() );
          }
