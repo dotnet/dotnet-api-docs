@@ -6,7 +6,7 @@
 ' A dynamic assembly with a module having a runtime class, 'TempClass' is created. 
 ' This class defines a method, 'SortArray', which sorts the elements of the array 
 ' passed to it. The 'GetArrayMethod' method is used to obtain the 'MethodInfo' object 
-' corresponding to the 'Sort' method of the 'Array' . The token used to identify the 'Sort' 
+' corresponding to the 'Sort' method of the 'Array'. The token used to identify the 'Sort' 
 ' method in dynamic module is displayed using 'GetArrayMethodToken' method.
 
 Imports System.Reflection
