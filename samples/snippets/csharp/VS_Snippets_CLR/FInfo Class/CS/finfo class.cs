@@ -2,16 +2,16 @@
 using System;
 using System.IO;
 
-class Test 
+class Test
 {
 	
-    public static void Main() 
+    public static void Main()
     {
         string path = Path.GetTempFileName();
         var fi1 = new FileInfo(path);
 
         // Create a file to write to.
-        using (StreamWriter sw = fi1.CreateText()) 
+        using (StreamWriter sw = fi1.CreateText())
         {
             sw.WriteLine("Hello");
             sw.WriteLine("And");
@@ -19,16 +19,16 @@ class Test
         }	
 
         // Open the file to read from.
-        using (StreamReader sr = fi1.OpenText()) 
+        using (StreamReader sr = fi1.OpenText())
         {
             var s = "";
-            while ((s = sr.ReadLine()) != null) 
+            while ((s = sr.ReadLine()) != null)
             {
                 Console.WriteLine(s);
             }
         }
 
-        try 
+        try
         {
             string path2 = Path.GetTempFileName();
             var fi2 = new FileInfo(path2);
@@ -43,8 +43,8 @@ class Test
             // Delete the newly created file.
             fi2.Delete();
             Console.WriteLine($"{path2} was successfully deleted.");
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             Console.WriteLine($"The process failed: {e.ToString()}");
         }

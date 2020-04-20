@@ -2,11 +2,11 @@
 // System.Reflection.Emit.FieldBuilder.SetMarshal
 
 /*
-   The following program demonstrates 'SetOffset' and 'SetMarshal' 
-   methods of 'FieldBuilder' class.A new Class is defined and a 
-   'PInvoke' method 'OpenFile' method of 'Kernel32.dll' is defined 
+   The following program demonstrates 'SetOffset' and 'SetMarshal'
+   methods of 'FieldBuilder' class.A new Class is defined and a
+   'PInvoke' method 'OpenFile' method of 'Kernel32.dll' is defined
    in the class.Instance of the class is created and the method is invoked.
-   To execute this program, make sure a file named 'MyFile.txt' should be there 
+   To execute this program, make sure a file named 'MyFile.txt' should be there
    in the current directory.
 */
 
@@ -46,17 +46,17 @@ public class FieldBuilder_Sample
                                     typeof(short),FieldAttributes.Public);
       FieldBuilder myFieldBuilder6= myTypeBuilder2.DefineField("myPathName",
                                     typeof(char[]),FieldAttributes.Public);
-      myFieldBuilder6.SetMarshal(UnmanagedMarshal.DefineByValArray(128)); 
+      myFieldBuilder6.SetMarshal(UnmanagedMarshal.DefineByValArray(128));
       myFieldBuilder6.SetOffset(4);
-      Type myType1 = myTypeBuilder2.CreateType();  
+      Type myType1 = myTypeBuilder2.CreateType();
       // Create the PInvoke method for 'OpenFile' method of 'Kernel32.dll'.
-      Type[] myParameters={ typeof(string), myType1 ,typeof(uint)}; 
+      Type[] myParameters={ typeof(string), myType1 ,typeof(uint)};
       MethodBuilder myMethodBuilder= myTypeBuilder.DefinePInvokeMethod("OpenFile",
                                      "kernel32.dll",MethodAttributes.Public|MethodAttributes.Static|MethodAttributes.HideBySig,
                                        CallingConventions.Standard,typeof(IntPtr),
                                        myParameters,CallingConvention.Winapi,CharSet.None);
       Type myAttributeType = typeof(MethodImplAttribute);
-      ConstructorInfo myConstructorInfo = 
+      ConstructorInfo myConstructorInfo =
          myAttributeType.GetConstructor(new Type[1]{typeof(MethodImplOptions)});
       CustomAttributeBuilder myAttributeBuilder = new CustomAttributeBuilder(myConstructorInfo,
                                                    new object[1]{MethodImplOptions.PreserveSig});
@@ -74,11 +74,11 @@ public class FieldBuilder_Sample
       try
       {
          Type myType = CreateType(Thread.GetDomain());
-         Type myClass2 = myType.Module.GetType("MyClass2"); 
+         Type myClass2 = myType.Module.GetType("MyClass2");
          object myParam2 = Activator.CreateInstance(myClass2);
          uint myUint=0x00000800;
          object[] myArgs= {"MyFile.Txt",myParam2,myUint};
-         Object myObject  = myType.InvokeMember("OpenFile",BindingFlags.Public | 
+         Object myObject  = myType.InvokeMember("OpenFile",BindingFlags.Public |
             BindingFlags.InvokeMethod | BindingFlags.Static,null,null,myArgs);
          Console.WriteLine("MyClass.OpenFile method returned: \"{0}\"", myObject);
       }

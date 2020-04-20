@@ -38,7 +38,7 @@ namespace EventLogSamples
             Console.Write(" DoNotOverwrite,");
             Console.Write(" OverwriteAsNeeded");
             Console.WriteLine("] : ");
-    
+
             String input = Console.ReadLine();
 
             if (!String.IsNullOrEmpty(input))
@@ -83,10 +83,10 @@ namespace EventLogSamples
 
                 Console.WriteLine();
                 Console.WriteLine("{0}:", e.LogDisplayName);
-                Console.WriteLine("  Log name = \t\t {0}", e.Log); 
+                Console.WriteLine("  Log name = \t\t {0}", e.Log);
 
                 Console.WriteLine("  Number of event log entries = {0}", e.Entries.Count.ToString());
-                            
+
                 // Determine if there is an event log file for this event log.
                 RegistryKey regEventLog = Registry.LocalMachine.OpenSubKey("System\\CurrentControlSet\\Services\\EventLog\\" + e.Log);
                 if (regEventLog != null)
@@ -113,7 +113,7 @@ namespace EventLogSamples
                         Console.WriteLine("  Log file path = \t <not set>");
                     }
                 }
-                            
+
                 // Display the maximum size and overflow settings.
 
                 sizeKB = e.MaximumKilobytes;
@@ -123,7 +123,7 @@ namespace EventLogSamples
                 switch (e.OverflowAction)
                 {
                     case OverflowAction.OverwriteOlder:
-                        Console.WriteLine("\t Entries are retained a minimum of {0} days.", 
+                        Console.WriteLine("\t Entries are retained a minimum of {0} days.",
                             e.MinimumRetentionDays);
                         break;
                     case OverflowAction.DoNotOverwrite:
@@ -140,13 +140,13 @@ namespace EventLogSamples
         // </Snippet2>
 
         // <Snippet3>
-        // Display the current event log overflow settings, and 
+        // Display the current event log overflow settings, and
         // prompt the user to input a new overflow setting.
         public static void ChangeEventLogOverflowAction(String logName)
         {
             if (EventLog.Exists(logName))
             {
-                // Display the current overflow setting of the 
+                // Display the current overflow setting of the
                 // specified event log.
                 EventLog inputLog = new EventLog(logName);
                 Console.WriteLine("  Event log {0}", inputLog.Log);
@@ -158,7 +158,7 @@ namespace EventLogSamples
                     logOverflow.ToString());
                 if (logOverflow == OverflowAction.OverwriteOlder)
                 {
-                    Console.WriteLine("\t Entries are retained a minimum of {0} days.", 
+                    Console.WriteLine("\t Entries are retained a minimum of {0} days.",
                         numDays.ToString());
                 }
 
@@ -171,12 +171,12 @@ namespace EventLogSamples
                     inputLog.ModifyOverflowPolicy(logOverflow, numDays);
                     Console.WriteLine("Event log overflow policy was modified successfully!");
                 }
-                else 
+                else
                 {
                     Console.WriteLine("Event log overflow policy was not modified.");
                 }
             }
-            else 
+            else
             {
                 Console.WriteLine("Event log {0} was not found.", logName);
             }

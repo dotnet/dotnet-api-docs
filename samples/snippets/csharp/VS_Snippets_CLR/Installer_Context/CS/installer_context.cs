@@ -1,14 +1,14 @@
 ﻿/*
    System.Configuration.Install.Installer.Context
 
-   The following example demonstrates the 'Context' property of 
-   the 'Installer' class. The contents of the 'Context' property 
-   like information about the location of the log file for the 
-   installation, the location of the file to save information 
-   required by the Uninstall method, and the command line that 
-   was entered when the installation executable was run is 
+   The following example demonstrates the 'Context' property of
+   the 'Installer' class. The contents of the 'Context' property
+   like information about the location of the log file for the
+   installation, the location of the file to save information
+   required by the Uninstall method, and the command line that
+   was entered when the installation executable was run is
    displayed on the console.
-   
+
    Use 'installutil' to run the assembly Installer_Context.exe
 */
 

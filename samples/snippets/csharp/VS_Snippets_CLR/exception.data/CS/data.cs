@@ -3,7 +3,7 @@
 using System;
 using System.Collections;
 
-class Sample 
+class Sample
 {
    public static void Main()
    {
@@ -24,12 +24,12 @@ class Sample
          if (e.Data.Count > 0) {
             Console.WriteLine("  Extra details:");
             foreach (DictionaryEntry de in e.Data)
-               Console.WriteLine("    Key: {0,-20}      Value: {1}", 
+               Console.WriteLine("    Key: {0,-20}      Value: {1}",
                                  "'" + de.Key.ToString() + "'", de.Value);
          }
       }
    }
-    
+
    public static void NestedRoutine1(bool displayDetails)
    {
       try {
@@ -41,7 +41,7 @@ class Sample
          throw;
       }
    }
-    
+
    public static void NestedRoutine2(bool displayDetails)
    {
       Exception e = new Exception("This statement is the original exception message.");
@@ -56,14 +56,14 @@ class Sample
       throw e;
    }
 }
-// The example displays the following output: 
+// The example displays the following output:
 //    Exception with some extra information...
 //    An exception was thrown.
 //    This statement is the original exception message.
-//      Extra details:                                               
+//      Extra details:
 //        Key: 'ExtraInfo'               Value: Information from NestedRoutine1.
 //        Key: 'MoreExtraInfo'           Value: More information from NestedRoutine1.
-//    
+//
 //    Exception with all extra information...
 //    An exception was thrown.
 //    This statement is the original exception message.
@@ -72,5 +72,5 @@ class Sample
 //        Key: 'IntInfo'                 Value: -903
 //        Key: 'DateTimeInfo'            Value: 7/29/2013 10:50:13 AM
 //        Key: 'ExtraInfo'               Value: Information from NestedRoutine1.
-//        Key: 'MoreExtraInfo'           Value: More information from NestedRoutine1. 
+//        Key: 'MoreExtraInfo'           Value: More information from NestedRoutine1.
 //</snippet1>

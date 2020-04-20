@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-public class FileInfoMainTest 
+public class FileInfoMainTest
 {
-    public static void Main() 
+    public static void Main()
     {
         // Open an existing file, or create a new one.
         FileInfo fi = new FileInfo("temp.txt");
@@ -20,7 +20,7 @@ public class FileInfoMainTest
             Console.WriteLine( sr.ReadLine() );
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //Add as many lines as you like...

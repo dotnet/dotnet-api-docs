@@ -39,11 +39,11 @@ namespace FileSystemExample
             // Create a new DirectoryInfo object.
             DirectoryInfo dInfo = new DirectoryInfo(FileName);
 
-            // Get a DirectorySecurity object that represents the 
+            // Get a DirectorySecurity object that represents the
             // current security settings.
             DirectorySecurity dSecurity = dInfo.GetAccessControl();
 
-            // Add the FileSystemAccessRule to the security settings. 
+            // Add the FileSystemAccessRule to the security settings.
             dSecurity.AddAccessRule(new FileSystemAccessRule(Account,
                                                             Rights,
                                                             ControlType));
@@ -58,11 +58,11 @@ namespace FileSystemExample
             // Create a new DirectoryInfo object.
             DirectoryInfo dInfo = new DirectoryInfo(FileName);
 
-            // Get a DirectorySecurity object that represents the 
+            // Get a DirectorySecurity object that represents the
             // current security settings.
             DirectorySecurity dSecurity = dInfo.GetAccessControl();
 
-            // Add the FileSystemAccessRule to the security settings. 
+            // Add the FileSystemAccessRule to the security settings.
             dSecurity.RemoveAccessRule(new FileSystemAccessRule(Account,
                                                             Rights,
                                                             ControlType));

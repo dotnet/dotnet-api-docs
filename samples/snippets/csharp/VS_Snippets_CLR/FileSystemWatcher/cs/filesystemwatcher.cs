@@ -14,13 +14,13 @@ class Program
 
         // <snippet3>
         //  Watch for changes in LastAccess and LastWrite times, and
-        //  the renaming of files or directories. 
+        //  the renaming of files or directories.
         fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
             | NotifyFilters.FileName |NotifyFilters.DirectoryName;
         // </snippet3>
 
         // <snippet4>
-        //  Register a handler that gets called when a 
+        //  Register a handler that gets called when a
         //  file is created, changed, or deleted.
         fsw.Changed += new FileSystemEventHandler(OnChanged);
 
@@ -31,7 +31,7 @@ class Program
         //  Register a handler that gets called when a file is renamed.
         fsw.Renamed += new RenamedEventHandler(OnRenamed);
 
-        //  Register a handler that gets called if the 
+        //  Register a handler that gets called if the
         //  FileSystemWatcher needs to report an error.
         fsw.Error += new ErrorEventHandler(OnError);
         // </snippet4>
@@ -44,9 +44,9 @@ class Program
         Console.WriteLine("Press \'Enter\' to quit the sample.");
         Console.ReadLine();
     }
-    // </snippet6> 
+    // </snippet6>
 
-    // <snippet7>  
+    // <snippet7>
     //  This method is called when a file is created, changed, or deleted.
     private static void OnChanged(object source, FileSystemEventArgs e)
     {
@@ -66,7 +66,7 @@ class Program
     }
     // </snippet8>
 
-    // <snippet9> 
+    // <snippet9>
     //  This method is called when the FileSystemWatcher detects an error.
     private static void OnError(object source, ErrorEventArgs e)
     {
@@ -75,7 +75,7 @@ class Program
         //  Give more information if the error is due to an internal buffer overflow.
         if (e.GetException().GetType() == typeof(InternalBufferOverflowException))
         {
-            //  This can happen if Windows is reporting many file system events quickly 
+            //  This can happen if Windows is reporting many file system events quickly
             //  and internal buffer of the  FileSystemWatcher is not large enough to handle this
             //  rate of events. The InternalBufferOverflowException error informs the application
             //  that some of the file system events are being lost.

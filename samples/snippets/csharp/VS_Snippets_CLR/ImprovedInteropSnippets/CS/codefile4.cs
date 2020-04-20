@@ -15,7 +15,7 @@ namespace B
 			{
 				TypeLibTypeAttribute tlt = ( TypeLibTypeAttribute ) InterfaceAttributes[0];
 				TypeLibTypeFlags  flags = tlt.Value;
-				return ( flags & TypeLibTypeFlags.FHidden ) != 0; 
+				return ( flags & TypeLibTypeFlags.FHidden ) != 0;
 			}
 			return false;
 		}

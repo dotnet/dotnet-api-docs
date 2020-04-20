@@ -19,7 +19,7 @@ public class CompareToTest {
 // The example displays the following output:
 //       Does a Sportscar have more doors than a Motorbike?
 //       Yes
-//       
+//
 //       Does a Sportscar have more doors than a Sedan?
 //       No
 //</snippet1>

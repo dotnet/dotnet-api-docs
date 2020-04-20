@@ -2,9 +2,9 @@
 // System.Diagnostics.EventLogEntry.Source
 
 /*
-The following example demonstrates the properties 'EntryType' and 'Source' 
-of the class 'EventLogEntry'. 
-A new instance of 'EventLog' class is created and is associated to existing 
+The following example demonstrates the properties 'EntryType' and 'Source'
+of the class 'EventLogEntry'.
+A new instance of 'EventLog' class is created and is associated to existing
 System Log file of local machine. User selects the event type and the latest
 entry in the log file of that type and it's source is displayed.
 */

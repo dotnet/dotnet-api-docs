@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-public class DirectoryTest 
+public class DirectoryTest
 {
-    public static void Main() 
+    public static void Main()
     {
 
         // Open an existing file, or create a new one.
@@ -23,10 +23,10 @@ public class DirectoryTest
             Console.WriteLine(info.Name);
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
-//The directory 'C:\Visual Studio 2005\release' contains the following files 
+//The directory 'C:\Visual Studio 2005\release' contains the following files
 //and directories:
 //TempPE
 //fileinfodirectory.exe

@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-public class CopyToTest 
+public class CopyToTest
 {
-    public static void Main() 
+    public static void Main()
     {
         // Create a reference to a file, which might or might not exist.
         // If it does not exist, it is not yet created.
@@ -30,7 +30,7 @@ public class CopyToTest
             Console.WriteLine( sr.ReadLine() );
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //This is the information in the first file:

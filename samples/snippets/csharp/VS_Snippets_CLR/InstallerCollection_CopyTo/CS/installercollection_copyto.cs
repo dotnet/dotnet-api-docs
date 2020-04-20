@@ -3,10 +3,10 @@
 /*
    The following example demonstrates the 'CopyTo(Installer[], Int32)' method
    of the 'InstallerCollection' class. It Creates 'AssemblyInstaller' instances
-   for 'MyAssembly1.exe' and 'MyAssembly2.exe'. These instances of 
+   for 'MyAssembly1.exe' and 'MyAssembly2.exe'. These instances of
    'AssemblyInstaller' are added to an instance of 'TransactedInstaller'
    instance. The names of the assemblies to be installed
-   are displayed on the console. The installation process then installs 
+   are displayed on the console. The installation process then installs
    both 'MyAssembly1.exe' and 'MyAssembly2.exe'.
 */
 
@@ -38,7 +38,7 @@ public class InstallerCollection_CopyTo
 
       // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.
       myTransactedInstaller.Installers.Add(myAssemblyInstaller);
-     
+
       Installer[] myInstallers =
          new Installer[myTransactedInstaller.Installers.Count];
 
@@ -55,11 +55,11 @@ public class InstallerCollection_CopyTo
       }
 // </Snippet1>
       // Create a instance of 'InstallContext' with log file named 'Install.log'.
-      myInstallContext = 
+      myInstallContext =
          new InstallContext("Install.log", null);
       myTransactedInstaller.Context = myInstallContext;
 
       // Install an assembly.
-      myTransactedInstaller.Install(new Hashtable());  
-   }  
+      myTransactedInstaller.Install(new Hashtable());
+   }
 }

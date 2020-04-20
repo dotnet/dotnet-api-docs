@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 internal static class NativeMethods
 {
     // C# doesn't support varargs so all arguments must be explicitly defined.
-    // CallingConvention.Cdecl must be used since the stack is 
+    // CallingConvention.Cdecl must be used since the stack is
     // cleaned up by the caller.
 
     // int printf( const char *format [, argument]... )

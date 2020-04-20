@@ -2,7 +2,7 @@
 // System.Diagnostics.EventLogEntryCollection.CopyTo(EventLogEntry[],int)
 
 /*
-   The following example demonstrates the EventLogEntryCollection class and the 
+   The following example demonstrates the EventLogEntryCollection class and the
    CopyTo method of EventLogEntryCollection class.A new Source for eventlog 'MyNewLog'
    is created.A new entry is created for 'MyNewLog'.The entries of EventLog are copied
    to an Array.

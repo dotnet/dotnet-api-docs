@@ -1,12 +1,12 @@
-﻿// Do not use snippets 31 & 32 with snippet 21; snippet 21 goes 
+﻿// Do not use snippets 31 & 32 with snippet 21; snippet 21 goes
 // with snippet 2, which already provides enough context. (2 and
-// 21 were originally one snippet, but had to be split when 31 
+// 21 were originally one snippet, but had to be split when 31
 // was added, because I don't trust overlapping snippets any
-// more.) 
+// more.)
 //
 // Note further that {2, 21} is NOT USED right now because
 // the complete sample (snippet 1) is located in IDictionary.Add.
-// 
+//
 // The groups are:
 // {2, 21} - Add
 // {31, 3, 4, 32} - Item
@@ -33,7 +33,7 @@ public class Example
         //
         IDictionary openWith = new SortedDictionary<string, string>();
 
-        // Add some elements to the dictionary. There are no 
+        // Add some elements to the dictionary. There are no
         // duplicate keys, but some of the values are duplicates.
         // IDictionary.Add throws an exception if incorrect types
         // are supplied for key or value.
@@ -50,12 +50,12 @@ public class Example
         }
         catch (ArgumentException ex)
         {
-            Console.WriteLine("An exception was caught for " + 
+            Console.WriteLine("An exception was caught for " +
                 "IDictionary.Add. Exception message:\n\t{0}\n",
                 ex.Message);
         }
 
-        // The Add method throws an exception if the new key is 
+        // The Add method throws an exception if the new key is
         // already in the dictionary.
         try
         {
@@ -68,26 +68,26 @@ public class Example
         //</Snippet21>
 
         //<Snippet3>
-        // The Item property is another name for the indexer, so you 
-        // can omit its name when accessing elements. 
-        Console.WriteLine("For key = \"rtf\", value = {0}.", 
+        // The Item property is another name for the indexer, so you
+        // can omit its name when accessing elements.
+        Console.WriteLine("For key = \"rtf\", value = {0}.",
             openWith["rtf"]);
 
         // The indexer can be used to change the value associated
         // with a key.
         openWith["rtf"] = "winword.exe";
-        Console.WriteLine("For key = \"rtf\", value = {0}.", 
+        Console.WriteLine("For key = \"rtf\", value = {0}.",
             openWith["rtf"]);
 
         // If a key does not exist, setting the indexer for that key
         // adds a new key/value pair.
         openWith["doc"] = "winword.exe";
 
-        // The indexer returns null if the key is of the wrong data 
+        // The indexer returns null if the key is of the wrong data
         // type.
-        Console.WriteLine("The indexer returns null" 
+        Console.WriteLine("The indexer returns null"
             + " if the key is of the wrong type:");
-        Console.WriteLine("For key = 2, value = {0}.", 
+        Console.WriteLine("For key = 2, value = {0}.",
             openWith[2]);
 
         // The indexer throws an exception when setting a value
@@ -98,7 +98,7 @@ public class Example
         }
         catch (ArgumentException)
         {
-            Console.WriteLine("A key of the wrong type was specified" 
+            Console.WriteLine("A key of the wrong type was specified"
                 + " when assigning to the indexer.");
         }
         //</Snippet3>
@@ -107,17 +107,17 @@ public class Example
         // Unlike the default Item property on the Dictionary class
         // itself, IDictionary.Item does not throw an exception
         // if the requested key is not in the dictionary.
-        Console.WriteLine("For key = \"tif\", value = {0}.", 
+        Console.WriteLine("For key = \"tif\", value = {0}.",
             openWith["tif"]);
         //</Snippet4>
 
         //<Snippet6>
-        // Contains can be used to test keys before inserting 
+        // Contains can be used to test keys before inserting
         // them.
         if (!openWith.Contains("ht"))
         {
             openWith.Add("ht", "hypertrm.exe");
-            Console.WriteLine("Value added for key = \"ht\": {0}", 
+            Console.WriteLine("Value added for key = \"ht\": {0}",
                 openWith["ht"]);
         }
 
@@ -134,7 +134,7 @@ public class Example
         Console.WriteLine();
         foreach( DictionaryEntry de in openWith )
         {
-            Console.WriteLine("Key = {0}, Value = {1}", 
+            Console.WriteLine("Key = {0}, Value = {1}",
                 de.Key, de.Value);
         }
         //</Snippet7>

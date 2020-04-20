@@ -13,7 +13,7 @@ public class FieldInfoClass
         // Get the type and fields of FieldInfoClass.
         myFieldInfo = myType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance
             | BindingFlags.Public);
-        Console.WriteLine("\nThe fields of " + 
+        Console.WriteLine("\nThe fields of " +
             "FieldInfoClass are \n");
         // Display the field information of FieldInfoClass.
         for(int i = 0; i < myFieldInfo.Length; i++)

@@ -38,7 +38,7 @@ namespace ConsoleApplication2
 }
 
  // Output will vary based on contents of drive C.
- 
+
  // Directory entry C:\Documents and Settings was created on Tuesday, November 25, 2003
  // Directory entry C:\Inetpub was created on Monday, January 12, 2004
  // Directory entry C:\Program Files was created on Tuesday, November 25, 2003
