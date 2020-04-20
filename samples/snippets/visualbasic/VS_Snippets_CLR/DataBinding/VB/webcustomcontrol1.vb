@@ -23,7 +23,7 @@
 
 
 '  The following example demonstrates the  members of 'DataBinding' and
-' 'DataBindingCollection'.A new control 'SimpleWebControl'  is created
+' 'DataBindingCollection'. A new control 'SimpleWebControl'  is created
 '  and a 'Designer' attribute is attached to it which actually refers to the
 '  DesignTimeClass. The 'OnBindingsCollectionChanged(string)' method  is overridden
 '  to actually capture the DataBindingCollection instance and add the
