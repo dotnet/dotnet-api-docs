@@ -6,8 +6,9 @@
 
 ' Grouping Clause : Snippet5 and Snippet8 go together.
 
-' The following example demonstrates the constructor 'Binding()' and properties 'Extensions', 'Name', 'Operations',
-'  'ServiceDescription', and 'Type' property of 'Binding' class AND method 'Insert' of the 'BindingCollection' class.
+' The following example demonstrates the 'Binding()' constructor and the 'Extensions', 'Name', 'Operations',
+'  'ServiceDescription', and 'Type' properties of the 'Binding' class as well as the 'Insert' method of the 'BindingCollection' class.
+
 '  The input to the program is a WSDL file 'MathService_input.wsdl' with all information related to SOAP protocol 
 '  removed from it. In a way it tries to simulate a scenario wherein a service initially did not support a protocol, however later 
 '  on happen to support it. 
