@@ -1,10 +1,10 @@
 /*  System::Net::WebRequest::ContentType System::Net::WebRequest::ContentLength System::Net::WebRequest::GetRequestStream
-This program demonstrates 'GetRequestStream' method , 'ContentLength' and 'ContentType' properties of
-      'WebRequestClass'.
+This program demonstrates the 'GetRequestStream' method and the 'ContentLength' and 'ContentType' properties of
+      the 'WebRequest' class.
 A new 'WebRequest' Object* is created and the method used for sending data is set to 'POST' method by setting
 The 'Method' property to 'POST'. The 'ContentType' property is set to 'application/x-www-form-urlencoded'.
 The 'ContentLength' property is set to the length of the Byte stream to be posted. A new 'Stream' Object* is
-obtained from the 'GetRequestStream' method of the 'WebRequest' class.Data to be posted is requested from
+obtained from the 'GetRequestStream' method of the 'WebRequest' class. Data to be posted is requested from
 the user and is posted using the stream Object*. The HTML contents of the page are then displayed to the
 console after the Posted data is accepted by the URL.
 
