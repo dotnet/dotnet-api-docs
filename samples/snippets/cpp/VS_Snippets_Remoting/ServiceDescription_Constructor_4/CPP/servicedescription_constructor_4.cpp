@@ -4,8 +4,8 @@
 // System.Web.Services.Description.ServiceDescription.Name
 
 /* 
-The following example demonstrates the constructor 'ServiceDescription()', 
-properties 'Messages', 'Name' and 'Read'  method of 'ServiceDescription'
+The following example demonstrates the 'ServiceDescription()' constructor, 
+the 'Messages' and 'Name' properties and the 'Read' method of the 'ServiceDescription'
 class. The input to the program is a WSDL file 'MyWsdl.wsdl'.
 This program removes one message from the existing WSDL.
 A new Message is defined and added to the ServiceDescription.
