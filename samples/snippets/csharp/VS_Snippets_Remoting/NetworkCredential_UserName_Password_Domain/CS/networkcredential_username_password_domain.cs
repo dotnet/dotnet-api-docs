@@ -1,6 +1,6 @@
 ﻿// System.Net.NetworkCredential.Username;System.Net.NetworkCredential.Domain;System.Net.NetworkCredential.Password
 
-/*This program demontrates the 'UserName','Domain', and 'Password' properties of the 'NetworkCredential' class.
+/*This program demontrates the 'UserName', 'Domain', and 'Password' properties of the 'NetworkCredential' class.
   It takes an URL, username, password, and domain name from console. An empty 'NetworkCredential' object 
   is created. The 'UserName', 'Password', and 'Domain' properties of the 'NetworkCredential' class are initialized 
   with the respective values taken from console. Then a 'WebRequest' object is created and the 'NetworkCredential'
@@ -51,7 +51,7 @@ class CredentialCacheSnippet
     WebResponse myWebResponse = myWebRequest.GetResponse();
     
     // Process the response.
-    Console.WriteLine("\nResponse received sucessfully");
+    Console.WriteLine("\nResponse received successfully");
     
     // Release the resources of the response object.
     myWebResponse.Close();

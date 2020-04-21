@@ -130,7 +130,7 @@ public class SignVerifyEnvelope
     }
     // </Snippet2>
 
-    // Verify the signature of an XML file against an asymetric 
+    // Verify the signature of an XML file against an asymmetric 
     // algorithm and return the result.
     public static Boolean VerifyXmlFile(String FileName, String CertificateSubject)
     {

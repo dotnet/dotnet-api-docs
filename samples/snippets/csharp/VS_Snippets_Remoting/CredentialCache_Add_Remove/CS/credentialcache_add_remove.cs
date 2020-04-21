@@ -1,8 +1,8 @@
 ﻿// System.Net.CredentialCache.Add;System.Net.CredentialCache.CredentialCache();
 // System.Net.CredentialCache.Remove;System.Net.CredentialCache.
 
-/*This program demontrates the  'Remove' method, 'Add' method and 'CredentialCache'
-constructor of the 'CredentialCache' class.It takes an URL  creates a 'WebRequest' object for the Url.
+/*This program demontrates the 'Remove' method, the 'Add' method, and the 'CredentialCache'
+constructor of the 'CredentialCache' class. It takes an URL creates a 'WebRequest' object for the Url.
 The program stores a known set of credentials in a credential cache and removes a credential when it
 is no longer needed.
 */

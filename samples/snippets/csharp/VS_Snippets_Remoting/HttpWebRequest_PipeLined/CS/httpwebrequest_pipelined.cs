@@ -4,7 +4,7 @@
   HTTP Request and Response Headers are displayed to the console. The contents of the page of the
   requested URI are displayed to the console.
 
-Note:The 'Pipelined' property is supported only by servers that allow Pipelining of requests.
+Note: The 'Pipelined' property is supported only by servers that allow Pipelining of requests.
 */
 
 using System;
