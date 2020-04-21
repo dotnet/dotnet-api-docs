@@ -5,7 +5,7 @@
 
 ' The following program demonstrates the abstract class 'MessageBinding', it's constructor
 ' MessageBinding()and properties 'Extensions' and 'Name'.'MessageBinding' is an abstract class
-' from which 'InputBinding' , 'OutputBinding' are derived.The program contains a utility function
+' from which 'InputBinding' and 'OutputBinding' are derived. The program contains a utility function
 ' which could be used to create either an InputBinding or OutputBinding. This generic nature is
 ' achieved by returning an instance of 'MessageBinding'.
 ' <Snippet1>

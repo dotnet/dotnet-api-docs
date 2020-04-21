@@ -37,7 +37,7 @@ public class WebClient_UpLoadFile
             byte[] responseArray = myWebClient.UploadFile(uriString,fileName);
 
             // Decode and display the response.
-            Console.WriteLine("\nResponse Received.The contents of the file uploaded are:\n{0}", 
+            Console.WriteLine("\nResponse Received. The contents of the file uploaded are:\n{0}", 
                 System.Text.Encoding.ASCII.GetString(responseArray));
 // </Snippet1>
         } 
