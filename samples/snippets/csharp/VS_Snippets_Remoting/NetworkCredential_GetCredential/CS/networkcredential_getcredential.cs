@@ -46,7 +46,7 @@ class NetworkCredential_GetCredential
    } 
    catch(WebException e) 
    {
-      Console.WriteLine("\r\nWebException is raised.The Reason for failure is : {0}",e.Status); 
+      Console.WriteLine("\r\nWebException is raised. The Reason for failure is : {0}",e.Status); 
    }
    catch(Exception e)
    {
