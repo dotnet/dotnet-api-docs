@@ -20,7 +20,7 @@
 using System;
 using System.Collections;
 using System.Xml; 
-using System.Web.Services.Description;  
+using System.Web.Services.Description;
 
 public class MyMimePartCollection
 {
@@ -31,8 +31,8 @@ public class MyMimePartCollection
       ServiceDescriptionCollection myServiceDescriptionCol = 
          new ServiceDescriptionCollection();
       myServiceDescriptionCol.Add(myServiceDescription);
-      XmlQualifiedName  myXmlQualifiedName = 
-             new  XmlQualifiedName("MimeServiceHttpPost","http://tempuri.org/");
+      XmlQualifiedName myXmlQualifiedName = 
+             new XmlQualifiedName("MimeServiceHttpPost","http://tempuri.org/");
       // Create a binding object.
       Binding myBinding = myServiceDescriptionCol.GetBinding(myXmlQualifiedName);
       OperationBinding myOperationBinding= null;
@@ -75,7 +75,7 @@ public class MyMimePartCollection
       {
          // Display the index of inserted 'MimePart'.
          Console.WriteLine("'MimePart' is successfully inserted at position: "
-                              +myMimePartCollection.IndexOf(myMimePart1));         
+                              +myMimePartCollection.IndexOf(myMimePart1));
       }
 // </Snippet4>
 // </Snippet3>
@@ -91,7 +91,7 @@ public class MyMimePartCollection
       myMimeXmlBinding2.Part = "body";
       myMimePart2.Extensions.Add(myMimeXmlBinding2);
       // Add a mimepart to the mimepartcollection.
-      myMimePartCollection.Add(myMimePart2);      
+      myMimePartCollection.Add(myMimePart2);
       Console.WriteLine("Adding a mimepart object...");
       // Check if collection contains added mimepart object.
       if(myMimePartCollection.Contains(myMimePart2))
@@ -130,7 +130,7 @@ public class MyMimePartCollection
       }
 // </Snippet8>
       Console.WriteLine("Total number of elements in collection after removing is: "
-                            +myMimePartCollection.Count);  
+                            +myMimePartCollection.Count);
       MimePart[] myArray1 = new MimePart[myMimePartCollection.Count];
       myMimePartCollection.CopyTo(myArray1,0);
       Console.WriteLine("Dispalying the 'MimePartCollection' after removing");
