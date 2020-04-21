@@ -37,7 +37,7 @@ void GetPage( String^ url, String^ username, String^ passwd, String^ domain )
       WebResponse^ myWebResponse = myWebRequest->GetResponse();
       
       // Process the response.
-      Console::WriteLine( "\nResponse received sucessfully" );
+      Console::WriteLine( "\nResponse received successfully" );
       
       // Release the resources of the response object.
       myWebResponse->Close();

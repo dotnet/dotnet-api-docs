@@ -4,9 +4,9 @@
 // System.Web.Services.Description.MimeContentBinding
 
 /* The following program demonstrates properties 'Type','Part'
-   and field 'NameSpace'of class 'MimeContentBinding'.It reads 'MimeContentSample_cs.wsdl'file
-   and instantiates a ServiceDescription object.'MimeContentBinding' objects  are retrieved from Extension
-   points of OutputBinding for one of the Binding object and its properties 'Type','Part'are displayed.It also        displays 'NameSpace' of the 'MimeContentBinding' object.
+   and field 'NameSpace' of class 'MimeContentBinding'. It reads 'MimeContentSample_cs.wsdl' file
+   and instantiates a ServiceDescription object.'MimeContentBinding' objects are retrieved from Extension
+   points of OutputBinding for one of the Binding object and its properties 'Type','Part' are displayed. It also displays 'NameSpace' of the 'MimeContentBinding' object.
 */
 // <Snippet4>
 using System;
@@ -21,7 +21,7 @@ namespace MimeContentBinding_work
 // <Snippet1>
 // <Snippet2>
 // <Snippet3>
-         ServiceDescription  myServiceDescription =  
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MimeContentSample_cs.wsdl");
 
          // Get the Binding.
@@ -30,7 +30,7 @@ namespace MimeContentBinding_work
          // Get the first OperationBinding.
          OperationBinding myOperationBinding = myBinding.Operations[0];
          OutputBinding myOutputBinding = myOperationBinding.Output;
-         ServiceDescriptionFormatExtensionCollection  
+         ServiceDescriptionFormatExtensionCollection
             myServiceDescriptionFormatExtensionCollection = 
             myOutputBinding.Extensions;
 

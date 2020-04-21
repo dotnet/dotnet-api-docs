@@ -149,7 +149,7 @@ class MyClass1
       // the service collection.
       myServiceDescription.Services[0].Ports.Add(soapPort);
 
-      // Save the ServiceDescripition to an external file.
+      // Save the ServiceDescription to an external file.
       myServiceDescription.Write("MathService_new.wsdl");
       Console.WriteLine("\nSuccessfully added bindings for SOAP protocol " +
          "and saved results in the file MathService_new.wsdl");
