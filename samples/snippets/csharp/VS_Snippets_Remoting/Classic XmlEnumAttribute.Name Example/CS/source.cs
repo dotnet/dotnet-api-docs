@@ -13,5 +13,5 @@ public enum EmployeeStatus
    [XmlEnum("Triple")]
    Three
 }
-   
+
 // </Snippet1>

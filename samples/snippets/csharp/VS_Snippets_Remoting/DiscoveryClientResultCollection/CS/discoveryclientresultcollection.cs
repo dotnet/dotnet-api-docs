@@ -2,8 +2,8 @@
 /*
 The following example demonstrates 'DiscoveryClientResultCollection' class.
 A 'DiscoveryClientResultCollection' object is obtained by reading a '.discomap' file
-which contains the 'DiscoveryClientResult' objects, representing the details of 
-discovery references. An element from the collection is removed and programmatically 
+which contains the 'DiscoveryClientResult' objects, representing the details of
+discovery references. An element from the collection is removed and programmatically
 added to 'DiscoveryClientResultCollection' class.
 */
 // <Snippet1>
@@ -20,7 +20,7 @@ public class MyDiscoveryClientResult
    {
       try
       {
-         DiscoveryClientProtocol myDiscoveryClientProtocol = 
+         DiscoveryClientProtocol myDiscoveryClientProtocol =
              new DiscoveryClientProtocol();
 
          // Get the collection of DiscoveryClientResult objects.
@@ -34,16 +34,16 @@ public class MyDiscoveryClientResult
              myDiscoveryClientResultCollection[0]);
          Console.WriteLine("Adding a DiscoveryClientResult" +
              " to the collection...");
-         DiscoveryClientResult myDiscoveryClientResult = 
+         DiscoveryClientResult myDiscoveryClientResult =
              new DiscoveryClientResult();
 
-         // Set the DiscoveryDocumentReference class as the type of 
+         // Set the DiscoveryDocumentReference class as the type of
          // reference in the discovery document.
-         myDiscoveryClientResult.ReferenceTypeName = 
+         myDiscoveryClientResult.ReferenceTypeName =
              "System.Web.Services.Discovery.DiscoveryDocumentReference";
 
          // Set the URL for the reference.
-         myDiscoveryClientResult.Url = 
+         myDiscoveryClientResult.Url =
              "http://localhost/Discovery/Service1_cs.asmx?disco";
 
          // Set the name of the file in which the reference is saved.

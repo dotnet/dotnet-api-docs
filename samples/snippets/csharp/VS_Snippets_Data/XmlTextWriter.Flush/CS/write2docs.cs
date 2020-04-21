@@ -22,7 +22,7 @@ public class Sample
      writer.WriteStartElement("cd");
      writer.WriteElementString("title", "Americana");
      writer.WriteEndElement();
-     writer.Flush();  
+     writer.Flush();
 
      //Close the writer.
      writer.Close();

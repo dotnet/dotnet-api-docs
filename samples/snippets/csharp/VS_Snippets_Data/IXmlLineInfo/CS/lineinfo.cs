@@ -8,7 +8,7 @@ public class Sample{
   public static void Main(){
 
     // Create the XML fragment to be parsed.
-    string xmlFrag  = 
+    string xmlFrag  =
     @"<book>
            <misc>
               <style>paperback</style>
@@ -28,7 +28,7 @@ public class Sample{
 
     IXmlLineInfo lineInfo = ((IXmlLineInfo)reader);
     if (lineInfo.HasLineInfo()){
-       
+
       // Parse the XML and display each node.
       while (reader.Read()){
        switch (reader.NodeType){
@@ -44,12 +44,12 @@ public class Sample{
            Console.Write("{0} {1},{2}  ", reader.Depth, lineInfo.LineNumber, lineInfo.LinePosition);
            Console.WriteLine("</{0}>", reader.Name);
            break;
-       }       
-     }           
+       }
+     }
     }
 
     // Close the reader.
-    reader.Close();       
+    reader.Close();
   }
 }
 //</snippet1>

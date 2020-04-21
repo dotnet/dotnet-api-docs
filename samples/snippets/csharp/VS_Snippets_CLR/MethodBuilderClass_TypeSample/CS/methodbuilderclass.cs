@@ -36,7 +36,7 @@ public class MethodBuilderClass
          // Define a public string field named 'myField'.
          FieldBuilder myField = myTypeBuilder.DefineField("MyDynamicField",
                         typeof(String), FieldAttributes.Public);
-         
+
          // Define the dynamic method 'MyDynamicMethod'.
          MethodBuilder myMethodBuilder = myTypeBuilder.DefineMethod("MyDynamicMethod",
                               MethodAttributes.Private, typeof(int), new Type[] {});

@@ -8,7 +8,7 @@
 // System.Web.Services.Discovery.DiscoveryExceptionDictionary.Values
 
 /*
-   The following example demonstrates the usage of the 
+   The following example demonstrates the usage of the
    'DiscoveryExceptionDictionary' class, the constructor
    'DiscoveryExceptionDictionary()', the properties 'Item', 'Keys',
    'Values' and the methods 'Contains', 'Add' and 'Remove' of the class.
@@ -35,21 +35,21 @@ public class MySample
    {
       string myDiscoFile = "http://localhost/MathService_cs.disco";
       string myUrlKey = "http://localhost/MathService_cs.asmx?wsdl";
-      DiscoveryClientProtocol myDiscoveryClientProtocol1 = 
+      DiscoveryClientProtocol myDiscoveryClientProtocol1 =
                                             new DiscoveryClientProtocol();
-      DiscoveryDocument myDiscoveryDocument = 
+      DiscoveryDocument myDiscoveryDocument =
                          myDiscoveryClientProtocol1.Discover(myDiscoFile);
-      IEnumerator myEnumerator = 
+      IEnumerator myEnumerator =
                            myDiscoveryDocument.References.GetEnumerator();
       while ( myEnumerator.MoveNext() )
       {
          ContractReference myContractReference =
                                   (ContractReference)myEnumerator.Current;
-         DiscoveryClientProtocol myDiscoveryClientProtocol2 = 
+         DiscoveryClientProtocol myDiscoveryClientProtocol2 =
                                        myContractReference.ClientProtocol;
          myDiscoveryClientProtocol2.ResolveAll();
 // <Snippet2>
-         DiscoveryExceptionDictionary myExceptionDictionary 
+         DiscoveryExceptionDictionary myExceptionDictionary
                                       = myDiscoveryClientProtocol2.Errors;
          if ( myExceptionDictionary.Contains(myUrlKey) == true )
          {
@@ -84,7 +84,7 @@ public class MySample
             DiscoveryExceptionDictionary myNewExceptionDictionary =
                                        new DiscoveryExceptionDictionary();
             // Add an exception with the custom error message.
-            Exception myNewException = 
+            Exception myNewException =
                  new Exception("The requested service is not available.");
             myNewExceptionDictionary.Add(myUrlKey, myNewException);
             myExceptionDictionary = myNewExceptionDictionary;

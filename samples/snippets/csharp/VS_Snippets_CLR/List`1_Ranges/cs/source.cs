@@ -6,8 +6,8 @@ public class Example
 {
     public static void Main()
     {
-        string[] input = { "Brachiosaurus", 
-                           "Amargasaurus", 
+        string[] input = { "Brachiosaurus",
+                           "Amargasaurus",
                            "Mamenchisaurus" };
 
         List<string> dinosaurs = new List<string>(input);
@@ -38,8 +38,8 @@ public class Example
             Console.WriteLine(dinosaur);
         }
 
-        input = new string[] { "Tyrannosaurus", 
-                               "Deinonychus", 
+        input = new string[] { "Tyrannosaurus",
+                               "Deinonychus",
                                "Velociraptor"};
 
         Console.WriteLine("\nInsertRange(3, input)");
@@ -53,7 +53,7 @@ public class Example
 
         Console.WriteLine("\noutput = dinosaurs.GetRange(2, 3).ToArray()");
         string[] output = dinosaurs.GetRange(2, 3).ToArray();
-        
+
         Console.WriteLine();
         foreach( string dinosaur in output )
         {

@@ -16,8 +16,8 @@ public class Client
           RemotingConfiguration.Configure("channels.config");
           RemotingConfiguration.Configure("client.exe.config");
 
-          Foo server = new Foo();     
-          // Call share method. 
+          Foo server = new Foo();
+          // Call share method.
           server.PrintString("String logged to console.");
           Console.WriteLine("Connected to server ...");
        }

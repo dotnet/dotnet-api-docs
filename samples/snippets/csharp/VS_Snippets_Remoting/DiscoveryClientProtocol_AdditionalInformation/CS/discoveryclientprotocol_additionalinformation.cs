@@ -31,16 +31,16 @@ class DiscoverySoapBindingClass
             string myStringUrl = "http://localhost/dataservice.disco";
 
             // Call the Discover method to populate the Documents property.
-            DiscoveryClientProtocol myDiscoveryClientProtocol = 
+            DiscoveryClientProtocol myDiscoveryClientProtocol =
                 new DiscoveryClientProtocol();
-            myDiscoveryClientProtocol.Credentials = 
+            myDiscoveryClientProtocol.Credentials =
                 CredentialCache.DefaultCredentials;
-            DiscoveryDocument myDiscoveryDocument = 
+            DiscoveryDocument myDiscoveryDocument =
                 myDiscoveryClientProtocol.Discover(myStringUrl);
 
             SoapBinding mySoapBinding = new SoapBinding();
             mySoapBinding.Address = "http://schemas.xmlsoap.org/disco/scl/";
-            mySoapBinding.Binding = new XmlQualifiedName("string", 
+            mySoapBinding.Binding = new XmlQualifiedName("string",
                 "http://www.w3.org/2001/XMLSchema");
             myDiscoveryClientProtocol.AdditionalInformation.Add(mySoapBinding);
 
@@ -48,12 +48,12 @@ class DiscoverySoapBindingClass
             myDiscoveryClientProtocol.WriteAll("MyDirectory",
                 "results.discomap");
 
-            System.Collections.IList myIList = 
+            System.Collections.IList myIList =
                 myDiscoveryClientProtocol.AdditionalInformation;
             mySoapBinding = null;
             mySoapBinding = (SoapBinding)myIList[0];
-            Console.WriteLine("The address of the SoapBinding associated " 
-                + "with AdditionalInformation is: " 
+            Console.WriteLine("The address of the SoapBinding associated "
+                + "with AdditionalInformation is: "
                 + mySoapBinding.Address);
         }
         catch (Exception e)

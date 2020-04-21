@@ -76,9 +76,9 @@ public static void ReadElementContentAsObject() {
   XmlReaderSettings settings = new XmlReaderSettings();
   settings.ValidationType = ValidationType.Schema;
   settings.Schemas.Add("urn:items", "item.xsd");	
-   XmlReader reader = XmlReader.Create("item.xml", settings); 
+   XmlReader reader = XmlReader.Create("item.xml", settings);
 
-  // Get the CLR type of the price element. 
+  // Get the CLR type of the price element.
   reader.ReadToFollowing("price");
   Console.WriteLine(reader.ValueType);
 
@@ -88,7 +88,7 @@ public static void ReadElementContentAsObject() {
   // Add 2.50 to the price.
   price = Decimal.Add(price, 2.50m);
 
-//</snippet6>  
+//</snippet6>
 }
 
 public static void ReadElementContentAsDouble_1() {
@@ -103,7 +103,7 @@ public static void ReadElementContentAsDouble_1() {
 
 public static void ReadTypedData1() {
 //<snippet13>
-// Create a validating XmlReader object. The schema 
+// Create a validating XmlReader object. The schema
 // provides the necessary type information.
 XmlReaderSettings settings = new XmlReaderSettings();
 settings.ValidationType = ValidationType.Schema;

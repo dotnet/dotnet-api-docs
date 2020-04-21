@@ -22,7 +22,7 @@ public static void BinHexEncodeImageFile() {
   int readBytes = 0;
 	
   using (XmlWriter writer = XmlWriter.Create("output.xml")) {
-       FileStream inputFile = new FileStream(@"C:\artFiles\sunset.jpg", FileMode.OpenOrCreate, 
+       FileStream inputFile = new FileStream(@"C:\artFiles\sunset.jpg", FileMode.OpenOrCreate,
                                                                     FileAccess.Read, FileShare.Read);
        writer.WriteStartDocument();
        writer.WriteStartElement("image");
@@ -48,8 +48,8 @@ public static void BinHexDecodeImageFile() {
   int readBytes = 0;
 
   using (XmlReader reader = XmlReader.Create("output.xml")) {
-					   
-        FileStream outputFile = new FileStream(@"C:\artFiles\data\newImage.jpg", FileMode.OpenOrCreate, 
+					
+        FileStream outputFile = new FileStream(@"C:\artFiles\data\newImage.jpg", FileMode.OpenOrCreate,
                                                                       FileAccess.Write, FileShare.Write);
         // Read to the image element.
         reader.ReadToFollowing("image");
@@ -101,7 +101,7 @@ public static void Base64DecodeImageFile() {
   int readBytes = 0;
 
   using (XmlReader reader = XmlReader.Create("output.xml")) {
-					   
+					
         FileStream outputFile = new FileStream(@"C:\artFiles\data\newImage.jpg",
 					FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
         // Read to the image element.

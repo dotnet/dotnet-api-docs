@@ -32,28 +32,28 @@ public class Example
 
         // Allow the current user to read and delete the key.
         //
-        rs.AddAccessRule(new RegistryAccessRule(user, 
-            RegistryRights.ReadKey | RegistryRights.Delete, 
-            InheritanceFlags.None, 
-            PropagationFlags.None, 
+        rs.AddAccessRule(new RegistryAccessRule(user,
+            RegistryRights.ReadKey | RegistryRights.Delete,
+            InheritanceFlags.None,
+            PropagationFlags.None,
             AccessControlType.Allow));
 
         // Prevent the current user from writing or changing the
         // permission set of the key. Note that if Delete permission
         // were not allowed in the previous access rule, denying
-        // WriteKey permission would prevent the user from deleting the 
+        // WriteKey permission would prevent the user from deleting the
         // key.
-        rs.AddAccessRule(new RegistryAccessRule(user, 
-            RegistryRights.WriteKey | RegistryRights.ChangePermissions, 
-            InheritanceFlags.None, 
-            PropagationFlags.None, 
+        rs.AddAccessRule(new RegistryAccessRule(user,
+            RegistryRights.WriteKey | RegistryRights.ChangePermissions,
+            InheritanceFlags.None,
+            PropagationFlags.None,
             AccessControlType.Deny));
 
         // Create the example key with registry security.
         RegistryKey rk = null;
         try
         {
-            rk = Registry.CurrentUser.CreateSubKey("RegistryRightsExample", 
+            rk = Registry.CurrentUser.CreateSubKey("RegistryRightsExample",
                 RegistryKeyPermissionCheck.Default, rs);
             Console.WriteLine("\r\nExample key created.");
             rk.SetValue("ValueName", "StringValue");
@@ -67,7 +67,7 @@ public class Example
         rk = Registry.CurrentUser;
 
         RegistryKey rk2;
-        
+
         // Open the key with read access.
         rk2 = rk.OpenSubKey("RegistryRightsExample", false);
         Console.WriteLine("\r\nRetrieved value: {0}", rk2.GetValue("ValueName"));
@@ -89,10 +89,10 @@ public class Example
         try
         {
             rs = new RegistrySecurity();
-            rs.AddAccessRule(new RegistryAccessRule(user, 
-                RegistryRights.WriteKey, 
-                InheritanceFlags.None, 
-                PropagationFlags.None, 
+            rs.AddAccessRule(new RegistryAccessRule(user,
+                RegistryRights.WriteKey,
+                InheritanceFlags.None,
+                PropagationFlags.None,
                 AccessControlType.Allow));
             rk2 = rk.OpenSubKey("RegistryRightsExample", false);
             rk2.SetAccessControl(rs);

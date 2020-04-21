@@ -7,7 +7,7 @@ public class Sample{
   public static void Main(){
      XmlTextWriter writer = new XmlTextWriter ("out.xml", null);
      string tag = "item name";
-   
+
   try{
 	
      // Write the root element.
@@ -26,7 +26,7 @@ public class Sample{
 
      // Write the end tag for the root element.
      writer.WriteEndElement();
- 
+
      writer.Close();
   }
 }

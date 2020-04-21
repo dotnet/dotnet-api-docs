@@ -1,5 +1,5 @@
 ﻿// This sample demonstrates how to use  members of the SecurityElement class.
-// The sample creates a SecurityElement for the root of the XML tree and 
+// The sample creates a SecurityElement for the root of the XML tree and
 // demonstrates how to add attributes and child elements.
 //<Snippet1>
 using System;
@@ -12,7 +12,7 @@ class SecurityElementMembers
     static void Main(string[] args)
     {
         //<Snippet3>
-        SecurityElement xmlRootElement = 
+        SecurityElement xmlRootElement =
             new SecurityElement("RootTag", "XML security tree");
         //</Snippet3>
 
@@ -21,10 +21,10 @@ class SecurityElementMembers
             DateTime.Now.AddSeconds(1.0).ToString());
 
         //<Snippet2>
-        SecurityElement windowsRoleElement = 
+        SecurityElement windowsRoleElement =
             new SecurityElement("WindowsMembership.WindowsRole");
         //</Snippet2>
-        
+
         //<Snippet4>
         windowsRoleElement.AddAttribute("version","1.00");
         //</Snippet4>
@@ -53,7 +53,7 @@ class SecurityElementMembers
             //</Snippet23>
             Console.WriteLine(elementInXml);
         }
-        
+
         Console.WriteLine("This sample completed successfully; " +
             "press Enter to exit.");
         Console.ReadLine();
@@ -97,7 +97,7 @@ class SecurityElementMembers
             if (!SecurityElement.IsValidText(tagText))
                 //</Snippet9>
             {
-                // Replace invalid text with valid XML text 
+                // Replace invalid text with valid XML text
                 // to enforce proper XML formatting.
                 //<Snippet19>
                 tagText = SecurityElement.Escape(tagText);
@@ -128,7 +128,7 @@ class SecurityElementMembers
                             new SecurityElement(tagName, tagText));
                     }
                 }
-                else 
+                else
                 {
                     // Add child element to the parent security element.
                     parentElement.AddChild(
@@ -139,7 +139,7 @@ class SecurityElementMembers
         return parentElement;
     }
 
-    // Create and display a summary sentence 
+    // Create and display a summary sentence
     // about the specified security element.
     private static void DisplaySummary(SecurityElement xmlElement)
     {
@@ -152,12 +152,12 @@ class SecurityElementMembers
         //<Snippet12>
         string xmlTreeDescription = xmlElement.Text;
         //</Snippet12>
-        
+
         // Retrieve value of the creationdate attribute.
         //<Snippet13>
         string xmlCreationDate = xmlElement.Attribute("creationdate");
         //</Snippet13>
-        
+
         // Retrieve the number of children under the security element.
         //<Snippet14>
         string childrenCount = xmlElement.Children.Count.ToString();
@@ -171,7 +171,7 @@ class SecurityElementMembers
         Console.WriteLine(outputMessage);
     }
 
-    // Compare the first two occurrences of an attribute 
+    // Compare the first two occurrences of an attribute
     // in the specified security element.
     private static void CompareAttributes(
         SecurityElement xmlElement, string attributeName)
@@ -191,7 +191,7 @@ class SecurityElementMembers
         }
     }
 
-    // Convert the contents of the specified security element 
+    // Convert the contents of the specified security element
     // to hash codes stored in a hash table.
     private static void ConvertToHashTable(SecurityElement xmlElement)
     {
@@ -208,7 +208,7 @@ class SecurityElementMembers
         {
             parentNum++;
             xmlAsHash.Add(xmlParent.GetHashCode(), "parent" + parentNum);
-            if ((xmlParent.Children != null) && 
+            if ((xmlParent.Children != null) &&
                 (xmlParent.Children.Count > 0))
             {
                 int childNum = 0;
@@ -226,7 +226,7 @@ class SecurityElementMembers
     private static SecurityElement DestroyTree(SecurityElement xmlElement)
     {
         SecurityElement localXmlElement = xmlElement;
-        SecurityElement destroyElement = 
+        SecurityElement destroyElement =
             localXmlElement.SearchForChildByTag("destroytime");
 
         // Verify that a destroytime tag exists.
@@ -234,7 +234,7 @@ class SecurityElementMembers
         if (localXmlElement.SearchForChildByTag("destroytime") != null)
             //</Snippet17>
         {
-            // Retrieve the destroytime text to get the time 
+            // Retrieve the destroytime text to get the time
             // the tree can be destroyed.
             //<Snippet18>
             string storedDestroyTime =
@@ -255,7 +255,7 @@ class SecurityElementMembers
             typeof(System.Security.SecurityElement)))
             //</Snippet21>
         {
-            // Determine whether the localXmlElement object 
+            // Determine whether the localXmlElement object
             // differs from xmlElement.
             //<Snippet20>
             if (xmlElement.Equals(localXmlElement))
@@ -279,8 +279,8 @@ class SecurityElementMembers
 }
 //
 // This sample produces the following output:
-// 
-// The security XML tree named RootTag(XML security tree) 
+//
+// The security XML tree named RootTag(XML security tree)
 // was created on 2/23/2004 1:23:00 PM and contains 2 child elements.
 //<RootTag creationdate="2/23/2004 1:23:00 PM">XML security tree
 //   <destroytime>2/23/2004 1:23:01 PM</destroytime>

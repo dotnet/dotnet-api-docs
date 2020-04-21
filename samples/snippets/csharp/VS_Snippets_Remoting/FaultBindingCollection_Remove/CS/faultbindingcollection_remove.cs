@@ -1,9 +1,9 @@
 ﻿/*
- * The following example demonstrates the 'Remove', 'CopyTo', 'Insert', 
- 'Contains', 'IndexOf' method and 'Item[int]' property of FaultBindingCollection 
+ * The following example demonstrates the 'Remove', 'CopyTo', 'Insert',
+ 'Contains', 'IndexOf' method and 'Item[int]' property of FaultBindingCollection
   class
-  The program reverses the fault bindings that appear in the WSDL file. 
-  It also reverses the operation faults and displays the resultant WSDL file 
+  The program reverses the fault bindings that appear in the WSDL file.
+  It also reverses the operation faults and displays the resultant WSDL file
   to the console.
  */
 
@@ -35,7 +35,7 @@ public class FaultBindingCollection_Remove
          for(int i = 0, j = (myOperationFaultArray.Length - 1); i < myOperationFaultArray.Length; i++, j--)
             myOperationFaultCollection.Insert(i, myOperationFaultArray[j]);
       }
-      
+
 // <Snippet1>
 // <Snippet2>
 // <Snippet3>
@@ -50,7 +50,7 @@ public class FaultBindingCollection_Remove
       FaultBindingCollection myFaultBindingCollection = myOperationBinding.Faults;
 
       // Reverse the fault bindings order.
-      if(myFaultBindingCollection.Count > 1) 
+      if(myFaultBindingCollection.Count > 1)
       {
          FaultBinding myFaultBinding = myFaultBindingCollection[0];
 
@@ -66,7 +66,7 @@ public class FaultBindingCollection_Remove
          for(int i = 0, j = (myFaultBindingArray.Length - 1); i < myFaultBindingArray.Length; i++, j--)
             myFaultBindingCollection.Insert(i, myFaultBindingArray[j]);
          // Check if the first element in the collection before the reversal is now the last element.
-         if(myFaultBindingCollection.Contains(myFaultBinding) && 
+         if(myFaultBindingCollection.Contains(myFaultBinding) &&
             myFaultBindingCollection.IndexOf(myFaultBinding) == (myFaultBindingCollection.Count - 1))
             // Display the WSDL generated to the console.
             myServiceDescription.Write(Console.Out);

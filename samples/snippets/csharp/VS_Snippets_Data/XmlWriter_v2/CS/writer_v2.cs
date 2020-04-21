@@ -185,7 +185,7 @@ class Whidbey_Write_Methods
         settings.Indent = true;
         using (XmlWriter writer = XmlWriter.Create(Console.Out, settings))
         {
-            
+
             writer.WriteStartElement("root");
             writer.WriteAttributes(reader, true);
             writer.WriteEndElement();

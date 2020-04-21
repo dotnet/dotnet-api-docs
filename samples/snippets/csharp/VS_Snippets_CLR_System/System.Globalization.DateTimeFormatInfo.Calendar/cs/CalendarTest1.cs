@@ -8,17 +8,17 @@ public class Example
    {
       CultureInfo ci = CultureInfo.CreateSpecificCulture("ar-EG");
       Console.WriteLine("The current calendar for the {0} culture is {1}",
-                        ci.Name, 
+                        ci.Name,
                         CalendarUtilities.ShowCalendarName(ci.DateTimeFormat.Calendar));
 
       CalendarUtilities.ChangeCalendar(ci, new JapaneseCalendar());
       Console.WriteLine("The current calendar for the {0} culture is {1}",
-                        ci.Name, 
+                        ci.Name,
                         CalendarUtilities.ShowCalendarName(ci.DateTimeFormat.Calendar));
-      
+
       CalendarUtilities.ChangeCalendar(ci, new UmAlQuraCalendar());
       Console.WriteLine("The current calendar for the {0} culture is {1}",
-                        ci.Name, 
+                        ci.Name,
                         CalendarUtilities.ShowCalendarName(ci.DateTimeFormat.Calendar));
    }
 }
@@ -27,11 +27,11 @@ public class CalendarUtilities
 {
    private Calendar newCal;
    private bool isGregorian;
-   
+
    public static void ChangeCalendar(CultureInfo ci, Calendar cal)
    {
       CalendarUtilities util = new CalendarUtilities(cal);
-      
+
       // Is the new calendar already the current calendar?
       if (util.CalendarExists(ci.DateTimeFormat.Calendar))
          return;
@@ -40,20 +40,20 @@ public class CalendarUtilities
       if (Array.Exists(ci.OptionalCalendars, util.CalendarExists))
          ci.DateTimeFormat.Calendar = cal;
    }
-   
+
    private CalendarUtilities(Calendar cal)
    {
       newCal = cal;
-      
+
       // Is the new calendar a Gregorian calendar?
       isGregorian = cal.GetType().Name.Contains("Gregorian");
    }
-   
+
    private bool CalendarExists(Calendar cal)
    {
       if (cal.ToString() == newCal.ToString()) {
          if (isGregorian) {
-            if (((GregorianCalendar) cal).CalendarType == 
+            if (((GregorianCalendar) cal).CalendarType ==
                ((GregorianCalendar) newCal).CalendarType)
                return true;
          }
@@ -70,7 +70,7 @@ public class CalendarUtilities
       if (cal is GregorianCalendar)
          calName += ", Type " + ((GregorianCalendar) cal).CalendarType.ToString();
 
-      return calName; 
+      return calName;
    }
 }
 // The example displays the following output:

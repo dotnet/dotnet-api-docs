@@ -18,7 +18,7 @@ public class Example
          Console.WriteLine(ci.LastIndexOf(s1, searchString, position, 3, CompareOptions.None));
          Console.WriteLine(ci.LastIndexOf(s1, searchString, position, 3, CompareOptions.Ordinal));
       }
-      
+
       position = ci.LastIndexOf(s2, 'm');
       if (position >= 0) {
          Console.WriteLine(ci.LastIndexOf(s2, searchString, position, 3, CompareOptions.None));

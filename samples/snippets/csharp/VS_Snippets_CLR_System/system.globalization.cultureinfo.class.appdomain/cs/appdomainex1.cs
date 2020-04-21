@@ -11,29 +11,29 @@ public class Example
       // Set the default culture and display the current date in the current application domain.
       Info info1 = new Info();
       SetAppDomainCultures("fr-FR");
-      
+
       // Create a second application domain.
       AppDomainSetup setup = new AppDomainSetup();
       setup.AppDomainInitializer = SetAppDomainCultures;
       setup.AppDomainInitializerArguments = new string[] { "ru-RU" };
       AppDomain domain = AppDomain.CreateDomain("Domain2", null, setup);
       // Create an Info object in the new application domain.
-      Info info2 = (Info) domain.CreateInstanceAndUnwrap(typeof(Example).Assembly.FullName, 
-                                                         "Info"); 
+      Info info2 = (Info) domain.CreateInstanceAndUnwrap(typeof(Example).Assembly.FullName,
+                                                         "Info");
 
       // Execute methods in the two application domains.
       info2.DisplayDate();
       info2.DisplayCultures();
-      
+
       info1.DisplayDate();
-      info1.DisplayCultures();            
+      info1.DisplayCultures();
    }
 
    public static void SetAppDomainCultures(string[] names)
    {
       SetAppDomainCultures(names[0]);
    }
-   
+
    public static void SetAppDomainCultures(string name)
    {
        try {
@@ -43,10 +43,10 @@ public class Example
       // If an exception occurs, we'll just fall back to the system default.
       catch (CultureNotFoundException) {
          return;
-      }   
+      }
       catch (ArgumentException) {
          return;
-      } 
+      }
    }
 }
 
@@ -56,7 +56,7 @@ public class Info : MarshalByRefObject
    {
       Console.WriteLine("Today is {0:D}", DateTime.Now);
    }
-   
+
    public void DisplayCultures()
    {
       Console.WriteLine("Application domain is {0}", AppDomain.CurrentDomain.Id);

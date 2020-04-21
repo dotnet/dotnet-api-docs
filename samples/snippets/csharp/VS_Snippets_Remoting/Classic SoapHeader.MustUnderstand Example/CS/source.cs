@@ -3,7 +3,7 @@
 using System;
 
 public class Sample {
-    
+
     public static void Main() {
         MyWebService ws = new MyWebService();
 
@@ -12,7 +12,7 @@ public class Sample {
             customHeader.MyValue = "Header Value for MyValue";
             customHeader.MustUnderstand = true;
             ws.myHeader = customHeader;
-            
+
 	    int results = ws.MyWebMethod(3,5);
         }
         catch (Exception e) {
@@ -23,7 +23,7 @@ public class Sample {
 
 // </Snippet1>
 
-// Following was added to make the sample compile.  
+// Following was added to make the sample compile.
 public class MyHeader : SoapHeader {
 
 	public string MyValue;

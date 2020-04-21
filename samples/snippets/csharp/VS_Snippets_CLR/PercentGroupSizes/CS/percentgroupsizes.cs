@@ -26,12 +26,12 @@ class NumberFormatInfoSample {
 }
 
 
-/* 
+/*
 This code produces the following output.
 
 12,345,678,901,234,600.00 %
 1234,5678,9012,346,00.00 %
 123456789012,346,00.00 %
 */
-   
+
 // </snippet1>

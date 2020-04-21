@@ -1,9 +1,9 @@
 ﻿// System.Web.Services.Discovery.DiscoveryReference
 
-/* 
-   This program demonstrates 'DiscoveryReference' class. 
+/*
+   This program demonstrates 'DiscoveryReference' class.
    DiscoveryReference class is derived in 'MyDiscoveryReferenceClass'. A
-   variable of type 'MyDiscoveryReferenceClass' class is taken to demonstrate 
+   variable of type 'MyDiscoveryReferenceClass' class is taken to demonstrate
    members of 'MyDiscoveryReferenceClass'.
    Note : The dataservice.disco file should be copied to c:\Inetpub\wwwroot
 */
@@ -20,7 +20,7 @@ class MyDiscoveryDocumentClass
    {
       try {
          DiscoveryDocument myDiscoveryDocument;
-         StreamReader myStreamReader = 
+         StreamReader myStreamReader =
              new StreamReader("c:\\Inetpub\\wwwroot\\dataservice.disco");
          FileStream myStream = new FileStream("c:\\MyDiscovery.disco",
              FileMode.OpenOrCreate);
@@ -33,16 +33,16 @@ class MyDiscoveryDocumentClass
          MyDiscoveryReferenceClass myDiscoveryReference;
          myDiscoveryReference =  new MyDiscoveryReferenceClass();
 
-         DiscoveryClientProtocol myDiscoveryClientProtocol = 
+         DiscoveryClientProtocol myDiscoveryClientProtocol =
              new DiscoveryClientProtocol();
-         myDiscoveryClientProtocol.Credentials = 
+         myDiscoveryClientProtocol.Credentials =
              CredentialCache.DefaultCredentials;
 
          // Set the client protocol.
          myDiscoveryReference.ClientProtocol = myDiscoveryClientProtocol;
-         
+
          // Read the default file name.
-         Console.WriteLine("Default file name is: " 
+         Console.WriteLine("Default file name is: "
              + myDiscoveryReference.DefaultFilename);
 
          // Write the document.
@@ -51,7 +51,7 @@ class MyDiscoveryDocumentClass
          // Read the document.
          myDiscoveryReference.ReadDocument(myStream);
 
-         // Set the URL. 
+         // Set the URL.
          myDiscoveryReference.Url = "http://localhost/dataservice.disco";
          Console.WriteLine("Url is: " + myDiscoveryReference.Url);
 
@@ -61,7 +61,7 @@ class MyDiscoveryDocumentClass
          myStreamReader.Close();
          myStream.Close();
       }
-      catch (Exception e) 
+      catch (Exception e)
       {
          Console.WriteLine("Exception caught! - {0}", e.Message);
       }

@@ -40,7 +40,7 @@ namespace ServiceControllerSample
                     }
                     //<Snippet3>
                     // Issue custom commands to the service
-                    // enum SimpleServiceCustomCommands 
+                    // enum SimpleServiceCustomCommands
                     //    { StopWorker = 128, RestartWorker, CheckWorker };
                     sc.ExecuteCommand((int)SimpleServiceCustomCommands.StopWorker);
                     sc.ExecuteCommand((int)SimpleServiceCustomCommands.RestartWorker);

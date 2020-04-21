@@ -19,13 +19,13 @@ public XmlSerializer CreateOverrider()
    // Create an XmlSerializer with overriding attributes.
    XmlAttributes attrs = new XmlAttributes();
    XmlAttributeOverrides xOver = new XmlAttributeOverrides();
-   
+
    XmlRootAttribute xRoot = new XmlRootAttribute();
    // Set a new Namespace and ElementName for the root element.
    xRoot.Namespace = "http://www.cpandl.com";
    xRoot.ElementName = "NewGroup";
    attrs.XmlRoot = xRoot;
-   
+
    xOver.Add(typeof(Group), attrs);
 
    // Get the XmlAttributes object, based on the type.

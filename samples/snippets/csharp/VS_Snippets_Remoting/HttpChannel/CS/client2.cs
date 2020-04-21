@@ -8,7 +8,7 @@ using System.Runtime.Remoting.Lifetime;
 using SampleNamespace;
 
 // The following sample uses an HttpChannel constructor
-// to create a new HttpChannel.  
+// to create a new HttpChannel.
 // NOTE: manually instantiating HttpChannel() and registering it does not seem
 // necessary. This sample will work if the line of code is commented out.
 

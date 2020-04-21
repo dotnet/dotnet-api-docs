@@ -1,10 +1,10 @@
 ﻿// System.Web.Services.Discovery.ContractReference.Contract
-/* 
+/*
  The following example demonstrates the 'Contract' property of the 'ContractReference'
  class.
- It creates an instance of 'DiscoveryDocument' class by reading from a disco file 
+ It creates an instance of 'DiscoveryDocument' class by reading from a disco file
  and gets the first reference to a service description in a 'ContractReference' instance.
- Using the 'Contract' property of the 'ContractReference' instance it creates a wsdl 
+ Using the 'Contract' property of the 'ContractReference' instance it creates a wsdl
  file which works as a service description file.
  */
 
@@ -25,11 +25,11 @@ namespace ConsoleApplication1
          try
          {
             // Create the file stream.
-            FileStream discoStream = 
+            FileStream discoStream =
                 new FileStream("Service1_CS.disco",FileMode.Open);
 
             // Create the discovery document.
-            DiscoveryDocument myDiscoveryDocument = 
+            DiscoveryDocument myDiscoveryDocument =
                 DiscoveryDocument.Read(discoStream);
 
             // Get the first ContractReference in the collection.
@@ -38,7 +38,7 @@ namespace ConsoleApplication1
 
             // Set the client protocol.
             myContractReference.ClientProtocol = new DiscoveryClientProtocol();
-            myContractReference.ClientProtocol.Credentials = 
+            myContractReference.ClientProtocol.Credentials =
                 CredentialCache.DefaultCredentials;
 
             // Get the service description.

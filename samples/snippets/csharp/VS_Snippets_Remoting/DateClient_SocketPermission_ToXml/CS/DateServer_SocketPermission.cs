@@ -1,14 +1,14 @@
 ﻿/*
   This program demonstrates the 'AcceptList' property  of 'SocketPermission' class.
 
-  This program provides a class called 'DateServer' that functions as a server 
+  This program provides a class called 'DateServer' that functions as a server
   for a 'DateClient'. A 'DateServer' is a server that provides the current date on
-  the server in response to a request from a client. The 'DateServer' class 
+  the server in response to a request from a client. The 'DateServer' class
   provides a method called 'Create' which waits for client connections and sends
   the current date on that socket connection. Within the 'Create' method of
-  'DateServer' class an instance of 'SocketPermission' is created with the 
+  'DateServer' class an instance of 'SocketPermission' is created with the
   'SocketPermission(NetworkAccess, TransportType, string, int)' constructor.
-  If the calling method has the requisite permissions the 'Create' method waits 
+  If the calling method has the requisite permissions the 'Create' method waits
   for client connections and sends the current date on the socket connection.
 
 */
@@ -23,14 +23,14 @@ using System.Collections;
 public class DateServer {
 
 	// Client connecting to the date server.
-	private Socket clientSocket; 
+	private Socket clientSocket;
 	private Socket serverSocket;
 	private Encoding asciiEncoding;
 
 	public readonly int serverBacklog;
 
 	public static void Main(String[] args) {
-		if(args.Length != 1) 
+		if(args.Length != 1)
 		{
 			PrintUsage();
 			return;
@@ -60,13 +60,13 @@ public class DateServer {
 		// Create another 'SocketPermission' object with two ip addresses.
 		// First 'SocketPermission' ip-address is '192.168.144.238' for 'All' transport types and
       // for 'All' ports for the ip-address.
-		SocketPermission socketPermission = 
+		SocketPermission socketPermission =
 						new SocketPermission(NetworkAccess.Accept,
 											 TransportType.All,
 											 "192.168.144.238",
 											 SocketPermission.AllPorts);
 
-        // Second 'SocketPermission' ip-address is '192.168.144.239' for 'All' transport types and 
+        // Second 'SocketPermission' ip-address is '192.168.144.239' for 'All' transport types and
         // for 'All' ports for the ip-address.
 		socketPermission.AddPermission(NetworkAccess.Accept,
 									   TransportType.All,

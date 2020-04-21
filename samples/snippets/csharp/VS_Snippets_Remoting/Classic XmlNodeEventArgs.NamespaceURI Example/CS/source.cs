@@ -12,6 +12,6 @@ private void serializer_UnknownNode
    Console.WriteLine
    ("UnknownNode Namespace URI: " + e.NamespaceURI);
 }
-   
+
 // </Snippet1>
 }

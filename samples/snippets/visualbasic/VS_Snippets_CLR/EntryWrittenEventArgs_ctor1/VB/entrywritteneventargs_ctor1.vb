@@ -3,7 +3,7 @@
 ' The following example demonstrates 'EntryWrittenEventArgs ()'
 ' constructor of the 'EntryWrittenEventArgs' class. It creates a custom 'EventLog'
 ' and writes an entry into it. Then creates an 'EntryWrittenEventArgs' object
-' using the first entry in the custom eventlog.This object is used to notify a message
+' using the first entry in the custom eventlog. This object is used to notify a message
 
 ' <Snippet1>
 Imports System.Diagnostics

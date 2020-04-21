@@ -19,7 +19,7 @@ public class Sample {
     // Load the file to transform.
     XPathDocument doc = new XPathDocument(filename);
 
-    // Create the writer.             
+    // Create the writer.
     XmlWriter writer = XmlWriter.Create(Console.Out, xslt.OutputSettings);
 
     // Transform the file and send the output to the console.

@@ -4,8 +4,8 @@
 
 /*
    This program demonstrates the 'DiscoveryDocumentReference' class, default constructor and
-   'WriteDocument(object, Stream)' method of the 'DiscoveryDocumentReference' class. 
-   Discovery file is read by using 'DiscoveryDocument' instance. Write this discovery 
+   'WriteDocument(object, Stream)' method of the 'DiscoveryDocumentReference' class.
+   Discovery file is read by using 'DiscoveryDocument' instance. Write this discovery
    document into a file stream and print its contents on the console.
 */
 
@@ -23,24 +23,24 @@ public class DiscoveryDocumentReference_ctor_WriteDocument
         try
         {
             DiscoveryDocument myDiscoveryDocument;
-            XmlTextReader myXmlTextReader = 
+            XmlTextReader myXmlTextReader =
                 new XmlTextReader("http://localhost/Sample_cs.vsdisco");
             myDiscoveryDocument = DiscoveryDocument.Read(myXmlTextReader);
 
             // <Snippet2>
             // Create a new instance of DiscoveryDocumentReference.
-            DiscoveryDocumentReference myDiscoveryDocumentReference = 
+            DiscoveryDocumentReference myDiscoveryDocumentReference =
                 new DiscoveryDocumentReference();
             // </Snippet2>
             // <Snippet3>
-            FileStream myFileStream = new FileStream("Temp.vsdisco", 
+            FileStream myFileStream = new FileStream("Temp.vsdisco",
                 FileMode.OpenOrCreate, FileAccess.Write);
             myDiscoveryDocumentReference.WriteDocument(
                 myDiscoveryDocument, myFileStream);
             myFileStream.Close();
             // </Snippet3>
 
-            FileStream myFileStream1 = new FileStream("Temp.vsdisco", 
+            FileStream myFileStream1 = new FileStream("Temp.vsdisco",
                 FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader myStreamReader = new StreamReader(myFileStream1);
 

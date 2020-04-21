@@ -7,7 +7,7 @@ using System.Globalization;
 public class Test
 {
     // Declare a delegate type that can be used to execute the completed
-    // dynamic method. 
+    // dynamic method.
     private delegate int HelloDelegate(string msg, int ret);
 
     public static void Main()
@@ -21,9 +21,9 @@ public class Test
         // of Integer, and two parameters whose types are specified by
         // the array helloArgs. Create the method in the module that
         // defines the String class.
-        DynamicMethod hello = new DynamicMethod("Hello", 
-            typeof(int), 
-            helloArgs, 
+        DynamicMethod hello = new DynamicMethod("Hello",
+            typeof(int),
+            helloArgs,
             typeof(string).Module);
 
         // <Snippet2>
@@ -32,7 +32,7 @@ public class Test
         Type[] writeStringArgs = {typeof(string)};
         // Get the overload of Console.WriteLine that has one
         // String parameter.
-        MethodInfo writeString = typeof(Console).GetMethod("WriteLine", 
+        MethodInfo writeString = typeof(Console).GetMethod("WriteLine",
             writeStringArgs);
 
         // Get an ILGenerator and emit a body for the dynamic method,
@@ -52,7 +52,7 @@ public class Test
         // <Snippet33>
         // Add parameter information to the dynamic method. (This is not
         // necessary, but can be useful for debugging.) For each parameter,
-        // identified by position, supply the parameter attributes and a 
+        // identified by position, supply the parameter attributes and a
         // parameter name.
         hello.DefineParameter(1, ParameterAttributes.In, "message");
         hello.DefineParameter(2, ParameterAttributes.In, "valueToReturn");
@@ -62,7 +62,7 @@ public class Test
         // Create a delegate that represents the dynamic method. This
         // action completes the method. Any further attempts to
         // change the method are ignored.
-        HelloDelegate hi = 
+        HelloDelegate hi =
             (HelloDelegate) hello.CreateDelegate(typeof(HelloDelegate));
 
         // Use the delegate to execute the dynamic method.
@@ -89,13 +89,13 @@ public class Test
 
         Console.WriteLine("\r\n ----- Display information about the dynamic method -----");
         // <Snippet21>
-        // Display MethodAttributes for the dynamic method, set when 
+        // Display MethodAttributes for the dynamic method, set when
         // the dynamic method was created.
         Console.WriteLine("\r\nMethod Attributes: {0}", hello.Attributes);
         // </Snippet21>
 
         // <Snippet22>
-        // Display the calling convention of the dynamic method, set when the 
+        // Display the calling convention of the dynamic method, set when the
         // dynamic method was created.
         Console.WriteLine("\r\nCalling convention: {0}", hello.CallingConvention);
         // </Snippet22>
@@ -203,7 +203,7 @@ public class Test
         Console.WriteLine("\r\nParameters: name, type, ParameterAttributes");
         foreach( ParameterInfo p in parameters )
         {
-            Console.WriteLine("\t{0}, {1}, {2}", 
+            Console.WriteLine("\t{0}, {1}, {2}",
                 p.Name, p.ParameterType, p.Attributes);
         }
         // </Snippet34>

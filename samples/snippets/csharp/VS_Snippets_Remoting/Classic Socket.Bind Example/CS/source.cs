@@ -14,7 +14,7 @@ public class Sample
  catch (Exception e) {
      Console.WriteLine("Winsock error: " + e.ToString());
  }
- 
+
 // </Snippet1>
  }
 }

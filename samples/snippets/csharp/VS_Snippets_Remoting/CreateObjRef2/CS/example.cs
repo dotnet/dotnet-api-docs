@@ -14,19 +14,19 @@ public class ObjRefExample {
 
       ChannelServices.RegisterChannel(new HttpChannel(8090));
 
-      WellKnownServiceTypeEntry wkste = 
-         new WellKnownServiceTypeEntry(typeof(RemoteObject), 
-                                       "RemoteObject", 
+      WellKnownServiceTypeEntry wkste =
+         new WellKnownServiceTypeEntry(typeof(RemoteObject),
+                                       "RemoteObject",
                                        WellKnownObjectMode.Singleton);
-      
+
       RemotingConfiguration.RegisterWellKnownServiceType( wkste );
 
-      RemoteObject RObj = 
-         (RemoteObject)Activator.GetObject(typeof(RemoteObject), 
+      RemoteObject RObj =
+         (RemoteObject)Activator.GetObject(typeof(RemoteObject),
                                            "http://localhost:8090/RemoteObject");
 
       LocalObject LObj = new LocalObject();
-      
+
       RObj.Method1( LObj );
 
       Console.WriteLine("Press Return to exit...");
@@ -34,7 +34,7 @@ public class ObjRefExample {
    }
 }
 
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")] 
+[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class RemoteObject : MarshalByRefObject {
 
    public void Method1(LocalObject param) {
@@ -47,7 +47,7 @@ public class RemoteObject : MarshalByRefObject {
 // a custom ObjRef class that outputs its status
 [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class MyObjRef : ObjRef {
-   
+
    // only instantiate using marshaling or deserialization
    private MyObjRef() { }
 
@@ -77,7 +77,7 @@ public class MyObjRef : ObjRef {
          Console.WriteLine("Returning proxy to remote object.");
          return RemotingServices.Unmarshal(this);
       }
-   }   
+   }
 
    public void ORDump() {
 
@@ -87,10 +87,10 @@ public class MyObjRef : ObjRef {
       Console.WriteLine("\nWriting EnvoyInfo: ");
 
       if ( EnvoyInfo != null) {
-         
+
          IMessageSink EISinks = EnvoyInfo.EnvoySinks;
          while (EISinks != null) {
-            Console.WriteLine("\tSink: " + EISinks.ToString());  
+            Console.WriteLine("\tSink: " + EISinks.ToString());
             EISinks = EISinks.NextSink;
          }
       }
