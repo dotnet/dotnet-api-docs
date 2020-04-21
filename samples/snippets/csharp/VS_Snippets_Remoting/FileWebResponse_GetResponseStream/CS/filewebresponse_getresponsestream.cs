@@ -66,7 +66,7 @@ class FileWebResponseSnippet
             }
         catch(WebException e)
             {
-                Console.WriteLine("\r\nWebException thrown.The Reason for failure is : {0}",e.Status);
+                Console.WriteLine("\r\nWebException thrown. The Reason for failure is : {0}",e.Status);
             }
         catch(Exception e)
             {

@@ -8,11 +8,11 @@
 /* The following example demonstrates the constructor 'Binding()' and properties 'Extensions','Name','Operations',
   'ServiceDescription' and 'Type' property of 'Binding' class AND method 'Insert' of 'BindingCollection' class.
   The input to the program is a WSDL file 'MathService_input.wsdl' with all information related to SOAP protocol
-  removed from it.In a way it tries to simulate a scenario wherein a service initially did not support a protocol, however later
+  removed from it. In a way, it tries to simulate a scenario wherein a service initially did not support a protocol, however later
   on happen to support it.
-  IN this example the WSDL file is modified to insert a new Binding for SOAP. The binding is populated based on
+  In this example, the WSDL file is modified to insert a new Binding for SOAP. The binding is populated based on
   WSDL document structure defined in WSDL specification. The ServiceDescription instance is loaded with values
-  for 'Messages', 'PortTypes','Bindings' and 'Port'.The instance is then written to an external file 'MathService_new.wsdl'.
+  for 'Messages', 'PortTypes','Bindings', and 'Port'. The instance is then written to an external file 'MathService_new.wsdl'.
  * */
 
 #using <System.dll>

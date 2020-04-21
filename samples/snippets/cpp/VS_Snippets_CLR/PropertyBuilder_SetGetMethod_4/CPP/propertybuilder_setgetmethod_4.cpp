@@ -48,7 +48,7 @@ Type^ CreateCallee( AppDomain^ myAppDomain, AssemblyBuilderAccess access )
    array<Type^>^constructorArgs = {String::typeid};
    ConstructorBuilder^ constructor = helloWorldTypeBuilder->DefineConstructor( MethodAttributes::Public, CallingConventions::Standard, constructorArgs );
 
-   // Generate IL code for the method.The constructor stores its argument in the private field.
+   // Generate IL code for the method. The constructor stores its argument in the private field.
    ILGenerator^ constructorIL = constructor->GetILGenerator();
    constructorIL->Emit( OpCodes::Ldarg_0 );
    constructorIL->Emit( OpCodes::Ldarg_1 );
