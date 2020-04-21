@@ -1,8 +1,8 @@
 /*
 System::Net::HttpWebRequest::Method, System::Net::HttpWebRequest::ContentLength, System::Net::HttpWebRequest::ContentType
 System::Net::HttpWebRequest::GetRequestStream
-This program demonstrates 'Method', 'ContentLength' and 'ContentType' properties and 'GetRequestStream'
-method of HttpWebRequest Class.
+This program the demonstrates 'Method', 'ContentLength', and 'ContentType' properties and the 'GetRequestStream'
+method of the HttpWebRequest Class.
 It creates a 'HttpWebRequest' Object*. The 'Method' property of 'HttpWebRequestClass' is set to 'POST'.
 The 'ContentType' property is set to 'application/x-www-form-urlencoded'. The 'ContentLength' property
 is set to the length of the Byte stream to be posted. A new 'Stream' Object* is obtained from the
