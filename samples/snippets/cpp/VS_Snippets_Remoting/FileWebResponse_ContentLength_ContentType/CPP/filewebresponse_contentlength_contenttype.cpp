@@ -1,6 +1,6 @@
 // System::Net::FileWebResponse::ContentLength;System::Net::FileWebResponse::ContentType.
 
-/* This program demonstrates the 'ContentLength' and 'ContentType' property of 'FileWebResponse' class.
+/* This program demonstrates the 'ContentLength' and 'ContentType' properties of the 'FileWebResponse' class.
 It creates a web request and queries for a response. It then prints the content length
 and content type of the entity body in the response onto the console */
 
