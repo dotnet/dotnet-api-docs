@@ -29,7 +29,7 @@ DataBinding Expression to the property in the ASPX file. When 'Text' property of
 SimpleWebControl is bound to the 'Text' property of 'Button1' at the DesignTime 
 using the IDE, the 'OnBindingCollectionChanged' method is called and 
 the 'Text' property of the 'SimpleWebControl' is updated in .aspx file.
-The actual DataBinding is done at the runtime. The  properties of the 'DataBinding'
+The actual DataBinding is done at the runtime. The properties of the 'DataBinding'
 and 'DataBindingCollection' are written into a text file (DataBindingOutput.txt)
 in drive C. The Output is written at the design time itself.
 
