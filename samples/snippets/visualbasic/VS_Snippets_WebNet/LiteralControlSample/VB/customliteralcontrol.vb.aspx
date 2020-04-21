@@ -31,7 +31,7 @@
            ' System.Web.UI.LiteralControl.LiteralControl()
            ' System.Web.UI.LiteralControl.LiteralControl(string)
             The following example demonstrates LiteralControl() and LiteraControl(string) 
-            constructors.The class CustomLiteralControl class is derived from LiteralControl.
+            constructors. The class CustomLiteralControl class is derived from LiteralControl.
             'Text' is the property of 'LiteralControl' overriden in CustomLiteralControlClass.
      --%>
     </head>

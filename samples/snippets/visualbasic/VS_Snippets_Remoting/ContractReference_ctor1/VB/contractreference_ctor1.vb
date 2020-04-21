@@ -1,9 +1,9 @@
 ﻿' System.Web.Services.Discovery.ContractReference.ContractReference(string)
 
 ' The following example demonstrates the constructor 'ContractReference(string)' 
-' of 'ContractReference' class. A 'DiscoveryDocument' object is created .The 
+' of 'ContractReference' class. A 'DiscoveryDocument' object is created . The 
 ' constructor initializes a new instance of 'ContractReference' using the supplied 
-' reference to a Service Description.The Contract reference object is added to the list 
+' reference to a Service Description. The Contract reference object is added to the list 
 ' of references contained within the discovery document. A '.disco' file is generated
 ' for the webservice, where the reference tags of ContractReference are reflected.
 

@@ -1,6 +1,6 @@
 ﻿ 'System.Net.HttpWebRequest.UserAgent
 'This program demonstrates 'UserAgent' property of 'HttpWebRequest' Class.
-'A new 'HttpWebRequest' object is created.The 'UserAgent' property is set to
+'A new 'HttpWebRequest' object is created. The 'UserAgent' property is set to
 '"Mozilla/4.0 (compatible; MSIE 6.0b; Windows NT 5.0; COM+ 1.0.2702)".
 'This inturn sets the 'User-Agent' field of HTTP Request headers.
 'The response is obtained and displayed to the console.
