@@ -4,7 +4,7 @@
 /**
 * This program demonstrates Connection and KeepAlive properties of the
 * HttpWebRequest Class.
-* Two new HttpWebRequest objects are created . The KeepAlive property of one of
+* Two new HttpWebRequest objects are created. The KeepAlive property of one of
 * the objects is set to false that in turn sets the value of Connection field of
 * the HTTP request Headers to Close.
 * The Connection property of the other HttpWebRequest Object* is assigned the
