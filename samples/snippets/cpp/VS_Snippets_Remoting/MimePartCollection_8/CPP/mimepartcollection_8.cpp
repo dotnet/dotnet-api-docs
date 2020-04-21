@@ -7,13 +7,13 @@
 // System::Web::Services::Description.MimePartCollection::CopyTo
 // System::Web::Services::Description.MimePartCollection::Remove
 
-/* This program demonstrates constructor, 'Item' property , 'Insert', 'IndexOf', 'Add',
-'Contains', 'CopyTo', and 'Remove' methods of 'MimePartCollection' class.
+/* This program demonstrates the constructor, the 'Item' property , the 'Insert', 'IndexOf', 'Add',
+'Contains', 'CopyTo', and 'Remove' methods of the 'MimePartCollection' class.
 It takes 'MimePartCollection_8_Input_cpp.wsdl' as an input file which contains
-one 'MimePart' object that supports 'HttpPost'. A mimepartcollection object is
-created and new mimepart objects are added to mimepartcollection using 'Insert'
-and 'Add' methods. A mimepart object is removed from the mimepartcollection using
-'Remove' method. The ServiceDescription is finally written into output wsdl file
+one 'MimePart' object that supports 'HttpPost'. A MimePartCollection object is
+created and new MimePart objects are added to MimePartCollection using the 'Insert'
+and 'Add' methods. A MimePart object is removed from the MimePartCollection using the
+'Remove' method. The ServiceDescription is finally written into an output wsdl file
 'MimePartCollection_8_out_CS::wsdl'.
 */
 
