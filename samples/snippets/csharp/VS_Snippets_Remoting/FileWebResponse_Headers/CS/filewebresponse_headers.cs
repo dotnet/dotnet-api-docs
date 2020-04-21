@@ -1,7 +1,7 @@
 ﻿// System.Net.FileWebResponse.Headers
 
 /* This program demonstrates the 'Headers' property of the 'FileWebResponse' class.
-It creates a web request and queries for a response.It then prints out all the response
+It creates a web request and queries for a response. It then prints out all the response
 headers ( name -value pairs) onto the console. */
 
 using System;
@@ -44,7 +44,7 @@ class FileWebResponseSnippet
             }
         catch(WebException e)
             {
-                Console.WriteLine("\r\nWebException thrown.The Reason for failure is : {0}",e.Status);
+                Console.WriteLine("\r\nWebException thrown. The Reason for failure is : {0}",e.Status);
             }
         catch(Exception e)
             {

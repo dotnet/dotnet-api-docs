@@ -1,8 +1,8 @@
 ﻿// System.Net.FileWebResponse.Close
 
 /*This program demontrates the  'Close' method of 'FileWebResponse' Class.
-It takes an Uri from console and creates a 'FileWebRequest' object for the Uri.It then gets back
-the response object from the Uri. The response object can be processed as desired.The program then
+It takes an Uri from console and creates a 'FileWebRequest' object for the Uri. It then gets back
+the response object from the Uri. The response object can be processed as desired. The program then
 closes the response object and releases resources associated with it.*/
 
 using System;
@@ -46,7 +46,7 @@ class FileWebResponseSnippet
          }
         catch(WebException e)
          {
-           Console.WriteLine("\r\nWebException thrown.The Reason for failure is : {0}",e.Status);
+           Console.WriteLine("\r\nWebException thrown. The Reason for failure is : {0}",e.Status);
        }
         catch(Exception e)
        {

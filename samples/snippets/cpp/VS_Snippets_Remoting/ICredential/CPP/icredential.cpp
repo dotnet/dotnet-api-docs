@@ -1,10 +1,10 @@
 /*
-This program demonstrates 'GetCredential' method of 'ICredentials*' interface.
-The 'CredentialList' class implements 'ICredentials*' interface which stores credentials for multiple
-internet resources.The Program takes URL, Username, Password and Domain name from commandline and adds
-it to an instance of 'CredentialList' class.An instance of 'WebRequest' class is obtained and 'Credentials'
-property of 'WebRequest' class is set to an instance of 'NetworkCredential' class obtained by calling
-'GetCredential' method of 'CredentialList' class. Then it sends the request and obtains a response.
+This program demonstrates the 'GetCredential' method of the 'ICredentials*' interface.
+The 'CredentialList' class implements the 'ICredentials*' interface, which stores credentials for multiple
+internet resources. The program takes URL, Username, Password, and Domain name from command line and adds
+it to an instance of the 'CredentialList' class. An instance of the 'WebRequest' class is obtained and the 'Credentials'
+property of the 'WebRequest' class is set to an instance of the 'NetworkCredential' class obtained by calling the
+'GetCredential' method of the 'CredentialList' class. Then it sends the request and obtains a response.
 */
 
 #using <System.dll>

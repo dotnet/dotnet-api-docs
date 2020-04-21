@@ -1,7 +1,7 @@
 ﻿/*Sytem.Net.HttpWebRequest.PipeLined
- This program demonstrates  'Pipelined' property of the 'HttpWebRequest' class.
-  A new 'HttpWebRequest' object is created.The 'Pipelined' property is displayed to the console.
-  HTTP Request  and  Response Headers are displayed to the console.The contents of the page of the
+ This program demonstrates the 'Pipelined' property of the 'HttpWebRequest' class.
+  A new 'HttpWebRequest' object is created. The 'Pipelined' property is displayed to the console.
+  HTTP Request and Response Headers are displayed to the console. The contents of the page of the
   requested URI are displayed to the console.
 
 Note:The 'Pipelined' property is supported only by servers that allow Pipelining of requests.

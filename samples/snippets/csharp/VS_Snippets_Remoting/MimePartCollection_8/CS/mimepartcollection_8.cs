@@ -13,7 +13,7 @@
    one 'MimePart' object that supports 'HttpPost'. A mimepartcollection object is 
    created and new mimepart objects are added to mimepartcollection using 'Insert' 
    and 'Add' methods. A mimepart object is removed from the mimepartcollection using 
-   'Remove'method.The ServiceDescription is finally written into output wsdl file
+   'Remove'method. The ServiceDescription is finally written into output wsdl file
    'MimePartCollection_8_out_CS.wsdl'.
 */
 
