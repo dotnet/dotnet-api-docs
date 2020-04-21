@@ -1,6 +1,6 @@
 // System::Net::WebClient::BaseAddress; System::Net::WebClient::ResponseHeaders
 
-/*This program demonstrates the 'BaseAddress' and 'ResponseHeaders' property of 'WebClient' class.
+/*This program demonstrates the 'BaseAddress' and 'ResponseHeaders' properties of the 'WebClient' class.
 It accepts the base Uri from the user and assigns it to the 'BaseAddress' property of the
 'WebClient' class. It then invokes 'DownloadFile' for the specific web page requested by the
 user. WebClient internally combines the 'BaseAddress' and specific page name to retrieve the page.
