@@ -1,5 +1,5 @@
 // System::Net::HttpWebResponse::GetResponseHeader
-/* This program demonstrates the 'GetResponseHeader' method of the 'HttpWebResponse' class
+/* This program demonstrates the 'GetResponseHeader' method of the 'HttpWebResponse' class.
 It creates a web request and queries for a response. If the site requires authentication it
 will respond with a challenge String* which is extracted using 'GetResponse()' method.
 */
