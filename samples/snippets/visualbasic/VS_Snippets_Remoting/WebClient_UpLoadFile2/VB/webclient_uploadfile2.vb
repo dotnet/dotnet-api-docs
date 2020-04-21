@@ -35,7 +35,7 @@ Public Class WebClient_UpLoadFile
             Dim responseArray As Byte() = myWebClient.UploadFile(uriString, "POST", fileName)
 
             ' Decode and display the response.
-            Console.WriteLine(ControlChars.Cr + "Response Received.The contents of the file uploaded are: " & _
+            Console.WriteLine(ControlChars.Cr + "Response Received. The contents of the file uploaded are: " & _
                 ControlChars.Cr & "{0}", System.Text.Encoding.ASCII.GetString(responseArray))
 
 ' </Snippet1>

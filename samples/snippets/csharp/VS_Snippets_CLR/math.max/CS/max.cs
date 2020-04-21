@@ -1,9 +1,9 @@
 ﻿// This example demonstrates Math.Max()
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         //<snippet1>
         string str = "{0}: The greater of {1,3} and {2,3} is {3}.";

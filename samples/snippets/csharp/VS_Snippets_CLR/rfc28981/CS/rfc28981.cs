@@ -24,9 +24,9 @@ public class rfc2898test
         {
             //<SNIPPET6>
             string pwd1 = passwordargs[0];
-            // Create a byte array to hold the random value. 
+            // Create a byte array to hold the random value.
             byte[] salt1 = new byte[8];
-            using (RNGCryptoServiceProvider rngCsp = new 
+            using (RNGCryptoServiceProvider rngCsp = new
 RNGCryptoServiceProvider())
             {
                 // Fill the array with a random value.
@@ -43,7 +43,7 @@ RNGCryptoServiceProvider())
             try
             {
                 //<SNIPPET4>
-                Rfc2898DeriveBytes k1 = new Rfc2898DeriveBytes(pwd1, salt1, 
+                Rfc2898DeriveBytes k1 = new Rfc2898DeriveBytes(pwd1, salt1,
 myIterations);
                 Rfc2898DeriveBytes k2 = new Rfc2898DeriveBytes(pwd1, salt1);
                 //</SNIPPET4>
@@ -51,7 +51,7 @@ myIterations);
                 TripleDES encAlg = TripleDES.Create();
                 encAlg.Key = k1.GetBytes(16);
                 MemoryStream encryptionStream = new MemoryStream();
-                CryptoStream encrypt = new CryptoStream(encryptionStream, 
+                CryptoStream encrypt = new CryptoStream(encryptionStream,
 encAlg.CreateEncryptor(), CryptoStreamMode.Write);
                 byte[] utfD1 = new System.Text.UTF8Encoding(false).GetBytes(
 data1);

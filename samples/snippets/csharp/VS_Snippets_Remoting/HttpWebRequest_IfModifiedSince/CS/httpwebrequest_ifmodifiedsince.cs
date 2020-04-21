@@ -4,8 +4,8 @@ This program demonstrates the 'IfModifiedSince' property of the 'HttpWebRequest'
 A new 'HttpWebrequest' object is created.
 A new 'DateTime' object is created with the value intialized to the present DateTime.
 The 'IfModifiedSince' property of 'HttpWebRequest' object is compared with the 'DateTime' object.
-If the requested page has been modified since the time of the DateTime object 
-then the output displays the page has been modified 
+If the requested page has been modified since the time of the DateTime object
+then the output displays the page has been modified
 else the response headers and the contents of the page of the requested Uri are printed to the Console.
 
  */
@@ -33,7 +33,7 @@ class HttpWebRequest_IfModifiedSince
     targetDate.AddDays(-7.0);
     myHttpWebRequest.IfModifiedSince = targetDate;
 
-    try   
+    try
     {
       // Assign the response object of 'HttpWebRequest' to a 'HttpWebResponse' variable.
       HttpWebResponse myHttpWebResponse=(HttpWebResponse)myHttpWebRequest.GetResponse();
@@ -44,7 +44,7 @@ class HttpWebRequest_IfModifiedSince
       int count = streamRead.Read( readBuff, 0, 256 );
       Console.WriteLine("\nThe contents of Html Page are :  \n");	
 
-      while (count > 0) 
+      while (count > 0)
       {
         String outputData = new String(readBuff, 0, count);
         Console.Write(outputData);
@@ -66,7 +66,7 @@ class HttpWebRequest_IfModifiedSince
         if ( ((HttpWebResponse)e.Response).StatusCode == HttpStatusCode.NotModified)
           Console.WriteLine("\nThe page has not been modified since "+targetDate);
         else
-          Console.WriteLine("\nUnexpected status code = " + ((HttpWebResponse)e.Response).StatusCode);  
+          Console.WriteLine("\nUnexpected status code = " + ((HttpWebResponse)e.Response).StatusCode);
       }
       else
                 {
@@ -80,7 +80,7 @@ class HttpWebRequest_IfModifiedSince
 			Console.WriteLine("\nWebException Caught!");
 			Console.WriteLine("Source  :{0}", e.Source);
 			Console.WriteLine("Message :{0}",e.Message);
-		} 
+		}
 		catch(Exception e)
 		{
 			Console.WriteLine("\nException raised!");

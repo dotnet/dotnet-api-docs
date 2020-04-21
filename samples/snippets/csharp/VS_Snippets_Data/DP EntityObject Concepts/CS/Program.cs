@@ -28,10 +28,10 @@ namespace Microsoft.Samples.Edm
             {
                 // Set the object span to return line items with an order.
                 ObjectQuery<Order> query = context.Order.Include("LineItem");
- 
+
                 try
                 {
-                    // Execute the query and display information for each item 
+                    // Execute the query and display information for each item
                     // in the orders that belong to the first contact.
                     foreach (Order order in query.Top("5").Execute(MergeOption.AppendOnly))
                     {

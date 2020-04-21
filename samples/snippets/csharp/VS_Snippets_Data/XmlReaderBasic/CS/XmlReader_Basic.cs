@@ -19,13 +19,13 @@ if (reader.HasAttributes) {
     Console.WriteLine("  {0}", reader[i]);
   }
   // Move the reader back to the element node.
-  reader.MoveToElement(); 
+  reader.MoveToElement();
 }
 //</snippet1>
 }
 
 //==============================//
-// 
+//
 static void GetAttribute1() {
 XmlReader reader = XmlReader.Create("books.xml");
 //<snippet2>
@@ -34,7 +34,7 @@ string isbn = reader.GetAttribute(2);
 //</snippet2>
 }
 //==============================//
-// 
+//
 static void GetAttribute2() {
 XmlReader reader = XmlReader.Create("books.xml");
 //<snippet3>
@@ -45,7 +45,7 @@ Console.WriteLine("The ISBN value: " + isbn);
 }
 
 //==============================//
-// 
+//
 static void MoveToAttribute1() {
 XmlReader reader = XmlReader.Create("books.xml");
 reader.ReadToFollowing("book");
@@ -62,8 +62,8 @@ reader.MoveToElement(); // Moves the reader back to the element node.
 }
 
 //==============================//
-// 
-static void MoveToFirstAttribute() {  
+//
+static void MoveToFirstAttribute() {
 XmlReader reader = XmlReader.Create("books.xml");
 //<snippet5>
 reader.ReadToFollowing("book");
@@ -74,8 +74,8 @@ Console.WriteLine("The genre value: " + genre);
 }
 
 //==============================//
-// 
-static void MoveToNextAttribute() {    
+//
+static void MoveToNextAttribute() {
 XmlReader reader = XmlReader.Create("books.xml");
 reader.ReadToFollowing("book");
 //<snippet6>
@@ -91,7 +91,7 @@ if (reader.HasAttributes) {
 }
 
 //==============================//
-// 
+//
 static void Item() {
 XmlReader reader = XmlReader.Create("books.xml");
 //<snippet7>
@@ -102,14 +102,14 @@ Console.WriteLine("The ISBN value: " + isbn);
 }
 
 //==============================//
-// 
+//
 static void Node_Value() {
-  
+
 //<snippet8>
 XmlReaderSettings settings = new XmlReaderSettings();
 settings.DtdProcessing = DtdProcessing.Parse;
 XmlReader reader = XmlReader.Create("items.xml", settings);
-  
+
 reader.MoveToContent();
   // Parse the file and display each of the nodes.
   while (reader.Read()) {
@@ -143,18 +143,18 @@ reader.MoveToContent();
        case XmlNodeType.EndElement:
            Console.Write("</{0}>", reader.Name);
            break;
-   } 
+   }
 }
 //</snippet8>
 }
 
 //==============================//
-// 
+//
 static void NamespaceURI() {
 //<snippet9>
 XmlReader reader = XmlReader.Create("book2.xml");
 
-// Parse the file.  If they exist, display the prefix and 
+// Parse the file.  If they exist, display the prefix and
 // namespace URI of each node.
 while (reader.Read()) {
   if (reader.IsStartElement()) {
@@ -167,13 +167,13 @@ while (reader.Read()) {
       Console.WriteLine(" The namespace URI is " + reader.NamespaceURI);
     }
   }
-}       
+}
 reader.Close();
 //</snippet9>
 }
 
 //==============================//
-// 
+//
 static void IsStartElement() {
 XmlReader reader = XmlReader.Create("elems.xml");
 //<snippet10>
@@ -190,22 +190,22 @@ while (reader.Read()) {
         Console.Write("\r\n<{0}>", reader.Name);
       Console.WriteLine(reader.ReadString());  //Read the text content of the element.
     }
-  } 
-} 
+  }
+}
 //</snippet10>
 }
 
 //==============================//
-// 
+//
 static void ReadEndElement() {
 //<snippet11>
 using (XmlReader reader = XmlReader.Create("book3.xml")) {
 
-  // Parse the XML document.  ReadString is used to 
+  // Parse the XML document.  ReadString is used to
   // read the text content of the elements.
-  reader.Read(); 
-  reader.ReadStartElement("book");  
-  reader.ReadStartElement("title");   
+  reader.Read();
+  reader.ReadStartElement("book");
+  reader.ReadStartElement("title");
   Console.Write("The content of the title element:  ");
   Console.WriteLine(reader.ReadString());
   reader.ReadEndElement();
@@ -218,7 +218,7 @@ using (XmlReader reader = XmlReader.Create("book3.xml")) {
 //</snippet11>
     }
 //==============================//
-// 
+//
 static void ReadInnerXml() {
 //<snippet12>
 // Load the file and ignore all white space.
@@ -228,9 +228,9 @@ using (XmlReader reader = XmlReader.Create("2books.xml")) {
 
   // Moves the reader to the root element.
   reader.MoveToContent();
- 
+
   // Moves to book node.
-  reader.Read(); 
+  reader.Read();
 
   // Note that ReadInnerXml only returns the markup of the node's children
   // so the book's attributes are not returned.
@@ -240,13 +240,13 @@ using (XmlReader reader = XmlReader.Create("2books.xml")) {
   // ReadOuterXml returns the markup for the current node and its children
   // so the book's attributes are also returned.
   Console.WriteLine("Read the second book using ReadOuterXml...");
-  Console.WriteLine(reader.ReadOuterXml());      
+  Console.WriteLine(reader.ReadOuterXml());
 }
 //</snippet12>
     }
 
 //==============================//
-// 
+//
 static void ReadSubtree() {
 //<snippet13>
 XmlReaderSettings settings = new XmlReaderSettings();
@@ -256,29 +256,29 @@ using (XmlReader reader = XmlReader.Create("books.xml", settings)) {
   // Position the reader on the second book node
   reader.ReadToFollowing("Book");
   reader.Skip();
-       
+
   // Create another reader that contains just the second book node.
   XmlReader inner = reader.ReadSubtree();
 
   inner.ReadToDescendant("Title");
   Console.WriteLine(inner.Name);
 
-  // Do additional processing on the inner reader. After you 
-  // are done, call Close on the inner reader and 
+  // Do additional processing on the inner reader. After you
+  // are done, call Close on the inner reader and
   // continue processing using the original reader.
-  inner.Close(); 
+  inner.Close();
 }
 //</snippet13>
 }
 
 //==============================//
-// 
+//
 static void ReadtoDescendant() {
 //<snippet14>
 using (XmlReader reader = XmlReader.Create("2books.xml")) {
 
   // Move the reader to the second book node.
-  reader.MoveToContent(); 
+  reader.MoveToContent();
   reader.ReadToDescendant("book");
   reader.Skip(); //Skip the first book.
 
@@ -298,27 +298,27 @@ using (XmlReader reader = XmlReader.Create("2books.xml")) {
         case XmlNodeType.EndElement:
            Console.Write("</{0}>", reader.Name);
            break;
-     }       
-  }  while (reader.Read());    
+     }
+  }  while (reader.Read());
 }
 //</snippet14>
 }
 
 //==============================//
-// 
+//
 static void ReadToFollowing() {
 //<snippet15>
 using (XmlReader reader = XmlReader.Create("books.xml")) {
     reader.ReadToFollowing("book");
     do {
-       Console.WriteLine("ISBN: {0}", reader.GetAttribute("ISBN")); 
+       Console.WriteLine("ISBN: {0}", reader.GetAttribute("ISBN"));
     } while (reader.ReadToNextSibling("book"));
 }
 //</snippet15>
 }
 
 //==============================//
-// 
+//
 static void HasValue() {
 //<snippet16>
 XmlReaderSettings settings = new XmlReaderSettings();
@@ -330,13 +330,13 @@ using (XmlReader reader = XmlReader.Create("book1.xml", settings)) {
       Console.WriteLine("({0})  {1}={2}", reader.NodeType, reader.Name, reader.Value);
     else
       Console.WriteLine("({0}) {1}", reader.NodeType, reader.Name);
-  }           
+  }
 }
 //</snippet16>
 }
 
 //==============================//
-// 
+//
 static void IsStartElement_2() {
 using (XmlReader reader = XmlReader.Create("books.xml")) {
 //<snippet17>
@@ -345,8 +345,8 @@ using (XmlReader reader = XmlReader.Create("books.xml")) {
     if (reader.IsStartElement("price")) {
        Console.WriteLine(reader.ReadInnerXml());
     }
-  }   
-//</snippet17>        
+  }
+//</snippet17>
 }
 }
 }

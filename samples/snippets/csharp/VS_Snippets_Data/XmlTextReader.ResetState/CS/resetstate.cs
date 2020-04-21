@@ -9,7 +9,7 @@ public class Sample
   public static void Main(){
 
      Encoding enc = new UTF8Encoding();
-     byte[] utf8Buffer = enc.GetBytes("<root> 12345 </root>"); 
+     byte[] utf8Buffer = enc.GetBytes("<root> 12345 </root>");
 
      enc = new UnicodeEncoding();
      byte[] unicodeBuffer = enc.GetBytes("<?xml version='1.0' ?><unicode> root </unicode>");
@@ -30,7 +30,7 @@ public class Sample
         if (XmlNodeType.EndElement == reader.NodeType) {
           reader.ResetState();
        }
-    } 
+    }
   }
 }
 //</snippet1>

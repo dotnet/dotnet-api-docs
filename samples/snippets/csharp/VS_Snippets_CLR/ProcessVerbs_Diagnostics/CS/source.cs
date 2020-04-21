@@ -76,7 +76,7 @@ class ProcessInformation
                 }
                 catch (InvalidOperationException)
                 {
-                    // Catch this exception if the process exits quickly, 
+                    // Catch this exception if the process exits quickly,
                     // and the properties are not accessible.
                     Console.WriteLine($"Unable to start '{fileName}' with verb {verbToUse}");
                 }

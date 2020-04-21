@@ -27,8 +27,8 @@ public class Test
       // Create the XmlAttributes and XmlAttributeOverrides objects.
       XmlAttributes attrs = new XmlAttributes();
       XmlAttributeOverrides xOver = new XmlAttributeOverrides();
-      
-      /* Create an XmlTypeAttribute and change the name of the 
+
+      /* Create an XmlTypeAttribute and change the name of the
          XML type. */
       XmlTypeAttribute xType = new XmlTypeAttribute();
       xType.TypeName = "Autos";
@@ -52,7 +52,7 @@ public class Test
       XmlSerializer xSer = CreateOverrider();
 
       // Create object and serialize it.
-      Transportation myTransportation = 
+      Transportation myTransportation =
       new Transportation();
 
       Car c1 = new Car();

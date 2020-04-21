@@ -3,7 +3,7 @@
 //
 // The following example illustrates how to redirect the StandardInput
 // stream of a process.  The example starts the sort command with
-// redirected input.  It then prompts the user for text, and passes 
+// redirected input.  It then prompts the user for text, and passes
 // that to the sort command by means of the redirected input stream.
 // The sort command results are displayed to the user on the console.
 
@@ -34,7 +34,7 @@ namespace ProcessStandardInputSample
 
                 StreamWriter myStreamWriter = myProcess.StandardInput;
 
-                // Prompt the user for input text lines to sort. 
+                // Prompt the user for input text lines to sort.
                 // Write each line to the StandardInput stream of
                 // the sort command.
                 String inputText;
@@ -64,7 +64,7 @@ namespace ProcessStandardInputSample
 
                 // End the input stream to the sort command.
                 // When the stream closes, the sort command
-                // writes the sorted text lines to the 
+                // writes the sorted text lines to the
                 // console.
                 myStreamWriter.Close();
 

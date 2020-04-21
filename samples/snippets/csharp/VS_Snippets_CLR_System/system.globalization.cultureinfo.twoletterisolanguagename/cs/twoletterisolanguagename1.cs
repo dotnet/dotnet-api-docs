@@ -9,26 +9,26 @@ public class Example
       // Get all available cultures on the current system.
       CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
 
-      Console.WriteLine("{0,-32} {1,-13} {2,-6}\n", "Display Name", 
+      Console.WriteLine("{0,-32} {1,-13} {2,-6}\n", "Display Name",
                         "Name", "TwoLetterISOLanguageName");
 
       foreach (var culture in cultures) {
          // Exclude custom cultures.
-         if ((culture.CultureTypes & CultureTypes.UserCustomCulture) == CultureTypes.UserCustomCulture) 
+         if ((culture.CultureTypes & CultureTypes.UserCustomCulture) == CultureTypes.UserCustomCulture)
             continue;
-         
+
          // Exclude all two-letter codes.
          if (culture.TwoLetterISOLanguageName.Length == 2)
             continue;
-         
+
          Console.WriteLine("{0,-32} {1,-13} {2,-6}", culture.DisplayName,
                            culture.Name, culture.TwoLetterISOLanguageName);
-      }   
+      }
    }
 }
 // The example output like the following:
 //       Display Name                     Name          TwoLetterISOLanguageName
-//       
+//
 //       Upper Sorbian                    hsb           hsb
 //       Konkani                          kok           kok
 //       Syriac                           syr           syr

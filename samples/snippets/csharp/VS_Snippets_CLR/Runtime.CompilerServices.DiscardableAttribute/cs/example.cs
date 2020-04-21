@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 [DiscardableAttribute()]
 class Program
 {
-    
+
     static void Main(string[] args)
     {
 

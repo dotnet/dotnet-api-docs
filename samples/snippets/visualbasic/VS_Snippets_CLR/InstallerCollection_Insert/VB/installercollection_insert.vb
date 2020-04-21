@@ -7,7 +7,7 @@
 ' and 'MyAssembly2.exe'. These instances are added to an instance of 
 ' 'TransactedInstaller' named 'myTransactedInstaller1'.
 ' The installers in the 'myTransactedInstaller1' are copied to another
-' instance of 'TransactedInstaller' named 'myTransactedInstaller2'.The 
+' instance of 'TransactedInstaller' named 'myTransactedInstaller2'. The 
 ' installation process installs both 'MyAssembly1.exe' and 'MyAssembly2.exe'.
 
 Imports System.Reflection

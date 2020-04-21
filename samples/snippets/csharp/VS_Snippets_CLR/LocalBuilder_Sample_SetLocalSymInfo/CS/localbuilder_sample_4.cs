@@ -28,28 +28,28 @@ class LocalBuilder_Sample
         AssemblyName myAssemblyName = new AssemblyName();
         myAssemblyName.Name = "SampleAssembly";
 
-        AssemblyBuilder myAssembly = 
-           Thread.GetDomain().DefineDynamicAssembly(myAssemblyName, 
+        AssemblyBuilder myAssembly =
+           Thread.GetDomain().DefineDynamicAssembly(myAssemblyName,
                AssemblyBuilderAccess.RunAndSave);
 
         // Create a module. For a single-file assembly the module
         // name is usually the same as the assembly name.
-        ModuleBuilder myModule = 
-            myAssembly.DefineDynamicModule(myAssemblyName.Name, 
+        ModuleBuilder myModule =
+            myAssembly.DefineDynamicModule(myAssemblyName.Name,
                 myAssemblyName.Name + ".dll", true);
 
         // Define a public class 'Example'.
-        TypeBuilder myTypeBuilder = 
+        TypeBuilder myTypeBuilder =
             myModule.DefineType("Example", TypeAttributes.Public);
 
         // Create the 'Function1' public method, which takes an integer
         // and returns a string.
         MethodBuilder myMethod = myTypeBuilder.DefineMethod("Function1",
-           MethodAttributes.Public | MethodAttributes.Static, 
+           MethodAttributes.Public | MethodAttributes.Static,
            typeof(String), new Type[] { typeof(int) });
 
         // Generate IL for 'Function1'. The function body demonstrates
-        // assigning an argument to a local variable, assigning a 
+        // assigning an argument to a local variable, assigning a
         // constant string to a local variable, and putting the contents
         // of local variables on the stack.
         ILGenerator myMethodIL = myMethod.GetILGenerator();
@@ -83,7 +83,7 @@ class LocalBuilder_Sample
         Console.WriteLine( "'{0}' is created.", myAssemblyName.Name + ".dll" );
 
         // Invoke 'Function1' method of 'Example', passing the value 42.
-        Object myObject2 = myType1.InvokeMember("Function1", 
+        Object myObject2 = myType1.InvokeMember("Function1",
             BindingFlags.InvokeMethod, null, null, new Object[] { 42 });
 
         Console.WriteLine("Example.Function1 returned: {0}", myObject2);

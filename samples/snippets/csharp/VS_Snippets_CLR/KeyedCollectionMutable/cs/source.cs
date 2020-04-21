@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 // This class demonstrates one way to use the ChangeItemKey
-// method to store objects with keys that can be changed. The 
+// method to store objects with keys that can be changed. The
 // ChangeItemKey method is used to keep the internal lookup
-// Dictionary in sync with the keys of the stored objects. 
+// Dictionary in sync with the keys of the stored objects.
 //
 // MutableKeys stores MutableKey objects, which have an Integer
 // Key property that can be set. Therefore, MutableKeys inherits
@@ -14,13 +14,13 @@ using System.Collections.ObjectModel;
 //
 public class MutableKeys : KeyedCollection<int, MutableKey>
 {
-    // This parameterless constructor delegates to the base class 
+    // This parameterless constructor delegates to the base class
     // constructor that specifies a dictionary threshold. A
     // threshold of 0 means the internal Dictionary is created
     // the first time an object is added.
     //
     public MutableKeys() : base(null, 0) {}
-    
+
     protected override int GetKeyForItem(MutableKey item)
     {
         // The key is MutableKey.Key.
@@ -29,7 +29,7 @@ public class MutableKeys : KeyedCollection<int, MutableKey>
 
     protected override void InsertItem(int index, MutableKey newItem)
     {
-        if (newItem.Collection != null) 
+        if (newItem.Collection != null)
             throw new ArgumentException("The item already belongs to a collection.");
 
         base.InsertItem(index, newItem);
@@ -40,7 +40,7 @@ public class MutableKeys : KeyedCollection<int, MutableKey>
     {
         MutableKey replaced = Items[index];
 
-        if (newItem.Collection != null) 
+        if (newItem.Collection != null)
             throw new ArgumentException("The item already belongs to a collection.");
 
         base.SetItem(index, newItem);
@@ -62,7 +62,7 @@ public class MutableKeys : KeyedCollection<int, MutableKey>
         {
             mk.Collection = null;
         }
-        
+
         base.ClearItems();
     }
 
@@ -70,7 +70,7 @@ public class MutableKeys : KeyedCollection<int, MutableKey>
     {
         base.ChangeItemKey(item, newKey);
     }
-    
+
     public void Dump()
     {
         Console.WriteLine("\nDUMP:");
@@ -111,7 +111,7 @@ public class Demo
         mkeys.Add(new MutableKey(110072675, "Sprocket"));
 
         mkeys.Dump();
-    
+
         Console.WriteLine("\nCreate and insert a new item:");
         MutableKey test = new MutableKey(110072684, "Gear");
         mkeys.Insert(1, test);
@@ -145,7 +145,7 @@ public class Demo
 
         mkeys.Dump();
     }
-    
+
     private static void Display(MutableKeys order)
     {
         Console.WriteLine();
@@ -157,7 +157,7 @@ public class Demo
 }
 
 // This class has a key that can be changed.
-// 
+//
 public class MutableKey
 {
 
@@ -166,12 +166,12 @@ public class MutableKey
         _key = newKey;
         Value = newValue;
     } //New
-    
+
     public string Value;
     internal MutableKeys Collection;
-    
+
     private int _key;
-    public int Key    
+    public int Key
     {
         get
         {

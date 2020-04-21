@@ -38,7 +38,7 @@ internal static class AccountManager
             balance = Int32.Parse(line);
             reader.Close();
         }
-        return(balance);        
+        return(balance);
     }
 }
 
@@ -50,7 +50,7 @@ public class Account : ServicedComponent
 
     // A data member for the account file name.
     private string filename;
-    
+
     public string Filename
     {
         get
@@ -78,7 +78,7 @@ public class Account : ServicedComponent
         }
     }
 
-    // Debit the account, 
+    // Debit the account,
     public void DebitAccount (int ammount)
     {
 
@@ -105,7 +105,7 @@ public class Account : ServicedComponent
         AccountManager.WriteAccountBalance(filename, balance);
 
 // <snippet13>
-        // Commit or abort the transaction 
+        // Commit or abort the transaction
         if (commit)
         {
             ContextUtil.SetComplete();
@@ -145,7 +145,7 @@ public class AccountCompensator : Compensator
 
         // The record is valid.
         receivedPrepareRecord = true;
-        return(false);              
+        return(false);
     }
 // </snippet22>
 
@@ -206,7 +206,7 @@ public class AccountCompensator : Compensator
         // Extract old account data from the record.
         string filename = (string) record[0];
         int balance = (int) record[1];
- 
+
         // Restore the old state of the account.
         AccountManager.WriteAccountBalance(filename, balance);
 
@@ -218,7 +218,7 @@ public class AccountCompensator : Compensator
     public override void EndAbort ()
     {
         // nothing to do
-    }    
+    }
 // </snippet29>
 }
 // </snippet20>

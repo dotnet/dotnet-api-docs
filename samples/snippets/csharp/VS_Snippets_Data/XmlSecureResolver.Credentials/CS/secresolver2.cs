@@ -10,7 +10,7 @@ public class Sample {
 
     // Create the reader.
     XmlTextReader reader = new XmlTextReader("http://myServer/data/books.xml");
-   
+
     // Create a secure resolver with default credentials.
     XmlUrlResolver resolver = new XmlUrlResolver();
     XmlSecureResolver sResolver = new XmlSecureResolver(resolver, "http://myServer/data/");
@@ -22,10 +22,10 @@ public class Sample {
     // Parse the file.
     while (reader.Read()) {
        // Do any additional processing here.
-    }           
-  
+    }
+
     // Close the reader.
-    reader.Close();     
+    reader.Close();
   }
 }
 //</snippet1>

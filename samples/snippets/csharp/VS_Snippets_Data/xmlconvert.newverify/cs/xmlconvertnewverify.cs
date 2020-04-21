@@ -21,7 +21,7 @@ namespace VerifyNames
 
                 writer5.WriteStartElement("legalElement");
                 // Throw an exception due illegal white space character.
-                writer5.WriteString("ValueText" + 
+                writer5.WriteString("ValueText" +
                     XmlConvert.VerifyWhitespace("\t" + illegalWhiteSpaceChar));
 
                 // Write the end tag for the legal element.
@@ -45,13 +45,13 @@ namespace VerifyNames
             {
                 // Write document type Declaration.
                 // Throw an exception due illegal public id character.
-                writer4.WriteDocType("testPublic", 
+                writer4.WriteDocType("testPublic",
                     XmlConvert.VerifyPublicId("pubId" + illegalPubIdChar),
                     null, null);
 
                 // Write the root element.
-                writer4.WriteStartElement("root");               
-                
+                writer4.WriteStartElement("root");
+
                 writer4.WriteStartElement("legalElement");
                 writer4.WriteString("ValueText");
                 writer4.WriteEndElement();
@@ -72,7 +72,7 @@ namespace VerifyNames
             //<snippet3>
             XmlTextWriter writer3 = new XmlTextWriter("outFile.xml", null);
             char illegalChar = '\uFFFE';
-            string charsToVerify = "Test String "; 
+            string charsToVerify = "Test String ";
 
             try
             {

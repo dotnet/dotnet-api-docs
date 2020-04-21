@@ -9,7 +9,7 @@ class HttpClient_Example
 // <Snippet1>
    // HttpClient is intended to be instantiated once per application, rather than per-use. See Remarks.
    static readonly HttpClient client = new HttpClient();
-    
+
    static async Task Main()
    {
      // Call asynchronous network methods in a try/catch block to handle exceptions.
@@ -22,7 +22,7 @@ class HttpClient_Example
         // string responseBody = await client.GetStringAsync(uri);
 
         Console.WriteLine(responseBody);
-     }  
+     }
      catch(HttpRequestException e)
      {
         Console.WriteLine("\nException Caught!");	

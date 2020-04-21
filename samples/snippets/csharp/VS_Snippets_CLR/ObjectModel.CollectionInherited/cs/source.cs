@@ -66,7 +66,7 @@ public class DinosaursChangedEventArgs : EventArgs
     public readonly ChangeType ChangeType;
     public readonly string ReplacedWith;
 
-    public DinosaursChangedEventArgs(ChangeType change, string item, 
+    public DinosaursChangedEventArgs(ChangeType change, string item,
         string replacement)
     {
         ChangeType = change;
@@ -77,9 +77,9 @@ public class DinosaursChangedEventArgs : EventArgs
 
 public enum ChangeType
 {
-    Added, 
-    Removed, 
-    Replaced, 
+    Added,
+    Removed,
+    Replaced,
     Cleared
 };
 
@@ -89,7 +89,7 @@ public class Demo
     {
         Dinosaurs dinosaurs = new Dinosaurs();
 
-        dinosaurs.Changed += ChangedHandler; 
+        dinosaurs.Changed += ChangedHandler;
 
         dinosaurs.Add("Psitticosaurus");
         dinosaurs.Add("Caudipteryx");
@@ -97,11 +97,11 @@ public class Demo
         dinosaurs.Add("Muttaburrasaurus");
 
         Display(dinosaurs);
-    
-        Console.WriteLine("\nIndexOf(\"Muttaburrasaurus\"): {0}", 
+
+        Console.WriteLine("\nIndexOf(\"Muttaburrasaurus\"): {0}",
             dinosaurs.IndexOf("Muttaburrasaurus"));
 
-        Console.WriteLine("\nContains(\"Caudipteryx\"): {0}", 
+        Console.WriteLine("\nContains(\"Caudipteryx\"): {0}",
             dinosaurs.Contains("Caudipteryx"));
 
         Console.WriteLine("\nInsert(2, \"Nanotyrannus\")");
@@ -120,7 +120,7 @@ public class Demo
 
         Display(dinosaurs);
     }
-    
+
     private static void Display(Collection<string> cs)
     {
         Console.WriteLine();
@@ -130,13 +130,13 @@ public class Demo
         }
     }
 
-    private static void ChangedHandler(object source, 
+    private static void ChangedHandler(object source,
         DinosaursChangedEventArgs e)
     {
 
         if (e.ChangeType==ChangeType.Replaced)
         {
-            Console.WriteLine("{0} was replaced with {1}", e.ChangedItem, 
+            Console.WriteLine("{0} was replaced with {1}", e.ChangedItem,
                 e.ReplacedWith);
         }
         else if(e.ChangeType==ChangeType.Cleared)

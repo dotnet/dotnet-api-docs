@@ -7,12 +7,12 @@ using System.Text;
 public class Sample {
 
   public static void Main() {
-  
+
     XmlWriter writer = null;
 
     try {
 
-       // Create an XmlWriterSettings object with the correct options. 
+       // Create an XmlWriterSettings object with the correct options.
        XmlWriterSettings settings = new XmlWriterSettings();
        settings.Indent = true;
        settings.IndentChars = ("\t");
@@ -25,11 +25,11 @@ public class Sample {
        writer.WriteEndElement();
 	
        writer.Flush();
-     } 
+     }
      finally  {
         if (writer != null)
           writer.Close();
      }
-  } 
-} 
+  }
+}
 //</snippet1>

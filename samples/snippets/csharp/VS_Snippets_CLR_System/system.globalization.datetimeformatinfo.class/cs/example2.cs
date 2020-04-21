@@ -16,10 +16,10 @@ public class Example
          Console.WriteLine("{0}: {1}", fmt, value.ToString(fmt, dtfi));
 
       Console.WriteLine();
-      
+
       // We don't want to change the FullDateTimePattern, so we need to save it.
       String originalFullDateTimePattern = dtfi.FullDateTimePattern;
-      
+
       // Modify day name abbreviations and long date pattern.
       dtfi.AbbreviatedDayNames = new String[] { "Su", "M", "Tu", "W", "Th", "F", "Sa" };
       dtfi.LongDatePattern = "ddd dd-MMM-yyyy";
@@ -32,7 +32,7 @@ public class Example
 //       D: Tuesday, July 09, 2013
 //       F: Tuesday, July 09, 2013 12:00:00 AM
 //       f: Tuesday, July 09, 2013 12:00 AM
-//       
+//
 //       D: Tu 09-Jul-2013
 //       F: Tuesday, July 09, 2013 12:00:00 AM
 //       f: Tu 09-Jul-2013 12:00 AM

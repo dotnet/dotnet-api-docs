@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
- 
+
 public class Run
 {
    public static void Main()
@@ -11,7 +11,7 @@ public class Run
       Run test = new Run();
       test.SerializeObject("XmlNamespaces.xml");
    }
- 
+
    public void SerializeObject(string filename)
    {
       XmlSerializer s = new XmlSerializer(typeof(Books));

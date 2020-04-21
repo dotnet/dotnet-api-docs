@@ -1,7 +1,7 @@
 ﻿// System.Runtime.Remoting.Channels.ChannelServices.GetChannel
 // System.Runtime.Remoting.Channels.ChannelServices.GetChannelSinkProperties
 /*
-   This example demonstrates the usage of the properties 'GetChannel' and 
+   This example demonstrates the usage of the properties 'GetChannel' and
    'GetChannelSinkProperties' of the 'ChannelServices' class. It displays
    the registered channel name, priority and channelsinkproperties
    for a given proxy and executes a remote method 'HelloMethod'.
@@ -9,8 +9,8 @@
 using System;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using System.Collections; 
-using System.Collections.Specialized; 
+using System.Collections;
+using System.Collections.Specialized;
 using System.Security.Permissions;
 
 namespace RemotingSamples
@@ -28,7 +28,7 @@ namespace RemotingSamples
             new SoapClientFormatterSinkProvider(),
             new SoapServerFormatterSinkProvider());
          ChannelServices.RegisterChannel(myClientChannel);
-         // Get the registered channel. 
+         // Get the registered channel.
          Console.WriteLine("Channel Name : "+ChannelServices.GetChannel(
             myClientChannel.ChannelName).ChannelName);
          Console.WriteLine("Channel Priorty : "+ChannelServices.GetChannel(
@@ -48,7 +48,7 @@ namespace RemotingSamples
          myValuesCollection.CopyTo(myValuesArray,0);
          for(int iIndex=0;iIndex<myKeysArray.Length;iIndex++)
          {
-            Console.WriteLine("Property Name : "+myKeysArray[iIndex]+ 
+            Console.WriteLine("Property Name : "+myKeysArray[iIndex]+
                " value : "+myValuesArray[iIndex]);
          }
 // </Snippet2>

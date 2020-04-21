@@ -41,7 +41,7 @@ public static class TestBase64
         fileNew.Close();
     }
 
-    // Use the WriteBase64 method to create an XML document.  The object  
+    // Use the WriteBase64 method to create an XML document.  The object
     // passed by the user is encoded and included in the document.
     public static void EncodeXmlFile(string xmlFileName, FileStream fileOld)
     {
@@ -84,7 +84,7 @@ public static class TestBase64
         xw.Close();
     }
 
-    // Use the ReadBase64 method to decode the new XML document 
+    // Use the ReadBase64 method to decode the new XML document
     // and generate the original object.
     public static void DecodeOrignalObject(string xmlFileName, FileStream fileNew)
     {
