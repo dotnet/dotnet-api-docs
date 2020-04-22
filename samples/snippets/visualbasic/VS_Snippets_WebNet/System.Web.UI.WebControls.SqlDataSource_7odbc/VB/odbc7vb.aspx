@@ -9,7 +9,7 @@
     If e.AffectedRows > 0 Then
         ' Perform any additional processing, such as setting a status label.
         Label1.Text = Request.LogonUserIdentity.Name & _
-            " changed user information sucessfully!"
+            " changed user information successfully!"
     Else
         Label1.Text = "No data updated!"
     End If

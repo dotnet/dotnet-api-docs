@@ -1,8 +1,8 @@
 // System::Windows::Forms::DataGridColumnStyle::PropertyDescriptorChanged
 
 /* The following example demonstrates 'PropertyDescriptorChanged' Event of 'DataGridColumnStyle' class.
-A  DataGrid and Button are added to a form. When user clicks on the button, the 'PropertyDescriptor'Format of
-'DataGridColumnStyle' is changed  to 'Currency' format . This raises 'PropertyDescriptorChanged' event,
+A  DataGrid and Button are added to a form. When user clicks on the button, the 'PropertyDescriptor' Format of
+'DataGridColumnStyle' is changed to 'Currency' format. This raises 'PropertyDescriptorChanged' event,
 which then calls user defined EventHandler function.
 */
 

@@ -2,7 +2,7 @@
 '  The following example demonstrates the 'StringFormat' field of 'DataFormats' class. 
 '  It stores a String object in Clipboard using the Clipboard's 'SetDataObject' method.
 '  It retrieves the String object stored in the Clipboard by using the GetDataObject method
-'  which returns the 'IDataObject'.It checks the string data is available or not 
+'  which returns the 'IDataObject'. It checks the string data is available or not 
 '  by using the 'GetDataPresent' method of 'IDataObject'. If data is there then it displays the data to the console. 
 
 Imports System.Drawing.Imaging

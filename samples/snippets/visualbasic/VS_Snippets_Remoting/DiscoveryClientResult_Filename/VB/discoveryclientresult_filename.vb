@@ -13,7 +13,7 @@
 ' A 'DiscoveryClientResultCollection' object is obtained by reading a '.discomap' file which contains the
 ' 'DiscoveryClientResult' objects, representing the details of discovery references. An element from the 
 ' collection is removed and programmatically added to it to show the usage of methods of 
-' 'DiscoveryClientResultCollection' class . The contents of this collection are displayed..
+' 'DiscoveryClientResultCollection' class. The contents of this collection are displayed..
 
 Imports System.Web.Services.Discovery
 
