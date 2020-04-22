@@ -1,7 +1,7 @@
 // System::Net::FileWebResponse::Headers
 
 /* This program demonstrates the 'Headers' property of the 'FileWebResponse' class.
-It creates a web request and queries for a response.It then prints [Out] all* the response
+It creates a web request and queries for a response. It then prints [Out] all* the response
 headers (name -value pairs) onto the console. */
 
 #using <System.dll>

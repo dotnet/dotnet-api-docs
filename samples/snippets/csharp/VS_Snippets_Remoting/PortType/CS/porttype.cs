@@ -6,7 +6,7 @@
   'PortType()' of class 'PortType'. This sample reads the contents of a file 'MathService_cs.wsdl'
   into a 'ServiceDescription' instance. It gets the collection of 'PortType'
   instances from 'ServiceDescription'. It removes a 'PortType' from the collection, creates a 
-  new 'PortType' and adds it into collection.The programs writes a new web service description 
+  new 'PortType' and adds it into collection. The programs writes a new web service description 
   file 'MathService_New.wsdl'.
 */
 

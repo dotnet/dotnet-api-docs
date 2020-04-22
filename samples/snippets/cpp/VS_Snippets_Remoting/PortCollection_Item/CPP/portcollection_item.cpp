@@ -11,7 +11,7 @@
   each service in the collection. It access the ports from the collection and
   displays them. It accesses a port by its name from the collection and
   displays its index. It adds a new port and calls 'Remove'
-  to remove the newly added port.The programs writes a new web service
+  to remove the newly added port. The programs writes a new web service
   description file.
 */
 #using <System.Xml.dll>

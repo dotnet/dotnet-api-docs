@@ -2,11 +2,11 @@
 // System.Diagnostics.EventLog.WriteEntry(String, String, EventLogEntryType, Int32, Int16, Byte[])
 // System.Diagnostics.EventLog.EventLog.WriteEntry(String, EventLogEntryType, Int32, Int16)
 
-/* The following example demonstrates the method
+/* The following example demonstrates the
   'WriteEntry(String, String, EventLogEntryType, Int32, Int16)',
-  'WriteEntry(String, String, EventLogEntryType, Int32, Int16, Byte[]) '
-   and 'WriteEntry(String, EventLogEntryType, Int32, Int16)' of class
-  'EventLog'.The following example writes the information to an event log.
+  'WriteEntry(String, String, EventLogEntryType, Int32, Int16, Byte[])',
+   and 'WriteEntry(String, EventLogEntryType, Int32, Int16)' methods of the
+  'EventLog' class. The following example writes the information to an event log.
 */
 using System;
 using System.Diagnostics;

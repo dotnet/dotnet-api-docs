@@ -2,12 +2,12 @@
 // System.Reflection.Emit.FieldBuilder.SetCustomAttribute(CustomAttributeBuilder)
 
 /*
-   The following program demonstrates 'SetCustomAttribute(ConstructorInfo,byte[])'
-   and 'SetCustomAttribute(CustomAttributeBuilder)' methods of 'FieldBuilder' class.
+   The following program demonstrates the 'SetCustomAttribute(ConstructorInfo,byte[])'
+   and 'SetCustomAttribute(CustomAttributeBuilder)' methods of the 'FieldBuilder' class.
    A dynamic assembly is created. A new class of type 'MyClass' is created.
-   A 'Method' and a 'Field are defined in the class.Two 'CustomAttributes' are
-   set to the field.The method initializes a value to 'Field'.Value of the field
-   is displayed to console.Values of Attributes applied to field are retreived and
+   A 'Method' and a 'Field are defined in the class. Two 'CustomAttributes' are
+   set to the field. The method initializes a value to 'Field'. The value of the field
+   is displayed to console. The values of Attributes applied to field are retrieved and
    displayed to console.
 */
 

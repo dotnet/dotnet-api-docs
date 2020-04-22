@@ -5,7 +5,7 @@ The following example demonstrates the 'Item(Int32)' method of the
 'InstallerCollection' class. It creates 'AssemblyInstaller' instances
 for 'MyAssembly1.exe' and 'MyAssembly2.exe'. These instances are added
 to an instance of 'TransactedInstaller'. The names of all the assemblies
-that are to be installed are displayed to the console.The installation
+that are to be installed are displayed to the console. The installation
 process installs both 'MyAssembly1.exe' and 'MyAssembly2.exe'.
 */
 

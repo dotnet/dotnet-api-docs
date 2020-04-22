@@ -2,13 +2,13 @@
 ' System.Web.Services.HttpAddressBinding;System.Web.Services.HttpAddressBinding.Location;
 '
 ' * The following example demonstrates the 'HttpBinding()' constructor 
-'  and 'Verb' property of class 'HttpBinding' and 'HttpAddressBinding()
-' ' constructor and 'Location' property of class 'HttpAddressBinding'. 
+'  and the  'Verb' property of the 'HttpBinding' class and the 'HttpAddressBinding()
+' ' constructor and 'Location' property of the 'HttpAddressBinding' class. 
 '  It creates a 'ServiceDescription' instance by using the
 '  static read method of 'ServiceDescription' by passing the 
-' 'AddNumbers1.wsdl' name as an argument.It creates  a 'Binding' object 
+' 'AddNumbers1.wsdl' name as an argument. It creates a 'Binding' object 
 '  and adds that binding object to 'ServiceDescription'. 
-'  It adds the 'PortType',Messages to the 'ServiceDescription' object. 
+'  It adds the 'PortType', Messages to the 'ServiceDescription' object. 
 '  Finally it writes the 'ServiceDescrption' as a WSDL file with name 
 ' 'AddNumbers.wsdl.
   

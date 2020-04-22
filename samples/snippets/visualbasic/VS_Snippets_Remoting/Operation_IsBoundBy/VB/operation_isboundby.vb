@@ -3,7 +3,7 @@
 ' The following program demonstrates the 'IsBoundBy' method of 
 ' 'Operation' class. It takes "Operation_IsBoundBy_Input_VB.wsdl"
 ' as input which does not contain 'PortType' and 'Binding' objects
-' supporting 'HttpPost'.It then adds those objects and writes into
+' supporting 'HttpPost'. It then adds those objects and writes into
 ' 'Operation_IsBoundBy_Output_VB.wsdl'.
 
 Imports System.Web.Services.Description

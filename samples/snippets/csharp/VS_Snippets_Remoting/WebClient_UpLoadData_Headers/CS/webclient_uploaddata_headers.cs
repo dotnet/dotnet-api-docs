@@ -1,15 +1,15 @@
-﻿// System.Net.WebClient.UplodaData(String,String,byte[]); System.Net.WebClient.Headers
+﻿// System.Net.WebClient.UploadData(String,String,byte[]); System.Net.WebClient.Headers
 /*
 This program demonstrates the 'UploadData(String,String,byte[])' method and 'Headers' property of 
-'WebClient' class.It accepts an Uri and some string content to be posted to the Uri. This string 
+'WebClient' class. It accepts an Uri and some string content to be posted to the Uri. This string 
 is posted to the Uri provided as input using the 'UploadData(String,String,byte[])' method.
 The 'Headers' property is used to set the "Content-Type" header to "application/x-www-form-urlencoded".
 The custom made site responds back with whatever was posted to it. 
 The contents of the response are displayed to the console.
 
-Note : The results described were obtained using a custom made site. This behaviour may not be the
+Note : The results described were obtained using a custom made site. This behavior may not be the
 same with all other sites. Also certain sites would not support the "Post" method thereby leading to 
-an error.It is advisable to construct a site using files accompanying this and provide
+an error. It is advisable to construct a site using files accompanying this and provide
 url name of this site to the program.
 */
 using System;

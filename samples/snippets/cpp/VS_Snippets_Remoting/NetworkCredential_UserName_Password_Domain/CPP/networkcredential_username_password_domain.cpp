@@ -1,11 +1,11 @@
 
 
 // System::Net::NetworkCredential::Username;System::Net::NetworkCredential::Domain;System::Net::NetworkCredential::Password
-/*This program demontrates the 'UserName', 'Domain' and 'Password' properties of 'NetworkCredential' class.
-It takes an URL, username, password and domainname from console. An empty 'NetworkCredential' Object*
-is created.The 'UserName' , 'Password' and 'Domain' porperties of 'NetworkCredential' class are initialised
+/*This program demontrates the 'UserName', 'Domain', and 'Password' properties of the 'NetworkCredential' class.
+It takes an URL, username, password, and domain name from console. An empty 'NetworkCredential' Object*
+is created. The 'UserName', 'Password', and 'Domain' porperties of the 'NetworkCredential' class are initialized
 with the respective values taken from console. Then a 'WebRequest' Object* is created and the 'NetworkCredential'
-Object* is associated with it.A message is displayed onto the console on successful reception of response
+Object* is associated with it. A message is displayed onto the console on successful reception of response
 otherwise an exception is thrown.
 */
 
@@ -37,7 +37,7 @@ void GetPage( String^ url, String^ username, String^ passwd, String^ domain )
       WebResponse^ myWebResponse = myWebRequest->GetResponse();
       
       // Process the response.
-      Console::WriteLine( "\nResponse received sucessfully" );
+      Console::WriteLine( "\nResponse received successfully" );
       
       // Release the resources of the response object.
       myWebResponse->Close();
@@ -47,7 +47,7 @@ void GetPage( String^ url, String^ username, String^ passwd, String^ domain )
    }
    catch ( WebException^ e ) 
    {
-      Console::WriteLine( "\r\nWebException is raised.The Reason for failure is : {0}", e->Status );
+      Console::WriteLine( "\r\nWebException is raised. The Reason for failure is : {0}", e->Status );
    }
    catch ( Exception^ e ) 
    {

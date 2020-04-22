@@ -1,6 +1,6 @@
 // System::Net::HttpWebResponse::Method;System::Net::HttpWebResponse::Server
 /* This program demonstrates the 'Method' and 'Server' properties of the 'HttpWebResponse' class.
-It creates a Web request and queries for a response.It evaluates the response method used and the prints
+It creates a Web request and queries for a response. It evaluates the response method used and the prints
 the Web server name to the console*/
 
 #using <System.dll>

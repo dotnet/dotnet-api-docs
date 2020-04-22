@@ -8,11 +8,11 @@
 /* The following example demonstrates the constructor 'Binding()' and properties 'Extensions','Name','Operations',
   'ServiceDescription' and 'Type' property of 'Binding' class AND method 'Insert' of 'BindingCollection' class.
   The input to the program is a WSDL file 'MathService_input.wsdl' with all information related to SOAP protocol
-  removed from it.In a way it tries to simulate a scenario wherein a service initially did not support a protocol, however later
+  removed from it. In a way, it tries to simulate a scenario wherein a service initially did not support a protocol, however later
   on happen to support it.
-  IN this example the WSDL file is modified to insert a new Binding for SOAP. The binding is populated based on
+  In this example, the WSDL file is modified to insert a new Binding for SOAP. The binding is populated based on
   WSDL document structure defined in WSDL specification. The ServiceDescription instance is loaded with values
-  for 'Messages', 'PortTypes','Bindings' and 'Port'.The instance is then written to an external file 'MathService_new.wsdl'.
+  for 'Messages', 'PortTypes','Bindings', and 'Port'. The instance is then written to an external file 'MathService_new.wsdl'.
  * */
 
 #using <System.dll>
@@ -157,7 +157,7 @@ public:
       soapPort->Extensions->Add( mySoapAddressBinding );
       // Add port to the MathService which is the first service in the Service Collection.
       myServiceDescription->Services->default[ 0 ]->Ports->Add( soapPort );
-      // Save the ServiceDescripition instance to an external file.
+      // Save the ServiceDescription instance to an external file.
       myServiceDescription->Write( "MathService_new.wsdl" );
       Console::WriteLine( "\nSuccessfully added bindings for SOAP protocol and saved results in file MathService_new.wsdl" );
       Console::WriteLine( "\n This file should be passed to wsdl tool as input to generate proxy" );
