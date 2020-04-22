@@ -9,7 +9,7 @@
   of 'MathService.wsdl' into a 'ServiceDescription' instance. It gets the collection of 
   'PortType' instances from 'ServiceDescription'. It removes a 'PortType' with the name 
   'MathServiceSoap' and adds the same later. Then it checks whether the collection contains 
-  the added 'PortType'.The sample writes a new web service description file 'MathService_New.wsdl'.
+  the added 'PortType'. The sample writes a new web service description file 'MathService_New.wsdl'.
 */
 
 using System;

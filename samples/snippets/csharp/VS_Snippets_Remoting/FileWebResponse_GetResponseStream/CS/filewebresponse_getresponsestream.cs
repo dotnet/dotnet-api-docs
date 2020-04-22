@@ -3,7 +3,7 @@
 /* This program demonstrates the 'GetResponseStream' method of the 'FileWebResponse' class.
    It creates a 'FileWebRequest' object and queries for a response.
    The response stream obtained is piped to a higher level stream reader. The reader reads
-   256 characters at a time , writes them into a string and then displays the string onto the console*/
+   256 characters at a time, writes them into a string and then displays the string onto the console. */
 
 using System;
 using System.Net;
@@ -66,7 +66,7 @@ class FileWebResponseSnippet
             }
         catch(WebException e)
             {
-                Console.WriteLine("\r\nWebException thrown.The Reason for failure is : {0}",e.Status);
+                Console.WriteLine("\r\nWebException thrown. The Reason for failure is : {0}",e.Status);
             }
         catch(Exception e)
             {

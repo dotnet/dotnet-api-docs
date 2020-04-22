@@ -19,13 +19,13 @@
    and properties 'IsPostBack','Request','Response','Server','Session' and 'Trace' of 'UserControl' class.
    
    LogonControl is a 'UserControl' with textboxes for username and password, and is defined in the codebehind 
-   file LogOnControl.cs . The corresponding .ascx file for the codebehind file is Logonform.ascx which 
+   file LogOnControl.cs. The corresponding .ascx file for the codebehind file is Logonform.ascx which 
    specifies using the '@control' directive, the name of the class the user control inherits and the path to
    the source file.
    
    This UserControl is included in the current WebForms page by using the '@Register' directive. When the 
    submit button is clicked on the page all logon information is stored in the 'Session' instance of the 
-   user control. After the  postback the saved information is retrieved and displayed by clicking the 
+   user control. After the postback the saved information is retrieved and displayed by clicking the 
    Display Session Variables button.
 */
 

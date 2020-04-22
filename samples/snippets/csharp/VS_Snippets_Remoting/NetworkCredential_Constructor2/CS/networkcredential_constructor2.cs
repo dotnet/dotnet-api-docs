@@ -1,8 +1,8 @@
 ﻿// System.Net.NetworkCredential.NetworkCredential(string,string)
 
-/*This program demontrates the 'NetworkCredential(string,string)' constructor of 'NetworkCredential' class.
-  It takes an URL, username, password and domainname from console and forms a 'NetworkCredential' object with 
-  these arguments.Then a 'WebRequest' object is created and the 'NetworkCredential' object is associated with 
+/*This program demontrates the 'NetworkCredential(string,string)' constructor of the 'NetworkCredential' class.
+  It takes an URL, username, password, and domain name from console and forms a 'NetworkCredential' object with 
+  these arguments. Then, a 'WebRequest' object is created and the 'NetworkCredential' object is associated with 
   it.A message is displayed onto the console on successful reception of response otherwise an exception is thrown.
  */
 
@@ -14,7 +14,7 @@ class NetworkCredentialSnippet {
      {
         if (args.Length < 4) 
         {
-          Console.WriteLine("\nPlease enter a protected resource Url and other details as command line parameter as below:");
+          Console.WriteLine("\nPlease enter a protected resource Url and other details as command-line parameter as below:");
           Console.WriteLine("\nUsage: NetworkCredential_Constructor2 URLname username password domainname");
           Console.WriteLine("\nExample: NetworkCredential_Constructor2 http://www.microsoft.com/net/ george george123 microsoft");
         } 
@@ -31,7 +31,7 @@ class NetworkCredentialSnippet {
     try 
     {
 // <Snippet1>
-       // Call the onstructor  to create an instance of NetworkCredential with the 
+       // Call the constructor to create an instance of NetworkCredential with the 
        // specified user name and password.
        NetworkCredential myCredentials = new NetworkCredential(username,passwd);
   
@@ -54,7 +54,7 @@ class NetworkCredentialSnippet {
       } 
       catch(WebException e) 
       {
-        Console.WriteLine("\r\nWebException is raised.The Reason for failure is : {0}",e.Status); 
+        Console.WriteLine("\r\nWebException is raised. The Reason for failure is : {0}",e.Status); 
       }
     catch(Exception e)
     {

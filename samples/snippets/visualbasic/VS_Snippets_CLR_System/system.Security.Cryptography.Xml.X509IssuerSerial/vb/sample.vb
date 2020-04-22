@@ -139,7 +139,7 @@ Module SignVerifyEnvelope
     End Sub
 
     ' </Snippet2>
-    ' Verify the signature of an XML file against an asymetric 
+    ' Verify the signature of an XML file against an asymmetric 
     ' algorithm and return the result.
     Function VerifyXmlFile(ByVal FileName As String, ByVal CertificateSubject As String) As [Boolean]
         ' Check the args.

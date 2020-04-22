@@ -1,8 +1,8 @@
 /* System::Net::HttpWebRequest::AllowAutoRedirect System::Net::HttpWebRequest->Address
-This program demonstrates  'AllowAutoRedirect' and 'Address' properties of 'HttpWebRequest' Class.
-A new 'HttpWebRequest' Object* is created. The 'AllowAutoredirect' property which redirects a page automatically
-to the new Uri is set to true.Using the 'Address' property, the address of the 'Responding Uri' is printed to
-console.The contents of the redirected page are displayed to the console.
+This program demonstrates the 'AllowAutoRedirect' and 'Address' properties of the 'HttpWebRequest' Class.
+A new 'HttpWebRequest' Object* is created. The 'AllowAutoredirect' property, which redirects a page automatically
+to the new Uri, is set to true. Using the 'Address' property, the address of the 'Responding Uri' is printed to
+console. The contents of the redirected page are displayed to the console.
 */
 
 #using <System.dll>

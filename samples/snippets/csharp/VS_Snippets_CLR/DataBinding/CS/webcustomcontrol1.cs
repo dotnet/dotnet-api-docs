@@ -21,20 +21,20 @@
 // System.Web.UI.DataBindingHandlerAttribute
 // System.Web.UI.DataBindingHandlerAttribute.IsDefaultAttribute().
 
-/*The following example demonstrates the  members of 'DataBinding' and
-' 'DataBindingCollection'.A new control 'SimpleWebControl'  is created
-   and a 'Designer' attribute is attached to it which actually refers to the
-   DesignTimeClass.The 'OnBindingsCollectionChanged(string)' method  is overridden
+/*The following example demonstrates the members of the 'DataBinding' and
+' 'DataBindingCollection' classes. A new control 'SimpleWebControl' is created
+   and a 'Designer' attribute is attached to it, which actually refers to the
+   DesignTimeClass. The 'OnBindingsCollectionChanged(string)' method is overridden
    to actually capture the DataBindingCollection instance and add the
-   DataBinding Expression to the property in the ASPX file. When 'Text' property of the
+   DataBinding Expression to the property in the ASPX file. When the 'Text' property of the
    SimpleWebControl is bound to the 'Text' property of 'Button1' at the DesignTime
    using the IDE, the 'OnBindingCollectionChanged' method is called and
    the 'Text' property of the 'SimpleWebControl' is updated in .aspx file.
-   The actual DataBinding is done at the runtime.The  properties of the 'DataBinding'
+   The actual DataBinding is done at the runtime. The properties of the 'DataBinding'
    and 'DataBindingCollection' are written into a text file (DataBindingOutput.txt)
-   in drive C.The Output is written at the design time itself.
+   in drive C. The Output is written at the design time itself.
 
-Note:This program has to be tested at "DesignTime".
+Note: This program has to be tested at "DesignTime".
 These are the instructions to be followed to successfully test the functionality of the program.
 1) Create a new "C# WebApplication" project.
 2) Add Reference "System.Design.dll" to the project.
@@ -69,7 +69,7 @@ namespace DataBindingTest
 
  public class SimpleDesigner : System.Web.UI.Design.ControlDesigner
    {
-   // The DesigneTime manipulation is done by this class.
+   // The DesignTime manipulation is done by this class.
      public string Text
       {
          get
@@ -193,7 +193,7 @@ namespace DataBindingTest
 // <Snippet15>
             string dataBindingOutput4,dataBindingOutput5,dataBindingOutput6,dataBindingOutput7,dataBindingOutput8;
             dataBindingOutput4=String.Concat("The Count of the collection is ",myDataBindingCollection1.Count);
-            dataBindingOutput5=String.Concat("The IsSynchronised property of the collection is ",myDataBindingCollection1.IsSynchronized,"-",dataBindingOutput4);
+            dataBindingOutput5=String.Concat("The IsSynchronized property of the collection is ",myDataBindingCollection1.IsSynchronized,"-",dataBindingOutput4);
             dataBindingOutput6=String.Concat("The IsReadOnly property of the collection is ",myDataBindingCollection1.IsReadOnly,"-",dataBindingOutput5);
             WriteToFile(dataBindingOutput6);
 // </Snippet15>

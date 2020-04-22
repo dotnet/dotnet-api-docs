@@ -7,9 +7,9 @@ It accepts an Uri and the path of a file to be uploaded to the Uri. This file is
 provided as input using the 'UploadFile(String, String)' method. The custom made site responds back
 with whatever was posted to it. Thus the contents of the file are displayed to the console.
 
-Note : The results described were obtained using a custom made site. This behaviour may not be the
+Note : The results described were obtained using a custom made site. This behavior may not be the
 same with all other sites. Also certain sites would not accept S"Post" method thereby leading to
-an error.It is advisable to construct a site using files accompanying this and provide
+an error. It is advisable to construct a site using files accompanying this and provide
 url name of this site to the program.
 */
 #using <System.dll>

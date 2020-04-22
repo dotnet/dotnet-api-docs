@@ -53,7 +53,7 @@ Class CredentialCacheSnippet
             Console.WriteLine(ControlChars.Cr + ControlChars.Cr + "Request to Url is sent.Waiting for response...Please wait ...")
             Dim myWebResponse As WebResponse = myWebRequest.GetResponse()
             ' Process the response.
-            Console.WriteLine(ControlChars.Cr + "Response received sucessfully")
+            Console.WriteLine(ControlChars.Cr + "Response received successfully")
             ' Release the resources of the response object.
             myWebResponse.Close()
 ' </Snippet3>
