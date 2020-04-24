@@ -8,13 +8,13 @@ class Program
 
     static void Main()
     {
-        // The lazy initializer is created here. LargeObject is not created until the 
+        // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
         //<SnippetNewLazy>
         lazyLargeObject = new Lazy<LargeObject>(false);
 
         // The following lines show how to use other constructors to achieve exactly the
-        // same result as the previous line: 
+        // same result as the previous line:
         //lazyLargeObject = new Lazy<LargeObject>(LazyThreadSafetyMode.None);
         //</SnippetNewLazy>
 
@@ -38,7 +38,7 @@ class LargeObject
 {
     public LargeObject()
     {
-        Console.WriteLine("LargeObject was created on thread id {0}.", 
+        Console.WriteLine("LargeObject was created on thread id {0}.",
             Thread.CurrentThread.ManagedThreadId);
     }
     public long[] Data = new long[100000000];

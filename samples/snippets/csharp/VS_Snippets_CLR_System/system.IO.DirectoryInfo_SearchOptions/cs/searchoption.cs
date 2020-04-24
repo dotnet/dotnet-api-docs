@@ -11,10 +11,10 @@ class App
         string searchPattern = "c*";
 
         DirectoryInfo di = new DirectoryInfo(path);
-        DirectoryInfo[] directories = 
+        DirectoryInfo[] directories =
             di.GetDirectories(searchPattern, SearchOption.TopDirectoryOnly);
 
-        FileInfo[] files = 
+        FileInfo[] files =
             di.GetFiles(searchPattern, SearchOption.TopDirectoryOnly);
 
         Console.WriteLine(

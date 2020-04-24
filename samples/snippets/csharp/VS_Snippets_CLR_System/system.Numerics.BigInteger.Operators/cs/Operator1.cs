@@ -73,7 +73,7 @@ public class Class1
       }
       // </Snippet4>
    }
-   
+
    private static void EqualsInt642()
    {
       // <Snippet5>
@@ -82,7 +82,7 @@ public class Class1
       if (bigNumber == number)
       {
          // Do something...
-      }   
+      }
       // </Snippet5>
    }
 
@@ -116,8 +116,8 @@ public class Class1
       BigInteger number1 = BigInteger.Pow(2, 127);
       BigInteger number2 = BigInteger.Multiply(163, 124);
       BigInteger result = number1 ^ number2;
-      // </Snippet8>  
-      Console.WriteLine("XOR: " + result.ToString());    
+      // </Snippet8>
+      Console.WriteLine("XOR: " + result.ToString());
    }
 
    private static void GreaterThan64B()
@@ -133,7 +133,7 @@ public class Class1
 
    // Snipppet10: calling op_GreaterThan(Int64, BigInteger) directly is
    // not supported.
-   
+
    private static void GreaterThanB64()
    {
       // <Snippet11>
@@ -147,7 +147,7 @@ public class Class1
 
    // Snipppet12: calling op_GreaterThan(BigInteger, Int64) directly is
    // not supported.
-   
+
    private static void GreaterThanBU64()
    {
       // <Snippet13>
@@ -180,7 +180,7 @@ public class Class1
       }
       // </Snippet17>
    }
-   
+
    private static void GreaterThanOrEqualB64()
    {
       // <Snippet19>
@@ -191,7 +191,7 @@ public class Class1
       }
       // </Snippet19>
    }
-   
+
    private static void GreaterThanOrEqualBU64()
    {
       // <Snippet21>
@@ -202,7 +202,7 @@ public class Class1
       }
       // </Snippet21>
    }
-   
+
    private static void GreaterThanOrEqualU64B()
    {
       // <Snippet23>
@@ -234,10 +234,10 @@ public class Class1
       if (bigNumber != number)
       {
          // Do something...
-      }   
+      }
       // </Snippet26>
    }
-   
+
    private static void InequalityBU64()
    {
       // <Snippet27>
@@ -249,7 +249,7 @@ public class Class1
       }
       // </Snippet27>
    }
-   
+
    private static void InequalityU64B()
    {
       // <Snippet28>
@@ -259,7 +259,7 @@ public class Class1
       {
          // Do something...
       }
-      // </Snippet28>      
+      // </Snippet28>
    }
 
    private static void LeftShift()
@@ -270,7 +270,7 @@ public class Class1
       for (int ctr = 0; ctr <= 16; ctr++)
       {
          BigInteger newNumber = number << ctr;
-         Console.WriteLine(" {0,2} bits: {1,35} {2,30}", 
+         Console.WriteLine(" {0,2} bits: {1,35} {2,30}",
                            ctr, newNumber, newNumber.ToString("X"));
       }
       // The example displays the following output:
@@ -291,10 +291,10 @@ public class Class1
       //     13 bits: -7.4115659189860894719994364355E+31    C588763A1ADE0FA5983F7692000
       //     14 bits: -1.4823131837972178943998872871E+32    8B10EC7435BC1F4B307EED24000
       //     15 bits: -2.9646263675944357887997745742E+32   F1621D8E86B783E9660FDDA48000
-      //     16 bits: -5.9292527351888715775995491484E+32   E2C43B1D0D6F07D2CC1FBB490000      
+      //     16 bits: -5.9292527351888715775995491484E+32   E2C43B1D0D6F07D2CC1FBB490000
       // </Snippet29>
    }
-   
+
    private static void LeftShiftManually()
    {
       // <Snippet30>
@@ -303,7 +303,7 @@ public class Class1
       for (int ctr = 0; ctr <= 16; ctr++)
       {
          BigInteger newNumber = BigInteger.Multiply(number, BigInteger.Pow(2, ctr));
-         Console.WriteLine(" {0,2} bits: {1,35} {2,30}", 
+         Console.WriteLine(" {0,2} bits: {1,35} {2,30}",
                            ctr, newNumber, newNumber.ToString("X"));
       }
       // The example displays the following output:
@@ -324,7 +324,7 @@ public class Class1
       //     13 bits: -7.4115659189860894719994364355E+31    C588763A1ADE0FA5983F7692000
       //     14 bits: -1.4823131837972178943998872871E+32    8B10EC7435BC1F4B307EED24000
       //     15 bits: -2.9646263675944357887997745742E+32   F1621D8E86B783E9660FDDA48000
-      //     16 bits: -5.9292527351888715775995491484E+32   E2C43B1D0D6F07D2CC1FBB490000      
+      //     16 bits: -5.9292527351888715775995491484E+32   E2C43B1D0D6F07D2CC1FBB490000
       // </Snippet30>
    }
 
@@ -339,9 +339,9 @@ public class Class1
       else
       {
          // Do something else.
-      }      
+      }
       // </Snippet31>
-   } 
+   }
 
    private static void LessThanB64()
    {
@@ -354,10 +354,10 @@ public class Class1
       else
       {
          // Do something else.
-      }      
+      }
       // </Snippet33>
-   } 
-   
+   }
+
    private static void LessThanBU64()
    {
       // <Snippet35>
@@ -369,9 +369,9 @@ public class Class1
       else
       {
          // Do something else.
-      }      
+      }
       // </Snippet35>
-   } 
+   }
 
    private static void LessThanU64B()
    {
@@ -384,9 +384,9 @@ public class Class1
       else
       {
          // Do something else.
-      }      
+      }
       // </Snippet37>
-   } 
+   }
 
    private static void LessThanOrEqual64B()
    {
@@ -399,9 +399,9 @@ public class Class1
       else
       {
          // Do something else.
-      }      
+      }
       // </Snippet39>
-   } 
+   }
 
    private static void LessThanOrEqualB64()
    {
@@ -414,10 +414,10 @@ public class Class1
       else
       {
          // Do something else.
-      }      
+      }
       // </Snippet41>
-   } 
-   
+   }
+
    private static void LessThanOrEqualBU64()
    {
       // <Snippet43>
@@ -429,9 +429,9 @@ public class Class1
       else
       {
          // Do something else.
-      }      
+      }
       // </Snippet43>
-   } 
+   }
 
    private static void LessThanOrEqualU64B()
    {
@@ -444,7 +444,7 @@ public class Class1
       else
       {
          // Do something else.
-      }      
+      }
       // </Snippet45>
    }
 }

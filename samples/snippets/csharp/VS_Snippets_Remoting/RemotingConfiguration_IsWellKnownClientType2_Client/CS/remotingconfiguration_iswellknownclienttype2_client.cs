@@ -16,7 +16,7 @@ using System.Runtime.Remoting.Channels.Tcp;
       public static void Main()
       {
          ChannelServices.RegisterChannel(new TcpChannel());
-         // Register the 'MyServerImpl' object as well known type 
+         // Register the 'MyServerImpl' object as well known type
          // at client end.
          RemotingConfiguration.RegisterWellKnownClientType(
                     typeof(MyServerImpl),"tcp://localhost:8085/SayHello");

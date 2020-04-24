@@ -6,9 +6,9 @@ public class Example
 {
    public static void Main()
    {
-      Complex[] values= { new Complex(12.3, -1.4), 
-                          new Complex(-6.2, 3.1), 
-                          new Complex(8.9, 1.5) };   
+      Complex[] values= { new Complex(12.3, -1.4),
+                          new Complex(-6.2, 3.1),
+                          new Complex(8.9, 1.5) };
       foreach (var c1 in values)
          foreach (var c2 in values)
             Console.WriteLine("{0} + {1} = {2}", c1, c2, c1 + c2);

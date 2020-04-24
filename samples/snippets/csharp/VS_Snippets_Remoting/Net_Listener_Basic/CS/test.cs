@@ -37,7 +37,7 @@ public class ListenerBasic
         // for example "http://contoso.com:8080/index/".
         if (prefixes == null || prefixes.Length == 0)
           throw new ArgumentException("prefixes");
-        
+
         // Create a listener.
         HttpListener listener = new HttpListener();
         // Add the prefixes.
@@ -47,7 +47,7 @@ public class ListenerBasic
         }
         listener.Start();
         Console.WriteLine("Listening...");
-        // Note: The GetContext method blocks while waiting for a request. 
+        // Note: The GetContext method blocks while waiting for a request.
         HttpListenerContext context = listener.GetContext();
         HttpListenerRequest request = context.Request;
         // Obtain a response object.
@@ -76,11 +76,11 @@ public class ListenerBasic
         {
             return "Client authentication is not enabled for this Web server.";
         }
-        
+
         string display;
         if (id.IsAuthenticated)
         {
-            display = String.Format("{0} was authenticated using {1}", id.Name, 
+            display = String.Format("{0} was authenticated using {1}", id.Name,
                 id.AuthenticationType);
         }
         else
@@ -116,7 +116,7 @@ public class ListenerBasic
         // Specify Negotiate as the authentication scheme.
         listener.AuthenticationSchemes = AuthenticationSchemes.Negotiate;
         Console.WriteLine("Listening...");
-        // GetContext blocks while waiting for a request. 
+        // GetContext blocks while waiting for a request.
         HttpListenerContext context = listener.GetContext();
         HttpListenerRequest request = context.Request;
         // Obtain a response object.
@@ -150,10 +150,10 @@ public class ListenerBasic
     {
         // Get the prefixes that the Web server is listening to.
         HttpListenerPrefixCollection prefixes = listener.Prefixes;
-        try 
+        try
         {
             prefixes.Clear();
-        } 
+        }
         // If the operation failed, return false.
         catch
         {
@@ -199,7 +199,7 @@ public class ListenerBasic
         }
         listener.Start();
         IAsyncResult result = listener.BeginGetContext(new AsyncCallback(ListenerCallback),listener);
-        // Applications can do some work here while waiting for the 
+        // Applications can do some work here while waiting for the
         // request. If no work can be done until you have processed a request,
         // use a wait handle to prevent this thread from terminating
         // while the asynchronous operation completes.
@@ -248,10 +248,10 @@ public class ListenerBasic
         listener.AuthenticationSchemes = AuthenticationSchemes.Negotiate;
         // If NTLM is used, we will allow multiple requests on the same
         // connection to use the authentication information of first request.
-        // This improves performance but does reduce the security of your 
-        // application. 
+        // This improves performance but does reduce the security of your
+        // application.
         listener.UnsafeConnectionNtlmAuthentication = true;
-        // This listener does not want to receive exceptions 
+        // This listener does not want to receive exceptions
         // that occur when sending the response to the client.
         listener.IgnoreWriteExceptions = true;
         Console.WriteLine("Listening...");
@@ -284,7 +284,7 @@ public class ListenerBasic
                 Console.WriteLine(l);
             }
         }
-        
+
         // Display the URL used by the client.
         Console.WriteLine("URL: {0}", request.Url.OriginalString);
         Console.WriteLine("Raw URL: {0}", request.RawUrl);
@@ -301,7 +301,7 @@ public class ListenerBasic
         Console.WriteLine("User agent: {0}", request.UserAgent);
     }
     // </snippet15>
-    
+
     // <snippet16>
     public static void ShowRequestData (HttpListenerRequest request)
     {
@@ -318,7 +318,7 @@ public class ListenerBasic
             Console.WriteLine("Client data content type {0}", request.ContentType);
         }
         Console.WriteLine("Client data content length {0}", request.ContentLength64);
-       
+
         Console.WriteLine("Start of client data:");
         // Convert the data to a string and display it on the console.
         string s = reader.ReadToEnd();
@@ -329,7 +329,7 @@ public class ListenerBasic
         // If you are finished with the request, it should be closed also.
     }
         // </snippet16>
-        
+
         // <snippet17>
         public static void ShowRequestProperties2 (HttpListenerRequest request)
         {
@@ -356,11 +356,11 @@ public class ListenerBasic
                 Console.WriteLine("Path: {0}", cook.Path);
                 Console.WriteLine("Port: {0}", cook.Port);
                 Console.WriteLine("Secure: {0}", cook.Secure);
-             
+
                 Console.WriteLine("When issued: {0}", cook.TimeStamp);
-                Console.WriteLine("Expires: {0} (expired? {1})", 
+                Console.WriteLine("Expires: {0} (expired? {1})",
                     cook.Expires, cook.Expired);
-                Console.WriteLine("Don't save: {0}", cook.Discard);    
+                Console.WriteLine("Don't save: {0}", cook.Discard);
                 Console.WriteLine("Comment: {0}", cook.Comment);
                 Console.WriteLine("Uri for comments: {0}", cook.CommentUri);
                 Console.WriteLine("Version: RFC {0}" , cook.Version == 1 ? "2109" : "2965");
@@ -383,11 +383,11 @@ public class ListenerBasic
                 Console.WriteLine("Path: {0}", cook.Path);
                 Console.WriteLine("Port: {0}", cook.Port);
                 Console.WriteLine("Secure: {0}", cook.Secure);
-             
+
                 Console.WriteLine("When issued: {0}", cook.TimeStamp);
-                Console.WriteLine("Expires: {0} (expired? {1})", 
+                Console.WriteLine("Expires: {0} (expired? {1})",
                     cook.Expires, cook.Expired);
-                Console.WriteLine("Don't save: {0}", cook.Discard);    
+                Console.WriteLine("Don't save: {0}", cook.Discard);
                 Console.WriteLine("Comment: {0}", cook.Comment);
                 Console.WriteLine("Uri for comments: {0}", cook.CommentUri);
                 Console.WriteLine("Version: RFC {0}" , cook.Version == 1 ? "2109" : "2965");
@@ -419,7 +419,7 @@ public class ListenerBasic
             listener.IgnoreWriteExceptions = true;
             listener.Start();
             Console.WriteLine("Listening...");
-            // Note: The GetContext method blocks while waiting for a request. 
+            // Note: The GetContext method blocks while waiting for a request.
             HttpListenerContext context = listener.GetContext();
             HttpListenerRequest request = context.Request;
             string customerID = null;
@@ -467,10 +467,10 @@ public class ListenerBasic
         foreach (string key in headers.AllKeys)
         {
             string[] values = headers.GetValues(key);
-            if(values.Length > 0) 
+            if(values.Length > 0)
             {
                 Console.WriteLine("The values of the {0} header are: ", key);
-                foreach (string value in values) 
+                foreach (string value in values)
                 {
                     Console.WriteLine("   {0}", value);
                 }
@@ -498,10 +498,10 @@ public class ListenerBasic
         foreach (string key in headers.AllKeys)
         {
             string[] values = headers.GetValues(key);
-            if(values.Length > 0) 
+            if(values.Length > 0)
             {
                 Console.WriteLine("The values of the {0} header are: ", key);
-                foreach (string value in values) 
+                foreach (string value in values)
                 {
                     Console.WriteLine("   {0}", value);
                 }
@@ -521,7 +521,7 @@ public class ListenerBasic
         // for example "http://contoso.com:8080/index/".
         if (prefixes == null || prefixes.Length == 0)
           throw new ArgumentException("prefixes");
-        
+
         // Create a listener.
         HttpListener listener = new HttpListener();
         // Add the prefixes.
@@ -531,7 +531,7 @@ public class ListenerBasic
         }
         listener.Start();
         Console.WriteLine("Listening...");
-        // Note: The GetContext method blocks while waiting for a request. 
+        // Note: The GetContext method blocks while waiting for a request.
         HttpListenerContext context = listener.GetContext();
         HttpListenerRequest request = context.Request;
         // Obtain a response object.
@@ -541,7 +541,7 @@ public class ListenerBasic
         byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
         // Get a response stream and write the response to it.
         response.ContentLength64 = buffer.Length;
-        // Demonstrate using the close overload that takes an 
+        // Demonstrate using the close overload that takes an
         // entity body.
         // Specify true to block while data is transmitted.
         response.Close(buffer, true);
@@ -558,7 +558,7 @@ public class ListenerBasic
         }
     }
     //</snippet25>
-    
+
     //<snippet26>
     public static void SetExpirationDate(long seconds, HttpListenerResponse response)
     {
@@ -589,12 +589,12 @@ public class ListenerBasic
         }
         listener.Start();
         Console.WriteLine("Listening...");
-        // Note: The GetContext method blocks while waiting for a request. 
+        // Note: The GetContext method blocks while waiting for a request.
         HttpListenerContext context = listener.GetContext();
         HttpListenerRequest request = context.Request;
-        
-        // This application sends a cookie to the client marking the time 
-        // they visited. 
+
+        // This application sends a cookie to the client marking the time
+        // they visited.
         Cookie timeStampCookie = new Cookie("VisitDate", DateTime.Now.ToString());
         // Obtain a response object.
         HttpListenerResponse response = context.Response;
@@ -612,7 +612,7 @@ public class ListenerBasic
     public static void Main()
     {
         string[] prefixes = {@"http://localhost:8080/", @"http://sharriso3:8080/"};
-        
+
         //  SimpleListenerWithAuthentication( prefixes);
         //  SimpleListenerExample(prefixes);
         //SimpleListenerWithUnsafeAuthentication( prefixes);
@@ -645,8 +645,8 @@ public class ListenerBasic
 
 
 
-        
-        /* test CheckTestUrl 
+
+        /* test CheckTestUrl
 
         CheckTestUrl(listener, request);
         */
@@ -654,21 +654,21 @@ public class ListenerBasic
         /* test CheckForPrefix */
        //Console.WriteLine(CheckForPrefix( listener, prefixes[0]));
 
-       /* test CopyPrefixes 
+       /* test CopyPrefixes
        string[]prefixeStrings = CopyPrefixes( listener);
        foreach (string s in prefixeStrings)
        {
             Console.WriteLine(s);
        }
        */
-       /* test RemovePrefix 
+       /* test RemovePrefix
 
        Console.WriteLine("server has {0} prefixes", listener.Prefixes.Count);
        RemovePrefix(listener, prefixes[0]);
        Console.WriteLine("after remove 1 server has {0} prefixes", listener.Prefixes.Count);
        */
 
-       /* test RemoveAllPrefixes 
+       /* test RemoveAllPrefixes
        RemoveAllPrefixes( listener);
        Console.WriteLine("after remove all server has {0} prefixes", listener.Prefixes.Count);
     */

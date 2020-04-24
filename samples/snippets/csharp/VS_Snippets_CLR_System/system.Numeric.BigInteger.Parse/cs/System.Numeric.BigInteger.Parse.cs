@@ -16,7 +16,7 @@ public class ParseModule
        pm.ParseWithStyle();
        pm.ParseOverload4();
     }
-   
+
    private void ParseString()
    {
       // <Snippet1>
@@ -40,21 +40,21 @@ public class ParseModule
             case 1:
                Console.WriteLine("{0} is greater than {1}.", number1, number2);
                break;
-         }      
+         }
       }
       catch (FormatException)
       {
          Console.WriteLine("Unable to initialize integer because of invalid format in string.");
       }
-      // </Snippet1>     
-   }   
+      // </Snippet1>
+   }
 
    private void ParseStringWithIFormatProvider()
    {
        // <Snippet4>
       NumberFormatInfo fmt = new NumberFormatInfo();
       fmt.NegativeSign = "~";
-      
+
       BigInteger number = BigInteger.Parse("~6354129876", fmt);
       // Display value using same formatting information
       Console.WriteLine(number.ToString(fmt));
@@ -62,7 +62,7 @@ public class ParseModule
       Console.WriteLine(number);
       // </Snippet4>
    }
-   
+
    private void ParseWithCustomIFormatProvider()
    {
       // <Snippet3>
@@ -77,7 +77,7 @@ public class ParseModule
    private void ParseWithStyle()
    {
       // <Snippet5>
-      BigInteger number; 
+      BigInteger number;
       // Method should succeed (white space and sign allowed)
       number = BigInteger.Parse("   -68054   ", NumberStyles.Integer);
       Console.WriteLine(number);
@@ -87,14 +87,14 @@ public class ParseModule
       // Method call should fail: sign not allowed
       try
       {
-         number = BigInteger.Parse("   -68054  ", NumberStyles.AllowLeadingWhite 
+         number = BigInteger.Parse("   -68054  ", NumberStyles.AllowLeadingWhite
                                                   | NumberStyles.AllowTrailingWhite);
          Console.WriteLine(number);
-      }   
+      }
       catch (FormatException e)
       {
          Console.WriteLine(e.Message);
-      }                                                     
+      }
       // Method call should fail: white space not allowed
       try
       {
@@ -104,14 +104,14 @@ public class ParseModule
       catch (FormatException e)
       {
          Console.WriteLine(e.Message);
-      }    
+      }
       //
       // The method produces the following output:
       //
       //     -68054
       //     426068
       //     Input string was not in a correct format.
-      //     Input string was not in a correct format.                                                 
+      //     Input string was not in a correct format.
       // </Snippet5>
    }
 
@@ -119,55 +119,55 @@ public class ParseModule
    {
       // <Snippet6>
       // Call parse with default values of style and provider
-      Console.WriteLine(BigInteger.Parse("  -300   ", 
+      Console.WriteLine(BigInteger.Parse("  -300   ",
                         NumberStyles.Integer, CultureInfo.CurrentCulture));
       // Call parse with default values of style and provider supporting tilde as negative sign
-      Console.WriteLine(BigInteger.Parse("   ~300  ", 
+      Console.WriteLine(BigInteger.Parse("   ~300  ",
                                          NumberStyles.Integer, new BigIntegerFormatProvider()));
       // Call parse with only AllowLeadingWhite and AllowTrailingWhite
       // Exception thrown because of presence of negative sign
       try
       {
-         Console.WriteLine(BigInteger.Parse("    ~300   ", 
-                                      NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, 
+         Console.WriteLine(BigInteger.Parse("    ~300   ",
+                                      NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
                                       new BigIntegerFormatProvider()));
       }
       catch (FormatException e)
       {
          Console.WriteLine("{0}: \n   {1}", e.GetType().Name, e.Message);
-      }                                   
+      }
       // Call parse with only AllowHexSpecifier
       // Exception thrown because of presence of negative sign
       try
       {
-         Console.WriteLine(BigInteger.Parse("-3af", NumberStyles.AllowHexSpecifier, 
+         Console.WriteLine(BigInteger.Parse("-3af", NumberStyles.AllowHexSpecifier,
                                             new BigIntegerFormatProvider()));
       }
       catch (FormatException e)
       {
          Console.WriteLine("{0}: \n   {1}", e.GetType().Name, e.Message);
-      }                                 
+      }
       // Call parse with only NumberStyles.None
       // Exception thrown because of presence of white space and sign
       try
       {
-         Console.WriteLine(BigInteger.Parse(" -300 ", NumberStyles.None, 
+         Console.WriteLine(BigInteger.Parse(" -300 ", NumberStyles.None,
                                             new BigIntegerFormatProvider()));
       }
       catch (FormatException e)
       {
          Console.WriteLine("{0}: \n   {1}", e.GetType().Name, e.Message);
-      }      
-      // <</Snippet6>                           
+      }
+      // <</Snippet6>
    }
 }
 
 // <Snippet2>
 public class BigIntegerFormatProvider : IFormatProvider
 {
-   public object GetFormat(Type formatType) 
+   public object GetFormat(Type formatType)
    {
-      if (formatType == typeof(NumberFormatInfo)) 
+      if (formatType == typeof(NumberFormatInfo))
       {
          NumberFormatInfo numberFormat = new NumberFormatInfo();
          numberFormat.NegativeSign = "~";
@@ -176,7 +176,7 @@ public class BigIntegerFormatProvider : IFormatProvider
       else
       {
          return null;
-      }      
+      }
    }
 }
 // </Snippet2>

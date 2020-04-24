@@ -81,7 +81,7 @@ class PortClass
 
      // Create an HttpAddressBinding.
      HttpAddressBinding postAddressBinding = new HttpAddressBinding();
-     postAddressBinding.Location = 
+     postAddressBinding.Location =
         "http://localhost/PortClass/PortService_cs.asmx";
 
      // Add the HttpAddressBinding to the Port.

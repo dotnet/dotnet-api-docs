@@ -6,7 +6,7 @@ public class Example
    public static void Main()
    {
       double value = 11.1;
-      for (int ctr = 0; ctr <= 5; ctr++)    
+      for (int ctr = 0; ctr <= 5; ctr++)
          value = RoundValueAndAdd(value);
 
       Console.WriteLine();
@@ -14,7 +14,7 @@ public class Example
       value = 11.5;
       RoundValueAndAdd(value);
    }
-   
+
    private static double RoundValueAndAdd(double value)
    {
       Console.WriteLine("{0} --> {1}", value, Math.Round(value));
@@ -28,6 +28,6 @@ public class Example
 //       11.4 --> 11
 //       11.5 --> 11
 //       11.6 --> 12
-//       
+//
 //       11.5 --> 12
 // </Snippet1>

@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 
 namespace CustomWebFormsControls {
 
-   [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")] 
+   [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
    public class MyTextBox: Control, IPostBackDataHandler {
 
       public String Text {
@@ -18,11 +18,11 @@ namespace CustomWebFormsControls {
          set {
             ViewState["Text"] = value;
          }
-      }      
+      }
 
       public event EventHandler TextChanged;
 
-      public virtual bool LoadPostData(string postDataKey, 
+      public virtual bool LoadPostData(string postDataKey,
          NameValueCollection postCollection) {
 
          String presentValue = Text;
@@ -49,7 +49,7 @@ namespace CustomWebFormsControls {
          output.Write("<INPUT type= text name = "+this.UniqueID
             + " value = " + this.Text + " >");
       }
-   }   
+   }
 }
-   
+
 // </Snippet1>

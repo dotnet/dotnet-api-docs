@@ -6,17 +6,17 @@ It creates a web request and queries for a response. The server should respond u
 using System;
 using System.Net;
 
-class HttpWebResponseSnippet 
+class HttpWebResponseSnippet
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
 	{
-		if (args.Length < 1) 
+		if (args.Length < 1)
 		{	
 			Console.WriteLine("\nPlease enter the url as command line parameter");
 			Console.WriteLine("Example:");
 			Console.WriteLine("HttpWebResponse_ProtocolVersion http://www.microsoft.com/net/");
-		} 
-		else 
+		}
+		else
 		{
 			GetPage(args[0]);
 		}
@@ -25,31 +25,31 @@ class HttpWebResponseSnippet
 		return;
     }
 	
-    public static void GetPage(String url) 
+    public static void GetPage(String url)
 	{
 
-	try 
+	try
  		  {	
 // <Snippet1>		
             Uri ourUri = new Uri(url);
-				// Creates an HttpWebRequest for the specified URL. 
-				HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(ourUri); 
+				// Creates an HttpWebRequest for the specified URL.
+				HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(ourUri);
 				myHttpWebRequest.ProtocolVersion = HttpVersion.Version10;
 				// Sends the HttpWebRequest and waits for the response.
-				HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse(); 
-				// Ensures that only Http/1.0 responses are accepted. 
+				HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+				// Ensures that only Http/1.0 responses are accepted.
 				if(myHttpWebResponse.ProtocolVersion != HttpVersion.Version10)
 					Console.WriteLine("\nThe server responded with a version other than Http/1.0");
 				else
 				if (myHttpWebResponse.StatusCode == HttpStatusCode.OK)
 					Console.WriteLine("\nRequest sent using version Http/1.0. Successfully received response with version HTTP/1.0 ");
 				// Releases the resources of the response.
-				myHttpWebResponse.Close(); 
+				myHttpWebResponse.Close();
 // </Snippet1>			
-        	} 
-		 catch(WebException e) 
+        	}
+		 catch(WebException e)
 		   {
-				Console.WriteLine("\nWebException Raised. The following error occurred : {0}",e.Status);  
+				Console.WriteLine("\nWebException Raised. The following error occurred : {0}",e.Status);
          }
 		catch(Exception e)
 			{

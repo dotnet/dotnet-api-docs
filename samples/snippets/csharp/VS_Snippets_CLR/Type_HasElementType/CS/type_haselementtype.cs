@@ -7,16 +7,16 @@ using System.Reflection;
 public class Example
 {
     // This method is for demonstration purposes.
-    unsafe public void Test(ref int x, out int y, int* z) 
-    { 
-        *z = x = y = 0; 
+    unsafe public void Test(ref int x, out int y, int* z)
+    {
+        *z = x = y = 0;
     }
 
     public static void Main()
     {
         // All of the following display 'True'.
 
-        // Define an array, get its type, and display HasElementType. 
+        // Define an array, get its type, and display HasElementType.
         int[] nums = {1, 1, 2, 3, 5, 8, 13};
         Type t = nums.GetType();
         Console.WriteLine("HasElementType is '{0}' for array types.", t.HasElementType);
@@ -32,7 +32,7 @@ public class Example
         Console.WriteLine("HasElementType is '{0}' for array types.", t.HasElementType);
 
         // When you reflect over methods, HasElementType is true for
-        // ref, out, and pointer parameter types. The following 
+        // ref, out, and pointer parameter types. The following
         // gets the Test method, defined above, and examines its
         // parameters.
         MethodInfo mi = typeof(Example).GetMethod("Test");

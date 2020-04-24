@@ -14,7 +14,7 @@ public class ServerClass
       {
          IDictionary myDictionaryProperty = new Hashtable();
          myDictionaryProperty.Add("port", 8082);
-         IServerChannelSinkProvider mySoapProvider = 
+         IServerChannelSinkProvider mySoapProvider =
                   new SoapServerFormatterSinkProvider();
          TcpChannel myTcpChannel =
          new TcpChannel(myDictionaryProperty, null, mySoapProvider );

@@ -12,7 +12,7 @@ public class Group
    [DefaultValue(".NET")]
    public string GroupName;
 }
- 
+
 public class Run
 {
    public static void Main()
@@ -26,7 +26,7 @@ public class Run
    public void SerializeOriginal(string filename)
    {
       // Create an instance of the XmlSerializer class.
-      XmlSerializer mySerializer =  
+      XmlSerializer mySerializer =
       new XmlSerializer(typeof(Group));
 
       // Writing the file requires a TextWriter.
@@ -36,7 +36,7 @@ public class Run
       Group myGroup = new Group();
 
       // Setting the GroupName to '.NET' is like not setting it at all
-      // because it is the default value. So no value will be 
+      // because it is the default value. So no value will be
       // serialized, and on deserialization it will appear as a blank.
       myGroup.GroupName = ".NET";
 
@@ -57,7 +57,7 @@ public class Run
       // Create an instance of the class that will be serialized.
       Group myGroup = new Group();
 
-      // The override specifies that the default value is now 
+      // The override specifies that the default value is now
       // 'Team1'. So setting the GroupName to '.NET' means
       // the value will be serialized.
       myGroup.GroupName = ".NET";
@@ -74,7 +74,7 @@ public class Run
       TextReader reader = new StreamReader(filename);
 
       // Deserialize and cast the object.
-      Group myGroup; 
+      Group myGroup;
       myGroup = (Group) mySerializer.Deserialize(reader);
 
       Console.WriteLine(myGroup.GroupName);
@@ -89,7 +89,7 @@ public class Run
       TextReader reader = new StreamReader(filename);
 
       // Deserialize and cast the object.
-      Group myGroup; 
+      Group myGroup;
       myGroup = (Group) overRideSerializer.Deserialize(reader);
 
       Console.WriteLine(myGroup.GroupName);
@@ -97,19 +97,19 @@ public class Run
 
    private XmlSerializer CreateOverrideSerializer()
    {
-      SoapAttributeOverrides mySoapAttributeOverrides = 
+      SoapAttributeOverrides mySoapAttributeOverrides =
       new SoapAttributeOverrides();
       SoapAttributes soapAtts = new SoapAttributes();
       // Create a new DefaultValueAttribute object for the GroupName
       // property.
-      DefaultValueAttribute newDefault = 
+      DefaultValueAttribute newDefault =
       new DefaultValueAttribute("Team1");
       soapAtts.SoapDefaultValue = newDefault;
 
-      mySoapAttributeOverrides.Add(typeof(Group), "GroupName", 
+      mySoapAttributeOverrides.Add(typeof(Group), "GroupName",
       soapAtts);
-      
-      // Create an XmlTypeMapping that is used to create an instance 
+
+      // Create an XmlTypeMapping that is used to create an instance
       // of the XmlSerializer. Then return the XmlSerializer object.
       XmlTypeMapping myMapping = (new SoapReflectionImporter(
       mySoapAttributeOverrides)).ImportTypeMapping(typeof(Group));

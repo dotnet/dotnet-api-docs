@@ -1,17 +1,17 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-   
+
 public class AsyncGetExample
 {
-    public AsyncGetExample() 
+    public AsyncGetExample()
     {
-        ManagementObject o = 
+        ManagementObject o =
             new ManagementObject(
             "Win32_Process.Name='notepad.exe'");
 
         // Set up handlers for asynchronous get
-        ManagementOperationObserver ob = 
+        ManagementOperationObserver ob =
             new ManagementOperationObserver();
         ob.Completed += new
             CompletedEventHandler(this.Done);
@@ -34,10 +34,10 @@ public class AsyncGetExample
         Console.WriteLine("async Get completed !");
         completed = true;
     }
-    
+
     private bool Completed
-    { 
-        get 
+    {
+        get
         {
             return completed;
         }

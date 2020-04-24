@@ -23,10 +23,10 @@ class Program
 
     static void Main()
     {
-        // The lazy initializer is created here. LargeObject is not created until the 
+        // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
         //<SnippetNewLazy>
-        lazyLargeObject = new Lazy<LargeObject>(InitLargeObject, 
+        lazyLargeObject = new Lazy<LargeObject>(InitLargeObject,
                                      LazyThreadSafetyMode.PublicationOnly);
         //</SnippetNewLazy>
 
@@ -74,15 +74,15 @@ class Program
             large = lazyLargeObject.Value;
 
             // The following line introduces an artificial delay to exaggerate the race condition.
-            Thread.Sleep(5); 
+            Thread.Sleep(5);
 
-            // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the  
+            // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the
             //            object after creation. You must lock the object before accessing it,
             //            unless the type is thread safe. (LargeObject is not thread safe.)
             lock(large)
             {
                 large.Data[0] = Thread.CurrentThread.ManagedThreadId;
-                Console.WriteLine("LargeObject was initialized by thread {0}; last used by thread {1}.", 
+                Console.WriteLine("LargeObject was initialized by thread {0}; last used by thread {1}.",
                     large.InitializedBy, large.Data[0]);
             }
         }
@@ -100,8 +100,8 @@ class LargeObject
     public int InitializedBy { get { return initBy; } }
 
     //<SnippetCtorFinalizer>
-    public LargeObject(int initializedBy) 
-    { 
+    public LargeObject(int initializedBy)
+    {
         initBy = initializedBy;
         Console.WriteLine("Constructor: Instance initializing on thread {0}", initBy);
     }
@@ -111,7 +111,7 @@ class LargeObject
         Console.WriteLine("Finalizer: Instance was initialized on {0}", initBy);
     }
     //</SnippetCtorFinalizer>
-    
+
     public long[] Data = new long[100000000];
 }
 

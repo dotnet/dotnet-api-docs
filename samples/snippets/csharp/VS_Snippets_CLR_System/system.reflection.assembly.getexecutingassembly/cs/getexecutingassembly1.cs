@@ -16,7 +16,7 @@ class Example
       Assembly currentAssem = Assembly.GetExecutingAssembly();
       Console.WriteLine("Currently executing assembly:");
       Console.WriteLine("   {0}\n", currentAssem.FullName);
-      
+
       Console.WriteLine("The two Assembly objects are equal: {0}",
                         assemFromType.Equals(currentAssem));
    }

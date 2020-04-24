@@ -7,33 +7,33 @@ public class Example : IComparer<CultureInfo>
 {
    public static void Main()
    {
-      // Assign possible values and their associated patterns to a 
+      // Assign possible values and their associated patterns to a
       // generic Dictionary object.
       Dictionary<int, String> patterns = new Dictionary<int, String>();
-      string[] patternStrings= { "($n)", "-$n", "$-n", "$n-", "(n$)", 
+      string[] patternStrings= { "($n)", "-$n", "$-n", "$n-", "(n$)",
                                  "-n$", "n-$", "n$-", "-n $", "-$ n",
                                  "n $-", "$ n-", "$ -n", "n- $", "($ n)",
-                                 "(n $)" };    
-      for (int ctr = patternStrings.GetLowerBound(0); 
-           ctr <= patternStrings.GetUpperBound(0); ctr++) 
+                                 "(n $)" };
+      for (int ctr = patternStrings.GetLowerBound(0);
+           ctr <= patternStrings.GetUpperBound(0); ctr++)
          patterns.Add(ctr, patternStrings[ctr]);
 
       // Retrieve all specific cultures.
       CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
       Array.Sort(cultures, new Example());
-      
+
       double number = -16.335;
       // Display the culture, CurrencyNegativePattern value, associated pattern, and result.
-      foreach (var culture in cultures) 
-         Console.WriteLine("{0,-15} {1,2} ({2,5}) {3,15}", culture.Name + ":", 
+      foreach (var culture in cultures)
+         Console.WriteLine("{0,-15} {1,2} ({2,5}) {3,15}", culture.Name + ":",
                            culture.NumberFormat.CurrencyNegativePattern,
                            patterns[culture.NumberFormat.CurrencyNegativePattern],
                            number.ToString("C", culture));
    }
-   
-   public int Compare(CultureInfo x, CultureInfo y) 
+
+   public int Compare(CultureInfo x, CultureInfo y)
    {
-      return String.Compare(x.Name, y.Name);                           
+      return String.Compare(x.Name, y.Name);
    }
 }
 // A portion of the output appears as follows:

@@ -6,17 +6,17 @@ public class Example
    {
       // <Snippet3>
       Random rnd = new Random();
-      string[] malePetNames = { "Rufus", "Bear", "Dakota", "Fido", 
-                                "Vanya", "Samuel", "Koani", "Volodya", 
+      string[] malePetNames = { "Rufus", "Bear", "Dakota", "Fido",
+                                "Vanya", "Samuel", "Koani", "Volodya",
                                 "Prince", "Yiska" };
-      string[] femalePetNames = { "Maggie", "Penny", "Saya", "Princess", 
-                                  "Abby", "Laila", "Sadie", "Olivia", 
-                                  "Starlight", "Talla" };                                      
-      
+      string[] femalePetNames = { "Maggie", "Penny", "Saya", "Princess",
+                                  "Abby", "Laila", "Sadie", "Olivia",
+                                  "Starlight", "Talla" };
+
       // Generate random indexes for pet names.
       int mIndex = rnd.Next(malePetNames.Length);
       int fIndex = rnd.Next(femalePetNames.Length);
-      
+
       // Display the result.
       Console.WriteLine("Suggested pet name of the day: ");
       Console.WriteLine("   For a male:     {0}", malePetNames[mIndex]);

@@ -7,7 +7,7 @@ using System.Xml;
 
 public class Verify {
 
-    public static void Main(String[] args) 
+    public static void Main(String[] args)
     {
 
         Console.WriteLine("Verifying " + args[0] + "...");

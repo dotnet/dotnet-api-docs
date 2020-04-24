@@ -27,7 +27,7 @@
          Type Type1;
          // Set the Type instance to the target class type.
          Type1 = Integer1.GetType();
-         // Instantiate an Assembly class to the assembly housing the Integer type.  
+         // Instantiate an Assembly class to the assembly housing the Integer type.
          SampleAssembly = Assembly.GetAssembly(Integer1.GetType());
          // Gets the location of the assembly using file: protocol.
          Console.WriteLine("CodeBase=" + SampleAssembly.CodeBase);
@@ -42,7 +42,7 @@
          Type Type1;
          // Set the Type instance to the target class type.
          Type1 = Integer1.GetType();
-         // Instantiate an Assembly class to the assembly housing the Integer type.  
+         // Instantiate an Assembly class to the assembly housing the Integer type.
          SampleAssembly = Assembly.GetAssembly(Integer1.GetType());
          // Write the display name of assembly including base name and version.
          Console.WriteLine("FullName=" + SampleAssembly.FullName);
@@ -61,7 +61,7 @@
          Type Type1;
          // Set the Type instance to the target class type.
          Type1 = Integer1.GetType();
-         // Instantiate an Assembly class to the assembly housing the Integer type.  
+         // Instantiate an Assembly class to the assembly housing the Integer type.
          SampleAssembly = Assembly.GetAssembly(Integer1.GetType());
          // Display the physical location of the assembly containing the manifest.
          Console.WriteLine("Location=" + SampleAssembly.Location);
@@ -81,7 +81,7 @@
          Type Type1;
          // Set the Type instance to the target class type.
          Type1 = Integer1.GetType();
-         // Instantiate an Assembly class to the assembly housing the Integer type.  
+         // Instantiate an Assembly class to the assembly housing the Integer type.
          SampleAssembly = Assembly.GetAssembly(Integer1.GetType());
          // Display the name of the assembly currently executing
          Console.WriteLine("GetExecutingAssembly=" + Assembly.GetExecutingAssembly().FullName);
@@ -90,7 +90,7 @@
          // </Snippet5>
          Console.WriteLine();
      }
-     
+
      public void Snippet6()
      {
          Console.WriteLine("SNIPPET6:");
@@ -105,7 +105,7 @@
          // </Snippet6>
          Console.WriteLine();
      }
-     
+
      public void Snippet7()
      {
          Console.WriteLine("SNIPPET7:");
@@ -120,7 +120,7 @@
          // </Snippet7>
          Console.WriteLine();
      }
-   
+
      public void Snippet8()
      {
          Console.WriteLine("SNIPPET8:");
@@ -135,7 +135,7 @@
          // </Snippet8>
          Console.WriteLine();
      }
-   
+
      public void Snippet9()
      {
          Console.WriteLine("SNIPPET9:");
@@ -164,7 +164,7 @@
          // </Snippet9>
          Console.WriteLine();
      }
-   
+
      public void Snippet10()
      {
          Console.WriteLine("SNIPPET10:");
@@ -180,7 +180,7 @@
          // </Snippet10>
          Console.WriteLine();
      }
-   
+
      public void Snippet11()
      {
          Console.WriteLine("SNIPPET11:");

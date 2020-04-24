@@ -5,18 +5,18 @@
 
 /*
    Notes:
-   This example deletes the custom culture x-en-US-sample.nlp 
+   This example deletes the custom culture x-en-US-sample.nlp
    file, but not the %winnt%\Globalization directory that contains the file.
 */
 
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
-    try 
+    try
         {
         Console.Clear();
         Console.WriteLine("Unregister the \"x-en-US-sample\" " +

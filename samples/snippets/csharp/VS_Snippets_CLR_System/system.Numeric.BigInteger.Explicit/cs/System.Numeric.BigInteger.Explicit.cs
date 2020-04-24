@@ -12,13 +12,13 @@ public class ExplicitConversion
       // BigInteger to Byte conversion.
       BigInteger goodByte = BigInteger.One;
       BigInteger badByte = 256;
-      
-      byte byteFromBigInteger;   
-      
+
+      byte byteFromBigInteger;
+
       // Successful conversion using cast operator.
       byteFromBigInteger = (byte) goodByte;
       Console.WriteLine(byteFromBigInteger);
-      
+
       // Handle conversion that should result in overflow.
       try
       {
@@ -27,24 +27,24 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badByte, e.Message);
       }
       Console.WriteLine();
       // </Snippet1>
-      
+
       // <Snippet2>
       // BigInteger to Decimal conversion.
       BigInteger goodDecimal = 761652543;
-      BigInteger badDecimal = (BigInteger) Decimal.MaxValue; 
+      BigInteger badDecimal = (BigInteger) Decimal.MaxValue;
       badDecimal += BigInteger.One;
-      
+
       Decimal decimalFromBigInteger;
 
       // Successful conversion using cast operator.
       decimalFromBigInteger = (decimal) goodDecimal;
       Console.WriteLine(decimalFromBigInteger);
-      
+
       // Handle conversion that should result in overflow.
       try
       {
@@ -53,7 +53,7 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badDecimal, e.Message);
       }
       Console.WriteLine();
@@ -62,15 +62,15 @@ public class ExplicitConversion
       // <Snippet3>
       // BigInteger to Double conversion.
       BigInteger goodDouble = (BigInteger) 102.43e22;
-      BigInteger badDouble = (BigInteger) Double.MaxValue;  
+      BigInteger badDouble = (BigInteger) Double.MaxValue;
       badDouble = badDouble * 2;
-      
+
       double doubleFromBigInteger;
-      
+
       // successful conversion using cast operator.
       doubleFromBigInteger = (double) goodDouble;
       Console.WriteLine(doubleFromBigInteger);
-      
+
       // Convert an out-of-bounds BigInteger value to a Double.
       doubleFromBigInteger = (double) badDouble;
       Console.WriteLine(doubleFromBigInteger);
@@ -80,13 +80,13 @@ public class ExplicitConversion
       // BigInteger to Int16 conversion.
       BigInteger goodShort = 20000;
       BigInteger badShort = 33000;
-      
+
       short shortFromBigInteger;
-      
-      // Successful conversion using cast operator. 
+
+      // Successful conversion using cast operator.
       shortFromBigInteger = (short) goodShort;
       Console.WriteLine(shortFromBigInteger);
-      
+
       // Handle conversion that should result in overflow.
       try
       {
@@ -95,7 +95,7 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badShort, e.Message);
       }
       Console.WriteLine();
@@ -105,13 +105,13 @@ public class ExplicitConversion
       // BigInteger to Int32 conversion.
       BigInteger goodInteger = 200000;
       BigInteger badInteger = 65000000000;
-      
+
       int integerFromBigInteger;
 
-      // Successful conversion using cast operator. 
+      // Successful conversion using cast operator.
       integerFromBigInteger = (int) goodInteger;
       Console.WriteLine(integerFromBigInteger);
-      
+
       // Handle conversion that should result in overflow.
       try
       {
@@ -120,7 +120,7 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badInteger, e.Message);
       }
       Console.WriteLine();
@@ -130,13 +130,13 @@ public class ExplicitConversion
       // BigInteger to Int64 conversion.
       BigInteger goodLong = 2000000000;
       BigInteger badLong = BigInteger.Pow(goodLong, 3);
-      
+
       long longFromBigInteger;
-      
-      // Successful conversion using cast operator. 
+
+      // Successful conversion using cast operator.
       longFromBigInteger = (long) goodLong;
       Console.WriteLine(longFromBigInteger);
-      
+
       // Handle conversion that should result in overflow.
       try
       {
@@ -145,23 +145,23 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badLong, e.Message);
       }
       Console.WriteLine();
       // </Snippet6>
-      
+
       // <Snippet7>
       // BigInteger to SByte conversion.
       BigInteger goodSByte = BigInteger.MinusOne;
       BigInteger badSByte = -130;
-      
+
       sbyte sByteFromBigInteger;
 
-      // Successful conversion using cast operator. 
+      // Successful conversion using cast operator.
       sByteFromBigInteger = (sbyte) goodSByte;
       Console.WriteLine(sByteFromBigInteger);
-      
+
       // Handle conversion that should result in overflow.
       try
       {
@@ -170,7 +170,7 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badSByte, e.Message);
       }
       Console.WriteLine();
@@ -179,15 +179,15 @@ public class ExplicitConversion
       // <Snippet8>
       // BigInteger to Single conversion.
       BigInteger goodSingle = (BigInteger) 102.43e22F;
-      BigInteger badSingle = (BigInteger) float.MaxValue;  
+      BigInteger badSingle = (BigInteger) float.MaxValue;
       badSingle = badSingle * 2;
-      
+
       float singleFromBigInteger;
-      
-      // Successful conversion using cast operator. 
+
+      // Successful conversion using cast operator.
       singleFromBigInteger = (float) goodSingle;
       Console.WriteLine(singleFromBigInteger);
-      
+
       // Convert an out-of-bounds BigInteger value to a Single.
       singleFromBigInteger = (float) badSingle;
       Console.WriteLine(singleFromBigInteger);
@@ -197,10 +197,10 @@ public class ExplicitConversion
       // BigInteger to UInt16 conversion.
       BigInteger goodUShort = 20000;
       BigInteger badUShort = 66000;
-      
+
       ushort uShortFromBigInteger;
-      
-      // Successful conversion using cast operator. 
+
+      // Successful conversion using cast operator.
       uShortFromBigInteger = (ushort) goodUShort;
       Console.WriteLine(uShortFromBigInteger);
 
@@ -212,23 +212,23 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badUShort, e.Message);
       }
       Console.WriteLine();
-      // </Snippet9> 
-      
+      // </Snippet9>
+
       // <Snippet10>
       // BigInteger to UInt32 conversion.
       BigInteger goodUInteger = 200000;
       BigInteger badUInteger = 65000000000;
-      
+
       uint uIntegerFromBigInteger;
-      
-      // Successful conversion using cast operator. 
+
+      // Successful conversion using cast operator.
       uIntegerFromBigInteger = (uint) goodInteger;
       Console.WriteLine(uIntegerFromBigInteger);
-      
+
       // Handle conversion that should result in overflow.
       try
       {
@@ -237,23 +237,23 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badUInteger, e.Message);
       }
       Console.WriteLine();
       // </Snippet10>
-      
+
       // <Snippet11>
       // BigInteger to UInt64 conversion.
       BigInteger goodULong = 2000000000;
       BigInteger badULong = BigInteger.Pow(goodULong, 3);
-      
+
       ulong uLongFromBigInteger;
-      
-      // Successful conversion using cast operator. 
+
+      // Successful conversion using cast operator.
       uLongFromBigInteger = (ulong) goodULong;
       Console.WriteLine(uLongFromBigInteger);
-      
+
       // Handle conversion that should result in overflow.
       try
       {
@@ -262,12 +262,12 @@ public class ExplicitConversion
       }
       catch (OverflowException e)
       {
-         Console.WriteLine("Unable to convert {0}:\n   {1}", 
+         Console.WriteLine("Unable to convert {0}:\n   {1}",
                            badULong, e.Message);
       }
       Console.WriteLine();
-      // </Snippet11>      
-      
+      // </Snippet11>
+
        // <Snippet12>
       // BigInteger to Decimal conversion.
       //
@@ -280,10 +280,10 @@ public class ExplicitConversion
       {
          decimalValue = (decimal) hugeValueFromDecimal;
          Console.WriteLine("The decimal value is {0}", decimalValue);
-      }   
+      }
       else
       {
-         Console.WriteLine("Unable to convert {0} to a Decimal", hugeValueFromDecimal);            
+         Console.WriteLine("Unable to convert {0} to a Decimal", hugeValueFromDecimal);
       }
       // </Snippet12>
 
@@ -302,10 +302,10 @@ public class ExplicitConversion
       }
       else
       {
-         Console.WriteLine("Unable to convert {0} to a Double", hugeValueFromDouble);            
+         Console.WriteLine("Unable to convert {0} to a Double", hugeValueFromDouble);
       }
       // </Snippet13>
-     
+
       // <Snippet14>
       // BigInteger to float conversion.
       //

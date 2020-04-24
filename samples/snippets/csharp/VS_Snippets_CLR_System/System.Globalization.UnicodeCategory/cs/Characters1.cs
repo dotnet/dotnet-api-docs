@@ -8,7 +8,7 @@ public class Example
    {
       int ctr = 0;
       UnicodeCategory category = UnicodeCategory.UppercaseLetter;
-      
+
       for (ushort codePoint = 0; codePoint < ushort.MaxValue; codePoint++) {
          Char ch = Convert.ToChar(codePoint);
 
@@ -17,11 +17,11 @@ public class Example
                Console.WriteLine();
             Console.Write("{0} (U+{1:X4})     ", ch, codePoint);
             ctr++;
-         } 
+         }
       }
       Console.WriteLine();
-      Console.WriteLine("\n{0} characters are in the {1:G} category", 
-                        ctr, category);   
+      Console.WriteLine("\n{0} characters are in the {1:G} category",
+                        ctr, category);
    }
 }
 // </Snippet1>

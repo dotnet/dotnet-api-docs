@@ -14,7 +14,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example performs asynchronous peek operation
 		// processing.
 		//**************************************************
@@ -27,10 +27,10 @@ namespace MyProject
 				{typeof(String)});
 
 			// Add an event handler for the PeekCompleted event.
-			myQueue.PeekCompleted += new 
+			myQueue.PeekCompleted += new
 				PeekCompletedEventHandler(MyPeekCompleted);
 			
-			// Begin the asynchronous peek operation with a time-out 
+			// Begin the asynchronous peek operation with a time-out
 			// of one minute.
 			myQueue.BeginPeek(new TimeSpan(0,1,0), messageNumber++);
 			
@@ -44,7 +44,7 @@ namespace MyProject
 		// event.
 		//**************************************************
 		
-		private static void MyPeekCompleted(Object source, 
+		private static void MyPeekCompleted(Object source,
 			PeekCompletedEventArgs asyncResult)
 		{
 			try
@@ -55,20 +55,20 @@ namespace MyProject
 				// End the asynchronous peek operation.
 				Message m = mq.EndPeek(asyncResult.AsyncResult);
 
-				// Display message information on the screen, 
+				// Display message information on the screen,
 				// including the message number (state object).
-				Console.WriteLine("Message: " + 
-					(int)asyncResult.AsyncResult.AsyncState + " " 
+				Console.WriteLine("Message: " +
+					(int)asyncResult.AsyncResult.AsyncState + " "
 					+(string)m.Body);
 
-				// Restart the asynchronous peek operation, with the 
+				// Restart the asynchronous peek operation, with the
 				// same time-out.
 				mq.BeginPeek(new TimeSpan(0,1,0), messageNumber++);
 			}
 
 			catch(MessageQueueException e)
 			{
-				if (e.MessageQueueErrorCode == 
+				if (e.MessageQueueErrorCode ==
 					MessageQueueErrorCode.IOTimeout)
 				{
 					Console.WriteLine(e.ToString());
@@ -79,7 +79,7 @@ namespace MyProject
 			
 			// Handle other exceptions.
 			
-			return; 
+			return;
 		}
 	}
 }

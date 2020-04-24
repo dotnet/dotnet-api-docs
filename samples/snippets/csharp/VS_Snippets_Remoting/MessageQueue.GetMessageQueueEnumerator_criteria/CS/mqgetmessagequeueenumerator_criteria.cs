@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example uses a cursor to step through the
 		// message queues and list the public queues on the
 		// network that specify certain criteria.
@@ -32,7 +32,7 @@ namespace MyProject
 		//**************************************************
 		// Iterates through message queues and displays the
 		// path of each queue that was created in the last
-		// day and that exists on the computer "MyComputer". 
+		// day and that exists on the computer "MyComputer".
 		//**************************************************
 		
 		public void ListPublicQueuesByCriteria()
@@ -40,14 +40,14 @@ namespace MyProject
 			uint numberQueues = 0;
 			
 			// Specify the criteria to filter by.
-			MessageQueueCriteria myCriteria = new 
+			MessageQueueCriteria myCriteria = new
 				MessageQueueCriteria();
 			myCriteria.MachineName = "MyComputer";
-			myCriteria.CreatedAfter = DateTime.Now.Subtract(new 
+			myCriteria.CreatedAfter = DateTime.Now.Subtract(new
 				TimeSpan(1,0,0,0));
 
 			// Get a cursor into the queues on the network.
-			MessageQueueEnumerator myQueueEnumerator = 
+			MessageQueueEnumerator myQueueEnumerator =
 				MessageQueue.GetMessageQueueEnumerator(myCriteria);
 
 			// Move to the next queue and read its path.

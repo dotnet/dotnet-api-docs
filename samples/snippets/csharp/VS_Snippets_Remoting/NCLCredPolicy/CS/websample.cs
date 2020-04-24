@@ -14,10 +14,10 @@ using Microsoft.Win32;
         public SelectedHostsCredentialPolicy()
         {
         }
-        
-        public virtual bool ShouldSendCredential(Uri challengeUri, 
-            WebRequest request, 
-            NetworkCredential credential, 
+
+        public virtual bool ShouldSendCredential(Uri challengeUri,
+            WebRequest request,
+            NetworkCredential credential,
             IAuthenticationModule authModule)
         {
             Console.WriteLine("Checking custom credential policy.");
@@ -32,7 +32,7 @@ using Microsoft.Win32;
 
 //<snippet4>
 // The following class allows credentials to be sent if they are for requests for resources
-// in the same domain, or if the request uses the HTTPSscheme and basic authentication is 
+// in the same domain, or if the request uses the HTTPSscheme and basic authentication is
 // required.
 
        public class HttpsBasicCredentialPolicy: IntranetZoneCredentialPolicy
@@ -40,10 +40,10 @@ using Microsoft.Win32;
         public HttpsBasicCredentialPolicy()
         {
         }
-        
-        public override bool ShouldSendCredential(Uri challengeUri, 
-            WebRequest request, 
-            NetworkCredential credential, 
+
+        public override bool ShouldSendCredential(Uri challengeUri,
+            WebRequest request,
+            NetworkCredential credential,
             IAuthenticationModule authModule)
         {
             Console.WriteLine("Checking custom credential policy for HTTPS and basic.");
@@ -87,9 +87,9 @@ using Microsoft.Win32;
         // </snippet2>
         // <snippet1>
 
-        // The following example uses the System, System.Net, 
+        // The following example uses the System, System.Net,
         // and System.IO namespaces.
-        
+
         public static void RequestMutualAuth(Uri resource)
         {
             // Create a new HttpWebRequest object for the specified resource.
@@ -128,10 +128,10 @@ using Microsoft.Win32;
         public HttpsBasicCredentialOnlyPolicy()
         {
         }
-        
-        public bool ShouldSendCredential(Uri challengeUri, 
-            WebRequest request, 
-            NetworkCredential credential, 
+
+        public bool ShouldSendCredential(Uri challengeUri,
+            WebRequest request,
+            NetworkCredential credential,
             IAuthenticationModule authModule)
         {
             Console.WriteLine("Checking custom credential policy for HTTPS and basic.");
@@ -199,7 +199,7 @@ using Microsoft.Win32;
             // Release the HttpWebResponse.
             response.Close();
         }
-        
+
 /*
 
 The output from this example will differ based on the requested resource

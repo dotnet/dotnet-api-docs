@@ -13,24 +13,24 @@ public class MyFilterNameIgnoreCaseSample
             MemberInfo[] myMemberinfo1 = myType.FindMembers(MemberTypes.Constructor
                 |MemberTypes.Method, BindingFlags.Public | BindingFlags.Static |
                 BindingFlags.Instance, myFilter, "C*");
-            foreach (MemberInfo myMemberinfo2 in myMemberinfo1) 
-            { 
+            foreach (MemberInfo myMemberinfo2 in myMemberinfo1)
+            {
                 Console.Write("\n" + myMemberinfo2.Name);
-                MemberTypes Mymembertypes = myMemberinfo2.MemberType; 
-                Console.WriteLine(" is a " + Mymembertypes.ToString()); 
+                MemberTypes Mymembertypes = myMemberinfo2.MemberType;
+                Console.WriteLine(" is a " + Mymembertypes.ToString());
             }
         }
         catch(ArgumentNullException e)
         {
-            Console.Write("ArgumentNullException : " + e.Message); 
-        }   
+            Console.Write("ArgumentNullException : " + e.Message);
+        }
         catch(SecurityException e)
         {
-            Console.Write("SecurityException : " + e.Message); 
-        }   
+            Console.Write("SecurityException : " + e.Message);
+        }
         catch(Exception e)
         {
-            Console.Write("Exception : " + e.Message); 
+            Console.Write("Exception : " + e.Message);
         }
     }
 }

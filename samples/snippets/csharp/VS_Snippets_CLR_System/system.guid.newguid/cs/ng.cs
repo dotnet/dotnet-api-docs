@@ -11,7 +11,7 @@ class Sample
         Guid g = Guid.NewGuid();
         Console.WriteLine(g);
         Console.WriteLine(Guid.NewGuid());
-        
+
         // This code example produces a result similar to the following:
 
         // 0f8fad5b-d9cb-469f-a165-70867728950e

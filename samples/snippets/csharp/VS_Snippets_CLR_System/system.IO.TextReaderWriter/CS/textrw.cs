@@ -8,7 +8,7 @@ class TextRW
     {
         // <Snippet2>
         TextWriter stringWriter = new StringWriter();
-        using(TextWriter streamWriter = 
+        using(TextWriter streamWriter =
             new StreamWriter("InvalidPathChars.txt"))
         // </Snippet2>
         {
@@ -17,9 +17,9 @@ class TextRW
         }
 
         // <Snippet3>
-        TextReader stringReader = 
+        TextReader stringReader =
             new StringReader(stringWriter.ToString());
-        using(TextReader streamReader = 
+        using(TextReader streamReader =
             new StreamReader("InvalidPathChars.txt"))
         // </Snippet3>
         {
@@ -40,7 +40,7 @@ class TextRW
     // <Snippet5>
     static void ReadText(TextReader textReader)
     {
-        Console.WriteLine("From {0} - {1}", 
+        Console.WriteLine("From {0} - {1}",
             textReader.GetType().Name, textReader.ReadToEnd());
     }
     // </Snippet5>

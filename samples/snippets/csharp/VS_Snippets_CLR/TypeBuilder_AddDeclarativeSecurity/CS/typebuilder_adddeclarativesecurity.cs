@@ -4,9 +4,9 @@
    of 'TypeBuilder' class.
    The program creates a dynamic assembly and a type in it that has
    a declarative security demand for ControlEvidence.
-   Caller (main) is able to create an instance successfully with 
-   default permission, because the local machine executes with a 
-   full trust permission set. 
+   Caller (main) is able to create an instance successfully with
+   default permission, because the local machine executes with a
+   full trust permission set.
 */
 // <Snippet1>
 using System;
@@ -17,7 +17,7 @@ using System.Security.Permissions;
 
 namespace CustomAttribute_Sample
 {
-   public class MyApplication 
+   public class MyApplication
    {
       static void Main()
       {
@@ -25,7 +25,7 @@ namespace CustomAttribute_Sample
          AssemblyName myAssemblyName = new AssemblyName("EmittedAssembly");
          AssemblyBuilder myAssemblyBuilder =
             AppDomain.CurrentDomain.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.RunAndSave);
-         ModuleBuilder myModuleBuilder = 
+         ModuleBuilder myModuleBuilder =
             myAssemblyBuilder.DefineDynamicModule("EmittedAssembly", "EmittedAssembly.dll");
 
          // Define a public class named "MyDynamicClass" in the assembly.

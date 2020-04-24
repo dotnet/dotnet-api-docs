@@ -23,11 +23,11 @@ public class Server
 
         // Expose an object for remote calls.
         RemotingConfiguration.RegisterWellKnownServiceType(
-            typeof(RemoteObject), "RemoteObject.rem", 
+            typeof(RemoteObject), "RemoteObject.rem",
             WellKnownObjectMode.Singleton);
 
         // Display the channel's URI.
-        Console.WriteLine("The channel URI is {0}.", 
+        Console.WriteLine("The channel URI is {0}.",
             channel.GetChannelUri());
 
         // Parse the channel's URI.
@@ -41,7 +41,7 @@ public class Server
             Console.WriteLine("The channel URI is {0}.", channelUri);
             Console.WriteLine("The object URL is {0}.", objectUrl);
         }
-        
+
         // Wait for the user prompt.
         Console.WriteLine("Press ENTER to exit the server.");
         Console.ReadLine();

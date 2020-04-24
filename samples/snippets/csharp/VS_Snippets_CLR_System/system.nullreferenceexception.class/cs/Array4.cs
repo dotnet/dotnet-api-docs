@@ -8,9 +8,9 @@ public class Example
        int[] values = new int[10];
        for (int ctr = 0; ctr <= 9; ctr++)
           values[ctr] = ctr * 2;
-          
+
        foreach (var value in values)
-          Console.WriteLine(value);   
+          Console.WriteLine(value);
    }
 }
 // The example displays the following output:

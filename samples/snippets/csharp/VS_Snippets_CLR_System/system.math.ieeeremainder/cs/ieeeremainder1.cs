@@ -28,7 +28,7 @@ public class Example
    }
 }
 // The example displays the following output:
-//       
+//
 //
 //                       IEEERemainder   Remainder operator
 // 3 / 2 =                          -1                    1

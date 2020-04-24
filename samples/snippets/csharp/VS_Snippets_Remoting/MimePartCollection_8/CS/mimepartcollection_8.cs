@@ -9,34 +9,34 @@
 
 /* This program demonstrates constructor, 'Item' property ,'Insert','IndexOf','Add',
    'Contains','CopyTo',and 'Remove' methods of 'MimePartCollection' class.
-   It takes 'MimePartCollection_8_Input_cs.wsdl' as an input file which contains 
-   one 'MimePart' object that supports 'HttpPost'. A mimepartcollection object is 
-   created and new mimepart objects are added to mimepartcollection using 'Insert' 
-   and 'Add' methods. A mimepart object is removed from the mimepartcollection using 
+   It takes 'MimePartCollection_8_Input_cs.wsdl' as an input file which contains
+   one 'MimePart' object that supports 'HttpPost'. A mimepartcollection object is
+   created and new mimepart objects are added to mimepartcollection using 'Insert'
+   and 'Add' methods. A mimepart object is removed from the mimepartcollection using
    'Remove' method. The ServiceDescription is finally written into output wsdl file
    'MimePartCollection_8_out_CS.wsdl'.
 */
 
 using System;
 using System.Collections;
-using System.Xml; 
+using System.Xml;
 using System.Web.Services.Description;
 
 public class MyMimePartCollection
 {
    public static void Main()
    {
-      ServiceDescription myServiceDescription = 
+      ServiceDescription myServiceDescription =
          ServiceDescription.Read("MimePartCollection_8_Input_cs.wsdl");
-      ServiceDescriptionCollection myServiceDescriptionCol = 
+      ServiceDescriptionCollection myServiceDescriptionCol =
          new ServiceDescriptionCollection();
       myServiceDescriptionCol.Add(myServiceDescription);
-      XmlQualifiedName myXmlQualifiedName = 
+      XmlQualifiedName myXmlQualifiedName =
              new XmlQualifiedName("MimeServiceHttpPost","http://tempuri.org/");
       // Create a binding object.
       Binding myBinding = myServiceDescriptionCol.GetBinding(myXmlQualifiedName);
       OperationBinding myOperationBinding= null;
-      for(int i=0; i<myBinding.Operations.Count; i++) 
+      for(int i=0; i<myBinding.Operations.Count; i++)
       {
          if(myBinding.Operations[i].Name.Equals("AddNumbers"))
          {
@@ -51,7 +51,7 @@ public class MyMimePartCollection
       MimeMultipartRelatedBinding myMimeMultipartRelatedBinding = null;
       IEnumerator myIEnumerator = myOutputBinding.Extensions.GetEnumerator();
       while(myIEnumerator.MoveNext())
-      { 
+      {
          myMimeMultipartRelatedBinding=(MimeMultipartRelatedBinding)myIEnumerator.Current;
       }
       // Create an instance of 'MimePartCollection'.
@@ -118,7 +118,7 @@ public class MyMimePartCollection
             Console.WriteLine("Part: "+(myMimeXmlBinding3.Part));
          }
       }
-// </Snippet7> 
+// </Snippet7>
 // <Snippet8>
       Console.WriteLine("Removing a mimepart object...");
       // Remove the mimepart from the mimepartcollection.
@@ -138,7 +138,7 @@ public class MyMimePartCollection
       {
          Console.WriteLine("Mimepart object at position :" + j);
          for(int i=0;i<myArray1[j].Extensions.Count;i++)
-         {            
+         {
             MimeXmlBinding myMimeXmlBinding3 = (MimeXmlBinding)myArray1[j].Extensions[i];
             Console.WriteLine("part:  "+(myMimeXmlBinding3.Part));
          }

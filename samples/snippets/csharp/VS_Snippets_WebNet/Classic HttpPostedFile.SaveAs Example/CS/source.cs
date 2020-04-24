@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 String TempFileName;
  HttpFileCollection MyFileCollection = Request.Files;
- 
+
  for (int Loop1 = 0; Loop1 < MyFileCollection.Count; Loop1++)
  {
     // Create a new file name.
@@ -17,7 +17,7 @@ String TempFileName;
     // Save the file.
     MyFileCollection[Loop1].SaveAs(TempFileName);
  }
-   
+
 // </Snippet1>
  }
 }

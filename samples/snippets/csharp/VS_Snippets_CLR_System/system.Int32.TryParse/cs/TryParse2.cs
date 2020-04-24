@@ -8,7 +8,7 @@ public class StringParsing
    {
       string numericString;
       NumberStyles styles;
-      
+
       numericString = "106779";
       styles = NumberStyles.Integer;
       CallTryParse(numericString, styles);
@@ -16,65 +16,65 @@ public class StringParsing
       numericString = "-30677";
       styles = NumberStyles.None;
       CallTryParse(numericString, styles);
-      
+
       styles = NumberStyles.AllowLeadingSign;
       CallTryParse(numericString, styles);
-      
+
       numericString = "301677-";
       CallTryParse(numericString, styles);
-      
+
       styles = styles | NumberStyles.AllowTrailingSign;
       CallTryParse(numericString, styles);
-      
+
       numericString = "$10634";
       styles = NumberStyles.Integer;
       CallTryParse(numericString, styles);
-      
+
       styles = NumberStyles.Integer | NumberStyles.AllowCurrencySymbol;
       CallTryParse(numericString, styles);
-      
+
       numericString = "10345.00";
       styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
       CallTryParse(numericString, styles);
-      
+
       numericString = "10345.72";
       styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
       CallTryParse(numericString, styles);
 
-      numericString = "22,593"; 
+      numericString = "22,593";
       styles = NumberStyles.Integer | NumberStyles.AllowThousands;
       CallTryParse(numericString, styles);
-      
+
       numericString = "12E-01";
       styles = NumberStyles.Integer | NumberStyles.AllowExponent;
-      CallTryParse(numericString, styles); 
-          
+      CallTryParse(numericString, styles);
+
       numericString = "12E03";
-      CallTryParse(numericString, styles); 
-      
+      CallTryParse(numericString, styles);
+
       numericString = "80c1";
       CallTryParse(numericString, NumberStyles.HexNumber);
-      
+
       numericString = "0x80C1";
-      CallTryParse(numericString, NumberStyles.HexNumber);      
+      CallTryParse(numericString, NumberStyles.HexNumber);
    }
 
    private static void CallTryParse(string stringToConvert, NumberStyles styles)
    {
       CultureInfo provider;
-      
+
       // If currency symbol is allowed, use en-US culture.
       if ((styles & NumberStyles.AllowCurrencySymbol) > 0)
          provider = new CultureInfo("en-US");
       else
          provider = CultureInfo.InvariantCulture;
-            
-      bool success = Int32.TryParse(stringToConvert, styles, 
+
+      bool success = Int32.TryParse(stringToConvert, styles,
                                    provider, out int number);
       if (success)
          Console.WriteLine("Converted '{0}' to {1}.", stringToConvert, number);
       else
-         Console.WriteLine("Attempted conversion of '{0}' failed.", 
+         Console.WriteLine("Attempted conversion of '{0}' failed.",
                            Convert.ToString(stringToConvert));
    }
 }

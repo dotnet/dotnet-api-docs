@@ -1,8 +1,8 @@
 ﻿// System.Web.Services.Description.ServiceDescription.Imports
 
 /* The following program demonstrates the property 'Imports' of 'ServiceDescription' class.
-   The input to the program is a WSDL file 'ServiceDescription_Imports_Input_CS.wsdl' which 
-   is not having the import element. A new 'Import' is defined and added to the new modified 
+   The input to the program is a WSDL file 'ServiceDescription_Imports_Input_CS.wsdl' which
+   is not having the import element. A new 'Import' is defined and added to the new modified
    'ServiceDescription_Imports_Output_CS.wsdl' file.
 */
 
@@ -17,7 +17,7 @@ class MyServiceDescription
    {
 // <Snippet1>
       ServiceDescription myServiceDescription = new ServiceDescription();
-      myServiceDescription = 
+      myServiceDescription =
          ServiceDescription.Read("ServiceDescription_Imports_Input_CS.wsdl");
       ImportCollection myImportCollection = myServiceDescription.Imports;
 
@@ -30,7 +30,7 @@ class MyServiceDescription
       myImportCollection.Add(myImport);
       myServiceDescription.Write("ServiceDescription_Imports_Output_CS.wsdl");
       myImportCollection.Clear();
-      myServiceDescription = 
+      myServiceDescription =
          ServiceDescription.Read("ServiceDescription_Imports_Output_CS.wsdl");
       myImportCollection = myServiceDescription.Imports;
       Console.WriteLine(

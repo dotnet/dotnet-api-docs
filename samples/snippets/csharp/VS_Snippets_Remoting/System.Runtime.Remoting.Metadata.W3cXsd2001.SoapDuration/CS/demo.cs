@@ -1,10 +1,10 @@
 ﻿/// Class:  System.Runtime.Remoting.Metadata.W3cXsd2001.SoapDuration
-///    10    class 
+///    10    class
 ///    !    #ctor
 ///    11    Parse()
 ///    12    ToString()
 ///    13    XsdType
-///    
+///
 ///    Bug report:
 ///    The constructor is unusable since all methods are static.
 
@@ -18,17 +18,17 @@ public class Demo
     {
         //<snippet11>
         // Parse an XSD duration to create a TimeSpan object.
-        // This is a duration of 2 years, 3 months, 9 days, 12 hours, 
+        // This is a duration of 2 years, 3 months, 9 days, 12 hours,
         // 35 minutes, 20 seconds, and 10 milliseconds.
         string xsdDuration = "P2Y3M9DT12H35M20.0100000S";
         TimeSpan timeSpan = SoapDuration.Parse(xsdDuration);
-        Console.WriteLine("The time span contains {0} days.", 
+        Console.WriteLine("The time span contains {0} days.",
             timeSpan.Days);
-        Console.WriteLine("The time span contains {0} hours.", 
+        Console.WriteLine("The time span contains {0} hours.",
             timeSpan.Hours);
-        Console.WriteLine("The time span contains {0} minutes.", 
+        Console.WriteLine("The time span contains {0} minutes.",
             timeSpan.Minutes);
-        Console.WriteLine("The time span contains {0} seconds.", 
+        Console.WriteLine("The time span contains {0} seconds.",
             timeSpan.Seconds);
         //</snippet11>
 

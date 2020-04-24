@@ -26,12 +26,12 @@ namespace P2PContacts
             }
 
             //Signing in.
-            
+
             bool tempResult = PeerCollabSignin();
 
             //Continuously displays the console menu to the user and responds to their requests.
             while (tempResult)
-            {   
+            {
                 switch (choice)
                 {
                     case "0":
@@ -62,7 +62,7 @@ namespace P2PContacts
                         SetPresenceInformation();
                         break;
                     case "9":
-                        //Set the temp result to 'false' to break out of loop.                        
+                        //Set the temp result to 'false' to break out of loop.
                         tempResult = false;
                         break;
                     default:
@@ -147,7 +147,7 @@ namespace P2PContacts
             }
             catch (InvalidOperationException ioEx)
             {
-                Console.WriteLine("The application is no longer signed into the Peer Collaboration Infrastructure: {0}", 
+                Console.WriteLine("The application is no longer signed into the Peer Collaboration Infrastructure: {0}",
                     ioEx.Message);
             }
             catch (Exception ex)
@@ -180,11 +180,11 @@ namespace P2PContacts
             }
             return;
         }
-        
+
         //------------------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------------------
         // Displays all peer end points (PeerEndPoint) in the PeerEndPointCollection.
-     
+
         private static void DisplayEndpoints(PeerEndPointCollection endpointCollection)
         {
             if (endpointCollection == null ||  endpointCollection.Count == 0)
@@ -204,15 +204,15 @@ namespace P2PContacts
             }
             return;
         }
-        
+
         //------------------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------------------
         //List PeerNearMe objects that may be added as contacts.
-        
+
         private static void AddContact()
         {
             PeerNearMeCollection pnmc = null;
-            PeerContactCollection peerContacts = null;            
+            PeerContactCollection peerContacts = null;
             bool peerNameFound = false;
 
             PeerApplication application = null;
@@ -235,7 +235,7 @@ namespace P2PContacts
 
             try
             {
-                //Adds one of the PeerNearMe objects as a contact.                               
+                //Adds one of the PeerNearMe objects as a contact.
                 pnmc = GetPeersNearMe();
                 Console.WriteLine("Please enter the nickname of the peer you wish to add as a contact:");
                 string peerNameToAdd = Console.ReadLine();
@@ -366,12 +366,12 @@ namespace P2PContacts
             }
             catch (PeerToPeerException p2pEx)
             {
-                Console.WriteLine("The Peer Collaboration Infrastructure could not return an enumeration of the registered applications: {0}", 
+                Console.WriteLine("The Peer Collaboration Infrastructure could not return an enumeration of the registered applications: {0}",
                     p2pEx.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Unexpected exception caught when trying to enumerate the registered collaboration applications: {0}.", 
+                Console.WriteLine("Unexpected exception caught when trying to enumerate the registered collaboration applications: {0}.",
                     ex.Message);
             }
             finally
@@ -400,7 +400,7 @@ namespace P2PContacts
             }
             catch (PeerToPeerException p2pEx)
             {
-                Console.WriteLine("The Peer Collaboration Infrastructure could not return an enumeration of the available contacts: {0}", 
+                Console.WriteLine("The Peer Collaboration Infrastructure could not return an enumeration of the available contacts: {0}",
                     p2pEx.Message);
             }
             catch (Exception ex)
@@ -420,7 +420,7 @@ namespace P2PContacts
         //------------------------------------------------------------------------------------------------------
         // <Snippet6>
         //Enumerating the contacts and letting the user choose which one to delete.
-        public static void DeleteContact() 
+        public static void DeleteContact()
         {
             PeerContactCollection pcc = null;
             string contactToDelete = "";
@@ -454,7 +454,7 @@ namespace P2PContacts
             }
             catch (ArgumentException argEx)
             {
-                Console.WriteLine("The supplied contact \"{0}\" could not be found in the Contact Manager: {1}", 
+                Console.WriteLine("The supplied contact \"{0}\" could not be found in the Contact Manager: {1}",
                     contactToDelete, argEx.Message);
             }
             catch (PeerToPeerException p2pEx)
@@ -502,9 +502,9 @@ namespace P2PContacts
             foreach (PeerEndPoint pep in endPointCollection)
             {
                 Console.WriteLine("PeerEndPoint is {0}:" , pep);
-                Console.WriteLine("PeerEndPoint information:\n Name: {0}\n  IP Address: {1}\n  Port: {2}\n", 
-                    pep.Name, 
-                    pep.EndPoint.Address, 
+                Console.WriteLine("PeerEndPoint information:\n Name: {0}\n  IP Address: {1}\n  Port: {2}\n",
+                    pep.Name,
+                    pep.EndPoint.Address,
                     pep.EndPoint.Port);
             }
 
@@ -546,7 +546,7 @@ namespace P2PContacts
                             pc.PeerName);
                         // In case there are multiple endpoints, pick an endpoint for this contact
                         peerEndPoint = PickEndpointForContact(pc);
-                        Console.WriteLine("The presence information is: {0}.", 
+                        Console.WriteLine("The presence information is: {0}.",
                             pc.GetPresenceInfo(peerEndPoint).PresenceStatus.ToString());
                     }
                     catch (ArgumentException argEx)
@@ -555,7 +555,7 @@ namespace P2PContacts
                     }
                     catch (PeerToPeerException p2pEx)
                     {
-                        Console.WriteLine("The Peer Collaboration Infrastructure could not obtain presence data for the endpoint: {0}", 
+                        Console.WriteLine("The Peer Collaboration Infrastructure could not obtain presence data for the endpoint: {0}",
                             p2pEx.Message);
                     }
                     catch (Exception ex)
@@ -577,5 +577,5 @@ namespace P2PContacts
             return;
         }
         //------------------------------------------------------------------------------------------------------
-    } //end class 
+    } //end class
 } //end namespace

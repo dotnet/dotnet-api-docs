@@ -26,8 +26,8 @@ public class MyLease : MarshalByRefObject, ILease {
    ILease baseLease;
 
    public MyLease(ILease oldLease) {
-      
-      Console.WriteLine("Constructing MyLease."); 
+
+      Console.WriteLine("Constructing MyLease.");
       if(oldLease == null)
          Console.WriteLine("CRUD!");
       baseLease = oldLease;
@@ -38,15 +38,15 @@ public class MyLease : MarshalByRefObject, ILease {
       get {
          TimeSpan time = baseLease.CurrentLeaseTime;
          Console.WriteLine("The CurrentLeaseTime property returned {0}.", time.Milliseconds);
-         return time; 
+         return time;
       }
    }
 
    public LeaseState CurrentState {
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
-      get { 
+      get {
          LeaseState state = baseLease.CurrentState;
-         Console.WriteLine("The CurrentState property returned {0}.", state); 
+         Console.WriteLine("The CurrentState property returned {0}.", state);
          return state;
       }
    }
@@ -55,8 +55,8 @@ public class MyLease : MarshalByRefObject, ILease {
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
       get {
          TimeSpan time = baseLease.InitialLeaseTime;
-         Console.WriteLine("The InitialLeaseTime property returned {0}.", time.Milliseconds); 
-         return time; 
+         Console.WriteLine("The InitialLeaseTime property returned {0}.", time.Milliseconds);
+         return time;
       }
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
       set {
@@ -69,29 +69,29 @@ public class MyLease : MarshalByRefObject, ILease {
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
       get {
          TimeSpan time = baseLease.RenewOnCallTime;
-         Console.WriteLine("The RenewOnCallTime property returned {0}.", time.Milliseconds); 
-         return time; 
+         Console.WriteLine("The RenewOnCallTime property returned {0}.", time.Milliseconds);
+         return time;
       }
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
-      set { 
-         Console.WriteLine("The RenewOnCallTime property was set to {0}.", value.Milliseconds); 
-         baseLease.RenewOnCallTime = value; 
+      set {
+         Console.WriteLine("The RenewOnCallTime property was set to {0}.", value.Milliseconds);
+         baseLease.RenewOnCallTime = value;
       }
    }
 
    public TimeSpan SponsorshipTimeout {
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
-      get { 
+      get {
          TimeSpan time = baseLease.SponsorshipTimeout;
-         Console.WriteLine("The SponsorshipTimeout property returned {0}.", time.Milliseconds); 
-         return time; 
+         Console.WriteLine("The SponsorshipTimeout property returned {0}.", time.Milliseconds);
+         return time;
       }
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
-      set { 
-         Console.WriteLine("The SponsorshipTimeout property was set to {0}.", value.Milliseconds); 
-         baseLease.SponsorshipTimeout = value; 
+      set {
+         Console.WriteLine("The SponsorshipTimeout property was set to {0}.", value.Milliseconds);
+         baseLease.SponsorshipTimeout = value;
       }
-   }                                                
+   }
 
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
    public void Register(ISponsor sponsor) {

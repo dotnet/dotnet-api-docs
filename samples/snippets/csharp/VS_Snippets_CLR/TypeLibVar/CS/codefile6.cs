@@ -18,7 +18,7 @@ namespace D
 			{
 				TypeLibVarAttribute tlv = ( TypeLibVarAttribute )FieldAttributes[0];
 				TypeLibVarFlags  flags = tlv.Value;
-				return ( flags & TypeLibVarFlags.FHidden ) != 0; 
+				return ( flags & TypeLibVarFlags.FHidden ) != 0;
 			}
 			return false;
 		}

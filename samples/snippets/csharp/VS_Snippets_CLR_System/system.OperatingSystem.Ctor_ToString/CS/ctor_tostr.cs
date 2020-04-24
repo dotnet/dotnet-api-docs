@@ -1,9 +1,9 @@
 ﻿//<Snippet1>
-// Example for the OperatingSystem constructor and the 
+// Example for the OperatingSystem constructor and the
 // OperatingSystem.ToString( ) method.
 using System;
 
-class OpSysConstructDemo 
+class OpSysConstructDemo
 {
     // Create and display an OperatingSystem object.
     static void BuildOSObj( PlatformID pID, Version ver )
@@ -15,7 +15,7 @@ class OpSysConstructDemo
 
     static void BuildOperatingSystemObjects( )
     {
-        // The Version object does not need to correspond to an 
+        // The Version object does not need to correspond to an
         // actual OS version.
         Version verNull     = new Version( );
         Version verMajMin   = new Version( 3, 11 );
@@ -31,20 +31,20 @@ class OpSysConstructDemo
         BuildOSObj( PlatformID.Win32NT, verString );
     }
 
-    public static void Main( ) 
+    public static void Main( )
     {
-        Console.WriteLine( 
+        Console.WriteLine(
             "This example of the OperatingSystem constructor " +
             "and \nOperatingSystem.ToString( ) " +
             "generates the following output.\n" );
-        Console.WriteLine( 
+        Console.WriteLine(
             "Create and display several different " +
             "OperatingSystem objects:\n" );
 
         BuildOperatingSystemObjects( );
 
-        Console.WriteLine( 
-            "\nThe OS version of the host computer is:\n\n   {0}", 
+        Console.WriteLine(
+            "\nThe OS version of the host computer is:\n\n   {0}",
             Environment.OSVersion.ToString( ) );
     }
 }

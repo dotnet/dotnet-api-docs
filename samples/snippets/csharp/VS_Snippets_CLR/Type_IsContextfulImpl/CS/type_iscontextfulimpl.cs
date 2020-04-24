@@ -4,7 +4,7 @@ using System.Reflection;
 public class MyTypeDelegatorClass : TypeDelegator
 {
     public string myElementType = null;
-    private Type myType = null ; 
+    private Type myType = null ;
 
     public MyTypeDelegatorClass(Type myType) : base(myType)
     {
@@ -15,7 +15,7 @@ public class MyTypeDelegatorClass : TypeDelegator
     {
         // Check whether the type is contextful.
         if(myType.IsContextful)
-        { 
+        {
             myElementType = " is contextful ";
             return true;
         }

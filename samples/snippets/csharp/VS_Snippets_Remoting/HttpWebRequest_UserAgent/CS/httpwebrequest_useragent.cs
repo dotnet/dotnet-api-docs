@@ -28,7 +28,7 @@ class HttpWebRequest_UserAgent
 			Char[] readBuff = new Char[256];
 			int count = streamRead.Read( readBuff, 0, 256 );
 			Console.WriteLine("\nThe contents of HTML Page are :\n");	
-			while (count > 0) 
+			while (count > 0)
 			{
 				String outputData = new String(readBuff, 0, count);
 				Console.Write(outputData);

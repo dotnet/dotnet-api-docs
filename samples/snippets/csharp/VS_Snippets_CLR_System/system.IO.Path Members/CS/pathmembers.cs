@@ -13,15 +13,15 @@ public class PathSnippets
 
         result = Path.ChangeExtension(goodFileName, ".old");
         Console.WriteLine("ChangeExtension({0}, '.old') returns '{1}'",
-            goodFileName, result); 
+            goodFileName, result);
 
         result = Path.ChangeExtension(goodFileName, "");
-        Console.WriteLine("ChangeExtension({0}, '') returns '{1}'", 
-            goodFileName, result); 
+        Console.WriteLine("ChangeExtension({0}, '') returns '{1}'",
+            goodFileName, result);
 
         result = Path.ChangeExtension(badFileName, ".old");
-        Console.WriteLine("ChangeExtension({0}, '.old') returns '{1}'", 
-            badFileName, result); 
+        Console.WriteLine("ChangeExtension({0}, '.old') returns '{1}'",
+            badFileName, result);
 
         // This code produces output similar to the following:
         //
@@ -29,7 +29,7 @@ public class PathSnippets
         // ChangeExtension(C:\mydir\myfile.com.extension, '') returns 'C:\mydir\myfile.com.'
         // ChangeExtension(C:\mydir\, '.old') returns 'C:\mydir\.old'
         // </Snippet1>
-                    
+
         Console.WriteLine();
     }
 
@@ -99,11 +99,11 @@ public class PathSnippets
         string extension;
 
         extension = Path.GetExtension(fileName);
-        Console.WriteLine("GetExtension('{0}') returns '{1}'", 
+        Console.WriteLine("GetExtension('{0}') returns '{1}'",
             fileName, extension);
 
         extension = Path.GetExtension(path);
-        Console.WriteLine("GetExtension('{0}') returns '{1}'", 
+        Console.WriteLine("GetExtension('{0}') returns '{1}'",
             path, extension);
 
         // This code produces output similar to the following:
@@ -111,7 +111,7 @@ public class PathSnippets
         // GetExtension('C:\mydir.old\myfile.ext') returns '.ext'
         // GetExtension('C:\mydir.old\') returns ''
         // </Snippet4>
-                    
+
         Console.WriteLine();
     }
 
@@ -123,11 +123,11 @@ public class PathSnippets
         string result;
 
         result = Path.GetFileName(fileName);
-        Console.WriteLine("GetFileName('{0}') returns '{1}'", 
+        Console.WriteLine("GetFileName('{0}') returns '{1}'",
             fileName, result);
 
         result = Path.GetFileName(path);
-        Console.WriteLine("GetFileName('{0}') returns '{1}'", 
+        Console.WriteLine("GetFileName('{0}') returns '{1}'",
             path, result);
 
         // This code produces output similar to the following:
@@ -135,7 +135,7 @@ public class PathSnippets
         // GetFileName('C:\mydir\myfile.ext') returns 'myfile.ext'
         // GetFileName('C:\mydir\') returns ''
         // </Snippet5>
-                    
+
         Console.WriteLine();
     }
 
@@ -147,11 +147,11 @@ public class PathSnippets
         string result;
 
         result = Path.GetFileNameWithoutExtension(fileName);
-        Console.WriteLine("GetFileNameWithoutExtension('{0}') returns '{1}'", 
+        Console.WriteLine("GetFileNameWithoutExtension('{0}') returns '{1}'",
             fileName, result);
 
         result = Path.GetFileName(path);
-        Console.WriteLine("GetFileName('{0}') returns '{1}'", 
+        Console.WriteLine("GetFileName('{0}') returns '{1}'",
             path, result);
 
         // This code produces output similar to the following:
@@ -159,7 +159,7 @@ public class PathSnippets
         // GetFileNameWithoutExtension('C:\mydir\myfile.ext') returns 'myfile'
         // GetFileName('C:\mydir\') returns ''
         // </Snippet6>
-                    
+
         Console.WriteLine();
     }
 
@@ -172,15 +172,15 @@ public class PathSnippets
         string fullPath;
 
         fullPath = Path.GetFullPath(path1);
-        Console.WriteLine("GetFullPath('{0}') returns '{1}'", 
+        Console.WriteLine("GetFullPath('{0}') returns '{1}'",
             path1, fullPath);
-        
+
         fullPath = Path.GetFullPath(fileName);
-        Console.WriteLine("GetFullPath('{0}') returns '{1}'", 
+        Console.WriteLine("GetFullPath('{0}') returns '{1}'",
             fileName, fullPath);
 
         fullPath = Path.GetFullPath(path2);
-        Console.WriteLine("GetFullPath('{0}') returns '{1}'", 
+        Console.WriteLine("GetFullPath('{0}') returns '{1}'",
             path2, fullPath);
 
         // Output is based on your current directory, except
@@ -189,7 +189,7 @@ public class PathSnippets
         // GetFullPath('myfile.ext') returns 'C:\temp\Demo\myfile.ext'
         // GetFullPath('\mydir') returns 'C:\mydir'
         // </Snippet7>
-                    
+
         Console.WriteLine();
     }
 
@@ -202,15 +202,15 @@ public class PathSnippets
         string pathRoot;
 
         pathRoot = Path.GetPathRoot(path);
-        Console.WriteLine("GetPathRoot('{0}') returns '{1}'", 
+        Console.WriteLine("GetPathRoot('{0}') returns '{1}'",
             path, pathRoot);
-        
+
         pathRoot = Path.GetPathRoot(fileName);
-        Console.WriteLine("GetPathRoot('{0}') returns '{1}'", 
+        Console.WriteLine("GetPathRoot('{0}') returns '{1}'",
             fileName, pathRoot);
 
         pathRoot = Path.GetPathRoot(fullPath);
-        Console.WriteLine("GetPathRoot('{0}') returns '{1}'", 
+        Console.WriteLine("GetPathRoot('{0}') returns '{1}'",
             fullPath, pathRoot);
 
         // This code produces output similar to the following:
@@ -219,7 +219,7 @@ public class PathSnippets
         // GetPathRoot('myfile.ext') returns ''
         // GetPathRoot('C:\mydir\myfile.ext') returns 'C:\'
         // </Snippet8>
-                    
+
         Console.WriteLine();
     }
 
@@ -229,9 +229,9 @@ public class PathSnippets
         string fileName = Path.GetTempFileName();
 
         FileInfo  fileInfo = new FileInfo(fileName);
-        Console.WriteLine("File '{0}' created of size {1} bytes", 
+        Console.WriteLine("File '{0}' created of size {1} bytes",
             fileName, fileInfo.Length);
-        
+
         // Write some text to the file.
         FileStream f = new FileStream(fileName, FileMode.Open);
         StreamWriter s = new StreamWriter(f);
@@ -239,8 +239,8 @@ public class PathSnippets
         s.Close();
         f.Close();
 
-        fileInfo.Refresh();                                            
-        Console.WriteLine("File '{0}' now has size {1} bytes", 
+        fileInfo.Refresh();
+        Console.WriteLine("File '{0}' now has size {1} bytes",
             fileName, fileInfo.Length);
 
         // This code produces output similar to the following:
@@ -248,7 +248,7 @@ public class PathSnippets
         // File 'D:\Documents and Settings\cliffc\Local Settings\Temp\8\tmp38.tmp' created of size 0 bytes
         // File 'D:\Documents and Settings\cliffc\Local Settings\Temp\8\tmp38.tmp' now has size 20 bytes
         // </Snippet9>
-                    
+
         Console.WriteLine();
     }
 
@@ -259,7 +259,7 @@ public class PathSnippets
         Console.WriteLine("Temporary path is '{0}'", tempPath);
 
         DirectoryInfo tempDir = new DirectoryInfo(tempPath);
-        Console.WriteLine("{0} contains {1} files", tempPath, 
+        Console.WriteLine("{0} contains {1} files", tempPath,
             tempDir.GetFiles().Length);
 
         // This code produces output similar to the following:
@@ -267,7 +267,7 @@ public class PathSnippets
         // Temporary path is 'D:\Documents and Settings\cliffc\Local Settings\Temp\8\'
         // D:\Documents and Settings\cliffc\Local Settings\Temp\8\ contains 6 files
         // </Snippet10>
-                    
+
         Console.WriteLine();
     }
 
@@ -280,15 +280,15 @@ public class PathSnippets
         bool result;
 
         result = Path.HasExtension(fileName1);
-        Console.WriteLine("HasExtension('{0}') returns {1}", 
+        Console.WriteLine("HasExtension('{0}') returns {1}",
             fileName1, result);
 
         result = Path.HasExtension(fileName2);
-        Console.WriteLine("HasExtension('{0}') returns {1}", 
+        Console.WriteLine("HasExtension('{0}') returns {1}",
             fileName2, result);
-        
+
         result = Path.HasExtension(path);
-        Console.WriteLine("HasExtension('{0}') returns {1}", 
+        Console.WriteLine("HasExtension('{0}') returns {1}",
             path, result);
 
         // This code produces output similar to the following:
@@ -297,7 +297,7 @@ public class PathSnippets
         // HasExtension('mydir\myfile') returns False
         // HasExtension('C:\mydir.ext\') returns False
         // </Snippet11>
-                    
+
         Console.WriteLine();
     }
 
@@ -310,15 +310,15 @@ public class PathSnippets
         bool result;
 
         result = Path.IsPathRooted(fileName);
-        Console.WriteLine("IsPathRooted('{0}') returns {1}", 
+        Console.WriteLine("IsPathRooted('{0}') returns {1}",
             fileName, result);
 
         result = Path.IsPathRooted(UncPath);
-        Console.WriteLine("IsPathRooted('{0}') returns {1}", 
+        Console.WriteLine("IsPathRooted('{0}') returns {1}",
             UncPath, result);
-        
+
         result = Path.IsPathRooted(relativePath);
-        Console.WriteLine("IsPathRooted('{0}') returns {1}", 
+        Console.WriteLine("IsPathRooted('{0}') returns {1}",
             relativePath, result);
 
         // This code produces output similar to the following:
@@ -327,22 +327,22 @@ public class PathSnippets
         // IsPathRooted('\\myPc\mydir\myfile') returns True
         // IsPathRooted('mydir\sudir\') returns False
         // </Snippet12>
-                    
+
         Console.WriteLine();
     }
 
     public void StaticProperties()
     {
         // <Snippet13>
-        Console.WriteLine("Path.AltDirectorySeparatorChar={0}", 
+        Console.WriteLine("Path.AltDirectorySeparatorChar={0}",
             Path.AltDirectorySeparatorChar);
-        Console.WriteLine("Path.DirectorySeparatorChar={0}", 
+        Console.WriteLine("Path.DirectorySeparatorChar={0}",
             Path.DirectorySeparatorChar);
-        Console.WriteLine("Path.PathSeparator={0}", 
+        Console.WriteLine("Path.PathSeparator={0}",
             Path.PathSeparator);
-        Console.WriteLine("Path.VolumeSeparatorChar={0}", 
+        Console.WriteLine("Path.VolumeSeparatorChar={0}",
             Path.VolumeSeparatorChar);
-        
+
         Console.Write("Path.GetInvalidPathChars()=");
         foreach (char c in Path.GetInvalidPathChars())
             Console.Write(c);
@@ -358,13 +358,13 @@ public class PathSnippets
         // </Snippet13>
 
         Console.WriteLine();
-    }                
-                            
+    }
+
     public static void Main()
     {
         Console.WriteLine();
         PathSnippets pathSnippets = new PathSnippets();
-        pathSnippets.StaticProperties();       
+        pathSnippets.StaticProperties();
         pathSnippets.ChangeExtension();
         pathSnippets.Combine();
         pathSnippets.GetDirectoryName();

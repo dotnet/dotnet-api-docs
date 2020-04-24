@@ -1,8 +1,8 @@
 ﻿//<Snippet1>
 using System;
-class TestType 
+class TestType
 {
-    public static void Main() 
+    public static void Main()
     {
         Type t = typeof(int);
         Console.WriteLine("{0} inherits from {1}.", t,t.BaseType);

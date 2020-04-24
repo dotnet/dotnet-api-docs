@@ -11,11 +11,11 @@ using System.Threading;
 
 namespace Examples.NegotiateStreamExample
 {
-    public class AsynchronousAuthenticatingTcpListener 
+    public class AsynchronousAuthenticatingTcpListener
     {
-        public static void Main() 
+        public static void Main()
         {
-            // Create an IPv4 TCP/IP socket. 
+            // Create an IPv4 TCP/IP socket.
             TcpListener listener = new TcpListener(IPAddress.Any, 11000);
             // Listen for incoming connections.
             listener.Start();
@@ -26,7 +26,7 @@ namespace Examples.NegotiateStreamExample
                 // Type CNTL-C to terminate the server.
                 clientRequest = listener.AcceptTcpClient();
                 Console.WriteLine("Client connected.");
-                // A client has connected. 
+                // A client has connected.
                 try
                 {
                     AuthenticateClient(clientRequest);
@@ -44,7 +44,7 @@ namespace Examples.NegotiateStreamExample
             NetworkStream stream = clientRequest.GetStream();
             // Create the NegotiateStream.
             NegotiateStream authStream = new NegotiateStream(stream, false);
-            // Save the current client and NegotiateStream instance 
+            // Save the current client and NegotiateStream instance
             // in a ClientState object.
             ClientState cState = new ClientState(authStream, clientRequest);
             // Listen for the client authentication request.
@@ -82,7 +82,7 @@ namespace Examples.NegotiateStreamExample
             authStream.Close();
             clientRequest.Close();
         }
-//</snippet1>    
+//</snippet1>
 
 //<snippet2>
         private static void EndAuthenticateCallback(ClientState cState)

@@ -6,11 +6,11 @@ using System.Security;
 class EventsSample
 {
     public static void Main()
-    { 
+    {
         try
         {
             // Create a bitmask based on BindingFlags.
-            BindingFlags myBindingFlags = BindingFlags.Instance | BindingFlags.Public;  
+            BindingFlags myBindingFlags = BindingFlags.Instance | BindingFlags.Public;
             Type myTypeEvent = typeof(System.Windows.Forms.Button);
             EventInfo[] myEventsBindingFlags = myTypeEvent.GetEvents(myBindingFlags);
             Console.WriteLine("\nThe events on the Button class with the specified BindingFlags are:");

@@ -6,9 +6,9 @@ public class Example
 {
    public static void Main()
    {
-      Complex[] values= { Complex.One, 
-                          new Complex(-7.1, 2.5), 
-                          new Complex(1.3, -4.2), 
+      Complex[] values= { Complex.One,
+                          new Complex(-7.1, 2.5),
+                          new Complex(1.3, -4.2),
                           new Complex(-3.3, -1.8) };
       foreach (Complex c1 in values)
          Console.WriteLine("{0} --> {1}", c1, Complex.Negate(c1));

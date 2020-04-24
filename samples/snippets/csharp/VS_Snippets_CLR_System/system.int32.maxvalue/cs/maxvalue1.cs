@@ -12,7 +12,7 @@ public class Class1
          if (number >= Int32.MinValue && number <= Int32.MaxValue)
          {
             newNumber = Convert.ToInt32(number);
-            Console.WriteLine("Successfully converted {0} to an Int32.", 
+            Console.WriteLine("Successfully converted {0} to an Int32.",
                               newNumber);
          }
          else

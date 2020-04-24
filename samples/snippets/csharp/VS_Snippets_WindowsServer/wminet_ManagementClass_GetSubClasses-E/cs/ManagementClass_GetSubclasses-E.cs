@@ -4,12 +4,12 @@ using System.Management;
 
 public class Example
 {
-    public static void Main() 
+    public static void Main()
     {
-        EnumerationOptions opt = new EnumerationOptions();   
+        EnumerationOptions opt = new EnumerationOptions();
         // Causes return of deep subclasses
         // as opposed to only immediate ones.
-        opt.EnumerateDeep = true;  
+        opt.EnumerateDeep = true;
         ManagementObjectCollection subclasses = (new
             ManagementClass("CIM_LogicalDisk")).GetSubclasses(opt);
         foreach(ManagementClass subclass in subclasses)

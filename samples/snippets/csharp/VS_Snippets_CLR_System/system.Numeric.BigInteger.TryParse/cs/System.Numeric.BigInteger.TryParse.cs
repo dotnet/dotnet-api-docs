@@ -33,11 +33,11 @@ public class TryParse
             case 1:
                Console.WriteLine("{0} is greater than {1}.", number1, number2);
                break;
-         }      
+         }
       }
       else
       {
-         if (! succeeded1) 
+         if (! succeeded1)
             Console.WriteLine("Unable to initialize the first BigInteger value.");
 
          if (! succeeded2)
@@ -45,7 +45,7 @@ public class TryParse
       }
       // The example displays the following output:
       //      1975308642714319704 is greater than -37042602479685369.
-      // </Snippet1>     
+      // </Snippet1>
    }
 
    private void TryParse2()
@@ -56,76 +56,76 @@ public class TryParse
 
       // Call parse with default values of style and provider
       numericString = "  -300   ";
-      if (BigInteger.TryParse(numericString, NumberStyles.Integer, 
+      if (BigInteger.TryParse(numericString, NumberStyles.Integer,
                              CultureInfo.CurrentCulture, out number))
-         Console.WriteLine("The string '{0}' parses to {1}", 
-                           numericString, number);                             
+         Console.WriteLine("The string '{0}' parses to {1}",
+                           numericString, number);
       else
-         Console.WriteLine("Conversion of {0} to a BigInteger failed.", 
+         Console.WriteLine("Conversion of {0} to a BigInteger failed.",
                            numericString);
 
       // Call parse with default values of style and provider supporting tilde as negative sign
       numericString = "  -300   ";
-      if (BigInteger.TryParse(numericString, NumberStyles.Integer, 
-                             new BigIntegerFormatProvider(), out number)) 
-         Console.WriteLine("The string '{0}' parses to {1}", 
-                           numericString, number);                             
+      if (BigInteger.TryParse(numericString, NumberStyles.Integer,
+                             new BigIntegerFormatProvider(), out number))
+         Console.WriteLine("The string '{0}' parses to {1}",
+                           numericString, number);
       else
-         Console.WriteLine("Conversion of {0} to a BigInteger failed.", 
+         Console.WriteLine("Conversion of {0} to a BigInteger failed.",
                            numericString);
-                             
+
       // Call parse with only AllowLeadingWhite and AllowTrailingWhite
       // Method returns false because of presence of negative sign
       numericString = "  -500   ";
-      if (BigInteger.TryParse(numericString, 
-                          NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, 
+      if (BigInteger.TryParse(numericString,
+                          NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
                           new BigIntegerFormatProvider(), out number))
-         Console.WriteLine("The string '{0}' parses to {1}", 
-                           numericString, number);                             
+         Console.WriteLine("The string '{0}' parses to {1}",
+                           numericString, number);
       else
-         Console.WriteLine("Conversion of {0} to a BigInteger failed.", 
+         Console.WriteLine("Conversion of {0} to a BigInteger failed.",
                            numericString);
-                           
+
       // Call parse with AllowHexSpecifier and a hex value
       numericString = "FFAAC086455192";
-      if (BigInteger.TryParse(numericString, NumberStyles.AllowHexSpecifier, 
+      if (BigInteger.TryParse(numericString, NumberStyles.AllowHexSpecifier,
                              null, out number))
-         Console.WriteLine("The string '{0}' parses to {1}, or 0x{1:x}.", 
-                           numericString, number);                             
+         Console.WriteLine("The string '{0}' parses to {1}, or 0x{1:x}.",
+                           numericString, number);
       else
-         Console.WriteLine("Conversion of {0} to a BigInteger failed.", 
+         Console.WriteLine("Conversion of {0} to a BigInteger failed.",
                            numericString);
-                          
+
       // Call parse with AllowHexSpecifier and a negative hex value
       // Conversion fails because of presence of negative sign
       numericString = "-3af";
-      if (BigInteger.TryParse(numericString, NumberStyles.AllowHexSpecifier, 
+      if (BigInteger.TryParse(numericString, NumberStyles.AllowHexSpecifier,
                              new BigIntegerFormatProvider(), out number))
-         Console.WriteLine("The string '{0}' parses to {1}.", 
-                           numericString, number);                             
+         Console.WriteLine("The string '{0}' parses to {1}.",
+                           numericString, number);
       else
-         Console.WriteLine("Conversion of {0} to a BigInteger failed.", 
+         Console.WriteLine("Conversion of {0} to a BigInteger failed.",
                            numericString);
 
       // Call parse with only NumberStyles.None
       // Exception thrown because of presence of white space and sign
       numericString = " -300 ";
-      if (BigInteger.TryParse(numericString, NumberStyles.None, 
+      if (BigInteger.TryParse(numericString, NumberStyles.None,
                              new BigIntegerFormatProvider(), out number))
-         Console.WriteLine("The string '{0}' parses to {1}", 
-                           numericString, number);                             
+         Console.WriteLine("The string '{0}' parses to {1}",
+                           numericString, number);
       else
-         Console.WriteLine("Conversion of {0} to a BigInteger failed.", 
+         Console.WriteLine("Conversion of {0} to a BigInteger failed.",
                            numericString);
-      // <</Snippet2>                           
+      // <</Snippet2>
    }
 }
 
 public class BigIntegerFormatProvider : IFormatProvider
 {
-   public object GetFormat(Type formatType) 
+   public object GetFormat(Type formatType)
    {
-      if (formatType == typeof(NumberFormatInfo)) 
+      if (formatType == typeof(NumberFormatInfo))
       {
          NumberFormatInfo numberFormat = new NumberFormatInfo();
          numberFormat.NegativeSign = "~";
@@ -134,6 +134,6 @@ public class BigIntegerFormatProvider : IFormatProvider
       else
       {
          return null;
-      }      
+      }
    }
 }

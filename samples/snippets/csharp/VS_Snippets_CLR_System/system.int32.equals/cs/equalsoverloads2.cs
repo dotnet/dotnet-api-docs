@@ -4,7 +4,7 @@ using System;
 public class Example
 {
    static int value = 112;
-   
+
    public static void Main()
    {
       byte byte1= 112;

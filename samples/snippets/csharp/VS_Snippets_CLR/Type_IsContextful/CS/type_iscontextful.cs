@@ -22,7 +22,7 @@ public class Example
                            typeof(Example).Name, typeof(Example).IsMarshalByRef);
          Console.WriteLine("The IsMarshalByRef property of {0} is {1}.",
                            typeof(ContextBoundClass).Name, typeof(ContextBoundClass).IsMarshalByRef);
-         
+
          // Determine whether the types are primitive datatypes.
          Console.WriteLine("{0} is a primitive data type: {1}.",
                            typeof(int).Name, typeof(int).IsPrimitive);

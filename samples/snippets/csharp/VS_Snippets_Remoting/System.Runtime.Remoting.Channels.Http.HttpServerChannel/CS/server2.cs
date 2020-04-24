@@ -3,7 +3,7 @@
 /// x    Done
 ///        Work in progress
 
-/// Snippets needed: 
+/// Snippets needed:
 ///    -    Ctor()
 ///    x    Ctor(IDictionary,IServerChannelSinkProvider)
 ///    x    Ctor(string,int)
@@ -19,14 +19,14 @@ public class Server2
 {
     // Broken.
 [SecurityPermission(SecurityAction.Demand)]
-    private static HttpServerChannel Ctor1() 
+    private static HttpServerChannel Ctor1()
     {
         //<snippet11>
         HttpServerChannel serverChannel = new HttpServerChannel();
         serverChannel.AddHookChannelUri("http://localhost:9090");
         //</snippet11>
 
-        // return serverChannel; 
+        // return serverChannel;
 
         // Return good channel until fix.
         return Ctor2();
@@ -50,7 +50,7 @@ public class Server2
         //<snippet13>
         string name = "RemotingServer";
         int port = 9090;
-        HttpServerChannel serverChannel = 
+        HttpServerChannel serverChannel =
             new HttpServerChannel(name, port);
         //</snippet13>
         return serverChannel;
@@ -62,7 +62,7 @@ public class Server2
         string name = "RemotingServer";
         int port = 9090;
         IServerChannelSinkProvider sinkProvider = null;
-        HttpServerChannel serverChannel = 
+        HttpServerChannel serverChannel =
             new HttpServerChannel(name, port, sinkProvider);
         //</snippet14>
         return serverChannel;
@@ -82,12 +82,12 @@ public class Server2
         ChannelServices.RegisterChannel(serverChannel);
 
         // Display the channel's URI.
-        Console.WriteLine("The URI of the channel is {0}.", 
+        Console.WriteLine("The URI of the channel is {0}.",
             serverChannel.GetChannelUri());
 
         // Expose an object for remote calls.
         RemotingConfiguration.RegisterWellKnownServiceType(
-            typeof(RemoteObject), "RemoteObject.rem", 
+            typeof(RemoteObject), "RemoteObject.rem",
             WellKnownObjectMode.Singleton);
 
         // Wait for the user prompt.

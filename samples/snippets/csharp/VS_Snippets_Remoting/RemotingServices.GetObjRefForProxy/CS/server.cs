@@ -12,7 +12,7 @@ namespace SampleNamespace {
             ChannelServices.RegisterChannel(channel);
             RemotingConfiguration.ApplicationName = "MySampleService";
             RemotingConfiguration.RegisterActivatedServiceType(typeof(SampleService));
-            
+
             Console.WriteLine("Press enter to end the server process.");
             Console.ReadLine();
         }

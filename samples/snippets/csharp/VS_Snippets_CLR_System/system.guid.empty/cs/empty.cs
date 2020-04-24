@@ -9,7 +9,7 @@ public class Example
         Guid guid1 = Guid.NewGuid();
         Console.WriteLine(guid1);
         Console.WriteLine($"Empty: {guid1 == Guid.Empty}\n");
-      
+
         // Create a GUID with all zeros and compare it to Empty.
         var bytes = new Byte[16];
         var guid2 = new Guid(bytes);
@@ -19,7 +19,7 @@ public class Example
         // The example displays output like the following:
         //       11c43ee8-b9d3-4e51-b73f-bd9dda66e29c
         //       Empty: False
-        //       
+        //
         //       00000000-0000-0000-0000-000000000000
         //       Empty: True
         // </Snippet1>

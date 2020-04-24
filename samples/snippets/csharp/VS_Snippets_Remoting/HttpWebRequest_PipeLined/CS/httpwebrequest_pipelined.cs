@@ -17,7 +17,7 @@ class HttpWebRequest_Pipelined
 	static void Main(string[] args)
 	{
 		try	
-		{ 
+		{
 			if(args.Length<1)
 			{
 				Console.WriteLine("\nPlease enter the Uri address as a command line parameter:");
@@ -32,7 +32,7 @@ class HttpWebRequest_Pipelined
 		{
 			Console.WriteLine("\nWebException Caught!");
 			Console.WriteLine("Message :{0}",e.Message);			
-		} 
+		}
 		catch(Exception e)
 		{
 			Console.WriteLine("\nException Caught!");
@@ -54,7 +54,7 @@ class HttpWebRequest_Pipelined
 			Char[] readBuffer = new Char[256];
 			int count = streamRead.Read( readBuffer, 0, 256 );
 			Console.WriteLine("\nThe contents of HTML page are.......");	
-			while (count > 0) 
+			while (count > 0)
 			{
 				String outputData = new String(readBuffer, 0, count);
 				Console.Write(outputData);
@@ -75,7 +75,7 @@ class HttpWebRequest_Pipelined
 		{
 			Console.WriteLine("\nWebException Caught!");
 			Console.WriteLine("Message : {0}",e.Message);			
-		} 
+		}
 		catch(Exception e)
 		{
 			Console.WriteLine("\nException Caught!");

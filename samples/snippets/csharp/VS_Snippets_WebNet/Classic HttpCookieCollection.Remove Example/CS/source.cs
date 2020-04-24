@@ -10,7 +10,7 @@ protected string MyCookie;
  HttpCookieCollection MyCookieCollection = Response.Cookies;
 // <Snippet1>
 MyCookieCollection.Remove(MyCookie);
-    
+
 // </Snippet1>
  }
 }

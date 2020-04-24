@@ -2,17 +2,17 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class
         //Options specify that amended qualifiers
         // should be retrieved along with the class
-        ManagementClass c = 
-            new ManagementClass("\\\\MyBox\\root\\cimv2", 
-            "Win32_Environment", 
+        ManagementClass c =
+            new ManagementClass("\\\\MyBox\\root\\cimv2",
+            "Win32_Environment",
             new ObjectGetOptions(
             null, System.TimeSpan.MaxValue, true));
 

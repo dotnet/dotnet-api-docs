@@ -5,9 +5,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Text;
 
-// To run this sample use the Certificate Creation Tool (Makecert.exe) to generate a test X.509 certificate and 
-// place it in the local user store. 
-// To generate an exchange key and make the key exportable run the following command from a Visual Studio command prompt: 
+// To run this sample use the Certificate Creation Tool (Makecert.exe) to generate a test X.509 certificate and
+// place it in the local user store.
+// To generate an exchange key and make the key exportable run the following command from a Visual Studio command prompt:
 
 //makecert -r -pe -n "CN=CERT_SIGN_TEST_CERT" -b 01/01/2010 -e 01/01/2012 -sky exchange -ss my
 namespace X509CertEncrypt

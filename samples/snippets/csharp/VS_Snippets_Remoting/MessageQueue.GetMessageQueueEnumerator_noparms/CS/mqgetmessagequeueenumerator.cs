@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example uses a cursor to step through the
 		// message queues and list the public queues on the
 		// network.
@@ -41,7 +41,7 @@ namespace MyProject
 			uint numberQueues = 0;
 	
 			// Get a cursor into the queues on the network.
-			MessageQueueEnumerator myQueueEnumerator = 
+			MessageQueueEnumerator myQueueEnumerator =
 				MessageQueue.GetMessageQueueEnumerator();
 
 			// Move to the next queue and read its path.
@@ -53,7 +53,7 @@ namespace MyProject
 			}
 
 			// Display final count.
-			Console.WriteLine("Number of public queues: " + 
+			Console.WriteLine("Number of public queues: " +
 				numberQueues.ToString());
 			
 			return;

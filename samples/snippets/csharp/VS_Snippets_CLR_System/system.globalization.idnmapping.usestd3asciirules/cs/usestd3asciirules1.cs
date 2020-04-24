@@ -9,37 +9,37 @@ public class Example
       int nFailed = 0;
       IdnMapping idnStd = new IdnMapping();
       idnStd.UseStd3AsciiRules = true;
-      
+
       IdnMapping idnRelaxed = new IdnMapping();
       idnRelaxed.UseStd3AsciiRules = false;  // The default, but make it explicit.
-      
-      for (int ctr = 0; ctr <= 0x7F; ctr++) { 
+
+      for (int ctr = 0; ctr <= 0x7F; ctr++) {
          string name = "Prose" + Convert.ToChar(ctr) + "ware.com";
-         
+
          bool stdFailed = false;
          bool relaxedFailed = false;
          string punyCode = "";
          try {
             punyCode = idnStd.GetAscii(name);
-         }   
+         }
          catch (ArgumentException) {
             stdFailed = true;
-         }       
-         
+         }
+
          try {
             punyCode = idnRelaxed.GetAscii(name);
          }
          catch (ArgumentException) {
             relaxedFailed = true;
-         }       
-         
+         }
+
          if (relaxedFailed != stdFailed) {
             Console.Write("U+{0:X4}     ", ctr);
             nFailed++;
             if (nFailed % 5 == 0)
-               Console.WriteLine();       
-         }        
-      }   
+               Console.WriteLine();
+         }
+      }
    }
 }
 // The example displays the following output:

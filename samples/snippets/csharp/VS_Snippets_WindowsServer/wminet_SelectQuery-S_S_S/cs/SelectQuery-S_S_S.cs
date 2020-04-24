@@ -2,22 +2,22 @@
 using System;
 using System.Management;
 
-public class Sample 
+public class Sample
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
-        String[] properties = 
+        String[] properties =
             {"Name", "Handle"};
 
         SelectQuery s = new SelectQuery("Win32_Process",
-            "Name = 'notepad.exe'", 
+            "Name = 'notepad.exe'",
             properties);
 
-        ManagementObjectSearcher searcher = 
+        ManagementObjectSearcher searcher =
             new ManagementObjectSearcher(
             s);
 
-        foreach (ManagementObject o in searcher.Get()) 
+        foreach (ManagementObject o in searcher.Get())
         {
             // show the class
             Console.WriteLine(o.ToString());

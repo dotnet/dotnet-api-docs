@@ -8,8 +8,8 @@
    class, its constructor and the properties 'Message' and 'Operation'.
    The input to the program is a WSDL file 'MathService_input_cs.wsdl' without
    the input message of 'Add' operation for the SOAP
-   protocol. In this example a new input message for the 'Add' operation is created. 
-   The input message in the ServiceDescription instance is loaded with values for 
+   protocol. In this example a new input message for the 'Add' operation is created.
+   The input message in the ServiceDescription instance is loaded with values for
    'InputMessage'. The instance is then written to 'MathService_new_cs.wsdl'.
 */
 
@@ -25,9 +25,9 @@ class MyOperationMessageSample
    {
       try
       {
-         ServiceDescription myDescription = 
+         ServiceDescription myDescription =
             ServiceDescription.Read("MathService_input_cs.wsdl");
-         PortTypeCollection myPortTypeCollection  = 
+         PortTypeCollection myPortTypeCollection  =
             myDescription.PortTypes;
 
          // Get the OperationCollection for the SOAP protocol.
@@ -35,7 +35,7 @@ class MyOperationMessageSample
             myPortTypeCollection[0].Operations;
 
          // Get the OperationMessageCollection for the Add operation.
-         OperationMessageCollection myOperationMessageCollection = 
+         OperationMessageCollection myOperationMessageCollection =
             myOperationCollection[0].Messages;
 
 // <Snippet2>
@@ -50,7 +50,7 @@ class MyOperationMessageSample
          myOperationMessageCollection.Insert(0, myInputOperationMessage);
 
          // Display the operation name of the InputMessage.
-         Console.WriteLine("The operation name is " + 
+         Console.WriteLine("The operation name is " +
             myInputOperationMessage.Operation.Name);
 
 // </Snippet4>

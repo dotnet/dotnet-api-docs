@@ -16,7 +16,7 @@ public class LocationReporter : IObserver<Location>
 
    public virtual void Subscribe(IObservable<Location> provider)
    {
-      if (provider != null) 
+      if (provider != null)
          unsubscriber = provider.Subscribe(this);
    }
 

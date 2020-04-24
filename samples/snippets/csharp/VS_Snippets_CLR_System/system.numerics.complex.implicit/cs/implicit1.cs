@@ -6,24 +6,24 @@ public class Example
    public static void Main()
    {
       ComplexFromByte();
-      Console.WriteLine("-----"); 
+      Console.WriteLine("-----");
       ComplexFromDouble();
-      Console.WriteLine("-----"); 
+      Console.WriteLine("-----");
       ComplexFromInt16();
-      Console.WriteLine("-----"); 
-      ComplexFromInt32();     
-      Console.WriteLine("-----"); 
-      ComplexFromInt64();     
-      Console.WriteLine("-----"); 
-      ComplexFromSByte();     
-      Console.WriteLine("-----"); 
-      ComplexFromSingle();     
-      Console.WriteLine("-----"); 
+      Console.WriteLine("-----");
+      ComplexFromInt32();
+      Console.WriteLine("-----");
+      ComplexFromInt64();
+      Console.WriteLine("-----");
+      ComplexFromSByte();
+      Console.WriteLine("-----");
+      ComplexFromSingle();
+      Console.WriteLine("-----");
       ComplexFromUInt16();
-      Console.WriteLine("-----"); 
-      ComplexFromUInt32();     
-      Console.WriteLine("-----"); 
-      ComplexFromUInt64();     
+      Console.WriteLine("-----");
+      ComplexFromUInt32();
+      Console.WriteLine("-----");
+      ComplexFromUInt64();
    }
 
    private static void ComplexFromByte()
@@ -33,10 +33,10 @@ public class Example
       System.Numerics.Complex c1 = byteValue;
       Console.WriteLine(c1);
       // The example displays the following output:
-      //       (122, 0) 
+      //       (122, 0)
       // </Snippet1>
    }
-   
+
    private static void ComplexFromDouble()
    {
       // <Snippet2>
@@ -44,10 +44,10 @@ public class Example
       System.Numerics.Complex c1 = doubleValue;
       Console.WriteLine(c1);
       // The example displays the following output:
-      //       (1.032E-16, 0) 
+      //       (1.032E-16, 0)
       // </Snippet2>
    }
-   
+
    private static void ComplexFromInt16()
    {
       // <Snippet3>
@@ -58,7 +58,7 @@ public class Example
       //       (16024, 0)
       // </Snippet3>
    }
-   
+
    private static void ComplexFromInt32()
    {
       // <Snippet4>
@@ -69,7 +69,7 @@ public class Example
       //       (1034217, 0)
       // </Snippet4>
    }
-   
+
    private static void ComplexFromInt64()
    {
       // <Snippet5>
@@ -91,7 +91,7 @@ public class Example
       //       (-12, 0)
       // </Snippet6>
    }
-   
+
    private static void ComplexFromSingle()
    {
       // <Snippet7>
@@ -99,7 +99,7 @@ public class Example
       System.Numerics.Complex c1 = singleValue;
       Console.WriteLine(c1);
       // The example displays the following output:
-      //       (1.03199999657022E-08, 0) 
+      //       (1.03199999657022E-08, 0)
       // </Snippet7>
    }
 
@@ -113,7 +113,7 @@ public class Example
       //       (421, 0)
       // </Snippet8>
    }
-   
+
    private static void ComplexFromUInt32()
    {
       // <Snippet9>
@@ -124,7 +124,7 @@ public class Example
       //       (197461, 0)
       // </Snippet9>
    }
-   
+
    private static void ComplexFromUInt64()
    {
       // <Snippet10>

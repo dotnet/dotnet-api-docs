@@ -1,5 +1,5 @@
 ﻿// System.Web.Services.Description.ServiceDescription.Namespace
-/* 
+/*
    The following example demonstrates the 'Namespace' property of 'ServiceDescription' class. The input to the program is a
    WSDL file 'MyWsdl.wsdl'. This program displays the Namespace of 'ServiceDescription' class.
 */
@@ -16,7 +16,7 @@ namespace ServiceDescription1
       try
       {
          // <Snippet1>
-         ServiceDescription myDescription = 
+         ServiceDescription myDescription =
             ServiceDescription.Read("MyWsdl_CS.wsdl");
          Console.WriteLine("Namespace: " + ServiceDescription.Namespace);
          // </Snippet1>
