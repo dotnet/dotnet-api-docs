@@ -11,13 +11,9 @@ namespace MetadataReaderSnippets
         public static void Run()
         {
             //<SnippetMetadataReader>
-            FileStream fs = new FileStream("Example.dll", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-
-            using (fs)
+            using (var fs = new FileStream("Example.dll", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                PEReader peReader = new PEReader(fs);
-
-                using (peReader)
+                using (var peReader = new PEReader(fs))
                 {
                     MetadataReader mr = peReader.GetMetadataReader();
 
