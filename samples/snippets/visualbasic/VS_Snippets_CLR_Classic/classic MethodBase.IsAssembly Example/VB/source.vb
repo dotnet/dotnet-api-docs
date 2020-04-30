@@ -11,6 +11,8 @@ Public class Example
     End Sub
     Protected Friend Sub m_Protected_Friend() 
     End Sub
+    Private Protected Sub m_Private_Protected() 
+    End Sub
 
     Public Shared Sub Main()
     
@@ -46,5 +48,6 @@ End Class
 'm_Friend             False    True     False    False    False
 'm_Protected          False    False    True     False    False
 'm_Protected_Friend   False    False    False    True     False
+'m_Private_Protected  False    False    False    False    True
 ' </Snippet1>
 
