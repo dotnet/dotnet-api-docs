@@ -75,9 +75,11 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] uses the <xref:System.Char> structure to represent a Unicode character. The Unicode Standard identifies each Unicode character with a unique 21-bit scalar number called a code point, and defines the UTF-16 encoding form that specifies how a code point is encoded into a sequence of one or more 16-bit values. Each 16-bit value ranges from hexadecimal 0x0000 through 0xFFFF and is stored in a <xref:System.Char> structure.  The value of a <xref:System.Char> object is its 16-bit numeric (ordinal) value.
+.NET uses the <xref:System.Char> structure to represent Unicode code points by using UTF-16 encoding. The value of a <xref:System.Char> object is its 16-bit numeric (ordinal) value.
 
- The following sections examine the relationship between a <xref:System.Char> object and a character and discuss some common tasks performed with <xref:System.Char> instances.
+If you aren't familiar with Unicode, scalar values, code points, surrogate pairs, UTF-16, and the <xref:System.Text.Rune> type, see [Introduction to character encoding in .NET](/dotnet/standard/base-types/character-encoding-introduction).
+
+The following sections examine the relationship between a <xref:System.Char> object and a character and discuss some common tasks performed with <xref:System.Char> instances. We recommend that you consider the <xref:System.Text.Rune> type, introduced in .NET Core 3.0, as an alternative to <xref:System.Char> for performing some of these tasks.
 
 - [Char objects, Unicode characters, and strings](#Relationship)
 - [Characters and character categories](#Categories)
@@ -140,14 +142,14 @@
 |To do this|Use these `System.Char` methods|
 |----------------|-------------------------------------|
 |Compare <xref:System.Char> objects|<xref:System.Char.CompareTo%2A> and <xref:System.Char.Equals%2A>|
-|Convert a code point to a string|<xref:System.Char.ConvertFromUtf32%2A>|
-|Convert a <xref:System.Char> object or a surrogate pair of <xref:System.Char> objects to a code point|For a single character: <xref:System.Convert.ToInt32%28System.Char%29?displayProperty=nameWithType><br /><br /> For a surrogate pair or a character in a string: <xref:System.Char.ConvertToUtf32%2A?displayProperty=nameWithType>|
-|Get the Unicode category of a character|<xref:System.Char.GetUnicodeCategory%2A>|
-|Determine whether a character is in a particular Unicode category such as digit, letter, punctuation, control character, and so on|<xref:System.Char.IsControl%2A>, <xref:System.Char.IsDigit%2A>, <xref:System.Char.IsHighSurrogate%2A>, <xref:System.Char.IsLetter%2A>, <xref:System.Char.IsLetterOrDigit%2A>, <xref:System.Char.IsLower%2A>, <xref:System.Char.IsLowSurrogate%2A>, <xref:System.Char.IsNumber%2A>, <xref:System.Char.IsPunctuation%2A>, <xref:System.Char.IsSeparator%2A>, <xref:System.Char.IsSurrogate%2A>, <xref:System.Char.IsSurrogatePair%2A>, <xref:System.Char.IsSymbol%2A>, <xref:System.Char.IsUpper%2A>, and <xref:System.Char.IsWhiteSpace%2A>|
-|Convert a <xref:System.Char> object that represents a number to a numeric value type|<xref:System.Char.GetNumericValue%2A>|
+|Convert a code point to a string|<xref:System.Char.ConvertFromUtf32%2A><br /><br />  See also the <xref:System.Text.Rune> type.|
+|Convert a <xref:System.Char> object or a surrogate pair of <xref:System.Char> objects to a code point|For a single character: <xref:System.Convert.ToInt32%28System.Char%29?displayProperty=nameWithType><br /><br /> For a surrogate pair or a character in a string: <xref:System.Char.ConvertToUtf32%2A?displayProperty=nameWithType><br /><br />  See also the <xref:System.Text.Rune> type.|
+|Get the Unicode category of a character|<xref:System.Char.GetUnicodeCategory%2A><br /><br />  See also <xref:System.Text.Rune.GetUnicodeCategory%2A>.|
+|Determine whether a character is in a particular Unicode category such as digit, letter, punctuation, control character, and so on|<xref:System.Char.IsControl%2A>, <xref:System.Char.IsDigit%2A>, <xref:System.Char.IsHighSurrogate%2A>, <xref:System.Char.IsLetter%2A>, <xref:System.Char.IsLetterOrDigit%2A>, <xref:System.Char.IsLower%2A>, <xref:System.Char.IsLowSurrogate%2A>, <xref:System.Char.IsNumber%2A>, <xref:System.Char.IsPunctuation%2A>, <xref:System.Char.IsSeparator%2A>, <xref:System.Char.IsSurrogate%2A>, <xref:System.Char.IsSurrogatePair%2A>, <xref:System.Char.IsSymbol%2A>, <xref:System.Char.IsUpper%2A>, and <xref:System.Char.IsWhiteSpace%2A><br /><br />  See also corresponding methods on the <xref:System.Text.Rune> type.|
+|Convert a <xref:System.Char> object that represents a number to a numeric value type|<xref:System.Char.GetNumericValue%2A><br /><br /> See also <xref:System.Text.Rune.GetNumericValue%2A>.|
 |Convert a character in a string into a <xref:System.Char> object|<xref:System.Char.Parse%2A> and <xref:System.Char.TryParse%2A>|
 |Convert a <xref:System.Char> object to a <xref:System.String> object|<xref:System.Char.ToString%2A>|
-|Change the case of a <xref:System.Char> object|<xref:System.Char.ToLower%2A>, <xref:System.Char.ToLowerInvariant%2A>, <xref:System.Char.ToUpper%2A>, and <xref:System.Char.ToUpperInvariant%2A>|
+|Change the case of a <xref:System.Char> object|<xref:System.Char.ToLower%2A>, <xref:System.Char.ToLowerInvariant%2A>, <xref:System.Char.ToUpper%2A>, and <xref:System.Char.ToUpperInvariant%2A><br /><br />  See also corresponding methods on the <xref:System.Text.Rune> type.|
 
 <a name="Interop"></a>
 ## Char values and interop
@@ -573,6 +575,7 @@ When a managed <xref:System.Char> type, which is represented as a Unicode UTF-16
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="index" /> is not a position within <paramref name="s" />.</exception>
         <exception cref="T:System.ArgumentException">The specified index position contains a surrogate pair, and either the first character in the pair is not a valid high surrogate or the second character in the pair is not a valid low surrogate.</exception>
+        <altmember cref="T:System.Text.Rune" />
         <altmember cref="M:System.Char.ConvertFromUtf32(System.Int32)" />
         <altmember cref="T:System.Text.UTF32Encoding" />
       </Docs>
@@ -1118,6 +1121,7 @@ When a managed <xref:System.Char> type, which is represented as a Unicode UTF-16
 
  ]]></format>
         </remarks>
+        <altmember cref="M:System.Text.Rune.IsControl(System.Text.Rune)" />
       </Docs>
     </MemberGroup>
     <Member MemberName="IsControl">
@@ -2712,6 +2716,7 @@ When a managed <xref:System.Char> type, which is represented as a Unicode UTF-16
 
  ]]></format>
         </remarks>
+        <altmember cref="M:System.Text.Rune.IsSeparator(System.Text.Rune)" />
         <altmember cref="T:System.Globalization.UnicodeCategory" />
       </Docs>
     </Member>
@@ -3547,6 +3552,7 @@ When a managed <xref:System.Char> type, which is represented as a Unicode UTF-16
 
  ]]></format>
         </remarks>
+        <altmember cref="M:System.Text.Rune.IsWhiteSpace(System.Text.Rune)" />
         <altmember cref="T:System.Boolean" />
         <altmember cref="T:System.Globalization.UnicodeCategory" />
       </Docs>
@@ -4842,6 +4848,8 @@ This member is an explicit interface member implementation. It can be used only 
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="culture" /> is <see langword="null" />.</exception>
+        <altmember cref="M:System.Text.Rune.ToLower(System.Text.Rune,System.Globalization.CultureInfo)" />
+        <altmember cref="M:System.Text.Rune.ToUpper(System.Text.Rune,System.Globalization.CultureInfo)" />
         <altmember cref="P:System.Globalization.CultureInfo.CurrentCulture" />
         <altmember cref="M:System.String.ToLower" />
         <altmember cref="M:System.Char.ToUpper(System.Char,System.Globalization.CultureInfo)" />
@@ -5241,6 +5249,8 @@ This member is an explicit interface member implementation. It can be used only 
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="culture" /> is <see langword="null" />.</exception>
+        <altmember cref="M:System.Text.Rune.ToUpper(System.Text.Rune,System.Globalization.CultureInfo)" />
+        <altmember cref="M:System.Text.Rune.ToLower(System.Text.Rune,System.Globalization.CultureInfo)" />
         <altmember cref="P:System.Globalization.CultureInfo.CurrentCulture" />
         <altmember cref="M:System.String.ToUpper" />
         <altmember cref="M:System.Char.ToLower(System.Char,System.Globalization.CultureInfo)" />
