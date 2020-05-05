@@ -88,13 +88,11 @@
 |<xref:System.Net.WebClient.DownloadString%2A>|Downloads a <xref:System.String> from a resource and returns a <xref:System.String>.|  
 |<xref:System.Net.WebClient.DownloadStringAsync%2A>|Downloads a <xref:System.String> from a resource, without blocking the calling thread.|  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to attempt to cancel asynchronous operations.  
   
  A <xref:System.Net.WebClient> instance does not send optional HTTP headers by default. If your request requires an optional header, you must add the header to the <xref:System.Net.WebClient.Headers%2A> collection. For example, to retain queries in the response, you must add a user-agent header. Also, servers may return 500 (Internal Server Error) if the user agent header is missing.  
   
- <xref:System.Net.HttpWebRequest.AllowAutoRedirect%2A> is set to `true` in <xref:System.Net.WebClient> instances.  
-  
-   
+ <xref:System.Net.HttpWebRequest.AllowAutoRedirect%2A> is set to `true` in <xref:System.Net.WebClient> instances.
   
 ## Examples  
  The following code example takes the URI of a resource, retrieves it, and displays the response.  
@@ -411,7 +409,10 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- If an operation is pending, this method calls <xref:System.Net.WebRequest.Abort%2A> on the underlying <xref:System.Net.WebRequest>.  
+ If an operation is pending, this method calls <xref:System.Net.WebRequest.Abort%2A> on the underlying <xref:System.Net.WebRequest>.
+ 
+ > [!NOTE]
+ > Starting in .NET Core 2.0, <xref:System.Net.WebClient.CancelAsync%2A> doesn't cancel the request immediately if the response has started to fetch. If the response has started to fetch, the request is cancelled only after a complete response is read.
   
  When you call <xref:System.Net.WebClient.CancelAsync%2A>, your application still receives the completion event associated with the operation. For example, when you call <xref:System.Net.WebClient.CancelAsync%2A> to cancel a <xref:System.Net.WebClient.DownloadStringAsync%2A> operation, if you have specified an event handler for the <xref:System.Net.WebClient.DownloadStringCompleted> event, your event handler receives notification that the operation has ended. To learn whether the operation completed successfully, check the <xref:System.ComponentModel.AsyncCompletedEventArgs.Cancelled%2A> property on the base class of <xref:System.Net.DownloadDataCompletedEventArgs> in the event data object passed to the event handler.  
   
@@ -689,14 +690,14 @@
   
  This method does not block the calling thread while downloading the resource. To download a resource and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.DownloadData%2A> methods. When the download completes, the <xref:System.Net.WebClient.DownloadDataCompleted> event is raised. Your application must handle this event to receive notification. The downloaded data is available in the <xref:System.Net.DownloadDataCompletedEventArgs.Result%2A> property.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
   
  ]]></format>
         </remarks>
@@ -756,7 +757,7 @@
   
  This method does not block the calling thread while downloading the resource. To download a resource and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.DownloadData%2A> methods. When the download completes, the <xref:System.Net.WebClient.DownloadDataCompleted> event is raised. Your application must handle this event to receive notification. The downloaded data is available in the <xref:System.Net.DownloadDataCompletedEventArgs.Result%2A> property.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
@@ -1213,7 +1214,7 @@
   
  This method does not block the calling thread while the resource is being downloaded. To block while waiting for the download to complete, use one of the <xref:System.Net.WebClient.DownloadFile%2A> methods.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -1289,7 +1290,7 @@
   
  This method does not block the calling thread while the resource is being downloaded. To block while waiting for the download to complete, use one of the <xref:System.Net.WebClient.DownloadFile%2A> methods.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -1436,7 +1437,7 @@
   
  This method downloads the resource at the URI specified by in the `address` parameter. When the download completes successfully, the downloaded file is named `fileName` on the local computer. The file is downloaded asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -1515,7 +1516,7 @@
   
  This method downloads the resource at the URI specified by in the `address` parameter. When the download completes successfully, the downloaded file is named `fileName` on the local computer. The file is downloaded asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -1832,7 +1833,7 @@ internal class MyWebClient : WebClient
   
  After downloading the resource, this method uses the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property to convert the resource to a <xref:System.String>. This method does not block the calling thread while downloading the resource. To download a resource and block while waiting for the server's response, use the <xref:System.Net.WebClient.DownloadString%2A> method. When the download completes, the <xref:System.Net.WebClient.DownloadStringCompleted> event is raised. Your application must handle this event to receive notification. The downloaded string is available in the <xref:System.Net.DownloadStringCompletedEventArgs.Result%2A> property.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -1899,7 +1900,7 @@ internal class MyWebClient : WebClient
   
  After downloading the resource, this method uses the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property to convert the resource to a <xref:System.String>. This method does not block the calling thread while downloading the resource. To download a resource and block while waiting for the server's response, use the <xref:System.Net.WebClient.DownloadString%2A> method. When the download completes, the <xref:System.Net.WebClient.DownloadStringCompleted> event is raised. Your application must handle this event to receive notification. The downloaded string is available in the <xref:System.Net.DownloadStringCompletedEventArgs.Result%2A> property.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -2037,7 +2038,7 @@ internal class MyWebClient : WebClient
   
  After downloading the resource, this method uses the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property to convert the resource to a <xref:System.String>. This method does not block the calling thread while downloading the resource.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -2106,7 +2107,7 @@ internal class MyWebClient : WebClient
   
  After downloading the resource, this method uses the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property to convert the resource to a <xref:System.String>. This method does not block the calling thread while downloading the resource.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -3455,7 +3456,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the stream is opening. To block while waiting for the stream, use the <xref:System.Net.WebClient.OpenReadAsync%2A> method.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested resource. If the <xref:System.Net.WebClient.QueryString%2A> property is not `null`, it is appended to `address`.  
   
@@ -3529,7 +3530,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the stream is opening. To block while waiting for the stream, use the <xref:System.Net.WebClient.OpenRead%2A> method.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested resource. If the <xref:System.Net.WebClient.QueryString%2A> property is not `null`, it is appended to `address`.  
   
@@ -3674,7 +3675,7 @@ internal class MyWebClient : WebClient
 > [!NOTE]
 >  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested resource. If the <xref:System.Net.WebClient.QueryString%2A> property is not `null`, it is appended to `address`.  
   
@@ -3752,7 +3753,7 @@ internal class MyWebClient : WebClient
 > [!NOTE]
 >  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested resource. If the <xref:System.Net.WebClient.QueryString%2A> property is not `null`, it is appended to `address`.  
   
@@ -4247,7 +4248,7 @@ internal class MyWebClient : WebClient
   
  If the `method` parameter specifies a method that is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  This method does not block the calling thread while the stream is being opened. To block while waiting for the stream, use one of the <xref:System.Net.WebClient.OpenWrite%2A> methods.  
   
@@ -4388,7 +4389,7 @@ internal class MyWebClient : WebClient
 > [!NOTE]
 >  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -4461,7 +4462,7 @@ internal class MyWebClient : WebClient
 > [!NOTE]
 >  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -4537,7 +4538,7 @@ internal class MyWebClient : WebClient
   
  If the `method` parameter specifies a method that is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -4614,7 +4615,7 @@ internal class MyWebClient : WebClient
   
  If the `method` parameter specifies a method that is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -5203,7 +5204,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the data is being sent. To send data and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadData%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -5281,7 +5282,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the data is being sent. To send data and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadData%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -5354,7 +5355,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the data is being sent. To send data and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadData%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -5496,7 +5497,7 @@ internal class MyWebClient : WebClient
   
  This method sends a data buffer to a resource. The data buffer is sent asynchronously using thread resources that are automatically allocated from the thread pool. The data is not encoded.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -5572,7 +5573,7 @@ internal class MyWebClient : WebClient
   
  This method sends a data buffer to a resource. The data buffer is sent asynchronously using thread resources that are automatically allocated from the thread pool. The data is not encoded.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -5650,7 +5651,7 @@ internal class MyWebClient : WebClient
   
  This method sends a data buffer to a resource. The data buffer is sent asynchronously using thread resources that are automatically allocated from the thread pool. The data is not encoded.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -5726,7 +5727,7 @@ internal class MyWebClient : WebClient
   
  This method sends a data buffer to a resource. The data buffer is sent asynchronously using thread resources that are automatically allocated from the thread pool. The data is not encoded.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -6183,7 +6184,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the file is being sent. To send a file and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadFile%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -6273,7 +6274,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the file is being sent. To send a file and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadFile%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -6360,7 +6361,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the file is being sent. To send a file and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadFile%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -6514,7 +6515,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the file has been uploaded to the resource. The file is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -6600,7 +6601,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the file has been uploaded to the resource. The file is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -6688,7 +6689,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the file has been uploaded to the resource. The file is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -6776,7 +6777,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the file has been uploaded to the resource. The file is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -7257,7 +7258,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadString%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -7335,7 +7336,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadString%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -7412,7 +7413,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadString%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -7556,7 +7557,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the string has been uploaded to the resource. The string is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  Before uploading the string, this method converts it to a <xref:System.Byte> array using the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property. This method blocks while the string is transmitted.  
   
@@ -7630,7 +7631,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the string has been uploaded to the resource. The string is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  Before uploading the string, this method converts it to a <xref:System.Byte> array using the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property. This method blocks while the string is transmitted.  
   
@@ -7706,7 +7707,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the string has been uploaded to the resource. The string is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  Before uploading the string, this method converts it to a <xref:System.Byte> array using the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property. This method blocks while the string is transmitted.  
   
@@ -7786,7 +7787,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the string has been uploaded to the resource. The string is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  Before uploading the string, this method converts it to a <xref:System.Byte> array using the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property. This method blocks while the string is transmitted.  
   
@@ -8247,7 +8248,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadString%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
@@ -8329,7 +8330,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadValues%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not empty, it is appended to `address`.  
   
@@ -8410,7 +8411,7 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadValues%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not empty, it is appended to `address`.  
   
@@ -8545,7 +8546,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the name/value collection has been uploaded to the resource. The name/value collection is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the underlying request is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
@@ -8631,7 +8632,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the name/value collection has been uploaded to the resource. The name/value collection is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the underlying request is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
@@ -8719,7 +8720,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the name/value collection has been uploaded to the resource. The name/value collection is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the underlying request is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
@@ -8811,7 +8812,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the name/value collection has been uploaded to the resource. The name/value collection is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the underlying request is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
