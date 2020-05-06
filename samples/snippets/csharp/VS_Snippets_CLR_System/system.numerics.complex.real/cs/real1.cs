@@ -6,8 +6,8 @@ public class Example
 {
    public static void Main()
    {
-      Complex[] values = { new Complex(12.5, -6.3), 
-                           new Complex(-17.8, 1.7), 
+      Complex[] values = { new Complex(12.5, -6.3),
+                           new Complex(-17.8, 1.7),
                            new Complex(14.4, 8.9) };
       foreach (var value in values)
          Console.WriteLine("{0} + {1}i", value.Real, value.Imaginary);

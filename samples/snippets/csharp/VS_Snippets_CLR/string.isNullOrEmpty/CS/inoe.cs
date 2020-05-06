@@ -1,8 +1,8 @@
 ﻿using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     //<snippet1>
     string s1 = "abcd";
@@ -15,7 +15,7 @@ class Sample
 
     String Test(string s)
     {
-    if (String.IsNullOrEmpty(s)) 
+    if (String.IsNullOrEmpty(s))
         return "is null or empty";
     else
         return String.Format("(\"{0}\") is neither null nor empty", s);

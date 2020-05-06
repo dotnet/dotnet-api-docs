@@ -43,21 +43,21 @@ namespace SimpleServiceSample
             // A new file is created each time.  If a
             // previous log file exists, it is overwritten.
             StreamWriter myFile = File.CreateText(logFile);
-      
+
             // Create a new trace listener writing to the text file,
             // and add it to the trace listeners.
             serviceTraceListener = new TextWriterTraceListener(myFile);
             Trace.Listeners.Add(serviceTraceListener);
 
             Trace.AutoFlush = true;
-            Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+            Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                 " - Service main method starting...",
                 "Main");
 
             // Load the service into memory.
             System.ServiceProcess.ServiceBase.Run(new SimpleService());
 
-            Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+            Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                 " - Service main method exiting...",
                 "Main");
 
@@ -82,7 +82,7 @@ namespace SimpleServiceSample
         {
             // Start a separate thread which does the actual work.
 
-            if ((workerThread == null) || 
+            if ((workerThread == null) ||
                 ((workerThread.ThreadState &
                  (System.Threading.ThreadState.Unstarted | System.Threading.ThreadState.Stopped)) != 0))
             {
@@ -95,13 +95,13 @@ namespace SimpleServiceSample
             }
             if (workerThread != null)
             {
-                Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
-                    " - Worker thread state = " + 
+                Trace.WriteLine(DateTime.Now.ToLongTimeString() +
+                    " - Worker thread state = " +
                     workerThread.ThreadState.ToString(),
                     "OnStart");
             }
         }
- 
+
         // <Snippet4>
         // Stop this service.
         protected override void OnStop()
@@ -109,7 +109,7 @@ namespace SimpleServiceSample
             // Signal the worker thread to exit.
             if ((workerThread != null) && (workerThread.IsAlive))
             {
-                Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+                Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                     " - Stopping service worker thread.",
                     "OnStop");
 
@@ -120,8 +120,8 @@ namespace SimpleServiceSample
             }
             if (workerThread != null)
             {
-                Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
-                    " - Worker thread state = " + 
+                Trace.WriteLine(DateTime.Now.ToLongTimeString() +
+                    " - Worker thread state = " +
                     workerThread.ThreadState.ToString(),
                     "OnStop");
             }
@@ -133,22 +133,22 @@ namespace SimpleServiceSample
         protected override void OnPause()
         {
             // Pause the worker thread.
-            if ((workerThread != null) && 
+            if ((workerThread != null) &&
                 (workerThread.IsAlive) &&
-                ((workerThread.ThreadState & 
+                ((workerThread.ThreadState &
                  (System.Threading.ThreadState.Suspended | System.Threading.ThreadState.SuspendRequested)) == 0))
             {
-                Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+                Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                     " - Suspending service worker thread.",
                     "OnPause");
 
                 workerThread.Suspend();
             }
-            
+
             if (workerThread != null)
             {
-                Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
-                    " - Worker thread state = " + 
+                Trace.WriteLine(DateTime.Now.ToLongTimeString() +
+                    " - Worker thread state = " +
                     workerThread.ThreadState.ToString(),
                     "OnPause");
             }
@@ -161,11 +161,11 @@ namespace SimpleServiceSample
         {
 
             // Signal the worker thread to continue.
-            if ((workerThread != null) && 
-                ((workerThread.ThreadState & 
+            if ((workerThread != null) &&
+                ((workerThread.ThreadState &
                  (System.Threading.ThreadState.Suspended | System.Threading.ThreadState.SuspendRequested)) != 0))
             {
-                Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+                Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                     " - Resuming service worker thread.",
                     "OnContinue");
 
@@ -173,19 +173,19 @@ namespace SimpleServiceSample
             }
             if (workerThread != null)
             {
-                Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
-                    " - Worker thread state = " + 
+                Trace.WriteLine(DateTime.Now.ToLongTimeString() +
+                    " - Worker thread state = " +
                     workerThread.ThreadState.ToString(),
                     "OnContinue");
             }
         }
         // </Snippet6>
-     
+
         // <Snippet7>
         // Handle a custom command.
         protected override void OnCustomCommand(int command)
         {
-            Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+            Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                 " - Custom command received: " +
                 command.ToString(),
                 "OnCustomCommand");
@@ -211,15 +211,15 @@ namespace SimpleServiceSample
                 case (int) SimpleServiceCustomCommands.CheckWorker:
 
                     // Log the current worker thread state.
-                    Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+                    Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                         " - Worker thread state = " +
                         workerThread.ThreadState.ToString(),
                         "OnCustomCommand");
 
                     break;
-    
+
                 default:
-                    Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+                    Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                         " - Unrecognized custom command ignored!",
                         "OnCustomCommand");
                     break;
@@ -227,23 +227,23 @@ namespace SimpleServiceSample
         }
         // </Snippet7>
 
-        // Define a simple method that runs as the worker thread of 
-        // the service.  
+        // Define a simple method that runs as the worker thread of
+        // the service.
         public void ServiceWorkerMethod()
         {
-            Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+            Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                 " - Starting service worker thread.",
                 "Worker");
-            
-            try 
+
+            try
             {
-                do 
+                do
                 {
                     // Wake up every 10 seconds and write
                     // a message to the trace output.
 
                     Thread.Sleep(10000);
-                    Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+                    Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                         " - heartbeat cycle.",
                         "Worker");
                 }
@@ -253,19 +253,19 @@ namespace SimpleServiceSample
             {
                 // Another thread has signalled that this thread
                 // must terminate.  Typically, this occurs when
-                // the main service thread gets a service stop 
+                // the main service thread gets a service stop
                 // command.
 
                 // Write a trace line indicating the worker thread
                 // is exiting.  Notice that this simple thread does
                 // not have any local objects or data to clean up.
 
-                Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+                Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                     " - Thread abort signalled.",
                     "Worker");
             }
 
-            Trace.WriteLine(DateTime.Now.ToLongTimeString() + 
+            Trace.WriteLine(DateTime.Now.ToLongTimeString() +
                 " - Exiting service worker thread.",
                 "Worker");
         }

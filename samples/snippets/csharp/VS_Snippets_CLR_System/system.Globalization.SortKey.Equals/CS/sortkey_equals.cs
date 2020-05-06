@@ -37,22 +37,22 @@ public class SamplesSortKey  {
       //    created from the same CompareInfo with the same string and the same CompareOptions.
       Console.WriteLine( "same          same         same             same             {0}", mySK1.Equals( mySK2 ) );
 
-      // Compares the base SortKey with a SortKey that is 
+      // Compares the base SortKey with a SortKey that is
       //    created from the same CompareInfo with the same string but with different CompareOptions.
       Console.WriteLine( "same          same         same             different        {0}", mySK1.Equals( mySK3 ) );
-      
-      // Compares the base SortKey with a SortKey that is 
-      //    created from the same CompareInfo with the different string 
+
+      // Compares the base SortKey with a SortKey that is
+      //    created from the same CompareInfo with the different string
       //    but with the same CompareOptions.
       Console.WriteLine( "same          same         different        same             {0}", mySK1.Equals( mySK4 ) );
 
-      // Compares the base SortKey with a SortKey that is 
-      //    created from a different CompareInfo (same culture) 
+      // Compares the base SortKey with a SortKey that is
+      //    created from a different CompareInfo (same culture)
       //    with the same string and the same CompareOptions.
       Console.WriteLine( "different     same         same             same             {0}", mySK1.Equals( mySK5 ) );
 
-      // Compares the base SortKey with a SortKey that is 
-      //    created from a different CompareInfo (different culture) 
+      // Compares the base SortKey with a SortKey that is
+      //    created from a different CompareInfo (different culture)
       //    with the same string and the same CompareOptions.
       Console.WriteLine( "different     different    same             same             {0}", mySK1.Equals( mySK6 ) );
    }

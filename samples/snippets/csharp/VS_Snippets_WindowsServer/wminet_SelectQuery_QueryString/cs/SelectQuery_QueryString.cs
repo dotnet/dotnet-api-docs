@@ -2,18 +2,18 @@
 using System;
 using System.Management;
 
-public class Sample 
+public class Sample
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
-        SelectQuery s = new SelectQuery(); 
+        SelectQuery s = new SelectQuery();
         s.QueryString = "SELECT * FROM Win32_Process";
-      
-        ManagementObjectSearcher searcher = 
+
+        ManagementObjectSearcher searcher =
             new ManagementObjectSearcher(
             s);
 
-        foreach (ManagementObject o in searcher.Get()) 
+        foreach (ManagementObject o in searcher.Get())
         {
             // show the class
             Console.WriteLine(o.ToString());

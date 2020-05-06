@@ -8,7 +8,7 @@ public class Page1: Page
  {
 // <Snippet1>
 String[] StateVars = new String[Application.Count];
-StateVars = Application.AllKeys;   
+StateVars = Application.AllKeys;
 // </Snippet1>
  }
 }

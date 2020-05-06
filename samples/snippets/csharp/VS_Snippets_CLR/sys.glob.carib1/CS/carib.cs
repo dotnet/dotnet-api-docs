@@ -1,20 +1,20 @@
 ﻿//<snippet1>
 // This example demonstrates a System.Globalization.Culture-
-// AndRegionInfoBuilder constructor and some of the properties 
+// AndRegionInfoBuilder constructor and some of the properties
 // of the CultureAndRegionInfoBuilder object that is created.
 // Compile this example with a reference to sysglobl.dll.
 
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
 
-// Construct a new, privately used culture that extends the en-US culture 
+// Construct a new, privately used culture that extends the en-US culture
 // provided by the .NET Framework. In this sample, the CultureAndRegion-
-// Types.Specific parameter creates a minimal CultureAndRegionInfoBuilder 
+// Types.Specific parameter creates a minimal CultureAndRegionInfoBuilder
 // object that you must populate with culture and region information.
 
     CultureAndRegionInfoBuilder cib = null;

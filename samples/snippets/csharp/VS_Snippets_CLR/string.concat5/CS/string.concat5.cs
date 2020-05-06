@@ -25,11 +25,11 @@ class stringConcat5 {
 //    1) -123
 //    2) -123-123
 //    3) -123-123-123
-//    
+//
 //    Concatenate 4 objects and a variable length parameter list:
 //    4) -123-123-123-123
 //    5) -123-123-123-123-123
-//    
+//
 //    Concatenate a 3-element object array:
 //    6) -123-456-789
 // </snippet1>

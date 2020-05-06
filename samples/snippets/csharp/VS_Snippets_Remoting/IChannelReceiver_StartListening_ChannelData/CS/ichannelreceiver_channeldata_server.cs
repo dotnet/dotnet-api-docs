@@ -7,7 +7,7 @@
 /*
    This example implements the 'ChannelData' property and 'GetUrlsForUri',
    'StartListening' and 'StopListening' method of 'IChannelReceiver' interface.
-   It creates a server by implementing 'IChannelReceiver' interface to receive 
+   It creates a server by implementing 'IChannelReceiver' interface to receive
    request send by the client.
 */
 using System;
@@ -19,29 +19,29 @@ using System.Runtime.Remoting.Channels;
 using System.Text.RegularExpressions;
 using System.Security.Permissions;
 
-namespace RemotingSamples 
+namespace RemotingSamples
 {
-   public class MyIChannelReceiverChannelDataServerClass 
+   public class MyIChannelReceiverChannelDataServerClass
    {
       [PermissionSet(SecurityAction.LinkDemand)]
-      public static void Main() 
+      public static void Main()
       {
          MyCustomChannel myChannel = new MyCustomChannel(8085);
-         ChannelDataStore myChannelDataStore = 
+         ChannelDataStore myChannelDataStore =
             (ChannelDataStore)myChannel.ChannelData;
-         Console.WriteLine("The channel URI is " + 
+         Console.WriteLine("The channel URI is " +
             myChannelDataStore.ChannelUris[0]);
          string[] myUrlArray = myChannel.GetUrlsForUri("SayHello");
-         Console.WriteLine("The URL for the objectURI is " + myUrlArray[0]); 
+         Console.WriteLine("The URL for the objectURI is " + myUrlArray[0]);
          bool continueOption = true;
          while(continueOption)
          {
             Console.WriteLine("");
             Console.WriteLine("Select a option ..");
             Console.WriteLine(" 1 - StartListening");
-            Console.WriteLine(" 2 - StopListening");   
+            Console.WriteLine(" 2 - StopListening");
             Console.WriteLine(" 3 - Exit");
-           
+
             Console.Write("Option : ");
             int myOption = Int32.Parse(Console.ReadLine());
             switch(myOption)
@@ -72,7 +72,7 @@ namespace RemotingSamples
       private bool myListening = false;
       private Thread myThread;
       public MyCustomChannel(int portNo)
-      {  
+      {
          myPortNo = portNo;
          string [] myURI = new string[1];
          myURI[0] = Dns.Resolve(Dns.GetHostName()).AddressList[0] + ":" +
@@ -107,7 +107,7 @@ namespace RemotingSamples
          // Get the object URI.
          objectURI = myUrl.Substring(myMatch.Index);
          // Return the channel url.
-         return myUrl.Substring(0,myMatch.Index);   
+         return myUrl.Substring(0,myMatch.Index);
       }
       // Implementation of 'IChannelReceiver' interface.
 // <Snippet2>

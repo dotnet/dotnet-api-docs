@@ -1,10 +1,10 @@
 ﻿/*
-  This program demonstrates  'Credentials' property, 'GetProxy' and 'IsBypassed' methods of 
+  This program demonstrates  'Credentials' property, 'GetProxy' and 'IsBypassed' methods of
   IWebProxy interface.
   The 'WebProxy_Interface' class implements the 'IWebProxy' interface. It provides an implementation for the
-  'GetProxy' and 'IsByPassed' methods and 'ICredentials' property. The 'GetProxy' method returns the url 
-  of the proxy server as specified in the constructor. The 'IsByPassed' method returns false indicating 
-  that the proxy server must never be bypassed for any requested url. The 'ICredentials' property stores 
+  'GetProxy' and 'IsByPassed' methods and 'ICredentials' property. The 'GetProxy' method returns the url
+  of the proxy server as specified in the constructor. The 'IsByPassed' method returns false indicating
+  that the proxy server must never be bypassed for any requested url. The 'ICredentials' property stores
   the credentials required by the proxy server to authenticate the actual user.
 */
 
@@ -59,7 +59,7 @@ public class WebProxy_Interface : IWebProxy
 // </Snippet1>
 
 public class WebProxy_Example {
-	public static void Main() 
+	public static void Main()
 	{
 	//<Snippet4>
 		WebProxy_Interface webProxy_Interface = new WebProxy_Interface(new Uri("http://proxy.example.com"));

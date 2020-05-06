@@ -2,9 +2,9 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
         ManagementClass c = new ManagementClass("Win32_Process");
         foreach (ManagementObject o in c.GetInstances())

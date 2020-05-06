@@ -17,7 +17,7 @@ public class Example
                IntPtr newPtr = IntPtr.Add(ptr, ctr * size);
                Console.Write("{0}   ", Marshal.ReadInt32(newPtr));
             }
-         }      
+         }
       }
    }
 }

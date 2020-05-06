@@ -2,7 +2,7 @@
    This program demostrates 'AddressList' property of 'IPHostEntry' class.
    It takes a URL from commandline(or uses default value) and obtains a
    'IPHostEntry' object by calling 'GetHostByName' method of 'Dns' class and
-   prints the host name and IP addresses associated with the specified URL.      
+   prints the host name and IP addresses associated with the specified URL.
 */
 
 using System;
@@ -11,7 +11,7 @@ using System.Net.Sockets;
 
 class HostInfoSample
 {
-   public static void Main() 
+   public static void Main()
    {
       String hostString = " ";
       // Create an instance of HostInfoSample class.
@@ -24,10 +24,10 @@ class HostInfoSample
          hostInfoSampleObj.GetIpAddressList("www.microsoft.net");
    }
 // <Snippet1>
-   
+
    public void GetIpAddressList(String hostString)
    {
-	   try 
+	   try
 	   {
 		   // Get 'IPHostEntry' object containing information like host name, IP addresses, aliases for a host.
 		   IPHostEntry hostInfo = Dns.GetHostByName(hostString);
@@ -38,7 +38,7 @@ class HostInfoSample
 			   Console.WriteLine(hostInfo.AddressList[index]);
 		   }
 	   }
-	   catch(SocketException e) 
+	   catch(SocketException e)
 	   {
 		   Console.WriteLine("SocketException caught!!!");
 		   Console.WriteLine("Source : " + e.Source);

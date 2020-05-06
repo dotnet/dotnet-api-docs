@@ -6,12 +6,12 @@ public class Example
 {
    public static void Main()
    {
-      Complex[] values = { new Complex(2.5, 1.5), 
-                           new Complex(2.5, -1.5), 
-                           new Complex(-2.5, 1.5), 
+      Complex[] values = { new Complex(2.5, 1.5),
+                           new Complex(2.5, -1.5),
+                           new Complex(-2.5, 1.5),
                            new Complex(-2.5, -1.5) };
       foreach (Complex value in values)
-         Console.WriteLine("Tan(Atan({0})) = {1}", 
+         Console.WriteLine("Tan(Atan({0})) = {1}",
                             value, Complex.Tan(Complex.Atan(value)));
    }
 }

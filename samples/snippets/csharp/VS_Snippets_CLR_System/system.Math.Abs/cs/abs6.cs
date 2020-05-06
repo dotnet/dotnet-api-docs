@@ -12,7 +12,7 @@ public class Example
             Console.WriteLine($"Abs({value}) = {Math.Abs(value)}");
          }
          catch (OverflowException) {
-            Console.WriteLine("Unable to calculate the absolute value of {0}.", 
+            Console.WriteLine("Unable to calculate the absolute value of {0}.",
                               value);
          }
       }
@@ -23,6 +23,6 @@ public class Example
       //       Abs(0) = 0
       //       Abs(-32) = 32
       //       Unable to calculate the absolute value of -128.
-      // </Snippet6>   
+      // </Snippet6>
    }
 }

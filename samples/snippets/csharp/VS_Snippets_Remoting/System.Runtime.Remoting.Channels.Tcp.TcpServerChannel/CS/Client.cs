@@ -19,7 +19,7 @@ public class Client
         RemotingConfiguration.RegisterWellKnownClientType(remoteType);
 
         // Create an instance of the remote object.
-        RemoteObject service = new RemoteObject(); 
+        RemoteObject service = new RemoteObject();
 
         // Invoke a method on the remote object.
         Console.WriteLine("The client is invoking the remote object.");

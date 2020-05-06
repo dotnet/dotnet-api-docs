@@ -32,7 +32,7 @@ namespace CodeSnippets
                       System.Linq.Expressions.Expression.Constant("spruce"),
                       System.Linq.Expressions.Expression.Constant("alder") };
 
-            // Create an expression tree that represents creating and  
+            // Create an expression tree that represents creating and
             // initializing a one-dimensional array of type string.
             System.Linq.Expressions.NewArrayExpression newArrayExpression =
                 System.Linq.Expressions.Expression.NewArrayInit(typeof(string), trees);
@@ -49,7 +49,7 @@ namespace CodeSnippets
         static void NewArrayBounds()
         {
             // <Snippet2>
-            // Create an expression tree that represents creating a 
+            // Create an expression tree that represents creating a
             // two-dimensional array of type string with bounds [3,2].
             System.Linq.Expressions.NewArrayExpression newArrayExpression =
                 System.Linq.Expressions.Expression.NewArrayBounds(

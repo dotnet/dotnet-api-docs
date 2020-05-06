@@ -14,7 +14,7 @@ class BinaryRW
         binWriter.Write("Invalid file path characters are: ");
         binWriter.Write(Path.InvalidPathChars);
 
-        // Create the reader using the same MemoryStream 
+        // Create the reader using the same MemoryStream
         // as used with the writer.
         BinaryReader binReader = new BinaryReader(memStream);
 

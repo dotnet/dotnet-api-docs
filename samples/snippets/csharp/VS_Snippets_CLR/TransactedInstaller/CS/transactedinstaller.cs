@@ -4,7 +4,7 @@
 // System.COnfiguration.Install.TransactedInstaller.Uninstall(IDictionary)
 
 /*
-   The following example demonstrates the constructor, Install(IDictionary) and 
+   The following example demonstrates the constructor, Install(IDictionary) and
    Uninstall(IDictionary) methods of the 'TransactedInstaller' class.
    This example provides an implementation similar to that of 'InstallUtil.exe'.
    It installs assemblies with the options preceding that particular assembly.
@@ -73,11 +73,11 @@ public class TransactedInstaller_Example
                }
 
                // Create a instance of 'AssemblyInstaller' that installs the given assembly.
-               myAssemblyInstaller = 
-                  new AssemblyInstaller(args[i], 
+               myAssemblyInstaller =
+                  new AssemblyInstaller(args[i],
                   (string[]) myOptions.ToArray(typeof(string)));
-               // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.  
-               myTransactedInstaller.Installers.Add(myAssemblyInstaller);  
+               // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.
+               myTransactedInstaller.Installers.Add(myAssemblyInstaller);
             }
          }
          // If user requested help or didn't provide any assemblies to install
@@ -89,8 +89,8 @@ public class TransactedInstaller_Example
          }
 
          // Create a instance of 'InstallContext' with the options specified.
-         myInstallContext = 
-            new InstallContext("Install.log", 
+         myInstallContext =
+            new InstallContext("Install.log",
             (string[]) myOptions.ToArray(typeof(string)));
          myTransactedInstaller.Context = myInstallContext;
 
@@ -104,8 +104,8 @@ public class TransactedInstaller_Example
       {
          Console.WriteLine("\nException raised : {0}", e.Message);
       }
-   }  
-   
+   }
+
    public static void PrintHelpMessage()
    {
       Console.WriteLine("Usage : TransactedInstaller [/u | /uninstall] [option [...]] assembly" +

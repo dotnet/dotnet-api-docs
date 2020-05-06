@@ -4,7 +4,7 @@ using System.Reflection;
 public class MyTypeDelegatorClass : TypeDelegator
 {
     public string myElementType = null;
-    private Type myType = null ; 
+    private Type myType = null ;
     public MyTypeDelegatorClass(Type myType) : base(myType)
     {
         this.myType = myType;
@@ -14,7 +14,7 @@ public class MyTypeDelegatorClass : TypeDelegator
     {
         // Determine whether the type is marshalled by reference.
         if(myType.IsMarshalByRef)
-        { 
+        {
             myElementType = " marshalled by reference";
             return true;
         }

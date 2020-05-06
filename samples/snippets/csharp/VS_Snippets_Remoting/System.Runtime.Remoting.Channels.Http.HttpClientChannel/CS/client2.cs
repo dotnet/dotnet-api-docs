@@ -57,7 +57,7 @@ public class Client2
         Register(clientChannel);
 
         // Create an instance of the remote object.
-        RemoteObject service = new RemoteObject(); 
+        RemoteObject service = new RemoteObject();
 
         // Invoke a method on the remote object.
         InvokeRemoteObject(service);
@@ -69,9 +69,9 @@ public class Client2
         ChannelServices.RegisterChannel(channel);
 
         // Register as client for remote object.
-        WellKnownClientTypeEntry remoteType = 
+        WellKnownClientTypeEntry remoteType =
             new WellKnownClientTypeEntry(
-                typeof(RemoteObject), 
+                typeof(RemoteObject),
                 "http://localhost:9090/RemoteObject.rem");
         RemotingConfiguration.RegisterWellKnownClientType(remoteType);
     }
@@ -80,7 +80,7 @@ public class Client2
     {
         // Invoke a method on the remote object.
         Console.WriteLine("The client is invoking the remote object.");
-        Console.WriteLine("The remote object has been called {0} times.", 
+        Console.WriteLine("The remote object has been called {0} times.",
             service.GetCount());
     }
 }

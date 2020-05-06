@@ -1,10 +1,10 @@
 ﻿// System.Web.Services.Description.PortCollection.Contains
 // System.Web.Services.Description.PortCollection.Add
 
-/* 
+/*
   The following sample reads the contents of a file 'MathServiceAdd_cs.wsdl'
-  into a 'ServiceDescription' instance. It gets the collection of Service 
-  instances from 'ServiceDescription'. It then adds a new port and checks 
+  into a 'ServiceDescription' instance. It gets the collection of Service
+  instances from 'ServiceDescription'. It then adds a new port and checks
   whether a port exists.  The programs writes a new web service description
   file.
 */
@@ -22,22 +22,22 @@ class PortCollection_2
         Service myService;
         PortCollection myPortCollection;
 
-        ServiceDescription myServiceDescription = 
+        ServiceDescription myServiceDescription =
            ServiceDescription.Read("MathServiceAdd_cs.wsdl");
-      
-        Console.WriteLine("\nTotal Number of Services :" 
+
+        Console.WriteLine("\nTotal Number of Services :"
            + myServiceDescription.Services.Count);
-      
+
         for(int i=0; i < myServiceDescription.Services.Count; ++i)
         {
            myService = myServiceDescription.Services[i];
            Console.WriteLine("Name : " + myService.Name);
  // <Snippet1>
- // <Snippet2>         
+ // <Snippet2>
 
            myPortCollection = myService.Ports;
            Port myNewPort = myPortCollection[0];
-           
+
            myPortCollection.Remove(myNewPort);
 
            // Display the number of ports.
@@ -55,7 +55,7 @@ class PortCollection_2
 
            bool bContain = myPortCollection.Contains(myNewPort);
 
-           Console.WriteLine("\nPort '"+myNewPort.Name + "' exists : " 
+           Console.WriteLine("\nPort '"+myNewPort.Name + "' exists : "
               + bContain );
 
            // Remove a port from the collection.
@@ -63,14 +63,14 @@ class PortCollection_2
 
            bContain = myPortCollection.Contains(myNewPort);
 
-           Console.WriteLine("Port '"+  myNewPort.Name  + "' exists : " 
+           Console.WriteLine("Port '"+  myNewPort.Name  + "' exists : "
               + bContain );
-           
+
            // Create the description file.
            myPortCollection.Insert(0, myNewPort);
            myServiceDescription.Write("MathServiceAddNew_cs.wsdl");
-           
- // </Snippet1>         
+
+ // </Snippet1>
         }
      }
      catch(Exception ex)

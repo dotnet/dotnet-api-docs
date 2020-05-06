@@ -9,16 +9,16 @@ public class Example
        Byte[] bytes = new Byte[10000];
        int[] total = new int[101];
        rnd.NextBytes(bytes, 0, 101);
-       
+
        // Calculate how many of each value we have.
        foreach (var value in bytes)
           total[value]++;
-       
+
        // Display the results.
        for (int ctr = 0; ctr < total.Length; ctr++) {
            Console.Write("{0,3}: {1,-3}   ", ctr, total[ctr]);
            if ((ctr + 1) % 5 == 0) Console.WriteLine();
-       }   
+       }
    }
 }
 

@@ -1,5 +1,5 @@
 ﻿/// Class:  System.Runtime.Remoting.Metadata.W3cXsd2001.SoapPositiveInteger
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(Decimal)
 ///    13    GetXsdType()
@@ -20,15 +20,15 @@ public class Demo
     public static void Main(string[] args)
     {
         //<snippet11>
-        // Parse an XSD formatted string to create a SoapPositiveInteger 
+        // Parse an XSD formatted string to create a SoapPositiveInteger
         // object.
         string xsdIntegerString = "+13";
-        SoapPositiveInteger xsdInteger = 
+        SoapPositiveInteger xsdInteger =
             SoapPositiveInteger.Parse(xsdIntegerString);
         //</snippet11>
 
         //<snippet12>
-        // Print the value of the SoapPositiveInteger object in XSD format. 
+        // Print the value of the SoapPositiveInteger object in XSD format.
         Console.WriteLine(
             "The SoapPositiveInteger object in XSD format is {0}.",
             xsdInteger.ToString());
@@ -36,14 +36,14 @@ public class Demo
 
         //<snippet13>
         // Print the XSD type string of the SoapPositiveInteger object.
-        Console.WriteLine("The XSD type of the SoapPositiveInteger " + 
+        Console.WriteLine("The XSD type of the SoapPositiveInteger " +
             "object is {0}.", xsdInteger.GetXsdType());
         //</snippet13>
 
         //<snippet14>
         // Print the value of the SoapPositiveInteger object.
         Console.WriteLine(
-            "The value of the SoapPositiveInteger object is {0}.", 
+            "The value of the SoapPositiveInteger object is {0}.",
             xsdInteger.Value);
         //</snippet14>
 

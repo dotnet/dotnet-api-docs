@@ -6,14 +6,14 @@ public class Example
 {
    public static void Main()
    {
-      Complex[] values = { new Complex(1, 1), 
-                           new Complex(-1, 1), 
+      Complex[] values = { new Complex(1, 1),
+                           new Complex(-1, 1),
                            new Complex(10, -1),
                            new Complex(3, 5) };
       foreach (Complex value in values)
-      {         
-         Complex r1 = Complex.Reciprocal(value);                   
-         Console.WriteLine("{0:N0} x {1:N2} = {2:N2}", 
+      {
+         Complex r1 = Complex.Reciprocal(value);
+         Console.WriteLine("{0:N0} x {1:N2} = {2:N2}",
                            value, r1, value * r1);
       }
    }

@@ -7,11 +7,11 @@ public class Example
    public static void Main()
    {
       Complex c1 = new Complex(1.2, 2.3);
-      Complex[] values = { new Complex(1.2, 2.3), 
-                           new Complex(0.5, 0.75), 
+      Complex[] values = { new Complex(1.2, 2.3),
+                           new Complex(0.5, 0.75),
                            new Complex(3.0, -5.0) };
       foreach (Complex c2 in values)
-         Console.WriteLine("{0} / {1} = {2:N2}", c1, c2, 
+         Console.WriteLine("{0} / {1} = {2:N2}", c1, c2,
                            Complex.Divide(c1, c2));
    }
 }

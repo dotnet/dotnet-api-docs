@@ -1,8 +1,8 @@
 ﻿using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     //<snippet1>
     // This example demonstrates the String() methods that use
@@ -22,7 +22,7 @@ class Sample
 
     // Display the original string and delimiter characters.
     Console.WriteLine("1a )The original string is \"{0}\".", s1);
-    Console.WriteLine("The delimiter character is '{0}'.\n", 
+    Console.WriteLine("The delimiter character is '{0}'.\n",
                        charSeparators[0]);
 
     // Split a string delimited by characters and return all elements.
@@ -37,14 +37,14 @@ class Sample
     result = s1.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
     Show(result);
 
-    // Split the original string into the string and empty string before the 
+    // Split the original string into the string and empty string before the
     // delimiter and the remainder of the original string after the delimiter.
     Console.WriteLine("1d) Split a string delimited by characters and " +
                       "return 2 elements:");
     result = s1.Split(charSeparators, 2, StringSplitOptions.None);
     Show(result);
 
-    // Split the original string into the string after the delimiter and the 
+    // Split the original string into the string after the delimiter and the
     // remainder of the original string after the delimiter.
     Console.WriteLine("1e) Split a string delimited by characters and " +
                       "return 2 non-empty elements:");
@@ -72,16 +72,16 @@ class Sample
     result = s2.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
     Show(result);
 
-    // Split the original string into the empty string before the 
+    // Split the original string into the empty string before the
     // delimiter and the remainder of the original string after the delimiter.
     Console.WriteLine("2d) Split a string delimited by another string and " +
                       "return 2 elements:");
     result = s2.Split(stringSeparators, 2, StringSplitOptions.None);
     Show(result);
 
-    // Split the original string into the string after the delimiter and the 
+    // Split the original string into the string after the delimiter and the
     // remainder of the original string after the delimiter.
-    Console.WriteLine("2e) Split a string delimited by another string and " + 
+    Console.WriteLine("2e) Split a string delimited by another string and " +
                       "return 2 non-empty elements:");
     result = s2.Split(stringSeparators, 2, StringSplitOptions.RemoveEmptyEntries);
     Show(result);

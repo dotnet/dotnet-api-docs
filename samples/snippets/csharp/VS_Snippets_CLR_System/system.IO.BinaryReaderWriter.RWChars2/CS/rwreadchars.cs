@@ -15,7 +15,7 @@ class BinaryRW
         binWriter.Write(
             Path.InvalidPathChars, 0, Path.InvalidPathChars.Length);
 
-        // Create the reader using the same MemoryStream 
+        // Create the reader using the same MemoryStream
         // as used with the writer.
         BinaryReader binReader = new BinaryReader(memStream);
 

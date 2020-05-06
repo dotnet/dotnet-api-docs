@@ -5,7 +5,7 @@
 /*
    This example demonstrates the implementation of the 'ChannelScheme' and
    'WantsToListen' properties of the 'IChannelReceiverHook' interface.
-   It creates  a customized channel 'MyCustomChannel' by implementing 
+   It creates  a customized channel 'MyCustomChannel' by implementing
    'IChannelReceiverHook' interface.
 */
 
@@ -21,26 +21,26 @@ public class IChannelReceiverHook_ChannelScheme
    {
       try
       {
-         MyCustomChannel myCustomChannelWithPort = 
+         MyCustomChannel myCustomChannelWithPort =
                new MyCustomChannel(8085);
-         MyCustomChannel myCustomChannelNoPort = 
+         MyCustomChannel myCustomChannelNoPort =
                new MyCustomChannel();
          Console.WriteLine("Channel Scheme of myCustomChannelWithPort : "+
                myCustomChannelWithPort.ChannelScheme);
          Console.WriteLine("Channel Scheme of myCustomChannelNoPort : " +
                myCustomChannelNoPort.ChannelScheme);
          // 'WantsToListen' is false. It is already listening.
-         if (myCustomChannelWithPort.WantsToListen) 
+         if (myCustomChannelWithPort.WantsToListen)
          {
             Console.WriteLine("myCustomChannelWithPort wants to listen.");
          }
-         else 
+         else
          {
             Console.WriteLine("myCustomChannelWithPort doesn't want to " +
                   "listen.");
          }
          // 'WantsToListen' is true.
-         if (myCustomChannelNoPort.WantsToListen) 
+         if (myCustomChannelNoPort.WantsToListen)
          {
             Console.WriteLine("myCustomChannelNoPort wants to listen.");
          }
@@ -61,7 +61,7 @@ public class IChannelReceiverHook_ChannelScheme
 // <Snippet1>
 // Implementation of 'IChannelReceiverHook' interface.
 [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
-public class MyCustomChannel : IChannelReceiverHook 
+public class MyCustomChannel : IChannelReceiverHook
 {
    private bool portSet;
    // Constructor for MyCustomChannel.

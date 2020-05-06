@@ -9,12 +9,12 @@ public class Example
       checked {
       try {
          // Square the original value.
-         int square = value * value; 
+         int square = value * value;
          Console.WriteLine("{0} ^ 2 = {1}", value, square);
       }
       catch (OverflowException) {
          double square = Math.Pow(value, 2);
-         Console.WriteLine("Exception: {0} > {1:E}.", 
+         Console.WriteLine("Exception: {0} > {1:E}.",
                            square, Int32.MaxValue);
       } }
       // The example displays the following output:
@@ -26,19 +26,19 @@ public class Example
    }
 
    private static void Cast()
-   {      
+   {
       // <Snippet2>
       byte value = 241;
       checked {
       try {
          sbyte newValue = (sbyte) value;
-         Console.WriteLine("Converted the {0} value {1} to the {2} value {3}.", 
-                           value.GetType().Name, value, 
+         Console.WriteLine("Converted the {0} value {1} to the {2} value {3}.",
+                           value.GetType().Name, value,
                            newValue.GetType().Name, newValue);
       }
       catch (OverflowException) {
          Console.WriteLine("Exception: {0} > {1}.", value, SByte.MaxValue);
-      } }                            
+      } }
       // The example displays the following output:
       //       Exception: 241 > 127.
       // </Snippet2>
@@ -50,8 +50,8 @@ public class Example
       byte value = 241;
       try {
          sbyte newValue = (sbyte) value;
-         Console.WriteLine("Converted the {0} value {1} to the {2} value {3}.", 
-                           value.GetType().Name, value, 
+         Console.WriteLine("Converted the {0} value {1} to the {2} value {3}.",
+                           value.GetType().Name, value,
                            newValue.GetType().Name, newValue);
       }
       catch (OverflowException) {

@@ -18,7 +18,7 @@ public class SamplesTextElementEnumerator  {
       TextElementEnumerator myTEE = StringInfo.GetTextElementEnumerator( myString );
 
       // Displays the values returned by ElementIndex, Current and GetTextElement.
-      // Current and GetTextElement return a string containing the entire text element. 
+      // Current and GetTextElement return a string containing the entire text element.
       Console.WriteLine( "Index\tCurrent\tGetTextElement" );
       myTEE.Reset();
       while (myTEE.MoveNext())  {

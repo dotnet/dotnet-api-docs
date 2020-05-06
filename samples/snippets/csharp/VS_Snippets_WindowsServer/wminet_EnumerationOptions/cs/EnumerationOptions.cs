@@ -1,9 +1,9 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-public class RemoteConnect 
+public class RemoteConnect
 {
-    public static void Main() 
+    public static void Main()
     {
         EnumerationOptions opt = new EnumerationOptions();
         // Will enumerate instances of the given class

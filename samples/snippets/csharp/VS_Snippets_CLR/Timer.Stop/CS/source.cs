@@ -1,5 +1,5 @@
-﻿// Alternative to using SignalTime to ensure that Elapsed 
-// events are not processed if they occur after the timer 
+﻿// Alternative to using SignalTime to ensure that Elapsed
+// events are not processed if they occur after the timer
 // has been stopped. The object is to avoid race conditions.
 //
 //<Snippet1>
@@ -8,7 +8,7 @@ using System.Timers;
 using System.Threading;
 
 public class Test
-{    
+{
     // Change these values to control the behavior of the program.
     private static int testRuns = 100;
     // Times are given in milliseconds:
@@ -24,8 +24,8 @@ public class Test
     private static Random rand = new Random();
 
     // This is the synchronization point that prevents events
-    // from running concurrently, and prevents the main thread 
-    // from executing code after the Stop method until any 
+    // from running concurrently, and prevents the main thread
+    // from executing code after the Stop method until any
     // event handlers are done executing.
     private static int syncPoint = 0;
 
@@ -63,8 +63,8 @@ public class Test
 
     public static void TestRun()
     {
-        // Set syncPoint to zero before starting the test 
-        // run. 
+        // Set syncPoint to zero before starting the test
+        // run.
         syncPoint = 0;
 
         // Test runs alternate between Timer1 and Timer2, to avoid
@@ -74,7 +74,7 @@ public class Test
         else
             currentTimer = Timer1;
 
-        currentTimer.Interval = timerIntervalBase 
+        currentTimer.Interval = timerIntervalBase
             - timerIntervalDelta + rand.Next(timerIntervalDelta * 2);
         currentTimer.Enabled = true;
 
@@ -89,13 +89,13 @@ public class Test
 
     private static void ControlThreadProc()
     {
-        // Allow the timer to run for a period of time, and then 
+        // Allow the timer to run for a period of time, and then
         // stop it.
         Thread.Sleep(testRunsFor);
         currentTimer.Stop();
 
         // The 'counted' flag ensures that if this thread has
-        // to wait for an event to finish, the wait only gets 
+        // to wait for an event to finish, the wait only gets
         // counted once.
         bool counted = false;
 
@@ -104,7 +104,7 @@ public class Test
         // the event handler is finished. This is accomplished
         // by using CompareExchange to place -1 in syncPoint,
         // but only if syncPoint is currently zero (specified
-        // by the third parameter of CompareExchange). 
+        // by the third parameter of CompareExchange).
         // CompareExchange returns the original value that was
         // in syncPoint. If it was not zero, then there's an
         // event handler running, and it is necessary to try
@@ -134,13 +134,13 @@ public class Test
     // Event-handling methods for the Elapsed events of the two
     // timers.
     //
-    private static void Timer1_ElapsedEventHandler(object sender, 
+    private static void Timer1_ElapsedEventHandler(object sender,
         ElapsedEventArgs e)
     {
         HandleElapsed(sender, e);
     }
 
-    private static void Timer2_ElapsedEventHandler(object sender, 
+    private static void Timer2_ElapsedEventHandler(object sender,
         ElapsedEventArgs e)
     {
         HandleElapsed(sender, e);
@@ -151,20 +151,20 @@ public class Test
         numEvents += 1;
 
         // This example assumes that overlapping events can be
-        // discarded. That is, if an Elapsed event is raised before 
+        // discarded. That is, if an Elapsed event is raised before
         // the previous event is finished processing, the second
-        // event is ignored. 
+        // event is ignored.
         //
-        // CompareExchange is used to take control of syncPoint, 
-        // and to determine whether the attempt was successful. 
+        // CompareExchange is used to take control of syncPoint,
+        // and to determine whether the attempt was successful.
         // CompareExchange attempts to put 1 into syncPoint, but
-        // only if the current value of syncPoint is zero 
+        // only if the current value of syncPoint is zero
         // (specified by the third parameter). If another thread
         // has set syncPoint to 1, or if the control thread has
-        // set syncPoint to -1, the current event is skipped. 
-        // (Normally it would not be necessary to use a local 
-        // variable for the return value. A local variable is 
-        // used here to determine the reason the event was 
+        // set syncPoint to -1, the current event is skipped.
+        // (Normally it would not be necessary to use a local
+        // variable for the return value. A local variable is
+        // used here to determine the reason the event was
         // skipped.)
         //
         int sync = Interlocked.CompareExchange(ref syncPoint, 1, 0);
@@ -174,7 +174,7 @@ public class Test
             // The event handler simulates an amount of work
             // lasting between 50 and 200 milliseconds, so that
             // some events will overlap.
-            int delay = timerIntervalBase 
+            int delay = timerIntervalBase
                 - timerIntervalDelta / 2 + rand.Next(timerIntervalDelta);
             Thread.Sleep(delay);
             numExecuted += 1;

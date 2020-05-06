@@ -23,8 +23,8 @@ public class MyItemType : ISerializable
         get { return myProperty_value; }
         set { myProperty_value = value; }
     }
-        
-    // Implement this method to serialize data. The method is called 
+
+    // Implement this method to serialize data. The method is called
     // on serialization.
     public void GetObjectData(SerializationInfo info, StreamingContext context)
     {
@@ -40,7 +40,7 @@ public class MyItemType : ISerializable
     }
 }
 
-// This is a console application. 
+// This is a console application.
 public static class Test
 {
     static void Main()
@@ -51,7 +51,7 @@ public static class Test
         // Use a BinaryFormatter or SoapFormatter.
         IFormatter formatter = new BinaryFormatter();
         //IFormatter formatter = new SoapFormatter();
-            
+
         Test.SerializeItem(fileName, formatter); // Serialize an instance of the class.
         Test.DeserializeItem(fileName, formatter); // Deserialize the instance.
         Console.WriteLine("Done");
@@ -65,7 +65,7 @@ public static class Test
         t.MyProperty = "Hello World";
 
         FileStream s = new FileStream(fileName , FileMode.Create);
-        formatter.Serialize(s, t);            
+        formatter.Serialize(s, t);
         s.Close();
     }
 
@@ -73,7 +73,7 @@ public static class Test
     {
         FileStream s = new FileStream(fileName, FileMode.Open);
         MyItemType t = (MyItemType)formatter.Deserialize(s);
-        Console.WriteLine(t.MyProperty);            
-    }       
+        Console.WriteLine(t.MyProperty);
+    }
 }
 //</snippet1>

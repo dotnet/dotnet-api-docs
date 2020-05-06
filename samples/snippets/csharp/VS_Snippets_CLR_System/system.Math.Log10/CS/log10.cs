@@ -5,11 +5,11 @@ public class Example
 {
    public static void Main()
    {
-      double[] numbers = {-1, 0, .105, .5, .798, 1, 4, 6.9, 10, 50, 
+      double[] numbers = {-1, 0, .105, .5, .798, 1, 4, 6.9, 10, 50,
                           100, 500, 1000, Double.MaxValue};
-      
+
       foreach (double number in numbers)
-         Console.WriteLine("The base 10 log of {0} is {1}.", 
+         Console.WriteLine("The base 10 log of {0} is {1}.",
                            number, Math.Log10(number));
    }
 }

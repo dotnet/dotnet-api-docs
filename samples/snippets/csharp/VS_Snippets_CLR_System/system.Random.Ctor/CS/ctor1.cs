@@ -22,13 +22,13 @@ public class RandomNumbers
       rand.NextBytes(values);
       foreach (byte value in values)
          Console.Write("{0, 5}", value);
-      Console.WriteLine();   
+      Console.WriteLine();
    }
 }
 // The example displays the following output to the console:
 //       28   35  133  224   58
-//    
+//
 //       28   35  133  224   58
-//    
+//
 //       32  222   43  251   49
 // </Snippet2>

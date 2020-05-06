@@ -9,7 +9,7 @@ class TypeBuilderMemberDemo
 	public static void DefineDynamicModuleDemo1()
 	{
 	   // <Snippet1>
-	   AppDomain myAppDomain = Thread.GetDomain(); 
+	   AppDomain myAppDomain = Thread.GetDomain();
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "MyAssembly";
 	   AssemblyBuilder myAsmBuilder = myAppDomain.DefineDynamicAssembly(
@@ -17,7 +17,7 @@ class TypeBuilderMemberDemo
 							AssemblyBuilderAccess.Run);
 
 	   // Create a transient dynamic module. Since no DLL name is specified with
-	   // this constructor, it can not be saved. 
+	   // this constructor, it can not be saved.
 	   ModuleBuilder myModuleBuilder = myAsmBuilder.DefineDynamicModule("MyModule1");
 	   // </Snippet1>
 	}
@@ -25,7 +25,7 @@ class TypeBuilderMemberDemo
 	public static void DefineDynamicModuleDemo2()
 	{
 	   // <Snippet2>
-	   AppDomain myAppDomain = Thread.GetDomain(); 
+	   AppDomain myAppDomain = Thread.GetDomain();
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "MyAssembly";
 	   AssemblyBuilder myAsmBuilder = myAppDomain.DefineDynamicAssembly(
@@ -42,7 +42,7 @@ class TypeBuilderMemberDemo
 	public static void DefineDynamicModuleDemo3()
 	{
 	   // <Snippet3>
-	   AppDomain myAppDomain = Thread.GetDomain(); 
+	   AppDomain myAppDomain = Thread.GetDomain();
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "MyAssembly";
 	   AssemblyBuilder myAsmBuilder = myAppDomain.DefineDynamicAssembly(
@@ -56,7 +56,7 @@ class TypeBuilderMemberDemo
 	public static void DefineDynamicModuleDemo4()
 	{
 	   // <Snippet4>
-	   AppDomain myAppDomain = Thread.GetDomain(); 
+	   AppDomain myAppDomain = Thread.GetDomain();
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "MyAssembly";
 	   AssemblyBuilder myAsmBuilder = myAppDomain.DefineDynamicAssembly(

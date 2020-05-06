@@ -1,5 +1,5 @@
 ﻿/// Class: System.Runtime.Remoting.Metadata.W3cXsd2001.SoapDay
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(DateTime)
 ///    13    GetXsdType()
@@ -7,17 +7,17 @@
 ///    12    ToString()
 ///    14    Value
 ///    16    XsdType
-///    
+///
 ///    Bugs:
-///    
-///    1. Documentation bug: according to the XML spec and the code 
-///    SoapDay.Parse(string) should accept the format "---ddzzz" and 
-///    "---dd"; the documentation states that SoapDay.Parse(string) 
-///    accepts "ddzzz" (which it does not). For gDay examples, see 
+///
+///    1. Documentation bug: according to the XML spec and the code
+///    SoapDay.Parse(string) should accept the format "---ddzzz" and
+///    "---dd"; the documentation states that SoapDay.Parse(string)
+///    accepts "ddzzz" (which it does not). For gDay examples, see
 ///    http://books.xmlschemata.org/relaxng/ch17-77066.html.
-///    2. Documentation bug: zzz cannot be in this format "08:00". It 
-///    must equal "Z" or it must be in one of these formats: "+08:00" 
-///    or "-08:00". Without the leading "+" or "-" sign Parse(string) 
+///    2. Documentation bug: zzz cannot be in this format "08:00". It
+///    must equal "Z" or it must be in one of these formats: "+08:00"
+///    or "-08:00". Without the leading "+" or "-" sign Parse(string)
 ///    fails.
 
 //<snippet10>
@@ -36,7 +36,7 @@ public class Demo
         //</snippet11>
 
         //<snippet12>
-        // Display the day in XSD format. 
+        // Display the day in XSD format.
         Console.WriteLine("The day in XSD format is {0}.",
             day.ToString());
         //</snippet12>

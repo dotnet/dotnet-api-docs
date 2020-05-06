@@ -26,17 +26,17 @@ class MyOperationClass
       PortType myPortType = new PortType();
       myPortType.Name = "OperationServiceHttpPost";
       Operation myOperation = CreateOperation
-                         ("AddNumbers","s0:AddNumbersHttpPostIn","s0:AddNumbersHttpPostOut");    
+                         ("AddNumbers","s0:AddNumbersHttpPostIn","s0:AddNumbersHttpPostOut");
       myPortType.Operations.Add(myOperation);
-// <Snippet5>      
-      // Get the PortType of the Operation. 
+// <Snippet5>
+      // Get the PortType of the Operation.
       PortType myPort = myOperation.PortType;
       Console.WriteLine(
          "The port type of the operation is: " + myPort.Name);
 // </Snippet5>
       // Add the 'PortType's to 'PortTypeCollection' of 'ServiceDescription'.
       myDescription.PortTypes.Add(myPortType);
-      
+
       // Write the 'ServiceDescription' as a WSDL file.
       myDescription.Write("Operation_5_Output_CS.wsdl");
       Console.WriteLine("WSDL file with name 'Operation_5_Output_CS.wsdl' file created Successfully");
@@ -57,7 +57,7 @@ class MyOperationClass
       // Add messages to the OperationMessageCollection.
       myOperation.Messages.Add(myInput);
       myOperation.Messages.Add(myOutput);
-      Console.WriteLine("Operation name is: " + myOperation.Name);     
+      Console.WriteLine("Operation name is: " + myOperation.Name);
 // </Snippet4>
 // </Snippet3>
 // </Snippet2>

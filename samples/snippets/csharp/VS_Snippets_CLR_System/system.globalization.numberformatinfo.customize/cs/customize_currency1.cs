@@ -14,19 +14,19 @@ public class Example
       nfi.CurrencySymbol =  (new RegionInfo(enUS.Name)).ISOCurrencySymbol;
       // Change the positive currency pattern to <code><space><value>.
       nfi.CurrencyPositivePattern = 2;
-      // Change the negative currency pattern to <code><space><sign><value>.     
+      // Change the negative currency pattern to <code><space><sign><value>.
       nfi.CurrencyNegativePattern = 12;
-      
+
       // Produce the result strings by calling ToString.
       Decimal[] values = { 1065.23m, 19.89m, -.03m, -175902.32m };
       foreach (var value in values)
          Console.WriteLine(value.ToString("C", enUS));
 
       Console.WriteLine();
-      
+
       // Produce the result strings by calling a composite formatting method.
       foreach (var value in values)
-         Console.WriteLine(String.Format(enUS, "{0:C}", value));      
+         Console.WriteLine(String.Format(enUS, "{0:C}", value));
    }
 }
 // The example displays the following output:
@@ -34,7 +34,7 @@ public class Example
 //       USD 19.89
 //       USD -0.03
 //       USD -175,902.32
-//       
+//
 //       USD 1,065.23
 //       USD 19.89
 //       USD -0.03

@@ -25,8 +25,8 @@ class MyServer
                                              new BinaryServerFormatterSinkProvider());
          // Register the server channel.
          ChannelServices.RegisterChannel(myHttpServerChannel);
-         RemotingConfiguration.RegisterWellKnownServiceType(typeof(MyHelloServer), 
-                                       "SayHello", WellKnownObjectMode.SingleCall);  
+         RemotingConfiguration.RegisterWellKnownServiceType(typeof(MyHelloServer),
+                                       "SayHello", WellKnownObjectMode.SingleCall);
          // Start listening on a specific port.
          myHttpServerChannel.StartListening((object)myPort);
          // Get the name of the channel.
@@ -40,7 +40,7 @@ class MyServer
          // Indicate whether 'IChannelReceiverHook' wants to be hooked into the outside listener service.
          Console.WriteLine("WantsToListen : " + myHttpServerChannel.WantsToListen);
          // Extract the channel URI and the remote well known object URI from the specified URL.
-         Console.WriteLine("Parsed : " + 
+         Console.WriteLine("Parsed : " +
                         myHttpServerChannel.Parse(myHttpServerChannel.GetChannelUri()+
                                                                "/SayHello",out myString));
          Console.WriteLine("String : " + myString);

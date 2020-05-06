@@ -13,7 +13,7 @@ public class Page1: Page
 StringWriter writer = new StringWriter();
 Server.UrlDecode(EncodedString, writer);
 String DecodedString = writer.ToString();
-   
+
 // </Snippet1>
  }
 }

@@ -14,12 +14,12 @@ public class Sync_Send_Receive
     {
         byte[] msg = Encoding.UTF8.GetBytes("This is a test");
         byte[] bytes = new byte[256];
-        try 
+        try
         {
             // Blocks until send returns.
             int i = server.Send(msg);
             Console.WriteLine("Sent {0} bytes.", i);
-            
+
             // Get reply from the server.
             i = server.Receive(bytes);
             Console.WriteLine(Encoding.UTF8.GetString(bytes));
@@ -37,9 +37,9 @@ public class Sync_Send_Receive
     // using the overload that takes a buffer.
     public static int ReceiveTest1(Socket client)
     {
-        
+
         byte[] bytes = new byte[256];
-        try 
+        try
         {
             // It is usually preferable to use the overload
             // that allows you to specify the maximum bytes returned.
@@ -51,7 +51,7 @@ public class Sync_Send_Receive
             int byteCount = client.Receive(bytes);
             if (byteCount > 0)
                 Console.WriteLine(Encoding.UTF8.GetString(bytes));
-            
+
             // Send reply to the client.
             client.Send(Encoding.UTF8.GetBytes("Bye."));
         }
@@ -70,12 +70,12 @@ public class Sync_Send_Receive
     {
         byte[] msg = Encoding.UTF8.GetBytes("This is a test");
         byte[] bytes = new byte[256];
-        try 
+        try
         {
             // Blocks until send returns.
             int byteCount = server.Send(msg, SocketFlags.None);
             Console.WriteLine("Sent {0} bytes.", byteCount);
-            
+
             // Get reply from the server.
             byteCount = server.Receive(bytes, SocketFlags.None);
             if (byteCount > 0)
@@ -97,14 +97,14 @@ public class Sync_Send_Receive
     {
         byte[] msg = Encoding.UTF8.GetBytes("This is a test");
         byte[] bytes = new byte[256];
-        try 
+        try
         {
             // Blocks until send returns.
             int i = server.Send(msg, msg.Length, SocketFlags.None);
             Console.WriteLine("Sent {0} bytes.", i);
-            
+
             // Get reply from the server.
-            int byteCount = server.Receive(bytes, server.Available, 
+            int byteCount = server.Receive(bytes, server.Available,
                                                SocketFlags.None);
             if (byteCount > 0)
                 Console.WriteLine(Encoding.UTF8.GetString(bytes));
@@ -125,14 +125,14 @@ public class Sync_Send_Receive
     {
         byte[] msg = Encoding.UTF8.GetBytes("This is a test");
         byte[] bytes = new byte[256];
-        try 
+        try
         {
             // Blocks until send returns.
             int byteCount = server.Send(msg, 0, msg.Length, SocketFlags.None);
             Console.WriteLine("Sent {0} bytes.", byteCount);
-            
+
             // Get reply from the server.
-            byteCount = server.Receive(bytes, 0, server.Available, 
+            byteCount = server.Receive(bytes, 0, server.Available,
                                        SocketFlags.None);
 
             if (byteCount > 0)
@@ -156,16 +156,16 @@ public class Sync_Send_Receive
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
             ProtocolType.Udp);
-      
+
         byte[] msg = Encoding.ASCII.GetBytes("This is a test");
         Console.WriteLine("Sending data.");
-        // This call blocks. 
+        // This call blocks.
         s.SendTo(msg, endPoint);
         s.Close();
     }
     //</Snippet5>
-        
-    //<Snippet6>  
+
+    //<Snippet6>
     public static void SendTo2()
     {
         IPHostEntry hostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -174,10 +174,10 @@ public class Sync_Send_Receive
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
             ProtocolType.Udp);
-      
+
         byte[] msg = Encoding.ASCII.GetBytes("This is a test");
         Console.WriteLine("Sending data.");
-        // This call blocks. 
+        // This call blocks.
         s.SendTo(msg, SocketFlags.None, endPoint);
         s.Close();
     }
@@ -191,10 +191,10 @@ public class Sync_Send_Receive
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
             ProtocolType.Udp);
-      
+
         byte[] msg = Encoding.ASCII.GetBytes("This is a test");
         Console.WriteLine("Sending data.");
-        // This call blocks. 
+        // This call blocks.
         s.SendTo(msg, msg.Length, SocketFlags.None, endPoint);
         s.Close();
     }
@@ -208,10 +208,10 @@ public class Sync_Send_Receive
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
             ProtocolType.Udp);
-      
+
         byte[] msg = Encoding.ASCII.GetBytes("This is a test");
         Console.WriteLine("Sending data.");
-        // This call blocks. 
+        // This call blocks.
         s.SendTo(msg, 0, msg.Length, SocketFlags.None, endPoint);
         s.Close();
     }
@@ -229,24 +229,24 @@ public class Sync_Send_Receive
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
             ProtocolType.Udp);
-      
+
         // Creates an IPEndPoint to capture the identity of the sending host.
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         EndPoint senderRemote = (EndPoint)sender;
-        
+
         // Binding is required with ReceiveFrom calls.
         s.Bind(endPoint);
-        
+
         byte[] msg = new Byte[256];
         Console.WriteLine ("Waiting to receive datagrams from client...");
-        
-        // This call blocks. 
+
+        // This call blocks.
         s.ReceiveFrom(msg, ref senderRemote);
         s.Close();
     }
     //</Snippet9>
-        
-    //<Snippet10>  
+
+    //<Snippet10>
     public static void ReceiveFrom2()
     {
         IPHostEntry hostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -255,17 +255,17 @@ public class Sync_Send_Receive
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
             ProtocolType.Udp);
-        
+
         // Creates an IpEndPoint to capture the identity of the sending host.
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         EndPoint senderRemote = (EndPoint)sender;
-        
+
         // Binding is required with ReceiveFrom calls.
         s.Bind(endPoint);
-        
+
         byte[] msg = new Byte[256];
         Console.WriteLine ("Waiting to receive datagrams from client...");
-        // This call blocks. 
+        // This call blocks.
         s.ReceiveFrom(msg, SocketFlags.None, ref senderRemote);
         s.Close();
     }
@@ -279,17 +279,17 @@ public class Sync_Send_Receive
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
             ProtocolType.Udp);
-      
+
         // Creates an IPEndPoint to capture the identity of the sending host.
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         EndPoint senderRemote = (EndPoint)sender;
-        
+
         // Binding is required with ReceiveFrom calls.
         s.Bind(endPoint);
-        
+
         byte[] msg = new Byte[256];
         Console.WriteLine ("Waiting to receive datagrams from client...");
-        // This call blocks. 
+        // This call blocks.
         s.ReceiveFrom(msg, msg.Length, SocketFlags.None, ref senderRemote);
         s.Close();
     }
@@ -303,16 +303,16 @@ public class Sync_Send_Receive
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
             ProtocolType.Udp);
-            
+
         // Creates an IpEndPoint to capture the identity of the sending host.
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         EndPoint senderRemote = (EndPoint)sender;
-        
+
         // Binding is required with ReceiveFrom calls.
         s.Bind(endPoint);
         byte[] msg = new Byte[256];
         Console.WriteLine ("Waiting to receive datagrams from client...");
-        // This call blocks.  
+        // This call blocks.
         s.ReceiveFrom(msg, 0, msg.Length, SocketFlags.None, ref senderRemote);
         s.Close();
     }
@@ -321,17 +321,17 @@ public class Sync_Send_Receive
     public static void RunUdpTests()
     {
         // Test the upd versions.
-      
+
         ThreadStart myThreadDelegate = new ThreadStart(Sync_Send_Receive.ReceiveFrom1);
         Thread myThread1 = new Thread(myThreadDelegate);
         myThread1.Start();
-        
+
         while (myThread1.IsAlive == true)
         {
             SendTo1();
         }
         myThread1.Join();
-        
+
         Console.WriteLine("UDP test2");
         Thread myThread2 = new Thread(new ThreadStart(Sync_Send_Receive.ReceiveFrom2));
         myThread2.Start();
@@ -340,7 +340,7 @@ public class Sync_Send_Receive
             SendTo2();
         }
         myThread2.Join();
-        
+
         Console.WriteLine("UDP test3");
         Thread myThread3 = new Thread(new ThreadStart(Sync_Send_Receive.ReceiveFrom3));
         myThread3.Start();
@@ -349,7 +349,7 @@ public class Sync_Send_Receive
             SendTo3();
         }
         myThread3.Join();
-     
+
         Console.WriteLine("UDP test4");
         Thread myThread4 = new Thread(new ThreadStart(Sync_Send_Receive.ReceiveFrom4));
         myThread4.Start();
@@ -362,12 +362,12 @@ public class Sync_Send_Receive
     //Main tests the snippets.
     // To test tcp - run 2 instances source /s runs server, source /c runs client.
     // To test Upd run source /u.
-    
+
     public static int  Main(string[] args)
     {
         string host;
         bool isServer;
-           
+
         char c = args[0].ToLower()[1];
         if ( c == 'c')
         {
@@ -378,7 +378,7 @@ public class Sync_Send_Receive
         {
             RunUdpTests();
             return 0;
-        } 
+        }
         else
         {
             host = "localhost";
@@ -387,23 +387,23 @@ public class Sync_Send_Receive
         // Set up the endpoint and create the socket.
         IPHostEntry hostEntry = Dns.GetHostEntry(host);
         IPEndPoint endPoint = new IPEndPoint(hostEntry.AddressList[0], 11000);
-        
+
         // Test the TCPIP snippets (Socket.Send and Socket.Receive)
 
         Socket s = new Socket(endPoint.Address.AddressFamily,
             SocketType.Stream,
             ProtocolType.Tcp);
-       
+
         // Send or receive the test messages.
         if (isServer)
         {
-            Socket sender = null;  
+            Socket sender = null;
             s.Bind(endPoint);
             s.Listen(1);
-            while (true) 
+            while (true)
             {
                 sender = s.Accept();
-                // exchange messages with all clients tests 
+                // exchange messages with all clients tests
                 for (int i = 0; i< 4; i++)
                 {
                     ReceiveTest1(sender);
@@ -423,7 +423,7 @@ public class Sync_Send_Receive
                 SendReceiveTest3(s);
                 SendReceiveTest4(s);
             }
-            finally 
+            finally
             {
                 s.Close();
             }

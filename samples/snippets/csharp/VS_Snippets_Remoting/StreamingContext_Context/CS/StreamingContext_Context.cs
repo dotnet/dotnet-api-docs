@@ -30,7 +30,7 @@ namespace StreamingContextExample
         {
             object myObject = DateTime.Now;
             // Create a StreamingContext that includes a
-            // a DateTime. 
+            // a DateTime.
             StreamingContext sc = new StreamingContext(
                 StreamingContextStates.CrossProcess, myObject);
             BinaryFormatter bf = new BinaryFormatter(null, sc);
@@ -38,9 +38,9 @@ namespace StreamingContextExample
             bf.Serialize(ms, new MyClass());
             ms.Seek(0, SeekOrigin.Begin);
             MyClass f = (MyClass)bf.Deserialize(ms);
-            Console.WriteLine("\t MinValue: {0} \n\t MaxValue: {1}", 
+            Console.WriteLine("\t MinValue: {0} \n\t MaxValue: {1}",
                 f.MinValue , f.MaxValue);
-            Console.WriteLine("StreamingContext.State: {0}", 
+            Console.WriteLine("StreamingContext.State: {0}",
                 sc.State);
 
             DateTime myDateTime = (DateTime)sc.Context;
@@ -83,7 +83,7 @@ namespace StreamingContextExample
         protected MyClass(SerializationInfo si, StreamingContext context)
         {
             minValue_value = (int)si.GetValue("minValue", typeof(int));
-            maxValue_value = (int)si.GetValue("maxValue", typeof(int));            
+            maxValue_value = (int)si.GetValue("maxValue", typeof(int));
         }
     }
 }

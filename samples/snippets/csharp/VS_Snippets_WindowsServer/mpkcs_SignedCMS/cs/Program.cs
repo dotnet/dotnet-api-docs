@@ -19,11 +19,11 @@ static void Test_CheckSignature1(byte[] encodedMessage)
 // Create a new, nondetached SignedCms message.
 SignedCms signedCms = new SignedCms();
 
-// encodedMessage is the encoded message received from 
+// encodedMessage is the encoded message received from
 // the sender.
 signedCms.Decode(encodedMessage);
 
-// Verify the signature without validating the 
+// Verify the signature without validating the
 // certificate.
 signedCms.CheckSignature(true);
 //</Snippet1>
@@ -32,18 +32,18 @@ signedCms.CheckSignature(true);
 static void Test_CheckSignature2(byte[] innerContent, byte[] encodedMessage)
 {
 //<Snippet2>
-// Create a ContentInfo object from the inner content obtained 
+// Create a ContentInfo object from the inner content obtained
 // independently from encodedMessage.
 ContentInfo contentInfo = new ContentInfo(innerContent);
 
 // Create a new, detached SignedCms message.
 SignedCms signedCms = new SignedCms(contentInfo, true);
 
-// encodedMessage is the encoded message received from 
+// encodedMessage is the encoded message received from
 // the sender.
 signedCms.Decode(encodedMessage);
 
-// Verify the signature without validating the 
+// Verify the signature without validating the
 // certificate.
 signedCms.CheckSignature(true);
 //</Snippet2>

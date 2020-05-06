@@ -1,8 +1,8 @@
 ﻿// System.Web.Services.Description.Read(TextReader)
-/* 
-   The following example demonstrates the 'Read(TextReader)' method  of 
-   'ServiceDescription' class.A ServiceDescription instance is 
-   obtained from existing Wsdl.Name property of Bindings in the 
+/*
+   The following example demonstrates the 'Read(TextReader)' method  of
+   'ServiceDescription' class.A ServiceDescription instance is
+   obtained from existing Wsdl.Name property of Bindings in the
    ServiceDescription is displayed to console.
    */
 
@@ -20,7 +20,7 @@ class MyService
    {
 // <Snippet1>
       ServiceDescription myDescription = new ServiceDescription();
-      
+
       // Create a StreamReader to read a WSDL file.
       TextReader myTextReader = new StreamReader("MyWsdl.wsdl");
       myDescription = ServiceDescription.Read(myTextReader);

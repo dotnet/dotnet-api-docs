@@ -7,35 +7,35 @@ class CloneCompareDemo
     // Copy, clone, and duplicate an OperatingSystem object.
     static void CopyOperatingSystemObjects( )
     {
-        // The Version object does not need to correspond to an 
+        // The Version object does not need to correspond to an
         // actual OS version.
         Version verMMBVer = new Version( 5, 6, 7, 8 );
-            
-        OperatingSystem opCreate1 = new 
+
+        OperatingSystem opCreate1 = new
             OperatingSystem( PlatformID.Win32NT, verMMBVer );
-            
-        // Create another OperatingSystem object with the same 
+
+        // Create another OperatingSystem object with the same
         // parameters as opCreate1.
-        OperatingSystem opCreate2 = new 
+        OperatingSystem opCreate2 = new
             OperatingSystem( PlatformID.Win32NT, verMMBVer );
-            
+
         // Clone opCreate1 and copy the opCreate1 reference.
-        OperatingSystem opClone = 
+        OperatingSystem opClone =
             (OperatingSystem)opCreate1.Clone( );
         OperatingSystem opCopy = opCreate1;
 
         // Compare the various objects for equality.
-        Console.WriteLine( "{0,-50}{1}", 
-            "Is the second object the same as the original?", 
+        Console.WriteLine( "{0,-50}{1}",
+            "Is the second object the same as the original?",
             opCreate1.Equals( opCreate2 ) );
-        Console.WriteLine( "{0,-50}{1}", 
-            "Is the object clone the same as the original?", 
+        Console.WriteLine( "{0,-50}{1}",
+            "Is the object clone the same as the original?",
             opCreate1.Equals( opClone ) );
-        Console.WriteLine( "{0,-50}{1}", 
-            "Is the copied object the same as the original?", 
+        Console.WriteLine( "{0,-50}{1}",
+            "Is the copied object the same as the original?",
             opCreate1.Equals( opCopy ) );
-    } 
-        
+    }
+
     static void Main( )
     {
         Console.WriteLine(
@@ -50,10 +50,10 @@ class CloneCompareDemo
             "using the Equals( ) method. Equals( ) \n" +
             "returns true only when both " +
             "references refer to the same object.\n" );
-            
+
         CopyOperatingSystemObjects( );
-    } 
-} 
+    }
+}
 
 /*
 This example of OperatingSystem.Clone( ) generates the following output.

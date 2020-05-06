@@ -11,11 +11,11 @@ public class Demo2
     {
         //<snippet21>
         // Create a SoapNegativeInteger object.
-        SoapNegativeInteger xsdInteger = 
+        SoapNegativeInteger xsdInteger =
             new SoapNegativeInteger();
-        xsdInteger.Value = -14; 
+        xsdInteger.Value = -14;
         Console.WriteLine(
-            "The value of the SoapNegativeInteger object is {0}.", 
+            "The value of the SoapNegativeInteger object is {0}.",
             xsdInteger.ToString());
         //</snippet21>
     }
@@ -24,11 +24,11 @@ public class Demo2
     {
         //<snippet22>
         // Create a SoapNegativeInteger object.
-        decimal decimalValue = -14; 
-        SoapNegativeInteger xsdInteger = 
+        decimal decimalValue = -14;
+        SoapNegativeInteger xsdInteger =
             new SoapNegativeInteger(decimalValue);
         Console.WriteLine(
-            "The value of the SoapNegativeInteger object is {0}.", 
+            "The value of the SoapNegativeInteger object is {0}.",
             xsdInteger.ToString());
         //</snippet22>
     }

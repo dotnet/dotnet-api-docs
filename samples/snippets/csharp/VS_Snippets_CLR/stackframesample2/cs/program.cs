@@ -52,7 +52,7 @@ namespace StackFrameExample
             }
             catch (Exception e)
             {
-                StackTrace st = new StackTrace();              
+                StackTrace st = new StackTrace();
                 StackTrace st1 = new StackTrace(new StackFrame(2,true));
                 Console.WriteLine(" Stack trace for Method2: {0}",
                    st1.ToString());

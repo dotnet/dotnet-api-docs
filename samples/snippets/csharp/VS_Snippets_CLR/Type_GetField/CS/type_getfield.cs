@@ -12,7 +12,7 @@ public class MyFieldClassA
 public class MyFieldClassB
 {
     private string field = "B Field";
-    public string Field 
+    public string Field
     {
         get
         {
@@ -39,12 +39,12 @@ public class MyFieldInfoClass
         FieldInfo myFieldInfo = myTypeA.GetField("Field");
 
         Type myTypeB = typeof(MyFieldClassB);
-        FieldInfo myFieldInfo1 = myTypeB.GetField("field", 
+        FieldInfo myFieldInfo1 = myTypeB.GetField("field",
             BindingFlags.NonPublic | BindingFlags.Instance);
 
-        Console.WriteLine("The value of the public field is: '{0}'", 
+        Console.WriteLine("The value of the public field is: '{0}'",
             myFieldInfo.GetValue(myFieldObjectA));
-        Console.WriteLine("The value of the private field is: '{0}'", 
+        Console.WriteLine("The value of the private field is: '{0}'",
             myFieldInfo1.GetValue(myFieldObjectB));
     }
 }

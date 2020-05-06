@@ -10,7 +10,7 @@ public class Example
       PerformBigIntegerOperation();
       PerformWithIntermediary();
    }
-   
+
    private static void ShowSimpleAdd()
    {
       // <Snippet1>
@@ -19,7 +19,7 @@ public class Example
       Console.WriteLine(number);
       // </Snippet1>
    }
-   
+
    private static void PerformBigIntegerOperation()
    {
       Stopwatch sw = Stopwatch.StartNew();
@@ -38,9 +38,9 @@ public class Example
       // </Snippet12>
 
       sw.Stop();
-      Console.WriteLine("Incrementing a BigInteger: " + sw.Elapsed.ToString()); 
+      Console.WriteLine("Incrementing a BigInteger: " + sw.Elapsed.ToString());
    }
-   
+
    private static void PerformWithIntermediary()
    {
       Stopwatch sw = Stopwatch.StartNew();
@@ -61,9 +61,9 @@ public class Example
       // </Snippet3>
 
       sw.Stop();
-      Console.WriteLine("Incrementing a BigInteger: " + sw.Elapsed.ToString()); 
+      Console.WriteLine("Incrementing a BigInteger: " + sw.Elapsed.ToString());
    }
-   
+
    private static bool SomeOperationSucceeds()
    {
       return true;

@@ -4,7 +4,7 @@ using System;
 using System.Reflection;
 using System.IO;
 
-[DefaultMemberAttribute("Age")]   
+[DefaultMemberAttribute("Age")]
 public class MyClass
 {
     public void Name(String s) {}
@@ -30,7 +30,7 @@ public class MyClass
             }
             else
             {
-                Console.WriteLine("No default members are available."); 
+                Console.WriteLine("No default members are available.");
             }
         }
         catch(InvalidOperationException e)

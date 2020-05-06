@@ -12,7 +12,7 @@ public class Example : IComparer
       NumberFormatInfo nfi2 = CultureInfo.CurrentCulture.NumberFormat;
       Console.WriteLine("Objects equal: {0}", nfi1.Equals(nfi2));
       Console.WriteLine("Equal references: {0}\n", Object.ReferenceEquals(nfi1, nfi2));
-     
+
       PropertyInfo[] props = nfi1.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
       Array.Sort(props, new Example());
       Console.WriteLine("Properties of NumberFormat.CurrentInfo object:");
@@ -29,27 +29,27 @@ public class Example : IComparer
          }
          else {
             Console.WriteLine("   {0}: {1}", prop.Name, prop.GetValue(nfi1));
-        }   
-      }      
+        }
+      }
    }
-   
-   public int Compare(Object x, Object y) 
+
+   public int Compare(Object x, Object y)
    {
       if (x == null && y == null) return 0;
-      
+
       PropertyInfo px = x as PropertyInfo;
       if (px == null) return -1;
-      
+
       PropertyInfo py = y as PropertyInfo;
       if (py == null) return 1;
-      
+
       return String.Compare(px.Name, py.Name);
    }
 }
 // The example displays the following output:
 //       Objects equal: True
 //       Equal references: True
-//       
+//
 //       Properties of NumberFormat.CurrentInfo object:
 //          CurrencyDecimalDigits: 2
 //          CurrencyDecimalSeparator: .

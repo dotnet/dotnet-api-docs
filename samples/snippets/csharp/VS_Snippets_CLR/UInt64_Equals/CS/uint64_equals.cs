@@ -1,4 +1,4 @@
-﻿// <Snippet1>           
+﻿// <Snippet1>
 using System;
 
 class Example
@@ -23,4 +23,4 @@ class Example
 //       value1:   Type: UInt64   Value: 50
 //       value2:   Type: UInt64   Value: 50
 //       value1 and value2 are equal: True
-// </Snippet1>            
+// </Snippet1>

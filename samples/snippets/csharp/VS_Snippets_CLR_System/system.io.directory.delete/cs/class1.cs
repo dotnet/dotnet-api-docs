@@ -12,7 +12,7 @@ namespace ConsoleApplication
 
             try
             {
-                Directory.CreateDirectory(subPath);   
+                Directory.CreateDirectory(subPath);
                 Directory.Delete(subPath);
 
                 bool directoryExists = Directory.Exists(@"C:\NewDirectory");

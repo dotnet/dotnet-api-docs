@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 Exception LastError;
 String ErrMessage;
- 
+
 LastError = Server.GetLastError();
 
 if (LastError != null)
@@ -18,7 +18,7 @@ else
    ErrMessage = "No Errors";
 
 Response.Write("Last Error = " + ErrMessage);
-   
+
 // </Snippet1>
  }
 }

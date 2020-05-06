@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 class MethodBodyDemo {
-// This class will demonstrate how to create a method body using 
+// This class will demonstrate how to create a method body using
 // the MethodBuilder.CreateMethodBody(byte[], int) method.
 
    public static Type BuildDynType() {
-    
+
   	Type addType = null;
 
     	AppDomain currentDom = Thread.GetDomain();
@@ -26,14 +26,14 @@ class MethodBodyDemo {
         // within it.  The type Point will be reflected into this module.
 
 	ModuleBuilder myModuleBldr = myAsmBldr.DefineDynamicModule("MyModule");
-      
+
 	TypeBuilder myTypeBldr =  myModuleBldr.DefineType("Adder");
 
         MethodBuilder myMthdBldr = myTypeBldr.DefineMethod("DoAdd",
 							    MethodAttributes.Public |
 							    MethodAttributes.Static,
 							    typeof(int),
-							    new Type[] 
+							    new Type[]
 							    {typeof(int), typeof(int)});
         // Build the array of Bytes holding the MSIL instructions.
 
@@ -53,15 +53,15 @@ class MethodBodyDemo {
 
    public static void Main() {
 
-	Type myType = BuildDynType(); 
+	Type myType = BuildDynType();
         Console.WriteLine("---");
-	Console.Write("Enter the first integer to add: "); 
+	Console.Write("Enter the first integer to add: ");
         int aVal = Convert.ToInt32(Console.ReadLine());
-     
+
      	Console.Write("Enter the second integer to add: ");
      	int bVal = Convert.ToInt32(Console.ReadLine());
-   
-     	object adderInst = Activator.CreateInstance(myType, new object[0]); 
+
+     	object adderInst = Activator.CreateInstance(myType, new object[0]);
 
 	Console.WriteLine("The value of adding {0} to {1} is: {2}.",
 			   aVal, bVal,	
@@ -69,7 +69,7 @@ class MethodBodyDemo {
 			  		       BindingFlags.InvokeMethod,
 			  		       null,
 			  		       adderInst,
-			  		       new object[] {aVal, bVal})); 
+			  		       new object[] {aVal, bVal}));
    }
 }
 

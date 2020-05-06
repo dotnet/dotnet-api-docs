@@ -4,14 +4,14 @@ using System;
 public class IdInfo
 {
     public int IdNumber;
-    
+
     public IdInfo(int IdNumber)
     {
         this.IdNumber = IdNumber;
     }
 }
 
-public class Person 
+public class Person
 {
     public int Age;
     public string Name;
@@ -50,7 +50,7 @@ public class Example
         DisplayValues(p1);
         Console.WriteLine("   p2 instance values:");
         DisplayValues(p2);
-        
+
         // Change the value of p1 properties and display the values of p1 and p2.
         p1.Age = 32;
         p1.Name = "Frank";
@@ -88,7 +88,7 @@ public class Example
 //          p2 instance values:
 //             Name: Sam, Age: 42
 //             Value: 6565
-//       
+//
 //       Values of p1 and p2 after changes to p1:
 //          p1 instance values:
 //             Name: Frank, Age: 32
@@ -96,7 +96,7 @@ public class Example
 //          p2 instance values:
 //             Name: Sam, Age: 42
 //             Value: 7878
-//       
+//
 //       Values of p1 and p3 after changes to p1:
 //          p1 instance values:
 //             Name: George, Age: 39

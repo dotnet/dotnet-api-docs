@@ -21,11 +21,11 @@ public class StringParsing
       bool result = Int16.TryParse(value, out number);
       if (result)
       {
-         Console.WriteLine("Converted '{0}' to {1}.", value, number);         
+         Console.WriteLine("Converted '{0}' to {1}.", value, number);
       }
       else
       {
-         if (value == null) value = ""; 
+         if (value == null) value = "";
          Console.WriteLine("Attempted conversion of '{0}' failed.", value);
       }
    }

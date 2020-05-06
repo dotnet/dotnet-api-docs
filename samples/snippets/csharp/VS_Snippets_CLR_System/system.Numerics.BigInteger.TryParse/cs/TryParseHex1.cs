@@ -7,11 +7,11 @@ public class Example
 {
    public static void Main()
    {
-      string[] hexStrings = { "80", "E293", "F9A2FF", "FFFFFFFF", 
-                              "080", "0E293", "0F9A2FF", "0FFFFFFFF",  
+      string[] hexStrings = { "80", "E293", "F9A2FF", "FFFFFFFF",
+                              "080", "0E293", "0F9A2FF", "0FFFFFFFF",
                               "0080", "00E293", "00F9A2FF", "00FFFFFFFF" };
       BigInteger number = BigInteger.Zero;
-                              
+
       foreach (string hexString in hexStrings)
       {
          if (BigInteger.TryParse(hexString, NumberStyles.AllowHexSpecifier,

@@ -3,12 +3,12 @@
 /*
   This program demonstrates GetMembers() method of System.Type Class.
   Get the members (properties, methods, fields, events, and so on)
-  of the class 'MyClass' and displays the same to the console.     
+  of the class 'MyClass' and displays the same to the console.
 */
 
 using System;
 using System.Reflection;
-using System.Security; 
+using System.Security;
 
 // <Snippet1>
 class MyClass
@@ -31,15 +31,15 @@ class Type_GetMembers
       try
       {
          MyClass myObject = new MyClass();
-         MemberInfo[] myMemberInfo; 
+         MemberInfo[] myMemberInfo;
 
          // Get the type of 'MyClass'.
-         Type myType = myObject.GetType(); 
-        
-         // Get the information related to all public member's of 'MyClass'. 
+         Type myType = myObject.GetType();
+
+         // Get the information related to all public member's of 'MyClass'.
          myMemberInfo = myType.GetMembers();
-    
-         Console.WriteLine( "\nThe members of class '{0}' are :\n", myType); 
+
+         Console.WriteLine( "\nThe members of class '{0}' are :\n", myType);
          for (int i =0 ; i < myMemberInfo.Length ; i++)
          {
             // Display name and type of the concerned member.
@@ -48,7 +48,7 @@ class Type_GetMembers
       }
       catch(SecurityException e)
       {
-         Console.WriteLine("Exception : " + e.Message ); 
+         Console.WriteLine("Exception : " + e.Message );
       }
    }
 }

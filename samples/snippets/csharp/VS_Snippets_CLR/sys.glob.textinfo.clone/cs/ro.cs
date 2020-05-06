@@ -5,11 +5,11 @@
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
-// Get the TextInfo of a predefined culture that ships with 
+// Get the TextInfo of a predefined culture that ships with
 // the .NET Framework.
     CultureInfo ci = new CultureInfo("en-US");
     TextInfo ti1 = ci.TextInfo;
@@ -17,7 +17,7 @@ class Sample
 // Display whether the TextInfo is read-only or not.
     DisplayReadOnly("1) The original TextInfo object", ti1);
     Console.WriteLine();
-   
+
 // Create a clone of the original TextInfo and cast the clone to a TextInfo type.
     Console.WriteLine("2a) Create a clone of the original TextInfo object...");
     TextInfo ti2 = (TextInfo)ti1.Clone();
@@ -40,7 +40,7 @@ class Sample
     DisplayReadOnly("3b) The TextInfo clone", ti3);
 
 // Try to set the ListSeparator property of a read-only TextInfo object. Use the
-// IsReadOnly property again to determine whether to attempt the set operation. You 
+// IsReadOnly property again to determine whether to attempt the set operation. You
 // could use a try-catch block instead and catch an InvalidOperationException when
 // the set operation fails, but that programming technique is inefficient.
     Console.WriteLine("3c) Try to set the read-only clone's LineSeparator " +
@@ -60,7 +60,7 @@ class Sample
 
     private static void DisplayReadOnly(string caption, TextInfo ti)
     {
-    Console.WriteLine("{0} is {1}read-only.", 
+    Console.WriteLine("{0} is {1}read-only.",
                       caption, ti.IsReadOnly ? "" : "not ");
     }
 }

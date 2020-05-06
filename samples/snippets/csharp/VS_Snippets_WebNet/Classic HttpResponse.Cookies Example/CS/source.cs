@@ -14,7 +14,7 @@ MyCookie.Value = now.ToString();
 MyCookie.Expires = now.AddHours(1);
 
 Response.Cookies.Add(MyCookie);
-   
+
 // </Snippet1>
  }
 }

@@ -6,11 +6,11 @@ using System.Net;
 using System.Threading;
 
 //This project implements an echo socket server.
-//The socket server requires four command line parameters:  
+//The socket server requires four command line parameters:
 //Usage: AsyncSocketServer.exe <#connections> <Receive Size In Bytes> <address family: ipv4 | ipv6> <Local Port Number>
 
 //# Connections: The maximum number of connections the server will accept simultaneously.
-//Receive Size in Bytes: The buffer size used by the server for each receive operation.  
+//Receive Size in Bytes: The buffer size used by the server for each receive operation.
 //Address family: The address family of the socket the server will use to listen for incoming connections.  Supported values are ‘ipv4’ and ‘ipv6’.
 //Local Port Number: The port the server will bind to.
 
@@ -18,7 +18,7 @@ using System.Threading;
 
 namespace AsyncSocketSample
 {
-    // This class is designed for use as the object to be assigned to the SocketAsyncEventArgs.UserToken property. 
+    // This class is designed for use as the object to be assigned to the SocketAsyncEventArgs.UserToken property.
     //
     class AsyncUserToken
     {
@@ -39,18 +39,18 @@ namespace AsyncSocketSample
     }
 
     //<Snippet1>
-    // This class creates a single large buffer which can be divided up 
-    // and assigned to SocketAsyncEventArgs objects for use with each 
-    // socket I/O operation.  
-    // This enables bufffers to be easily reused and guards against 
+    // This class creates a single large buffer which can be divided up
+    // and assigned to SocketAsyncEventArgs objects for use with each
+    // socket I/O operation.
+    // This enables bufffers to be easily reused and guards against
     // fragmenting heap memory.
-    // 
+    //
     // The operations exposed on the BufferManager class are not thread safe.
     class BufferManager
     {
         int m_numBytes;                 // the total number of bytes controlled by the buffer pool
         byte[] m_buffer;                // the underlying byte array maintained by the Buffer Manager
-        Stack<int> m_freeIndexPool;     // 
+        Stack<int> m_freeIndexPool;     //
         int m_currentIndex;
         int m_bufferSize;
 
@@ -65,12 +65,12 @@ namespace AsyncSocketSample
         // Allocates buffer space used by the buffer pool
         public void InitBuffer()
         {
-            // create one big large buffer and divide that 
+            // create one big large buffer and divide that
             // out to each SocketAsyncEventArg object
             m_buffer = new byte[m_numBytes];
         }
 
-        // Assigns a buffer from the buffer pool to the 
+        // Assigns a buffer from the buffer pool to the
         // specified SocketAsyncEventArgs object
         //
         // <returns>true if the buffer was successfully set, else false</returns>
@@ -93,7 +93,7 @@ namespace AsyncSocketSample
             return true;
         }
 
-        // Removes the buffer from a SocketAsyncEventArg object.  
+        // Removes the buffer from a SocketAsyncEventArg object.
         // This frees the buffer back to the buffer pool
         public void FreeBuffer(SocketAsyncEventArgs args)
         {
@@ -104,14 +104,14 @@ namespace AsyncSocketSample
     //</Snippet1>
 
     //<Snippet2>
-    // Represents a collection of reusable SocketAsyncEventArgs objects.  
+    // Represents a collection of reusable SocketAsyncEventArgs objects.
     class SocketAsyncEventArgsPool
     {
         Stack<SocketAsyncEventArgs> m_pool;
-        
+
         // Initializes the object pool to the specified size
         //
-        // The "capacity" parameter is the maximum number of 
+        // The "capacity" parameter is the maximum number of
         // SocketAsyncEventArgs objects the pool can hold
         public SocketAsyncEventArgsPool(int capacity)
         {
@@ -120,7 +120,7 @@ namespace AsyncSocketSample
 
         // Add a SocketAsyncEventArg instance to the pool
         //
-        //The "item" parameter is the SocketAsyncEventArgs instance 
+        //The "item" parameter is the SocketAsyncEventArgs instance
         // to add to the pool
         public void Push(SocketAsyncEventArgs item)
         {
@@ -150,26 +150,26 @@ namespace AsyncSocketSample
     //</Snippet2>
 
     //<Snippet3>
-    // Implements the connection logic for the socket server.  
-    // After accepting a connection, all data read from the client 
-    // is sent back to the client. The read and echo back to the client pattern 
+    // Implements the connection logic for the socket server.
+    // After accepting a connection, all data read from the client
+    // is sent back to the client. The read and echo back to the client pattern
     // is continued until the client disconnects.
     class Server
     {
-        private int m_numConnections;   // the maximum number of connections the sample is designed to handle simultaneously 
-        private int m_receiveBufferSize;// buffer size to use for each socket I/O operation 
+        private int m_numConnections;   // the maximum number of connections the sample is designed to handle simultaneously
+        private int m_receiveBufferSize;// buffer size to use for each socket I/O operation
         BufferManager m_bufferManager;  // represents a large reusable set of buffers for all socket operations
         const int opsToPreAlloc = 2;    // read, write (don't alloc buffer space for accepts)
         Socket listenSocket;            // the socket used to listen for incoming connection requests
         // pool of reusable SocketAsyncEventArgs objects for write, read and accept socket operations
         SocketAsyncEventArgsPool m_readWritePool;
         int m_totalBytesRead;           // counter of the total # bytes received by the server
-        int m_numConnectedSockets;      // the total number of clients connected to the server 
+        int m_numConnectedSockets;      // the total number of clients connected to the server
         Semaphore m_maxNumberAcceptedClients;
 
-        // Create an uninitialized server instance.  
+        // Create an uninitialized server instance.
         // To start the server listening for connection requests
-        // call the Init method followed by Start method 
+        // call the Init method followed by Start method
         //
         // <param name="numConnections">the maximum number of connections the sample is designed to handle simultaneously</param>
         // <param name="receiveBufferSize">buffer size to use for each socket I/O operation</param>
@@ -179,23 +179,23 @@ namespace AsyncSocketSample
             m_numConnectedSockets = 0;
             m_numConnections = numConnections;
             m_receiveBufferSize = receiveBufferSize;
-            // allocate buffers such that the maximum number of sockets can have one outstanding read and 
-            //write posted to the socket simultaneously  
+            // allocate buffers such that the maximum number of sockets can have one outstanding read and
+            //write posted to the socket simultaneously
             m_bufferManager = new BufferManager(receiveBufferSize * numConnections * opsToPreAlloc,
                 receiveBufferSize);
-      
+
             m_readWritePool = new SocketAsyncEventArgsPool(numConnections);
-            m_maxNumberAcceptedClients = new Semaphore(numConnections, numConnections); 
+            m_maxNumberAcceptedClients = new Semaphore(numConnections, numConnections);
         }
 
-        // Initializes the server by preallocating reusable buffers and 
-        // context objects.  These objects do not need to be preallocated 
-        // or reused, but it is done this way to illustrate how the API can 
+        // Initializes the server by preallocating reusable buffers and
+        // context objects.  These objects do not need to be preallocated
+        // or reused, but it is done this way to illustrate how the API can
         // easily be used to create reusable objects to increase server performance.
         //
         public void Init()
         {
-            // Allocates one large byte buffer which all I/O operations use a piece of.  This gaurds 
+            // Allocates one large byte buffer which all I/O operations use a piece of.  This gaurds
             // against memory fragmentation
             m_bufferManager.InitBuffer();
 
@@ -217,10 +217,10 @@ namespace AsyncSocketSample
             }
         }
 
-        // Starts the server such that it is listening for 
-        // incoming connection requests.    
+        // Starts the server such that it is listening for
+        // incoming connection requests.
         //
-        // <param name="localEndPoint">The endpoint which the server will listening 
+        // <param name="localEndPoint">The endpoint which the server will listening
         // for connection requests on</param>
         public void Start(IPEndPoint localEndPoint)
         {
@@ -229,18 +229,18 @@ namespace AsyncSocketSample
             listenSocket.Bind(localEndPoint);
             // start the server with a listen backlog of 100 connections
             listenSocket.Listen(100);
-            
+
             // post accepts on the listening socket
-            StartAccept(null);            
+            StartAccept(null);
 
             //Console.WriteLine("{0} connected sockets with one outstanding receive posted to each....press any key", m_outstandingReadCount);
             Console.WriteLine("Press any key to terminate the server process....");
             Console.ReadKey();
         }
 
-        // Begins an operation to accept a connection request from the client 
+        // Begins an operation to accept a connection request from the client
         //
-        // <param name="acceptEventArg">The context object to use when issuing 
+        // <param name="acceptEventArg">The context object to use when issuing
         // the accept operation on the server's listening socket</param>
         public void StartAccept(SocketAsyncEventArgs acceptEventArg)
         {
@@ -263,7 +263,7 @@ namespace AsyncSocketSample
             }
         }
 
-        // This method is the callback method associated with Socket.AcceptAsync 
+        // This method is the callback method associated with Socket.AcceptAsync
         // operations and is invoked when an accept operation is complete
         //
         void AcceptEventArg_Completed(object sender, SocketAsyncEventArgs e)
@@ -277,7 +277,7 @@ namespace AsyncSocketSample
             Console.WriteLine("Client connection accepted. There are {0} clients connected to the server",
                 m_numConnectedSockets);
 
-            // Get the socket for the accepted client connection and put it into the 
+            // Get the socket for the accepted client connection and put it into the
             //ReadEventArg object user token
             SocketAsyncEventArgs readEventArgs = m_readWritePool.Pop();
             ((AsyncUserToken)readEventArgs.UserToken).Socket = e.AcceptSocket;
@@ -292,7 +292,7 @@ namespace AsyncSocketSample
             StartAccept(e);
         }
 
-        // This method is called whenever a receive or send operation is completed on a socket 
+        // This method is called whenever a receive or send operation is completed on a socket
         //
         // <param name="e">SocketAsyncEventArg associated with the completed receive operation</param>
         void IO_Completed(object sender, SocketAsyncEventArgs e)
@@ -308,11 +308,11 @@ namespace AsyncSocketSample
                     break;
                 default:
                     throw new ArgumentException("The last operation completed on the socket was not a receive or send");
-            }       
+            }
         }
-        
-        // This method is invoked when an asynchronous receive operation completes. 
-        // If the remote host closed the connection, then the socket is closed.  
+
+        // This method is invoked when an asynchronous receive operation completes.
+        // If the remote host closed the connection, then the socket is closed.
         // If data was received then the data is echoed back to the client.
         //
         private void ProcessReceive(SocketAsyncEventArgs e)
@@ -324,7 +324,7 @@ namespace AsyncSocketSample
                 //increment the count of the total bytes receive by the server
                 Interlocked.Add(ref m_totalBytesRead, e.BytesTransferred);
                 Console.WriteLine("The server has read a total of {0} bytes", m_totalBytesRead);
-                
+
                 //echo the data received back to the client
                 e.SetBuffer(e.Offset, e.BytesTransferred);
                 bool willRaiseEvent = token.Socket.SendAsync(e);
@@ -339,8 +339,8 @@ namespace AsyncSocketSample
             }
         }
 
-        // This method is invoked when an asynchronous send operation completes.  
-        // The method issues another receive on the socket to read any additional 
+        // This method is invoked when an asynchronous send operation completes.
+        // The method issues another receive on the socket to read any additional
         // data sent from the client
         //
         // <param name="e"></param>
@@ -378,16 +378,16 @@ namespace AsyncSocketSample
 
             // decrement the counter keeping track of the total number of clients connected to the server
             Interlocked.Decrement(ref m_numConnectedSockets);
-            
+
             // Free the SocketAsyncEventArg so they can be reused by another client
             m_readWritePool.Push(e);
-            
+
             m_maxNumberAcceptedClients.Release();
             Console.WriteLine("A client has been disconnected from the server. There are {0} clients connected to the server", m_numConnectedSockets);
         }
-    }    
+    }
     //</Snippet3>
-    
+
     class Program
     {
         static void Main(string[] args)
@@ -425,7 +425,7 @@ namespace AsyncSocketSample
                     throw new ArgumentException("The port specified must be greater than 0");
                 }
 
-                // This sample supports two address family types: ipv4 and ipv6 
+                // This sample supports two address family types: ipv4 and ipv6
                 if (addressFamily.Equals("ipv4"))
                 {
                     localEndPoint = new IPEndPoint(IPAddress.Any, port);

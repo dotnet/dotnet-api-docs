@@ -7,12 +7,12 @@
 // System.Web.Services.Description.OperationBindingCollection.IndexOf
 // System.Web.Services.Description.OperationBindingCollection.CopyTo
 
-/* 
+/*
    The following example demonstrates the usage of the
    'OperationBindingCollection' class, the 'Item' property and various methods of the
-   class. The input to the program is a WSDL file 'MathService_input_cs.wsdl' without 
+   class. The input to the program is a WSDL file 'MathService_input_cs.wsdl' without
    the add operation binding of SOAP protocol. In this example the WSDL file
-   is modified to insert a new 'OperationBinding' for SOAP. The 
+   is modified to insert a new 'OperationBinding' for SOAP. The
    'OperationBindingCollection' is populated based on WSDL document
    structure defined in WSDL specification. The updated instance is then
    written to 'MathService_new_cs.wsdl'.
@@ -50,22 +50,22 @@ class MyOperationBindingCollectionSample
          addOperationBinding.Output = myOutputBinding;
 
          // Add the extensibility element for the SoapOperationBinding.
-         SoapOperationBinding mySoapOperationBinding = 
+         SoapOperationBinding mySoapOperationBinding =
             new SoapOperationBinding();
          mySoapOperationBinding.Style = SoapBindingStyle.Document;
          mySoapOperationBinding.SoapAction = myTargetNamespace + addOperation;
          addOperationBinding.Extensions.Add(mySoapOperationBinding);
 
          // Get the BindingCollection from the ServiceDescription.
-         BindingCollection myBindingCollection = 
+         BindingCollection myBindingCollection =
             myServiceDescription.Bindings;
 
-         // Get the OperationBindingCollection of SOAP binding from 
+         // Get the OperationBindingCollection of SOAP binding from
          // the BindingCollection.
-         OperationBindingCollection myOperationBindingCollection = 
+         OperationBindingCollection myOperationBindingCollection =
             myBindingCollection[0].Operations;
 
-// <Snippet2> 
+// <Snippet2>
          // Check for the Add OperationBinding in the collection.
          bool contains = myOperationBindingCollection.Contains
             (addOperationBinding);
@@ -83,16 +83,16 @@ class MyOperationBindingCollectionSample
 // <Snippet4>
 // <Snippet5>
          // Get the OperationBinding of the Add operation from the collection.
-         OperationBinding myOperationBinding = 
+         OperationBinding myOperationBinding =
             myOperationBindingCollection[3];
 
-         // Remove the OperationBinding of the Add operation from 
+         // Remove the OperationBinding of the Add operation from
          // the collection.
          myOperationBindingCollection.Remove(myOperationBinding);
          Console.WriteLine("\nRemoved the OperationBinding of the " +
             "Add operation from the collection.");
 // </Snippet5>
-// </Snippet4> 
+// </Snippet4>
 
 // <Snippet6>
 // <Snippet7>
@@ -118,7 +118,7 @@ class MyOperationBindingCollectionSample
          myOperationBindingCollection.CopyTo(operationBindingArray, 0);
          Console.WriteLine("The operations supported by this service " +
             "are :");
-         foreach(OperationBinding myOperationBinding1 in 
+         foreach(OperationBinding myOperationBinding1 in
             operationBindingArray)
          {
             Binding myBinding = myOperationBinding1.Binding;

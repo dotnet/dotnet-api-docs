@@ -2,15 +2,15 @@
 using System;
 using System.Management;
 
-// This sample demonstrates invoking 
+// This sample demonstrates invoking
 // a WMI method using parameter objects
-public class InvokeMethod 
-{    
-    public static void Main() 
+public class InvokeMethod
+{
+    public static void Main()
     {
 
         // Get the object on which the method will be invoked
-        ManagementClass processClass = 
+        ManagementClass processClass =
             new ManagementClass("Win32_Process");
 
         // Get an input parameters object for this method
@@ -21,9 +21,9 @@ public class InvokeMethod
         inParams["CommandLine"] = "calc.exe";
 
         // Method Options
-        InvokeMethodOptions methodOptions = new 
+        InvokeMethodOptions methodOptions = new
             InvokeMethodOptions();
-        methodOptions.Timeout = 
+        methodOptions.Timeout =
             System.TimeSpan.MaxValue;
 
         // Execute the method
@@ -38,7 +38,7 @@ public class InvokeMethod
         Console.WriteLine(
             "Creation of calculator process returned: "
             + outParams["returnValue"]);
-        Console.WriteLine("Process ID: " 
+        Console.WriteLine("Process ID: "
             + outParams["processId"]);
     }
 }

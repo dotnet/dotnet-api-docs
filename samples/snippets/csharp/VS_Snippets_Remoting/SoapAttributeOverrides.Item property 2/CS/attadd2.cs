@@ -10,7 +10,7 @@ public class Group
 {
    public string GroupName;
 }
-  
+
 public class Run
 {
    public static void Main()
@@ -41,23 +41,23 @@ public class Run
 
    private XmlSerializer CreateOverrideSerializer()
    {
-      SoapAttributeOverrides mySoapAttributeOverrides = 
+      SoapAttributeOverrides mySoapAttributeOverrides =
       new SoapAttributeOverrides();
       SoapAttributes mySoapAttributes = new SoapAttributes();
 
       SoapTypeAttribute mySoapType = new SoapTypeAttribute();
       mySoapType.TypeName= "Team";
       mySoapAttributes.SoapType = mySoapType;
-      // Add the SoapAttributes to the 
+      // Add the SoapAttributes to the
       // mySoapAttributeOverridesrides object.
       mySoapAttributeOverrides.Add(typeof(Group), mySoapAttributes);
       // Get the SoapAttributes with the Item property.
-      SoapAttributes thisSoapAtts = 
+      SoapAttributes thisSoapAtts =
       mySoapAttributeOverrides[typeof(Group)];
-      Console.WriteLine("New serialized type name: " + 
+      Console.WriteLine("New serialized type name: " +
       thisSoapAtts.SoapType.TypeName);
 
-      // Create an XmlTypeMapping that is used to create an instance 
+      // Create an XmlTypeMapping that is used to create an instance
       // of the XmlSerializer. Then return the XmlSerializer object.
       XmlTypeMapping myMapping = (new SoapReflectionImporter(
       mySoapAttributeOverrides)).ImportTypeMapping(typeof(Group));

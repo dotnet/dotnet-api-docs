@@ -4,10 +4,10 @@
 // System.Web.Description.ServiceDescription.Write(XmlWriter)
 
 /*
-   The following program demonstrates the properties of ServiceDescription and 
+   The following program demonstrates the properties of ServiceDescription and
    ServiceCollection class.An XmlTextReader with the required url is created.
    An existing WSDL document is read.
-   An existing service named "MathService" is removed from the collection and 
+   An existing service named "MathService" is removed from the collection and
    A new Service object is constructed and added at index 1 of the Collection of Services.
    A new WSDL file is created as output.
 */
@@ -28,7 +28,7 @@ class MyClass
 // <Snippet2>
       // Create a new XmlTextWriter with specified URL.
       XmlTextReader myXmlReader = new XmlTextReader("All_CS.wsdl");
-      ServiceDescription myServiceDescription = 
+      ServiceDescription myServiceDescription =
          ServiceDescription.Read(myXmlReader);
       myServiceDescription.TargetNamespace = "http://tempuri.org/";
 
@@ -43,7 +43,7 @@ class MyClass
 // <Snippet3>
       Service myService = new Service();
       myService.Name = "MathService";
-      XmlQualifiedName myXmlQualifiedName = 
+      XmlQualifiedName myXmlQualifiedName =
          new XmlQualifiedName("s0:MathServiceSoap");
 
       // Build a new Port for SOAP.
@@ -56,13 +56,13 @@ class MyClass
       mySoapPort.Extensions.Add(mySoapAddressBinding);
 
       // Build a new Port for HTTP-GET.
-      XmlQualifiedName myXmlQualifiedName2 = 
+      XmlQualifiedName myXmlQualifiedName2 =
          new XmlQualifiedName("s0:MathServiceHttpGet");
       Port myHttpGetPort = new Port();
       myHttpGetPort.Name = "MathServiceHttpGet";
       myHttpGetPort.Binding = myXmlQualifiedName2;
       HttpAddressBinding myHttpAddressBinding = new HttpAddressBinding();
-      myHttpAddressBinding.Location = 
+      myHttpAddressBinding.Location =
          "http://localhost/ServiceDescription_Read/AddService_CS.asmx";
       myHttpGetPort.Extensions.Add(myHttpAddressBinding);
 
@@ -77,7 +77,7 @@ class MyClass
 // <Snippet4>
       // Create a new XmlTextWriter object.
      XmlTextWriter myWriter = new XmlTextWriter("output.wsdl",Encoding.UTF8);
-     myWriter.Formatting = Formatting.Indented; 
+     myWriter.Formatting = Formatting.Indented;
 
      // Write the WSDL.
      myServiceDescription.Write(myWriter);

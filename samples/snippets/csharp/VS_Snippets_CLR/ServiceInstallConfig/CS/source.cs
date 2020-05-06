@@ -334,19 +334,19 @@ namespace ServiceChangeSample
             this.query_button.Name = "query_button";
             this.query_button.Size = new System.Drawing.Size(124, 30);
             this.query_button.Text = "Query Service";
-            this.query_button.Click += new System.EventHandler(this.query_button_Click);            
-            
+            this.query_button.Click += new System.EventHandler(this.query_button_Click);
+
             // Set properties for startMode_button.
             this.startMode_button.Enabled = false;
             this.startMode_button.Location = new System.Drawing.Point(264, 16);
             this.startMode_button.Name = "startMode_button";
-            this.startMode_button.Size = new System.Drawing.Size(124, 30);            
+            this.startMode_button.Size = new System.Drawing.Size(124, 30);
             this.startMode_button.Text = "Change Service Start Mode";
-            this.startMode_button.Click += new System.EventHandler(this.startMode_button_Click);            
+            this.startMode_button.Click += new System.EventHandler(this.startMode_button_Click);
             // Set properties for modeLabel
             this.modeLabel.Location = new System.Drawing.Point(395, 20);
             this.modeLabel.Size = new Size(180, 22);
-            this.modeLabel.Text = "Select a service mode:"; 
+            this.modeLabel.Text = "Select a service mode:";
             this.modeLabel.Visible = false;
             // Set properties for modeComboBox
             this.modeComboBox.Location = new System.Drawing.Point(560, 16);
@@ -354,7 +354,7 @@ namespace ServiceChangeSample
             this.modeComboBox.Name = "modeComboBox";
             this.modeComboBox.Items.AddRange( new string[] { "Automatic", "Manual", "Disabled" } );
             this.modeComboBox.Anchor = System.Windows.Forms.AnchorStyles.Left
-                | System.Windows.Forms.AnchorStyles.Right 
+                | System.Windows.Forms.AnchorStyles.Right
                 | System.Windows.Forms.AnchorStyles.Top;
             this.modeComboBox.SelectedIndex = 0;
             this.modeComboBox.Visible = false;
@@ -363,27 +363,27 @@ namespace ServiceChangeSample
             this.startName_button.Enabled = false;
             this.startName_button.Location = new System.Drawing.Point(136, 16);
             this.startName_button.Name = "startName_button";
-            this.startName_button.Size = new System.Drawing.Size(124, 30);            
+            this.startName_button.Size = new System.Drawing.Size(124, 30);
             this.startName_button.Text = "Change Service Account";
-            this.startName_button.Click += new System.EventHandler(this.startName_button_Click);            
+            this.startName_button.Click += new System.EventHandler(this.startName_button_Click);
 
-            // Set properties for textBox.        
+            // Set properties for textBox.
             this.textBox.Anchor = (System.Windows.Forms.AnchorStyles.Top
                 | System.Windows.Forms.AnchorStyles.Bottom
-                | System.Windows.Forms.AnchorStyles.Left 
+                | System.Windows.Forms.AnchorStyles.Left
                 | System.Windows.Forms.AnchorStyles.Right);
             this.textBox.Location = new System.Drawing.Point(8, 48);
             this.textBox.Multiline = true;
             this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(744, 280);            
-            this.textBox.Text = "";            
-            
+            this.textBox.Size = new System.Drawing.Size(744, 280);
+            this.textBox.Text = "";
+
             // Set properties for the ServiceSampleForm.
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(768, 340);
             this.MinimumSize = new System.Drawing.Size(750, 340);
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {this.textBox, 
+            this.Controls.AddRange(new System.Windows.Forms.Control[] {this.textBox,
                                     this.query_button, this.startMode_button, this.startName_button,
                                     this.modeComboBox, this.modeLabel });
             this.Name = "ServiceSampleForm";
@@ -398,7 +398,7 @@ namespace ServiceChangeSample
 
         // Define the windows application entry point.
         [STAThread]
-        static void Main() 
+        static void Main()
         {
             Application.Run(new ServiceSampleForm());
         }

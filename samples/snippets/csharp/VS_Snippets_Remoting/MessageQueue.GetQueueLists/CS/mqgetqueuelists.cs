@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example gets lists of queues by a variety
 		// of criteria.
 		//**************************************************
@@ -42,8 +42,8 @@ namespace MyProject
 		public void GetQueuesByCategory()
 		{
 			// Get a list of queues with the specified category.
-			MessageQueue[] QueueList = 
-				MessageQueue.GetPublicQueuesByCategory(new 
+			MessageQueue[] QueueList =
+				MessageQueue.GetPublicQueuesByCategory(new
 				Guid("{00000000-0000-0000-0000-000000000001}"));
 
 			// Send a broadcast message to each queue in the array.
@@ -64,7 +64,7 @@ namespace MyProject
 		public void GetQueuesByLabel()
 		{
 			// Get a list of queues with the specified label.
-			MessageQueue[] QueueList = 
+			MessageQueue[] QueueList =
 				MessageQueue.GetPublicQueuesByLabel("My Label");
 
 			// Send a broadcast message to each queue in the array.
@@ -77,14 +77,14 @@ namespace MyProject
 		}
 
 		//**************************************************
-		// Gets a list of queues on a specified computer. 
+		// Gets a list of queues on a specified computer.
 		// Displays the list on screen.
 		//**************************************************
 		
 		public void GetQueuesByComputer()
 		{
 			// Get a list of queues on the specified computer.
-			MessageQueue[] QueueList = 
+			MessageQueue[] QueueList =
 				MessageQueue.GetPublicQueuesByMachine("MyComputer");
 
 			// Display the paths of the queues in the list.
@@ -103,31 +103,31 @@ namespace MyProject
 		public void GetAllPublicQueues()
 		{
 			// Get a list of public queues.
-			MessageQueue[] QueueList = 
+			MessageQueue[] QueueList =
 				MessageQueue.GetPublicQueues();
 	
 			return;
 		}
 
 		//**************************************************
-		// Gets a list of all public queues that match 
-		// specified criteria. Displays the list on 
+		// Gets a list of all public queues that match
+		// specified criteria. Displays the list on
 		// screen.
 		//**************************************************
 		
 		public void GetPublicQueuesByCriteria()
 		{
 			// Define criteria to filter the queues.
-			MessageQueueCriteria myCriteria = new 
+			MessageQueueCriteria myCriteria = new
 				MessageQueueCriteria();
-			myCriteria.CreatedAfter = DateTime.Now.Subtract(new 
+			myCriteria.CreatedAfter = DateTime.Now.Subtract(new
 				TimeSpan(1,0,0,0));
 			myCriteria.ModifiedBefore = DateTime.Now;
 			myCriteria.MachineName = ".";
 			myCriteria.Label = "My Queue";
 			
 			// Get a list of queues with that criteria.
-			MessageQueue[] QueueList = 
+			MessageQueue[] QueueList =
 				MessageQueue.GetPublicQueues(myCriteria);
 
 			// Display the paths of the queues in the list.
@@ -140,14 +140,14 @@ namespace MyProject
 		}
 
 		//**************************************************
-		// Gets a list of private queues on the local 
+		// Gets a list of private queues on the local
 		// computer. Displays the list on screen.
 		//**************************************************
 		
 		public void GetPrivateQueues()
 		{
 			// Get a list of queues with the specified category.
-			MessageQueue[] QueueList = 
+			MessageQueue[] QueueList =
 				MessageQueue.GetPrivateQueuesByMachine(".");
 
 			// Display the paths of the queues in the list.

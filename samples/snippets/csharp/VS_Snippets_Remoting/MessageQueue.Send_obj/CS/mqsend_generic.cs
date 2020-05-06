@@ -13,7 +13,7 @@ namespace MyProject
 
         //**************************************************
         // Provides an entry point into the application.
-        // 
+        //
         // This example sends a message to a queue.
         //**************************************************
 
@@ -42,7 +42,7 @@ namespace MyProject
             if (myQueue.Transactional == true)
             {
                 // Create a transaction.
-                MessageQueueTransaction myTransaction = new 
+                MessageQueueTransaction myTransaction = new
                     MessageQueueTransaction();
 
                 // Begin the transaction.
