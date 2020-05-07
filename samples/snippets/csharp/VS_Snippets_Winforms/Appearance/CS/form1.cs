@@ -17,7 +17,7 @@ public class Form1 : Form
         Controls.Add(tabControl1);
     }
 
-    static void Main() 
+    static void Main()
     {
         Application.Run(new Form1());
     }

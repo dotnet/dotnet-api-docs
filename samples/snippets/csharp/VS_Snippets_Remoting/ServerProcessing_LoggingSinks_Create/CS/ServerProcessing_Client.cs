@@ -1,4 +1,4 @@
-﻿/* This file is a support file for demonstrating IClientChannelSinkProvider 
+﻿/* This file is a support file for demonstrating IClientChannelSinkProvider
 and ServerProcessing. */
 
 using System;
@@ -8,16 +8,16 @@ using System.Runtime.Remoting.Channels;
 using System.Security.Permissions;
 using MyLogging;
 
-public class MyServerProcessingClient 
+public class MyServerProcessingClient
 {
    [SecurityPermission(SecurityAction.LinkDemand)]
-   public static void Main() 
+   public static void Main()
    {
       IClientChannelSinkProvider mySoapClientFormatterProvider = new SoapClientFormatterSinkProvider();
       IClientChannelSinkProvider myClientProvider = new MyServerProcessingLogClientChannelSinkProviderData();
-      
+
       mySoapClientFormatterProvider.Next = myClientProvider;
-            
+
       TcpChannel channel = new TcpChannel(null, mySoapClientFormatterProvider, null);
 
       ChannelServices.RegisterChannel(channel);
@@ -27,7 +27,7 @@ public class MyServerProcessingClient
 
       MyHelloService myService = new MyHelloService();
 
-      if(myService == null) 
+      if(myService == null)
       {
          Console.WriteLine("Could not locate server.");
          return;

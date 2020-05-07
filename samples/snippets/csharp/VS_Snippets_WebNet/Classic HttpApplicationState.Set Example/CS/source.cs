@@ -10,7 +10,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Application.Set("MyAppVar1", MyNewObjectValue);
-   
+
 // </Snippet1>
  }
 }

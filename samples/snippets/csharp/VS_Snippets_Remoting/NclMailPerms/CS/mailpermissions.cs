@@ -13,7 +13,7 @@ namespace Examples.SmtpExamples.Permissions
 // <snippet1>
     public static SmtpPermission CreateConnectPermission()
     {
-        SmtpPermission connectAccess = new 
+        SmtpPermission connectAccess = new
             SmtpPermission(SmtpAccess.Connect);
         Console.WriteLine("Access? {0}", connectAccess.Access);
         return connectAccess;
@@ -22,9 +22,9 @@ namespace Examples.SmtpExamples.Permissions
 // <snippet2>
     public static SmtpPermission CreateUnrestrictedPermission()
     {
-        SmtpPermission allAccess = new 
+        SmtpPermission allAccess = new
             SmtpPermission(System.Security.Permissions.PermissionState.Unrestricted);
-        Console.WriteLine("Is unrestricted? {0}", 
+        Console.WriteLine("Is unrestricted? {0}",
             allAccess.IsUnrestricted());
         return allAccess;
     }
@@ -40,9 +40,9 @@ namespace Examples.SmtpExamples.Permissions
 // <snippet4>
     public static SmtpPermission CreateUnrestrictedPermission2()
     {
-        SmtpPermission allAccess = new 
+        SmtpPermission allAccess = new
             SmtpPermission(true);
-        Console.WriteLine("Is unrestricted? {0}", 
+        Console.WriteLine("Is unrestricted? {0}",
             allAccess.IsUnrestricted());
         return allAccess;
     }
@@ -58,7 +58,7 @@ namespace Examples.SmtpExamples.Permissions
 // <snippet6>
     public static SmtpPermission IntersectionWithFull(SmtpPermission permission)
     {
-        SmtpPermission allAccess = new 
+        SmtpPermission allAccess = new
             SmtpPermission(System.Security.Permissions.PermissionState.Unrestricted);
         return (SmtpPermission) permission.Intersect(allAccess);
     }
@@ -67,7 +67,7 @@ namespace Examples.SmtpExamples.Permissions
 // <snippet7>
     public static bool CheckSubSet(SmtpPermission permission)
     {
-        SmtpPermission allAccess = new 
+        SmtpPermission allAccess = new
             SmtpPermission(System.Security.Permissions.PermissionState.Unrestricted);
         return permission.IsSubsetOf(allAccess);
     }
@@ -76,7 +76,7 @@ namespace Examples.SmtpExamples.Permissions
 // <snippet8>
     public static SmtpPermission UnionWithFull(SmtpPermission permission)
     {
-        SmtpPermission allAccess = new 
+        SmtpPermission allAccess = new
             SmtpPermission(System.Security.Permissions.PermissionState.Unrestricted);
         return  (SmtpPermission)  permission.Union(allAccess);
     }

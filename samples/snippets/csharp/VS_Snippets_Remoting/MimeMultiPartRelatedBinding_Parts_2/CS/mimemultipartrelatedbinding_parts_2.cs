@@ -17,7 +17,7 @@ namespace MimeContentBinding_work
       static void Main()
       {
 // <Snippet2>
-         ServiceDescription  myServicDescription = 
+         ServiceDescription  myServicDescription =
             ServiceDescription.Read("MimeMultiPartRelatedSample_cs.wsdl");
 
          // Get the binding collection.
@@ -28,26 +28,26 @@ namespace MimeContentBinding_work
             // Get the collection for MimeServiceHttpPost.
             if( myBindingCollection[i].Name == "MimeServiceHttpPost")
             {
-               OperationBindingCollection myOperationBindingCollection = 
+               OperationBindingCollection myOperationBindingCollection =
                   myBindingCollection[i].Operations;
-               OutputBinding myOutputBinding = 
+               OutputBinding myOutputBinding =
                   myOperationBindingCollection[0].Output;
-               ServiceDescriptionFormatExtensionCollection 
-                  myServiceDescriptionFormatExtensionCollection = 
+               ServiceDescriptionFormatExtensionCollection
+                  myServiceDescriptionFormatExtensionCollection =
                   myOutputBinding.Extensions;
-               MimeMultipartRelatedBinding myMimeMultipartRelatedBinding  = 
+               MimeMultipartRelatedBinding myMimeMultipartRelatedBinding  =
                   (MimeMultipartRelatedBinding)
                   myServiceDescriptionFormatExtensionCollection.Find(
                   typeof(MimeMultipartRelatedBinding));
-               MimePartCollection myMimePartCollection = 
+               MimePartCollection myMimePartCollection =
                   myMimeMultipartRelatedBinding.Parts;
                foreach( MimePart myMimePart in myMimePartCollection)
                {
-                  Console.WriteLine("Extension types added to MimePart: " + 
+                  Console.WriteLine("Extension types added to MimePart: " +
                      index ++);
                   Console.WriteLine ("----------------------------");
                   foreach(object myExtension in myMimePart.Extensions)
-                     Console.WriteLine(myExtension.GetType()); 
+                     Console.WriteLine(myExtension.GetType());
                   Console.WriteLine();
                }
                break;

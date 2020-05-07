@@ -1,11 +1,11 @@
-﻿/*  
-   System.Net.HttpWebRequest.SendChunked  
+﻿/*
+   System.Net.HttpWebRequest.SendChunked
    System.Net.HttpWebRequest.TransferEncoding
    This program demonstrates the 'TransferEncoding' and 'SendChunked' properties of the 'HttpWebRequest' class.
    A new 'HttpWebRequest' object is created. The 'SendChunked' property value is set to 'true' and the
-  'TransferEncoding' property is set to "gzip". If 'TransferEncoding' property is set with 'SendChunked' 
+  'TransferEncoding' property is set to "gzip". If 'TransferEncoding' property is set with 'SendChunked'
    property set to 'false' then 'InvalidOperationException' is raised. Data to be posted to the Uri is
-   requested from the user. The HTML contents of the page are displayed to the console after the posted 
+   requested from the user. The HTML contents of the page are displayed to the console after the posted
    data is accepted by the URL
 
 Note: This program requires http://localhost/CodeSnippetTest.asp as command-line parameter.
@@ -22,7 +22,7 @@ class HttpWebRequest_SendChunked
 {
    public static void Main(string[] args)
    {
-      try   
+      try
       {
          if (args.Length < 1)
          {
@@ -31,7 +31,7 @@ class HttpWebRequest_SendChunked
          }
          else
          {
-            GetPage(args[0]); 
+            GetPage(args[0]);
          }
       }
       catch (WebException e)
@@ -44,8 +44,8 @@ class HttpWebRequest_SendChunked
       {
          Console.WriteLine("\nException Caught!");
          Console.WriteLine("Source  :{0}", e.Source);
-         Console.WriteLine("Message :{0}", e.Message); 
-      }        
+         Console.WriteLine("Message :{0}", e.Message);
+      }
    }
    public static void GetPage(String myUri)
    {
@@ -93,7 +93,7 @@ class HttpWebRequest_SendChunked
          // Release the response object resources.
          streamRead.Close();
          streamResponse.Close();
-         myHttpWebResponse.Close(); 
+         myHttpWebResponse.Close();
 // </Snippet2>
 // </Snippet1>
          Console.WriteLine("\nPress 'Enter' Key to Continue.................");
@@ -109,7 +109,7 @@ class HttpWebRequest_SendChunked
       {
          Console.WriteLine("\nException Caught!");
          Console.WriteLine("Source  :{0}", e.Source);
-         Console.WriteLine("Message :{0}", e.Message); 
+         Console.WriteLine("Message :{0}", e.Message);
       }
    }
 }

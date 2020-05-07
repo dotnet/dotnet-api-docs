@@ -5,7 +5,7 @@ public class Example
    public static void Main()
    {
       // <Snippet1>
-      decimal[] decimals = { Decimal.MaxValue, 12.45M, 0M, -19.69M, 
+      decimal[] decimals = { Decimal.MaxValue, 12.45M, 0M, -19.69M,
                              Decimal.MinValue };
       foreach (decimal value in decimals)
          Console.WriteLine($"Abs({value}) = {Math.Abs(value)}");
@@ -16,6 +16,6 @@ public class Example
       //       Abs(0) = 0
       //       Abs(-19.69) = 19.69
       //       Abs(-79228162514264337593543950335) = 79228162514264337593543950335
-      // </Snippet1>         
+      // </Snippet1>
    }
 }

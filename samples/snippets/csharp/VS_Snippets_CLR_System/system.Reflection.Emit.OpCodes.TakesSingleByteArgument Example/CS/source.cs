@@ -12,7 +12,7 @@ public static void Main()
 {
    // We need a blank OpCode object for reference when calling FieldInfo.GetValue().
 
-   OpCode blankOpCode = new OpCode(); 
+   OpCode blankOpCode = new OpCode();
 
    Type myOpCodesType = Type.GetType("System.Reflection.Emit.OpCodes");
    FieldInfo[] listOfOpCodes = myOpCodesType.GetFields();
@@ -26,7 +26,7 @@ public static void Main()
    {
 	object theOpCode = opCodeFI.GetValue(blankOpCode);
 	
-	Console.WriteLine("{0}: {1}", opCodeFI.Name, 
+	Console.WriteLine("{0}: {1}", opCodeFI.Name,
 			  OpCodes.TakesSingleByteArgument((OpCode)theOpCode).ToString());
    }
 }

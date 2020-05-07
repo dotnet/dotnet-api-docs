@@ -7,11 +7,11 @@ public class Example
    public static void Main()
    {
       Complex[] values = { new Complex(2.3, 1.4),
-                           new Complex(-2.3, 1.4), 
+                           new Complex(-2.3, 1.4),
                            new Complex(-2.3, -1.4),
                            new Complex(2.3, -1.4) };
       foreach (Complex value in values)
-         Console.WriteLine("Sin(Asin({0})) = {1}", 
+         Console.WriteLine("Sin(Asin({0})) = {1}",
                             value, Complex.Sin(Complex.Asin(value)));
    }
 }

@@ -11,7 +11,7 @@ class Program
         try
         {
             // LINQ query for all files containing the word 'Europe'.
-            var files = from file in 
+            var files = from file in
                 Directory.EnumerateFiles(@"\\archives1\library\")
                 where file.ToLower().Contains("europe")
                 select file;

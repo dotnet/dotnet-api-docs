@@ -12,8 +12,8 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
-		// This example creates new public and private 
+		//		
+		// This example creates new public and private
 		// queues.
 		//**************************************************
 
@@ -40,7 +40,7 @@ namespace MyProject
 			if (!MessageQueue.Exists(".\\newPublicQueue"))
 			{
 				// Create the queue if it does not exist.
-				MessageQueue myNewPublicQueue = 
+				MessageQueue myNewPublicQueue =
 					MessageQueue.Create(".\\newPublicQueue");
 
 				// Send a message to the queue.
@@ -67,7 +67,7 @@ namespace MyProject
 			if (!MessageQueue.Exists(".\\Private$\\newPrivQueue"))
 			{
 				// Create the queue if it does not exist.
-				MessageQueue myNewPrivateQueue = 
+				MessageQueue myNewPrivateQueue =
 					MessageQueue.Create(".\\Private$\\newPrivQueue");
 
 				// Send a message to the queue.

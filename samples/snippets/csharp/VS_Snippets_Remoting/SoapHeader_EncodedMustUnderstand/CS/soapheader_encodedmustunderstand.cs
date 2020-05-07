@@ -6,7 +6,7 @@
    namely 'WebMethod1' for which the property 'DidUnderstand' is set
    to true and 'WebMethod2' for which the property 'DidUnderstand'
    is set to false. The property 'EncodedMustUnderstand' is set to '1'
-   for the client soapheader. The client calls the method 'WebMethod2' 
+   for the client soapheader. The client calls the method 'WebMethod2'
    whose 'DidUnderstand' property is set to false and hence a 'SoapHeaderException'
    is thrown.
 */
@@ -15,7 +15,7 @@ using System;
 
 public class MySoapHeader_EncodedMustUnderstand
 {
-    public static void Main() 
+    public static void Main()
     {
         try
         {
@@ -27,7 +27,7 @@ public class MySoapHeader_EncodedMustUnderstand
             // Set the EncodedMustUnderstand property to true.
             customHeader.EncodedMustUnderstand = "1";
 
-            WebService_SoapHeader_EncodedMustUnderstand myWebService = 
+            WebService_SoapHeader_EncodedMustUnderstand myWebService =
                 new WebService_SoapHeader_EncodedMustUnderstand();
             myWebService.MyHeaderValue = customHeader;
             string results = myWebService.MyWebMethod1();
@@ -43,7 +43,7 @@ public class MySoapHeader_EncodedMustUnderstand
             }
 // </Snippet1>
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             Console.WriteLine("Exception caught!");
             Console.WriteLine("Source: " + e.Source);

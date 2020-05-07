@@ -7,12 +7,12 @@
 // System.Web.Services.Description.MimeTextMatch.IgnoreCase
 // System.Web.Services.Description.MimeTextBinding.Matches
 
-/* This program demostrates constructor and 'Matches' property 
-   of 'MimeTextBinding' class and 'Name', 'Type', 'Pattern', 
+/* This program demostrates constructor and 'Matches' property
+   of 'MimeTextBinding' class and 'Name', 'Type', 'Pattern',
    'IgnoreCase' properties of 'MimeTextMatch' class.
    It takes 'MimeText_Binding_Match_8_Input_CS.wsdl' as an
-   input file which does not contain 'Binding' object that supports 
-   'HttpPost'. A text pattern ''TITLE&gt;(.*?)&lt;' with text name 
+   input file which does not contain 'Binding' object that supports
+   'HttpPost'. A text pattern ''TITLE&gt;(.*?)&lt;' with text name
    as 'Title' and with type name set, is added to the wsdl file. Finally the
 '   modified ServiceDescription is written to 'MimeText_Binding_Match_8_Output_CS.wsdl'.
 */
@@ -29,7 +29,7 @@ class MyTextBinding
    {
       try
       {
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MimeText_Binding_Match_8_Input_CS.wsdl");
 
          // Create a Binding.
@@ -37,7 +37,7 @@ class MyTextBinding
 
          // Initialize the Name property of the Binding.
          myBinding.Name = "MimeText_Binding_MatchServiceHttpPost";
-         XmlQualifiedName myXmlQualifiedName = 
+         XmlQualifiedName myXmlQualifiedName =
             new XmlQualifiedName("s0:MimeText_Binding_MatchServiceHttpPost");
          myBinding.Type = myXmlQualifiedName;
 
@@ -52,7 +52,7 @@ class MyTextBinding
          OperationBinding myOperationBinding = new OperationBinding();
          myOperationBinding.Name = "AddNumbers";
 
-         HttpOperationBinding myHttpOperationBinding = 
+         HttpOperationBinding myHttpOperationBinding =
             new HttpOperationBinding();
          myHttpOperationBinding.Location="/AddNumbers";
 
@@ -66,7 +66,7 @@ class MyTextBinding
          myInputBinding.Extensions.Add(postMimeContentbinding);
 
          // Add the InputBinding to the OperationBinding.
-         myOperationBinding.Input = myInputBinding;      
+         myOperationBinding.Input = myInputBinding;
 // <Snippet8>
 // <Snippet7>
 // <Snippet6>
@@ -98,7 +98,7 @@ class MyTextBinding
                myOutputBinding.Extensions.Add( myMimeTextBinding );
 
                // Add the OutputBinding to the OperationBinding.
-               myOperationBinding.Output = myOutputBinding; 
+               myOperationBinding.Output = myOutputBinding;
 // </Snippet2>
 // </Snippet3>
 // </Snippet4>
@@ -107,7 +107,7 @@ class MyTextBinding
 // </Snippet7>
 // </Snippet8>
          // Add the OutputBinding to the OperationBinding.
-         myOperationBinding.Output = myOutputBinding; 
+         myOperationBinding.Output = myOutputBinding;
 
          // Add the OperationBinding to the Binding.
          myBinding.Operations.Add(myOperationBinding);

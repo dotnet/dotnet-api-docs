@@ -7,17 +7,17 @@ using System.Security.Principal;
 
 namespace Examples.NegotiateStreamExample
 {
-    public class SynchronousAuthenticatingTcpClient 
+    public class SynchronousAuthenticatingTcpClient
     {
         //<snippet4>
-        public static void Main(String[] args)  
+        public static void Main(String[] args)
         {
                 //<snippet3>
             // Establish the remote endpoint for the socket.
             // For this example, use the local machine.
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[0];
-            // Client and server use port 11000. 
+            // Client and server use port 11000.
             IPEndPoint remoteEP = new IPEndPoint(ipAddress,11000);
             // Create a TCP/IP socket.
            TcpClient client = new TcpClient();
@@ -25,18 +25,18 @@ namespace Examples.NegotiateStreamExample
             client.Connect(remoteEP);
             Console.WriteLine("Client connected to {0}.",
                 remoteEP.ToString());
-            // Ensure the client does not close when there is 
+            // Ensure the client does not close when there is
             // still data to be sent to the server.
             client.LingerState = (new LingerOption(true,0));
             // Request authentication.
             NetworkStream clientStream = client.GetStream();
-            NegotiateStream authStream = new NegotiateStream(clientStream); 
+            NegotiateStream authStream = new NegotiateStream(clientStream);
             // Request authentication for the client only (no mutual authentication).
             // Authenicate using the client's default credetials.
             // Permit the server to impersonate the client to access resources on the server only.
             // Request that data be transmitted using encryption and data signing.
             authStream.AuthenticateAsClient(
-                 (NetworkCredential) CredentialCache.DefaultCredentials, 
+                 (NetworkCredential) CredentialCache.DefaultCredentials,
                  "",
                  ProtectionLevel.EncryptAndSign,
                  TokenImpersonationLevel.Impersonation);
@@ -62,7 +62,7 @@ namespace Examples.NegotiateStreamExample
              Console.WriteLine("Can read: {0}", stream.CanRead);
              Console.WriteLine("Can write: {0}", stream.CanWrite);
              Console.WriteLine("Can seek: {0}", stream.CanSeek);
-             try 
+             try
              {
                  // If the underlying stream supports it, display the length.
                  Console.WriteLine("Length: {0}", stream.Length);
@@ -70,7 +70,7 @@ namespace Examples.NegotiateStreamExample
              {
                      Console.WriteLine("Cannot get the length of the underlying stream.");
              }
-             
+
              if (stream.CanTimeout)
              {
                  Console.WriteLine("Read time-out: {0}", stream.ReadTimeout);

@@ -7,11 +7,11 @@ class Example
     public static void Main()
     {
         Thread t = new Thread(ThreadProc);
-        Console.WriteLine("Before setting apartment state: {0}", 
+        Console.WriteLine("Before setting apartment state: {0}",
             t.GetApartmentState());
 
         t.SetApartmentState(ApartmentState.STA);
-        Console.WriteLine("After setting apartment state: {0}", 
+        Console.WriteLine("After setting apartment state: {0}",
             t.GetApartmentState());
 
         bool result = t.TrySetApartmentState(ApartmentState.MTA);

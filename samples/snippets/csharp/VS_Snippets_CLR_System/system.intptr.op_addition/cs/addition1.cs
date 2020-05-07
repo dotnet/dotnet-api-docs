@@ -15,11 +15,11 @@ public class Example
              {
                 IntPtr newPtr = ptr + ctr * sizeof(Int32);
                 Console.Write("{0}   ", Marshal.ReadInt32(newPtr));
-             } 
+             }
          }
-      }  
+      }
       // The example displays the following output:
-      //       2   4   6   8   10   12   14   16   18   20         
-      // </Snippet1>  
+      //       2   4   6   8   10   12   14   16   18   20
+      // </Snippet1>
    }
 }

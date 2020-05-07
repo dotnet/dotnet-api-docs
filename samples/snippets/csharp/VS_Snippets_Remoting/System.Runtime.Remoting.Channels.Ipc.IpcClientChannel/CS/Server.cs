@@ -6,8 +6,8 @@ public class Server
     public static void Main(string[] args)
     {
         // Create the server channel.
-        IpcChannel serverChannel = 
-            new IpcChannel("localhost:9090"); 
+        IpcChannel serverChannel =
+            new IpcChannel("localhost:9090");
 
         // Register the server channel.
         System.Runtime.Remoting.Channels.ChannelServices.RegisterChannel(
@@ -16,7 +16,7 @@ public class Server
         // Expose an object for remote calls.
         System.Runtime.Remoting.RemotingConfiguration.
             RegisterWellKnownServiceType(
-                typeof(RemoteObject), "RemoteObject.rem", 
+                typeof(RemoteObject), "RemoteObject.rem",
                 System.Runtime.Remoting.WellKnownObjectMode.Singleton);
 
         // Wait for the user prompt.

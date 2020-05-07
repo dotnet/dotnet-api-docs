@@ -14,7 +14,7 @@
    web service method. Whenever this method is invoked on the client
    side all the SOAP message that get transffered both from the client
    and the server(which is hosting the web service) are written into
-   a log file. 
+   a log file.
 */
 
 using System;
@@ -25,7 +25,7 @@ using System.Web.Services;
 	// response for the XML Web service method the SOAP extension is
 	// applied to.
 
-public class TraceExtension : SoapExtension 
+public class TraceExtension : SoapExtension
 {
 	Stream oldStream;
 	Stream newStream;
@@ -43,7 +43,7 @@ public class TraceExtension : SoapExtension
 	// When the SOAP extension is accessed for the first time, the XML Web
 	// service method it is applied to is accessed to store the file
 	// name passed in, using the corresponding SoapExtensionAttribute.	
-	public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute attribute) 
+	public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute attribute)
 	{
 		return ((TraceExtensionAttribute) attribute).Filename;
 	}
@@ -51,16 +51,16 @@ public class TraceExtension : SoapExtension
 	// The SOAP extension was configured to run using a configuration file
 	// instead of an attribute applied to a specific XML Web service
 	// method.
-	public override object GetInitializer(Type WebServiceType) 
+	public override object GetInitializer(Type WebServiceType)
 	{
 		// Return a file name to log the trace information to, based on the
 		// type.
-		return "C:\\" + WebServiceType.FullName + ".log";    
+		return "C:\\" + WebServiceType.FullName + ".log";
 	}
 
 	// Receive the file name stored by GetInitializer and store it in a
 	// member variable for this specific instance.
-	public override void Initialize(object initializer) 
+	public override void Initialize(object initializer)
 	{
 		filename = (string) initializer;
 	}
@@ -68,9 +68,9 @@ public class TraceExtension : SoapExtension
 	//  If the SoapMessageStage is such that the SoapRequest or
 	//  SoapResponse is still in the SOAP format to be sent or received,
 	//  save it out to a file.
-	public override void ProcessMessage(SoapMessage message) 
+	public override void ProcessMessage(SoapMessage message)
 	{
-		switch (message.Stage) 
+		switch (message.Stage)
 		{
 			case SoapMessageStage.BeforeSerialize:
 				break;
@@ -112,7 +112,7 @@ public class TraceExtension : SoapExtension
 
 		string soapString = (message is SoapServerMessage) ?
 			"SoapRequest" : "SoapResponse";
-		w.WriteLine("-----" + soapString + 
+		w.WriteLine("-----" + soapString +
 			" at " + DateTime.Now);
 		w.Flush();
 		newStream.Position = 0;
@@ -121,7 +121,7 @@ public class TraceExtension : SoapExtension
 		newStream.Position = 0;
 	}
 
-	void Copy(Stream from, Stream to) 
+	void Copy(Stream from, Stream to)
 	{
 		TextReader reader = new StreamReader(from);
 		TextWriter writer = new StreamWriter(to);
@@ -131,7 +131,7 @@ public class TraceExtension : SoapExtension
 }
 
 // <Snippet1>
-// A SoapExtensionAttribute that can be associated with an 
+// A SoapExtensionAttribute that can be associated with an
 // XML Web service method.
 [AttributeUsage(AttributeTargets.Method)]
 public class TraceExtensionAttribute : SoapExtensionAttribute
@@ -158,20 +158,20 @@ public class TraceExtensionAttribute : SoapExtensionAttribute
 
 // <Snippet3>
    // User can set priority of the SoapExtension.
-   public override int Priority 
+   public override int Priority
    {
-      get 
+      get
       {
          return myPriority;
       }
-      set 
-      { 
+      set
+      {
          myPriority = value;
       }
    }
 // </Snippet3>
 
-   public string Filename 
+   public string Filename
    {
       get
       {
@@ -186,17 +186,17 @@ public class TraceExtensionAttribute : SoapExtensionAttribute
 // </Snippet1>
 
 [System.Web.Services.WebServiceBindingAttribute(Name="MathSvcSoap", Namespace="http://tempuri.org/")]
-public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol 
-{ 
+public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol
+{
    [System.Diagnostics.DebuggerStepThroughAttribute()]
-   public MathSvc() 
+   public MathSvc()
    {
       this.Url = "http://localhost/MathSvc_SoapExtensionAttribute.asmx";
    }
-   
+
    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/Add", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
    [TraceExtension()]
-   public System.Single Add(System.Single xValue, System.Single yValue) 
+   public System.Single Add(System.Single xValue, System.Single yValue)
    {
       object[] results = this.Invoke("Add", new object[] {
                                              xValue,
@@ -207,14 +207,14 @@ public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol
    public System.IAsyncResult BeginAdd(System.Single xValue,
                                        System.Single yValue,
                                        System.AsyncCallback callback,
-                                       object asyncState) 
+                                       object asyncState)
    {
       return this.BeginInvoke("Add", new object[] {
                                        xValue,
                                        yValue}, callback, asyncState);
    }
 
-   public System.Single EndAdd(System.IAsyncResult asyncResult) 
+   public System.Single EndAdd(System.IAsyncResult asyncResult)
    {
       object[] results = this.EndInvoke(asyncResult);
       return ((System.Single)(results[0]));

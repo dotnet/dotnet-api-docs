@@ -12,7 +12,7 @@ class FStream
         byte[] dataArray = new byte[100000];
         new Random().NextBytes(dataArray);
 
-        using(FileStream  
+        using(FileStream
             fileStream = new FileStream(fileName, FileMode.Create))
         {
             // Write the data to the file, byte by byte.

@@ -2,9 +2,9 @@
 using System;
 using System.Management;
 
-public class EventSample 
+public class EventSample
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
         // Requests all instance creation events,
         // with a specified latency of

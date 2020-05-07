@@ -8,19 +8,19 @@ namespace Contoso.Libraries
    public class Person
    {
       private string _name;
-   
+
       public Person()
       { }
-   
+
       public Person(string name)
       {
          this._name = name;
       }
-   
+
       public string Name
       { get { return this._name; }
         set { this._name = value; } }
-   
+
       public override string ToString()
       {
          return this._name;
@@ -41,7 +41,7 @@ public class Example
       }
       else {
          Console.WriteLine("Unable to instantiate a Person object.");
-      }   
+      }
    }
 }
 // The example displays the following output:

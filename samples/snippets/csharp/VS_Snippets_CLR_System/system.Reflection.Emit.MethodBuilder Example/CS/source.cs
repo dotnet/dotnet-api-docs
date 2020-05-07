@@ -4,36 +4,36 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-class DemoMethodBuilder 
+class DemoMethodBuilder
 {
     public static void AddMethodDynamically (TypeBuilder myTypeBld,
                                              string mthdName,
-                                             Type[] mthdParams, 
+                                             Type[] mthdParams,
                                              Type returnType,
-                                             string mthdAction) 
+                                             string mthdAction)
     {
-    
+
         MethodBuilder myMthdBld = myTypeBld.DefineMethod(
                                              mthdName,
                                              MethodAttributes.Public |
                                              MethodAttributes.Static,
                                              returnType,
-                                             mthdParams);        
+                                             mthdParams);
 
         ILGenerator ILout = myMthdBld.GetILGenerator();
-        
+
         int numParams = mthdParams.Length;
 
-        for (byte x=0; x < numParams; x++) 
+        for (byte x=0; x < numParams; x++)
         {
             ILout.Emit(OpCodes.Ldarg_S, x);
         }
 
-        if (numParams > 1) 
+        if (numParams > 1)
         {
-            for (int y=0; y<(numParams-1); y++) 
+            for (int y=0; y<(numParams-1); y++)
             {
-                switch (mthdAction) 
+                switch (mthdAction)
                 {
                     case "A": ILout.Emit(OpCodes.Add);
                               break;
@@ -52,16 +52,16 @@ class DemoMethodBuilder
         AppDomain myDomain = AppDomain.CurrentDomain;
         AssemblyName asmName = new AssemblyName();
         asmName.Name = "MyDynamicAsm";
-        
+
         AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(
-                                       asmName, 
+                                       asmName,
                                        AssemblyBuilderAccess.RunAndSave);
 
         ModuleBuilder myModule = myAsmBuilder.DefineDynamicModule("MyDynamicAsm",
                                                                   "MyDynamicAsm.dll");
 
         TypeBuilder myTypeBld = myModule.DefineType("MyDynamicType",
-                                                    TypeAttributes.Public);           
+                                                    TypeAttributes.Public);
 
         // Get info from the user to build the method dynamically.
         Console.WriteLine("Let's build a simple method dynamically!");
@@ -71,27 +71,27 @@ class DemoMethodBuilder
         string myMthdAction = Console.ReadLine().ToUpper();
         Console.Write("Lastly, what do you want to name your new dynamic method? ");
         string myMthdName = Console.ReadLine();
-        
-        // Process inputNums into an array and create a corresponding Type array 
+
+        // Process inputNums into an array and create a corresponding Type array
         int index = 0;
         string[] inputNumsList = inputNums.Split();
 
         Type[] myMthdParams = new Type[inputNumsList.Length];
         object[] inputValsList = new object[inputNumsList.Length];
 
-        foreach (string inputNum in inputNumsList) 
+        foreach (string inputNum in inputNumsList)
         {
             inputValsList[index] = (object)Convert.ToInt32(inputNum);
                 myMthdParams[index] = typeof(int);
                 index++;
-        } 
+        }
 
-        // Now, call the method building method with the parameters, passing the 
+        // Now, call the method building method with the parameters, passing the
         // TypeBuilder by reference.
         AddMethodDynamically(myTypeBld,
                              myMthdName,
                              myMthdParams,
-                             typeof(int),        
+                             typeof(int),
                              myMthdAction);
 
         Type myType = myTypeBld.CreateType();
@@ -117,7 +117,7 @@ class DemoMethodBuilder
         myAsmBuilder.Save("MyDynamicAsm.dll");
 
         MethodInfo myMthdInfo = myType.GetMethod(myMthdName);
-        Console.WriteLine("Your Dynamic Method: {0};", myMthdInfo.ToString());    
+        Console.WriteLine("Your Dynamic Method: {0};", myMthdInfo.ToString());
     }
 }
 // </Snippet1>

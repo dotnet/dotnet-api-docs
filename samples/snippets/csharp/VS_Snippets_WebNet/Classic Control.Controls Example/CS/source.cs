@@ -4,7 +4,7 @@ using System.Web.UI;
 
 public class Form1: Control
 {
- 
+
  public void Method()
  {
 // <Snippet1>

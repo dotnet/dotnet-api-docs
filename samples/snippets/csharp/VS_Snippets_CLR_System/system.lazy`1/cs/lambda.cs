@@ -8,7 +8,7 @@ class Program
     static void Main()
     {
         //<SnippetInitWithLambda>
-        lazyLargeObject = new Lazy<LargeObject>(() => 
+        lazyLargeObject = new Lazy<LargeObject>(() =>
         {
             LargeObject large = new LargeObject(Thread.CurrentThread.ManagedThreadId);
             // Perform additional initialization here.
@@ -29,7 +29,7 @@ class Program
             threads[i].Start();
         }
 
-        // Wait for all 3 threads to finish. 
+        // Wait for all 3 threads to finish.
         foreach (Thread t in threads)
         {
             t.Join();
@@ -43,13 +43,13 @@ class Program
     {
         LargeObject large = lazyLargeObject.Value;
 
-        // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the  
+        // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the
         //            object after creation. You must lock the object before accessing it,
         //            unless the type is thread safe. (LargeObject is not thread safe.)
         lock(large)
         {
             large.Data[0] = Thread.CurrentThread.ManagedThreadId;
-            Console.WriteLine("Initialized by thread {0}; last used by thread {1}.", 
+            Console.WriteLine("Initialized by thread {0}; last used by thread {1}.",
                 large.InitializedBy, large.Data[0]);
         }
     }

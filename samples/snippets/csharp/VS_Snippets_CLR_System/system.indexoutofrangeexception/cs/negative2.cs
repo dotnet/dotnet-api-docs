@@ -8,21 +8,21 @@ public class Example
 
    public static void Main()
    {
-      int startValue; 
+      int startValue;
       string[] args = Environment.GetCommandLineArgs();
-      if (args.Length < 2) 
+      if (args.Length < 2)
          startValue = 2;
-      else 
+      else
          if (! Int32.TryParse(args[1], out startValue))
             startValue = 2;
 
       ShowValues(startValue);
    }
-   
+
    private static void ShowValues(int startValue)
-   {   
+   {
       // Create a collection with numeric values.
-      if (numbers.Count == 0)  
+      if (numbers.Count == 0)
          numbers.AddRange( new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22} );
 
       // Get the index of startValue.

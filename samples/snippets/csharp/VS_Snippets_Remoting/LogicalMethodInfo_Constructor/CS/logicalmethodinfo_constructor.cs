@@ -13,7 +13,7 @@
    'ToString()' methods of the 'LogicalMethodInfo' class. This example
    displays the declaring type, parameters, return type of a method
    named 'Add' in the class named 'MyService'.
-   
+
    Note : The 'LogicalMethodInfo' class should only be used with
    'SoapMessage'. 'SoapClientMessage' and 'SoapServerMessage' contain
    a property named 'MethodInfo' which provides for an instance of
@@ -29,7 +29,7 @@ using System.Reflection;
 using System.Security.Permissions;
 using System.Web.Services.Protocols;
 
-public class MyService 
+public class MyService
 {
    public int Add(int xValue, int yValue)
    {
@@ -44,7 +44,7 @@ class LogicalMethodInfo_Constructor
    {
       Type myType = typeof(MyService);
       MethodInfo myMethodInfo = myType.GetMethod("Add");
-      LogicalMethodInfo myLogicalMethodInfo = 
+      LogicalMethodInfo myLogicalMethodInfo =
                   new LogicalMethodInfo(myMethodInfo);
 
       Console.WriteLine("\nPrinting properties of method : {0}\n",
@@ -71,13 +71,13 @@ class LogicalMethodInfo_Constructor
       Console.WriteLine("\nInvoking the method {0}\n",
                               myLogicalMethodInfo.Name);
       Console.WriteLine("\tThe sum of 10 and 10 is : {0}",
-                              myLogicalMethodInfo.Invoke(service, 
+                              myLogicalMethodInfo.Invoke(service,
                                                    new object[] {10, 10}));
    }
-   
+
    static void Main()
    {
       Run();
-   }  
+   }
 }
 // </Snippet1>

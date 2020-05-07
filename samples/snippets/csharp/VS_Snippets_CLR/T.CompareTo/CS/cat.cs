@@ -1,14 +1,14 @@
 ﻿//<snippet1>
-// This example demonstrates the generic and non-generic versions of the 
+// This example demonstrates the generic and non-generic versions of the
 // CompareTo method for several base types.
 // The non-generic version takes a parameter of type Object, while the generic
 // version takes a type-specific parameter, such as Boolean, Int32, or Double.
 
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     string    nl = Environment.NewLine;
     string    msg = "{0}The following is the result of using the generic and non-generic{0}" +
@@ -16,9 +16,9 @@ class Sample
 
     DateTime  now = DateTime.Now;
 // Time span = 11 days, 22 hours, 33 minutes, 44 seconds
-    TimeSpan  tsX = new TimeSpan(11, 22, 33, 44); 
+    TimeSpan  tsX = new TimeSpan(11, 22, 33, 44);
 // Version = 1.2.333.4
-    Version   versX = new Version("1.2.333.4");  
+    Version   versX = new Version("1.2.333.4");
 // Guid = CA761232-ED42-11CE-BACD-00AA0057B223
     Guid      guidX = new Guid("{CA761232-ED42-11CE-BACD-00AA0057B223}");
 
@@ -44,7 +44,7 @@ class Sample
     UInt64   z1 = 11,    z2 = 11;
 //
     Console.WriteLine(msg, nl);
-    try 
+    try
         {
 // The second and third Show method call parameters are automatically boxed because
 // the second and third Show method declaration arguments expect type Object.
@@ -76,13 +76,13 @@ class Sample
         }
     }
 
-    public static void Show(string caption, Object var1, Object var2, 
+    public static void Show(string caption, Object var1, Object var2,
                             int resultGeneric, int resultNonGeneric)
     {
     string relation;
 
     Console.Write(caption);
-    if (resultGeneric == resultNonGeneric) 
+    if (resultGeneric == resultNonGeneric)
         {
         if      (resultGeneric < 0) relation = "less than";
         else if (resultGeneric > 0) relation = "greater than";
@@ -95,7 +95,7 @@ class Sample
 
     else
         {
-        Console.WriteLine("Generic CompareTo = {0}; non-generic CompareTo = {1}", 
+        Console.WriteLine("Generic CompareTo = {0}; non-generic CompareTo = {1}",
                            resultGeneric, resultNonGeneric);
         }
    }

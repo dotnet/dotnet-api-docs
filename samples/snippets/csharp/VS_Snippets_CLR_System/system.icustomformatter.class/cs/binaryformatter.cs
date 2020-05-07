@@ -13,7 +13,7 @@ public class BinaryFormatter : IFormatProvider, ICustomFormatter
          return this;
       else
          return null;
-   }   
+   }
 
    // Format number in binary (B), octal (O), or hexadecimal (H).
    public string Format(string format, object arg, IFormatProvider formatProvider)
@@ -36,13 +36,13 @@ public class BinaryFormatter : IFormatProvider, ICustomFormatter
       }
       else if (arg is byte) {
          bytes = new byte[1] { (byte) arg };
-      }   
+      }
       else if (arg is short) {
          bytes = BitConverter.GetBytes((short) arg);
-      }   
+      }
       else if (arg is int) {
          bytes = BitConverter.GetBytes((int) arg);
-      }   
+      }
       else if (arg is long) {
          bytes = BitConverter.GetBytes((long) arg);
       }
@@ -53,14 +53,14 @@ public class BinaryFormatter : IFormatProvider, ICustomFormatter
          bytes = BitConverter.GetBytes((uint) arg);
       }
       else if (arg is ulong) {
-         bytes = BitConverter.GetBytes((ulong) arg);                  
+         bytes = BitConverter.GetBytes((ulong) arg);
       }
       else if (arg is BigInteger) {
          bytes = ((BigInteger) arg).ToByteArray();
       }
       else {
          try {
-            return HandleOtherFormats(format, arg); 
+            return HandleOtherFormats(format, arg);
          }
          catch (FormatException e) {
             throw new FormatException(String.Format("The format of '{0}' is invalid.", format), e);
@@ -72,7 +72,7 @@ public class BinaryFormatter : IFormatProvider, ICustomFormatter
          // Binary formatting.
          case "B":
             baseNumber = 2;
-            break;        
+            break;
          case "O":
             baseNumber = 8;
             break;
@@ -82,13 +82,13 @@ public class BinaryFormatter : IFormatProvider, ICustomFormatter
          // Handle unsupported format strings.
          default:
          try {
-            return HandleOtherFormats(format, arg); 
+            return HandleOtherFormats(format, arg);
          }
          catch (FormatException e) {
             throw new FormatException(String.Format("The format of '{0}' is invalid.", format), e);
          }
       }
-   
+
       // Return a formatted string.
       string numericString = String.Empty;
       for (int ctr = bytes.GetUpperBound(0); ctr >= bytes.GetLowerBound(0); ctr--)
@@ -99,7 +99,7 @@ public class BinaryFormatter : IFormatProvider, ICustomFormatter
          else if (baseNumber == 8)
             byteString = new String('0', 4 - byteString.Length) + byteString;
          // Base is 16.
-         else     
+         else
             byteString = new String('0', 2 - byteString.Length) + byteString;
 
          numericString +=  byteString + " ";
@@ -110,11 +110,11 @@ public class BinaryFormatter : IFormatProvider, ICustomFormatter
    private string HandleOtherFormats(string format, object arg)
    {
       // <Snippet3>
-      if (arg is IFormattable) 
+      if (arg is IFormattable)
          return ((IFormattable)arg).ToString(format, CultureInfo.CurrentCulture);
       else if (arg != null)
          return arg.ToString();
-      // </Snippet3>   
+      // </Snippet3>
       else
          return String.Empty;
    }
@@ -127,25 +127,25 @@ public class Example
    public static void Main()
    {
       Console.WindowWidth = 100;
-      
+
       byte byteValue = 124;
       // <Snippet4>
-      Console.WriteLine(String.Format(new BinaryFormatter(), 
+      Console.WriteLine(String.Format(new BinaryFormatter(),
                                       "{0} (binary: {0:B}) (hex: {0:H})", byteValue));
       // </Snippet4>
-      
+
       int intValue = 23045;
-      Console.WriteLine(String.Format(new BinaryFormatter(), 
+      Console.WriteLine(String.Format(new BinaryFormatter(),
                                       "{0} (binary: {0:B}) (hex: {0:H})", intValue));
-      
+
       ulong ulngValue = 31906574882;
-      Console.WriteLine(String.Format(new BinaryFormatter(), 
-                                      "{0}\n   (binary: {0:B})\n   (hex: {0:H})", 
+      Console.WriteLine(String.Format(new BinaryFormatter(),
+                                      "{0}\n   (binary: {0:B})\n   (hex: {0:H})",
                                       ulngValue));
 
       BigInteger bigIntValue = BigInteger.Multiply(Int64.MaxValue, 2);
-      Console.WriteLine(String.Format(new BinaryFormatter(), 
-                                      "{0}\n   (binary: {0:B})\n   (hex: {0:H})", 
+      Console.WriteLine(String.Format(new BinaryFormatter(),
+                                      "{0}\n   (binary: {0:B})\n   (hex: {0:H})",
                                       bigIntValue));
    }
 }

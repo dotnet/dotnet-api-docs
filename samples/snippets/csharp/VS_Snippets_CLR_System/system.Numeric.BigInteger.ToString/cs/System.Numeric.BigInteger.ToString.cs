@@ -19,14 +19,14 @@ public class TestToString
       // <Snippet1>
       BigInteger number = 9867857831128;
       number = BigInteger.Pow(number, 3) * BigInteger.MinusOne;
-      
+
       NumberFormatInfo bigIntegerProvider = new NumberFormatInfo();
       bigIntegerProvider.NegativeSign = "~";
-      
+
       Console.WriteLine(number.ToString(bigIntegerProvider));
       // </Snippet1>
    }
-   
+
    private void CallToString2()
    {
       // <Snippet2>
@@ -42,7 +42,7 @@ public class TestToString
       // <Snippet3>
       NumberFormatInfo bigIntegerFormat = new NumberFormatInfo();
       bigIntegerFormat.NegativeSign = "~";
-      
+
       BigInteger number = new BigInteger(-9867857831128);
 
       Console.WriteLine(number.ToString("G"));          // Displays 9867857831128

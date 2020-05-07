@@ -22,7 +22,7 @@ namespace SequenceExamples
             // Split the string into individual words.
             string[] words = sentence.Split(' ');
 
-            // Prepend each word to the beginning of the 
+            // Prepend each word to the beginning of the
             // new sentence to reverse the word order.
             string reversed = words.Aggregate((workingSentence, next) =>
                                                   next + " " + workingSentence);
@@ -91,7 +91,7 @@ namespace SequenceExamples
                                new Pet { Name="Boots", Age=4 },
                                new Pet { Name="Whiskers", Age=6 } };
 
-                // Determine whether all pet names 
+                // Determine whether all pet names
                 // in the array start with 'B'.
                 bool allStartWithB = pets.All(pet =>
                                                   pet.Name.StartsWith("B"));
@@ -148,7 +148,7 @@ namespace SequenceExamples
                 }
 
                 /* This code produces the following output:
-                 * 
+                 *
                  * Haas
                  * Antebi
                  */
@@ -215,7 +215,7 @@ namespace SequenceExamples
                 }
 
                 /* This code produces the following output:
-                  
+
                    Haas
                    Fakhouri
                    Philips
@@ -276,7 +276,7 @@ namespace SequenceExamples
         {
             // Create a new Clump<T> object.
             Clump<string> fruitClump =
-                new Clump<string> { "apple", "passionfruit", "banana", 
+                new Clump<string> { "apple", "passionfruit", "banana",
                     "mango", "orange", "blueberry", "grape", "strawberry" };
 
             // First call to Where():
@@ -302,7 +302,7 @@ namespace SequenceExamples
         // query1 has been created.
         //
         // query2 has been created.
-        // </Snippet108> 
+        // </Snippet108>
         #endregion
 
         #region Average
@@ -375,22 +375,22 @@ namespace SequenceExamples
             fruits.Add("mango");
             fruits.Add("apple");
             fruits.Add("lemon");
-            
+
             IEnumerable<string> query =
                 fruits.Cast<string>().OrderBy(fruit => fruit).Select(fruit => fruit);
-            
+
             // The following code, without the cast, doesn't compile.
             //IEnumerable<string> query1 =
             //    fruits.OrderBy(fruit => fruit).Select(fruit => fruit);
-            
+
             foreach (string fruit in query)
             {
                 Console.WriteLine(fruit);
             }
 
-            // This code produces the following output: 
+            // This code produces the following output:
             //
-            // apple 
+            // apple
             // lemon
             // mango
             // </Snippet19>
@@ -581,7 +581,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Barley
              Boots
              Whiskers
@@ -601,7 +601,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              0
             */
             // </Snippet25>
@@ -640,7 +640,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Name: Barley
              Name: Boots
              Name: Whiskers
@@ -668,7 +668,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Distinct ages:
              21
              46
@@ -684,8 +684,8 @@ namespace SequenceExamples
         {
             // <Snippet28>
             string[] names =
-                { "Hartono, Tommy", "Adams, Terry", "Andersen, Henriette Thaulow", 
-                    
+                { "Hartono, Tommy", "Adams, Terry", "Andersen, Henriette Thaulow",
+
                     "Hedlund, Magnus", "Ito, Shu" };
             Random random = new Random(DateTime.Now.Millisecond);
 
@@ -695,7 +695,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following sample output:
-            
+
              The name chosen at random is 'Ito, Shu'.
             */
             // </Snippet28>
@@ -721,7 +721,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The name chosen at index 20 is '<no name at this index>'.
             */
             // </Snippet29>
@@ -761,7 +761,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Adams, Terry
              Andersen, Henriette Thaulow
              Hedlund, Magnus
@@ -789,7 +789,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              2
              2.1
              2.3
@@ -804,7 +804,7 @@ namespace SequenceExamples
         static void FirstEx1()
         {
             // <Snippet35>
-            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54, 
+            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54,
                                 83, 23, 87, 435, 67, 12, 19 };
 
             int first = numbers.First();
@@ -813,7 +813,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              9
             */
             // </Snippet35>
@@ -822,7 +822,7 @@ namespace SequenceExamples
         static void FirstEx2()
         {
             // <Snippet36>
-            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54, 
+            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54,
                                 83, 23, 87, 435, 67, 12, 19 };
 
             int first = numbers.First(number => number > 80);
@@ -831,7 +831,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              92
             */
             // </Snippet36>
@@ -848,7 +848,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              0
             */
             // </Snippet37>
@@ -857,8 +857,8 @@ namespace SequenceExamples
         static void FirstOrDefaultEx2()
         {
             // <Snippet38>
-            string[] names = { "Hartono, Tommy", "Adams, Terry", 
-                                 "Andersen, Henriette Thaulow", 
+            string[] names = { "Hartono, Tommy", "Adams, Terry",
+                                 "Andersen, Henriette Thaulow",
                                  "Hedlund, Magnus", "Ito, Shu" };
 
             string firstLongName = names.FirstOrDefault(name => name.Length > 20);
@@ -873,7 +873,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The first long name is 'Andersen, Henriette Thaulow'.
              There is not a name longer than 30 characters.
             */
@@ -899,7 +899,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The value of the firstMonth1 variable is 1
              The value of the firstMonth2 variable is 1
             */
@@ -927,7 +927,7 @@ namespace SequenceExamples
                                    new Pet { Name="Whiskers", Age=1 },
                                    new Pet { Name="Daisy", Age=4 } };
 
-                // Group the pets using Age as the key value 
+                // Group the pets using Age as the key value
                 // and selecting only the pet's Name for each value.
                 IEnumerable<IGrouping<int, string>> query =
                     pets.GroupBy(pet => pet.Age, pet => pet.Name);
@@ -937,7 +937,7 @@ namespace SequenceExamples
                 {
                     // Print the key value of the IGrouping.
                     Console.WriteLine(petGroup.Key);
-                    // Iterate over each value in the 
+                    // Iterate over each value in the
                     // IGrouping and print the value.
                     foreach (string name in petGroup)
                         Console.WriteLine("  {0}", name);
@@ -946,7 +946,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              8
                Barley
              4
@@ -967,7 +967,7 @@ namespace SequenceExamples
                                    new Pet { Name="Whiskers", Age=1 },
                                    new Pet { Name="Daisy", Age=4 } };
 
-                // Group the pets using Age as the key value 
+                // Group the pets using Age as the key value
                 // and selecting only the pet's Name for each value.
                 // <Snippet122>
                 IEnumerable<IGrouping<int, string>> query =
@@ -980,7 +980,7 @@ namespace SequenceExamples
                 {
                     // Print the key value of the IGrouping.
                     Console.WriteLine(petGroup.Key);
-                    // Iterate over each value in the IGrouping 
+                    // Iterate over each value in the IGrouping
                     // and print the value.
                     foreach (string name in petGroup)
                         Console.WriteLine("  {0}", name);
@@ -1030,17 +1030,17 @@ namespace SequenceExamples
                 }
 
                 /*  This code produces the following output:
-                 
+
                     Age group: 8
                     Number of pets in this age group: 1
                     Minimum age: 8.3
                     Maximum age: 8.3
-                 
+
                     Age group: 4
                     Number of pets in this age group: 2
                     Minimum age: 4.3
                     Maximum age: 4.9
-                 
+
                     Age group: 1
                     Number of pets in this age group: 1
                     Minimum age: 1.5
@@ -1094,17 +1094,17 @@ namespace SequenceExamples
                 }
 
                 /*  This code produces the following output:
-                 
+
                     Age group: 8
                     Number of pets in this age group: 1
                     Minimum age: 8.3
                     Maximum age: 8.3
-                 
+
                     Age group: 4
                     Number of pets in this age group: 2
                     Minimum age: 4.3
                     Maximum age: 4.9
-                 
+
                     Age group: 1
                     Number of pets in this age group: 1
                     Minimum age: 1.5
@@ -1144,8 +1144,8 @@ namespace SequenceExamples
                 List<Person> people = new List<Person> { magnus, terry, charlotte };
                 List<Pet> pets = new List<Pet> { barley, boots, whiskers, daisy };
 
-                // Create a list where each element is an anonymous 
-                // type that contains a person's name and 
+                // Create a list where each element is an anonymous
+                // type that contains a person's name and
                 // a collection of names of the pets they own.
                 var query =
                     people.GroupJoin(pets,
@@ -1172,7 +1172,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Hedlund, Magnus:
                Daisy
              Adams, Terry:
@@ -1237,7 +1237,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              26
              30
             */
@@ -1274,7 +1274,7 @@ namespace SequenceExamples
                 List<Person> people = new List<Person> { magnus, terry, charlotte };
                 List<Pet> pets = new List<Pet> { barley, boots, whiskers, daisy };
 
-                // Create a list of Person-Pet pairs where 
+                // Create a list of Person-Pet pairs where
                 // each element is an anonymous type that contains a
                 // Pet's name and the name of the Person that owns the Pet.
                 var query =
@@ -1295,7 +1295,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Hedlund, Magnus - Daisy
              Adams, Terry - Barley
              Adams, Terry - Boots
@@ -1309,7 +1309,7 @@ namespace SequenceExamples
         static void LastEx1()
         {
             // <Snippet43>
-            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54, 
+            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54,
                                 83, 23, 87, 67, 12, 19 };
 
             int last = numbers.Last();
@@ -1318,7 +1318,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              19
             */
             // </Snippet43>
@@ -1327,7 +1327,7 @@ namespace SequenceExamples
         static void LastEx2()
         {
             // <Snippet44>
-            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54, 
+            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54,
                                 83, 23, 87, 67, 12, 19 };
 
             int last = numbers.Last(num => num > 80);
@@ -1336,7 +1336,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              87
             */
             // </Snippet44>
@@ -1354,7 +1354,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              <string is null or empty>
             */
             // </Snippet45>
@@ -1377,7 +1377,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The last number that rounds to 50 is 50.2.
              The last number that rounds to 40 is <DOES NOT EXIST>.
             */
@@ -1403,7 +1403,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-             
+
              The value of the lastDay1 variable is 1
              The value of the lastDay2 variable is 1
             */
@@ -1415,7 +1415,7 @@ namespace SequenceExamples
         public static void LongCountEx1()
         {
             // <Snippet47>
-            string[] fruits = { "apple", "banana", "mango", 
+            string[] fruits = { "apple", "banana", "mango",
                                   "orange", "passionfruit", "grape" };
 
             long count = fruits.LongCount();
@@ -1424,7 +1424,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              There are 6 fruits in the collection.
             */
             // </Snippet47>
@@ -1454,7 +1454,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              There are 2 animals over age 3.
             */
             // </Snippet48>
@@ -1473,7 +1473,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The largest number is 4294967296.
             */
             // </Snippet52>
@@ -1490,7 +1490,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The largest number is 1.5E+104.
             */
             // </Snippet54>
@@ -1500,7 +1500,7 @@ namespace SequenceExamples
         {
             // <Snippet57>
             /// <summary>
-            /// This class implements IComparable to be able to 
+            /// This class implements IComparable to be able to
             /// compare one Pet to another Pet.
             /// </summary>
             class Pet : IComparable<Pet>
@@ -1509,11 +1509,11 @@ namespace SequenceExamples
                 public int Age { get; set; }
 
                 /// <summary>
-                /// Compares this Pet to another Pet by 
+                /// Compares this Pet to another Pet by
                 /// summing each Pet's age and name length.
                 /// </summary>
                 /// <param name="other">The Pet to compare this Pet to.</param>
-                /// <returns>-1 if this Pet is 'less' than the other Pet, 
+                /// <returns>-1 if this Pet is 'less' than the other Pet,
                 /// 0 if they are equal,
                 /// or 1 if this Pet is 'greater' than the other Pet.</returns>
                 int IComparable<Pet>.CompareTo(Pet other)
@@ -1545,7 +1545,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The 'maximum' animal is Barley.
             */
             // </Snippet57>
@@ -1575,7 +1575,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The maximum pet age plus name length is 14.
             */
             // </Snippet58>
@@ -1595,7 +1595,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The smallest number is -2E+103.
             */
             // </Snippet60>
@@ -1612,7 +1612,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The lowest grade is 37.
             */
             // </Snippet63>
@@ -1622,7 +1622,7 @@ namespace SequenceExamples
         {
             // <Snippet67>
             /// <summary>
-            /// This class implements IComparable in order to 
+            /// This class implements IComparable in order to
             /// be able to compare different Pet objects.
             /// </summary>
             class Pet : IComparable<Pet>
@@ -1634,8 +1634,8 @@ namespace SequenceExamples
                 /// Compares this Pet's age to another Pet's age.
                 /// </summary>
                 /// <param name="other">The Pet to compare this Pet to.</param>
-                /// <returns>-1 if this Pet's age is smaller, 
-                /// 0 if the Pets' ages are equal, or 
+                /// <returns>-1 if this Pet's age is smaller,
+                /// 0 if the Pets' ages are equal, or
                 /// 1 if this Pet's age is greater.</returns>
                 int IComparable<Pet>.CompareTo(Pet other)
                 {
@@ -1663,7 +1663,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The 'minimum' animal is Whiskers.
             */
             // </Snippet67>
@@ -1691,8 +1691,8 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
-             The youngest animal is age 1.  
+
+             The youngest animal is age 1.
             */
             // </Snippet68>
         }
@@ -1718,7 +1718,7 @@ namespace SequenceExamples
                 Console.WriteLine(fruit);
             }
 
-            // The following query shows that the standard query operators such as 
+            // The following query shows that the standard query operators such as
             // Where() can be applied to the ArrayList type after calling OfType().
             IEnumerable<string> query2 =
                 fruits.OfType<string>().Where(fruit => fruit.ToLower().Contains("n"));
@@ -1771,7 +1771,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Whiskers - 1
              Boots - 4
              Barley - 8
@@ -1853,7 +1853,7 @@ namespace SequenceExamples
         // Four
         // four
         // First
-        // first  
+        // first
         // </Snippet140>
         #endregion
 
@@ -1872,7 +1872,7 @@ namespace SequenceExamples
                 /// </summary>
                 /// <param name="d1">The first decimal to compare.</param>
                 /// <param name="d2">The second decimal to compare.</param>
-                /// <returns>1 if the first decimal's fractional part 
+                /// <returns>1 if the first decimal's fractional part
                 /// is greater than the second decimal's fractional part,
                 /// -1 if the first decimal's fractional
                 /// part is less than the second decimal's fractional part,
@@ -1927,7 +1927,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              9.7
              0.5
              8.3
@@ -1943,7 +1943,7 @@ namespace SequenceExamples
         static void RangeEx1()
         {
             // <Snippet72>
-            // Generate a sequence of integers from 1 to 10 
+            // Generate a sequence of integers from 1 to 10
             // and then select their squares.
             IEnumerable<int> squares = Enumerable.Range(1, 10).Select(x => x * x);
 
@@ -1954,7 +1954,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              1
              4
              9
@@ -1984,7 +1984,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              I like programming.
              I like programming.
              I like programming.
@@ -2021,7 +2021,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              e l p p a
             */
             // </Snippet74>
@@ -2041,7 +2041,7 @@ namespace SequenceExamples
             }
             /*
              This code produces the following output:
-            
+
              1
              4
              9
@@ -2059,7 +2059,7 @@ namespace SequenceExamples
         static void SelectEx2()
         {
             // <Snippet76>
-            string[] fruits = { "apple", "banana", "mango", "orange", 
+            string[] fruits = { "apple", "banana", "mango", "orange",
                                   "passionfruit", "grape" };
 
             var query =
@@ -2073,7 +2073,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              {index=0, str=}
              {index=1, str=b}
              {index=2, str=ma}
@@ -2097,12 +2097,12 @@ namespace SequenceExamples
 
             public static void SelectManyEx1()
             {
-                PetOwner[] petOwners = 
-                    { new PetOwner { Name="Higa, Sidney", 
+                PetOwner[] petOwners =
+                    { new PetOwner { Name="Higa, Sidney",
                           Pets = new List<string>{ "Scruffy", "Sam" } },
-                      new PetOwner { Name="Ashkenazi, Ronen", 
+                      new PetOwner { Name="Ashkenazi, Ronen",
                           Pets = new List<string>{ "Walker", "Sugar" } },
-                      new PetOwner { Name="Price, Vernette", 
+                      new PetOwner { Name="Price, Vernette",
                           Pets = new List<string>{ "Scratches", "Diesel" } } };
 
                 // Query using SelectMany().
@@ -2110,7 +2110,7 @@ namespace SequenceExamples
 
                 Console.WriteLine("Using SelectMany():");
 
-                // Only one foreach loop is required to iterate 
+                // Only one foreach loop is required to iterate
                 // through the results since it is a
                 // one-dimensional collection.
                 foreach (string pet in query1)
@@ -2118,14 +2118,14 @@ namespace SequenceExamples
                     Console.WriteLine(pet);
                 }
 
-                // This code shows how to use Select() 
+                // This code shows how to use Select()
                 // instead of SelectMany().
                 IEnumerable<List<String>> query2 =
                     petOwners.Select(petOwner => petOwner.Pets);
 
                 Console.WriteLine("\nUsing Select():");
 
-                // Notice that two foreach loops are required to 
+                // Notice that two foreach loops are required to
                 // iterate through the results
                 // because the query returns a collection of arrays.
                 foreach (List<String> petList in query2)
@@ -2140,7 +2140,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Using SelectMany():
              Scruffy
              Sam
@@ -2148,7 +2148,7 @@ namespace SequenceExamples
              Sugar
              Scratches
              Diesel
- 
+
              Using Select():
              Scruffy
              Sam
@@ -2173,18 +2173,18 @@ namespace SequenceExamples
 
             public static void SelectManyEx2()
             {
-                PetOwner[] petOwners = 
-                    { new PetOwner { Name="Higa, Sidney", 
+                PetOwner[] petOwners =
+                    { new PetOwner { Name="Higa, Sidney",
                           Pets = new List<string>{ "Scruffy", "Sam" } },
-                      new PetOwner { Name="Ashkenazi, Ronen", 
+                      new PetOwner { Name="Ashkenazi, Ronen",
                           Pets = new List<string>{ "Walker", "Sugar" } },
-                      new PetOwner { Name="Price, Vernette", 
+                      new PetOwner { Name="Price, Vernette",
                           Pets = new List<string>{ "Scratches", "Diesel" } },
-                      new PetOwner { Name="Hines, Patrick", 
+                      new PetOwner { Name="Hines, Patrick",
                           Pets = new List<string>{ "Dusty" } } };
 
-                // Project the items in the array by appending the index 
-                // of each PetOwner to each pet's name in that petOwner's 
+                // Project the items in the array by appending the index
+                // of each PetOwner to each pet's name in that petOwner's
                 // array of pets.
                 IEnumerable<string> query =
                     petOwners.SelectMany((petOwner, index) =>
@@ -2220,13 +2220,13 @@ namespace SequenceExamples
             public static void SelectManyEx3()
             {
                 PetOwner[] petOwners =
-                    { new PetOwner { Name="Higa", 
+                    { new PetOwner { Name="Higa",
                           Pets = new List<string>{ "Scruffy", "Sam" } },
-                      new PetOwner { Name="Ashkenazi", 
+                      new PetOwner { Name="Ashkenazi",
                           Pets = new List<string>{ "Walker", "Sugar" } },
-                      new PetOwner { Name="Price", 
+                      new PetOwner { Name="Price",
                           Pets = new List<string>{ "Scratches", "Diesel" } },
-                      new PetOwner { Name="Hines", 
+                      new PetOwner { Name="Hines",
                           Pets = new List<string>{ "Dusty" } } };
 
                 // Project the pet owner's name and the pet's name.
@@ -2287,7 +2287,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The lists are equal.
             */
             // </Snippet32>
@@ -2310,7 +2310,7 @@ namespace SequenceExamples
                 // Create two lists of pets.
                 List<Pet> pets1 = new List<Pet> { pet1, pet2 };
                 List<Pet> pets2 =
-                    new List<Pet> { new Pet { Name = "Turbo", Age = 2 }, 
+                    new List<Pet> { new Pet { Name = "Turbo", Age = 2 },
                                     new Pet { Name = "Peanut", Age = 8 } };
 
                 bool equal = pets1.SequenceEqual(pets2);
@@ -2320,7 +2320,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The lists are not equal.
             */
             // </Snippet33>
@@ -2339,7 +2339,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              orange
             */
             // </Snippet79>
@@ -2361,19 +2361,19 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The collection does not contain exactly one element.
             */
             // </Snippet80>
         }
 
-        // TODO - Should I add exception handling to 
-        // all the snippets whose operators are 
+        // TODO - Should I add exception handling to
+        // all the snippets whose operators are
         // documented to throw those exceptions??
         static void SingleEx2()
         {
             // <Snippet81>
-            string[] fruits = { "apple", "banana", "mango", 
+            string[] fruits = { "apple", "banana", "mango",
                                   "orange", "passionfruit", "grape" };
 
             string fruit1 = fruits.Single(fruit => fruit.Length > 10);
@@ -2382,7 +2382,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              passionfruit
             */
             // </Snippet81>
@@ -2396,7 +2396,7 @@ namespace SequenceExamples
             }
             catch (System.InvalidOperationException)
             {
-                Console.WriteLine(@"The collection does not contain exactly 
+                Console.WriteLine(@"The collection does not contain exactly
                                 one element whose length is greater than 15.");
             }
 
@@ -2404,7 +2404,7 @@ namespace SequenceExamples
 
             // This code produces the following output:
             //
-            // The collection does not contain exactly  
+            // The collection does not contain exactly
             // one element whose length is greater than 15.
             // </Snippet82>
         }
@@ -2422,7 +2422,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              orange
             */
             // </Snippet83>
@@ -2437,7 +2437,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              No such string!
             */
             // </Snippet84>
@@ -2446,7 +2446,7 @@ namespace SequenceExamples
         static void SingleOrDefaultEx2()
         {
             // <Snippet85>
-            string[] fruits = { "apple", "banana", "mango", 
+            string[] fruits = { "apple", "banana", "mango",
                                   "orange", "passionfruit", "grape" };
 
             string fruit1 = fruits.SingleOrDefault(fruit => fruit.Length > 10);
@@ -2455,7 +2455,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              passionfruit
             */
             // </Snippet85>
@@ -2469,7 +2469,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              No such string!
             */
             // </Snippet86>
@@ -2494,7 +2494,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The value of the pageNumber1 variable is 1
              The value of the pageNumber2 variable is 1
             */
@@ -2519,7 +2519,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              All grades except the top three are:
              82
              70
@@ -2549,7 +2549,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              All grades below 80:
              70
              59
@@ -2561,7 +2561,7 @@ namespace SequenceExamples
         static void SkipWhileEx2()
         {
             // <Snippet89>
-            int[] amounts = { 5000, 2500, 9000, 8000, 
+            int[] amounts = { 5000, 2500, 9000, 8000,
                                 6500, 4000, 1500, 5500 };
 
             IEnumerable<int> query =
@@ -2574,7 +2574,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              4000
              1500
              5500
@@ -2596,7 +2596,7 @@ namespace SequenceExamples
             public static void SumEx1()
             {
                 List<Package> packages =
-                    new List<Package> 
+                    new List<Package>
                         { new Package { Company = "Coho Vineyard", Weight = 25.2 },
                           new Package { Company = "Lucerne Publishing", Weight = 18.7 },
                           new Package { Company = "Wingtip Toys", Weight = 6.0 },
@@ -2609,7 +2609,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The total weight of the packages is: 83.7
             */
             // </Snippet98>
@@ -2626,7 +2626,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              The sum of the numbers is 635.13.
             */
             // </Snippet120>
@@ -2643,7 +2643,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Total points earned: 311.39
             */
             // </Snippet121>
@@ -2667,7 +2667,7 @@ namespace SequenceExamples
             }
             /*
              This code produces the following output:
-            
+
              The top three grades are:
              98
              92
@@ -2681,7 +2681,7 @@ namespace SequenceExamples
         static void TakeWhileEx1()
         {
             // <Snippet100>
-            string[] fruits = { "apple", "banana", "mango", "orange", 
+            string[] fruits = { "apple", "banana", "mango", "orange",
                                   "passionfruit", "grape" };
 
             IEnumerable<string> query =
@@ -2694,7 +2694,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              apple
              banana
              mango
@@ -2705,7 +2705,7 @@ namespace SequenceExamples
         static void TakeWhileEx2()
         {
             // <Snippet101>
-            string[] fruits = { "apple", "passionfruit", "banana", "mango", 
+            string[] fruits = { "apple", "passionfruit", "banana", "mango",
                                   "orange", "blueberry", "grape", "strawberry" };
 
             IEnumerable<string> query =
@@ -2718,7 +2718,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              apple
              passionfruit
              banana
@@ -2735,10 +2735,10 @@ namespace SequenceExamples
         static void ThenByEx1()
         {
             // <Snippet102>
-            string[] fruits = { "grape", "passionfruit", "banana", "mango", 
+            string[] fruits = { "grape", "passionfruit", "banana", "mango",
                                   "orange", "raspberry", "apple", "blueberry" };
 
-            // Sort the strings first by their length and then 
+            // Sort the strings first by their length and then
             //alphabetically by passing the identity selector function.
             IEnumerable<string> query =
                 fruits.OrderBy(fruit => fruit.Length).ThenBy(fruit => fruit);
@@ -2750,7 +2750,7 @@ namespace SequenceExamples
 
             /*
                 This code produces the following output:
-            
+
                 apple
                 grape
                 mango
@@ -2781,7 +2781,7 @@ namespace SequenceExamples
             {
                 string[] fruits = { "apPLe", "baNanA", "apple", "APple", "orange", "BAnana", "ORANGE", "apPLE" };
 
-                // Sort the strings first ascending by their length and 
+                // Sort the strings first ascending by their length and
                 // then descending using a custom case insensitive comparer.
                 IEnumerable<string> query =
                     fruits
@@ -2796,7 +2796,7 @@ namespace SequenceExamples
 
             /*
                 This code produces the following output:
-            
+
                 apPLe
                 apple
                 APple
@@ -2823,7 +2823,7 @@ namespace SequenceExamples
             public static void ToArrayEx1()
             {
                 List<Package> packages =
-                    new List<Package> 
+                    new List<Package>
                         { new Package { Company = "Coho Vineyard", Weight = 25.2 },
                           new Package { Company = "Lucerne Publishing", Weight = 18.7 },
                           new Package { Company = "Wingtip Toys", Weight = 6.0 },
@@ -2839,7 +2839,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Coho Vineyard
              Lucerne Publishing
              Wingtip Toys
@@ -2870,7 +2870,7 @@ namespace SequenceExamples
                           new Package { Company = "Wingtip Toys", Weight = 6.0, TrackingNumber = 299456122L },
                           new Package { Company = "Adventure Works", Weight = 33.8, TrackingNumber = 4665518773L } };
 
-                // Create a Dictionary of Package objects, 
+                // Create a Dictionary of Package objects,
                 // using TrackingNumber as the key.
                 Dictionary<long, Package> dictionary =
                     packages.ToDictionary(p => p.TrackingNumber);
@@ -2887,7 +2887,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              Key 89453312: Coho Vineyard, 25.2 pounds
              Key 89112755: Lucerne Publishing, 18.7 pounds
              Key 299456122: Wingtip Toys, 6 pounds
@@ -2901,7 +2901,7 @@ namespace SequenceExamples
         static void ToListEx1()
         {
             // <Snippet106>
-            string[] fruits = { "apple", "passionfruit", "banana", "mango", 
+            string[] fruits = { "apple", "passionfruit", "banana", "mango",
                                   "orange", "blueberry", "grape", "strawberry" };
 
             List<int> lengths = fruits.Select(fruit => fruit.Length).ToList();
@@ -2913,7 +2913,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              5
              12
              6
@@ -2944,20 +2944,20 @@ namespace SequenceExamples
                 // Create a list of Packages.
                 List<Package> packages =
                     new List<Package>
-                        { new Package { Company = "Coho Vineyard", 
+                        { new Package { Company = "Coho Vineyard",
                               Weight = 25.2, TrackingNumber = 89453312L },
-                          new Package { Company = "Lucerne Publishing", 
+                          new Package { Company = "Lucerne Publishing",
                               Weight = 18.7, TrackingNumber = 89112755L },
-                          new Package { Company = "Wingtip Toys", 
+                          new Package { Company = "Wingtip Toys",
                               Weight = 6.0, TrackingNumber = 299456122L },
-                          new Package { Company = "Contoso Pharmaceuticals", 
+                          new Package { Company = "Contoso Pharmaceuticals",
                               Weight = 9.3, TrackingNumber = 670053128L },
-                          new Package { Company = "Wide World Importers", 
+                          new Package { Company = "Wide World Importers",
                               Weight = 33.8, TrackingNumber = 4665518773L } };
 
-                // Create a Lookup to organize the packages. 
+                // Create a Lookup to organize the packages.
                 // Use the first character of Company as the key value.
-                // Select Company appended to TrackingNumber 
+                // Select Company appended to TrackingNumber
                 // as the element values of the Lookup.
                 ILookup<char, string> lookup =
                     packages
@@ -2969,7 +2969,7 @@ namespace SequenceExamples
                 {
                     // Print the key value of the IGrouping.
                     Console.WriteLine(packageGroup.Key);
-                    // Iterate through each value in the 
+                    // Iterate through each value in the
                     // IGrouping and print its value.
                     foreach (string str in packageGroup)
                         Console.WriteLine("    {0}", str);
@@ -2978,7 +2978,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              C
                  Coho Vineyard 89453312
                  Contoso Pharmaceuticals 670053128
@@ -3008,7 +3008,7 @@ namespace SequenceExamples
 
             /*
              This code produces the following output:
-            
+
              5 3 9 7 8 6 4 1 0
             */
             // </Snippet109>
@@ -3022,7 +3022,7 @@ namespace SequenceExamples
         {
             // <Snippet110>
             List<string> fruits =
-                new List<string> { "apple", "passionfruit", "banana", "mango", 
+                new List<string> { "apple", "passionfruit", "banana", "mango",
                                 "orange", "blueberry", "grape", "strawberry" };
 
             IEnumerable<string> query = fruits.Where(fruit => fruit.Length < 6);
@@ -3033,7 +3033,7 @@ namespace SequenceExamples
             }
             /*
              This code produces the following output:
-            
+
              apple
              mango
              grape
@@ -3055,7 +3055,7 @@ namespace SequenceExamples
             }
             /*
              This code produces the following output:
-            
+
              0
              20
              15

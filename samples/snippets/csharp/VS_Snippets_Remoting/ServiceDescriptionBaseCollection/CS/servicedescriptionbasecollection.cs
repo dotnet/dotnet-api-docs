@@ -3,7 +3,7 @@
    The following example demonstrates 'ServiceDescriptionBaseCollection' class.
    A 'ServiceDescription' instance is obtained from the existing Wsdl.
    'MyMethod' takes an instance of 'ServiceDescriptionBaseCollection' as a parameter.
-   Instance of different types of collections that were actually derived from 
+   Instance of different types of collections that were actually derived from
    'ServiceDescriptionBaseCollection' are passed to my method and modifications of
    corresponding  instances in done.
 */
@@ -44,7 +44,7 @@ class ServiceDescription_Sample
          // Build a new Service.
          Service myService =new Service();
          myService.Name="MathService";
-         XmlQualifiedName myXmlQualifiedName = 
+         XmlQualifiedName myXmlQualifiedName =
             new XmlQualifiedName("s0:MathServiceSoap");
 
          // Build a new Port for SOAP.
@@ -57,13 +57,13 @@ class ServiceDescription_Sample
          mySoapPort.Extensions.Add(mySoapAddressBinding);
 
          // Build a new Port for HTTP-GET.
-         XmlQualifiedName myXmlQualifiedName2 = 
+         XmlQualifiedName myXmlQualifiedName2 =
             new XmlQualifiedName("s0:MathServiceHttpGet");
          Port myHttpGetPort= new Port();
          myHttpGetPort.Name="MathServiceHttpGet";
          myHttpGetPort.Binding=myXmlQualifiedName2;
          HttpAddressBinding myHttpAddressBinding = new HttpAddressBinding();
-         myHttpAddressBinding.Location = "http://localhost/" + 
+         myHttpAddressBinding.Location = "http://localhost/" +
             "ServiceDescriptionBaseCollection/AddSubtractService.CS.asmx";
          myHttpGetPort.Extensions.Add(myHttpAddressBinding);
 
@@ -84,7 +84,7 @@ class ServiceDescription_Sample
          // Build a new Binding.
          Binding myBinding = new Binding();
          myBinding.Name = "MathServiceSoap";
-         XmlQualifiedName myXmlQualifiedName = 
+         XmlQualifiedName myXmlQualifiedName =
             new XmlQualifiedName("s0:MathServiceSoap");
          myBinding.Type=myXmlQualifiedName;
          SoapBinding mySoapBinding = new SoapBinding();
@@ -122,12 +122,12 @@ class ServiceDescription_Sample
 
           // Build the Input and Output messages for the Operations.
           OperationInput myOperationInputMessage1 = new OperationInput();
-          XmlQualifiedName myXmlQualifiedName1 = 
+          XmlQualifiedName myXmlQualifiedName1 =
              new XmlQualifiedName("s0:AddSoapIn");
           myOperationInputMessage1.Message = myXmlQualifiedName1;
 
           OperationOutput myOperationOutputMessage1 = new OperationOutput();
-          XmlQualifiedName myXmlQualifiedName2 = 
+          XmlQualifiedName myXmlQualifiedName2 =
              new XmlQualifiedName("s0:AddSoapOut");
           myOperationOutputMessage1.Message=myXmlQualifiedName2;
 
@@ -141,11 +141,11 @@ class ServiceDescription_Sample
 
           // Build the Input and Output messages for the operations.
           OperationInput myOperationInputMessage2 = new OperationInput();
-          XmlQualifiedName myXmlQualifiedName3 = 
+          XmlQualifiedName myXmlQualifiedName3 =
              new XmlQualifiedName("s0:SubtractSoapIn");
           myOperationInputMessage2.Message = myXmlQualifiedName3;
           OperationOutput myOperationOutputMessage2 = new OperationOutput();
-          XmlQualifiedName myXmlQualifiedName4 = 
+          XmlQualifiedName myXmlQualifiedName4 =
              new XmlQualifiedName("s0:SubtractSoapOut");
           myOperationOutputMessage2.Message = myXmlQualifiedName4;
 
@@ -161,8 +161,8 @@ class ServiceDescription_Sample
           myServiceDescription.PortTypes.Add(myPortType);
       }
     }
-// </Snippet1>   
-   public static OperationBinding CreateOperationBinding(string operation, 
+// </Snippet1>
+   public static OperationBinding CreateOperationBinding(string operation,
       string targetNamespace)
    {
       // Create OperationBinding instance for operation.
@@ -176,7 +176,7 @@ class ServiceDescription_Sample
       // Create OutputBinding for operation.
       OutputBinding myOutputBinding = new OutputBinding();
       myOutputBinding.Extensions.Add(mySoapBodyBinding);
-      // Add 'InputBinding' and 'OutputBinding' to 'OperationBinding'. 
+      // Add 'InputBinding' and 'OutputBinding' to 'OperationBinding'.
       myOperationBinding.Input = myInputBinding;
       myOperationBinding.Output = myOutputBinding;
       // Create extensibility element for 'SoapOperationBinding'.

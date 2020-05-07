@@ -11,12 +11,12 @@
 /* This program demostrates constructor, Contains, Add, Item,
    IndexOf, Insert and Remove property of 'MimeTextMatchCollection'.
    This program takes 'MimeText_Match_MatchColl_9_Input_CS.wsdl' as an
-   input file which does not contain 'Binding' object that supports 
-   'HttpPost'. A name, type, Group and Capture properties are set 
-   which are to be searched in a HTTP transmission and 
-   'MimeTextMatchCollection' collection object is created 
-   for input and output of 'HttpPost' and finally writes into 
-   'MimeText_Match_MatchColl_9_Output_CS.wsdl'.  
+   input file which does not contain 'Binding' object that supports
+   'HttpPost'. A name, type, Group and Capture properties are set
+   which are to be searched in a HTTP transmission and
+   'MimeTextMatchCollection' collection object is created
+   for input and output of 'HttpPost' and finally writes into
+   'MimeText_Match_MatchColl_9_Output_CS.wsdl'.
 */
 
 using System;
@@ -37,7 +37,7 @@ class MyMimeTextMatchCollection
          Binding myBinding = new Binding();
          // Initialize 'Name' property of 'Binding' class.
          myBinding.Name = "MimeText_Match_MatchCollServiceHttpPost";
-         XmlQualifiedName 
+         XmlQualifiedName
             myXmlQualifiedName = new XmlQualifiedName
                                      ("s0:MimeText_Match_MatchCollServiceHttpPost");
          myBinding.Type = myXmlQualifiedName;
@@ -94,7 +94,7 @@ class MyMimeTextMatchCollection
 // </Snippet5>
          myInputBinding.Extensions.Add(myMimeTextBinding);
          // Add the 'InputBinding' to 'OperationBinding'.
-         myOperationBinding.Input = myInputBinding;      
+         myOperationBinding.Input = myInputBinding;
 
          // Create the 'OutputBinding' instance.
          OutputBinding myOutputBinding = new OutputBinding();
@@ -122,10 +122,10 @@ class MyMimeTextMatchCollection
          myMimeTextMatch1[4] = new MimeTextMatch();
          // Remove 'MimeTextMatch' instance from collection.
          myMimeTextMatchCollection1.Remove( myMimeTextMatch1[ 1 ] );
-         // Using MimeTextMatchCollection.Item indexer to comapre. 
+         // Using MimeTextMatchCollection.Item indexer to comapre.
          if( myMimeTextMatch1[ 2 ] == myMimeTextMatchCollection1[ 1 ] )
          {
-            // Check whether 'MimeTextMatch' instance exists. 
+            // Check whether 'MimeTextMatch' instance exists.
             myInt = myMimeTextMatchCollection1.IndexOf( myMimeTextMatch1[ 2 ] );
             // Insert 'MimeTextMatch' instance at a desired position.
             myMimeTextMatchCollection1.Insert( 1, myMimeTextMatch1[ myInt ] );
@@ -140,9 +140,9 @@ class MyMimeTextMatchCollection
 // </Snippet1>
          myOutputBinding.Extensions.Add( myMimeTextBinding1 );
          // Add the 'OutPutBinding' to 'OperationBinding'.
-         myOperationBinding.Output = myOutputBinding; 
+         myOperationBinding.Output = myOutputBinding;
          // Add the 'OutPutBinding' to 'OperationBinding'.
-         myOperationBinding.Output = myOutputBinding; 
+         myOperationBinding.Output = myOutputBinding;
          // Add the 'OperationBinding' to 'Binding'.
          myBinding.Operations.Add(myOperationBinding);
          // Add the 'Binding' to 'BindingCollection' of 'ServiceDescription'.

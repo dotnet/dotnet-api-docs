@@ -10,7 +10,7 @@ public class Page1: Page
 int loop1;
 
  HttpCookieCollection MyCookieCollection = Response.Cookies;
- 
+
  for(loop1 = 0; loop1 < MyCookieCollection.Count; loop1++)
  {
     if(MyCookieCollection.GetKey(loop1) == "LastVisit")
@@ -19,7 +19,7 @@ int loop1;
        MyCookieCollection.Set(MyCookieCollection[loop1]);
     }
  }
-    
+
 // </Snippet1>
  }
 }

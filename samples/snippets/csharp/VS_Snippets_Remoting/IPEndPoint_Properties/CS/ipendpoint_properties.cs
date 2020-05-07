@@ -4,11 +4,11 @@
 
 /*This program demonstrates the properties 'MaxPort', 'MinPort','Address','Port'
   and 'AddressFamily' and a constructor 'IPEndPoint(long,int)' of class 'IPEndPoint'.
-  
+
   A procedure DoSocketGet is created which internally uses a socket to transmit http "Get" requests to a Web resource.
-  The program accepts a resource Url, Resolves it to obtain 'IPAddress',Constructs 'IPEndPoint' instance using this 
+  The program accepts a resource Url, Resolves it to obtain 'IPAddress',Constructs 'IPEndPoint' instance using this
   'IPAddress' and port 80.Invokes DoSocketGet procedure to obtain a response and displays the response to a console.
-   
+
   It then accepts another Url, Resolves it to obtain 'IPAddress'. Assigns this IPAddress and port to the 'IPEndPoint'
   and again invokes DoSocketGet to obtain a response and display.
  */
@@ -16,12 +16,12 @@
 using System;
 using System.Net;
 using System.Text;
-using System.Net.Sockets; 
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 
-class IPEndPointSnippet 
+class IPEndPointSnippet
 {
-	public static void Main() 
+	public static void Main()
 	{
 
 		try
@@ -68,7 +68,7 @@ class IPEndPointSnippet
 // </Snippet6>
 // </Snippet5>		
 		}
-		catch(SocketException e) 
+		catch(SocketException e)
 		{
 			Console.WriteLine("SocketException caught!!!");
 			Console.WriteLine("Source : " + e.Source);
@@ -81,7 +81,7 @@ class IPEndPointSnippet
 		}
 	}
 	
-	public static string DoSocketGet(IPEndPoint hostIPEndPoint,string getString) 
+	public static string DoSocketGet(IPEndPoint hostIPEndPoint,string getString)
 	{
 		try
 		{
@@ -101,7 +101,7 @@ class IPEndPointSnippet
     		// Receive the page, loop until all bytes are received.
 			Int32 byteCount = mySocket.Receive(recvBytes,recvBytes.Length,0);
 			strRetPage = strRetPage + ASCII.GetString(recvBytes,0,byteCount);
-    		while (byteCount > 0) 
+    		while (byteCount > 0)
 			{
 				byteCount = mySocket.Receive(recvBytes,recvBytes.Length,0);
 				strRetPage = strRetPage + ASCII.GetString(recvBytes,0,byteCount);

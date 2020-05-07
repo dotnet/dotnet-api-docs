@@ -9,16 +9,16 @@ using System.Resources;
 using System.Collections;
 using System.IO;
 
-internal class NestedEnum {    
+internal class NestedEnum {
     internal static TypeBuilder enumType = null;
-    internal static Type tNested = null;   
+    internal static Type tNested = null;
     internal static Type tNesting = null;
 
     public static void Main(String[] args) {
 	AssemblyName asmName = new AssemblyName();
 	asmName.Name = "NestedEnum";
 	AssemblyBuilder asmBuild = Thread.GetDomain().DefineDynamicAssembly(asmName, AssemblyBuilderAccess.RunAndSave);
-	ModuleBuilder modBuild = asmBuild.DefineDynamicModule("ModuleOne", "NestedEnum.dll");       
+	ModuleBuilder modBuild = asmBuild.DefineDynamicModule("ModuleOne", "NestedEnum.dll");
 
 	// Hook up the event listening.
 	TypeResolveHandler typeResolveHandler = new TypeResolveHandler(modBuild);
@@ -39,7 +39,7 @@ internal class NestedEnum {
 	// When this field is defined, the loader cannot determine the size
 	// of the type. Therefore, a TypeResolve event is generated when the
 	// nested type is completed.
-	tb.DefineField("Field2", eb, FieldAttributes.Public);        
+	tb.DefineField("Field2", eb, FieldAttributes.Public);
 
 	tNesting = tb.CreateType();
 	if (tNesting == null)
@@ -58,7 +58,7 @@ internal class NestedEnum {
 	    Type x = tNested.DeclaringType;
 	    if (x == null)
 		Console.WriteLine("Declaring type was null.");
-	    else 
+	    else
 		Console.WriteLine(x.Name);
 	}
 
@@ -70,7 +70,7 @@ internal class NestedEnum {
 }
 
 // Helper class called when a resolve type event is raised.
-internal class TypeResolveHandler 
+internal class TypeResolveHandler
 {
     private Module m_Module;
 
@@ -92,9 +92,9 @@ internal class TypeResolveHandler
 	    // and the type might be complete already.
 	}
 
-	// Complete the type.		    
+	// Complete the type.		
 	return m_Module.Assembly;
     }
 }
-    
+
 // </Snippet1>

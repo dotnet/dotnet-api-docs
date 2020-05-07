@@ -4,17 +4,17 @@
 */
 using System;
 
-namespace RemotingSamples 
+namespace RemotingSamples
 {
-   public class HelloServer : MarshalByRefObject 
+   public class HelloServer : MarshalByRefObject
    {
 
-      public HelloServer() 
+      public HelloServer()
       {
          Console.WriteLine("HelloServer activated");
       }
 
-      public String HelloMethod(String name) 
+      public String HelloMethod(String name)
       {
          Console.WriteLine("Hello.HelloMethod : {0}", name);
          return "Hi there " + name;

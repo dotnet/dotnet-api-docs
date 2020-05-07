@@ -15,7 +15,7 @@ namespace QueuedComponentClient
             {
                 // <snippet0>
                 // Use BindToMoniker to run the queued moniker, to get an instance of the recorder
-                IQueuedComponent qc = 
+                IQueuedComponent qc =
                     (IQueuedComponent)System.Runtime.InteropServices.Marshal.BindToMoniker("queue:/new:QueuedComponent");
                 // Call the method that will be recorded
                 qc.QueuedTask();

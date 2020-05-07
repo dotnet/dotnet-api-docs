@@ -1,34 +1,34 @@
 ﻿// System.Web.Services.Description.MimePartCollection
 
-/* The following program demostrates 'MimePartCollection' class. It 
+/* The following program demostrates 'MimePartCollection' class. It
    takes 'MimePartCollection_1_Input_cs.wsdl' as input which
    contains one 'MimePart' object that supports 'HttpPost'.
-   A mimepartcollection object is created and mimepart is added to the 
-   mimepartcollection at the specified location, finally writes 
+   A mimepartcollection object is created and mimepart is added to the
+   mimepartcollection at the specified location, finally writes
    into the file'MimePartCollection_1_Output_CS.wsdl'.
 */
 
 // <Snippet1>
 using System;
 using System.Collections;
-using System.Xml; 
-using System.Web.Services.Description;  
+using System.Xml;
+using System.Web.Services.Description;
 
 public class MyMimePartCollection
 {
    public static void Main()
    {
-      ServiceDescription myServiceDescription = 
+      ServiceDescription myServiceDescription =
          ServiceDescription.Read("MimePartCollection_1_Input_cs.wsdl");
-      ServiceDescriptionCollection myServiceDescriptionCol = 
+      ServiceDescriptionCollection myServiceDescriptionCol =
          new ServiceDescriptionCollection();
       myServiceDescriptionCol.Add(myServiceDescription);
-      XmlQualifiedName  myXmlQualifiedName = 
+      XmlQualifiedName  myXmlQualifiedName =
          new  XmlQualifiedName("MimeServiceHttpPost","http://tempuri.org/");
       // Create a 'Binding' object.
       Binding myBinding = myServiceDescriptionCol.GetBinding(myXmlQualifiedName);
       OperationBinding myOperationBinding= null;
-      for(int i=0; i<myBinding.Operations.Count; i++) 
+      for(int i=0; i<myBinding.Operations.Count; i++)
       {
          if(myBinding.Operations[i].Name.Equals("AddNumbers"))
          {
@@ -39,13 +39,13 @@ public class MyMimePartCollection
       MimeMultipartRelatedBinding myMimeMultipartRelatedBinding = null;
       IEnumerator myIEnumerator = myOutputBinding.Extensions.GetEnumerator();
       while(myIEnumerator.MoveNext())
-      { 
+      {
          myMimeMultipartRelatedBinding=(MimeMultipartRelatedBinding)myIEnumerator.Current;
       }
       // Create an instances of 'MimePartCollection'.
       MimePartCollection myMimePartCollection = new MimePartCollection();
       myMimePartCollection= myMimeMultipartRelatedBinding.Parts;
-      
+
       Console.WriteLine("Total number of mimepart elements initially is: "
                                        +myMimePartCollection.Count);
       // Create an instance of 'MimePart'.

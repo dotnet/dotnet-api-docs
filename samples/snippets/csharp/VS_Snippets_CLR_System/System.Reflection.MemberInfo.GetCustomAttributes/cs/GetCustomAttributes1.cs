@@ -4,7 +4,7 @@ using System;
 public class BaseClass
 {
    [ThreadStatic] public int total;
-   
+
    [CLSCompliant(false)] public virtual uint MethodA()
    {
       return (uint) 100;

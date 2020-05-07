@@ -2,13 +2,13 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class
-        ManagementClass processClass = 
+        ManagementClass processClass =
             new ManagementClass("Win32_Process");
         processClass.Options.UseAmendedQualifiers = true;
 
@@ -28,7 +28,7 @@ public class Sample
                 Console.WriteLine();
 
                 Console.WriteLine("In-parameters: ");
-                foreach(PropertyData i in 
+                foreach(PropertyData i in
                     method.InParameters.Properties)
                 {
                     Console.WriteLine(i.Name);
@@ -36,7 +36,7 @@ public class Sample
                 Console.WriteLine();
 
                 Console.WriteLine("Out-parameters: ");
-                foreach(PropertyData o in 
+                foreach(PropertyData o in
                     method.OutParameters.Properties)
                 {
                     Console.WriteLine(o.Name);
@@ -44,14 +44,14 @@ public class Sample
                 Console.WriteLine();
 
                 Console.WriteLine("Qualifiers: ");
-                foreach(QualifierData q in 
+                foreach(QualifierData q in
                     method.Qualifiers)
                 {
                     Console.WriteLine(q.Name);
                 }
                 Console.WriteLine();
             }
-        } 
+        }
     }
 }
 //</Snippet1>

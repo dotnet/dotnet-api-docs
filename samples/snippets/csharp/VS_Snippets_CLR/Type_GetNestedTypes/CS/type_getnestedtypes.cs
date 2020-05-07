@@ -1,10 +1,10 @@
-﻿// <Snippet1>         
+﻿// <Snippet1>
 
 using System;
 using System.Reflection;
-public class MyClass 
+public class MyClass
 {
-    public class NestClass 
+    public class NestClass
     {
         public static int myPublicInt=0;
     }
@@ -14,15 +14,15 @@ public class MyClass
     }
 }
 
-public class MyMainClass 
+public class MyMainClass
 {
-    public static void Main() 
+    public static void Main()
     {
         try
         {
             // Get the Type object corresponding to MyClass.
             Type myType=typeof(MyClass);
-            // Get an array of nested type objects in MyClass. 
+            // Get an array of nested type objects in MyClass.
             Type[] nestType=myType.GetNestedTypes();
             Console.WriteLine("The number of nested types is {0}.", nestType.Length);
             foreach(Type t in nestType)
@@ -30,8 +30,8 @@ public class MyMainClass
         }
         catch(Exception e)
         {
-            Console.WriteLine("Error"+e.Message);  
-        }         
+            Console.WriteLine("Error"+e.Message);
+        }
     }
 }
 // </Snippet1>

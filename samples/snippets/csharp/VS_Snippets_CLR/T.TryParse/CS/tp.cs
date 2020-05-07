@@ -2,24 +2,24 @@
 // This example demonstrates overloads of the TryParse method for
 // several base types, and the TryParseExact method for DateTime.
 
-// In most cases, this example uses the most complex overload; that is, the overload 
-// with the most parameters for a particular type. If a complex overload specifies 
-// null (Nothing in Visual Basic) for the IFormatProvider parameter, formatting 
-// information is obtained from the culture associated with the current thread. 
-// If a complex overload specifies the style parameter, the parameter value is 
+// In most cases, this example uses the most complex overload; that is, the overload
+// with the most parameters for a particular type. If a complex overload specifies
+// null (Nothing in Visual Basic) for the IFormatProvider parameter, formatting
+// information is obtained from the culture associated with the current thread.
+// If a complex overload specifies the style parameter, the parameter value is
 // the default value used by the equivalent simple overload.
 
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     bool     success;
     CultureInfo ci;
     string   nl = Environment.NewLine;
-    string   msg1 = 
+    string   msg1 =
              "This example demonstrates overloads of the TryParse method for{0}" +
              "several base types, as well as the TryParseExact method for DateTime.{0}";
     string   msg2 = "Non-numeric types:{0}";
@@ -58,20 +58,20 @@ class Sample
 
     // Use fr-FR culture, and dates of the form: DDMMYYYY.
     ci = new CultureInfo("fr-FR");
-    success = DateTime.TryParse("4/7/2004 12:34:56", 
+    success = DateTime.TryParse("4/7/2004 12:34:56",
              ci, DateTimeStyles.None, out datetimeVal);
     Show(success, "DateTime #2", datetimeVal.ToString());
 
   // TryParseExact:
     // Use fr-FR culture. The format, "G", is short date and long time.
-    success = DateTime.TryParseExact("04/07/2004 12:34:56", "G", 
+    success = DateTime.TryParseExact("04/07/2004 12:34:56", "G",
              ci, DateTimeStyles.None, out datetimeVal);
     Show(success, "DateTime #3", datetimeVal.ToString());
 
     // Assume en-US culture.
     string[] dateFormats = {"f", "F", "g", "G"};
-    success = DateTime.TryParseExact("7/4/2004 12:34:56 PM", 
-             dateFormats, null, DateTimeStyles.None, 
+    success = DateTime.TryParseExact("7/4/2004 12:34:56 PM",
+             dateFormats, null, DateTimeStyles.None,
              out datetimeVal);
     Show(success, "DateTime #4", datetimeVal.ToString());
 
@@ -101,13 +101,13 @@ class Sample
     success = Decimal.TryParse("-5.5", NumberStyles.Number, null, out decimalVal);
     Show(success, "Decimal", decimalVal.ToString());
 // Single
-    success = Single.TryParse("6.6", 
-             (NumberStyles.Float | NumberStyles.AllowThousands), 
+    success = Single.TryParse("6.6",
+             (NumberStyles.Float | NumberStyles.AllowThousands),
              null, out singleVal);
     Show(success, "Single", singleVal.ToString());
 // Double
-    success = Double.TryParse("-7", 
-             (NumberStyles.Float | NumberStyles.AllowThousands), 
+    success = Double.TryParse("-7",
+             (NumberStyles.Float | NumberStyles.AllowThousands),
              null, out doubleVal);
     Show(success, "Double", doubleVal.ToString());
 
@@ -131,7 +131,7 @@ class Sample
     Show(success, "UInt64", uint64Val.ToString());
     }
 
-    protected static void Show(bool parseSuccess, string typeName, 
+    protected static void Show(bool parseSuccess, string typeName,
                                string parseValue)
     {
     string msgSuccess = "Parse for {0} = {1}";

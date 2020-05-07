@@ -7,24 +7,24 @@ public class Example
    {
       var pages = new Pages();
       Page current = pages.CurrentPage;
-      if (current != null) {  
+      if (current != null) {
          String title = current.Title;
          Console.WriteLine("Current title: '{0}'", title);
       }
       else {
          Console.WriteLine("There is no page information in the cache.");
-      }   
+      }
    }
 }
 // The example displays the following output:
 //       There is no page information in the cache.
 // </Snippet7>
 
-public class Pages 
+public class Pages
 {
    Page[] page = new Page[10];
    int ctr = 0;
-   
+
    public Page CurrentPage
    {
       get { return page[ctr]; }
@@ -33,17 +33,17 @@ public class Pages
          if (ctr > page.GetUpperBound(0)) {
             for (int ndx = 1; ndx <= page.GetUpperBound(0); ndx++)
                page[ndx - 1] = page[ndx];
-         }    
+         }
          page[ctr] = value;
          if (ctr < page.GetUpperBound(0))
-            ctr++; 
+            ctr++;
       }
    }
-   
+
    public Page PreviousPage
    {
       get {
-         if (ctr == 0) { 
+         if (ctr == 0) {
             if (page[0] == null)
                return null;
             else
@@ -54,7 +54,7 @@ public class Pages
             return page[ctr + 1];
          }
       }
-   }         
+   }
 }
 
 public class Page

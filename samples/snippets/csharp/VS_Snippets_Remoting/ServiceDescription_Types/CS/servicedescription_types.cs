@@ -23,7 +23,7 @@ class ServiceDescription_Types
       try
       {
          // Read the existing WSDL.
-         ServiceDescription myServiceDescription= 
+         ServiceDescription myServiceDescription=
             ServiceDescription.Read("Input_CS.wsdl");
 // <Snippet1>
          myServiceDescription.Types.Schemas.Remove(
@@ -36,7 +36,7 @@ class ServiceDescription_Types
          XmlSchemaElement myXmlElement1 = new XmlSchemaElement();
          myXmlElement1.Name="Add";
 
-         XmlSchemaComplexType myXmlSchemaComplexType = 
+         XmlSchemaComplexType myXmlSchemaComplexType =
             new XmlSchemaComplexType();
          XmlSchemaSequence myXmlSchemaSequence = new XmlSchemaSequence();
          myXmlSchemaSequence.Items.Add(CreateComplexTypeXmlElement(
@@ -44,7 +44,7 @@ class ServiceDescription_Types
 
          myXmlSchemaSequence.Items.Add(CreateComplexTypeXmlElement(
             "1", "1", "b", new XmlQualifiedName("s:float")));
-                                              
+
          myXmlSchemaComplexType.Particle = myXmlSchemaSequence;
          myXmlElement1.SchemaType = myXmlSchemaComplexType;
          myXmlSchema.Items.Add(myXmlElement1);
@@ -55,7 +55,7 @@ class ServiceDescription_Types
          myXmlSchemaSequence = new XmlSchemaSequence();
          myXmlSchemaSequence.Items.Add(CreateComplexTypeXmlElement(
             "1", "1", "AddResult", new XmlQualifiedName("s:float")));
-                                
+
          myXmlSchemaComplexType.Particle = myXmlSchemaSequence;
          myXmlElement2.SchemaType=myXmlSchemaComplexType;
          myXmlSchema.Items.Add(myXmlElement2);
@@ -66,10 +66,10 @@ class ServiceDescription_Types
          myXmlSchemaSequence = new XmlSchemaSequence();
          myXmlSchemaSequence.Items.Add(CreateComplexTypeXmlElement(
             "1", "1", "a", new XmlQualifiedName("s:float")));
-                                              
+
          myXmlSchemaSequence.Items.Add(CreateComplexTypeXmlElement(
             "1", "1", "b", new XmlQualifiedName("s:float")));
-                                               
+
          myXmlSchemaComplexType.Particle = myXmlSchemaSequence;
          myXmlElement3.SchemaType=myXmlSchemaComplexType;
          myXmlSchema.Items.Add(myXmlElement3);
@@ -80,7 +80,7 @@ class ServiceDescription_Types
          myXmlSchemaSequence = new XmlSchemaSequence();
          myXmlSchemaSequence.Items.Add(CreateComplexTypeXmlElement(
             "1", "1", "SubtractResult", new XmlQualifiedName("s:int")));
-                           
+
          myXmlSchemaComplexType.Particle = myXmlSchemaSequence;
          myXmlElement4.SchemaType = myXmlSchemaComplexType;
          myXmlSchema.Items.Add(myXmlElement4);
@@ -108,10 +108,10 @@ class ServiceDescription_Types
    }
    // This function creates a XmlComplex Element.
     public static XmlSchemaElement CreateComplexTypeXmlElement(
-       string minoccurs, string maxoccurs, string name, 
+       string minoccurs, string maxoccurs, string name,
        XmlQualifiedName schemaTypeName)
    {
-      XmlSchemaElement myXmlSchemaElement = new XmlSchemaElement(); 
+      XmlSchemaElement myXmlSchemaElement = new XmlSchemaElement();
       myXmlSchemaElement.MinOccursString = minoccurs;
       myXmlSchemaElement.MaxOccursString = maxoccurs;
       myXmlSchemaElement.Name = name;

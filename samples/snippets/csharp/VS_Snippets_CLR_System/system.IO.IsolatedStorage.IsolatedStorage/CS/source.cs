@@ -1,4 +1,4 @@
-﻿//<snippet1>  
+﻿//<snippet1>
 // This sample demonstrates methods of classes found in the System.IO IsolatedStorage namespace.
 using System;
 using System.IO;
@@ -88,7 +88,7 @@ public class LoginPrefs
         get { return myNewPrefs; }
     }
 
-    //<snippet4>   
+    //<snippet4>
     private bool GetPrefsForUser()
     {
         try
@@ -144,7 +144,7 @@ public class LoginPrefs
         }
     }
     //</snippet4>
-    //<snippet3>  
+    //<snippet3>
     public bool GetIsoStoreInfo()
     {
         // Get a User store with type evidence for the current Domain and the Assembly.
@@ -186,7 +186,7 @@ public class LoginPrefs
     {
         try
         {
-            //<snippet10>    
+            //<snippet10>
             IsolatedStorageFile isoFile;
             isoFile = IsolatedStorageFile.GetUserStoreForDomain();
 
@@ -220,10 +220,10 @@ public class LoginPrefs
     }
 
     //</snippet2>
-    //<snippet6>   
+    //<snippet6>
     public void DeleteFiles()
     {
-        //<snippet9>  
+        //<snippet9>
         try
         {
             IsolatedStorageFile isoFile = IsolatedStorageFile.GetStore(IsolatedStorageScope.User |
@@ -256,9 +256,9 @@ public class LoginPrefs
         }
     }
     //</snippet6>
-    //<snippet8>  
-    // This method deletes directories in the specified Isolated Storage, after first 
-    // deleting the files they contain. In this example, the Archive directory is deleted. 
+    //<snippet8>
+    // This method deletes directories in the specified Isolated Storage, after first
+    // deleting the files they contain. In this example, the Archive directory is deleted.
     // There should be no other directories in this Isolated Storage.
     public void DeleteDirectories()
     {
@@ -303,7 +303,7 @@ public class LoginPrefs
         //</Snippet16>		
     }
     //</snippet8>
-    //<snippet7>  
+    //<snippet7>
     public double SetNewPrefsForUser()
     {
         try
@@ -315,7 +315,7 @@ public class LoginPrefs
                 typeof(System.Security.Policy.Url),
                 typeof(System.Security.Policy.Url));
 
-            // If this is not a new user, archive the old preferences and 
+            // If this is not a new user, archive the old preferences and
             // overwrite them using the new preferences.
             if (!this.myNewPrefs)
             {
@@ -389,7 +389,7 @@ public class LoginPrefs
             //</Snippet12>
             isoStream.Position = 0;  // Position to overwrite the old data.
             //</snippet7>
-            //<snippet5>  
+            //<snippet5>
             StreamWriter writer = new StreamWriter(isoStream);
             // Update the data based on the new inputs.
             writer.WriteLine(this.NewsUrl);

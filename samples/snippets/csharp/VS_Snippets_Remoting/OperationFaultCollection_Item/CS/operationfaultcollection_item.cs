@@ -2,7 +2,7 @@
 
 /*
    The following example demonstrates the 'Item' property of the
-   'OperationFaultCollection' class. The program removes a fault binding 
+   'OperationFaultCollection' class. The program removes a fault binding
    with the name 'ErrorString' from the WSDL file. It also removes an
    operation fault with the name 'ErrorString' and generates a WSDL file.
 */
@@ -27,9 +27,9 @@ public class MySample
          Operation myOperation = myOperationCollection[0];
 
 // <Snippet1>
-         OperationFaultCollection myOperationFaultCollection = 
+         OperationFaultCollection myOperationFaultCollection =
             myOperation.Faults;
-         OperationFault myOperationFault = 
+         OperationFault myOperationFault =
             myOperationFaultCollection["ErrorString"];
          if( myOperationFault != null )
          {
@@ -41,11 +41,11 @@ public class MySample
          BindingCollection myBindingCollection = myServiceDescription.
                                                                  Bindings;
          Binding myBinding = myBindingCollection[0];
-         OperationBindingCollection myOperationBindingCollection = 
+         OperationBindingCollection myOperationBindingCollection =
                                                      myBinding.Operations;
-         OperationBinding myOperationBinding = 
+         OperationBinding myOperationBinding =
                                           myOperationBindingCollection[0];
-         FaultBindingCollection myFaultBindingCollection = 
+         FaultBindingCollection myFaultBindingCollection =
                                                 myOperationBinding.Faults;
          if(myFaultBindingCollection.Contains(
                                  myFaultBindingCollection["ErrorString"]))

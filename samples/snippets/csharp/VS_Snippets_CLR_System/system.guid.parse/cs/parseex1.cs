@@ -18,10 +18,10 @@ public class Example
             {
                 Guid newGuid = Guid.Parse(stringGuid);
                 Console.WriteLine($"Converted {stringGuid} to a Guid");
-            }   
+            }
             catch (ArgumentNullException)
             {
-                Console.WriteLine("The string to be parsed is null.");   
+                Console.WriteLine("The string to be parsed is null.");
             }
             catch (FormatException)
             {

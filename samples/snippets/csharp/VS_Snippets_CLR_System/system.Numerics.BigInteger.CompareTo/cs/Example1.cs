@@ -9,7 +9,7 @@ public struct StarInfo : IComparable<StarInfo>
    public StarInfo(string name, double lightYears)
    {
       this.Name = name;
-      
+
       // Calculate distance in miles from light years.
       this.Distance = (BigInteger) Math.Round(lightYears * 5.88e12);
    }

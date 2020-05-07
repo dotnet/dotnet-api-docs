@@ -6,15 +6,15 @@ public class Example
    {
       // <Snippet5>
       Random rnd = new Random();
-      
+
       Console.WriteLine("Generating 10 random numbers:");
-                        
+
       for (uint ctr = 1; ctr <= 10; ctr++)
          Console.WriteLine($"{rnd.Next(),15:N0}");
 
       // The example displays output like the following:
       //
-      //     Generating 10 random numbers:                  
+      //     Generating 10 random numbers:
       //         1,733,189,596
       //           566,518,090
       //         1,166,108,546

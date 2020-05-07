@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 String ThisMachine;
 ThisMachine = Server.MachineName;
-   
+
 // </Snippet1>
  }
 }

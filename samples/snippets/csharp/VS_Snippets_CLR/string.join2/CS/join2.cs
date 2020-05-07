@@ -1,9 +1,9 @@
 ﻿// Sample for String.Join(String, String[], int int)
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         //<snippet1>
         String[] val = {"apple", "orange", "grape", "pear"};

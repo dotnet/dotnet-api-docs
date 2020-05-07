@@ -1,9 +1,9 @@
 ﻿// System.TypeLoadException.TypeName;System.TypeLoadException.Message
 
 /* This program demonstrates the 'TypeName' and 'Message' properties
-   of the 'TypeLoadException' class. It attempts to load a 
-   non-existent type from the mscorlib assembly which throws an 
-   exception. This exception is caught and the TypeName and Message 
+   of the 'TypeLoadException' class. It attempts to load a
+   non-existent type from the mscorlib assembly which throws an
+   exception. This exception is caught and the TypeName and Message
    values are displayed.
 */
 
@@ -14,27 +14,27 @@ using System.Reflection;
 
 public class TypeLoadException_TypeName
 {
-   public static void Main() 
+   public static void Main()
    {
       // Get a reference to the assembly mscorlib.dll, which is always
       // loaded. (System.String is defined in mscorlib.)
       Assembly mscorlib = typeof(string).Assembly;
 
-      try 
+      try
       {
          Console.WriteLine("Attempting to load a type that does not exist in mscorlib.");
          // The boolean parameter causes an exception to be thrown if the
          // type is not found.
          Type myType = mscorlib.GetType("System.NonExistentType", true);
-      }  
-      catch (TypeLoadException ex) 
+      }
+      catch (TypeLoadException ex)
       {
-         // Display the name of the type that was not found, and the 
+         // Display the name of the type that was not found, and the
          // exception message.
-         Console.WriteLine("TypeLoadException was caught. Type = '{0}'.", 
+         Console.WriteLine("TypeLoadException was caught. Type = '{0}'.",
              ex.TypeName);
          Console.WriteLine("Error Message = '{0}'", ex.Message);
-      }  
+      }
    }
 }
 /*

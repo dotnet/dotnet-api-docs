@@ -38,7 +38,7 @@ public class PropertyClass
 
 public class Example
 {
-    public static void Main() 
+    public static void Main()
     {
         Type t = typeof(PropertyClass);
         // Get the public properties.
@@ -62,7 +62,7 @@ public class Example
         foreach (var propInfo in propInfos) {
             bool readable = propInfo.CanRead;
             bool writable = propInfo.CanWrite;
-            
+
             Console.WriteLine("   Property name: {0}", propInfo.Name);
             Console.WriteLine("   Property type: {0}", propInfo.PropertyType);
             Console.WriteLine("   Read-Write:    {0}", readable & writable);

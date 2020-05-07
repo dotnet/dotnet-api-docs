@@ -7,14 +7,14 @@ public class Example
 {
    public static void Main()
    {
-      string[] hexStrings = { "80", "E293", "F9A2FF", "FFFFFFFF", 
-                              "080", "0E293", "0F9A2FF", "0FFFFFFFF",  
+      string[] hexStrings = { "80", "E293", "F9A2FF", "FFFFFFFF",
+                              "080", "0E293", "0F9A2FF", "0FFFFFFFF",
                               "0080", "00E293", "00F9A2FF", "00FFFFFFFF" };
       foreach (string hexString in hexStrings)
       {
          BigInteger number = BigInteger.Parse(hexString, NumberStyles.AllowHexSpecifier);
          Console.WriteLine("Converted 0x{0} to {1}.", hexString, number);
-      }         
+      }
    }
 }
 // The example displays the following output:

@@ -5,9 +5,9 @@
 
 /* The following example demonstrates 'IMessage.Properties', 'IMessage' interface,
    'IMessageSink.SyncProcessMessage' and 'IMessageSink' interface.
-   In the example the MyProxy is derived from 'RealProxy' class. In MyProxy 
-   'MessageSink' is created using 'CreateMessageSink' method of 'IChannelSender' 
-   interface. The 'IMessageSink' return by 'CreateMessageSink' is used to demonstrate 
+   In the example the MyProxy is derived from 'RealProxy' class. In MyProxy
+   'MessageSink' is created using 'CreateMessageSink' method of 'IChannelSender'
+   interface. The 'IMessageSink' return by 'CreateMessageSink' is used to demonstrate
    'IMessageSink.SyncProcessMessage' of 'IMessageSink' interface. The 'Invoke' method
    is overridden in 'MyProxy' class.to demonstrate its properties.
 */
@@ -27,7 +27,7 @@ using Share;
 
 namespace MyNameSpace
 {
-   
+
    public class MyProxy : RealProxy
    {
       string myUrl;
@@ -38,7 +38,7 @@ namespace MyNameSpace
       public MyProxy(Type myType, string myUrl1)
          : base(myType)
       {
-         
+
          myUrl = myUrl1;
 
          IChannel[] myRegisteredChannels = ChannelServices.RegisteredChannels;

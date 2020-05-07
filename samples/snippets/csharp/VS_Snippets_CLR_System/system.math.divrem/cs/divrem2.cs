@@ -10,17 +10,17 @@ public class Example
                            Int64.MinValue };
       // Define one positive and one negative divisor.
       long[] divisors = { 2000, -2000 };
-      
+
       foreach (long divisor in divisors)
       {
          foreach (long dividend in dividends)
          {
-            long remainder; 
+            long remainder;
             long quotient = Math.DivRem(dividend, divisor, out remainder);
-            Console.WriteLine(@"{0:N0} \ {1:N0} = {2:N0}, remainder {3:N0}", 
+            Console.WriteLine(@"{0:N0} \ {1:N0} = {2:N0}, remainder {3:N0}",
                               dividend, divisor, quotient, remainder);
          }
-      }                                
+      }
    }
 }
 // The example displays the following output:

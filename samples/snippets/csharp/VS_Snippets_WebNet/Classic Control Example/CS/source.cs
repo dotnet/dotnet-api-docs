@@ -6,7 +6,7 @@ using System.Web.UI;
 namespace SimpleControlSamples {
 
     public class InnerContent : Control {
-	[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="Execution")] 
+	[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="Execution")]
        protected override void Render(HtmlTextWriter output) {
 
            if ( (HasControls()) && (Controls[0] is LiteralControl) ) {
@@ -15,7 +15,7 @@ namespace SimpleControlSamples {
                output.Write("</H2>");
            }
        }
-    }    
+    }
 }
-   
+
 // </Snippet1>

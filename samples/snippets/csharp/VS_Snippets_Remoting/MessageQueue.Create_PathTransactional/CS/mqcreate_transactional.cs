@@ -12,7 +12,7 @@ namespace MyProject
 
         //**************************************************
         // Provides an entry point into the application.
-        //		 
+        //		
         // This example creates new transactional queues.
         //**************************************************
 
@@ -29,7 +29,7 @@ namespace MyProject
         }
 
         //**************************************************
-        // Creates public transactional queues and sends a 
+        // Creates public transactional queues and sends a
         // message.
         //**************************************************
 		
@@ -49,7 +49,7 @@ namespace MyProject
 
             // Send a message to the queue.
             // Create a transaction.
-            MessageQueueTransaction myTransaction = new 
+            MessageQueueTransaction myTransaction = new
                 MessageQueueTransaction();
 
             // Begin the transaction.
@@ -90,7 +90,7 @@ namespace MyProject
 
             // Send a message to the queue.
             // Create a transaction.
-            MessageQueueTransaction myTransaction = new 
+            MessageQueueTransaction myTransaction = new
                 MessageQueueTransaction();
 
             // Begin the transaction.
@@ -105,7 +105,7 @@ namespace MyProject
             // Create (but do not connect to) a second private queue.
             if (!MessageQueue.Exists(".\\Private$\\newPrivTransQ2"))
             {
-                MessageQueue.Create(".\\Private$\\newPrivTransQ2", 
+                MessageQueue.Create(".\\Private$\\newPrivTransQ2",
                     true);
             }
 

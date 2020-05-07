@@ -16,7 +16,7 @@ namespace SampleNamespace {
             SampleService objectService = new SampleService();
             RemotingServices.SetObjectUriForMarshal(objectService, "SampleService.soap");
             ObjRef objRefService = RemotingServices.Marshal(objectService);
-            
+
             Console.WriteLine("Press enter to end the server process.");
             Console.ReadLine();
             // </Snippet1>

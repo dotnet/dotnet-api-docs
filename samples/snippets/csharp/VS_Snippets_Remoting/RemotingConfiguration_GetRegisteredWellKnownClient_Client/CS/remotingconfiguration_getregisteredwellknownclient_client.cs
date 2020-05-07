@@ -2,9 +2,9 @@
 
 /*
 The following example demonstrates the 'GetRegisteredWellKnownClientTypes' method
-of 'RemotingConfiguration' class. 
-It registers a 'TcpChannel' object with the channel services. Then registers the 
-'MyServerImpl' object as well-known type at the client end. By using the 
+of 'RemotingConfiguration' class.
+It registers a 'TcpChannel' object with the channel services. Then registers the
+'MyServerImpl' object as well-known type at the client end. By using the
 'GetRegisteredWellKnownClientTypes' method it gets well-known types registered
 at the client side and displays it's properties to the console.
 */
@@ -33,5 +33,5 @@ using System.Runtime.Remoting.Channels.Tcp;
          Console.WriteLine("The Object type is:"+myEntries[0].ObjectType);
          Console.WriteLine("The Object Url is:"+myEntries[0].ObjectUrl);
 // </Snippet1>
-      } 
+      }
    }

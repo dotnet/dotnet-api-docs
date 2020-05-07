@@ -8,7 +8,7 @@ public class Page1: Page
  {
 // <Snippet1>
 HttpFileCollection MyFileCollection = Request.Files;
- 
+
  for (int Loop1 = 0; Loop1 < MyFileCollection.Count; Loop1++)
  {
     if (MyFileCollection[Loop1].ContentType == "video/mpeg")
@@ -16,7 +16,7 @@ HttpFileCollection MyFileCollection = Request.Files;
        //...
     }
  }
-    
+
 // </Snippet1>
  }
 }

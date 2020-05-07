@@ -13,25 +13,25 @@ public class ValueComparison
       int negativeValue = -1934;
       int positiveValue = 903624;
       int sameValue = 16325;
-         
-      Console.WriteLine("Comparing {0} and {1}: {2} ({3}).",  
-                        mainValue, zeroValue, 
-                        mainValue.CompareTo(zeroValue), 
-                        (Comparison) mainValue.CompareTo(zeroValue));
-                        
+
       Console.WriteLine("Comparing {0} and {1}: {2} ({3}).",
-                        mainValue, sameValue, 
-                        mainValue.CompareTo(sameValue), 
+                        mainValue, zeroValue,
+                        mainValue.CompareTo(zeroValue),
+                        (Comparison) mainValue.CompareTo(zeroValue));
+
+      Console.WriteLine("Comparing {0} and {1}: {2} ({3}).",
+                        mainValue, sameValue,
+                        mainValue.CompareTo(sameValue),
                         (Comparison) mainValue.CompareTo(sameValue));
-                        
-      Console.WriteLine("Comparing {0} and {1}: {2} ({3}).", 
-                        mainValue, negativeValue, 
-                        mainValue.CompareTo(negativeValue), 
+
+      Console.WriteLine("Comparing {0} and {1}: {2} ({3}).",
+                        mainValue, negativeValue,
+                        mainValue.CompareTo(negativeValue),
                         (Comparison) mainValue.CompareTo(negativeValue));
-                        
-      Console.WriteLine("Comparing {0} and {1}: {2} ({3}).", 
-                        mainValue, positiveValue, 
-                        mainValue.CompareTo(positiveValue), 
+
+      Console.WriteLine("Comparing {0} and {1}: {2} ({3}).",
+                        mainValue, positiveValue,
+                        mainValue.CompareTo(positiveValue),
                         (Comparison) mainValue.CompareTo(positiveValue));
    }
 }

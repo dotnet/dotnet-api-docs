@@ -2,13 +2,13 @@
 // System.Web.Services.Description.ServiceDescriptionCollection.Item(String)
 // System.Web.Services.Description.ServiceDescriptionCollection.CopyTo()
 
-/* The following program demonstrates 'Item' property, 'Insert' and 'CopyTo' 
-   methods of the 'ServiceDescriptionCollection' class. It creates an instance of 
-   'ServiceDescriptionCollection' and adds 'ServiceDescription' objects to the 
-   collection. The elements of the collection are copied to a 'ServiceDescription' 
+/* The following program demonstrates 'Item' property, 'Insert' and 'CopyTo'
+   methods of the 'ServiceDescriptionCollection' class. It creates an instance of
+   'ServiceDescriptionCollection' and adds 'ServiceDescription' objects to the
+   collection. The elements of the collection are copied to a 'ServiceDescription'
    array.
-   
-   Note: This program requires 'DataTypes_CS.wsdl' and 'MathService_CS.wsdl' 
+
+   Note: This program requires 'DataTypes_CS.wsdl' and 'MathService_CS.wsdl'
    files to be placed in the same directory as that of .exe for running.
 */
 using System;
@@ -31,8 +31,8 @@ class MyServiceDescriptionCollection
          myCollection.Add(myServiceDescription1) ;
 // <Snippet1>
          // Insert a 'ServiceDescription' object into the collection.
-         myCollection.Insert(1, myServiceDescription2); 
-// </Snippet1>      
+         myCollection.Insert(1, myServiceDescription2);
+// </Snippet1>
 // <Snippet2>
           // Get a 'ServiceDescription' object in collection using 'Item'.
           ServiceDescription myServiceDescription = myCollection["http://tempuri1.org/"];

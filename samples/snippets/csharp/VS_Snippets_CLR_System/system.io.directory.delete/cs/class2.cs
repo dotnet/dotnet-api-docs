@@ -10,7 +10,7 @@ namespace ConsoleApplication
         {
             string topPath = @"C:\NewDirectory";
             string subPath = @"C:\NewDirectory\NewSubDirectory";
-            
+
             try
             {
                 Directory.CreateDirectory(subPath);
@@ -19,7 +19,7 @@ namespace ConsoleApplication
                 {
                     writer.WriteLine("content added");
                 }
-                
+
                 Directory.Delete(topPath, true);
 
                 bool directoryExists = Directory.Exists(topPath);
