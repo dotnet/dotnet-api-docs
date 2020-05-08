@@ -5,7 +5,7 @@ public class RemoveTest {
     public static void Main() {
 
         string name = "Michelle Violet Banks";
- 
+
         Console.WriteLine("The entire name is '{0}'", name);
 
         // remove the middle name, identified by finding the spaces in the middle of the name...

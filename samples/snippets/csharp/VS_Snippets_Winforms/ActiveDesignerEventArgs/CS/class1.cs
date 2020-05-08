@@ -8,7 +8,7 @@ namespace ActiveDesignerEventArgsExample
 	{
 		[STAThread]
 		static void Main(string[] args)
-		{            
+		{
 		}
 
         //<Snippet1>

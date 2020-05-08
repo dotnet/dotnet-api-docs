@@ -1,18 +1,18 @@
 ﻿//<snippet1>
 // This example demonstrates the CopyTo(Int32, Char[], Int32, Int32) method.
 
-// Typically the destination array is small, preallocated, and global while 
-// the StringBuilder is large with programmatically defined data. 
-// However, for this example both the array and StringBuilder are small 
+// Typically the destination array is small, preallocated, and global while
+// the StringBuilder is large with programmatically defined data.
+// However, for this example both the array and StringBuilder are small
 // and the StringBuilder has predefined data.
 
 using System;
 using System.Text;
 
-class Sample 
+class Sample
 {
     protected static char[] dest = new char[6];
-    public static void Main() 
+    public static void Main()
     {
     StringBuilder src = new StringBuilder("abcdefghijklmnopqrstuvwxyz!");
     dest[1] = ')';

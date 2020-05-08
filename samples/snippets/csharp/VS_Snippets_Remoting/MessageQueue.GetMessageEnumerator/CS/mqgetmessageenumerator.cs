@@ -12,9 +12,9 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example uses a cursor to step through the
-		// messages in a queue and counts the number of 
+		// messages in a queue and counts the number of
 		// Lowest priority messages.
 		//**************************************************
 
@@ -43,7 +43,7 @@ namespace MyProject
 			MessageQueue myQueue = new MessageQueue(".\\myQueue");
 	
 			// Get a cursor into the messages in the queue.
-			MessageEnumerator myEnumerator = 
+			MessageEnumerator myEnumerator =
 				myQueue.GetMessageEnumerator();
 
 			// Specify that the messages's priority should be read.
@@ -53,14 +53,14 @@ namespace MyProject
 			while(myEnumerator.MoveNext())
 			{
 				// Increase the count if priority is Lowest.
-				if(myEnumerator.Current.Priority == 
+				if(myEnumerator.Current.Priority ==
 					MessagePriority.Lowest)
 					
 					numberItems++;
 			}
 
 			// Display final count.
-			Console.WriteLine("Lowest priority messages: " + 
+			Console.WriteLine("Lowest priority messages: " +
 				numberItems.ToString());
 			
 			return;

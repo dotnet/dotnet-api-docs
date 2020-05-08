@@ -27,7 +27,7 @@ public class Form1 : Form
     {
         // Draws a flat button on button1.
         ControlPaint.DrawButton(
-            System.Drawing.Graphics.FromHwnd(_button1.Handle), 0, 0, 
+            System.Drawing.Graphics.FromHwnd(_button1.Handle), 0, 0,
             _button1.Width, _button1.Height,
             ButtonState.Flat);
     }

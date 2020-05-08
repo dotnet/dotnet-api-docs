@@ -8,14 +8,14 @@ namespace test
    using System;
    using System.Web;
 
-   // Factory class that creates a handler object based on a request 
+   // Factory class that creates a handler object based on a request
    // for either abc.aspx or xyz.aspx as specified in the Web.config file.
    public class MyFactory : IHttpHandlerFactory
    {
       [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-      public virtual IHttpHandler GetHandler(HttpContext context, 
-                                             String requestType, 
-                                             String url, 
+      public virtual IHttpHandler GetHandler(HttpContext context,
+                                             String requestType,
+                                             String url,
                                              String pathTranslated)
       {
          String fname = url.Substring(url.LastIndexOf('/')+1);
@@ -25,7 +25,7 @@ namespace test
          Object h = null;
 
          // Try to create the handler object.
-         try 
+         try
          {
             // Create the handler by calling class abc or class xyz.
             h = Activator.CreateInstance(Type.GetType(className));
@@ -43,7 +43,7 @@ namespace test
       {
       }
    }
-   
+
    // Class definition for abc.aspx handler.
    public class abc : IHttpHandler
    {
@@ -53,7 +53,7 @@ namespace test
          context.Response.Write("<p>ABC Handler</p>\n");
          context.Response.Write("</body></html>");
       }
-    
+
       public virtual bool IsReusable
       {
          get { return true; }
@@ -69,7 +69,7 @@ namespace test
          context.Response.Write("<p>XYZ Handler</p>\n");
          context.Response.Write("</body></html>");
       }
-    
+
       public virtual bool IsReusable
       {
          get { return true; }
@@ -80,7 +80,7 @@ namespace test
 /*
 ______________________________________________________________
 
-To use the handler factory, use the following lines in a 
+To use the handler factory, use the following lines in a
 Web.config file.
 
 <configuration>
@@ -88,9 +88,9 @@ Web.config file.
       <httpHandlers>
          <add verb="*" path="abc.aspx" type="test.MyFactory,HandlerFactoryTest" />
          <add verb="*" path="xyz.aspx" type="test.MyFactory,HandlerFactoryTest" />
-      </httpHandlers>     
+      </httpHandlers>
    </system.web>
 </configuration>
 */
-   
+
 // </Snippet1>

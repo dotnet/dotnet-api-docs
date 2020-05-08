@@ -3,9 +3,9 @@
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     CultureInfo ci = new CultureInfo("ar-DZ");
     Console.WriteLine("Culture name: . . . . . . . . . {0}", ci.Name);

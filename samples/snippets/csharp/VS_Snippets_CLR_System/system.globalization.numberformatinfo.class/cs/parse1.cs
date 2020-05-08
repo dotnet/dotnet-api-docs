@@ -8,7 +8,7 @@ public class Example
    {
       String[] values = { "1,034,562.91", "9 532 978,07" };
       String[] cultureNames = { "en-US", "fr-FR", "" };
-      
+
       foreach (var value in values) {
          foreach (var cultureName in cultureNames) {
             CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
@@ -20,7 +20,7 @@ public class Example
             catch (FormatException) {
                Console.WriteLine("'{0}': FormatException ({1})",
                                  value, name);
-            }   
+            }
          }
          Console.WriteLine();
       }
@@ -30,7 +30,7 @@ public class Example
 //       '1,034,562.91' --> 1034562.91 (en-US)
 //       '1,034,562.91': FormatException (fr-FR)
 //       '1,034,562.91' --> 1034562.91 (Invariant)
-//       
+//
 //       '9 532 978,07': FormatException (en-US)
 //       '9 532 978,07' --> 9532978.07 (fr-FR)
 //       '9 532 978,07': FormatException (Invariant)

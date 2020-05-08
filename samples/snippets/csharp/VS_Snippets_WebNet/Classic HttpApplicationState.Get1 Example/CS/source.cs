@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 Object MyObject;
 MyObject = Application.Get(0);
-   
+
 // </Snippet1>
  }
 }

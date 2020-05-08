@@ -10,7 +10,7 @@ public class Page1: Page
  String connectionString = "";
 // <Snippet1>
 Cache.Insert("DSN", connectionString, new CacheDependency(Server.MapPath("myconfig.xml")));
-   
+
 // </Snippet1>
  }
 }

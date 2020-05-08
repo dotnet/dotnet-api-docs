@@ -13,7 +13,7 @@ public class Program
 
         string DataName = "";
         GC.Collect(0);
-        
+
         // Randomly access objects in the cache.
         for (int i = 0; i < c.Count; i++) {
             int index = r.Next(c.Count);
@@ -33,7 +33,7 @@ public class Cache
     static Dictionary<int, WeakReference> _cache;
 
     // Track the number of times an object is regenerated.
-    int regenCount = 0;   
+    int regenCount = 0;
 
     public Cache(int count)
     {

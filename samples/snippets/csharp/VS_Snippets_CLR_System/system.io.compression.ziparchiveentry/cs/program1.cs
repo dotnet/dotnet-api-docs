@@ -18,9 +18,9 @@ namespace ConsoleApplication1
                     float compressedRatio = (float)entry.CompressedLength / entry.Length;
                     float reductionPercentage = 100 - (compressedRatio * 100);
 
-                    Console.WriteLine (string.Format("File: {0}, Compressed {1:F2}%", entry.Name, reductionPercentage)); 
+                    Console.WriteLine (string.Format("File: {0}, Compressed {1:F2}%", entry.Name, reductionPercentage));
                 }
-            } 
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Example
             // IsBaseOf
             SampleIsBaseOf();
         }
-     
+
         // TryCreate
         private static void SampleTryCreate()
         {
@@ -52,7 +52,7 @@ namespace Example
                 Console.WriteLine("addressString could not be parsed as a URI "
                     + "address.");
             }
-            //</snippet1>    
+            //</snippet1>
         } //SampleTryCreate
 
         // Constructor
@@ -62,10 +62,10 @@ namespace Example
             // Create an absolute Uri from a string.
             Uri absoluteUri = new Uri("http://www.contoso.com/");
 
-            // Create a relative Uri from a string.  allowRelative = true to allow for 
+            // Create a relative Uri from a string.  allowRelative = true to allow for
             // creating a relative Uri.
             Uri relativeUri = new Uri("/catalog/shownew.htm?date=today", UriKind.Relative);
-         
+
             // Check whether the new Uri is absolute or relative.
             if (!relativeUri.IsAbsoluteUri)
                 Console.WriteLine("{0} is a relative Uri.", relativeUri);
@@ -84,11 +84,11 @@ namespace Example
             Uri uriAddress = new Uri("HTTP://www.ConToso.com:80//thick%20and%20thin.htm");
 
             // Write the new Uri to the console and note the difference in the two values.
-            // ToString() gives the canonical version.  OriginalString gives the orginal 
+            // ToString() gives the canonical version.  OriginalString gives the orginal
             // string that was passed to the constructor.
 
             // The following outputs "http://www.contoso.com/thick and thin.htm".
-            Console.WriteLine(uriAddress.ToString()); 
+            Console.WriteLine(uriAddress.ToString());
 
             // The following outputs "HTTP://www.ConToso.com:80//thick%20and%20thin.htm".
             Console.WriteLine(uriAddress.OriginalString);
@@ -99,10 +99,10 @@ namespace Example
         private static void SampleDNSSafeHost()
         {
             //<snippet4>
-            // Create new Uri using a string address.         
+            // Create new Uri using a string address.
             Uri address = new Uri("http://[fe80::200:39ff:fe36:1a2d%254]/temp/example.htm");
 
-            // Make the address DNS safe. 
+            // Make the address DNS safe.
 
             // The following outputs "[fe80::200:39ff:fe36:1a2d]".
             Console.WriteLine(address.Host);
@@ -118,8 +118,8 @@ namespace Example
             //<snippet5>
             // Create some Uris.
             Uri address1 = new Uri("http://www.contoso.com/index.htm#search");
-            Uri address2 = new Uri("http://www.contoso.com/index.htm"); 
-            Uri address3 = new Uri("http://www.contoso.com/index.htm?date=today"); 
+            Uri address2 = new Uri("http://www.contoso.com/index.htm");
+            Uri address3 = new Uri("http://www.contoso.com/index.htm?date=today");
 
             // The first two are equal because the fragment is ignored.
             if (address1 == address2)
@@ -139,9 +139,9 @@ namespace Example
             Uri baseUri = new Uri("http://www.contoso.com/");
 
             // Create a new Uri from a string.
-            Uri uriAddress = new Uri("http://www.contoso.com/index.htm?date=today"); 
+            Uri uriAddress = new Uri("http://www.contoso.com/index.htm?date=today");
 
-            // Determine whether BaseUri is a base of UriAddress.  
+            // Determine whether BaseUri is a base of UriAddress.
             if (baseUri.IsBaseOf(uriAddress))
                 Console.WriteLine("{0} is the base of {1}", baseUri, uriAddress);
             //</snippet6>

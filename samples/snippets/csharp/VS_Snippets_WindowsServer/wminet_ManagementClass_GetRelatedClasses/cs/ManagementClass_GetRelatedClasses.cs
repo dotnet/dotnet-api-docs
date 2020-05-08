@@ -4,7 +4,7 @@ using System.Management;
 
 public class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         ManagementClass c =
             new ManagementClass("Win32_LogicalDisk");

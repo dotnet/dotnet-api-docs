@@ -11,7 +11,7 @@ public class Page1: Page
 // <Snippet1>
 MyCookie.Value = DateTime.Now.ToString();
  Response.Cookies.Set(MyCookie);
-    
+
 // </Snippet1>
  }
 }

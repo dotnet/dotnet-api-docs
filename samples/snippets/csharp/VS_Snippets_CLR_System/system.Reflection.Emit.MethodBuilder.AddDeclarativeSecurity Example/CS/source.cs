@@ -19,9 +19,9 @@ class MyMethodBuilderDemo {
 				    	TypeAttributes.Public);
 
 	MethodBuilder myMethod1 = myTypeBuilder.DefineMethod("MyMethod",
-						MethodAttributes.Public, 
+						MethodAttributes.Public,
 						typeof(int),
-						new Type[] 
+						new Type[]
 						{typeof(int), typeof(int)});	
 
 	PermissionSet myMethodPermissions = new PermissionSet(

@@ -7,7 +7,7 @@
 // System.Web.Services.Description.OperationFaultCollection.Remove
 
 /*
-   The following example demonstrates the usage of the 
+   The following example demonstrates the usage of the
    'OperationFaultCollection' class, the 'Contains', 'CopyTo', 'IndexOf',
    'Insert', 'Remove', methods and the 'Item' property of the class.
    The program reverses the fault bindings that appear in the WSDL file.
@@ -26,7 +26,7 @@ public class MyOperationFaultCollectionSample
       try
       {
          // Read the StockQuote.wsdl file as input.
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("StockQuote_cs.wsdl");
 // <Snippet2>
 // <Snippet3>
@@ -34,19 +34,19 @@ public class MyOperationFaultCollectionSample
 // <Snippet5>
 // <Snippet6>
 // <Snippet7>
-         PortTypeCollection myPortTypeCollection = 
+         PortTypeCollection myPortTypeCollection =
             myServiceDescription.PortTypes;
          PortType myPortType = myPortTypeCollection[0];
          OperationCollection myOperationCollection = myPortType.Operations;
          Operation myOperation = myOperationCollection[0];
-         OperationFaultCollection myOperationFaultCollection = 
+         OperationFaultCollection myOperationFaultCollection =
             myOperation.Faults;
 
          // Reverse the operation fault order.
          if(myOperationFaultCollection.Count > 1)
          {
             OperationFault myOperationFault = myOperationFaultCollection[0];
-            OperationFault[] myOperationFaultArray = 
+            OperationFault[] myOperationFaultArray =
                new OperationFault[myOperationFaultCollection.Count];
 
             // Copy the operation faults to a temporary array.
@@ -66,13 +66,13 @@ public class MyOperationFaultCollectionSample
                   i, myOperationFaultArray[j]);
             }
             if ( myOperationFaultCollection.Contains(myOperationFault) &&
-               (myOperationFaultCollection.IndexOf(myOperationFault) 
+               (myOperationFaultCollection.IndexOf(myOperationFault)
                == myOperationFaultCollection.Count-1))
             {
                Console.WriteLine(
                   "Succeeded in reversing the operation faults.");
             }
-            else 
+            else
             {
                Console.WriteLine("Error while reversing the faults.");
             }
@@ -83,22 +83,22 @@ public class MyOperationFaultCollectionSample
 // </Snippet4>
 // </Snippet3>
 // </Snippet2>
-         BindingCollection myBindingCollection = 
+         BindingCollection myBindingCollection =
             myServiceDescription.Bindings;
          Binding myBinding = myBindingCollection[0];
-         OperationBindingCollection myOperationBindingCollection = 
+         OperationBindingCollection myOperationBindingCollection =
             myBinding.Operations;
-         OperationBinding myOperationBinding = 
+         OperationBinding myOperationBinding =
             myOperationBindingCollection[0];
-         FaultBindingCollection myFaultBindingCollection = 
+         FaultBindingCollection myFaultBindingCollection =
             myOperationBinding.Faults;
 
          // Reverse the fault binding order.
-         if(myFaultBindingCollection.Count > 1) 
+         if(myFaultBindingCollection.Count > 1)
          {
             FaultBinding myFaultBinding = myFaultBindingCollection[0];
 
-            FaultBinding[] myFaultBindingArray = 
+            FaultBinding[] myFaultBindingArray =
                new FaultBinding[myFaultBindingCollection.Count];
 
             // Copy the fault bindings to a temporary array.
@@ -117,10 +117,10 @@ public class MyOperationFaultCollectionSample
                myFaultBindingCollection.Insert(i, myFaultBindingArray[j]);
             }
 
-            // Check whether the first element before the reversal 
+            // Check whether the first element before the reversal
             // is now the last element.
-            if(myFaultBindingCollection.Contains(myFaultBinding) && 
-               myFaultBindingCollection.IndexOf(myFaultBinding) == 
+            if(myFaultBindingCollection.Contains(myFaultBinding) &&
+               myFaultBindingCollection.IndexOf(myFaultBinding) ==
                (myFaultBindingCollection.Count - 1))
             {
                // Write the WSDL generated to a file.

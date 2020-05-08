@@ -6,12 +6,12 @@
 // System.Web.Services.Protocols.SoapHeaderDirection.In
 
 /*
-   The following example demonstrates various members of the 
+   The following example demonstrates various members of the
    SoapHeaderCollection class and the In member of the SoapHeaderDirection
-   enumeration. The program extends the SoapExtension class to create a 
+   enumeration. The program extends the SoapExtension class to create a
    class that is used to log the SOAP messages transferred for an XML Web
    service method invocation. Whenever this method is invoked on the client
-   side, all the SOAP message that are transfered both from the client and 
+   side, all the SOAP message that are transfered both from the client and
    the server are written to a log file.
 */
 
@@ -20,7 +20,7 @@ using System.IO;
 using System.Web.Services.Protocols;
 using System.Web.Services;
 
-public class MySoapExtension : SoapExtension 
+public class MySoapExtension : SoapExtension
 {
    Stream oldStream;
    Stream newStream;
@@ -28,27 +28,27 @@ public class MySoapExtension : SoapExtension
 
    // Return the file name that is to log the SOAP messages.
    public override object GetInitializer(LogicalMethodInfo methodInfo,
-      SoapExtensionAttribute attribute) 
+      SoapExtensionAttribute attribute)
    {
       return ((MySoapExtensionAttribute)attribute).Filename;
    }
 
    // Return the file name that is to log the SOAP messages.
-   public override object GetInitializer(Type filename) 
+   public override object GetInitializer(Type filename)
    {
       return (Type) filename;
    }
 
    // Save the name of the log file that will save the SOAP messages.
-   public override void Initialize(object initializer) 
+   public override void Initialize(object initializer)
    {
       filename = (string) initializer;
    }
 
    // Process the SOAP message received and write it to the log file.
-   public override void ProcessMessage(SoapMessage message) 
+   public override void ProcessMessage(SoapMessage message)
    {
-      switch (message.Stage) 
+      switch (message.Stage)
       {
          case SoapMessageStage.BeforeSerialize:
             break;
@@ -69,7 +69,7 @@ public class MySoapExtension : SoapExtension
    public void WriteOutput(SoapClientMessage message)
    {
       newStream.Position = 0;
-      FileStream myFileStream = 
+      FileStream myFileStream =
          new FileStream(filename, FileMode.Append, FileAccess.Write);
       StreamWriter myStreamWriter = new StreamWriter(myFileStream);
       myStreamWriter.WriteLine("================================== Request at "
@@ -86,10 +86,10 @@ public class MySoapExtension : SoapExtension
    public void WriteInput(SoapClientMessage message)
    {
       Copy(oldStream, newStream);
-      FileStream myFileStream = 
+      FileStream myFileStream =
          new FileStream(filename, FileMode.Append, FileAccess.Write);
       StreamWriter myStreamWriter = new StreamWriter(myFileStream);
-      myStreamWriter.WriteLine("---------------------------------- Response at " 
+      myStreamWriter.WriteLine("---------------------------------- Response at "
          + DateTime.Now);
       myStreamWriter.Flush();
       newStream.Position = 0;
@@ -107,8 +107,8 @@ public class MySoapExtension : SoapExtension
       return newStream;
    }
 
-   // Utility method to copy the contents of one stream to another. 
-   void Copy(Stream fromStream, Stream toStream) 
+   // Utility method to copy the contents of one stream to another.
+   void Copy(Stream fromStream, Stream toStream)
    {
       TextReader myTextReader = new StreamReader(fromStream);
       TextWriter myTextWriter = new StreamWriter(toStream);
@@ -117,7 +117,7 @@ public class MySoapExtension : SoapExtension
    }
 }
 
-// A SoapExtensionAttribute that can be associated with an 
+// A SoapExtensionAttribute that can be associated with an
 // XML Web service method.
 [AttributeUsage(AttributeTargets.Method)]
 public class MySoapExtensionAttribute : SoapExtensionAttribute
@@ -141,19 +141,19 @@ public class MySoapExtensionAttribute : SoapExtensionAttribute
    }
 
    // User can set priority of the SoapExtension.
-   public override int Priority 
+   public override int Priority
    {
-      get 
+      get
       {
          return myPriority;
       }
-      set 
-      { 
+      set
+      {
          myPriority = value;
       }
    }
 
-   public string Filename 
+   public string Filename
    {
       get
       {
@@ -174,19 +174,19 @@ public class MySoapHeader : SoapHeader
 // <Snippet1>
 [System.Web.Services.WebServiceBindingAttribute(Name="MathSvcSoap",
    Namespace="http://tempuri.org/")]
-public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol 
-{ 
+public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol
+{
 // <Snippet6>
    public SoapHeader[] mySoapHeaders;
-   
-   [SoapHeaderAttribute("mySoapHeaders", 
+
+   [SoapHeaderAttribute("mySoapHeaders",
       Direction=SoapHeaderDirection.In)]
    [System.Web.Services.Protocols.SoapDocumentMethodAttribute(
-      "http://tempuri.org/Add", 
-      Use=System.Web.Services.Description.SoapBindingUse.Literal, 
+      "http://tempuri.org/Add",
+      Use=System.Web.Services.Description.SoapBindingUse.Literal,
       ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
    [MySoapExtensionAttribute()]
-   public System.Single Add(System.Single xValue, System.Single yValue) 
+   public System.Single Add(System.Single xValue, System.Single yValue)
    {
 // <Snippet2>
       SoapHeaderCollection mySoapHeaderCollection = new SoapHeaderCollection();
@@ -209,26 +209,26 @@ public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol
       mySoapHeaders = new MySoapHeader[mySoapHeaderCollection.Count];
       mySoapHeaderCollection.CopyTo(mySoapHeaders, 0);
 // </Snippet5>
-      object[] results = this.Invoke("Add", 
+      object[] results = this.Invoke("Add",
          new object[] {xValue, yValue});
       return ((System.Single)(results[0]));
    }
 // </Snippet6>
 
    [System.Diagnostics.DebuggerStepThroughAttribute()]
-   public MathSvc() 
+   public MathSvc()
    {
       this.Url = "http://localhost/MathSvc_SoapHeaderCollection.cs.asmx";
    }
 
    public System.IAsyncResult BeginAdd(System.Single xValue,
-      System.Single yValue, System.AsyncCallback callback, object asyncState) 
+      System.Single yValue, System.AsyncCallback callback, object asyncState)
    {
-      return this.BeginInvoke("Add", new object[] {xValue, yValue}, 
+      return this.BeginInvoke("Add", new object[] {xValue, yValue},
          callback, asyncState);
    }
 
-   public System.Single EndAdd(System.IAsyncResult asyncResult) 
+   public System.Single EndAdd(System.IAsyncResult asyncResult)
    {
       object[] results = this.EndInvoke(asyncResult);
       return ((System.Single)(results[0]));

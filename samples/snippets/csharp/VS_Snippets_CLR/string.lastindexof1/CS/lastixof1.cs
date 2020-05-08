@@ -20,7 +20,7 @@ class Sample {
     while((start > -1) && (at > -1))
         {
         at = str.LastIndexOf('t', start);
-        if (at > -1) 
+        if (at > -1)
             {
             Console.Write("{0} ", at);
             start = at - 1;

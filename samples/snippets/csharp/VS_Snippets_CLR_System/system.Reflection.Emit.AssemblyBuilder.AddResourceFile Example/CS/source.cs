@@ -11,10 +11,10 @@ class AsmBuilderGetFileDemo
 {
    private static string myResourceFileName = "MyResource.txt";
 
-   private static FileInfo CreateResourceFile() 
+   private static FileInfo CreateResourceFile()
    {
 
-     	FileInfo f = new FileInfo(myResourceFileName); 
+     	FileInfo f = new FileInfo(myResourceFileName);
 	StreamWriter sw = f.CreateText();
 
 	sw.WriteLine("Hello, world!");
@@ -41,16 +41,16 @@ class AsmBuilderGetFileDemo
 
 	// To confirm that the resource file has been added to the manifest,
 	// we will save the assembly as MyAsm.dll. You can view the manifest
-	// and confirm the presence of the resource file by running 
+	// and confirm the presence of the resource file by running
 	// "ildasm MyAsm.dll" from the prompt in the directory where you executed
-	// the compiled code. 
+	// the compiled code.
 
 	myAsmBuilder.Save(myAsmFileName);	
 
 	return myAsmBuilder;
    }
 
-   public static void Main() 
+   public static void Main()
    {
 
 	FileStream myResourceFS = null;
@@ -61,7 +61,7 @@ class AsmBuilderGetFileDemo
 
 	AssemblyBuilder myAsm = BuildDynAssembly();
 
-	try 
+	try
         {
 	   myResourceFS = myAsm.GetFile(myResourceFileName);
         }
@@ -72,10 +72,10 @@ class AsmBuilderGetFileDemo
 			     "in this SDK build.");
 	   Console.WriteLine("The file data will now be retrieved directly, via a new FileStream.");
 	   Console.WriteLine("---");
-	   myResourceFS = new FileStream(myResourceFileName, 
+	   myResourceFS = new FileStream(myResourceFileName,
 					 FileMode.Open);
 	}
-	 
+	
 	StreamReader sr = new StreamReader(myResourceFS, System.Text.Encoding.ASCII);
 	Console.WriteLine(sr.ReadToEnd());
 	sr.Close();

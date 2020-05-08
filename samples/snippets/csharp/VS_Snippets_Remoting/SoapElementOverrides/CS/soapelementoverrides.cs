@@ -18,7 +18,7 @@ public class Transportation
    public Thing thing;
 }
 
-public class Thing{ 
+public class Thing{
    [SoapElement(IsNullable=true)] public string ThingName;
 }
 
@@ -38,12 +38,12 @@ public class Test
       // Create the SoapAttributes and SoapAttributeOverrides objects.
       SoapAttributes soapAttrs = new SoapAttributes();
 
-      SoapAttributeOverrides soapOverrides = 
+      SoapAttributeOverrides soapOverrides =
       new SoapAttributeOverrides();
-            
-      /* Create an SoapElementAttribute to override 
+
+      /* Create an SoapElementAttribute to override
       the Vehicles property. */
-      SoapElementAttribute soapElement1 = 
+      SoapElementAttribute soapElement1 =
       new SoapElementAttribute("Truck");
       // Set the SoapElement to the object.
       soapAttrs.SoapElement= soapElement1;
@@ -51,7 +51,7 @@ public class Test
       /* Add the SoapAttributes to the SoapAttributeOverrides,
       specifying the member to override. */
       soapOverrides.Add(typeof(Transportation), "Vehicle", soapAttrs);
-      
+
       // Create the XmlSerializer, and return it.
       XmlTypeMapping myTypeMapping = (new SoapReflectionImporter
       (soapOverrides)).ImportTypeMapping(typeof(Transportation));
@@ -64,14 +64,14 @@ public class Test
       XmlSerializer ser = CreateSoapOverrider();
 
       // Create the object and serialize it.
-      Transportation myTransportation = 
+      Transportation myTransportation =
       new Transportation();
 
       myTransportation.Vehicle = "MyCar";
       myTransportation.CreationDate=DateTime.Now;
       myTransportation.thing = new Thing();
 
-      XmlTextWriter writer = 
+      XmlTextWriter writer =
       new XmlTextWriter(filename, Encoding.UTF8);
       writer.Formatting = Formatting.Indented;
       writer.WriteStartElement("wrapper");
@@ -82,12 +82,12 @@ public class Test
    public void SerializeObject(string filename){
       // Create an XmlSerializer instance.
       XmlSerializer ser = new XmlSerializer(typeof(Transportation));
-      Transportation myTransportation = 
+      Transportation myTransportation =
       new Transportation();
       myTransportation.Vehicle = "MyCar";
       myTransportation.CreationDate = DateTime.Now;
       myTransportation.thing = new Thing();
-      XmlTextWriter writer = 
+      XmlTextWriter writer =
       new XmlTextWriter(filename, Encoding.UTF8);
       writer.Formatting = Formatting.Indented;
       writer.WriteStartElement("wrapper");

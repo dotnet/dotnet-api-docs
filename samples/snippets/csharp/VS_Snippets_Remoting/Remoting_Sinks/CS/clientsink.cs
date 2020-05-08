@@ -56,7 +56,7 @@ public class ClientSink : BaseChannelSinkWithProperties, IClientChannelSink
 
         // Hand off to the next sink in the chain.
         nextSink.ProcessMessage(message, requestHeaders, requestStream, out responseHeaders, out responseStream);
-    } 
+    }
 // </snippet24>
 
 // <snippet25>

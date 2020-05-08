@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 public class Example
 {
    private const int GW_OWNER = 4;
-    
+
    [DllImport("user32", CharSet=CharSet.Auto, SetLastError=true, ExactSpelling=true)]
-   public static extern IntPtr GetWindow(IntPtr hwnd, int wFlag);   
-   
+   public static extern IntPtr GetWindow(IntPtr hwnd, int wFlag);
+
    public static void Main()
    {
       IntPtr hwnd = new IntPtr(3);

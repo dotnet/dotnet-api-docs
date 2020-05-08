@@ -31,7 +31,7 @@ namespace MimeContentBinding_work
          OperationBinding myOperationBinding = myBinding.Operations[0];
          OutputBinding myOutputBinding = myOperationBinding.Output;
          ServiceDescriptionFormatExtensionCollection
-            myServiceDescriptionFormatExtensionCollection = 
+            myServiceDescriptionFormatExtensionCollection =
             myOutputBinding.Extensions;
 
          // Find all MimeContentBinding objects in extensions.
@@ -40,7 +40,7 @@ namespace MimeContentBinding_work
             typeof(MimeContentBinding));
 
          // Enumerate the array and display MimeContentBinding properties.
-         foreach(MimeContentBinding myMimeContentBinding in 
+         foreach(MimeContentBinding myMimeContentBinding in
             myMimeContentBindings)
          {
             Console.WriteLine("Type: " + myMimeContentBinding.Type);

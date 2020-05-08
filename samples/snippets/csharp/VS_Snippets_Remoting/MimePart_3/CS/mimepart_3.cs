@@ -2,35 +2,35 @@
 // System.Web.Services.Description.MimePart.ctor()
 // System.Web.Services.Description.MimePart.Extensions
 
-/* The following program demonstrates the 'MimePart' class, constructor 
-   and 'Extensions' property of 'MimePart' class. It reads 
+/* The following program demonstrates the 'MimePart' class, constructor
+   and 'Extensions' property of 'MimePart' class. It reads
    'MimePart_3_Input_cs.wsdl' file which does not have 'MimePart' object
-   supporting 'OutPut' of 'HttpPost'. It adds the 'MimePart' and finally 
+   supporting 'OutPut' of 'HttpPost'. It adds the 'MimePart' and finally
    writes into 'MimePart_3_OutPut_cs.wsdl' file.
 */
 
 // <Snippet1>
 using System;
-using System.Xml; 
-using System.Web.Services.Description;  
+using System.Xml;
+using System.Web.Services.Description;
 
 public class MyMimePart
 {
    public static void Main()
    {
-      ServiceDescription myServiceDescription  = 
+      ServiceDescription myServiceDescription  =
          ServiceDescription.Read("MimePart_3_Input_cs.wsdl");
-      ServiceDescriptionCollection myServiceDescriptionCol = 
+      ServiceDescriptionCollection myServiceDescriptionCol =
          new ServiceDescriptionCollection();
       myServiceDescriptionCol.Add(myServiceDescription);
-      XmlQualifiedName myXmlQualifiedName = 
+      XmlQualifiedName myXmlQualifiedName =
          new XmlQualifiedName("MimeServiceHttpPost","http://tempuri.org/");
 
       // Create the Binding.
-      Binding myBinding = 
+      Binding myBinding =
          myServiceDescriptionCol.GetBinding(myXmlQualifiedName);
       OperationBinding myOperationBinding= null;
-      for(int i=0; i< myBinding.Operations.Count; i++) 
+      for(int i=0; i< myBinding.Operations.Count; i++)
       {
          if(myBinding.Operations[i].Name.Equals("AddNumbers"))
          {
@@ -57,7 +57,7 @@ public class MyMimePart
 // </Snippet2>
       myServiceDescription.Write("MimePart_3_Output_CS.wsdl");
       Console.WriteLine(
-         "MimePart_3_Output_CS.wsdl has been generated successfully."); 
+         "MimePart_3_Output_CS.wsdl has been generated successfully.");
    }
 }
 // </Snippet1>

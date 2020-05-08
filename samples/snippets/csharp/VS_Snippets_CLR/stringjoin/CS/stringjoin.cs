@@ -1,9 +1,9 @@
 ﻿//<snippet1>
 using System;
 
-public class JoinTest 
+public class JoinTest
 {
-    public static void Main() 
+    public static void Main()
     {
         Console.WriteLine(MakeLine(0, 5, ", "));
         Console.WriteLine(MakeLine(1, 6, "  "));
@@ -11,7 +11,7 @@ public class JoinTest
         Console.WriteLine(MakeLine(4, 7, "< "));
     }
 
-    private static string MakeLine(int initVal, int multVal, string sep) 
+    private static string MakeLine(int initVal, int multVal, string sep)
     {
         string [] sArr = new string [10];
 
@@ -25,5 +25,5 @@ public class JoinTest
 //       0  , 5  , 10 , 15 , 20 , 25 , 30 , 35 , 40 , 45
 //       6    12   18   24   30   36   42   48   54   60
 //       81 : 90 : 99 : 108: 117: 126: 135: 144: 153: 162
-//       28 < 35 < 42 < 49 < 56 < 63 < 70 < 77 < 84 < 91  
+//       28 < 35 < 42 < 49 < 56 < 63 < 70 < 77 < 84 < 91
 // </snippet1>

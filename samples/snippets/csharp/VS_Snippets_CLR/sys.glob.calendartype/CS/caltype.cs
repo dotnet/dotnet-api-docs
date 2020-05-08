@@ -5,13 +5,13 @@
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     GregorianCalendar grCal = new GregorianCalendar();
     HijriCalendar     hiCal = new HijriCalendar();
-    JapaneseLunisolarCalendar 
+    JapaneseLunisolarCalendar
                       jaCal = new JapaneseLunisolarCalendar();
     Display(grCal);
     Display(hiCal);

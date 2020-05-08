@@ -19,7 +19,7 @@ public class HelloServiceClass : MarshalByRefObject {
 
         // Reports that the method was called.
         Console.WriteLine();
-        Console.WriteLine("Called HelloMethod on instance {0} with the '{1}' parameter.", 
+        Console.WriteLine("Called HelloMethod on instance {0} with the '{1}' parameter.",
                              n_instance, name);
 
         // Calculates and returns the result to the client.

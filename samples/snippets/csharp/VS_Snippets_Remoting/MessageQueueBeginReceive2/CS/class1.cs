@@ -21,7 +21,7 @@ public class QueueExample
         MessageQueue queue = new MessageQueue(".\\exampleQueue");
 
         // Add an event handler for the ReceiveCompleted event.
-        queue.ReceiveCompleted += new 
+        queue.ReceiveCompleted += new
             ReceiveCompletedEventHandler(MyReceiveCompleted);
 
         // Send a message to the queue.
@@ -50,7 +50,7 @@ public class QueueExample
     }
 
     // Provides an event handler for the ReceiveCompleted event.
-    private static void MyReceiveCompleted(Object source, 
+    private static void MyReceiveCompleted(Object source,
         ReceiveCompletedEventArgs asyncResult)
     {
         // Connect to the queue.

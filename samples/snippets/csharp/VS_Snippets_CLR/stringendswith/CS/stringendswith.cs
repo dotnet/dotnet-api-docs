@@ -34,10 +34,10 @@ public class EndsWithTest {
     private static string StripEndTags( string item ) {
 
         bool found = false;
-            
+
         // try to find a tag at the end of the line using EndsWith
         if (item.Trim().EndsWith(">")) {
-                
+
             // now search for the opening tag...
             int lastLocation = item.LastIndexOf( "</" );
 
@@ -45,12 +45,12 @@ public class EndsWithTest {
             if ( lastLocation >= 0 ) {
                 found = true;
                 item =  item.Substring( 0, lastLocation );
-            }    
+            }
         }
 
         if (found)
            item = StripEndTags(item);
-           
+
         return item;
     }
 }
@@ -62,7 +62,7 @@ public class EndsWithTest {
 //    <b><i><font color=green>This has multiple tags</font></i></b>
 //    <b>This has <i>embedded</i> tags.</b>
 //    This line simply ends with a greater than symbol, it should not be modified>
-//    
+//
 //    The following lists the items after the ends have been stripped:
 //    ----------------------------------------------------------------
 //    <b>This is bold text

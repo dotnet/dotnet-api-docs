@@ -12,8 +12,8 @@ public class Example
 
       if (firstNum == 0)
          Console.WriteLine("No value is greater than 4.");
-      else   
-         Console.WriteLine("The first value greater than 4 is {0}", 
+      else
+         Console.WriteLine("The first value greater than 4 is {0}",
                            firstNum);
    }
 }

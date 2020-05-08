@@ -201,9 +201,9 @@ namespace IPFilter
         public ServerProcessing ProcessMessage(
             IServerChannelSinkStack sinkStack,
             IMessage requestMessage,
-            ITransportHeaders requestHeaders, 
+            ITransportHeaders requestHeaders,
             Stream requestStream,
-            out IMessage msg, 
+            out IMessage msg,
             out ITransportHeaders responseHeaders,
             out Stream responseStream)
         {

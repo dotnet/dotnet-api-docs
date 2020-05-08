@@ -13,7 +13,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example sends and receives a message from
 		// a queue.
 		//**************************************************
@@ -28,7 +28,7 @@ namespace MyProject
 			myNewQueue.SendMessage(MessagePriority.Highest, "Second Message Body.");
 
 			// Receive messages from a queue.
-			myNewQueue.ReceiveMessage(); 
+			myNewQueue.ReceiveMessage();
 			myNewQueue.ReceiveMessage();
 
 			return;
@@ -84,13 +84,13 @@ namespace MyProject
 			
 			try
 			{
-				// Receive and format the message. 
-				Message myMessage =	myQueue.Receive(); 
+				// Receive and format the message.
+				Message myMessage =	myQueue.Receive();
 
 				// Display message information.
-				Console.WriteLine("Priority: " + 
+				Console.WriteLine("Priority: " +
 					myMessage.Priority.ToString());
-				Console.WriteLine("Body: " + 
+				Console.WriteLine("Body: " +
 					myMessage.Body.ToString());
 			}
 			

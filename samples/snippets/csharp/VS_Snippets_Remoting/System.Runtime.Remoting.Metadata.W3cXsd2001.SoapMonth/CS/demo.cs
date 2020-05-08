@@ -1,5 +1,5 @@
 ﻿/// Class: System.Runtime.Remoting.Metadata.W3cXsd2001.SoapMonth
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(DateTime)
 ///    13    GetXsdType()
@@ -7,25 +7,25 @@
 ///    12    ToString()
 ///    14    Value
 ///    16    XsdType
-///    
+///
 ///    Bugs in SoapMonth:
-///    
-///    1. SoapMonth.Parse interprets time zone inconsistently: The 
-///    following both reduce the month by 1. Either they should not 
-///    alter the month. Or the first one should reduce but the second 
+///
+///    1. SoapMonth.Parse interprets time zone inconsistently: The
+///    following both reduce the month by 1. Either they should not
+///    alter the month. Or the first one should reduce but the second
 ///    one should not:
 ///      SoapMonth.Parse("--02--+08:00").ToString() // Prints "--01--".
 ///      SoapMonth.Parse("--02---07:00").ToString() // Prints "--01--".
-/// 
-///    2. SoapMonth.Parse throws exception when the time zone is "Z": 
+///
+///    2. SoapMonth.Parse throws exception when the time zone is "Z":
 ///    SoapMonth.Parse throws the following exception,
-///      System.FormatException: String was not recognized as a 
+///      System.FormatException: String was not recognized as a
 ///      valid DateTime.
 /// when invoked as follows,
 ///      SoapMonth.Parse("--02--Z");    // Throws exception.
 ///    It fails to correctly interpret Z as the current time zone.
-///    
-/// 3. SoapMonth.Parse documentation incorrect: The documentation 
+///
+/// 3. SoapMonth.Parse documentation incorrect: The documentation
 /// states that Parse can accept months formatted as "05", "01".
 /// This is incorrect. The acceptable formats (according to the code
 /// and according to the XML spec) are: "--MM--" and "--MM--zzz".
@@ -46,7 +46,7 @@ public class Demo
         //</snippet11>
 
         //<snippet12>
-        // Print the month in XSD format. 
+        // Print the month in XSD format.
         Console.WriteLine("The month in XSD format is {0}.",
             month.ToString());
         //</snippet12>

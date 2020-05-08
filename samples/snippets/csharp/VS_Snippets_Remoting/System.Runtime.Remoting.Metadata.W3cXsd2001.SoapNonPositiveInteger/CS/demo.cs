@@ -1,5 +1,5 @@
 ﻿/// Class:  System.Runtime.Remoting.Metadata.W3cXsd2001.SoapNonPositiveInteger
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(Decimal)
 ///    13    GetXsdType()
@@ -20,16 +20,16 @@ public class Demo
     public static void Main(string[] args)
     {
         //<snippet11>
-        // Parse an XSD formatted string to create a SoapNonPositiveInteger 
+        // Parse an XSD formatted string to create a SoapNonPositiveInteger
         // object.
         string xsdIntegerString = "-13";
-        SoapNonPositiveInteger xsdInteger = 
+        SoapNonPositiveInteger xsdInteger =
             SoapNonPositiveInteger.Parse(xsdIntegerString);
         //</snippet11>
 
         //<snippet12>
-        // Print the value of the SoapNonPositiveInteger object 
-        // in XSD format. 
+        // Print the value of the SoapNonPositiveInteger object
+        // in XSD format.
         Console.WriteLine(
             "The SoapNonPositiveInteger object in XSD format is {0}.",
             xsdInteger.ToString());
@@ -38,7 +38,7 @@ public class Demo
         //<snippet13>
         // Print the XSD type string of the SoapNonPositiveInteger object.
         Console.WriteLine(
-            "The XSD type of the SoapNonPositiveInteger " + 
+            "The XSD type of the SoapNonPositiveInteger " +
             "object is {0}.", xsdInteger.GetXsdType());
         //</snippet13>
 

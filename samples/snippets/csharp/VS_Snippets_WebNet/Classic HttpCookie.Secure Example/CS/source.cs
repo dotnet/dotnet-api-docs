@@ -13,7 +13,7 @@ if (MyCookie.Secure)
  {
    //...
  }
-    
+
 // </Snippet1>
  }
 }

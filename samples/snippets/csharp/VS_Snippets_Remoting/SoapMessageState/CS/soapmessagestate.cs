@@ -6,18 +6,18 @@
 
 /*
    The following example demonstrates the 'AfterDeserialize',
-   'AfterSerialize', 'BeforeDeserialize' and 'BeforeSerialize' enum 
-   members of the 'SoapMessageState' class. The program extends the 
-   'SoapExtension' class to create a class that is used to log the 
-   SOAP messages transferred for a web service method invocation. 
-   To associate this 'SoapExtension' class with the web service 
-   method on the client proxy a class that extends from 
-   'SoapExtensionAttribute' is used. This 'SoapExtensionAttribute' is 
-   applied to a client proxy method which is associated with a web 
+   'AfterSerialize', 'BeforeDeserialize' and 'BeforeSerialize' enum
+   members of the 'SoapMessageState' class. The program extends the
+   'SoapExtension' class to create a class that is used to log the
+   SOAP messages transferred for a web service method invocation.
+   To associate this 'SoapExtension' class with the web service
+   method on the client proxy a class that extends from
+   'SoapExtensionAttribute' is used. This 'SoapExtensionAttribute' is
+   applied to a client proxy method which is associated with a web
    service method. Whenever this method is invoked on the client
    side all the SOAP message that get transfered both from the client
    and the server(which is hosting the web service) are written into
-   a log file. 
+   a log file.
 */
 
 using System;
@@ -25,39 +25,39 @@ using System.IO;
 using System.Web.Services.Protocols;
 using System.Web.Services;
 
-public class MySoapExtension : SoapExtension 
+public class MySoapExtension : SoapExtension
 {
    Stream oldStream;
    Stream newStream;
    string filename;
 
    // Return the filename that is to log the SOAP messages.
-   public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute attribute) 
+   public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute attribute)
    {
       return ((MySoapExtensionAttribute)attribute).Filename;
    }
 
    // Return the filename that is to log the SOAP messages.
-   public override object GetInitializer(Type filename) 
+   public override object GetInitializer(Type filename)
    {
       return (Type) filename;
    }
 
    // Save the name of the log file that shall save the SOAP messages.
-   public override void Initialize(object initializer) 
+   public override void Initialize(object initializer)
    {
       filename = (string) initializer;
    }
 
 // <Snippet1>
    // Process the SOAP message received and write to log file.
-   public override void ProcessMessage(SoapMessage message) 
+   public override void ProcessMessage(SoapMessage message)
    {
 // <Snippet2>
 // <Snippet3>
 // <Snippet4>
 // <Snippet5>
-      switch (message.Stage) 
+      switch (message.Stage)
       {
          case SoapMessageStage.BeforeSerialize:
             break;
@@ -108,7 +108,7 @@ public class MySoapExtension : SoapExtension
       Copy(oldStream, newStream);
       FileStream myFileStream = new FileStream(filename, FileMode.Append, FileAccess.Write);
       StreamWriter myStreamWriter = new StreamWriter(myFileStream);
-      myStreamWriter.WriteLine("---------------------------------- Response at " 
+      myStreamWriter.WriteLine("---------------------------------- Response at "
          + DateTime.Now);
       myStreamWriter.Flush();
       newStream.Position = 0;
@@ -117,8 +117,8 @@ public class MySoapExtension : SoapExtension
       newStream.Position = 0;
    }
 
-   // Utility method to copy the contents of one stream to another. 
-   void Copy(Stream fromStream, Stream toStream) 
+   // Utility method to copy the contents of one stream to another.
+   void Copy(Stream fromStream, Stream toStream)
    {
       TextReader myTextReader = new StreamReader(fromStream);
       TextWriter myTextWriter = new StreamWriter(toStream);
@@ -150,19 +150,19 @@ public class MySoapExtensionAttribute : SoapExtensionAttribute
    }
 
    // User can set priority of the 'SoapExtension'.
-   public override int Priority 
+   public override int Priority
    {
-      get 
+      get
       {
          return myPriority;
       }
-      set 
-      { 
+      set
+      {
          myPriority = value;
       }
    }
 
-   public string Filename 
+   public string Filename
    {
       get
       {
@@ -176,17 +176,17 @@ public class MySoapExtensionAttribute : SoapExtensionAttribute
 }
 
 [System.Web.Services.WebServiceBindingAttribute(Name="MathSvcSoap", Namespace="http://tempuri.org/")]
-public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol 
-{ 
+public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol
+{
    [System.Diagnostics.DebuggerStepThroughAttribute()]
-   public MathSvc() 
+   public MathSvc()
    {
       this.Url = "http://localhost/MathSvc_SoapMessageState.asmx";
    }
-   
+
    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/Add", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
    [MySoapExtensionAttribute()]
-   public System.Single Add(System.Single xValue, System.Single yValue) 
+   public System.Single Add(System.Single xValue, System.Single yValue)
    {
       object[] results = this.Invoke("Add", new object[] {
                                              xValue,
@@ -197,14 +197,14 @@ public class MathSvc : System.Web.Services.Protocols.SoapHttpClientProtocol
    public System.IAsyncResult BeginAdd(System.Single xValue,
                                        System.Single yValue,
                                        System.AsyncCallback callback,
-                                       object asyncState) 
+                                       object asyncState)
    {
       return this.BeginInvoke("Add", new object[] {
                                        xValue,
                                        yValue}, callback, asyncState);
    }
 
-   public System.Single EndAdd(System.IAsyncResult asyncResult) 
+   public System.Single EndAdd(System.IAsyncResult asyncResult)
    {
       object[] results = this.EndInvoke(asyncResult);
       return ((System.Single)(results[0]));

@@ -8,7 +8,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Response.Cache.AppendCacheExtension("post-check=900,pre-check=3600");
-    
+
 // </Snippet1>
  }
 }

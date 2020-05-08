@@ -4,9 +4,9 @@ using System.Management;
 
 public class AsyncGetExample
 {
-    public AsyncGetExample() 
+    public AsyncGetExample()
     {
-        ManagementClass c = 
+        ManagementClass c =
             new ManagementClass("Win32_Process");
         ManagementOperationObserver ob =
             new ManagementOperationObserver();
@@ -24,22 +24,22 @@ public class AsyncGetExample
     private bool completed = false;
 
     private void NewObject(object sender,
-        ObjectReadyEventArgs e) 
+        ObjectReadyEventArgs e)
     {
         Console.WriteLine("New result arrived: {0}",
             ((ManagementObject)(e.NewObject))["Name"]);
     }
 
     private void Done(object sender,
-        CompletedEventArgs e) 
+        CompletedEventArgs e)
     {
         Console.WriteLine("async Get completed !");
         completed = true;
     }
 
-    private bool Completed 
-    { 
-        get 
+    private bool Completed
+    {
+        get
         {
             return completed;
         }

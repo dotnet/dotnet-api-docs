@@ -7,7 +7,7 @@ using System.IO;
 namespace MyProject
 {
 
-	// The following example 
+	// The following example
 	// sends to a queue and receives from a queue.
 	public class Order
 	{
@@ -23,7 +23,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example sends and receives a message from
 		// a queue.
 		//**************************************************
@@ -114,14 +114,14 @@ namespace MyProject
 			
 			try
 			{
-				// Receive and format the message. 
-				Message myMessage =	myQueue.Receive(); 
+				// Receive and format the message.
+				Message myMessage =	myQueue.Receive();
 				Order myOrder = (Order)myMessage.Body;
 
 				// Display message information.
-				Console.WriteLine("Order ID: " + 
+				Console.WriteLine("Order ID: " +
 					myOrder.orderId.ToString());
-				Console.WriteLine("Sent: " + 
+				Console.WriteLine("Sent: " +
 					myOrder.orderTime.ToString());
 			}
 			

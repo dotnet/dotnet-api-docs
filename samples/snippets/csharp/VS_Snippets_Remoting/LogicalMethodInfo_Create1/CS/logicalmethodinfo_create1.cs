@@ -8,11 +8,11 @@
 
 /*
    This following example demonstrates the 'Name',
-   'InParameters', 'OutParameters', 'IsVoid' properties and 
-   'Create(MethodInfo)' method of the 'LogicalMethodInfo' class. 
-   This example displays the parameters, the in parameters and 
+   'InParameters', 'OutParameters', 'IsVoid' properties and
+   'Create(MethodInfo)' method of the 'LogicalMethodInfo' class.
+   This example displays the parameters, the in parameters and
    out parameters.
-   
+
    Note : The 'LogicalMethodInfo' class should only be used with
    'SoapMessage'. 'SoapClientMessage' and 'SoapServerMessage' contain
    a property named 'MethodInfo' which provides for an instance of
@@ -41,7 +41,7 @@ public class LogicalMethodInfo_Create
    {
       Type myType = typeof(MyService);
       MethodInfo myMethodInfo = myType.GetMethod("MyMethod");
-      LogicalMethodInfo myLogicalMethodInfo = 
+      LogicalMethodInfo myLogicalMethodInfo =
          (LogicalMethodInfo.Create(new MethodInfo[] {myMethodInfo}))[0];
 
       Console.WriteLine("\nPrinting parameters for the method : {0}",

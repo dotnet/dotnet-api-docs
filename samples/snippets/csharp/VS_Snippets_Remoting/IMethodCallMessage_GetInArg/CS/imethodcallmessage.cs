@@ -5,11 +5,11 @@
 // System.Runtime.Remoting.IMethodCallMessage.GetInArg(int)
 
 /*
-   The following example demonstrates 'GetInArg', 'GetArgName', 'InArgCount' and 'InArgs' 
+   The following example demonstrates 'GetInArg', 'GetArgName', 'InArgCount' and 'InArgs'
    members of 'IMethodCallMessage' interface.
-   In this example custom proxy is accessed by passing message to the Invoke method.  
+   In this example custom proxy is accessed by passing message to the Invoke method.
    In invoke method check the type of message. If the type is IMethodCallMessage, then
-   InArgCount,InArgs,GetArgName(int) and GetInArg(int) of the interface are displayed. 
+   InArgCount,InArgs,GetArgName(int) and GetInArg(int) of the interface are displayed.
    This example also shows how to create a custom proxy.
 */
 
@@ -24,7 +24,7 @@ using System.Security.Permissions;
 namespace IMethodCallMessageNS
 {
    // MyProxy extends the CLR Remoting RealProxy.
-   // In the same class, in the Invoke method, the methods and properties of the 
+   // In the same class, in the Invoke method, the methods and properties of the
    // IMethodCallMessage are demonstrated.
 
    [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
@@ -43,7 +43,7 @@ namespace IMethodCallMessageNS
          Console.WriteLine("MyProxy.Invoke Start");
          Console.WriteLine("");
          ReturnMessage myReturnMessage = null;
-         
+
          if (myIMessage is IMethodCallMessage)
          {
             Console.WriteLine("Message is of type 'IMethodCallMessage'.");
@@ -51,9 +51,9 @@ namespace IMethodCallMessageNS
 
             IMethodCallMessage myIMethodCallMessage;
             myIMethodCallMessage=(IMethodCallMessage)myIMessage;
-            Console.WriteLine("InArgCount is  : " + 
+            Console.WriteLine("InArgCount is  : " +
                               myIMethodCallMessage.InArgCount.ToString());
-         
+
             foreach (object myObj in myIMethodCallMessage.InArgs)
             {
                Console.WriteLine("InArgs is : " + myObj.ToString());
@@ -61,7 +61,7 @@ namespace IMethodCallMessageNS
 
             for(int i=0; i<myIMethodCallMessage.InArgCount; i++)
             {
-               Console.WriteLine("GetArgName(" +i.ToString() +") is : " + 
+               Console.WriteLine("GetArgName(" +i.ToString() +") is : " +
                                        myIMethodCallMessage.GetArgName(i));
                Console.WriteLine("GetInArg("+i.ToString() +") is : " +
                               myIMethodCallMessage.GetInArg(i).ToString());
@@ -76,7 +76,7 @@ namespace IMethodCallMessageNS
             // Build Return Message
             myReturnMessage = new ReturnMessage(5,null,0,null,
                                        (IMethodCallMessage)myIMessage);
-      
+
          Console.WriteLine("MyProxy.Invoke - Finish");
          return myReturnMessage;
       }
@@ -103,12 +103,12 @@ namespace IMethodCallMessageNS
          MyProxy myProxy = new MyProxy(typeof(MyMarshalByRefClass));
 
          Console.WriteLine("Obtain the transparent proxy from myProxy.");
-         MyMarshalByRefClass myMarshalByRefClassObj = 
+         MyMarshalByRefClass myMarshalByRefClassObj =
                               (MyMarshalByRefClass)myProxy.GetTransparentProxy();
 
          Console.WriteLine("Calling the Proxy.");
          object myReturnValue = myMarshalByRefClassObj.MyMethod("Microsoft", 1.2, 6);
-         
+
          Console.WriteLine("Sample Done.");
       }
    }

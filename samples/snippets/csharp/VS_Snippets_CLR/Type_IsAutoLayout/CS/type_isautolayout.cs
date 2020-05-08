@@ -14,10 +14,10 @@ public class Example
     {
         // Create an instance of the Type class using the GetType method.
         Type  myType=typeof(Demo);
-        // Get and display the IsAutoLayout property of the 
+        // Get and display the IsAutoLayout property of the
         // Demoinstance.
         Console.WriteLine("\nThe AutoLayout property for the Demo class is {0}.",
-            myType.IsAutoLayout); 
+            myType.IsAutoLayout);
     }
 }
 // </Snippet1>

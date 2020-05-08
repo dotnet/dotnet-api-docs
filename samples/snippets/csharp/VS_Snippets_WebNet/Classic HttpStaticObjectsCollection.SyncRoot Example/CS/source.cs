@@ -8,7 +8,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Object MySyncObject = Application.StaticObjects.SyncRoot;
-   
+
 // </Snippet1>
  }
 }

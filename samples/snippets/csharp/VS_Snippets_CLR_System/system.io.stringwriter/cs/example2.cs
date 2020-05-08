@@ -35,14 +35,14 @@ namespace ConsoleApplication
 // Characters in StringBuilder
 // a
 // n
-// d 
+// d
 //
 // c
 // h
 // a
 // r
 // s
-// 
+//
 // t
 // o
 //

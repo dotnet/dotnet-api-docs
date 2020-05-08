@@ -14,20 +14,20 @@ public struct Number
    {
       get { return n; }
    }
-   
+
    public override bool Equals(Object obj)
    {
-      if (obj == null || ! (obj is Number)) 
+      if (obj == null || ! (obj is Number))
          return false;
       else
          return n == ((Number) obj).n;
-   }      
-   
+   }
+
    public override int GetHashCode()
    {
       return n;
    }
-   
+
    public override string ToString()
    {
       return n.ToString();
@@ -43,7 +43,7 @@ public class Example
          int randomN = rnd.Next(Int32.MinValue, Int32.MaxValue);
          Number n = new Number(randomN);
          Console.WriteLine("n = {0,12}, hash code = {1,12}", n, n.GetHashCode());
-      }   
+      }
    }
 }
 // The example displays output like the following:

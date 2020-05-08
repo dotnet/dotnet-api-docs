@@ -7,7 +7,7 @@
 
 /*
    The following example demonstrates 'ReturnValue', 'OutArgCount' properties,
-   'GetOutArg', 'GetOutArgName' methods of 'IMethodReturnMessage' interface 
+   'GetOutArg', 'GetOutArgName' methods of 'IMethodReturnMessage' interface
    and 'IMethodReturnMessage' interface.
    A custom proxy is created by extending 'RealProxy' and overriding 'Invoke' method of
    'RealProxy'. The custom proxy is accessed by passing message to the Invoke method.
@@ -72,7 +72,7 @@ namespace CustomProxySample
                i, myIMethodReturnMessage.GetOutArg(i));
          }
          Console.WriteLine();
-         object[] myObjectArray = myIMethodReturnMessage.OutArgs; 
+         object[] myObjectArray = myIMethodReturnMessage.OutArgs;
          for(int i = 0; i < myObjectArray.Length; i++)
             Console.WriteLine("Value of argument {0} is '{1}' in OutArgs",
                i, myObjectArray[i]);

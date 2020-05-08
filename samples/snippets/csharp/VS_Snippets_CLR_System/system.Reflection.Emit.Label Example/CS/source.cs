@@ -46,7 +46,7 @@ class ILLabelDemo {
 
 	adderIL.Emit(OpCodes.Ldarg_0);
 	adderIL.Emit(OpCodes.Ldc_I4_S, 100);
-	adderIL.Emit(OpCodes.Bgt_S, failed); 
+	adderIL.Emit(OpCodes.Bgt_S, failed);
 
 	// Now, check to see if argument 1 was greater than 100. If it was,
 	// branch to "failed." Otherwise, fall through and perform the addition,
@@ -68,7 +68,7 @@ class ILLabelDemo {
 
 	// The end of the method. If both values were less than 100, the
 	// correct result will return. If one of the arguments was greater
-	// than 100, the result will be -1. 
+	// than 100, the result will be -1.
 
 	adderIL.MarkLabel(endOfMthd);
 	adderIL.Emit(OpCodes.Ret);
@@ -80,7 +80,7 @@ class ILLabelDemo {
 
 	Type adderType = BuildAdderType();
 
-	object addIns = Activator.CreateInstance(adderType); 
+	object addIns = Activator.CreateInstance(adderType);
 
 	object[] addParams = new object[2];
 
@@ -96,7 +96,7 @@ class ILLabelDemo {
 					BindingFlags.InvokeMethod,
 					null,
 					addIns,
-					addParams); 
+					addParams);
 
 	if (adderResult != -1) {
 

@@ -37,7 +37,7 @@ namespace IBindingList_Doc
 		{
 			if( disposing )
 			{
-				if (components != null) 
+				if (components != null)
 				{
 					components.Dispose();
 				}
@@ -52,9 +52,9 @@ namespace IBindingList_Doc
 		/// </summary>
 		private void InitializeComponent()
 		{
-			// 
+			//
 			// Form1
-			// 
+			//
 			this.ClientSize = new System.Drawing.Size(292, 273);
 			this.Name = "Form1";
 			this.Text = "Form1";
@@ -66,7 +66,7 @@ namespace IBindingList_Doc
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main() 
+		static void Main()
 		{
 			Application.Run(new Form1());
 		}
@@ -78,26 +78,26 @@ namespace IBindingList_Doc
 
 	// sample for IEditableObject
 	//<snippet1>
-	public class Customer : IEditableObject 
+	public class Customer : IEditableObject
 	{
-       
-		struct CustomerData 
+
+		struct CustomerData
 		{
 			internal string id ;
 			internal string firstName ;
 			internal string lastName ;
 		}
-        
+
 		private CustomersList parent;
-		private CustomerData custData; 
-		private CustomerData backupData; 
+		private CustomerData custData;
+		private CustomerData backupData;
 		private bool inTxn = false;
 
 		// Implements IEditableObject
-		void IEditableObject.BeginEdit() 
+		void IEditableObject.BeginEdit()
 		{
 			Console.WriteLine("Start BeginEdit");
-			if (!inTxn) 
+			if (!inTxn)
 			{
 				this.backupData = custData;
 				inTxn = true;
@@ -106,10 +106,10 @@ namespace IBindingList_Doc
 			Console.WriteLine("End BeginEdit");
 		}
 
-		void IEditableObject.CancelEdit() 
+		void IEditableObject.CancelEdit()
 		{
 			Console.WriteLine("Start CancelEdit");
-			if (inTxn) 
+			if (inTxn)
 			{
 				this.custData = backupData;
 				inTxn = false;
@@ -118,10 +118,10 @@ namespace IBindingList_Doc
 			Console.WriteLine("End CancelEdit");
 		}
 
-		void IEditableObject.EndEdit() 
+		void IEditableObject.EndEdit()
 		{
 			Console.WriteLine("Start EndEdit" + this.custData.id + this.custData.lastName);
-			if (inTxn) 
+			if (inTxn)
 			{
 				backupData = new CustomerData();
 				inTxn = false;
@@ -130,7 +130,7 @@ namespace IBindingList_Doc
 			Console.WriteLine("End EndEdit");
 		}
 
-		public Customer(string ID) : base() 
+		public Customer(string ID) : base()
 		{
 			this.custData = new CustomerData();
 			this.custData.id = ID;
@@ -138,68 +138,68 @@ namespace IBindingList_Doc
 			this.custData.lastName = "";
 		}
 
-		public string ID 
+		public string ID
 		{
-			get 
+			get
 			{
 				return this.custData.id;
 			}
 		}
-        
-		public string FirstName 
+
+		public string FirstName
 		{
-			get 
+			get
 			{
 				return this.custData.firstName;
 			}
-			set 
+			set
 			{
 				this.custData.firstName = value;
                 this.OnCustomerChanged();
 			}
 		}
-             
-		public string LastName 
+
+		public string LastName
 		{
-			get 
+			get
 			{
 				return this.custData.lastName;
 			}
-			set 
+			set
 			{
 				this.custData.lastName = value;
                 this.OnCustomerChanged();
 			}
 		}
-       
-		internal CustomersList Parent 
+
+		internal CustomersList Parent
 		{
-			get 
+			get
 			{
 				return parent;
 			}
-			set 
+			set
 			{
 				parent = value ;
 			}
 		}
 
-		private void OnCustomerChanged() 
+		private void OnCustomerChanged()
 		{
-			if (!inTxn && Parent != null) 
+			if (!inTxn && Parent != null)
 			{
 				Parent.CustomerChanged(this);
 			}
 		}
 		
-		public override string ToString() 
+		public override string ToString()
 		{
 			StringWriter sb = new StringWriter();
 			sb.Write(this.FirstName);
 			sb.Write(" ");
 			sb.Write(this.LastName);
 			return sb.ToString();
-		}   
+		}
 	}
 	//</snippet1>
 	// end of Customer class - sample for IEditableObject
@@ -208,11 +208,11 @@ namespace IBindingList_Doc
 	//<snippet2>
 	public class CustomersList :  CollectionBase, IBindingList
 	{
-    
+
 		private ListChangedEventArgs resetEvent = new ListChangedEventArgs(ListChangedType.Reset, -1);
 		private ListChangedEventHandler onListChanged;
 
-		public void LoadCustomers() 
+		public void LoadCustomers()
 		{
 			IList l = (IList)this;
 			l.Add(ReadCustomer1());
@@ -220,138 +220,138 @@ namespace IBindingList_Doc
 			OnListChanged(resetEvent);
 		}
 
-		public Customer this[int index] 
+		public Customer this[int index]
 		{
-			get 
+			get
 			{
 				return (Customer)(List[index]);
 			}
-			set 
+			set
 			{
 				List[index] = value;
 			}
 		}
 
-		public int Add (Customer value) 
+		public int Add (Customer value)
 		{
 			return List.Add(value);
 		}
 
-		public Customer AddNew() 
+		public Customer AddNew()
 		{
 			return (Customer)((IBindingList)this).AddNew();
 		}
 
-		public void Remove (Customer value) 
+		public void Remove (Customer value)
 		{
 			List.Remove(value);
 		}
 
-		protected virtual void OnListChanged(ListChangedEventArgs ev) 
+		protected virtual void OnListChanged(ListChangedEventArgs ev)
 		{
-			if (onListChanged != null) 
+			if (onListChanged != null)
 			{
 				onListChanged(this, ev);
 			}
 		}
 
-		protected override void OnClear() 
+		protected override void OnClear()
 		{
-			foreach (Customer c in List) 
+			foreach (Customer c in List)
 			{
 				c.Parent = null;
 			}
 		}
 
-		protected override void OnClearComplete() 
+		protected override void OnClearComplete()
 		{
 			OnListChanged(resetEvent);
 		}
 
-		protected override void OnInsertComplete(int index, object value) 
+		protected override void OnInsertComplete(int index, object value)
 		{
 			Customer c = (Customer)value;
 			c.Parent = this;
 			OnListChanged(new ListChangedEventArgs(ListChangedType.ItemAdded, index));
 		}
 
-		protected override void OnRemoveComplete(int index, object value) 
+		protected override void OnRemoveComplete(int index, object value)
 		{
 			Customer c = (Customer)value;
 			c.Parent = this;
 			OnListChanged(new ListChangedEventArgs(ListChangedType.ItemDeleted, index));
 		}
 
-		protected override void OnSetComplete(int index, object oldValue, object newValue) 
+		protected override void OnSetComplete(int index, object oldValue, object newValue)
 		{
-			if (oldValue != newValue) 
+			if (oldValue != newValue)
 			{
 
 				Customer oldcust = (Customer)oldValue;
 				Customer newcust = (Customer)newValue;
-                
+
 				oldcust.Parent = null;
 				newcust.Parent = this;
 
 				OnListChanged(new ListChangedEventArgs(ListChangedType.ItemAdded, index));
 			}
 		}
-        
+
 		// Called by Customer when it changes.
-		internal void CustomerChanged(Customer cust) 
+		internal void CustomerChanged(Customer cust)
 		{
 			
 			int index = List.IndexOf(cust);
-            
+
 			OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
 		}
 
 		// Implements IBindingList.
-		bool IBindingList.AllowEdit 
-		{ 
+		bool IBindingList.AllowEdit
+		{
 			get { return true ; }
 		}
 
-		bool IBindingList.AllowNew 
-		{ 
+		bool IBindingList.AllowNew
+		{
 			get { return true ; }
 		}
 
-		bool IBindingList.AllowRemove 
-		{ 
+		bool IBindingList.AllowRemove
+		{
 			get { return true ; }
 		}
 
-		bool IBindingList.SupportsChangeNotification 
-		{ 
+		bool IBindingList.SupportsChangeNotification
+		{
 			get { return true ; }
 		}
-        
-		bool IBindingList.SupportsSearching 
-		{ 
+
+		bool IBindingList.SupportsSearching
+		{
 			get { return false ; }
 		}
 
-		bool IBindingList.SupportsSorting 
-		{ 
+		bool IBindingList.SupportsSorting
+		{
 			get { return false ; }
 		}
 
 		// Events.
-		public event ListChangedEventHandler ListChanged 
+		public event ListChangedEventHandler ListChanged
 		{
-			add 
+			add
 			{
 				onListChanged += value;
 			}
-			remove 
+			remove
 			{
 				onListChanged -= value;
 			}
 		}
 
 		// Methods.
-		object IBindingList.AddNew() 
+		object IBindingList.AddNew()
 		{
 			Customer c = new Customer(this.Count.ToString());
 			List.Add(c);
@@ -359,57 +359,57 @@ namespace IBindingList_Doc
 		}
 
 		// Unsupported properties.
-		bool IBindingList.IsSorted 
-		{ 
+		bool IBindingList.IsSorted
+		{
 			get { throw new NotSupportedException(); }
 		}
 
-		ListSortDirection IBindingList.SortDirection 
-		{ 
+		ListSortDirection IBindingList.SortDirection
+		{
 			get { throw new NotSupportedException(); }
 		}
 
-		PropertyDescriptor IBindingList.SortProperty 
-		{ 
+		PropertyDescriptor IBindingList.SortProperty
+		{
 			get { throw new NotSupportedException(); }
 		}
 
 		// Unsupported Methods.
-		void IBindingList.AddIndex(PropertyDescriptor property) 
+		void IBindingList.AddIndex(PropertyDescriptor property)
 		{
-			throw new NotSupportedException(); 
+			throw new NotSupportedException();
 		}
 
-		void IBindingList.ApplySort(PropertyDescriptor property, ListSortDirection direction) 
+		void IBindingList.ApplySort(PropertyDescriptor property, ListSortDirection direction)
 		{
-			throw new NotSupportedException(); 
+			throw new NotSupportedException();
 		}
 
-		int IBindingList.Find(PropertyDescriptor property, object key) 
+		int IBindingList.Find(PropertyDescriptor property, object key)
 		{
-			throw new NotSupportedException(); 
+			throw new NotSupportedException();
 		}
 
-		void IBindingList.RemoveIndex(PropertyDescriptor property) 
+		void IBindingList.RemoveIndex(PropertyDescriptor property)
 		{
-			throw new NotSupportedException(); 
+			throw new NotSupportedException();
 		}
 
-		void IBindingList.RemoveSort() 
+		void IBindingList.RemoveSort()
 		{
-			throw new NotSupportedException(); 
+			throw new NotSupportedException();
 		}
 
 		// Worker functions to populate the list with data.
-		private static Customer ReadCustomer1() 
+		private static Customer ReadCustomer1()
 		{
 			Customer cust = new Customer("536-45-1245");
 			cust.FirstName = "Jo";
 			cust.LastName = "Brown";
 			return cust;
 		}
-        
-		private static Customer ReadCustomer2() 
+
+		private static Customer ReadCustomer2()
 		{
 			Customer cust = new Customer("246-12-5645");
 			cust.FirstName = "Robert";

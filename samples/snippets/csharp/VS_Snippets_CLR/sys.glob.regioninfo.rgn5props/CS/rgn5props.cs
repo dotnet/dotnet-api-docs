@@ -1,13 +1,13 @@
 ﻿//<snippet1>
-// This example demonstrates the RegionInfo.EnglishName, NativeName, 
+// This example demonstrates the RegionInfo.EnglishName, NativeName,
 // CurrencyEnglishName, CurrencyNativeName, and GeoId properties.
 
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     RegionInfo ri = new RegionInfo("SE"); // Sweden
 

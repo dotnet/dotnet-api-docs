@@ -3,7 +3,7 @@
 /// 42 #ctor(String,IClientChannelSinkProvider)
 /// 21 ChannelName
 /// 23 ChannelPriority
-/// 22 CreateMessageSink(String,Object,String@) 
+/// 22 CreateMessageSink(String,Object,String@)
 /// 24 Parse(String,String@)
 
 using System;
@@ -15,13 +15,13 @@ public class Client
     {
         //<snippet41>
         // Create the client channel.
-        System.Collections.IDictionary properties = 
+        System.Collections.IDictionary properties =
             new System.Collections.Hashtable();
         properties["name"] = "ipc client";
         properties["priority"] = "1";
-        System.Runtime.Remoting.Channels.IClientChannelSinkProvider 
+        System.Runtime.Remoting.Channels.IClientChannelSinkProvider
             sinkProvider = null;
-        IpcClientChannel clientChannel = 
+        IpcClientChannel clientChannel =
             new IpcClientChannel(properties, sinkProvider);
         //</snippet41>
         return clientChannel;
@@ -32,9 +32,9 @@ public class Client
         //<snippet42>
         // Create the client channel.
         string name = "ipc client";
-        System.Runtime.Remoting.Channels.IClientChannelSinkProvider 
+        System.Runtime.Remoting.Channels.IClientChannelSinkProvider
             sinkProvider = null;
-        IpcClientChannel clientChannel = 
+        IpcClientChannel clientChannel =
             new IpcClientChannel(name, sinkProvider);
         //</snippet42>
         return clientChannel;
@@ -63,7 +63,7 @@ public class Client
             RegisterChannel(clientChannel);
 
         // Register as client for remote object.
-        System.Runtime.Remoting.WellKnownClientTypeEntry remoteType = 
+        System.Runtime.Remoting.WellKnownClientTypeEntry remoteType =
             new System.Runtime.Remoting.WellKnownClientTypeEntry(
                 typeof(RemoteObject),
                 "ipc://localhost:9090/RemoteObject.rem");
@@ -71,7 +71,7 @@ public class Client
             RegisterWellKnownClientType(remoteType);
 
         // Create an instance of the remote object.
-        RemoteObject service = new RemoteObject(); 
+        RemoteObject service = new RemoteObject();
 
         // Invoke a method on the remote object.
         Console.WriteLine("The client is invoking the remote object.");

@@ -16,7 +16,7 @@ namespace Example
             s.IOControl(IOControlCode.DataToRead, null, outValue);
 
             uint bytesAvailable = BitConverter.ToUInt32(outValue, 0);
-            Console.Write("server has {0} bytes pending. ", 
+            Console.Write("server has {0} bytes pending. ",
                 bytesAvailable);
             Console.WriteLine("Available property says {1}.",
                              s.Available);
@@ -56,7 +56,7 @@ namespace Example
                 message = Encoding.UTF8.GetString(buffer);
                 // Displays the information received to the screen
                 Console.WriteLine(
-                    " Server received the following message : {0}", 
+                    " Server received the following message : {0}",
                     message);
 
                 // Look for "<EOF>" to end session.

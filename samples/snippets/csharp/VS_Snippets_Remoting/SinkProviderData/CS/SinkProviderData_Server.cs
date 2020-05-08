@@ -1,5 +1,5 @@
 ﻿/* The following program is the supporting program for demonstration of
-   'System.Runtime.Remoting.Channels.SinkProviderData' class and its 
+   'System.Runtime.Remoting.Channels.SinkProviderData' class and its
    properties 'Children', 'Name', 'Properties'.
 */
 using System;
@@ -17,11 +17,11 @@ public class Server
    public static void Main()
    {
       RemotingConfiguration.Configure("channels.config");
-      RemotingConfiguration.Configure("server.exe.config");        
+      RemotingConfiguration.Configure("server.exe.config");
       Console.WriteLine("Server Listening...");
       // Obtain filter interface.
-      IDictionary myIDictionary = 
-         ((HttpServerChannel)ChannelServices.GetChannel("MyHttpChannel")).Properties;       
+      IDictionary myIDictionary =
+         ((HttpServerChannel)ChannelServices.GetChannel("MyHttpChannel")).Properties;
       String keyState = "";
       while (String.Compare(keyState,"0", true) != 0)
       {

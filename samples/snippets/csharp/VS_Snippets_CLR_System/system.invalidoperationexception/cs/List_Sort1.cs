@@ -9,7 +9,7 @@ public class Person
       FirstName = fName;
       LastName = lName;
    }
-   
+
    public String FirstName { get; set; }
    public String LastName { get; set; }
 }
@@ -19,7 +19,7 @@ public class Example
    public static void Main()
    {
       var people = new List<Person>();
-      
+
       people.Add(new Person("John", "Doe"));
       people.Add(new Person("Jane", "Doe"));
       people.Sort();
@@ -28,7 +28,7 @@ public class Example
    }
 }
 // The example displays the following output:
-//    Unhandled Exception: System.InvalidOperationException: Failed to compare two elements in the array. ---> 
+//    Unhandled Exception: System.InvalidOperationException: Failed to compare two elements in the array. --->
 //       System.ArgumentException: At least one object must implement IComparable.
 //       at System.Collections.Comparer.Compare(Object a, Object b)
 //       at System.Collections.Generic.ArraySortHelper`1.SwapIfGreater(T[] keys, IComparer`1 comparer, Int32 a, Int32 b)

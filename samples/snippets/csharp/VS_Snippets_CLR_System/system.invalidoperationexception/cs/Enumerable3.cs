@@ -10,12 +10,12 @@ public class Example
 
       var firstNum = dbQueryResults.First(n => n > 4);
 
-      Console.WriteLine("The first value greater than 4 is {0}", 
+      Console.WriteLine("The first value greater than 4 is {0}",
                         firstNum);
    }
 }
 // The example displays the following output:
-//    Unhandled Exception: System.InvalidOperationException: 
+//    Unhandled Exception: System.InvalidOperationException:
 //       Sequence contains no matching element
 //       at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
 //       at Example.Main()

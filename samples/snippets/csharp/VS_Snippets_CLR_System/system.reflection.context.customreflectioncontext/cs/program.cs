@@ -19,14 +19,14 @@ namespace ConsoleApplication1
     {
         //Called whenever the reflection context checks for custom attributes.
                protected override IEnumerable<object> GetCustomAttributes(MemberInfo member, IEnumerable<object> declaredAttributes)
-               {   
+               {
                    //Add example attribute to "To*" members.
                    if (member.Name.StartsWith("To")) {
                        yield return new myAttribute();
                    }
                    //Keep existing attributes as well.
                    foreach (var attr in declaredAttributes) yield return attr;
-             }    
+             }
     }
 
     class Program
@@ -46,7 +46,7 @@ namespace ConsoleApplication1
             foreach (MemberInfo m in myTI.DeclaredMembers)
             {
                Console.WriteLine(m.Name + ":");
-               foreach (Attribute cd in m.GetCustomAttributes()) 
+               foreach (Attribute cd in m.GetCustomAttributes())
                {
                     Console.WriteLine(cd.GetType());
                }
@@ -56,7 +56,7 @@ namespace ConsoleApplication1
 
             //The "ToString" member as represented in the default reflection context.
             MemberInfo mi1 = ti.GetDeclaredMethods("ToString").FirstOrDefault();
-            
+
             //All the attributes of "ToString" in the default reflection context.
             Console.WriteLine("'ToString' Attributes in Default Reflection Context:");
             foreach (Attribute cd in mi1.GetCustomAttributes())

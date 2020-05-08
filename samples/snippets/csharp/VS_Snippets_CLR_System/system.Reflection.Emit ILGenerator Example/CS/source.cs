@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 class TestILGenerator {
- 
+
   	public static Type DynamicDotProductGen() {
-	  
+	
 	   Type ivType = null;
 	   Type[] ctorParams = new Type[] { typeof(int),
 		               		    typeof(int),
@@ -19,7 +19,7 @@ class TestILGenerator {
 	   myAsmName.Name = "IntVectorAsm";
 	
 	   AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(
-					  myAsmName, 
+					  myAsmName,
 					  AssemblyBuilderAccess.RunAndSave);
 
    	   ModuleBuilder IntVectorModule = myAsmBuilder.DefineDynamicModule("IntVectorModule",
@@ -30,12 +30,12 @@ class TestILGenerator {
 
 	   FieldBuilder xField = ivTypeBld.DefineField("x", typeof(int),
                                                        FieldAttributes.Private);
-	   FieldBuilder yField = ivTypeBld.DefineField("y", typeof(int), 
+	   FieldBuilder yField = ivTypeBld.DefineField("y", typeof(int),
                                                        FieldAttributes.Private);
 	   FieldBuilder zField = ivTypeBld.DefineField("z", typeof(int),
                                                        FieldAttributes.Private);
 
-           Type objType = Type.GetType("System.Object"); 
+           Type objType = Type.GetType("System.Object");
            ConstructorInfo objCtor = objType.GetConstructor(new Type[0]);
 
 	   ConstructorBuilder ivCtor = ivTypeBld.DefineConstructor(
@@ -47,14 +47,14 @@ class TestILGenerator {
            ctorIL.Emit(OpCodes.Call, objCtor);
            ctorIL.Emit(OpCodes.Ldarg_0);
            ctorIL.Emit(OpCodes.Ldarg_1);
-           ctorIL.Emit(OpCodes.Stfld, xField); 
+           ctorIL.Emit(OpCodes.Stfld, xField);
            ctorIL.Emit(OpCodes.Ldarg_0);
            ctorIL.Emit(OpCodes.Ldarg_2);
-           ctorIL.Emit(OpCodes.Stfld, yField); 
+           ctorIL.Emit(OpCodes.Stfld, yField);
            ctorIL.Emit(OpCodes.Ldarg_0);
            ctorIL.Emit(OpCodes.Ldarg_3);
-           ctorIL.Emit(OpCodes.Stfld, zField); 
-	   ctorIL.Emit(OpCodes.Ret); 
+           ctorIL.Emit(OpCodes.Stfld, zField);
+	   ctorIL.Emit(OpCodes.Ret);
 
 	   // This method will find the dot product of the stored vector
 	   // with another.
@@ -66,24 +66,24 @@ class TestILGenerator {
 	   // the return type (int, in this case), and a array of Type
 	   // indicating the type of each parameter. Since the sole parameter
 	   // is a IntVector, the very class you're creating, you will
-	   // pass in the TypeBuilder (which is derived from Type) instead of 
-	   // a Type object for IntVector, avoiding an exception. 
+	   // pass in the TypeBuilder (which is derived from Type) instead of
+	   // a Type object for IntVector, avoiding an exception.
 
 	   // -- This method would be declared in C# as:
 	   //    public int DotProduct(IntVector aVector)
 
            MethodBuilder dotProductMthd = ivTypeBld.DefineMethod(
-	    		                  "DotProduct", 
+	    		                  "DotProduct",
 				          MethodAttributes.Public,
-                                          typeof(int), 
+                                          typeof(int),
                                           dpParams);
 
 	   // A ILGenerator can now be spawned, attached to the MethodBuilder.
 
 	   ILGenerator mthdIL = dotProductMthd.GetILGenerator();
-	   
+	
  	   // Here's the body of our function, in MSIL form. We're going to find the
-	   // "dot product" of the current vector instance with the passed vector 
+	   // "dot product" of the current vector instance with the passed vector
 	   // instance. For reference purposes, the equation is:
 	   // (x1 * x2) + (y1 * y2) + (z1 * z2) = the dot product
 
@@ -165,7 +165,7 @@ class TestILGenerator {
 	   aVector2 = myDTctor.Invoke(aVargs2);
 
 	   object[] passMe = new object[1];
-           passMe[0] = (object)aVector2; 
+           passMe[0] = (object)aVector2;
 
 	   Console.WriteLine("(10, 10, 10) . (20, 20, 20) = {0}",
 			     IVType.InvokeMember("DotProduct",
@@ -176,7 +176,7 @@ class TestILGenerator {
 
 	   // +++ OUTPUT +++
 	   // ---
-	   // (10, 10, 10) . (20, 20, 20) = 600 
+	   // (10, 10, 10) . (20, 20, 20) = 600
 	}
 }
 

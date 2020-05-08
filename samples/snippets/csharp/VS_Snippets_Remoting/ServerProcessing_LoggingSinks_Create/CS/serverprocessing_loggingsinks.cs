@@ -128,13 +128,13 @@ namespace MyLogging
 
       public bool Enabled
       {
-         get 
-            { 
-               return myBoolEnabled;   
-             }
-         set 
+         get
             {
-               myBoolEnabled = value; 
+               return myBoolEnabled;
+             }
+         set
+            {
+               myBoolEnabled = value;
              }
       }
 

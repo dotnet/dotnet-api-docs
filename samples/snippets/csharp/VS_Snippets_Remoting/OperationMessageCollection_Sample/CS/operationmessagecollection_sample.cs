@@ -64,7 +64,7 @@ class MyOperationMessageCollectionSample
          myInputOperationMessage.Message = myXmlQualifiedName;
 
 // <Snippet3>
-         OperationMessage[] myCollection = 
+         OperationMessage[] myCollection =
             new OperationMessage[myOperationMessageCollection.Count];
          myOperationMessageCollection.CopyTo(myCollection, 0);
          Console.WriteLine("Operation name(s) :");
@@ -81,7 +81,7 @@ class MyOperationMessageCollectionSample
 
 // <Snippet5>
 // <Snippet6>
-         if(myOperationMessageCollection.Contains(myOperationMessage) 
+         if(myOperationMessageCollection.Contains(myOperationMessage)
             == true )
          {
             int myIndex =

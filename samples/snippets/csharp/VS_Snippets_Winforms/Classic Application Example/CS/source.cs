@@ -31,14 +31,14 @@ public class Form1 : Form
         int count = 1;
         // Check to see whether the user wants to exit the application.
         // If not, add a number to the list box.
-        while (MessageBox.Show("Exit application?", "", 
+        while (MessageBox.Show("Exit application?", "",
             MessageBoxButtons.YesNo)==DialogResult.No)
         {
             listBox1.Items.Add(count);
             count += 1;
         }
 
-        // The user wants to exit the application. 
+        // The user wants to exit the application.
         // Close everything down.
         Application.Exit();
     }

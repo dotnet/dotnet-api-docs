@@ -2,10 +2,10 @@
 
 /*
 The following example demonstrates the 'IsRemotelyActivatedClientType(Type)' method
-of 'RemotingConfiguration' class. 
+of 'RemotingConfiguration' class.
 It registers a 'TcpChannel' object with the channel services. Then registers the 'MyServerImpl'
-object as activated client type which can be activated at the server. By using the above 
-method it gets the activated client type registered at the client side and displays it's 
+object as activated client type which can be activated at the server. By using the above
+method it gets the activated client type registered at the client side and displays it's
 properties to the console.
 */
 

@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 [Serializable] public struct SignAndMagnitude
 {
-   public int Sign; 
+   public int Sign;
    public byte[] Bytes;
 }
 
@@ -22,19 +22,19 @@ public class Example
       SignAndMagnitude sm = new SignAndMagnitude();
       sm.Sign = number.Sign;
       sm.Bytes = BigInteger.Abs(number).ToByteArray();
-      
+
       // Serialize SignAndMagnitude value.
       fs = new FileStream(@".\data.bin", FileMode.Create);
       formatter.Serialize(fs, sm);
       fs.Close();
-      
+
       // Deserialize SignAndMagnitude value.
       fs = new FileStream(@".\data.bin", FileMode.Open);
       SignAndMagnitude smRestored = (SignAndMagnitude) formatter.Deserialize(fs);
       fs.Close();
-      BigInteger restoredNumber = new BigInteger(smRestored.Bytes); 
-      restoredNumber *= sm.Sign; 
-      Console.WriteLine("The deserialized value is {0}.", restoredNumber);      
+      BigInteger restoredNumber = new BigInteger(smRestored.Bytes);
+      restoredNumber *= sm.Sign;
+      Console.WriteLine("The deserialized value is {0}.", restoredNumber);
    }
 }
 // The example displays the following output:

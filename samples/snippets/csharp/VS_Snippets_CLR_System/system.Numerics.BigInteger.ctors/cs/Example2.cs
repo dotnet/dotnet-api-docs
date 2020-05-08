@@ -17,7 +17,7 @@ public class Example
       Console.WriteLine("-----");
       UInt32Constructor();
       Console.WriteLine("-----");
-      UInt64Constructor();     
+      UInt64Constructor();
    }
 
    private static void DecimalConstructor()
@@ -29,7 +29,7 @@ public class Example
          BigInteger number = new BigInteger(decimalValue);
          Console.WriteLine("Instantiated BigInteger value {0} from the Decimal value {1}.",
                            number, decimalValue);
-      }                 
+      }
       // The example displays the following output:
       //    Instantiated BigInteger value -1790 from the Decimal value -1790.533.
       //    Instantiated BigInteger value -15 from the Decimal value -15.1514.
@@ -56,7 +56,7 @@ public class Example
       //    Original BigInteger value: -600,000,000,000,000,000,000
       //    Incremented Double value: -600,000,000,000,000,000,000
       //    Incremented BigInteger value: -599,999,999,999,999,999,999
-      // </Snippet5>   
+      // </Snippet5>
    }
 
    private static void IntegerConstructor()
@@ -65,14 +65,14 @@ public class Example
       int[] integers = { Int32.MinValue, -10534, -189, 0, 17, 113439,
                          Int32.MaxValue };
       BigInteger constructed, assigned;
-      
+
       foreach (int number in integers)
       {
          constructed = new BigInteger(number);
          assigned = number;
-         Console.WriteLine("{0} = {1}: {2}", constructed, assigned, 
-                           constructed.Equals(assigned)); 
-      }                                                  
+         Console.WriteLine("{0} = {1}: {2}", constructed, assigned,
+                           constructed.Equals(assigned));
+      }
       // The example displays the following output:
       //       -2147483648 = -2147483648: True
       //       -10534 = -10534: True
@@ -80,7 +80,7 @@ public class Example
       //       0 = 0: True
       //       17 = 17: True
       //       113439 = 113439: True
-      //       2147483647 = 2147483647: True      
+      //       2147483647 = 2147483647: True
       // </Snippet6>
    }
    private static void LongConstructor()
@@ -89,14 +89,14 @@ public class Example
       long[] longs = { Int64.MinValue, -10534, -189, 0, 17, 113439,
                        Int64.MaxValue };
       BigInteger constructed, assigned;
-      
+
       foreach (long number in longs)
       {
          constructed = new BigInteger(number);
          assigned = number;
-         Console.WriteLine("{0} = {1}: {2}", constructed, assigned, 
-                           constructed.Equals(assigned)); 
-      }                                                  
+         Console.WriteLine("{0} = {1}: {2}", constructed, assigned,
+                           constructed.Equals(assigned));
+      }
       // The example displays the following output:
       //       -2147483648 = -2147483648: True
       //       -10534 = -10534: True
@@ -104,7 +104,7 @@ public class Example
       //       0 = 0: True
       //       17 = 17: True
       //       113439 = 113439: True
-      //       2147483647 = 2147483647: True      
+      //       2147483647 = 2147483647: True
       // </Snippet7>
    }
 
@@ -114,13 +114,13 @@ public class Example
       // Create a BigInteger from a large negative Single value
       float negativeSingle = Single.MinValue;
       BigInteger negativeNumber = new BigInteger(negativeSingle);
-      
+
       Console.WriteLine(negativeSingle.ToString("N0"));
       Console.WriteLine(negativeNumber.ToString("N0"));
-      
+
       negativeSingle++;
       negativeNumber++;
-      
+
       Console.WriteLine(negativeSingle.ToString("N0"));
       Console.WriteLine(negativeNumber.ToString("N0"));
       // The example displays the following output:
@@ -158,9 +158,9 @@ public class Example
       // <Snippet10>
       ulong unsignedValue = UInt64.MaxValue;
       BigInteger number = new BigInteger(unsignedValue);
-      Console.WriteLine(number.ToString("N0"));       
+      Console.WriteLine(number.ToString("N0"));
       // The example displays the following output:
-      //       18,446,744,073,709,551,615      
-      // </Snippet10>   
+      //       18,446,744,073,709,551,615
+      // </Snippet10>
    }
 }

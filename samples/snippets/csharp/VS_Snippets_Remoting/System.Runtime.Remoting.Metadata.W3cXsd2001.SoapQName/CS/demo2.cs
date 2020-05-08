@@ -15,7 +15,7 @@ public class Demo2
         // Create a SoapQName object.
         SoapQName qName = new SoapQName();
         Console.WriteLine(
-            "The value of the SoapQName object is \"{0}\".", 
+            "The value of the SoapQName object is \"{0}\".",
             qName.ToString());
         //</snippet21>
     }
@@ -27,7 +27,7 @@ public class Demo2
         string name = "SomeName";
         SoapQName qName = new SoapQName(name);
         Console.WriteLine(
-            "The value of the SoapQName object is \"{0}\".", 
+            "The value of the SoapQName object is \"{0}\".",
             qName.ToString());
         //</snippet22>
     }
@@ -40,7 +40,7 @@ public class Demo2
         string name = "SomeName";
         SoapQName qName = new SoapQName(key, name);
         Console.WriteLine(
-            "The value of the SoapQName object is \"{0}\".", 
+            "The value of the SoapQName object is \"{0}\".",
             qName.ToString());
         //</snippet23>
     }
@@ -54,7 +54,7 @@ public class Demo2
         string namespaceValue = "http://example.org";
         SoapQName qName = new SoapQName(key, name, namespaceValue);
         Console.WriteLine(
-            "The value of the SoapQName object is \"{0}\".", 
+            "The value of the SoapQName object is \"{0}\".",
             qName.ToString());
         //</snippet24>
     }

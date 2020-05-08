@@ -1,13 +1,13 @@
 ﻿//<snippet1>
-// This example demonstrates the StringBuilder.AppendLine() 
+// This example demonstrates the StringBuilder.AppendLine()
 // method.
 
 using System;
 using System.Text;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     StringBuilder sb = new StringBuilder();
     string        line = "A line of text.";

@@ -1,5 +1,5 @@
 ﻿/// Class:  System.Runtime.Remoting.Metadata.W3cXsd2001.SoapNormalizedString
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(string)
 ///    13    GetXsdType()
@@ -7,9 +7,9 @@
 ///    12    ToString()
 ///    14    Value
 ///    16    XsdType
-//     
+//
 ///    Bugs in SoapNormalizedString: None found.
-///    
+///
 
 //<snippet10>
 using System;
@@ -23,13 +23,13 @@ public class Demo
         {
             //<snippet11>
             // Parse the test string.
-            SoapNormalizedString normalized = 
+            SoapNormalizedString normalized =
                 SoapNormalizedString.Parse(testString);
             //</snippet11>
 
             // Report that the parse succeeded if no exception was thrown.
             Console.WriteLine(
-                "Parse succeeded on the string \"{0}\".", 
+                "Parse succeeded on the string \"{0}\".",
                 testString);
 
             //<snippet12>
@@ -42,7 +42,7 @@ public class Demo
             //<snippet13>
             // Print the XSD type of the object.
             Console.WriteLine(
-                "The XSD type of the SoapNormalizedString " + 
+                "The XSD type of the SoapNormalizedString " +
                 "object is {0}.", normalized.GetXsdType());
             //</snippet13>
 
@@ -50,7 +50,7 @@ public class Demo
             // Print the value of the SoapNormalizedString object.
             Console.WriteLine(
                 "The value of the SoapNormalizedString " +
-                "object is \"{0}\".", 
+                "object is \"{0}\".",
                 normalized.Value);
             //</snippet14>
         }
@@ -58,7 +58,7 @@ public class Demo
         {
             // Report the details of the exception that was thrown.
             Console.WriteLine(
-                "Parse failed on the string \"{0}\".", 
+                "Parse failed on the string \"{0}\".",
                 testString);
             Console.WriteLine(e.Message);
         }

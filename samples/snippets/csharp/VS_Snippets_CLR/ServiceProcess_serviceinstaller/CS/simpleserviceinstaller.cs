@@ -4,17 +4,17 @@
 // It defines the instance SimpleServiceInstaller with the
 // attribute RunInstallerAttribute.
 //
-// When this file is built with the SimpleService.cs file, 
+// When this file is built with the SimpleService.cs file,
 // the resulting executable can be used to install the service.
 //
 // Steps:
-//     1) Run this program using the following command: 
+//     1) Run this program using the following command:
 //          InstallUtil.exe  <filename.exe>
 //     2) Uninstall the service created in step 1 using the
 //        following command:
 //          InstallUtil.exe /u <filename.exe>
 
-// 
+//
 using System;
 using System.Diagnostics;
 using System.Collections;
@@ -33,12 +33,12 @@ public class SimpleServiceInstaller : System.Configuration.Install.Installer
         // <Snippet3>
         simpleServiceProcessInstaller = new ServiceProcessInstaller();
         simpleServiceInstaller = new ServiceInstaller();
-                       
+
         // Set the account properties for the service process.
         simpleServiceProcessInstaller.Account = ServiceAccount.LocalService;
-             
+
         // Set the installation properties for the service.
-        // The ServiceInstaller.ServiceName must match the 
+        // The ServiceInstaller.ServiceName must match the
         // ServiceBase.ServiceName set in the service
         // implementation that is installed by this installer.
         simpleServiceInstaller.ServiceName = "SimpleService";
@@ -58,4 +58,4 @@ public class SimpleServiceInstaller : System.Configuration.Install.Installer
         Console.WriteLine("Usage: InstallUtil.exe [<install>.exe | <install>.dll]");
     }
 }
-// 
+//

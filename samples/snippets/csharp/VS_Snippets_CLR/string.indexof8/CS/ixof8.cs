@@ -1,9 +1,9 @@
 // Sample for String.IndexOf(String, Int32, Int32)
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         //<snippet1>
         string br1 = "0----+----1----+----2----+----3----+----4----+----5----+----6----+---";
@@ -42,7 +42,7 @@ class Sample
         012345678901234567890123456789012345678901234567890123456789012345678
         Now is the time for all good men to come to the aid of their country.
 
-        The string 'he' occurs at position(s): 45 56 
+        The string 'he' occurs at position(s): 45 56
 
         */
         //</snippet1>

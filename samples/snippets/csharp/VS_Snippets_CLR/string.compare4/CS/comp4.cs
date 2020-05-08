@@ -1,9 +1,9 @@
 // Sample for String.Compare(String, Int32, String, Int32, Int32, Boolean)
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         //<snippet1>
         String str1 = "MACHINE";

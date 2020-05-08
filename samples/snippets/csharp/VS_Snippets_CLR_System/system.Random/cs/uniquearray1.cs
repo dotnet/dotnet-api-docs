@@ -4,10 +4,10 @@ using System;
 // A class that represents an individual card in a playing deck.
 public class Card
 {
-   public Suit Suit; 
+   public Suit Suit;
    public FaceValue FaceValue;
-   
-   public override String ToString() 
+
+   public override String ToString()
    {
       return String.Format("{0:F} of {1:F}", this.FaceValue, this.Suit);
    }
@@ -30,24 +30,24 @@ public class Dealer
    int ptr = 0;
    // A flag to indicate the deck is used.
    bool mustReshuffle = false;
-   
+
    public Dealer()
    {
       rnd = new Random();
       // Initialize the deck.
       int deckCtr = 0;
       foreach (var suit in Enum.GetValues(typeof(Suit))) {
-         foreach (var faceValue in Enum.GetValues(typeof(FaceValue))) { 
+         foreach (var faceValue in Enum.GetValues(typeof(FaceValue))) {
             Card card = new Card();
             card.Suit = (Suit) suit;
             card.FaceValue = (FaceValue) faceValue;
-            deck[deckCtr] = card;  
+            deck[deckCtr] = card;
             deckCtr++;
          }
       }
-      
+
       for (int ctr = 0; ctr < order.Length; ctr++)
-         order[ctr] = rnd.NextDouble();   
+         order[ctr] = rnd.NextDouble();
 
       Array.Sort(order, deck);
    }
@@ -58,16 +58,16 @@ public class Dealer
          Console.WriteLine("There are no cards left in the deck");
          return null;
       }
-      
+
       Card[] cardsDealt = new Card[numberToDeal];
       for (int ctr = 0; ctr < numberToDeal; ctr++) {
          cardsDealt[ctr] = deck[ptr];
          ptr++;
-         if (ptr == deck.Length) 
+         if (ptr == deck.Length)
             mustReshuffle = true;
 
          if (mustReshuffle & ctr < numberToDeal - 1) {
-            Console.WriteLine("Can only deal the {0} cards remaining on the deck.", 
+            Console.WriteLine("Can only deal the {0} cards remaining on the deck.",
                               ctr + 1);
             return cardsDealt;
          }
@@ -83,7 +83,7 @@ public class Example
       Dealer dealer = new Dealer();
       ShowCards(dealer.Deal(20));
    }
-   
+
    private static void ShowCards(Card[] cards)
    {
       foreach (var card in cards)

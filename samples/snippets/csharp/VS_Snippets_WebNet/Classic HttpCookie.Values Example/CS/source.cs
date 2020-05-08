@@ -12,7 +12,7 @@ HttpCookie MyCookie = new HttpCookie("Cookie1");
  MyCookie.Values["Val2"] = "2";
  MyCookie.Values["Val3"] = "3";
  Response.Cookies.Add(MyCookie);
-    
+
 // </Snippet1>
  }
 }

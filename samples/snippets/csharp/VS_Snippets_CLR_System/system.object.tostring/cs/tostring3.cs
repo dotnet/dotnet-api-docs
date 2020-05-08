@@ -4,12 +4,12 @@ using System;
 public class Object2
 {
    private object value;
-   
+
    public Object2(object value)
    {
       this.value = value;
    }
-   
+
    public override string ToString()
    {
       return base.ToString() + ": " + value.ToString();

@@ -27,7 +27,7 @@ using System;
 using System.Web.Services.Description;
 using System.Collections;
 
-class MyFormatExtension : ServiceDescriptionFormatExtension 
+class MyFormatExtension : ServiceDescriptionFormatExtension
 {
    public MyFormatExtension()
    {
@@ -43,9 +43,9 @@ class myCollectionSample
       try
       {
 // <Snippet2>
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("Sample_CS.wsdl");
-         ServiceDescriptionFormatExtensionCollection  myCollection = 
+         ServiceDescriptionFormatExtensionCollection  myCollection =
             new ServiceDescriptionFormatExtensionCollection(myServiceDescription);
 // </Snippet2>
 // <Snippet3>
@@ -62,9 +62,9 @@ class myCollectionSample
 // <Snippet4>
          Console.WriteLine("Collection contains following types of elements: ");
          // Display the 'Type' of the elements in collection.
-         for(int i = 0;i< myCollection.Count;i++) 
+         for(int i = 0;i< myCollection.Count;i++)
          {
-            Console.WriteLine(myCollection[i].GetType().ToString()); 
+            Console.WriteLine(myCollection[i].GetType().ToString());
          }
 // </Snippet4>
 // <Snippet5>
@@ -87,21 +87,21 @@ class myCollectionSample
          myObjectArray1 = myCollection.FindAll(mySoapBinding1.GetType());
          int myNumberOfElements = 0;
          IEnumerator myIEnumerator  = myObjectArray1.GetEnumerator();
-         
+
          // Calculate number of elements of type 'SoapBinding'.
          while(myIEnumerator.MoveNext())
          {
             if(mySoapBinding1.GetType() == myIEnumerator.Current.GetType())
                myNumberOfElements++;
          }
-         Console.WriteLine("Collection contains {0} objects of type '{1}'.", 
+         Console.WriteLine("Collection contains {0} objects of type '{1}'.",
                            myNumberOfElements.ToString(),
                            mySoapBinding1.GetType().ToString());
 // </Snippet6>
 // <Snippet7>
          // Check 'IsHandled' status for 'myFormatExtensionObject' object in collection.
          Console.WriteLine("'IsHandled' status for {0} object is {1}.",
-                  myFormatExtensionObject.ToString(), 
+                  myFormatExtensionObject.ToString(),
                   myCollection.IsHandled(myFormatExtensionObject).ToString());
 // </Snippet7>
 // <Snippet8>
@@ -120,7 +120,7 @@ class myCollectionSample
          // Check for 'myFormatExtension' object in collection.
          if(myCollection.Contains(myFormatExtensionObject))
          {
-// <Snippet11>            
+// <Snippet11>
             // Get index of a 'myFormatExtension' object in collection.
             Console.WriteLine("Index of 'myFormatExtensionObject' is "+
                "{0} in collection.",

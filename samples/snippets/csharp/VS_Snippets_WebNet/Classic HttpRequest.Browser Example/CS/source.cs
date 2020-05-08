@@ -28,7 +28,7 @@ Response.Write("Supports JavaScript = " + bc.JavaScript + "<br>");
 Response.Write("Supports Java Applets = " + bc.JavaApplets + "<br>");
 Response.Write("Supports ActiveX Controls = " + bc.ActiveXControls + "<br>");
 Response.Write("CDF = " + bc.CDF + "<br>");
-    
+
 // </Snippet1>
  }
 }

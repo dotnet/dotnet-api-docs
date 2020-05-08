@@ -6,18 +6,18 @@ public class Example
 {
    public static void Main()
    {
-      string[] formatStrings = { "C2", "E1", "F", "G3", "N", 
+      string[] formatStrings = { "C2", "E1", "F", "G3", "N",
                                  "#,##0.000", "0,000,000,000.0##" };
       CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
       Decimal[] values = { 1345.6538m, 1921651.16m };
-      
+
       foreach (var value in values) {
          foreach (var formatString in formatStrings) {
             string resultString = value.ToString(formatString, culture);
             Console.WriteLine("{0,-18} -->  {1}", formatString, resultString);
          }
-         Console.WriteLine();      
-      }   
+         Console.WriteLine();
+      }
    }
 }
 // The example displays the following output:
@@ -28,7 +28,7 @@ public class Example
 //       N                  -->  1,345.65
 //       #,##0.000          -->  1,345.654
 //       0,000,000,000.0##  -->  0,000,001,345.654
-//       
+//
 //       C2                 -->  $1,921,651.16
 //       E1                 -->  1.9E+006
 //       F                  -->  1921651.16

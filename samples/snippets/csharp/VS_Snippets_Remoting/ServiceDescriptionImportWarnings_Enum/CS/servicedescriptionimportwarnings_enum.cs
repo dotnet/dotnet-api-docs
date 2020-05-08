@@ -28,7 +28,7 @@ public class ServiceDescriptionImportWarnings_Enum
    }
 
    [SecurityPermissionAttribute(SecurityAction.Demand, Unrestricted=true)]
-   public static void DisplayWarning(string myWSDLFileName) 
+   public static void DisplayWarning(string myWSDLFileName)
    {
 // <Snippet1>
       String myDisplay;
@@ -48,7 +48,7 @@ public class ServiceDescriptionImportWarnings_Enum
       CodeCompileUnit myCodeCompileUnit = new CodeCompileUnit();
 
       // Invoke 'Import' method.
-      ServiceDescriptionImportWarnings myWarning = 
+      ServiceDescriptionImportWarnings myWarning =
          myServiceDescriptionImporter.Import(myCodeNamespace,
          myCodeCompileUnit);
 
