@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-public class AppendTextTest 
+public class AppendTextTest
 {
-    public static void Main() 
+    public static void Main()
     {
         FileInfo fi = new FileInfo("temp.txt");
         // Create a writer, ready to add entries to the file.
@@ -20,7 +20,7 @@ public class AppendTextTest
             Console.WriteLine( sr.ReadLine() );
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //Add as many lines as you like...
 //Add another line to the output...

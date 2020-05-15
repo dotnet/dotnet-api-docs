@@ -3,8 +3,8 @@
 /*
    The following example demonstrates the 'GetTypeFromHandle(RuntimeTypeHandle)' method
    of the 'Type' Class.
-	It defines an empty class 'Myclass1' and obtains an object of 'Myclass1'. Then the runtime handle of 
-	the object is obtained and passed as an argument to 'GetTypeFromHandle(RuntimeTypeHandle)'method. That 
+	It defines an empty class 'Myclass1' and obtains an object of 'Myclass1'. Then the runtime handle of
+	the object is obtained and passed as an argument to 'GetTypeFromHandle(RuntimeTypeHandle)'method. That
 	returns the type referenced by the specified type handle.
 */
 

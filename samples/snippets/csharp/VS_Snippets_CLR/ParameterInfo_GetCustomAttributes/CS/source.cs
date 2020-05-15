@@ -11,17 +11,17 @@ public class MyAttribute : Attribute
     {
         myName = name;
     }
-    public string Name 
+    public string Name
     {
-        get 
+        get
         {
             return myName;
         }
     }
 }
 
-// Define a class which has a custom attribute associated with one of the 
-// parameters of a method. 
+// Define a class which has a custom attribute associated with one of the
+// parameters of a method.
 public class MyClass1
 {
     public void MyMethod(
@@ -32,7 +32,7 @@ public class MyClass1
     }
 }
 
-public class MemberInfo_GetCustomAttributes 
+public class MemberInfo_GetCustomAttributes
 {
     public static void Main()
     {
@@ -54,10 +54,10 @@ public class MemberInfo_GetCustomAttributes
                 {
                     // Get the attributes of type 'MyAttribute' for each parameter.
                     Object[] myAttributes = myParameters[j].GetCustomAttributes(typeof(MyAttribute), false);
- 
+
                     if (myAttributes.Length > 0)
                     {
-                        Console.WriteLine("Parameter {0}, name = {1}, type = {2} has attributes: ", 
+                        Console.WriteLine("Parameter {0}, name = {1}, type = {2} has attributes: ",
                             myParameters[j].Position, myParameters[j].Name, myParameters[j].ParameterType);
                         for(int k = 0; k < myAttributes.Length; k++)
                         {
@@ -66,7 +66,7 @@ public class MemberInfo_GetCustomAttributes
                     }
                 }
             }
-        }  
+        }
     }
 }
 /* This code example produces the following output:

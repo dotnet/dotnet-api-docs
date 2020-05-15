@@ -24,7 +24,7 @@ class MyArrayRankSample
             Console.WriteLine("Exception raised.");
             Console.WriteLine("Source: " + e.Source);
             Console.WriteLine("Message: " + e.Message);
-        }      
+        }
     }
 }
 // </Snippet1>

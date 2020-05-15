@@ -17,11 +17,11 @@ public class MyDiscoveryClientResult
     {
         try
         {
-            DiscoveryClientProtocol myDiscoveryClientProtocol = 
+            DiscoveryClientProtocol myDiscoveryClientProtocol =
                 new DiscoveryClientProtocol();
 
             // Get the collection holding DiscoveryClientResult objects.
-            DiscoveryClientResultCollection myDiscoveryClientResultCollection = 
+            DiscoveryClientResultCollection myDiscoveryClientResultCollection =
                 myDiscoveryClientProtocol.ReadAll("results.discomap");
             Console.WriteLine("The number of DiscoveryClientResult objects: "
                 + myDiscoveryClientResultCollection.Count);
@@ -29,13 +29,13 @@ public class MyDiscoveryClientResult
 
             // Iterate through the collection and display the properties
             // of each DiscoveryClientResult in it.
-            foreach(DiscoveryClientResult myDiscoveryClientResult in 
+            foreach(DiscoveryClientResult myDiscoveryClientResult in
                 myDiscoveryClientResultCollection)
             {
                 Console.WriteLine(
                     "Type of reference in the discovery document: "
                     + myDiscoveryClientResult.ReferenceTypeName);
-                Console.WriteLine("Url for the reference: " 
+                Console.WriteLine("Url for the reference: "
                     + myDiscoveryClientResult.Url);
                 Console.WriteLine("File for saving the reference: "
                     + myDiscoveryClientResult.Filename);

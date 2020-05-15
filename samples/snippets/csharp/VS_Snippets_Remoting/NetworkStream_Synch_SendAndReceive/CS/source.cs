@@ -1,4 +1,4 @@
-﻿// The following sample is intended to demonstrate how to use a 
+﻿// The following sample is intended to demonstrate how to use a
 //NetworkStream for synchronous communcation with a remote host
 //This class uses several NetworkStream members that would be useful
 // in a synchronous communciation senario
@@ -14,9 +14,9 @@ public class NetworkStream_Sync_Send_Receive{
 
 public static void MySample(bool networkStreamOwnsSocket){
 	
-      //<Snippet1> 
+      //<Snippet1>
       // This should be the classwide example.
-  
+
        // Create a socket and connect with a remote host.
   IPHostEntry myIpHostEntry = Dns.GetHostEntry("www.contoso.com");
   IPEndPoint myIpEndPoint = new IPEndPoint(myIpHostEntry.AddressList[0], 1001);
@@ -26,39 +26,39 @@ public static void MySample(bool networkStreamOwnsSocket){
                                          ProtocolType.Tcp);
        try{
             mySocket.Connect(myIpEndPoint);
-       
-            //<Snippet2>  
+
+            //<Snippet2>
             // Examples for constructors that do not specify file permission.
-            
+
             // Create the NetworkStream for communicating with the remote host.
             NetworkStream myNetworkStream;
-            
+
             if (networkStreamOwnsSocket){
-                 myNetworkStream = new NetworkStream(mySocket, true);          
+                 myNetworkStream = new NetworkStream(mySocket, true);
             }
             else{
-                 myNetworkStream = new NetworkStream(mySocket);     
+                 myNetworkStream = new NetworkStream(mySocket);
             }
-            //</Snippet2>           
+            //</Snippet2>
 
-            //<Snippet3>  
-            // Examples for CanWrite, and CanWrite  
-           
+            //<Snippet3>
+            // Examples for CanWrite, and CanWrite
+
             // Check to see if this NetworkStream is writable.
             if (myNetworkStream.CanWrite){
-               
+
                  byte[] myWriteBuffer = Encoding.ASCII.GetBytes("Are you receiving this message?");
                  myNetworkStream.Write(myWriteBuffer, 0, myWriteBuffer.Length);
             }
             else{
-                 Console.WriteLine("Sorry.  You cannot write to this NetworkStream.");  
+                 Console.WriteLine("Sorry.  You cannot write to this NetworkStream.");
             }
 
             //</Snippet3>
 
-            //<Snippet4>   
+            //<Snippet4>
             // Examples for CanRead, Read, and DataAvailable.
-           
+
             // Check to see if this NetworkStream is readable.
             if(myNetworkStream.CanRead){
                 byte[] myReadBuffer = new byte[1024];
@@ -83,7 +83,7 @@ public static void MySample(bool networkStreamOwnsSocket){
 
             //</Snippet4>
 
-            //<Snippet5>  
+            //<Snippet5>
             // Example for closing the NetworkStream.
 
             // Close the NetworkStream
@@ -93,7 +93,7 @@ public static void MySample(bool networkStreamOwnsSocket){
        }
        catch (Exception exception){
             Console.WriteLine("Exception Thrown: " + exception.ToString());
-       } 
+       }
 }
 
 //</Snippet1>

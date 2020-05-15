@@ -8,7 +8,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Response.Cache.SetExpires(DateTime.Parse("6:00:00PM"));
-    
+
 // </Snippet1>
  }
 }

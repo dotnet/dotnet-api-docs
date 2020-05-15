@@ -1,19 +1,19 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-   
+
 class Sample
 {
-    public static int Main(string[] args) 
+    public static int Main(string[] args)
     {
-        ManagementPath p = 
+        ManagementPath p =
             new ManagementPath(
             "Win32_Service.Name='Alerter'");
         ManagementObject o = new ManagementObject(p);
 
-        //Now it can be used 
+        //Now it can be used
         Console.WriteLine(o["Name"]);
-        
+
         return 0;
     }
 }

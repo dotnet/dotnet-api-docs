@@ -21,13 +21,13 @@ public class Server
 
         //<snippet3>
         // Show the name of the channel.
-        Console.WriteLine("The name of the channel is {0}.", 
+        Console.WriteLine("The name of the channel is {0}.",
             serverChannel.ChannelName);
         //</snippet3>
 
         //<snippet4>
         // Show the priority of the channel.
-        Console.WriteLine("The priority of the channel is {0}.", 
+        Console.WriteLine("The priority of the channel is {0}.",
             serverChannel.ChannelPriority);
         //</snippet4>
 
@@ -42,7 +42,7 @@ public class Server
 
         // Expose an object for remote calls.
         RemotingConfiguration.RegisterWellKnownServiceType(
-            typeof(RemoteObject), "RemoteObject.rem", 
+            typeof(RemoteObject), "RemoteObject.rem",
             WellKnownObjectMode.Singleton);
 
         //<snippet6>
@@ -58,7 +58,7 @@ public class Server
             Console.WriteLine("The channel URI is {0}.", channelUri);
         }
         //</snippet6>
-        
+
         // Wait for the user prompt.
         Console.WriteLine("Press ENTER to exit the server.");
         Console.ReadLine();

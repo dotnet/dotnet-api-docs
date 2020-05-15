@@ -9,7 +9,7 @@
 ///    !    #ctor cannot be snippeted because attribute is not constructed
 ///        using new, but rather implicitly constructed through an attribute
 ///        tag.
-///        
+///
 ///    !    UseAttribute cannot be snippeted because exception is thrown.
 
 //<snippet100>
@@ -43,11 +43,11 @@ public class Demo
     public static void Main(string[] args)
     {
         // Get the method info object for the GetHello method.
-        System.Reflection.MethodBase getHelloMethod = 
+        System.Reflection.MethodBase getHelloMethod =
             typeof(ExampleNamespace.ExampleClass).GetMethod("GetHello");
 
         // Print the XML namespace for the invocation of this method.
-        string methodCallXmlNamespace = 
+        string methodCallXmlNamespace =
             System.Runtime.Remoting.SoapServices.
                 GetXmlNamespaceForMethodCall(getHelloMethod);
         Console.WriteLine(
@@ -70,7 +70,7 @@ public class Demo
                 GetSoapActionFromMethodBase(getHelloMethod);
         Console.WriteLine(
             "The SOAP action for the method " +
-            "GetHello in ExampleClass is {0}.", 
+            "GetHello in ExampleClass is {0}.",
             getHelloSoapAction);
     }
 }

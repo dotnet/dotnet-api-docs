@@ -3,14 +3,14 @@ using System;
 using System.IO;
 using System.Text;
 
-class Test 
+class Test
 {
-    public static void Main() 
+    public static void Main()
     {
         string path = @"c:\temp\MyTest.txt";
 
         // Create the file, or overwrite if the file exists.
-        using (FileStream fs = File.Create(path, 1024)) 
+        using (FileStream fs = File.Create(path, 1024))
         {
             byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file.");
             // Add some information to the file.
@@ -18,10 +18,10 @@ class Test
         }
 
         // Open the stream and read it back.
-        using (StreamReader sr = File.OpenText(path)) 
+        using (StreamReader sr = File.OpenText(path))
         {
             string s = "";
-            while ((s = sr.ReadLine()) != null) 
+            while ((s = sr.ReadLine()) != null)
             {
                 Console.WriteLine(s);
             }

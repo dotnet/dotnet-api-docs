@@ -16,14 +16,14 @@ The following example demonstrates the 'SoapBinding' constructor,'Transport','St
 properties of 'SoapBinding' class,'Document' member of 'SoapBindingStyle' enum,
 'SoapOperationBinding' constructor,'SoapAction','Style' properties of 'SoapOperationBinding'
 class, 'SoapBodyBinding' contructor,'Use' property of 'SoapBodyBinding' class,
-'Literal' member of 'SoapBindingUse' enum and 'SoapAddressBinding' constructor, 'Location' 
+'Literal' member of 'SoapBindingUse' enum and 'SoapAddressBinding' constructor, 'Location'
 property  of class 'SoapAddressBinding'.
 
 It takes as input a wsdl file which supports two protocols 'HttpGet' and 'HttpPost' .
 By using the 'Read' method of 'ServiceDescription' class it gets a 'ServiceDescription'
 object. It uses the SOAP protocol related classes  and  creates 'Binding','Port',
-'PortType' and 'Message' elements of 'SOAP' protocol. It adds all these elements to 
-the 'ServiceDescription' object. The 'ServiceDescription' object creates another 
+'PortType' and 'Message' elements of 'SOAP' protocol. It adds all these elements to
+the 'ServiceDescription' object. The 'ServiceDescription' object creates another
 wsdl file which supports 'SOAP' also. This wsdl file is used to generate a proxy
 which is used by the .aspx file.
 Note: To run the example run the makefile provided and open the '.aspx' file in browser.
@@ -93,7 +93,7 @@ using System.Xml;
          OutputBinding myOutput = new OutputBinding();
          myOutput.Extensions.Add(mySoapBinding1);
          // Add the 'OutputBinding' object to 'OperationBinding' object.
-         myOperationBinding.Output = myOutput; 
+         myOperationBinding.Output = myOutput;
          // Add the 'OperationBinding' object to 'Binding' object.
          myBinding.Operations.Add(myOperationBinding);
          // Add the 'Binding' object to the ServiceDescription instance.
@@ -108,7 +108,7 @@ using System.Xml;
          soapPort.Name = "Service1Soap";
          soapPort.Binding = new XmlQualifiedName("s0:Service1Soap");
          // Create a 'SoapAddressBinding' object for the 'SOAP' protocol.
-         SoapAddressBinding mySoapAddressBinding = 
+         SoapAddressBinding mySoapAddressBinding =
                                        new SoapAddressBinding();
          mySoapAddressBinding.Location = "http://localhost/Service1_cs.asmx";
          // Add the 'SoapAddressBinding' object to the 'Port'.
@@ -159,9 +159,9 @@ using System.Xml;
          soapMessagePart2.Element =
                   new XmlQualifiedName("s0:AddNumbersResponse");
          // Add the 'MessagePart' object to second 'Message' object.
-         soapMessage2.Parts.Add(soapMessagePart2); 
+         soapMessage2.Parts.Add(soapMessagePart2);
 
-         // Add the 'Message' objects to 'ServiceDescription'. 
+         // Add the 'Message' objects to 'ServiceDescription'.
          myDescription.Messages.Add(soapMessage1);
          myDescription.Messages.Add(soapMessage2);
 

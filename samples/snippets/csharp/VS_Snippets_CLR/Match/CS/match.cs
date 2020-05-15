@@ -4,27 +4,27 @@ using System.Reflection;
 
 // A custom attribute to allow multiple authors per method.
 [AttributeUsage(AttributeTargets.Method)]
-public class AuthorsAttribute : Attribute 
+public class AuthorsAttribute : Attribute
 {
    protected List<string> _authors;
 
-	public AuthorsAttribute(params string[] names) 
+	public AuthorsAttribute(params string[] names)
    {
       _authors = new List<string>(names);
 	}
 
-   public List<string> Authors 
+   public List<string> Authors
    {
 	   get { return _authors; }
    }
 
 	// Determine if the object is a match to this one.
-	public override bool Match(object obj) 
+	public override bool Match(object obj)
    {
       // Return false if obj is null or not an AuthorsAttribute.
       AuthorsAttribute authors2 = obj as AuthorsAttribute;
       if (authors2 == null) return false;
-      
+
 		// Return true if obj and this instance are the same object reference.
       if (Object.ReferenceEquals(this, authors2))
          return true;
@@ -32,10 +32,10 @@ public class AuthorsAttribute : Attribute
       // Return false if obj and this instance have different numbers of authors
       if (_authors.Count != authors2._authors.Count)
          return false;
-         
+
       bool matches = false;
-      foreach (var author in _authors) 
-      { 
+      foreach (var author in _authors)
+      {
          for (int ctr = 0; ctr < authors2._authors.Count; ctr++)
          {
             if (author == authors2._authors[ctr])
@@ -86,21 +86,21 @@ public class TestClass {
 	{}
 }
 
-class Example 
+class Example
 {
-	static void Main() 
+	static void Main()
    {
 		// Get the type for TestClass to access its metadata.
 		Type clsType = typeof(TestClass);
 
 		// Iterate through each method of the class.
       AuthorsAttribute authors = null;
-		foreach(var method in clsType.GetMethods()) 
+		foreach(var method in clsType.GetMethods())
       {
 			// Check each method for the Authors attribute.
-			AuthorsAttribute authAttr = (AuthorsAttribute)  Attribute.GetCustomAttribute(method, 
+			AuthorsAttribute authAttr = (AuthorsAttribute)  Attribute.GetCustomAttribute(method,
 				                         typeof(AuthorsAttribute));
-			if (authAttr != null) 
+			if (authAttr != null)
          {
             // Display the authors.
 				Console.WriteLine($"{clsType.Name}.{method.Name} was authored by {authAttr}.");
@@ -112,7 +112,7 @@ class Example
                Console.WriteLine();
                continue;
             }
-         
+
    			// Compare first authors with the authors of this method.
             if (authors.Match(authAttr))
             {
@@ -128,13 +128,13 @@ class Example
 }
 // The example displays the following output:
 //       TestClass.Method1 was authored by Leo Tolstoy, John Milton.
-//       
+//
 //       TestClass.Method2 was authored by Anonymous.
 //       Leo Tolstoy, John Milton <> Anonymous
-//       
+//
 //       TestClass.Method3 was authored by Leo Tolstoy, John Milton, Nathaniel Hawthorne.
 //       Leo Tolstoy, John Milton <> Leo Tolstoy, John Milton, Nathaniel Hawthorne
-//       
+//
 //       TestClass.Method4 was authored by John Milton, Leo Tolstoy.
 //       TestClass.Method1 was also authored by the same team.
 //       Leo Tolstoy, John Milton <> John Milton, Leo Tolstoy

@@ -1,15 +1,15 @@
 ﻿// Example of the Random.Next( ) methods.
 using System;
 
-public class RandomNextDemo  
+public class RandomNextDemo
 {
     static void Main( )
     {	
         //<Snippet1>
-        Console.WriteLine(                 
+        Console.WriteLine(
             "This example of the Random.Next( ) methods\n" +
             "generates the following output.\n" );
-        Console.WriteLine(                 
+        Console.WriteLine(
             "Create Random objects all with the same seed and " +
             "generate\nsequences of numbers with different " +
             "bounds. Note the effect\nthat the various " +
@@ -30,7 +30,7 @@ public class RandomNextDemo
         // Generate random numbers with no bounds specified.
         void NoBoundsRandoms( int seed )
         {
-            Console.WriteLine( 
+            Console.WriteLine(
                 "\nRandom object, seed = {0}, no bounds:", seed );
             Random randObj = new Random( seed );
 
@@ -43,8 +43,8 @@ public class RandomNextDemo
         // Generate random numbers with an upper bound specified.
         void UpperBoundRandoms( int seed, int upper )
         {
-            Console.WriteLine( 
-                "\nRandom object, seed = {0}, upper bound = {1}:", 
+            Console.WriteLine(
+                "\nRandom object, seed = {0}, upper bound = {1}:",
                 seed, upper );
             Random randObj = new Random( seed );
 
@@ -57,15 +57,15 @@ public class RandomNextDemo
         // Generate random numbers with both bounds specified.
         void BothBoundsRandoms( int seed, int lower, int upper )
         {
-            Console.WriteLine( 
+            Console.WriteLine(
                 "\nRandom object, seed = {0}, lower = {1}, " +
                 "upper = {2}:", seed, lower, upper );
             Random randObj = new Random( seed );
 
-            // Generate six random integers from the lower to 
+            // Generate six random integers from the lower to
             // upper bounds.
             for( int j = 0; j < 6; j++ )
-                Console.Write( "{0,11} ", 
+                Console.Write( "{0,11} ",
                     randObj.Next( lower, upper) );
             Console.WriteLine( );
         }

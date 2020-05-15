@@ -18,7 +18,7 @@ class BinaryRW
             binWriter.Write(invalidPathChars[i]);
         }
 
-        // Create the reader using the same MemoryStream 
+        // Create the reader using the same MemoryStream
         // as used with the writer.
         BinaryReader binReader = new BinaryReader(memStream);
 
@@ -27,7 +27,7 @@ class BinaryRW
 
         // Read the data from memory and write it to the console.
         Console.Write(binReader.ReadString());
-        char[] memoryData = 
+        char[] memoryData =
             new char[memStream.Length - memStream.Position];
         for(i = 0; i < memoryData.Length; i++)
         {

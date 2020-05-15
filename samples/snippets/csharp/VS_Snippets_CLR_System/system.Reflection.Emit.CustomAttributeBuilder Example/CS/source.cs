@@ -10,7 +10,7 @@ public class ClassCreator: Attribute
 
 {
    private string creator;
-   public string Creator 
+   public string Creator
    {
 	get
 	{
@@ -40,7 +40,7 @@ public class DateLastUpdated: Attribute
    public DateLastUpdated(string theDate)
    {
 	this.dateUpdated = theDate;
-   } 
+   }
 }
 
 class MethodBuilderCustomAttributesDemo
@@ -98,7 +98,7 @@ class MethodBuilderCustomAttributesDemo
 	return myTypeBuilder.CreateType();
    }
 
-   public static void Main() 
+   public static void Main()
    {
 
 	Type myType = BuildTypeWithCustomAttributesOnMethod();
@@ -111,9 +111,9 @@ class MethodBuilderCustomAttributesDemo
 
 	object attrVal = null;
 
-	foreach (object customAttr in customAttrs) 
+	foreach (object customAttr in customAttrs)
    	{
-	   attrVal = typeof(ClassCreator).InvokeMember("Creator", 
+	   attrVal = typeof(ClassCreator).InvokeMember("Creator",
 					  BindingFlags.GetProperty,
 					  null, customAttr, new object[] { });
 	   Console.WriteLine("-- Attribute: [{0} = \"{1}\"]", customAttr, attrVal);
@@ -123,9 +123,9 @@ class MethodBuilderCustomAttributesDemo
 
 	customAttrs = myType.GetMember("HelloWorld")[0].GetCustomAttributes(true);	
 
-	foreach (object customAttr in customAttrs) 
+	foreach (object customAttr in customAttrs)
    	{
-	   attrVal = typeof(DateLastUpdated).InvokeMember("DateUpdated", 
+	   attrVal = typeof(DateLastUpdated).InvokeMember("DateUpdated",
 					  BindingFlags.GetProperty,
 					  null, customAttr, new object[] { });
 	   Console.WriteLine("-- Attribute: [{0} = \"{1}\"]", customAttr, attrVal);

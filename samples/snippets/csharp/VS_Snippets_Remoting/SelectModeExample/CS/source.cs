@@ -7,11 +7,11 @@ using System.Net.Sockets;
 public class Sample
 {
 
-public static void DoSocketGet(string server) 
+public static void DoSocketGet(string server)
  {
     //Set up variables and String to write to the server.
     Encoding ASCII = Encoding.ASCII;
-    string Get = "GET / HTTP/1.1\r\nHost: " + server + 
+    string Get = "GET / HTTP/1.1\r\nHost: " + server +
                  "\r\nConnection: Close\r\n\r\n";
     Byte[] ByteGet = ASCII.GetBytes(Get);
     Byte[] RecvBytes = new Byte[256];
@@ -27,7 +27,7 @@ public static void DoSocketGet(string server)
     //Creates the Socket for sending data over TCP.
     Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
        ProtocolType.Tcp );
- 
+
     // Connects to host using IPEndPoint.
     s.Connect(EPhost);
     if (!s.Connected)
@@ -54,7 +54,7 @@ public static void DoSocketGet(string server)
     Int32 bytes = s.Receive(RecvBytes, RecvBytes.Length, 0);
     strRetPage = "Default HTML page on " + server + ":\r\n";
     strRetPage = strRetPage + ASCII.GetString(RecvBytes, 0, bytes);
- 
+
     while (bytes > 0)
     {
        bytes = s.Receive(RecvBytes, RecvBytes.Length, 0);

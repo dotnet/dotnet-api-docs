@@ -1,4 +1,4 @@
-﻿// <Snippet1>   
+﻿// <Snippet1>
 
 using System;
 using System.Reflection;
@@ -26,7 +26,7 @@ public class MyTypeClass
         try
         {
             // Get the Type object corresponding to MyClass.
-            Type myType=typeof(MyClass);       
+            Type myType=typeof(MyClass);
             // Get the PropertyInfo object by passing the property name.
             PropertyInfo myPropInfo = myType.GetProperty("MyProperty");
             // Display the property name.

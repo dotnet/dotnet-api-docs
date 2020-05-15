@@ -1,9 +1,9 @@
 ﻿' System.Net.FileWebResponse.GetResponseStream.
 
-' This program demonstrates the 'GetResponseStream' method of the 'FileWebResponse' class
-'It creates a 'FileWebRequest' object and queries for a response.
+' This program demonstrates the 'GetResponseStream' method of the 'FileWebResponse' class.
+' It creates a 'FileWebRequest' object and queries for a response.
 ' The response stream obtained is piped to a higher level stream reader. The reader reads 
-' 256 characters at a time , writes them into a string and then displays the string onto the console
+' 256 characters at a time, writes them into a string and then displays the string onto the console.
 
 Imports System.Net
 Imports System.IO

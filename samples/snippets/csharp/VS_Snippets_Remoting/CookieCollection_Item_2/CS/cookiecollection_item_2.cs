@@ -4,12 +4,12 @@
   This program uses an internal site called "CookiesServer.aspx". The program creates a 'HttpWebRequest'
   object with the 'URL' taken from command line argument. When no cookies are initially sent to
   the server, it responds with a specific page querying the client for information. The client queries
-  this information from the user and sends it to the server in the second request. This information is  
+  this information from the user and sends it to the server in the second request. This information is
   used by the server to not only structure the page sent subsequently but also construct some cookies to be
-  set by the client, for future requests. The response and the  cookies that are sent from the server are 
+  set by the client, for future requests. The response and the  cookies that are sent from the server are
   displayed to the console.
 
-  Note: This program requires the "CookiesServer.aspx" server to be running before the execution of this 
+  Note: This program requires the "CookiesServer.aspx" server to be running before the execution of this
         program.Please refer the "ReadmeCookiesServer.txt" file for setting up the server.
 */
 
@@ -29,11 +29,11 @@ public class CookieCollection_Item_2 {
 			}
 			GetPage(new Uri(args[0]));
 		}
-		catch(UriFormatException e) 
+		catch(UriFormatException e)
 		{
 			Console.WriteLine("UriFormatException raised.\nError : " + e.Message);
 		}
-		catch(Exception e) 
+		catch(Exception e)
 		{
 			Console.WriteLine("Exception raised.\nError : " + e.Message);
 		}
@@ -69,9 +69,9 @@ public class CookieCollection_Item_2 {
 			Console.Write("\nPlaceOfBirth : ");
 			placeBirth = Console.ReadLine();
 			Console.WriteLine("");
-			output = asciiEncoding.GetBytes("UserName=" + usrName + 
+			output = asciiEncoding.GetBytes("UserName=" + usrName +
 									"&DateOfBirth=" + convertDate +
-									"&PlaceOfBirth=" + placeBirth + 
+									"&PlaceOfBirth=" + placeBirth +
 									"&__EVENTTARGET=PlaceOfBirth&__EVENTARGUMENT=");
 			myHttpWebRequest.ContentLength = output.Length;
 			myStream = myHttpWebRequest.GetRequestStream();
@@ -108,9 +108,9 @@ public class CookieCollection_Item_2 {
 	public static void DisplayCookies(CookieCollection cookies) {
 // <Snippet1>
 		// Get the cookies in the 'CookieCollection' object using the 'Item' property.
-		// The 'Item' property in C# is implemented through Indexers. 
-      // The class that implements indexers is usually a collection of other objects. 
-      // This class provides access to those objects with the '<class-instance>[i]' syntax. 
+		// The 'Item' property in C# is implemented through Indexers.
+      // The class that implements indexers is usually a collection of other objects.
+      // This class provides access to those objects with the '<class-instance>[i]' syntax.
 		try {
 			if(cookies.Count == 0) {
 				Console.WriteLine("No cookies to display");
@@ -125,7 +125,7 @@ public class CookieCollection_Item_2 {
 		}
 // </Snippet1>
 	}
-	public static void printUsage() 
+	public static void printUsage()
 	{
 		Console.WriteLine("Usage : ");
 		Console.WriteLine("CookieCollection_Item_2 <urlname>");

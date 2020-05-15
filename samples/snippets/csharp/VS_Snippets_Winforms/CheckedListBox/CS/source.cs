@@ -29,7 +29,7 @@ namespace Snip_CheckedListBox
             this.SuspendLayout();
 
             // checkedListBox1
-            this.checkedListBox1.Items.AddRange(new object[] {"one", "two", "three", "four", 
+            this.checkedListBox1.Items.AddRange(new object[] {"one", "two", "three", "four",
                                                               "five", "six", "seven", "eight",
                                                               "nine", "ten"});
             this.checkedListBox1.Location = new System.Drawing.Point(10, 25);
@@ -66,7 +66,7 @@ namespace Snip_CheckedListBox
 
         // The main entry point for the application.
         [STAThread]
-        static void Main() 
+        static void Main()
         {
             Application.Run(new Form1());
         }
@@ -86,8 +86,8 @@ namespace Snip_CheckedListBox
             foreach(object itemChecked in checkedListBox1.CheckedItems) {
 
                 // Use the IndexOf method to get the index of an item.
-                MessageBox.Show("Item with title: \"" + itemChecked.ToString() + 
-                                "\", is checked. Checked state is: " + 
+                MessageBox.Show("Item with title: \"" + itemChecked.ToString() +
+                                "\", is checked. Checked state is: " +
                                 checkedListBox1.GetItemCheckState(checkedListBox1.Items.IndexOf(itemChecked)).ToString() + ".");
             }
         }
@@ -112,7 +112,7 @@ namespace Snip_CheckedListBox
                     else
                         checkedListBox1.SetItemChecked(i, true);
                 }
-            }        
+            }
 
             insideCheckEveryOther = false;
         }
@@ -121,7 +121,7 @@ namespace Snip_CheckedListBox
             // An item in the CheckedListBox is being checked or unchecked.
             // Set the NewValue based upon the CurrentValue to allow for a tri-state checking.
 
-            // If the ItemCheck event is due to the code in CheckEveryOther, 
+            // If the ItemCheck event is due to the code in CheckEveryOther,
             // then exit the function.
             if (insideCheckEveryOther) return;
 
@@ -130,7 +130,7 @@ namespace Snip_CheckedListBox
             else if (e.CurrentValue == CheckState.Indeterminate)
                 e.NewValue = CheckState.Checked;
             else if (e.CurrentValue == CheckState.Checked)
-                e.NewValue = CheckState.Unchecked;        
+                e.NewValue = CheckState.Unchecked;
         }
         //</Snippet4>
 	}

@@ -3,7 +3,7 @@ using System;
 
 class Example
 {
-    public static void Main() 
+    public static void Main()
     {
        Console.WriteLine();
        //  Invoke this sample with an arbitrary set of command line arguments.
@@ -12,6 +12,6 @@ class Example
 }
 // The example displays output like the following:
 //       C:\>env0 ARBITRARY TEXT
-//       
+//
 //       CommandLine: env0 ARBITRARY TEXT
 //</snippet1>

@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System;
 using System.Reflection;
-  
+
 public class MyClass
 {
     public string MyField = "Microsoft";
@@ -11,7 +11,7 @@ public class FieldInfo_FieldHandle
 {
     public static void Main()
     {
-    
+
         MyClass myClass =new MyClass();
 
         // Get the type of MyClass.
@@ -20,9 +20,9 @@ public class FieldInfo_FieldHandle
         try
         {
             // Get the field information of MyField.
-            FieldInfo myFieldInfo = myType.GetField("MyField", BindingFlags.Public 
+            FieldInfo myFieldInfo = myType.GetField("MyField", BindingFlags.Public
                 | BindingFlags.Instance);
-      
+
             // Determine whether or not the FieldInfo object is null.
             if(myFieldInfo!=null)
             {
@@ -35,7 +35,7 @@ public class FieldInfo_FieldHandle
             {
                 Console.WriteLine("The myFieldInfo object is null.");
             }
-        }  
+        }
         catch(Exception e)
         {
             Console.WriteLine("Exception: {0}", e.Message);
@@ -45,8 +45,8 @@ public class FieldInfo_FieldHandle
     public static void DisplayFieldHandle(RuntimeFieldHandle myFieldHandle)
     {
         // Get the type from the handle.
-        FieldInfo myField = FieldInfo.GetFieldFromHandle(myFieldHandle);      
-      
+        FieldInfo myField = FieldInfo.GetFieldFromHandle(myFieldHandle);
+
         // Display the type.
         Console.WriteLine("\nDisplaying the field from the handle.\n");
         Console.WriteLine("The type is {0}.", myField.ToString());

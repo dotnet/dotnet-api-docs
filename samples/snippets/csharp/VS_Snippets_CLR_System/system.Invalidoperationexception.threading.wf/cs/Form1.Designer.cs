@@ -31,17 +31,17 @@
          this.textBox1 = new System.Windows.Forms.TextBox();
          this.threadExampleBtn = new System.Windows.Forms.Button();
          this.SuspendLayout();
-         // 
+         //
          // textBox1
-         // 
+         //
          this.textBox1.Location = new System.Drawing.Point(28, 36);
          this.textBox1.Multiline = true;
          this.textBox1.Name = "textBox1";
          this.textBox1.Size = new System.Drawing.Size(459, 186);
          this.textBox1.TabIndex = 0;
-         // 
+         //
          // threadExampleBtn
-         // 
+         //
          this.threadExampleBtn.Location = new System.Drawing.Point(249, 256);
          this.threadExampleBtn.Name = "threadExampleBtn";
          this.threadExampleBtn.Size = new System.Drawing.Size(75, 23);
@@ -49,9 +49,9 @@
          this.threadExampleBtn.Text = "button2";
          this.threadExampleBtn.UseVisualStyleBackColor = true;
          this.threadExampleBtn.Click += new System.EventHandler(this.threadExampleBtn_Click);
-         // 
+         //
          // Form1
-         // 
+         //
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(541, 371);

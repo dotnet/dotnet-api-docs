@@ -11,10 +11,10 @@ public class Example
       Console.WriteLine("{0,-7} {1,-20} {2:D}\n", "Culture", "Long Date Pattern", "Date");
       foreach (var cultureName in cultureNames) {
          CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
-         Console.WriteLine("{0,-7} {1,-20} {2}", 
-                           culture.Name, 
-                           culture.DateTimeFormat.LongDatePattern, 
-                           date1.ToString("D", culture));                 
+         Console.WriteLine("{0,-7} {1,-20} {2}",
+                           culture.Name,
+                           culture.DateTimeFormat.LongDatePattern,
+                           date1.ToString("D", culture));
       }
    }
 }

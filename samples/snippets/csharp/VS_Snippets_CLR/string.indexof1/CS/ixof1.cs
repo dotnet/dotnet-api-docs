@@ -1,9 +1,9 @@
 // Sample for String.IndexOf(Char, Int32)
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         //<snippet1>
         string br1 = "0----+----1----+----2----+----3----+----4----+----5----+----6----+---";
@@ -18,7 +18,7 @@ class Sample
         Console.Write("The letter 't' occurs at position(s): ");
 
         at = 0;
-        start = 0; 
+        start = 0;
         while((start < str.Length) && (at > -1))
         {
             at = str.IndexOf('t', start);

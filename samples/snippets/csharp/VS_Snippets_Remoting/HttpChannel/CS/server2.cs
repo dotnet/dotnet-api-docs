@@ -18,17 +18,17 @@ public class SampleServer {
         ListDictionary channelProperties = new ListDictionary();
 
         channelProperties.Add("port", 9000);
-        
+
         HttpChannel channel = new HttpChannel(channelProperties,
                                               new SoapClientFormatterSinkProvider(),
                                               new SoapServerFormatterSinkProvider());
 
         ChannelServices.RegisterChannel(channel);
 
-        RemotingConfiguration.RegisterWellKnownServiceType(typeof(SampleService), 
+        RemotingConfiguration.RegisterWellKnownServiceType(typeof(SampleService),
 							"MySampleService/SampleService.soap",
 							WellKnownObjectMode.Singleton);
-        
+
         Console.WriteLine("** Press enter to end the server process. **");
         Console.ReadLine();
         // </Snippet4>

@@ -125,7 +125,7 @@ namespace SimpleService
             SetServiceStatus(handle, ref myServiceStatus);
             EventLog.WriteEntry("SimpleService", "Starting SimpleService");
 
-            // Get arguments from the ImagePath string value for the service's registry 
+            // Get arguments from the ImagePath string value for the service's registry
             // key (HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SimpleService).
             // These arguments are not used by this sample, this code is only intended to
             // demonstrate how to obtain the arguments.
@@ -366,8 +366,8 @@ namespace SimpleService
             }
         }
         //</Snippet9>
-        // Define a simple method that runs as the worker thread for 
-        // the service.  
+        // Define a simple method that runs as the worker thread for
+        // the service.
         public void ServiceWorkerMethod()
         {
 #if LOGEVENTS
@@ -394,7 +394,7 @@ namespace SimpleService
             {
                 // Another thread has signalled that this worker
                 // thread must terminate.  Typically, this occurs when
-                // the main service thread receives a service stop 
+                // the main service thread receives a service stop
                 // command.
 
                 // Write a trace line indicating that the worker thread

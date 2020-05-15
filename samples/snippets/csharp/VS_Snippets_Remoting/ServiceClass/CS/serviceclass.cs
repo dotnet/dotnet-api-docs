@@ -1,9 +1,9 @@
 ﻿// System.Web.Services.Description.Service
 
-/* The following sample demonstrates the class 'Service'.This sample reads the
-   contents of a file 'MathService_cs.wsdl' into a 'ServiceDescription' instance. 
-   It gets the collection of Service instances from 'ServiceDescription'. It 
-   then removes a 'Service' from the collection and creates a new 'Service' and 
+/* The following sample demonstrates the class 'Service'. This sample reads the
+   contents of a file 'MathService_cs.wsdl' into a 'ServiceDescription' instance.
+   It gets the collection of Service instances from 'ServiceDescription'. It
+   then removes a 'Service' from the collection and creates a new 'Service' and
    adds it into collection. It writes a new web service description file 'MathService_New.wsdl'.
 */
 
@@ -19,14 +19,14 @@ class MyServiceClass
       try
       {
          // Read a WSDL document.
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MathService_CS.wsdl");
-         ServiceCollection myServiceCollection = 
+         ServiceCollection myServiceCollection =
             myServiceDescription.Services;
 
          int noOfServices = myServiceCollection.Count;
          Console.WriteLine("\nTotal number of services: " + noOfServices);
-         
+
          // Gets a reference to the service.
          Service  myOldService = myServiceCollection[0];
          Console.WriteLine("No. of ports in the service: "+
@@ -38,7 +38,7 @@ class MyServiceClass
 
          Service myService = new Service();
          myService.Name = "MathService";
-         
+
          // Add the Ports to the newly created Service.
          for(int i = 0; i < myOldService.Ports.Count; i++)
          {
@@ -63,10 +63,10 @@ class MyServiceClass
 
          // Remove the service from the collection.
          myServiceCollection.Remove(myOldService);
-         
+
          // Add the newly created service.
          myServiceCollection.Add(myService);
-         
+
          myServiceDescription.Write("MathService_New.wsdl");
       }
       catch(Exception e)
@@ -84,7 +84,7 @@ class MyServiceClass
 
       // Create a SoapAddress extensibility element to add to the port.
       SoapAddressBinding mySoapAddressBinding = new SoapAddressBinding();
-      mySoapAddressBinding.Location = 
+      mySoapAddressBinding.Location =
          "http://localhost/ServiceClass/MathService_CS.asmx";
       myPort.Extensions.Add(mySoapAddressBinding);
       return myPort;

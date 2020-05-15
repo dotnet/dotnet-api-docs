@@ -13,18 +13,18 @@ using System.IO;
 
 namespace Examples.System.Net
 {
-    public sealed class SslTcpServer 
+    public sealed class SslTcpServer
     {
         static X509Certificate serverCertificate = null;
-        // The certificate parameter specifies the name of the file 
+        // The certificate parameter specifies the name of the file
         // containing the machine certificate.
-        public static void RunServer(string certificate) 
+        public static void RunServer(string certificate)
         {
             serverCertificate = X509Certificate.CreateFromCertFile(certificate);
             // Create a TCP/IP (IPv4) socket and listen for incoming connections.
-            TcpListener listener = new TcpListener(IPAddress.Any, 8080);    
+            TcpListener listener = new TcpListener(IPAddress.Any, 8080);
             listener.Start();
-            while (true) 
+            while (true)
             {
                 Console.WriteLine("Waiting for a client to connect...");
                 // Application blocks while waiting for an incoming connection.
@@ -36,15 +36,15 @@ namespace Examples.System.Net
         //<snippet1>
         static void ProcessClient (TcpClient client)
         {
-            // A client has connected. Create the 
+            // A client has connected. Create the
             // SslStream using the client's network stream.
             SslStream sslStream = new SslStream(
                 client.GetStream(), false);
             // Authenticate the server but don't require the client to authenticate.
-            try 
+            try
             {
                 sslStream.AuthenticateAsServer(serverCertificate, clientCertificateRequired: false, checkCertificateRevocation: true);
-                
+
                 // Display the properties and settings for the authenticated stream.
                 DisplaySecurityLevel(sslStream);
                 DisplaySecurityServices(sslStream);
@@ -54,11 +54,11 @@ namespace Examples.System.Net
                 // Set timeouts for the read and write to 5 seconds.
                 sslStream.ReadTimeout = 5000;
                 sslStream.WriteTimeout = 5000;
-                // Read a message from the client.   
+                // Read a message from the client.
                 Console.WriteLine("Waiting for client message...");
                 string messageData = ReadMessage(sslStream);
                 Console.WriteLine("Received: {0}", messageData);
-                
+
                 // Write a message to the client.
                 byte[] message = Encoding.UTF8.GetBytes("Hello from the server.<EOF>");
                 Console.WriteLine("Sending hello message.");
@@ -99,7 +99,7 @@ namespace Examples.System.Net
             {
                 // Read the client's test message.
                 bytes = sslStream.Read(buffer, 0, buffer.Length);
-                        
+
                 // Use Decoder class to convert from bytes to UTF8
                 // in case a character spans two buffers.
                 Decoder decoder = Encoding.UTF8.GetDecoder();
@@ -111,8 +111,8 @@ namespace Examples.System.Net
                 {
                     break;
                 }
-            } while (bytes !=0); 
-            
+            } while (bytes !=0);
+
             return messageData.ToString();
         }
          //</snippet2>
@@ -144,7 +144,7 @@ namespace Examples.System.Net
         static void DisplayCertificateInformation(SslStream stream)
         {
             Console.WriteLine("Certificate revocation list checked: {0}", stream.CheckCertRevocationStatus);
-                
+
             X509Certificate localCertificate = stream.LocalCertificate;
             if (stream.LocalCertificate != null)
             {
@@ -171,7 +171,7 @@ namespace Examples.System.Net
         }
         //</snippet6>
         private static void DisplayUsage()
-        { 
+        {
             Console.WriteLine("To start the server specify:");
             Console.WriteLine("serverSync certificateFile.cer");
             Environment.Exit(1);
@@ -186,7 +186,7 @@ namespace Examples.System.Net
             certificate = args[0];
             SslTcpServer.RunServer (certificate);
             return 0;
-        } 
+        }
     }
 }
 // </snippet0>

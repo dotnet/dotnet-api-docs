@@ -17,7 +17,7 @@ public class X509
 
         // Get the value.
         byte[] results = cert.GetPublicKey();
-       
+
         // Display the value to the console.
         foreach(byte b in results)
         {

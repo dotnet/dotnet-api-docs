@@ -13,7 +13,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example performs asynchronous receive
 		// operation processing.
 		//**************************************************
@@ -26,7 +26,7 @@ namespace MyProject
 				{typeof(String)});
 
 			// Add an event handler for the ReceiveCompleted event.
-			myQueue.ReceiveCompleted += 
+			myQueue.ReceiveCompleted +=
 				new ReceiveCompletedEventHandler(MyReceiveCompleted);
 			
 			// Define wait handles for multiple operations.
@@ -34,13 +34,13 @@ namespace MyProject
 			for(int i=0; i<10; i++)
 			{
 				// Begin asynchronous operations.
-				waitHandleArray[i] = 
+				waitHandleArray[i] =
 					myQueue.BeginReceive().AsyncWaitHandle;
 			}
 
 			// Specify to wait for all operations to return.
 			WaitHandle.WaitAll(waitHandleArray);
-         
+
 			return;
 		}
 
@@ -49,14 +49,14 @@ namespace MyProject
 		// event.
 		//***************************************************
 		
-		private static void MyReceiveCompleted(Object source, 
+		private static void MyReceiveCompleted(Object source,
 			ReceiveCompletedEventArgs asyncResult)
 		{
 			try
 			{
 				// Connect to the queue.
 				MessageQueue mq = (MessageQueue)source;
-                
+
 				// End the asynchronous receive operation.
 				Message m = mq.EndReceive(asyncResult.AsyncResult);
 		
@@ -70,7 +70,7 @@ namespace MyProject
 			
 			// Handle other exceptions.
 			
-			return; 
+			return;
 		}
 	}
 }

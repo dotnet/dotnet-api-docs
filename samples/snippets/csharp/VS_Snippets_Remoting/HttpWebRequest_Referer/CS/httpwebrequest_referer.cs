@@ -1,10 +1,10 @@
 ﻿/*System.Net.HttpWebRequest.Referer
-This program demonstrates 'Referer' property of the 'HttpWebRequest' class.
-A new 'HttpWebRequest' object is created.The 'Referer' property is displayed to the console.
-HTTP Request  and  Response Headers are displayed to the console.The contents of the page of the 
+This program demonstrates the 'Referer' property of the 'HttpWebRequest' class.
+A new 'HttpWebRequest' object is created. The 'Referer' property is displayed to the console.
+HTTP Request and Response Headers are displayed to the console. The contents of the page of the
 requested URI are displayed to the console.
 
-Note:The 'Referer' property is used by the server to store the address of the Uri that has referred 
+Note: The 'Referer' property is used by the server to store the address of the Uri that has referred
      the request to that server.Please refer to RFC 2616 for more information on HTTP Headers.
 */
 
@@ -18,7 +18,7 @@ class HttpWebRequest_Referer
 	static void Main(string[] args)
 	{
 		try	
-		{ 
+		{
 			if(args.Length<1)
 			{
 				Console.WriteLine("\nPlease enter the Uri address as a command line parameter");
@@ -33,7 +33,7 @@ class HttpWebRequest_Referer
 		{
 			Console.WriteLine("\nWebException Caught!");
 			Console.WriteLine("Message :{0}",e.Message);			
-		} 
+		}
 		catch(Exception e)
 		{
 			Console.WriteLine("\nException Caught!");
@@ -57,7 +57,7 @@ class HttpWebRequest_Referer
 			Char[] readBuffer = new Char[256];
 			int count = streamRead.Read( readBuffer, 0, 256 );
 			Console.WriteLine("\nThe contents of HTML page are.......");	
-			while (count > 0) 
+			while (count > 0)
 			{
 				String outputData = new String(readBuffer, 0, count);
 				Console.Write(outputData);
@@ -78,7 +78,7 @@ class HttpWebRequest_Referer
 		{
 			Console.WriteLine("\nWebException Caught!");
 			Console.WriteLine("Message : {0}",e.Message);			
-		} 
+		}
 		catch(Exception e)
 		{
 			Console.WriteLine("\nException Caught!");

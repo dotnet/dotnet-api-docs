@@ -4,7 +4,7 @@
 ' System.Runtime.Remoting.Channels.SinkProviderData.Properties
 
 ' The following program demonstrates the SinkProviderData class and its properties
-' 'Children', 'Name', 'Properties'.The IP filter sink may be set up to be in accept
+' 'Children', 'Name', 'Properties'. The IP filter sink may be set up to be in accept
 ' or reject mode. In accept mode, the sink will only accept requests from ip addresses
 ' that matches one of the filters. In reject mode, the sink will reject requests from
 ' any ip address that matches one of the filters. The properties of the SinkProviderData

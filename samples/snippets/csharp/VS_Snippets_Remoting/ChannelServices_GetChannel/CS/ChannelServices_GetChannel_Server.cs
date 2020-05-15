@@ -1,12 +1,12 @@
 ﻿/*
    This program registers the remote object.
- */ 
+ */
 using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using System.Collections.Specialized; 
-namespace RemotingSamples 
+using System.Collections.Specialized;
+namespace RemotingSamples
 {
    public class MyChannelServices_Server
    {

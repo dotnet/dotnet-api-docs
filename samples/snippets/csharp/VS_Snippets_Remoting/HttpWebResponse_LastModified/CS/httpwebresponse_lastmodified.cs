@@ -1,23 +1,23 @@
 ﻿// System.Net.HttpWebResponse.LastModified
 
 /* This program demonstrates the 'LastModified' property of the 'HttpWebResponse' class
-It creates a web request and queries for a response.The program checks 
+It creates a web request and queries for a response. The program checks
 if the entity requested was modified any time today.*/
 
 using System;
 using System.Net;
 
-class HttpWebResponseSnippet 
+class HttpWebResponseSnippet
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
 	{
 		if (args.Length < 1)
 		{	
 			Console.WriteLine("\nPlease type the url as command line parameter:");
 			Console.WriteLine("Example:");
 			Console.WriteLine("HttpWebResponse_LastModified http://www.microsoft.com/net/");
-		} 
-		else 
+		}
+		else
 		{
 			GetPage(args[0]);
 		}
@@ -26,15 +26,15 @@ class HttpWebResponseSnippet
 		return;
     }
 	
-    public static void GetPage(String url) 
+    public static void GetPage(String url)
 	{
- 
-	try 
+
+	try
  		  {	
 // <Snippet1>				
             Uri myUri = new Uri(url);
-				// Creates an HttpWebRequest for the specified URL. 
-				HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(myUri); 
+				// Creates an HttpWebRequest for the specified URL.
+				HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(myUri);
 				HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 				if (myHttpWebResponse.StatusCode == HttpStatusCode.OK)
 					Console.WriteLine("\r\nRequest succeeded and the requested information is in the response , Description : {0}",
@@ -48,12 +48,12 @@ class HttpWebResponseSnippet
 						Console.WriteLine("\nThe requested URI was last modified on:{0}",
 											myHttpWebResponse.LastModified);
 				// Releases the resources of the response.
-				myHttpWebResponse.Close(); 
+				myHttpWebResponse.Close();
 // </Snippet1>			
-        	} 
-		catch(WebException e) 
+        	}
+		catch(WebException e)
 		   {
-		        Console.WriteLine("\r\nWebException Raised. The following error occurred : {0}",e.Status); 
+		        Console.WriteLine("\r\nWebException Raised. The following error occurred : {0}",e.Status);
            }
 		catch(Exception e)
 		{

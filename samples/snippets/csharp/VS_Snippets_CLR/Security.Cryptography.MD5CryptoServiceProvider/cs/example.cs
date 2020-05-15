@@ -19,7 +19,7 @@ class Example
         // and create a string.
         StringBuilder sBuilder = new StringBuilder();
 
-        // Loop through each byte of the hashed data 
+        // Loop through each byte of the hashed data
         // and format each one as a hexadecimal string.
         for (int i = 0; i < data.Length; i++)
         {
@@ -52,7 +52,7 @@ class Example
     static void Main()
     {
         string source = "Hello World!";
-        
+
         string hash = getMd5Hash(source);
 
         Console.WriteLine("The MD5 hash of " + source + " is: " + hash + ".");

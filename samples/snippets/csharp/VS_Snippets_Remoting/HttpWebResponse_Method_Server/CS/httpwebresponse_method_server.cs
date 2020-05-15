@@ -1,7 +1,7 @@
 ﻿// System.Net.HttpWebResponse.Method;System.Net.HttpWebResponse.Server
 
-/* This program demonstrates the 'Method' and 'Server' properties of the 'HttpWebResponse' class. 
-It creates a Web request and queries for a response.It evaluates the response method used and the prints
+/* This program demonstrates the 'Method' and 'Server' properties of the 'HttpWebResponse' class.
+It creates a Web request and queries for a response. It evaluates the response method used and the prints
 the Web server name to the console*/
 
 using System;
@@ -9,17 +9,17 @@ using System.Net;
 using System.IO;
 using System.Text;
 
-class HttpWebResponseSnippet 
+class HttpWebResponseSnippet
 {
-     public static void Main(string[] args) 
+     public static void Main(string[] args)
 	   {
-		if (args.Length < 1) 
+		if (args.Length < 1)
 		{	
 			Console.WriteLine("\nPlease enter the url as command line parameter:");
 			Console.WriteLine("Example:");
 			Console.WriteLine("HttpWebResponse_Method_Server http://www.microsoft.com/net/");
-		} 
-		else 
+		}
+		else
 		{
 			GetPage(args[0]);
 		}
@@ -28,15 +28,15 @@ class HttpWebResponseSnippet
 		return;
      }
 	
-    public static void GetPage(String url) 
+    public static void GetPage(String url)
 	   {
-// <Snippet1> 
+// <Snippet1>
 // <Snippet2>
-        try 
+        try
  		  {	
-            // Creates an HttpWebRequest for the specified URL. 
-				HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url); 
-				HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse(); 
+            // Creates an HttpWebRequest for the specified URL.
+				HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+				HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 				string method ;
 				method = myHttpWebResponse.Method;
 				if (String.Compare(method,"GET") == 0)
@@ -44,16 +44,16 @@ class HttpWebResponseSnippet
 									   myHttpWebResponse.Server);
 				// Releases the resources of the response.
 				myHttpWebResponse.Close();
-          } 
-		catch(WebException e) 
+          }
+		catch(WebException e)
 		   {
-		        Console.WriteLine("\nWebException raised. The following error occurred : {0}",e.Status); 
+		        Console.WriteLine("\nWebException raised. The following error occurred : {0}",e.Status);
            }
 		catch(Exception e)
 			{
 				Console.WriteLine("\nThe following Exception was raised : {0}",e.Message);
 			}
 	}
-// </Snippet1> 
+// </Snippet1>
 // </Snippet2>
 }

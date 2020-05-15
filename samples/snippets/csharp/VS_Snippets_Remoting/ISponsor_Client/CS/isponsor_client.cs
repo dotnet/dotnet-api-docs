@@ -29,7 +29,7 @@ public class Client
       // from the LeaseTime settings specified in the ISponsor_Server.config file.
       serverLease.Register(sponsor);
 
-      Console.WriteLine("Client-activated object.\n" + 
+      Console.WriteLine("Client-activated object.\n" +
          clientActivatedObject.RemoteMethod());
 
       Console.WriteLine("Press enter to end the client application domain.");
@@ -50,7 +50,7 @@ public class MyClientSponsor : MarshalByRefObject, ISponsor
    public TimeSpan Renewal(ILease lease)
    {
       Console.WriteLine("Request to renew the lease time.");
-      Console.WriteLine("Time since last renewal: " + 
+      Console.WriteLine("Time since last renewal: " +
          (DateTime.Now - lastRenewal).ToString());
 
       lastRenewal = DateTime.Now;

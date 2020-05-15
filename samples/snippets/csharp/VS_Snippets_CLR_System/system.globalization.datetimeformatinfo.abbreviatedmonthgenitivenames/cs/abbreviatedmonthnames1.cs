@@ -8,13 +8,13 @@ public class Example
    {
       CultureInfo ci = CultureInfo.CreateSpecificCulture("en-US");
       DateTimeFormatInfo dtfi = ci.DateTimeFormat;
-      dtfi.AbbreviatedMonthNames = new string[] { "of Jan", "of Feb", "of Mar", 
-                                                  "of Apr", "of May", "of Jun", 
-                                                  "of Jul", "of Aug", "of Sep", 
-                                                  "of Oct", "of Nov", "of Dec", "" };  
+      dtfi.AbbreviatedMonthNames = new string[] { "of Jan", "of Feb", "of Mar",
+                                                  "of Apr", "of May", "of Jun",
+                                                  "of Jul", "of Aug", "of Sep",
+                                                  "of Oct", "of Nov", "of Dec", "" };
       dtfi.AbbreviatedMonthGenitiveNames = dtfi.AbbreviatedMonthNames;
       DateTime dat = new DateTime(2012, 5, 28);
-      
+
       for (int ctr = 0; ctr < dtfi.Calendar.GetMonthsInYear(dat.Year); ctr++)
          Console.WriteLine(dat.AddMonths(ctr).ToString("dd MMM yyyy", dtfi));
    }

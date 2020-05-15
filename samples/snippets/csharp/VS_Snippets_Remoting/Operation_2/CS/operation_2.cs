@@ -111,7 +111,7 @@ class MyOperationClass
          myDescription.Messages.CopyTo( myMessage, 0 );
          for( int i = 0 ; i < myDescription.Messages.Count; i++ )
          {
-            MessagePart[] myMessagePart = 
+            MessagePart[] myMessagePart =
                new MessagePart[ myMessage[i].Parts.Count ];
 
             // Copy the message parts into a MessagePart.
@@ -122,7 +122,7 @@ class MyOperationClass
                myString += " " ;
             }
          }
-         // Set the ParameterOrderString equal to the list of 
+         // Set the ParameterOrderString equal to the list of
          // message part names.
          myOperation.ParameterOrderString = myString;
          string[] myString1 = myOperation.ParameterOrder;

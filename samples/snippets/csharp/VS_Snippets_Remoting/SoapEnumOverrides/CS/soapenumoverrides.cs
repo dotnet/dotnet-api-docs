@@ -17,7 +17,7 @@ public enum GroupType{
    [SoapEnum("Large")]
    B
 }
- 
+
 public class Run {
    static void Main(){
       Run test= new Run();
@@ -51,7 +51,7 @@ public class Run {
       SoapAttributeOverrides soapOver = new SoapAttributeOverrides();
       SoapAttributes SoapAtts = new SoapAttributes();
 
-      // Add a SoapEnumAttribute for the GroupType.A enumerator.       
+      // Add a SoapEnumAttribute for the GroupType.A enumerator.
       // Instead of 'A'  it will be "West".
       SoapEnumAttribute soapEnum = new SoapEnumAttribute("West");
       // Override the "A" enumerator.
@@ -67,7 +67,7 @@ public class Run {
       soapOver.Add(typeof(GroupType), "B", SoapAtts);
 
       // Create an XmlSerializer used for overriding.
-      XmlTypeMapping map = 
+      XmlTypeMapping map =
       new SoapReflectionImporter(soapOver).
       ImportTypeMapping(typeof(Group));
       XmlSerializer ser = new XmlSerializer(map);

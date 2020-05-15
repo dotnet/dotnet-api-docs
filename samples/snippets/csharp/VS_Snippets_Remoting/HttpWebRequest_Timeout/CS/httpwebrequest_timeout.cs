@@ -1,9 +1,9 @@
 ﻿/*System.Net.HttpWebRequest.Timeout
-  This program demonstrates 'Timeout' property of the HttpWebRequest Class.
-  A new HttpWebRequest Object is created .The default value of the 'Timeout' property is printed to the console.
+  This program demonstrates the 'Timeout' property of the HttpWebRequest class.
+  A new HttpWebRequest Object is created. The default value of the 'Timeout' property is printed to the console.
   It is then set to some value and displayed to the console. If the 'Timeout' property is set to a value less
   than the time required to get the response an 'Exception' is raised. 'Timeout' property measures the time in
-  Milliseconds. 
+  milliseconds.
   */
 using System;
 using System.IO;
@@ -24,7 +24,7 @@ class HttpWebRequest_Timeout
 			myHttpWebRequest.Timeout=10;
 			// Display the 'Timeout' property of the 'HttpWebRequest' on the console.
 			Console.WriteLine("\nThe timeout time of the request after setting the timeout is {0}  milliSeconds.",myHttpWebRequest.Timeout);
-			// A HttpWebResponse object is created and is GetResponse Property of the HttpWebRequest associated with it 
+			// A HttpWebResponse object is created and is GetResponse Property of the HttpWebRequest associated with it
 			HttpWebResponse myHttpWebResponse=(HttpWebResponse)myHttpWebRequest.GetResponse();
 // </Snippet1>
 			Stream streamResponse=myHttpWebResponse.GetResponseStream();
@@ -32,7 +32,7 @@ class HttpWebRequest_Timeout
 			Char[] readBuff = new Char[256];
 			int count = streamRead.Read( readBuff, 0, 256 );
 			Console.WriteLine("\nThe contents of the HTML page are, ");	
-			while (count > 0) 
+			while (count > 0)
 			{
 				String outputData = new String(readBuff, 0, count);
 				Console.Write(outputData);

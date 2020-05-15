@@ -4,7 +4,7 @@
 /*
   This program demonstrates 'BeginGetRequestStream' and 'EndGetRequestStream' method of 'FileWebRequest' class
   The path of the file from where content is to be read  is obtained as a command line argument and a 'webRequest'
-  object is created.Using the 'BeginGetRequestStream' method and 'EndGetRequestStream' of 'FileWebRequest' class 
+  object is created.Using the 'BeginGetRequestStream' method and 'EndGetRequestStream' of 'FileWebRequest' class
   a stream object is obtained which is used to write into the file.
 */
 
@@ -21,7 +21,7 @@ using System.Threading;
 	{
 		 public FileWebRequest myFileWebRequest;	
 		 public String userinput;
-       
+
  		public RequestDeclare()
 		{
 			myFileWebRequest = null;
@@ -38,7 +38,7 @@ using System.Threading;
 		  {
    		    Console.WriteLine("\nPlease enter the file name as command line parameter:");
  		       Console.WriteLine("Usage:FileWebRequest_reqbeginend <systemname>/<sharedfoldername>/<filename>\nExample:FileWebRequest_reqbeginend shafeeque/shaf/hello.txt");
-		  }  
+		  }
 		  else
 		  {
 

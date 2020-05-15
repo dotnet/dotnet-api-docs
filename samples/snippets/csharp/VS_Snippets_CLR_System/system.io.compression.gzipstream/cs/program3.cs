@@ -31,7 +31,7 @@ namespace ExampleConsoleApplication
                     decompressionStream.Read(decompressedBytes, 0, bytesToCompress.Length);
                 }
             }
-            
+
             Console.WriteLine("ending with: " + uniEncode.GetString(decompressedBytes));
         }
     }

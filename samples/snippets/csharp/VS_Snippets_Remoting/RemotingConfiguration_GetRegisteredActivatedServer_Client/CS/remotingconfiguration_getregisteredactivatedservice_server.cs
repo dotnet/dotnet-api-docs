@@ -3,9 +3,9 @@
 
 /*
 The following example demonstrates the 'IsActivationAllowed' and
-'GetRegisteredActivatedServiceTypes' methods of 'RemotingConfiguration' class. 
+'GetRegisteredActivatedServiceTypes' methods of 'RemotingConfiguration' class.
 It registers a 'TcpChannel' object with the channel services. Then registers the 'MyServerImpl'
-object at the service end that can be activated on request from a client.By using the 
+object at the service end that can be activated on request from a client.By using the
 'GetRegisteredActivatedClientTypes' method it gets the registered activated service types
 and displays it's properties to the console.
 
@@ -27,7 +27,7 @@ using System.Runtime.Remoting.Channels.Tcp;
 // <Snippet1>
 // <Snippet2>
 
-      // Check whether the 'MyServerImpl' object is allowed for 
+      // Check whether the 'MyServerImpl' object is allowed for
       // activation or not.
       if(RemotingConfiguration.IsActivationAllowed(typeof(MyServerImpl)))
       {

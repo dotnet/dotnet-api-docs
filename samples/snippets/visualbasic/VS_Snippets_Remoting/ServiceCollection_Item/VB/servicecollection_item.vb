@@ -8,8 +8,8 @@
 '   The following example demonstrates methods and properties of 
 '   ServiceDescription and ServiceCollection classes.
 '   A new WSDL is read and the existing service "MathService" in the 
-'   ServiceCollection is removed.The service by default is defined for 
-'   SOAP,HttpGet,HttpPost.A new Service defined for SOAP and HttpGet is 
+'   ServiceCollection is removed. The service by default is defined for 
+'   SOAP, HttpGet, HttpPost. A new Service defined for SOAP and HttpGet is 
 '   constructed and added to the ServiceCollection.
 '   The programs writes a new web service description file.
 

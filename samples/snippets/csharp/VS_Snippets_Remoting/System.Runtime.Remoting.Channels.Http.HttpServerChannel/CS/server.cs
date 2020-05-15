@@ -20,11 +20,11 @@
 
 /// Bug Notes [01-26-04][Mon]
 /// AddHookChannelUri does not pick up port.
-/// Ctor() would be usable if AddHookChannelUri could be 
+/// Ctor() would be usable if AddHookChannelUri could be
 /// used to set the port later. Since it can't Ctor() is
 /// also unusable. Items and Keys are unimplemented. While
 /// StopListening works, StartListening does not restart
-/// listening -- client fails. These two are likely to be 
+/// listening -- client fails. These two are likely to be
 /// used as a pair and are therefore unusable.
 
 //<snippet20>
@@ -47,19 +47,19 @@ public class Server
 
         //<snippet21>
         // Display the channel's scheme.
-        Console.WriteLine("The channel scheme is {0}.", 
+        Console.WriteLine("The channel scheme is {0}.",
             serverChannel.ChannelScheme);
         //</snippet21>
 
         //<snippet22>
         // Display the channel's URI.
-        Console.WriteLine("The channel URI is {0}.", 
+        Console.WriteLine("The channel URI is {0}.",
             serverChannel.GetChannelUri());
         //</snippet22>
 
         // Expose an object for remote calls.
         RemotingConfiguration.RegisterWellKnownServiceType(
-            typeof(RemoteObject), "RemoteObject.rem", 
+            typeof(RemoteObject), "RemoteObject.rem",
             WellKnownObjectMode.Singleton);
 
         //<snippet23>
@@ -74,7 +74,7 @@ public class Server
         // See if the channel wants to listen.
         bool wantsToListen = serverChannel.WantsToListen;
         Console.WriteLine(
-            "The value of WantsToListen is {0}.", 
+            "The value of WantsToListen is {0}.",
             wantsToListen);
         //</snippet24>
 
@@ -85,14 +85,14 @@ public class Server
         {
             string objectUrl = urls[0];
             string objectUri;
-            string channelUri = 
+            string channelUri =
                 serverChannel.Parse(objectUrl, out objectUri);
             Console.WriteLine("The object URI is {0}.", objectUri);
             Console.WriteLine("The channel URI is {0}.", channelUri);
             Console.WriteLine("The object URL is {0}.", objectUrl);
         }
         //</snippet25>
-        
+
         // Wait for the user prompt.
         Console.WriteLine("Press ENTER to exit the server.");
         Console.ReadLine();

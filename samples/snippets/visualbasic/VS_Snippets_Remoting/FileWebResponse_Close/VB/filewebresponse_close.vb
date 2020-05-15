@@ -1,8 +1,8 @@
 ﻿' System.Net.FileWebResponse.Close
 
-'This program demonstrates the functionality of 'Close' method of 'FileWebResponse' Class. 
-'It takes an Uri from console and creates a 'FileWebRequest' object for the Uri.It then gets back
-'the response object from the Uri. The response object can be processed as desired.The program then 
+'This program demonstrates the functionality of 'Close' method of the 'FileWebResponse' class. 
+'It takes an Uri from console and creates a 'FileWebRequest' object for the Uri. It then gets back
+'the response object from the Uri. The response object can be processed as desired. The program then 
 'closes the response object and releases resources associated with it.
 Imports System.Net
 Imports System.IO
@@ -38,7 +38,7 @@ Class FileWebResponseSnippet
             Dim myFileWebRequest As FileWebRequest = CType(WebRequest.Create(fileUrl), FileWebRequest)
             ' Send the 'fileWebRequest' and wait for response.
             Dim myFileWebResponse As FileWebResponse = CType(myFileWebRequest.GetResponse(), FileWebResponse)
-            ' Process the response here                        
+            ' Process the response here
             Console.WriteLine(ControlChars.Cr + "Response Received.Trying to Close the response stream..")
             ' The method call to release resources of response object.
             myFileWebResponse.Close()

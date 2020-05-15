@@ -101,7 +101,7 @@ public class SignVerifyEnvelope
         xmltw.Close();
     }
 
-    // Verify the signature of an XML file against an asymetric 
+    // Verify the signature of an XML file against an asymmetric 
     // algorithm and return the result.
     public static Boolean VerifyXmlFile(String Name, RSA Key)
     {

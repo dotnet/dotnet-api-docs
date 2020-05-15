@@ -1,6 +1,6 @@
 // System::Net::HttpWebResponse::ProtocolVersion
 /* This program demonstrates the 'ProtocolVersion' property of the 'HttpWebResponse' class.
-It creates a web request and queries for a response.The server should respond using the same version */
+It creates a web request and queries for a response. The server should respond using the same version */
 
 #using <System.dll>
 

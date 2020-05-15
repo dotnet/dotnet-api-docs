@@ -8,12 +8,12 @@ public class Page1: Page
  {
 // <Snippet1>
 int indx;
- 
- String[] arr = Request.AcceptTypes;    
+
+ String[] arr = Request.AcceptTypes;
  for (indx = 0; indx < arr.Length; indx++) {
     Response.Write("Accept Type " + indx +": " + arr[indx] + "<br>");
  }
-   
+
 // </Snippet1>
  }
 }

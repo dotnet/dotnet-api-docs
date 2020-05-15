@@ -12,7 +12,7 @@ class LinkedList: ISerializable {
 
    Node m_head = null;
    Node m_tail = null;
-   
+
    // Serializes the object.
    [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter=true)]
    public void GetObjectData(SerializationInfo info, StreamingContext context){
@@ -20,12 +20,12 @@ class LinkedList: ISerializable {
       info.AddValue("head", m_head, m_head.GetType());
       info.AddValue("tail", m_tail, m_tail.GetType());
    }
-   
+
    // Constructor that is called automatically during deserialization.
    // Reconstructs the object from the information in SerializationInfo info
    [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter=true)]
    private LinkedList(SerializationInfo info, StreamingContext context)
-   {      
+   {
       Node temp = new Node(0);
       // Retrieves the values of Type temp.GetType() from SerializationInfo info
       m_head = (Node)info.GetValue("head", temp.GetType());

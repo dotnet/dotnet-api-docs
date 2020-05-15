@@ -8,7 +8,7 @@ public class Example
    {
       Complex value = Complex.One;
       Console.WriteLine(value.ToString());
-      
+
       // Instantiate a complex number with real part 1 and imaginary part 0.
       Complex value1 = new Complex(1, 0);
       Console.WriteLine(value.Equals(value1));

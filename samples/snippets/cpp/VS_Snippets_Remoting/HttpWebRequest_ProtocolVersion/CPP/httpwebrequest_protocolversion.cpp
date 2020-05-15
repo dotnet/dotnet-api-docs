@@ -1,10 +1,10 @@
 /* System::Net::HttpWebRequest::ProtocolVersion
 This Program demonstrates the  'ProtocolVersion' property of the 'HttpWebRequest' Class.
 The 'ProtocolVersion' is a property that identifies the Version of the Protocol being used.
-A new 'HttpWebRequest' Object* is created.Then the default version, being used is displayed onto
-the console.It is then set to another version and displayed to the Console::The HTML contents
+A new 'HttpWebRequest' Object* is created. Then the default version, being used is displayed onto
+the console. It is then set to another version and displayed to the Console::The HTML contents
 of the page of the requested Uri are printed to the console.
-Note:Here the 'ProtocolVersion' property displays the ProtocolVersion being used.
+Note: Here the 'ProtocolVersion' property displays the ProtocolVersion being used.
 */
 
 #using <System.dll>

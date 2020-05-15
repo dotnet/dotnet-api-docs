@@ -1,11 +1,11 @@
 ﻿// System.Configuration.Install.InstallerCollection.Item(Int32)
 
 /*
-   The following example demonstrates the 'Item(Int32)' method of the 
+   The following example demonstrates the 'Item(Int32)' method of the
    'InstallerCollection' class. It creates 'AssemblyInstaller' instances
-   for 'MyAssembly1.exe' and 'MyAssembly2.exe'. These instances are added 
-   to an instance of 'TransactedInstaller'. The names of all the assemblies 
-   that are to be installed are displayed to the console.The installation 
+   for 'MyAssembly1.exe' and 'MyAssembly2.exe'. These instances are added
+   to an instance of 'TransactedInstaller'. The names of all the assemblies
+   that are to be installed are displayed to the console. The installation
    process installs both 'MyAssembly1.exe' and 'MyAssembly2.exe'.
 */
 
@@ -27,17 +27,17 @@ public class InstallerCollection_Item
          InstallContext myInstallContext;
 
          // Create a instance of 'AssemblyInstaller' that installs 'MyAssembly1.exe'.
-         myAssemblyInstaller = 
+         myAssemblyInstaller =
             new AssemblyInstaller("MyAssembly1.exe", null);
 
          // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.
          myTransactedInstaller.Installers.Add(myAssemblyInstaller);
 
          // Create a instance of 'AssemblyInstaller' that installs 'MyAssembly2.exe'.
-         myAssemblyInstaller = 
+         myAssemblyInstaller =
             new AssemblyInstaller("MyAssembly2.exe", null);
 
-         // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.  
+         // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.
          myTransactedInstaller.Installers.Add(myAssemblyInstaller);
 
          //Print the assemblies to be installed.
@@ -47,13 +47,13 @@ public class InstallerCollection_Item
          {
             if((myInstallers[i].GetType()).Equals(typeof(AssemblyInstaller)))
             {
-               Console.WriteLine("{0} {1}", i + 1, 
+               Console.WriteLine("{0} {1}", i + 1,
                   ((AssemblyInstaller)myInstallers[i]).Path);
             }
          }
 // </Snippet1>
          // Create a instance of 'InstallContext' with log file named 'Install.log'.
-         myInstallContext = 
+         myInstallContext =
             new InstallContext("Install.log", null);
          myTransactedInstaller.Context = myInstallContext;
 
@@ -64,5 +64,5 @@ public class InstallerCollection_Item
       {
          Console.WriteLine("Exception raised : {0}", e.Message);
       }
-   }  
+   }
 }

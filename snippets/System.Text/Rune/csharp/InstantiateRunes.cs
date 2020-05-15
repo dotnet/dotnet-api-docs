@@ -10,7 +10,7 @@ namespace RuneSamples
         {
             // <SnippetCodePoint>
             Rune a = new Rune(0x0061); // LATIN SMALL LETTER A
-            Rune b = new Rune(0x10421); // DESERET CAPITAL LETTER ER 
+            Rune b = new Rune(0x10421); // DESERET CAPITAL LETTER ER
             // </SnippetCodePoint>
 
             // <SnippetChar>

@@ -1,13 +1,13 @@
 ﻿// <Snippet1>
 using System;
-class MainApp 
+class MainApp
 {
     public static void Main()
     {
         try
         {
             // Use the ProgID localhost\HKEY_CLASSES_ROOT\DirControl.DirList.1.
-            string theProgramID ="DirControl.DirList.1"; 
+            string theProgramID ="DirControl.DirList.1";
             // Use the server name localhost.
             string theServer="localhost";
             // Make a call to the method to get the type information for the given ProgID.

@@ -18,19 +18,19 @@ class MyFindMembersClass
                 "ReferenceEquals");
 
             for(int index=0;index < arrayMemberInfo.Length ;index++)
-                Console.WriteLine ("Result of FindMembers -\t"+ arrayMemberInfo[index].ToString() +"\n");                 
+                Console.WriteLine ("Result of FindMembers -\t"+ arrayMemberInfo[index].ToString() +"\n");
         }
         catch (Exception e)
         {
-            Console.WriteLine ("Exception : " + e.ToString() );            
-        }           
+            Console.WriteLine ("Exception : " + e.ToString() );
+        }
     }
     public static bool DelegateToSearchCriteria(MemberInfo objMemberInfo, Object objSearch)
     {
         // Compare the name of the member function with the filter criteria.
         if(objMemberInfo.Name.ToString() == objSearch.ToString())
             return true;
-        else 
+        else
             return false;
     }
 }

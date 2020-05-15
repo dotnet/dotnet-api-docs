@@ -22,7 +22,7 @@ public class Example
       // </Snippet1>
       Console.WriteLine("{0} - {1}", number1, number2);
    }
-   
+
    private static void InstantiateByNarrowingConversion()
    {
       // <Snippet2>
@@ -34,16 +34,16 @@ public class Example
       catch (OverflowException) {
          Console.WriteLine("{0} is out of range of an Int32.", lNumber);
       }
-      
+
       double dbl2 = 35901.997;
       try {
          int number2 = (int) dbl2;
          Console.WriteLine(number2);
-      }   
+      }
       catch (OverflowException) {
          Console.WriteLine("{0} is out of range of an Int32.", dbl2);
       }
-         
+
       BigInteger bigNumber = 132451;
       try {
          int number3 = (int) bigNumber;
@@ -51,12 +51,12 @@ public class Example
       }
       catch (OverflowException) {
          Console.WriteLine("{0} is out of range of an Int32.", bigNumber);
-      }    
+      }
       // The example displays the following output:
       //       163245617
       //       35902
       //       132451
-      // </Snippet2> 
+      // </Snippet2>
    }
 
    private static void Parse()
@@ -89,15 +89,15 @@ public class Example
       // The example displays the following output:
       //       244681
       //       1022524
-      // </Snippet3>     
+      // </Snippet3>
    }
-   
+
    private static void InstantiateByWideningConversion()
    {
       // <Snippet4>
       sbyte value1 = 124;
       short value2 = 1618;
-      
+
       int number1 = value1;
       int number2 = value2;
       // </Snippet4>

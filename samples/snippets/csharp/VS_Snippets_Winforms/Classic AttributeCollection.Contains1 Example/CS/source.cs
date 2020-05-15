@@ -10,8 +10,8 @@ public class Form1: Form
  private void ContainsAttributes() {
     // Creates a new collection and assigns it the attributes for button1.
     AttributeCollection myCollection;
-    myCollection = TypeDescriptor.GetAttributes(button1);    
- 
+    myCollection = TypeDescriptor.GetAttributes(button1);
+
     // Checks to see whether the attributes in myCollection are the attributes for textBox1.
     Attribute[] myAttrArray = new Attribute[100];
     TypeDescriptor.GetAttributes(textBox1).CopyTo(myAttrArray, 0);

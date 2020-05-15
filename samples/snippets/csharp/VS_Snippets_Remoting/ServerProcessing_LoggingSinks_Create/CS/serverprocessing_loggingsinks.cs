@@ -12,7 +12,7 @@
    members 'Complete','OneWay' and 'Async'. This example defines two classes
    one for Client logging and other for Server based logging.
    Client Requests are sent to the server and the same is reflected
-   in terms of Responses on the server end.The incoming message from the
+   in terms of Responses on the server end. The incoming message from the
    client is proccessed and is handled by the 'ServerProcessing'
    enum. The output of the 'ServerProcessing' enum is displayed
    on the server console.
@@ -128,13 +128,13 @@ namespace MyLogging
 
       public bool Enabled
       {
-         get 
-            { 
-               return myBoolEnabled;   
-             }
-         set 
+         get
             {
-               myBoolEnabled = value; 
+               return myBoolEnabled;
+             }
+         set
+            {
+               myBoolEnabled = value;
              }
       }
 

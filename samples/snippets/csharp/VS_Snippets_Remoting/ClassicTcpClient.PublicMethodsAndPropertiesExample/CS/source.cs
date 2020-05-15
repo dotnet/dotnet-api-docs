@@ -16,7 +16,7 @@ public class MyTcpClientExample
             IPAddress ipAddress = Dns.GetHostEntry (Dns.GetHostName ()).AddressList[0];
             IPEndPoint ipLocalEndPoint = new IPEndPoint(ipAddress, 0);
             TcpClient tcpClientA = new TcpClient (ipLocalEndPoint);
-            // </Snippet2> 
+            // </Snippet2>
         }
         else if (myConstructorType == "HostNameExample")
         {
@@ -30,7 +30,7 @@ public class MyTcpClientExample
             // <Snippet4>
             //Creates a TCPClient using the default constructor.
             TcpClient tcpClientC = new TcpClient ();
-            // </Snippet4>  
+            // </Snippet4>
         }
         else
         {
@@ -176,7 +176,7 @@ public class MyTcpClientExample
             // Reads NetworkStream into a byte buffer.
             byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
 
-            // Read can return anything from 0 to numBytesToRead. 
+            // Read can return anything from 0 to numBytesToRead.
             // This method blocks until at least one byte is read.
             netStream.Read (bytes, 0, (int)tcpClient.ReceiveBufferSize);
 

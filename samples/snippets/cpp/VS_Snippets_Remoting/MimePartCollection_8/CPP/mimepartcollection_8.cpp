@@ -7,13 +7,13 @@
 // System::Web::Services::Description.MimePartCollection::CopyTo
 // System::Web::Services::Description.MimePartCollection::Remove
 
-/* This program demostrates constructor, 'Item' property , 'Insert', 'IndexOf', 'Add',
-'Contains', 'CopyTo', and 'Remove' methods of 'MimePartCollection' class.
+/* This program demonstrates the constructor, the 'Item' property , the 'Insert', 'IndexOf', 'Add',
+'Contains', 'CopyTo', and 'Remove' methods of the 'MimePartCollection' class.
 It takes 'MimePartCollection_8_Input_cpp.wsdl' as an input file which contains
-one 'MimePart' object that supports 'HttpPost'. A mimepartcollection object is
-created and new mimepart objects are added to mimepartcollection using 'Insert'
-and 'Add' methods. A mimepart object is removed from the mimepartcollection using
-'Remove'method.The ServiceDescription is finally written into output wsdl file
+one 'MimePart' object that supports 'HttpPost'. A MimePartCollection object is
+created and new MimePart objects are added to MimePartCollection using the 'Insert'
+and 'Add' methods. A MimePart object is removed from the MimePartCollection using the
+'Remove' method. The ServiceDescription is finally written into an output wsdl file
 'MimePartCollection_8_out_CS::wsdl'.
 */
 
@@ -73,7 +73,7 @@ int main()
    if ( myMimePartCollection->Contains( myMimePart1 ) )
    {
       // Display the index of inserted 'MimePart'.
-      Console::WriteLine( "'MimePart' is succesfully inserted at position: {0}", myMimePartCollection->IndexOf( myMimePart1 ) );
+      Console::WriteLine( "'MimePart' is successfully inserted at position: {0}", myMimePartCollection->IndexOf( myMimePart1 ) );
    }
    // </Snippet4>
    // </Snippet3>
@@ -95,7 +95,7 @@ int main()
 
    // Check if collection contains added mimepart object.
    if ( myMimePartCollection->Contains( myMimePart2 ) )
-      Console::WriteLine( "'MimePart' is succesfully added at position: {0}", myMimePartCollection->IndexOf( myMimePart2 ) );
+      Console::WriteLine( "'MimePart' is successfully added at position: {0}", myMimePartCollection->IndexOf( myMimePart2 ) );
    // </Snippet6>
    // </Snippet5>
 
@@ -125,7 +125,7 @@ int main()
    
    // Check whether the mimepart is removed or not.
    if (  !myMimePartCollection->Contains( myMimePart1 ) )
-      Console::WriteLine( "Mimepart is succesfully removed from mimepartcollection" );
+      Console::WriteLine( "Mimepart is successfully removed from mimepartcollection" );
    // </Snippet8>
 
    Console::WriteLine( "Total number of elements in collection after removing is: {0}", myMimePartCollection->Count );

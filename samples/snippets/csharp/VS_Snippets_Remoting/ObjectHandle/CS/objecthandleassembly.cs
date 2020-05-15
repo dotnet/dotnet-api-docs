@@ -19,13 +19,13 @@ class Test {
 
    public static void Main() {
 
-      Console.WriteLine("The hash code of the default AppDomain is {0}.", 
+      Console.WriteLine("The hash code of the default AppDomain is {0}.",
                         AppDomain.CurrentDomain.GetHashCode());
       Console.WriteLine("");
 
       // Creates another AppDomain.
-      AppDomain domain = AppDomain.CreateDomain("AnotherDomain", 
-                                                null, 
+      AppDomain domain = AppDomain.CreateDomain("AnotherDomain",
+                                                null,
                                                 (AppDomainSetup)null);
 
 // <Snippet2>
@@ -38,7 +38,7 @@ class Test {
       if(RemotingServices.IsTransparentProxy(testObj))
          Console.WriteLine("The unwrapped object is a proxy.");
       else
-         Console.WriteLine("The unwrapped object is not a proxy!");    
+         Console.WriteLine("The unwrapped object is not a proxy!");
 
       Console.WriteLine("");
       Console.Write("Calling a method on the object located in an AppDomain with the hash code ");

@@ -21,7 +21,7 @@ public class Sample
             client.Send(tmp, 0, 0);
             Console.WriteLine("Connected!");
         }
-        catch (SocketException e) 
+        catch (SocketException e)
         {
             // 10035 == WSAEWOULDBLOCK
             if (e.NativeErrorCode.Equals(10035))
@@ -45,7 +45,7 @@ public class Sample
     [STAThread]
     static void Main()
     {
-        Socket s = new Socket(AddressFamily.InterNetwork, 
+        Socket s = new Socket(AddressFamily.InterNetwork,
                               SocketType.Stream,
                               ProtocolType.Tcp);
 

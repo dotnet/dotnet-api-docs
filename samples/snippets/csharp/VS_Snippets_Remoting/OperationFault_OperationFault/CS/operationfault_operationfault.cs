@@ -2,9 +2,9 @@
 // System.Web.Services.Description.OperationFault.OperationFault
 
 /* The following example demonstrates the usage of the 'OperationFault'
-   class and its constructor. The program generates a WSDL file 
-   'StockQuoteNew_cs.wsdl' which contains 'Fault' information written 
-   out. 
+   class and its constructor. The program generates a WSDL file
+   'StockQuoteNew_cs.wsdl' which contains 'Fault' information written
+   out.
 */
 
 // <Snippet1>
@@ -18,7 +18,7 @@ public class MyOperationFaultSample
 {
    public static void Main()
    {
-      try 
+      try
       {
          // Read the 'StockQuote_cs.wsdl' file as input.
          ServiceDescription myServiceDescription = ServiceDescription.

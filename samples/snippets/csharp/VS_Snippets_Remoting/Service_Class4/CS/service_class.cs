@@ -4,10 +4,10 @@
 // System.Web.Services.Description.Service.Name
 
 /*The following sample demonstrates the properties 'Ports','Extensions','Name' and
-  constructor 'Service()'.This sample reads the contents of a file 'MathService_cs.wsdl'
-  into a 'ServiceDescription' instance. It gets the collection of Service 
+  constructor 'Service()'. This sample reads the contents of a file 'MathService_cs.wsdl'
+  into a 'ServiceDescription' instance. It gets the collection of Service
   instances from 'ServiceDescription'. It then removes a 'Service' from the collection and
-  creates a new 'Service' and adds it into collection. It writes a new web service description 
+  creates a new 'Service' and adds it into collection. It writes a new web service description
   file 'MathService_New.wsdl'.
 */
 
@@ -25,9 +25,9 @@ class MyServiceClass
 // <Snippet2>
 // <Snippet3>
 // <Snippet4>
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MathService_CS.wsdl");
-         ServiceCollection myServiceCollection = 
+         ServiceCollection myServiceCollection =
             myServiceDescription.Services;
 
          int noOfServices = myServiceCollection.Count;
@@ -35,7 +35,7 @@ class MyServiceClass
 
          // Get a reference to the service.
          Service myOldService = myServiceCollection[0];
-         Console.WriteLine("No. of Ports in the Service" + 
+         Console.WriteLine("No. of Ports in the Service" +
             myServiceCollection[0].Ports.Count);
          Console.WriteLine("These are the ports in the service:");
          for(int i = 0; i < myOldService.Ports.Count; i++)
@@ -49,9 +49,9 @@ class MyServiceClass
          for(int i = 0; i < myOldService.Ports.Count; i++)
          {
             string PortName = myServiceCollection[0].Ports[i].Name;
-            string BindingName = 
+            string BindingName =
                myServiceCollection[0].Ports[i].Binding.Name;
-            myService.Ports.Add(CreatePort(PortName, BindingName, 
+            myService.Ports.Add(CreatePort(PortName, BindingName,
                myServiceDescription.TargetNamespace));
          }
 
@@ -85,7 +85,7 @@ class MyServiceClass
       }
    }
 
-   public static Port CreatePort(string PortName, string BindingName, 
+   public static Port CreatePort(string PortName, string BindingName,
       string targetNamespace)
    {
       Port myPort = new Port();
@@ -94,7 +94,7 @@ class MyServiceClass
 
       // Create a SoapAddress extensibility element to add to the port.
       SoapAddressBinding mySoapAddressBinding = new SoapAddressBinding();
-      mySoapAddressBinding.Location = 
+      mySoapAddressBinding.Location =
          "http://localhost/Service_Class/MathService_CS.asmx";
       myPort.Extensions.Add(mySoapAddressBinding);
       return myPort;

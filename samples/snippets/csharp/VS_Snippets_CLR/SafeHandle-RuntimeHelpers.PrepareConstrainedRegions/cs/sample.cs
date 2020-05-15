@@ -53,7 +53,7 @@ namespace SafeHandleExample
 
             get { return IsClosed || handle == IntPtr.Zero; }
         }
-   
+
         [DllImport("kernel32")]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         private static extern bool CloseHandle(IntPtr handle);

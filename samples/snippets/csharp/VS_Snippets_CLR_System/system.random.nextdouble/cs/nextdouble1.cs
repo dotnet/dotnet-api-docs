@@ -8,7 +8,7 @@ public class Example
       int[] frequency = new int[10];
       double number;
       Random rnd = new Random();
-      
+
       for (int ctr = 0; ctr <= 99; ctr++) {
          number = rnd.NextDouble();
          frequency[(int) Math.Floor(number*10)] ++;

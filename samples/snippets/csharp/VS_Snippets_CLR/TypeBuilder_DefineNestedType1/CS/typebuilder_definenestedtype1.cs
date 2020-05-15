@@ -5,7 +5,7 @@
 /*
    The following program demonstrates the 'DefineNestedType', 'DefineMethodOverride' and
    'DefineMethod' methods of 'TypeBuilder' class. It builds an assembly by defining
-   'MyHelloWorld' type. 'MyHelloWorld' class has a nested class 'MyNestedClass' which extends 
+   'MyHelloWorld' type. 'MyHelloWorld' class has a nested class 'MyNestedClass' which extends
    'Example' and implements 'IMyInterface' interface. Then it creates and instance of
    'MyNestedClass' type and calls the 'HelloMethod' using 'IMyInterface' object and
    results are displayed to the console.

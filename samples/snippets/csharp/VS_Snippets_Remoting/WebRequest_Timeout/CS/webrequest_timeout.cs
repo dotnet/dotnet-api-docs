@@ -1,6 +1,6 @@
 ﻿/*System.Net.WebRequest.Timeout
  * This program demonstrates the 'Timeout' property of the WebRequest Class.
-  A new 'WebRequest' object is created .The default value of the 'Timeout' property is printed to the console.
+  A new 'WebRequest' object is created . The default value of the 'Timeout' property is printed to the console.
   It is then set to a value and  displayed to the console. If the 'Timeout' property is set to a value less than 
   the time required to get the response an Exception is raised.'Timeout' property measures the time in 
   Milliseconds.*/

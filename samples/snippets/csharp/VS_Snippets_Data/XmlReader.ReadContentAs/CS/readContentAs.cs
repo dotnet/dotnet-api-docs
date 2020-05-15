@@ -8,7 +8,7 @@ class Typed_Read_Methods {
    static void Main() {
 
               ReadContentAsBoolean();
-              ReadContentAs();                          
+              ReadContentAs();
    }
 
 public static void ReadContentAsBoolean() {

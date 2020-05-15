@@ -29,7 +29,7 @@ public class ParseInt32
       }
       catch (OverflowException)
       {
-         Console.WriteLine("'{0}' is out of range of the Int32 type.", value);   
+         Console.WriteLine("'{0}' is out of range of the Int32 type.", value);
       }
    }
 }

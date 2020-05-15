@@ -1,12 +1,12 @@
 ﻿//<snippet1>
-// This code example demonstrates the Nullable<T>.Equals 
+// This code example demonstrates the Nullable<T>.Equals
 // methods.
 
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     int? nullInt1 = 100;
     int? nullInt2 = 200;
@@ -21,7 +21,7 @@ class Sample
         Console.Write("are not");
     Console.WriteLine(" equal.");
 
-// Determine if a nullable of System.Int32 and an object 
+// Determine if a nullable of System.Int32 and an object
 // are equal. The object contains the boxed value of the
 // nullable object.
 

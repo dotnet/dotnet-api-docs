@@ -4,7 +4,7 @@ using System.IO;
 using System.Xml;
 
 public class Sample
-{ 
+{
   public static void Main()
   {
      //Create a writer to write XML to the console.
@@ -13,7 +13,7 @@ public class Sample
 
      //Use indentation for readability.
      writer.Formatting = Formatting.Indented;
-        
+
      //Write an element (this one is the root).
      writer.WriteStartElement("order");
 
@@ -25,9 +25,9 @@ public class Sample
      //content, calling WriteEndElement would have written a
      //short end tag '/>'.
      writer.WriteFullEndElement();
-             
+
      //Write the XML to file and close the writer
-     writer.Close();  
+     writer.Close();
   }
 }
    // </Snippet1>

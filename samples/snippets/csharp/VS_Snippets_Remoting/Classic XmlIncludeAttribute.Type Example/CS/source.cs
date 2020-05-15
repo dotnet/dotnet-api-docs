@@ -4,9 +4,9 @@ using System.IO;
 using System.Xml.Serialization;
 
 public class Group
-{   
+{
    public Employee[] Employees;
-}   
+}
 
 // Instruct the XmlSerializer to accept Manager types as well.
 [XmlInclude(typeof(Manager))]
@@ -34,7 +34,7 @@ public class Run
       XmlSerializer s = new XmlSerializer(typeof(Group));
       TextWriter writer = new StreamWriter(filename);
       Group group = new Group();
-      
+
       Manager manager = new Manager();
       Employee emp1 = new Employee();
       Employee emp2 = new Employee();
@@ -59,8 +59,8 @@ public class Run
       XmlSerializer x = new XmlSerializer(typeof(Group));
       Group g = (Group) x.Deserialize(fs);
       Console.Write("Members:");
-      
-      foreach(Employee e in g.Employees) 
+
+      foreach(Employee e in g.Employees)
       {
          Console.WriteLine("\t" + e.Name);
       }

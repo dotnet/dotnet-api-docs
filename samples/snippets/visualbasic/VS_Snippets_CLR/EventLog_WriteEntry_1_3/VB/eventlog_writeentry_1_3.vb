@@ -6,7 +6,7 @@
 ' 'WriteEntry(String, String, EventLogEntryType, Int32, Int16)', 
 ' 'WriteEntry(String, String, EventLogEntryType, Int32, Int16, Byte[]) ' 
 ' and 'WriteEntry(String, EventLogEntryType, Int32, Int16)' of class 
-' 'EventLog'.The following example writes the information to an event log. 
+' 'EventLog'. The following example writes the information to an event log. 
 
 
 Imports System.Diagnostics

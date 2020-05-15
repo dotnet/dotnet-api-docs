@@ -10,7 +10,7 @@ public class Group
 {
    [SoapAttribute (Namespace = "http://www.cpandl.com")]
    public string GroupName;
-   
+
    [SoapAttribute(DataType = "base64Binary")]
    public Byte [] GroupNumber;
 
@@ -19,9 +19,9 @@ public class Group
    [SoapElement(DataType = "nonNegativeInteger", ElementName = "PosInt")]
    public string PostitiveInt;
    // This is ignored when serialized unless it's overridden.
-   [SoapIgnore] 
+   [SoapIgnore]
    public bool IgnoreThis;
-   
+
    public GroupType Grouptype;
 
    public Vehicle MyVehicle;
@@ -44,7 +44,7 @@ public class Group
       return v;
    }
 }
-  
+
 // SoapInclude allows Vehicle to accept Car type.
 [SoapInclude(typeof(Car))]
 public abstract class Vehicle
@@ -65,7 +65,7 @@ public enum GroupType
    [SoapEnum("Large")]
    B
 }
- 
+
 public class Run
 {
    public static void Main()
@@ -79,14 +79,14 @@ public class Run
    public void SerializeOriginal(string filename)
    {
       // Create an instance of the XmlSerializer class.
-      XmlTypeMapping myMapping = 
+      XmlTypeMapping myMapping =
       (new SoapReflectionImporter().ImportTypeMapping(
       typeof(Group)));
-      XmlSerializer mySerializer =  
+      XmlSerializer mySerializer =
       new XmlSerializer(myMapping);
       Group myGroup=MakeGroup();
       // Writing the file requires a TextWriter.
-      XmlTextWriter writer = 
+      XmlTextWriter writer =
       new XmlTextWriter(filename, Encoding.UTF8);
       writer.Formatting = Formatting.Indented;
       writer.WriteStartElement("wrapper");
@@ -103,7 +103,7 @@ public class Run
       XmlSerializer overRideSerializer = CreateOverrideSerializer();
       Group myGroup=MakeGroup();
       // Writing the file requires a TextWriter.
-      XmlTextWriter writer = 
+      XmlTextWriter writer =
       new XmlTextWriter(filename, Encoding.UTF8);
       writer.Formatting = Formatting.Indented;
       writer.WriteStartElement("wrapper");
@@ -137,19 +137,19 @@ public class Run
    public void DeserializeOriginal(string filename)
    {
       // Create an instance of the XmlSerializer class.
-      XmlTypeMapping myMapping = 
+      XmlTypeMapping myMapping =
       (new SoapReflectionImporter().ImportTypeMapping(
       typeof(Group)));
-      XmlSerializer mySerializer =  
+      XmlSerializer mySerializer =
       new XmlSerializer(myMapping);
 
       // Reading the file requires an  XmlTextReader.
-      XmlTextReader reader= 
+      XmlTextReader reader=
       new XmlTextReader(filename);
       reader.ReadStartElement("wrapper");
 
       // Deserialize and cast the object.
-      Group myGroup; 
+      Group myGroup;
       myGroup = (Group) mySerializer.Deserialize(reader);
       reader.ReadEndElement();
       reader.Close();
@@ -161,12 +161,12 @@ public class Run
       XmlSerializer overRideSerializer = CreateOverrideSerializer();
 
       // Reading the file requires an  XmlTextReader.
-      XmlTextReader reader= 
+      XmlTextReader reader=
       new XmlTextReader(filename);
       reader.ReadStartElement("wrapper");
 
       // Deserialize and cast the object.
-      Group myGroup; 
+      Group myGroup;
       myGroup = (Group) overRideSerializer.Deserialize(reader);
       reader.ReadEndElement();
       reader.Close();
@@ -184,21 +184,21 @@ public class Run
    }
    private XmlSerializer CreateOverrideSerializer()
    {
-      SoapAttributeOverrides mySoapAttributeOverrides = 
+      SoapAttributeOverrides mySoapAttributeOverrides =
       new SoapAttributeOverrides();
       SoapAttributes soapAtts = new SoapAttributes();
 
       SoapElementAttribute mySoapElement = new SoapElementAttribute();
       mySoapElement.ElementName = "xxxx";
       soapAtts.SoapElement = mySoapElement;
-      mySoapAttributeOverrides.Add(typeof(Group), "PostitiveInt", 
+      mySoapAttributeOverrides.Add(typeof(Group), "PostitiveInt",
       soapAtts);
 
       // Override the IgnoreThis property.
       SoapIgnoreAttribute myIgnore = new SoapIgnoreAttribute();
       soapAtts = new SoapAttributes();
-      soapAtts.SoapIgnore = false;      
-      mySoapAttributeOverrides.Add(typeof(Group), "IgnoreThis", 
+      soapAtts.SoapIgnore = false;
+      mySoapAttributeOverrides.Add(typeof(Group), "IgnoreThis",
       soapAtts);
 
       // Override the GroupType enumeration.	
@@ -207,9 +207,9 @@ public class Run
       xSoapEnum.Name = "Over1000";
       soapAtts.SoapEnum = xSoapEnum;
 
-      // Add the SoapAttributes to the 
+      // Add the SoapAttributes to the
       // mySoapAttributeOverridesrides object.
-      mySoapAttributeOverrides.Add(typeof(GroupType), "A", 
+      mySoapAttributeOverrides.Add(typeof(GroupType), "A",
       soapAtts);
 
       // Create second enumeration and add it.
@@ -217,7 +217,7 @@ public class Run
       xSoapEnum = new SoapEnumAttribute();
       xSoapEnum.Name = "ZeroTo1000";
       soapAtts.SoapEnum = xSoapEnum;
-      mySoapAttributeOverrides.Add(typeof(GroupType), "B", 
+      mySoapAttributeOverrides.Add(typeof(GroupType), "B",
       soapAtts);
 
       // Override the Group type.
@@ -227,7 +227,7 @@ public class Run
       soapAtts.SoapType = soapType;
       mySoapAttributeOverrides.Add(typeof(Group),soapAtts);
 
-      // Create an XmlTypeMapping that is used to create an instance 
+      // Create an XmlTypeMapping that is used to create an instance
       // of the XmlSerializer. Then return the XmlSerializer object.
       XmlTypeMapping myMapping = (new SoapReflectionImporter(
       mySoapAttributeOverrides)).ImportTypeMapping(typeof(Group));

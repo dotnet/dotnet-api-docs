@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 class TestCtorBuilder {
- 
+
   	public static Type DynamicPointTypeGen() {
-	  
+	
 	   Type pointType = null;
 	   Type[] ctorParams = new Type[] {typeof(int),
 					    typeof(int),
@@ -19,7 +19,7 @@ class TestCtorBuilder {
 	   myAsmName.Name = "MyDynamicAssembly";
 	
 	   AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(
-					  myAsmName, 
+					  myAsmName,
 					  AssemblyBuilderAccess.RunAndSave);
 
    	   ModuleBuilder pointModule = myAsmBuilder.DefineDynamicModule("PointModule",
@@ -30,12 +30,12 @@ class TestCtorBuilder {
 
 	   FieldBuilder xField = pointTypeBld.DefineField("x", typeof(int),
                                                           FieldAttributes.Public);
-	   FieldBuilder yField = pointTypeBld.DefineField("y", typeof(int), 
+	   FieldBuilder yField = pointTypeBld.DefineField("y", typeof(int),
                                                           FieldAttributes.Public);
 	   FieldBuilder zField = pointTypeBld.DefineField("z", typeof(int),
                                                           FieldAttributes.Public);
 
-           Type objType = Type.GetType("System.Object"); 
+           Type objType = Type.GetType("System.Object");
            ConstructorInfo objCtor = objType.GetConstructor(new Type[0]);
 
 	   ConstructorBuilder pointCtor = pointTypeBld.DefineConstructor(
@@ -48,7 +48,7 @@ class TestCtorBuilder {
 	   // hold the actual passed parameters. ldarg.0 is used by instance methods
 	   // to hold a reference to the current calling object instance. Static methods
 	   // do not use arg.0, since they are not instantiated and hence no reference
-	   // is needed to distinguish them. 
+	   // is needed to distinguish them.
 
            ctorIL.Emit(OpCodes.Ldarg_0);
 
@@ -62,36 +62,36 @@ class TestCtorBuilder {
 
            ctorIL.Emit(OpCodes.Ldarg_0);
            ctorIL.Emit(OpCodes.Ldarg_1);
-           ctorIL.Emit(OpCodes.Stfld, xField); 
+           ctorIL.Emit(OpCodes.Stfld, xField);
 
 	   // Now, we store arg 2 "y" in the current instance with stfld.
 
            ctorIL.Emit(OpCodes.Ldarg_0);
            ctorIL.Emit(OpCodes.Ldarg_2);
-           ctorIL.Emit(OpCodes.Stfld, yField); 
+           ctorIL.Emit(OpCodes.Stfld, yField);
 
 	   // Last of all, arg 3 "z" gets stored in the current instance.
 
            ctorIL.Emit(OpCodes.Ldarg_0);
            ctorIL.Emit(OpCodes.Ldarg_3);
-           ctorIL.Emit(OpCodes.Stfld, zField); 
-           
+           ctorIL.Emit(OpCodes.Stfld, zField);
+
            // Our work complete, we return.
 
-	   ctorIL.Emit(OpCodes.Ret); 
+	   ctorIL.Emit(OpCodes.Ret);
 
 	   // Now, let's create three very simple methods so we can see our fields.
 
-	   string[] mthdNames = new string[] {"GetX", "GetY", "GetZ"}; 
+	   string[] mthdNames = new string[] {"GetX", "GetY", "GetZ"};
 
            foreach (string mthdName in mthdNames) {
               MethodBuilder getFieldMthd = pointTypeBld.DefineMethod(
-				           mthdName, 
+				           mthdName,
 				           MethodAttributes.Public,
-                                           typeof(int), 
+                                           typeof(int),
                                            null);
 	      ILGenerator mthdIL = getFieldMthd.GetILGenerator();
-	   
+	
 	      mthdIL.Emit(OpCodes.Ldarg_0);
   	      switch (mthdName) {
 	         case "GetX": mthdIL.Emit(OpCodes.Ldfld, xField);
@@ -108,7 +108,7 @@ class TestCtorBuilder {
  	   pointType = pointTypeBld.CreateType();
 
 	   // Let's save it, just for posterity.
-	   
+	
 	   myAsmBuilder.Save("Point.dll");
 	
 	   return pointType;
@@ -130,7 +130,7 @@ class TestCtorBuilder {
 	   Console.WriteLine("Assembly: '{0}'", myDynamicType.Assembly);
 	   Console.WriteLine("Attributes: '{0}'", myDynamicType.Attributes);
 	   Console.WriteLine("Module: '{0}'", myDynamicType.Module);
-	   Console.WriteLine("Members: "); 
+	   Console.WriteLine("Members: ");
 	   foreach (MemberInfo member in myDynamicType.GetMembers()) {
 		Console.WriteLine("-- {0} {1};", member.MemberType, member.Name);
 	   }
@@ -143,8 +143,8 @@ class TestCtorBuilder {
            Console.WriteLine("Constructor: {0};", myDTctor.ToString());
 
            Console.WriteLine("---");
-	  
-           // Now, we get to use our dynamically-created class by invoking the constructor. 
+	
+           // Now, we get to use our dynamically-created class by invoking the constructor.
 
 	   aPoint = myDTctor.Invoke(aPargs);
            Console.WriteLine("aPoint is type {0}.", aPoint.GetType());
@@ -176,7 +176,7 @@ class TestCtorBuilder {
 	   // Assembly: 'MyDynamicAssembly, Version=0.0.0.0'
 	   // Attributes: 'AutoLayout, AnsiClass, NotPublic, Public'
 	   // Module: 'PointModule'
-	   // Members: 
+	   // Members:
 	   // -- Field x;
 	   // -- Field y;
 	   // -- Field z;

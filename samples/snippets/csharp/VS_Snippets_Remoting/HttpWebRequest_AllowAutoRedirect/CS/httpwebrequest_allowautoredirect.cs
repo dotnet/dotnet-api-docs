@@ -1,8 +1,8 @@
 ﻿/* System.Net.HttpWebRequest.AllowAutoRedirect System.Net.HttpWebRequest.Address
- This program demonstrates  'AllowAutoRedirect' and 'Address' properties of 'HttpWebRequest' Class.
- A new 'HttpWebRequest' object is created. The 'AllowAutoredirect' property which redirects a page automatically 
- to the new Uri is set to true.Using the 'Address' property, the address of the 'Responding Uri' is printed to 
- console.The contents of the redirected page are displayed to the console.
+ This program demonstrates the 'AllowAutoRedirect' and 'Address' properties of the 'HttpWebRequest' class.
+ A new 'HttpWebRequest' object is created. The 'AllowAutoredirect' property, which redirects a page automatically
+ to the new Uri, is set to true. Using the 'Address' property, the address of the 'Responding Uri' is printed to
+ console. The contents of the redirected page are displayed to the console.
 */
 
 using System;
@@ -29,7 +29,7 @@ class HttpWebRequest_AllowAutoRedirect
 			Char[] readBuff = new Char[256];
 			int count = streamRead.Read( readBuff, 0, 256 );
 			Console.WriteLine("\nThe contents of Html Page are :  ");	
-			while (count > 0) 
+			while (count > 0)
 			{			
 				String outputData = new String(readBuff, 0, count);
 				Console.Write(outputData);
@@ -51,7 +51,7 @@ class HttpWebRequest_AllowAutoRedirect
 			Console.WriteLine("WebException raised!");
 			Console.WriteLine("\nMessage:{0}",e.Message);
 			Console.WriteLine("\nStatus:{0}",e.Status);
-		} 
+		}
 		catch(Exception e)
 		{
 			Console.WriteLine("Exception raised!");

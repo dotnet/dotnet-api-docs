@@ -11,15 +11,15 @@ public class Example
       int[] range = new int[10];
       for (int ctr = 1; ctr <= 1000000; ctr++) {
          Double value = rnd.NextDouble() * (upperBound - lowerBound) + lowerBound;
-         range[(int) Math.Truncate((value - lowerBound) * 10)]++; 
+         range[(int) Math.Truncate((value - lowerBound) * 10)]++;
       }
-      
+
       for (int ctr = 0; ctr <= 9; ctr++) {
          Double lowerRange = 10 + ctr * .1;
-         Console.WriteLine("{0:N1} to {1:N1}: {2,8:N0}  ({3,7:P2})", 
-                           lowerRange, lowerRange + .1, range[ctr], 
+         Console.WriteLine("{0:N1} to {1:N1}: {2,8:N0}  ({3,7:P2})",
+                           lowerRange, lowerRange + .1, range[ctr],
                            range[ctr] / 1000000.0);
-      } 
+      }
 
       // The example displays output like the following:
       //       10.0 to 10.1:   99,929  ( 9.99 %)

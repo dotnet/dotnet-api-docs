@@ -2,11 +2,11 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
-        ManagementClass existingClass = 
+        ManagementClass existingClass =
             new ManagementClass("CIM_Service");
         ManagementClass newClass = existingClass.Derive("My_Service");
         newClass.Put(); //to commit the new class to the WMI repository.

@@ -1,6 +1,6 @@
 ﻿// FxCop Exception:
-// This sample generates FxCop violation SecureLateBindingMethods for 
-// Activator.CreateInstance, Type.GetType, etc.. 
+// This sample generates FxCop violation SecureLateBindingMethods for
+// Activator.CreateInstance, Type.GetType, etc..
 // The violation can be ignored, because:
 //  - None of the dangerous methods appear in snippets.
 //  - The types used are all dynamic types created in this example.
@@ -10,10 +10,10 @@
 // System.Reflection.Emit.TypeBuilder.DefineConstructor()
 // System.Reflection.Emit.TypeBuilder.AddInterfaceImplementation()
 // System.Reflection.Emit.TypeBuilder.BaseType
-/* The following program demonstrates the property 'BaseType' and methods 
+/* The following program demonstrates the property 'BaseType' and methods
    'DefineField','DefineConstructor','AddInterfaceImplementation' of the
-   class 'TypeBuilder'. 
-   The program creates a dynamic assembly and a type within it called as 
+   class 'TypeBuilder'.
+   The program creates a dynamic assembly and a type within it called as
    'HelloWorld' This defines a field and implements an interface.
 */
 using System;
@@ -25,7 +25,7 @@ using System.Security.Permissions;
 public class MyTypeBuilder
 {
    [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
-   public static void Main() 
+   public static void Main()
    {
       Console.WriteLine("TypeBuilder Sample");
       Console.WriteLine("----------------------");
@@ -37,7 +37,7 @@ public class MyTypeBuilder
                                        new Object[] { "Called HelloWorld" });
       // Invoke 'SayHello' method.
       helloWorldType.InvokeMember("SayHello",
-                                BindingFlags.Default |BindingFlags.InvokeMethod 
+                                BindingFlags.Default |BindingFlags.InvokeMethod
                                ,null, helloWorld, null);
       // Get defined field in the class.
       Console.WriteLine("Defined Field: " + helloWorldType.GetField("myGreeting").Name);
@@ -49,9 +49,9 @@ public class MyTypeBuilder
    {
       void SayHello();
    }
-  
+
    // Create the transient dynamic assembly.
-   private static Type CreateDynamicAssembly(AppDomain myAppDomain, AssemblyBuilderAccess myAccess) 
+   private static Type CreateDynamicAssembly(AppDomain myAppDomain, AssemblyBuilderAccess myAccess)
    {
       // Create a simple name for assembly.
       AssemblyName myAssemblyName = new AssemblyName();
@@ -65,24 +65,24 @@ public class MyTypeBuilder
 // <Snippet1>
 // <Snippet4>
       // Define a public class named 'myHelloWorld' in the assembly.
-      TypeBuilder helloWorldTypeBuilder = 
+      TypeBuilder helloWorldTypeBuilder =
          myModuleBuilder.DefineType("HelloWorld", TypeAttributes.Public);
 
       // Get base type.
       Console.WriteLine("Base Type: " + helloWorldTypeBuilder.BaseType.Name);
 // </Snippet4>
       // Define 'myGreetingField' field.
-      FieldBuilder myGreetingField = 
-         helloWorldTypeBuilder.DefineField("myGreeting", typeof(String), 
+      FieldBuilder myGreetingField =
+         helloWorldTypeBuilder.DefineField("myGreeting", typeof(String),
                                                 FieldAttributes.Public);
 // </Snippet1>
 // <Snippet2>
       // Define the constructor.
       Type[] constructorArgs = { typeof(String) };
-      ConstructorBuilder myConstructorBuilder = 
-         helloWorldTypeBuilder.DefineConstructor(MethodAttributes.Public, 
+      ConstructorBuilder myConstructorBuilder =
+         helloWorldTypeBuilder.DefineConstructor(MethodAttributes.Public,
                             CallingConventions.Standard, constructorArgs);
-      // Generate IL for the method.The constructor stores its argument in the private field.
+      // Generate IL for the method. The constructor stores its argument in the private field.
       ILGenerator myConstructorIL = myConstructorBuilder.GetILGenerator();
       myConstructorIL.Emit(OpCodes.Ldarg_0);
       myConstructorIL.Emit(OpCodes.Ldarg_1);

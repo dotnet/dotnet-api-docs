@@ -1,10 +1,10 @@
 ﻿/*Sytem.Net.HttpWebRequest.PipeLined
- This program demonstrates  'Pipelined' property of the 'HttpWebRequest' class.
-  A new 'HttpWebRequest' object is created.The 'Pipelined' property is displayed to the console.
-  HTTP Request  and  Response Headers are displayed to the console.The contents of the page of the
+ This program demonstrates the 'Pipelined' property of the 'HttpWebRequest' class.
+  A new 'HttpWebRequest' object is created. The 'Pipelined' property is displayed to the console.
+  HTTP Request and Response Headers are displayed to the console. The contents of the page of the
   requested URI are displayed to the console.
 
-Note:The 'Pipelined' property is supported only by servers that allow Pipelining of requests.
+Note: The 'Pipelined' property is supported only by servers that allow Pipelining of requests.
 */
 
 using System;
@@ -17,7 +17,7 @@ class HttpWebRequest_Pipelined
 	static void Main(string[] args)
 	{
 		try	
-		{ 
+		{
 			if(args.Length<1)
 			{
 				Console.WriteLine("\nPlease enter the Uri address as a command line parameter:");
@@ -32,7 +32,7 @@ class HttpWebRequest_Pipelined
 		{
 			Console.WriteLine("\nWebException Caught!");
 			Console.WriteLine("Message :{0}",e.Message);			
-		} 
+		}
 		catch(Exception e)
 		{
 			Console.WriteLine("\nException Caught!");
@@ -54,7 +54,7 @@ class HttpWebRequest_Pipelined
 			Char[] readBuffer = new Char[256];
 			int count = streamRead.Read( readBuffer, 0, 256 );
 			Console.WriteLine("\nThe contents of HTML page are.......");	
-			while (count > 0) 
+			while (count > 0)
 			{
 				String outputData = new String(readBuffer, 0, count);
 				Console.Write(outputData);
@@ -75,7 +75,7 @@ class HttpWebRequest_Pipelined
 		{
 			Console.WriteLine("\nWebException Caught!");
 			Console.WriteLine("Message : {0}",e.Message);			
-		} 
+		}
 		catch(Exception e)
 		{
 			Console.WriteLine("\nException Caught!");

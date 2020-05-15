@@ -9,7 +9,7 @@ public class Page1: Page
  String connectionString = "";
 // <Snippet1>
 Cache.Insert("DSN", connectionString, null, DateTime.Now.AddMinutes(2), System.Web.Caching.Cache.NoSlidingExpiration);
-   
+
 // </Snippet1>
  }
 }

@@ -3,7 +3,7 @@
 ' This program demonstrates the 'WebException()' constructor of 'WebException' class.
 ' It creates a 'HttpConnect' object and calls the 'ConnectHttpServer' method with an invalid 'URL'.
 ' When the method tries to establish a socket connection to that address an exception is thrown.In 
-' the 'catch' block  a new 'WebException' object is created  and  thrown to the caller.That exception 
+' the 'catch' block  a new 'WebException' object is created  and thrown to the caller. That exception 
 ' is caught in the calling method and the error message is dispalyed to the console.
 
 
@@ -17,7 +17,7 @@ Public shared Sub Main()
         Try
             Dim myHttpConnect As New HttpConnect()
             ' If the Uri is valid  then 'ConnectHttpServer' method will connect 
-	         ' to the server sucessfully.
+	         ' to the server successfully.
             myHttpConnect.ConnectHttpServer("www.contoso.com")
         Catch e As WebException
             Console.WriteLine(("The Exception is :" + e.Message))

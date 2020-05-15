@@ -12,11 +12,11 @@ public class Example
       String value = "This is a string to persist.";
       Byte[] bytes  = enc.GetBytes(value);
 
-      FileStream fs = new FileStream(@".\TestFile.dat", 
+      FileStream fs = new FileStream(@".\TestFile.dat",
                                      FileMode.Open,
                                      FileAccess.Read);
       Task t = fs.WriteAsync(enc.GetPreamble(), 0, enc.GetPreamble().Length);
-      Task t2 = t.ContinueWith( (a) => fs.WriteAsync(bytes, 0, bytes.Length) ); 
+      Task t2 = t.ContinueWith( (a) => fs.WriteAsync(bytes, 0, bytes.Length) );
       await t2;
       fs.Close();
    }

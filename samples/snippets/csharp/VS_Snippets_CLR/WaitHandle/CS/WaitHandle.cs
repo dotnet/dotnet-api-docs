@@ -3,10 +3,10 @@
 using System;
 using System.Threading;
 
-public sealed class App 
+public sealed class App
 {
     // Define an array with two AutoResetEvent WaitHandles.
-    static WaitHandle[] waitHandles = new WaitHandle[] 
+    static WaitHandle[] waitHandles = new WaitHandle[]
     {
         new AutoResetEvent(false),
         new AutoResetEvent(false)
@@ -16,9 +16,9 @@ public sealed class App
     static Random r = new Random();
 
     //<snippet2>
-    static void Main() 
+    static void Main()
     {
-        // Queue up two tasks on two different threads; 
+        // Queue up two tasks on two different threads;
         // wait until all tasks are completed.
         DateTime dt = DateTime.Now;
         Console.WriteLine("Main thread is waiting for BOTH tasks to complete.");
@@ -26,10 +26,10 @@ public sealed class App
         ThreadPool.QueueUserWorkItem(new WaitCallback(DoTask), waitHandles[1]);
         WaitHandle.WaitAll(waitHandles);
         // The time shown below should match the longest task.
-        Console.WriteLine("Both tasks are completed (time waited={0})", 
+        Console.WriteLine("Both tasks are completed (time waited={0})",
             (DateTime.Now - dt).TotalMilliseconds);
 
-        // Queue up two tasks on two different threads; 
+        // Queue up two tasks on two different threads;
         // wait until any tasks are completed.
         dt = DateTime.Now;
         Console.WriteLine();
@@ -43,7 +43,7 @@ public sealed class App
     }
     //</snippet2>
 
-    static void DoTask(Object state) 
+    static void DoTask(Object state)
     {
         AutoResetEvent are = (AutoResetEvent) state;
         int time = 1000 * r.Next(2, 10);
@@ -59,7 +59,7 @@ public sealed class App
 //  Performing a task for 7000 milliseconds.
 //  Performing a task for 4000 milliseconds.
 //  Both tasks are completed (time waited=7064.8052)
-// 
+//
 //  The main thread is waiting for either task to complete.
 //  Performing a task for 2000 milliseconds.
 //  Performing a task for 2000 milliseconds.

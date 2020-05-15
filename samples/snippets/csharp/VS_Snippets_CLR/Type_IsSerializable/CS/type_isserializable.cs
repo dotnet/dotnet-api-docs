@@ -1,11 +1,11 @@
-﻿// <Snippet1>   
+﻿// <Snippet1>
 using System;
 namespace SystemType
 {
     public class MyClass
     {
         // Declare a public class with the [Serializable] attribute.
-        [Serializable] public class MyTestClass 
+        [Serializable] public class MyTestClass
         {
         }
         public static void Main(string []args)

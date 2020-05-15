@@ -1,11 +1,11 @@
 ﻿// <Snippet1>
 //
 // This example signs an XML file using an
-// envelope signature. It then verifies the 
+// envelope signature. It then verifies the
 // signed XML.
 //
 // You must have a certificate with a subject name
-// of "CN=XMLDSIG_Test" in the "My" certificate store. 
+// of "CN=XMLDSIG_Test" in the "My" certificate store.
 //
 // Run the following command to create a certificate
 // and place it in the store.
@@ -33,7 +33,7 @@ public class SignVerifyEnvelope
             CreateSomeXml("Example.xml");
             Console.WriteLine("New XML file created.");
 
-            // Sign the XML that was just created and save it in a 
+            // Sign the XML that was just created and save it in a
             // new file.
             SignXmlFile("Example.xml", "SignedExample.xml", Certificate);
             Console.WriteLine("XML file signed.");
@@ -79,7 +79,7 @@ public class SignVerifyEnvelope
         // Create a SignedXml object.
         SignedXml signedXml = new SignedXml(doc);
 
-        // Add the key to the SignedXml document. 
+        // Add the key to the SignedXml document.
         signedXml.SigningKey = cert.PrivateKey;
 
         // Create a reference to be signed.
@@ -128,7 +128,7 @@ public class SignVerifyEnvelope
     }
     // </Snippet2>
 
-    // Verify the signature of an XML file against an asymetric 
+    // Verify the signature of an XML file against an asymmetric
     // algorithm and return the result.
     public static Boolean VerifyXmlFile(String FileName, String CertificateSubject)
     {
@@ -144,7 +144,7 @@ public class SignVerifyEnvelope
         // Create a new XML document.
         XmlDocument xmlDocument = new XmlDocument();
 
-        // Load the passed XML file into the document. 
+        // Load the passed XML file into the document.
         xmlDocument.Load(FileName);
 
         // Create a new SignedXml object and pass it
@@ -202,7 +202,7 @@ public class SignVerifyEnvelope
             // Close the store even if an exception was thrown.
             store.Close();
         }
-        
+
         return cert;
     }
 

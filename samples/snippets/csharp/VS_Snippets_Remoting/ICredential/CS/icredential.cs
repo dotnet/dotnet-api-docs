@@ -1,13 +1,13 @@
 ﻿/*
    This program demonstrates 'GetCredential' method of 'ICredentials' interface.
-   The 'CredentialList' class implements 'ICredentials' interface which stores credentials for multiple 
-   internet resources.The Program takes URL, Username, Password and Domain name from commandline and adds 
-   it to an instance of 'CredentialList' class.An instance of 'WebRequest' class is obtained and 'Credentials'
-   property of 'WebRequest' class is set to an instance of 'NetworkCredential' class obtained by calling 
+   The 'CredentialList' class implements the 'ICredentials' interface, which stores credentials for multiple
+   internet resources. The Program takes URL, Username, Password, and Domain name from command line and adds
+   it to an instance of the 'CredentialList' class. An instance of 'WebRequest' class is obtained and 'Credentials'
+   property of 'WebRequest' class is set to an instance of 'NetworkCredential' class obtained by calling
    'GetCredential' method of 'CredentialList' class. Then it sends the request and obtains a response.
 */
 
-namespace CrendentialSample
+namespace CredentialSample
 {
 	using System;
 	using System.Net;
@@ -21,7 +21,7 @@ namespace CrendentialSample
 			public Uri uriObj;
 			public String authenticationType;
 			public NetworkCredential networkCredentialObj;
-      
+
 			public CredentialInfo(Uri uriObj, String authenticationType, NetworkCredential networkCredentialObj)
 			{
 				this.uriObj = uriObj;
@@ -40,7 +40,7 @@ namespace CrendentialSample
 		public void Add (Uri uriObj, String authenticationType, NetworkCredential credential)
 		{
 			// Add a 'CredentialInfo' object into a list.
-			arrayListObj.Add (new CredentialInfo(uriObj, authenticationType, credential));      
+			arrayListObj.Add (new CredentialInfo(uriObj, authenticationType, credential));
 		}
 		// Remove the 'CredentialInfo' object from the list that matches to the given 'Uri' and 'AuthenticationType'
 		public void Remove (Uri uriObj, String authenticationType)
@@ -84,29 +84,29 @@ namespace CrendentialSample
 	
 		public static void GetPage(string urlString, string UserName, string password, string DomainName)
 		{
-			try 
+			try
 			{
 				CredentialList credentialListObj = new CredentialList();
 				// Dummy names used as credentials.
 				credentialListObj.Add(new Uri(urlString), "Basic", new NetworkCredential(UserName, password, DomainName));
 				credentialListObj.Add(new Uri("http://www.msdn.microsoft.com"), "Basic", new NetworkCredential("User1", "Passwd1","Domain1"));
-				// Create a 'WebRequest' for the specified url. 
-				WebRequest myWebRequest = WebRequest.Create(urlString); 
+				// Create a 'WebRequest' for the specified url.
+				WebRequest myWebRequest = WebRequest.Create(urlString);
 				// Call 'GetCredential' to obtain the credentials specific to a Uri.
 				myWebRequest.Credentials = credentialListObj.GetCredential(new Uri(urlString), "Basic");
 
 				// Send the request and get the  response.
-				WebResponse myWebResponse = myWebRequest.GetResponse(); 
+				WebResponse myWebResponse = myWebRequest.GetResponse();
 				// ....Process the response here.
 				Console.WriteLine("\n Response Received.");
 				myWebResponse.Close();
 			}
-			catch(WebException e) 
+			catch(WebException e)
 			{
 				Console.WriteLine("WebException caught !!!");
 				Console.WriteLine("Message : " + e.Message);
 			}
-			catch(Exception e) 
+			catch(Exception e)
 			{
 				Console.WriteLine("Exception caught !!!");
 				Console.WriteLine("Message : " + e.Message);

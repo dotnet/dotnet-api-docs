@@ -168,7 +168,7 @@ public class PortChat
         Console.Write("Enter StopBits value (None is not supported and \n" +
          "raises an ArgumentOutOfRangeException. \n (Default: {0}):", defaultPortStopBits.ToString());
         stopBits = Console.ReadLine();
-       
+
         if (stopBits == "" )
         {
             stopBits = defaultPortStopBits.ToString();

@@ -15,13 +15,13 @@ public class Server
     {
         //<snippet41>
         // Create the server channel.
-        System.Collections.IDictionary properties = 
+        System.Collections.IDictionary properties =
             new System.Collections.Hashtable();
         properties["name"] = "ipc";
         properties["priority"] = "20";
         properties["portName"] = "localhost:9090";
-        IpcServerChannel serverChannel = 
-            new IpcServerChannel(properties, null); 
+        IpcServerChannel serverChannel =
+            new IpcServerChannel(properties, null);
         //</snippet41>
 
         return serverChannel;
@@ -33,7 +33,7 @@ public class Server
         // Create the server channel.
         string name = "ipc";
         string portName = "localhost:9090";
-        IpcServerChannel serverChannel = 
+        IpcServerChannel serverChannel =
             new IpcServerChannel(name, portName);
         //</snippet42>
 
@@ -47,7 +47,7 @@ public class Server
         string name = "ipc";
         string portName = "localhost:9090";
         IServerChannelSinkProvider sinkProvider = null;
-        IpcServerChannel serverChannel = 
+        IpcServerChannel serverChannel =
             new IpcServerChannel(name, portName, sinkProvider);
         //</snippet43>
 
@@ -82,11 +82,11 @@ public class Server
 
         // Expose an object for remote calls.
         RemotingConfiguration.RegisterWellKnownServiceType(
-            typeof(RemoteObject), "RemoteObject.rem", 
+            typeof(RemoteObject), "RemoteObject.rem",
             WellKnownObjectMode.Singleton);
 
         // Show the URIs associated with the channel.
-        ChannelDataStore channelData = 
+        ChannelDataStore channelData =
             (ChannelDataStore) serverChannel.ChannelData;
         foreach (string uri in channelData.ChannelUris)
         {

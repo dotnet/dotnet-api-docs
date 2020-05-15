@@ -1,11 +1,11 @@
 ﻿// System.Web.Services.Description.PortType
 
 /*
-  The following sample demonstrates the class 'PortType'. This sample reads 
+  The following sample demonstrates the class 'PortType'. This sample reads
   the contents of a file 'MathService_cs.wsdl' into a 'ServiceDescription' instance.
-  It gets the collection of 'PortType'instances from 'ServiceDescription'.
-  It removes a 'PortType' from the collection, creates a new 'PortType' and adds 
-  it into collection.The programs writes a new web service description 
+  It gets the collection of 'PortType' instances from 'ServiceDescription'.
+  It removes a 'PortType' from the collection, creates a new 'PortType' and adds
+  it into collection. The programs writes a new web service description
   file 'MathService_New.wsdl'.
 */
 
@@ -23,7 +23,7 @@ class MyPortTypeClass
          PortTypeCollection myPortTypeCollection;
          ServiceDescription myServiceDescription =
             ServiceDescription.Read("MathService_CS.wsdl");
-         
+
          myPortTypeCollection = myServiceDescription.PortTypes;
          int noOfPortTypes = myServiceDescription.PortTypes.Count;
          Console.WriteLine("\nTotal number of PortTypes : "
@@ -35,7 +35,7 @@ class MyPortTypeClass
          // Create a new PortType.
          PortType myNewPortType = new PortType();
          myNewPortType.Name = "MathServiceSoap";
-         OperationCollection myOperationCollection = 
+         OperationCollection myOperationCollection =
             myServiceDescription.PortTypes[0].Operations;
          for(int i=0;i<myOperationCollection.Count;i++)
          {
@@ -43,14 +43,14 @@ class MyPortTypeClass
             string outputmsg = myOperationCollection[i].Name + "SoapOut";
             Console.WriteLine("Operation = " + myOperationCollection[i].Name);
             myNewPortType.Operations.Add(
-               CreateOperation(myOperationCollection[i].Name, inputmsg, 
+               CreateOperation(myOperationCollection[i].Name, inputmsg,
                outputmsg,myServiceDescription.TargetNamespace));
          }
 
          // Add the PortType to the collection.
          myPortTypeCollection.Add(myNewPortType);
          noOfPortTypes = myServiceDescription.PortTypes.Count;
-         Console.WriteLine("\nTotal Number of PortTypes : " 
+         Console.WriteLine("\nTotal Number of PortTypes : "
             + noOfPortTypes);
          myServiceDescription.Write("MathService_New.wsdl");
       }
@@ -59,7 +59,7 @@ class MyPortTypeClass
          Console.WriteLine("Exception: " + e.Message);
       }
    }
-   public static Operation CreateOperation(string operationName, 
+   public static Operation CreateOperation(string operationName,
       string inputMessage, string outputMessage, string targetNamespace)
    {
       Operation myOperation = new Operation();

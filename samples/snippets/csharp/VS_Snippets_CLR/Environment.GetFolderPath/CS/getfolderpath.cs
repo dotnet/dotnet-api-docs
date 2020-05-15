@@ -2,12 +2,12 @@
 // Sample for the Environment.GetFolderPath method
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     Console.WriteLine();
-    Console.WriteLine("GetFolderPath: {0}", 
+    Console.WriteLine("GetFolderPath: {0}",
                  Environment.GetFolderPath(Environment.SpecialFolder.System));
     }
 }

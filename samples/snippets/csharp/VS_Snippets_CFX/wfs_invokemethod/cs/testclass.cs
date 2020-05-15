@@ -80,7 +80,7 @@ namespace Microsoft.Samples.InvokeMethodUsage
         public void AsyncMethodSample(string message)
         {
             Console.WriteLine("....Called synchronous sample method with \"{0}\"", message);
-            Console.WriteLine("....This method will not be executed, BeginAsyncMethoSample / EndAsyncMethodSample will be executed instead");
+            Console.WriteLine(".... This method will not be executed, BeginAsyncMethoSample / EndAsyncMethodSample will be executed instead");
         }
 
         // begin the async operation
@@ -92,7 +92,7 @@ namespace Microsoft.Samples.InvokeMethodUsage
             this.asyncResult = new TestAsyncResult() { AsyncState = asyncState };
 
             Thread t = new Thread(new ThreadStart(ProcessThread));
-            t.Start();            
+            t.Start();
 
             return this.asyncResult;
         }
@@ -107,7 +107,7 @@ namespace Microsoft.Samples.InvokeMethodUsage
                 Thread.Sleep(500);
             }
             Console.WriteLine();
-            
+
             this.callback(this.asyncResult);
         }
 

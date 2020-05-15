@@ -12,7 +12,7 @@ class Program
 //<SNIPPET1>
     public static void Decrypt(XmlDocument Doc, RSA Alg, string KeyName)
     {
-        // Check the arguments.  
+        // Check the arguments.
         if (Doc == null)
             throw new ArgumentNullException("Doc");
         if (Alg == null)

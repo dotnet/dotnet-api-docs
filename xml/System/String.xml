@@ -54,6 +54,7 @@
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Runtime" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -97,6 +98,8 @@
 ## Remarks
 
  A string is a sequential collection of characters that is used to represent text. A <xref:System.String> object is a sequential collection of <xref:System.Char?displayProperty=nameWithType> objects that represent a string; a <xref:System.Char?displayProperty=nameWithType> object corresponds to a UTF-16 code unit. The value of the <xref:System.String> object is the content of the sequential collection of <xref:System.Char?displayProperty=nameWithType> objects, and that value is immutable (that is, it is read-only). For more information about the immutability of strings, see the [Immutability and the StringBuilder class](#Immutability) section later in this topic. The maximum size of a <xref:System.String> object in memory is 2GB, or about 1 billion characters.
+
+For more information about Unicode, UTF-16, code units, code points, and the <xref:System.Char> and <xref:System.Text.Rune> types, see [Introduction to character encoding in .NET](~/docs/dotnet/standard/base-types/character-encoding-introduction.md).
 
  In this section:
 
@@ -174,7 +177,7 @@
 
 [!INCLUDE[character-categories](~/includes/unicode-categories.md)]
 
- In addition, .NET supports string comparison and sorting based on the Unicode standard. In versions of the .NET Framework through the [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], the .NET Framework maintains its own table of string data. This is also true of versions of the .NET Framework starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)] running on Windows 7. Starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)] running on Window 8 and later versions of the Windows operating system, the runtime delegates string comparison and sorting operations to the operating system. On .NET Core, string comparison and sorting information is provided by  [International Components for Unicode](http://site.icu-project.org/) libraries.The following table lists the versions of .NET and the versions of the Unicode Standard on which character comparison and sorting are based.
+ In addition, .NET supports string comparison and sorting based on the Unicode standard. In versions of the .NET Framework through the [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], the .NET Framework maintains its own table of string data. This is also true of versions of the .NET Framework starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)] running on Windows 7. Starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)] running on Window 8 and later versions of the Windows operating system, the runtime delegates string comparison and sorting operations to the operating system. On .NET Core, string comparison and sorting information is provided by [International Components for Unicode](http://site.icu-project.org/) libraries. The following table lists the versions of .NET and the versions of the Unicode Standard on which character comparison and sorting are based.
 
 |.NET version|Version of the Unicode Standard|
 |----------------------------|-------------------------------------|
@@ -214,7 +217,7 @@
  [!code-csharp-interactive[System.String.Class#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Class/cs/index2.cs#5)]
  [!code-vb[System.String.Class#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Class/vb/index2.vb#5)]
 
- Consecutive index values might not correspond to consecutive Unicode characters, because a Unicode character might be encoded as more than one <xref:System.Char> object. In particular, a string may contain multi-character units of text that are formed by a base character followed by one or more combining characters or by surrogate pairs. To work with Unicode characters instead of <xref:System.Char> objects, use the <xref:System.Globalization.StringInfo?displayProperty=nameWithType> and <xref:System.Globalization.TextElementEnumerator> classes. The following example illustrates the difference between code that works with <xref:System.Char> objects and code that works with Unicode characters. It compares the number of characters or text elements in each word of a sentence. The string includes two sequences of a base character followed by a combining character.
+ Consecutive index values might not correspond to consecutive Unicode characters, because a Unicode character might be encoded as more than one <xref:System.Char> object. In particular, a string may contain multi-character units of text that are formed by a base character followed by one or more combining characters or by surrogate pairs. To work with Unicode characters instead of <xref:System.Char> objects, use the <xref:System.Globalization.StringInfo?displayProperty=nameWithType> and <xref:System.Globalization.TextElementEnumerator> classes, or the <xref:System.String.EnumerateRunes%2A?displayProperty=nameWithType> method and the <xref:System.Text.Rune> struct. The following example illustrates the difference between code that works with <xref:System.Char> objects and code that works with Unicode characters. It compares the number of characters or text elements in each word of a sentence. The string includes two sequences of a base character followed by a combining character.
 
  [!code-cpp[System.String.Class#6](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Class/cpp/string.index3.cpp#6)]
  [!code-csharp-interactive[System.String.Class#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Class/cs/index3.cs#6)]
@@ -222,7 +225,7 @@
 
  This example works with text elements by using the <xref:System.Globalization.StringInfo.GetTextElementEnumerator%2A?displayProperty=nameWithType> method and the <xref:System.Globalization.TextElementEnumerator> class to enumerate all the text elements in a string. You can also retrieve an array that contains the starting index of each text element by calling the <xref:System.Globalization.StringInfo.ParseCombiningCharacters%2A?displayProperty=nameWithType> method.
 
- For more information about working with units of text rather than individual <xref:System.Char> values, see the <xref:System.Globalization.StringInfo> class.
+ For more information about working with units of text rather than individual <xref:System.Char> values, see [Introduction to character encoding in .NET](~/docs/dotnet/standard/base-types/character-encoding-introduction.md).
 
 <a name="Nulls"></a>
 ## Null strings and empty strings
@@ -783,20 +786,6 @@ Examples of instantiating strings:
 
  [!code-cpp[stringexample1#2](~/samples/snippets/cpp/VS_Snippets_CLR/stringexample1/CPP/source.cpp#2)]
  [!code-csharp[stringexample1#2](~/samples/snippets/csharp/VS_Snippets_CLR/stringexample1/CS/source.cs#2)]
-
-<a name="Versions"></a>
-## Version information
- .NET Framework
- All overloads are supported in: 4.5, 4, 3.5, 3.0, 2.0, 1.1, 1.0
-
- .NET Framework Client Profile
- All overloads are supported in: 4, 3.5 SP1
-
- Portable Class Library
- All overloads without an <xref:System.SByte>`*` parameter are supported
-
- .NET for Windows Store apps
- All overloads without an <xref:System.SByte>`*` parameter are supported in: Windows 8
 
  ]]></format>
         </remarks>
@@ -1398,18 +1387,18 @@ Examples of instantiating strings:
  This property returns the <xref:System.Char> object at the position specified by the `index` parameter. However, a Unicode character might be represented by more than one <xref:System.Char>. Use the <xref:System.Globalization.StringInfo?displayProperty=nameWithType> class to work with Unicode characters instead of <xref:System.Char> objects. For more information, see the "Char Objects and Unicode Characters" section in the <xref:System.String> class overview.
 
  In C#, the <xref:System.String.Chars%2A> property is an indexer. In Visual Basic, it is the default property of the <xref:System.String> class. Each <xref:System.Char> object in the string can be accessed by using code such as the following.
+ 
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.chars/cs/chars1.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.chars/vb/chars1.vb" id="Snippet1":::
 
- [!code-csharp[System.String.Chars#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.chars/cs/chars1.cs#1)]
- [!code-vb[System.String.Chars#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.chars/vb/chars1.vb#1)]
 
-
-
+ 
 ## Examples
  The following example demonstrates how you can use this indexer in a routine to validate a string.
 
- [!code-cpp[Uri_IsHexDigit#1](~/samples/snippets/cpp/VS_Snippets_CLR/Uri_IsHexDigit/CPP/uri_ishexdigit.cpp#1)]
- [!code-csharp[Uri_IsHexDigit#1](~/samples/snippets/csharp/VS_Snippets_CLR/Uri_IsHexDigit/CS/uri_ishexdigit.cs#1)]
- [!code-vb[Uri_IsHexDigit#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Uri_IsHexDigit/VB/uri_ishexdigit.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/Uri_IsHexDigit/CPP/uri_ishexdigit.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/Uri_IsHexDigit/CS/uri_ishexdigit.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/Uri_IsHexDigit/VB/uri_ishexdigit.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1605,9 +1594,9 @@ Examples of instantiating strings:
 
  In the following example, the `ReverseStringComparer` class demonstrates how you can evaluate two strings with the <xref:System.String.Compare%2A> method.
 
- [!code-cpp[ArrayList#7](~/samples/snippets/cpp/VS_Snippets_CLR/ArrayList/CPP/ArrayListSample.cpp#7)]
- [!code-csharp[ArrayList#7](~/samples/snippets/csharp/VS_Snippets_CLR/ArrayList/CS/ArrayListSample.cs#7)]
- [!code-vb[ArrayList#7](~/samples/snippets/visualbasic/VS_Snippets_CLR/ArrayList/VB/ArrayListSample.vb#7)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/ArrayList/CPP/ArrayListSample.cpp" id="Snippet7":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/ArrayList/CS/ArrayListSample.cs" interactive="try-dotnet" id="Snippet7":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/ArrayList/VB/ArrayListSample.vb" id="Snippet7":::
 
  ]]></format>
         </remarks>
@@ -1952,9 +1941,9 @@ Examples of instantiating strings:
 ## Examples
  The following example demonstrates how culture can affect a comparison. In Czech - Czech Republic culture, "ch" is a single character that is greater than "d". However, in English - United States culture, "ch" consists of two characters, and "c" is less than "d".
 
- [!code-cpp[string.comp4#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.comp4/CPP/string.comp4.cpp#1)]
- [!code-csharp[string.comp4#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.comp4/CS/string.comp4.cs#1)]
- [!code-vb[string.comp4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.comp4/VB/string.comp4.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.comp4/CPP/string.comp4.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.comp4/CS/string.comp4.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.comp4/VB/string.comp4.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2694,8 +2683,8 @@ Examples of instantiating strings:
 ## Examples
  The following example uses the <xref:System.String.Compare%28System.String%2CSystem.Int32%2CSystem.String%2CSystem.Int32%2CSystem.Int32%2CSystem.Globalization.CultureInfo%2CSystem.Globalization.CompareOptions%29> method to compare the last names of two people. It then lists them in alphabetical order.
 
- [!code-csharp[System.String.Compare5#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Compare5/cs/Example.cs#1)]
- [!code-vb[System.String.Compare5#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Compare5/vb/Example.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Compare5/cs/Example.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Compare5/vb/Example.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2815,9 +2804,9 @@ Examples of instantiating strings:
 ## Examples
  The following example performs and ordinal comparison of two strings that only differ in case.
 
- [!code-cpp[string.compareordinal#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.compareordinal/CPP/comp0.cpp#1)]
- [!code-csharp[string.compareordinal#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.compareordinal/CS/comp0.cs#1)]
- [!code-vb[string.compareordinal#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.compareordinal/VB/comp0.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.compareordinal/CPP/comp0.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.compareordinal/CS/comp0.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.compareordinal/VB/comp0.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2918,9 +2907,9 @@ Examples of instantiating strings:
 ## Examples
  This following example demonstrates that <xref:System.String.CompareOrdinal%2A> and <xref:System.String.Compare%2A> use different sort orders.
 
- [!code-cpp[StringCompareOrdinal#1](~/samples/snippets/cpp/VS_Snippets_CLR/StringCompareOrdinal/CPP/stringcompareordinal.cpp#1)]
- [!code-csharp[StringCompareOrdinal#1](~/samples/snippets/csharp/VS_Snippets_CLR/StringCompareOrdinal/CS/stringcompareordinal.cs#1)]
- [!code-vb[StringCompareOrdinal#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/StringCompareOrdinal/VB/stringcompareordinal.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/StringCompareOrdinal/CPP/stringcompareordinal.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/StringCompareOrdinal/CS/stringcompareordinal.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/StringCompareOrdinal/VB/stringcompareordinal.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3255,16 +3244,14 @@ Examples of instantiating strings:
 
  <xref:System.String.Concat%28System.Collections.Generic.IEnumerable%7BSystem.String%7D%29> is a convenience method that lets you concatenate each element in an `IEnumerable(Of String)` collection without first converting the elements to a string array. It is particularly useful with Language-Integrated Query (LINQ) query expressions. The following example passes a `List(Of String)` object that contains either the uppercase or lowercase letters of the alphabet to a lambda expression that selects letters that are equal to or greater than a particular letter (which, in the example, is "M"). The `IEnumerable(Of String)` collection that is returned by the <xref:System.Linq.Enumerable.Where%2A?displayProperty=nameWithType> method is passed to the <xref:System.String.Concat%28System.Collections.Generic.IEnumerable%7BSystem.String%7D%29> method to display the result as a single string.
 
- [!code-csharp[System.String.Concat#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat2.cs#3)]
- [!code-vb[System.String.Concat#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat2.vb#3)]
-
-
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat2.cs" interactive="try-dotnet" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat2.vb" id="Snippet3":::
 
 ## Examples
  The following example uses the Sieve of Eratosthenes algorithm to calculate the prime numbers that are less than or equal to 100. It assigns the result to a <xref:System.Collections.Generic.List%601> object of type <xref:System.String>, which it then passes to the <xref:System.String.Concat%28System.Collections.Generic.IEnumerable%7BSystem.String%7D%29> method.
 
- [!code-csharp[System.String.Concat#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat1.cs#2)]
- [!code-vb[System.String.Concat#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat1.vb#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat1.cs" interactive="try-dotnet" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat1.vb" id="Snippet2":::
 
  ]]></format>
         </remarks>
@@ -3324,9 +3311,9 @@ Examples of instantiating strings:
 ## Examples
  The following example demonstrates the <xref:System.String.Concat%2A> method.
 
- [!code-cpp[string.concat5#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.concat5/CPP/string.concat5.cpp#1)]
- [!code-csharp[string.concat5#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.concat5/CS/string.concat5.cs#1)]
- [!code-vb[string.concat5#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.concat5/VB/string.concat5.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.concat5/CPP/string.concat5.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.concat5/CS/string.concat5.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.concat5/VB/string.concat5.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3394,8 +3381,8 @@ Examples of instantiating strings:
 ## Examples
  The following example demonstrates the use of the <xref:System.String.Concat%2A> method with an <xref:System.Object> array.
 
- [!code-csharp[stringconcat1#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringconcat1/CS/stringconcat1.cs#1)]
- [!code-vb[stringconcat1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringconcat1/VB/stringconcat1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringconcat1/CS/stringconcat1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringconcat1/VB/stringconcat1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3474,9 +3461,9 @@ Examples of instantiating strings:
 ## Examples
  The following example demonstrates the use of the <xref:System.String.Concat%2A> method with a <xref:System.String> array.
 
- [!code-cpp[stringconcat3#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringconcat3/CPP/stringconcat3.cpp#1)]
- [!code-csharp[stringconcat3#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringconcat3/CS/stringconcat3.cs#1)]
- [!code-vb[stringconcat3#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringconcat3/VB/stringconcat3.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/stringconcat3/CPP/stringconcat3.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringconcat3/CS/stringconcat3.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringconcat3/VB/stringconcat3.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3544,9 +3531,9 @@ Examples of instantiating strings:
 ## Examples
  The following example demonstrates the <xref:System.String.Concat%2A> method.
 
- [!code-cpp[string.concat5#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.concat5/CPP/string.concat5.cpp#1)]
- [!code-csharp[string.concat5#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.concat5/CS/string.concat5.cs#1)]
- [!code-vb[string.concat5#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.concat5/VB/string.concat5.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.concat5/CPP/string.concat5.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.concat5/CS/string.concat5.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.concat5/VB/string.concat5.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3648,9 +3635,9 @@ Examples of instantiating strings:
 ## Examples
  The following example concatenates a person's first, middle, and last name.
 
- [!code-cpp[stringconcat4#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringconcat4/CPP/stringconcat4.cpp#1)]
- [!code-csharp[stringconcat4#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringconcat4/CS/stringconcat4.cs#1)]
- [!code-vb[stringconcat4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringconcat4/VB/stringconcat4.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/stringconcat4/CPP/stringconcat4.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringconcat4/CS/stringconcat4.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringconcat4/VB/stringconcat4.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3715,9 +3702,9 @@ Examples of instantiating strings:
 ## Examples
  The following example demonstrates the <xref:System.String.Concat%2A> method.
 
- [!code-cpp[string.concat5#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.concat5/CPP/string.concat5.cpp#1)]
- [!code-csharp[string.concat5#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.concat5/CS/string.concat5.cs#1)]
- [!code-vb[string.concat5#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.concat5/VB/string.concat5.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.concat5/CPP/string.concat5.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.concat5/CS/string.concat5.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.concat5/VB/string.concat5.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3821,9 +3808,9 @@ Examples of instantiating strings:
 ## Examples
  The following example uses the <xref:System.String.Concat%2A> method to concatenate three strings and displays the result.
 
- [!code-cpp[System.String.Concat#6](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.string.concat/cpp/Concat6.cpp#6)]
- [!code-csharp[System.String.Concat#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/Concat6.cs#6)]
- [!code-vb[System.String.Concat#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/Concat6.vb#6)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.string.concat/cpp/Concat6.cpp" id="Snippet6":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/Concat6.cs" interactive="try-dotnet" id="Snippet6":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/Concat6.vb" id="Snippet6":::
 
  ]]></format>
         </remarks>
@@ -3896,8 +3883,8 @@ Examples of instantiating strings:
 ## Examples
  The following example illustrates the use of the <xref:System.String.Concat%28System.Object%2CSystem.Object%2CSystem.Object%2CSystem.Object%29> method to concatenate a list of variable parameters. In this case, the method is called with nine parameters.
 
- [!code-csharp[System.String.Concat#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat4.cs#1)]
- [!code-vb[System.String.Concat#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat4.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat4.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat4.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4006,8 +3993,8 @@ Examples of instantiating strings:
 ## Examples
  The following example defines an array of four-letter words and stores their individual letters to a string array in order to scramble them. It then calls the <xref:System.String.Concat%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%29> method to reassemble the scrambled words.
 
- [!code-csharp[System.String.Concat#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat4.cs#1)]
- [!code-vb[System.String.Concat#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat4.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat4.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat4.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4077,8 +4064,8 @@ Examples of instantiating strings:
 ## Examples
  The following example defines a very simple `Animal` class that contains the name of an animal and the order to which it belongs. It then defines a <xref:System.Collections.Generic.List%601> object to contain a number of `Animal` objects. The <xref:System.Linq.Enumerable.Where%2A?displayProperty=nameWithType> extension method is called to extract the `Animal` objects whose `Order` property equals "Rodent". The result is passed to the <xref:System.String.Concat%60%601%28System.Collections.Generic.IEnumerable%7B%60%600%7D%29> method and displayed to the console.
 
- [!code-csharp[System.String.Concat#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat3.cs#4)]
- [!code-vb[System.String.Concat#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat3.vb#4)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.concat/cs/concat3.cs" interactive="try-dotnet" id="Snippet4":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.concat/vb/concat3.vb" id="Snippet4":::
 
  ]]></format>
         </remarks>
@@ -4422,9 +4409,9 @@ Depending on Why you want to call the `Copy` method, there are a number of alter
 ## Examples
  The following example demonstrates the <xref:System.String.CopyTo%2A> method.
 
- [!code-cpp[stringcopyto#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringcopyto/CPP/stringcopyto.cpp#1)]
- [!code-csharp[stringcopyto#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringcopyto/CS/stringcopyto.cs#1)]
- [!code-vb[stringcopyto#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringcopyto/VB/stringcopyto.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/stringcopyto/CPP/stringcopyto.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringcopyto/CS/stringcopyto.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringcopyto/VB/stringcopyto.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4659,14 +4646,14 @@ This method performs a case-sensitive and culture-sensitive comparison using the
 ## Examples
  The following example indicates whether each string in an array ends with a period (".").
 
- [!code-csharp[System.String.EndsWith#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.EndsWith/cs/EndsWith1.cs#1)]
- [!code-vb[System.String.EndsWith#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.EndsWith/vb/EndsWith1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.EndsWith/cs/EndsWith1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.EndsWith/vb/EndsWith1.vb" id="Snippet1":::
 
  The following example defines a `StripEndTags` method that uses the <xref:System.String.EndsWith%28System.String%29> method to remove HTML end tags from the end of a line. Note that the  `StripEndTags` method is called recursively to ensure that multiple HTML end tags at the end of the line are removed.
 
- [!code-cpp[stringendswith#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringendswith/CPP/stringendswith.cpp#1)]
- [!code-csharp[stringendswith#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringendswith/CS/stringendswith.cs#1)]
- [!code-vb[stringendswith#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringendswith/VB/stringendswith.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/stringendswith/CPP/stringendswith.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringendswith/CS/stringendswith.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringendswith/VB/stringendswith.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4741,9 +4728,9 @@ This method performs a case-sensitive and culture-sensitive comparison using the
 ## Examples
  The following example determines whether a string ends with a particular substring. The results are affected by the choice of culture, whether case is ignored, and whether an ordinal comparison is performed.
 
- [!code-cpp[System.String.EndsWithCmp#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.EndsWithCmp/cpp/ewcmp.cpp#1)]
- [!code-csharp[System.String.EndsWithCmp#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.EndsWithCmp/cs/ewcmp.cs#1)]
- [!code-vb[System.String.EndsWithCmp#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.EndsWithCmp/vb/ewcmp.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.EndsWithCmp/cpp/ewcmp.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.EndsWithCmp/cs/ewcmp.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.EndsWithCmp/vb/ewcmp.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4809,8 +4796,8 @@ This method performs a case-sensitive and culture-sensitive comparison using the
 ## Examples
  The following example determines whether a string occurs at the end of another string. The <xref:System.String.EndsWith%2A> method is called several times using case sensitivity, case insensitivity, and different cultures that influence the results of the search.
 
- [!code-csharp[system.string.EndsWithCI#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.EndsWithCI/cs/ewci.cs#1)]
- [!code-vb[system.string.EndsWithCI#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.EndsWithCI/vb/ewci.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.EndsWithCI/cs/ewci.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.EndsWithCI/vb/ewci.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4928,9 +4915,9 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 ## Examples
  The following example demonstrates the <xref:System.String.Equals%2A> method.
 
- [!code-cpp[string.equals#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.equals/CPP/equals.cpp#1)]
- [!code-csharp[string.equals#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.equals/CS/equals.cs#1)]
- [!code-vb[string.equals#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.equals/VB/equals.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.equals/CPP/equals.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.equals/CS/equals.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.equals/VB/equals.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5072,9 +5059,9 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 ## Examples
  The following example demonstrates the <xref:System.String.Equals%2A> method.
 
- [!code-cpp[string.equals#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.equals/CPP/equals.cpp#1)]
- [!code-csharp[string.equals#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.equals/CS/equals.cs#1)]
- [!code-vb[string.equals#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.equals/VB/equals.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.equals/CPP/equals.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.equals/CS/equals.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.equals/VB/equals.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5145,8 +5132,8 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 
  The following example compares four sets of words by using each member of the <xref:System.StringComparison> enumeration.  The comparisons use the conventions of the English (United States) and Sami (Upper Sweden) cultures. Note that the strings "encyclopædia" and "encyclopaedia" are considered equivalent in the en-US culture but not in the Sami (Northern Sweden) culture.
 
- [!code-csharp[System.String.Equals#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.equals/cs/equals_ex4.cs#4)]
- [!code-vb[System.String.Equals#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.equals/vb/equals_ex4.vb#4)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.equals/cs/equals_ex4.cs" interactive="try-dotnet" id="Snippet4":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.equals/vb/equals_ex4.vb" id="Snippet4":::
 
  ]]></format>
         </remarks>
@@ -5216,8 +5203,8 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 ## Examples
  The following example compares four sets of words by using each member of the <xref:System.StringComparison> enumeration.  The comparisons use the conventions of the English (United States) and Sami (Upper Sweden) cultures. Note that the strings "encyclopædia" and "encyclopaedia" are considered equivalent in the en-US culture but not in the Sami (Northern Sweden) culture.
 
- [!code-csharp[System.String.Equals#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.equals/cs/equals_ex3.cs#3)]
- [!code-vb[System.String.Equals#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.equals/vb/equals_ex3.vb#3)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.equals/cs/equals_ex3.cs" interactive="try-dotnet" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.equals/vb/equals_ex3.vb" id="Snippet3":::
 
  ]]></format>
         </remarks>
@@ -5382,9 +5369,9 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 
  The following example uses the `alignment` and `formatString` arguments to produce formatted output.
 
- [!code-cpp[System.String.Format#9](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Format/cpp/formatoverload2.cpp#9)]
- [!code-csharp[System.String.Format#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Format/cs/formatoverload2.cs#9)]
- [!code-vb[System.String.Format#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Format/vb/formatoverload2.vb#9)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Format/cpp/formatoverload2.cpp" id="Snippet9":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Format/cs/formatoverload2.cs" interactive="try-dotnet-method" id="Snippet9":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Format/vb/formatoverload2.vb" id="Snippet9":::
 
 <a name="HowFormatted"></a>
 ## How arguments are formatted
@@ -5431,9 +5418,9 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 ### Example: A custom formatting operation
  This example defines a format provider that formats an integer value as a customer account number in the form x-xxxxx-xx.
 
- [!code-cpp[System.String.Format#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Format/cpp/formatexample2.cpp#2)]
- [!code-csharp[System.String.Format#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Format/cs/FormatExample2.cs#2)]
- [!code-vb[System.String.Format#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Format/vb/FormatExample2.vb#2)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Format/cpp/formatexample2.cpp" id="Snippet2":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Format/cs/FormatExample2.cs" interactive="try-dotnet" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Format/vb/FormatExample2.vb" id="Snippet2":::
 
 <a name="Format7_Example"></a>
 ### Example: An intercept provider and Roman numeral formatter
@@ -5742,9 +5729,9 @@ This method uses the [composite formatting feature](~/docs/standard/base-types/c
 
  You can also pass the objects to be formatted as an array rather than as an argument list.
 
- [!code-cpp[System.String.Format#10](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Format/cpp/format_paramarray1.cpp#10)]
- [!code-csharp[System.String.Format#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Format/cs/format_paramarray1.cs#10)]
- [!code-vb[System.String.Format#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Format/vb/format_paramarray1.vb#10)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Format/cpp/format_paramarray1.cpp" id="Snippet10":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Format/cs/format_paramarray1.cs" interactive="try-dotnet" id="Snippet10":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Format/vb/format_paramarray1.vb" id="Snippet10":::
 
  ]]></format>
         </remarks>
@@ -6276,9 +6263,9 @@ This method uses the [composite formatting feature](~/docs/standard/base-types/c
 ## Examples
  The following example iterates the characters in several strings and displays information about their individual characters. It uses the language iteration construct rather than a call to the <xref:System.String.GetEnumerator%2A> method.
 
- [!code-cpp[system.string.getenumerator#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.GetEnumerator/CPP/getenumerator.cpp#1)]
- [!code-csharp[system.string.getenumerator#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.GetEnumerator/CS/getenumerator.cs#1)]
- [!code-vb[system.string.getenumerator#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.GetEnumerator/VB/getenumerator.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.GetEnumerator/CPP/getenumerator.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.GetEnumerator/CS/getenumerator.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.GetEnumerator/VB/getenumerator.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -6603,9 +6590,9 @@ The `GetPinnableReference` method returns a character that can be used for pinni
 ## Examples
  The following example displays the <xref:System.TypeCode> enumerated constant for the <xref:System.String> type.
 
- [!code-cpp[string.gettypecode#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.gettypecode/CPP/gtc.cpp#1)]
- [!code-csharp[string.gettypecode#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.gettypecode/CS/gtc.cs#1)]
- [!code-vb[string.gettypecode#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.gettypecode/VB/gtc.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.gettypecode/CPP/gtc.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.gettypecode/CS/gtc.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.gettypecode/VB/gtc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -7132,9 +7119,9 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 ## Examples
  The following example demonstrates the <xref:System.String.IndexOf%2A> method.
 
- [!code-cpp[system.string.indexof#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.IndexOf/CPP/indexofcii.cpp#1)]
- [!code-csharp[system.string.indexof#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.IndexOf/CS/indexofcii.cs#1)]
- [!code-vb[system.string.indexof#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.IndexOf/VB/indexofcii.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.IndexOf/CPP/indexofcii.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.IndexOf/CS/indexofcii.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.IndexOf/VB/indexofcii.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -7322,7 +7309,7 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
         <block subset="none" type="usage">
           <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="comparisonType" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed. If <paramref name="value" /> consists only of one or more ignorable characters, the <see cref="M:System.String.IndexOf(System.String,System.Int32,System.StringComparison)" /> method always returns <paramref name="startIndex" />, which is the character position at which the search begins.
 
- In the following example, the <see cref="M:System.String.IndexOf(System.String,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m" starting with the third character position in two strings. Only one of the strings contains the required substring.If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m". The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
+ In the following example, the <see cref="M:System.String.IndexOf(System.String,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m" starting with the third character position in two strings. Only one of the strings contains the required substring. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m". The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
 
  [!code-csharp[System.String.IndexOf#25](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.IndexOf/CS/ignorable25.cs#25)]
  [!code-vb[System.String.IndexOf#25](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.IndexOf/VB/ignorable25.vb#25)]</para>
@@ -7498,8 +7485,8 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 ## Examples
  The following example finds the first vowel in a string.
 
- [!code-csharp[System.String.IndexOfAny#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.IndexOfAny/cs/IndexOfAny1.cs#1)]
- [!code-vb[System.String.IndexOfAny#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.IndexOfAny/vb/IndexOfAny1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.IndexOfAny/cs/IndexOfAny1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.IndexOfAny/vb/IndexOfAny1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -7575,9 +7562,9 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 ## Examples
  The following example finds the index of the occurrence of any character of the string "is" within a substring of another string.
 
- [!code-cpp[string.indexofany2#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.indexofany2/CPP/ixany2.cpp#1)]
- [!code-csharp[string.indexofany2#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.indexofany2/CS/ixany2.cs#1)]
- [!code-vb[string.indexofany2#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.indexofany2/VB/ixany2.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.indexofany2/CPP/ixany2.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.indexofany2/CS/ixany2.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.indexofany2/VB/ixany2.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -7664,9 +7651,9 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 ## Examples
  The following example finds the index of the occurrence of any character of the string "aid" within a substring of another string.
 
- [!code-cpp[string.indexofany3#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.indexofany3/CPP/ixany3.cpp#1)]
- [!code-csharp[string.indexofany3#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.indexofany3/CS/ixany3.cs#1)]
- [!code-vb[string.indexofany3#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.indexofany3/VB/ixany3.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.indexofany3/CPP/ixany3.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.indexofany3/CS/ixany3.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.indexofany3/VB/ixany3.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -7750,8 +7737,8 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 ## Examples
  The following example inserts a space character in the fourth character position (the character at index 3) of a string.
 
- [!code-csharp[System.String.Insert#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.Insert/cs/Insert1.cs#1)]
- [!code-vb[System.String.Insert#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.Insert/vb/Insert1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.Insert/cs/Insert1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.Insert/vb/Insert1.vb" id="Snippet1":::
 
  The following console application prompts the users to enter one or more adjectives to describe two animals. It then calls the <xref:System.String.Insert%2A> method to insert the text entered by the user into a string.
 
@@ -7834,18 +7821,19 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 
  In the following example, the string s1, which has a value of "MyTest", is already interned because it is a literal in the program. The <xref:System.Text.StringBuilder?displayProperty=nameWithType> class generates a new string object that has the same value as s1. A reference to that string is assigned to s2. The <xref:System.String.Intern%2A> method searches for a string that has the same value as s2. Because such a string exists, the method returns the same reference that is assigned to s1. That reference is then assigned to s3. References s1 and s2 compare unequal because they refer to different objects; references s1 and s3 compare equal because they refer to the same string.
 
- [!code-csharp[System.String.Intern#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Intern/cs/Intern1.cs#1)]
- [!code-vb[System.String.Intern#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Intern/vb/Intern1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Intern/cs/Intern1.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Intern/vb/Intern1.vb" id="Snippet1":::
 
  Compare this method to the <xref:System.String.IsInterned%2A> method.
 
-## Version Considerations
+## Version considerations
+
  In the [!INCLUDE[net_v35SP1_long](~/includes/net-v35sp1-long-md.md)], the <xref:System.String.Intern%2A> method reverts to its behavior in the .NET Framework 1.0 and 1.1 with regard to interning the empty string. In the following example, the variable `str1` is assigned a reference to <xref:System.String.Empty?displayProperty=nameWithtype>, and the variable `str2` is assigned the reference to <xref:System.String.Empty?displayProperty=nameWithtype> that is returned by calling the <xref:System.String.Intern%2A> method after converting a <xref:System.Text.StringBuilder> object whose value is <xref:System.String.Empty?displayProperty=nameWithtype> to a string. Then the references contained in `str1` and `str2` are compared for equality.
 
- [!code-csharp[System.String.Intern#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Intern/cs/Intern2.cs#2)]
- [!code-vb[System.String.Intern#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Intern/vb/Intern2.vb#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Intern/cs/Intern2.cs" interactive="try-dotnet-method" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Intern/vb/Intern2.vb" id="Snippet2":::
 
- In the [!INCLUDE[net_v10_short](~/includes/net-v10-short-md.md)], [!INCLUDE[net_v11_short](~/includes/net-v11-short-md.md)], and [!INCLUDE[net_v35SP1_short](~/includes/net-v35sp1-short-md.md)], `str1` and `str2` are equal. In the [!INCLUDE[net_v20sp1_long](~/includes/net-v20sp1-long-md.md)] and [!INCLUDE[net_v30_long](~/includes/net-v30-long-md.md)], `str1` and `str2` are not equal.
+ In the [!INCLUDE[net_v20sp1_long](~/includes/net-v20sp1-long-md.md)] and [!INCLUDE[net_v30_long](~/includes/net-v30-long-md.md)], `str1` and `str2` are not equal. In all other versions, `str1` and `str2` are equal.
 
 ## Performance Considerations
  If you are trying to reduce the total amount of memory your application allocates, keep in mind that interning a string has two unwanted side effects. First, the memory allocated for interned <xref:System.String> objects is not likely to be released until the common language runtime (CLR) terminates. The reason is that the CLR's reference to the interned <xref:System.String> object can persist after your application, or even your application domain, terminates. Second, to intern a string, you must first create the string. The memory used by the <xref:System.String> object must still be allocated, even though the memory will eventually be garbage collected.
@@ -7857,9 +7845,9 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 ## Examples
  The following example uses three strings that are equal in value to determine whether a newly created string and an interned string are equal.
 
- [!code-cpp[string.intern#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.intern/CPP/string_intern.cpp#1)]
- [!code-csharp[string.intern#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.intern/CS/string_intern.cs#1)]
- [!code-vb[string.intern#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.intern/VB/string_intern.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.intern/CPP/string_intern.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.intern/CS/string_intern.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.intern/VB/string_intern.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -7924,8 +7912,8 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 
  This method does not return a Boolean value. If you call the method because you want a Boolean value that indicates whether a particular string is interned, you can use code such as the following.
 
- [!code-csharp[System.String.IsInterned#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.isinterned/cs/isinternedex1.cs#1)]
- [!code-vb[System.String.IsInterned#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.isinterned/vb/isinternedex1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.isinterned/cs/isinternedex1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.isinterned/vb/isinternedex1.vb" id="Snippet1":::
 
 > [!NOTE]
 >  Starting with the .NET Framework version 2.0, you can override the use of the intern pool when you use the [Ngen.exe (Native Image Generator)](~/docs/framework/tools/ngen-exe-native-image-generator.md) to install an assembly to the native image cache on a local computer. For more information, see Performance Considerations in the Remarks section for the <xref:System.String.Intern%2A> property.
@@ -7935,9 +7923,9 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 ## Examples
  The following example demonstrates that literal strings are interned automatically by the compiler.
 
- [!code-cpp[string.isinterned#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.isinterned/CPP/isin.cpp#1)]
- [!code-csharp[string.isinterned#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.isinterned/CS/isin.cs#1)]
- [!code-vb[string.isinterned#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.isinterned/VB/isin.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.isinterned/CPP/isin.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.isinterned/CS/isin.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.isinterned/VB/isin.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -8220,8 +8208,8 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Remarks
  <xref:System.String.IsNullOrWhiteSpace%2A> is a convenience method that is similar to the following  code, except that it offers superior performance:
 
- [!code-csharp[System.String.IsNullOrWhitespace#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.isnullorwhitespace/cs/isnullorwhitespace.cs#2)]
- [!code-vb[System.String.IsNullOrWhitespace#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.isnullorwhitespace/vb/isnullorwhitespace.vb#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.isnullorwhitespace/cs/isnullorwhitespace.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.isnullorwhitespace/vb/isnullorwhitespace.vb" id="Snippet2":::
 
  White-space characters are defined by the Unicode standard. The <xref:System.String.IsNullOrWhiteSpace%2A> method interprets any character that returns a value of `true` when it is passed to the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method as a white-space character.
 
@@ -8230,8 +8218,8 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example creates a string array, and then passes each element of the array to the <xref:System.String.IsNullOrWhiteSpace%2A> method.
 
- [!code-csharp[System.String.IsNullOrWhiteSpace#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.isnullorwhitespace/cs/isnullorwhitespace1.cs#1)]
- [!code-vb[System.String.IsNullOrWhiteSpace#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.isnullorwhitespace/vb/isnullorwhitespace1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.isnullorwhitespace/cs/isnullorwhitespace1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.isnullorwhitespace/vb/isnullorwhitespace1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -8406,16 +8394,14 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  <xref:System.String.Join%28System.String%2CSystem.Collections.Generic.IEnumerable%7BSystem.String%7D%29> is a convenience method that lets you concatenate each element in an `IEnumerable(Of String)` collection without first converting the elements to a string array. It is particularly useful with Language-Integrated Query (LINQ) query expressions. The following example passes a `List(Of String)` object that contains either the uppercase or lowercase letters of the alphabet to a lambda expression that selects letters that are equal to or greater than a particular letter (which, in the example, is "M"). The `IEnumerable(Of String)` collection returned by the <xref:System.Linq.Enumerable.Where%2A?displayProperty=nameWithType> method is passed to the <xref:System.String.Join%28System.String%2CSystem.Collections.Generic.IEnumerable%7BSystem.String%7D%29> method to display the result as a single string.
 
- [!code-csharp[System.String.Join#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join4.cs#4)]
- [!code-vb[System.String.Join#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join4.vb#4)]
-
-
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join4.cs" interactive="try-dotnet" id="Snippet4":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join4.vb" id="Snippet4":::
 
 ## Examples
  The following example uses the Sieve of Eratosthenes algorithm to calculate the prime numbers that are less than or equal to 100. It assigns the result to a <xref:System.Collections.Generic.List%601> object of type <xref:System.String>, which it then passes to the <xref:System.String.Join%28System.String%2CSystem.Collections.Generic.IEnumerable%7BSystem.String%7D%29> method.
 
- [!code-csharp[System.String.Join#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join3.cs#3)]
- [!code-vb[System.String.Join#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join3.vb#3)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join3.cs" interactive="try-dotnet" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join3.vb" id="Snippet3":::
 
  ]]></format>
         </remarks>
@@ -8490,8 +8476,8 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example uses the Sieve of Eratosthenes algorithm to calculate the prime numbers that are less than or equal to 100. It assigns the result to a integer array, which it then passes to the <xref:System.String.Join%28System.String%2CSystem.Object%5B%5D%29> method.
 
- [!code-csharp[System.String.Join#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join1.cs#1)]
- [!code-vb[System.String.Join#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -8572,9 +8558,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates the <xref:System.String.Join%2A> method.
 
- [!code-cpp[stringjoin#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringjoin/CPP/stringjoin.cpp#1)]
- [!code-csharp[stringjoin#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringjoin/CS/stringjoin.cs#1)]
- [!code-vb[stringjoin#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringjoin/VB/stringjoin.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/stringjoin/CPP/stringjoin.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringjoin/CS/stringjoin.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringjoin/VB/stringjoin.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -8829,16 +8815,14 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  This method is particular useful with Language-Integrated Query (LINQ) query expressions. For example, the following code defines a very simple `Animal` class that contains the name of an animal and the order to which it belongs. It then defines a <xref:System.Collections.Generic.List%601> object that contains a number of `Animal` objects. The <xref:System.Linq.Enumerable.Where%2A?displayProperty=nameWithType> extension method is called to extract the `Animal` objects whose `Order` property equals "Rodent". The result is passed to the <xref:System.String.Join%60%601%28System.String%2CSystem.Collections.Generic.IEnumerable%7B%60%600%7D%29> method.
 
- [!code-csharp[System.String.Join#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join5.cs#5)]
- [!code-vb[System.String.Join#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join5.vb#5)]
-
-
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join5.cs" interactive="try-dotnet" id="Snippet5":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join5.vb" id="Snippet5":::
 
 ## Examples
  The following example uses the Sieve of Eratosthenes algorithm to calculate the prime numbers that are less than or equal to 100. It assigns the result to a <xref:System.Collections.Generic.List%601> object of type integer, which it then passes to the <xref:System.String.Join%60%601%28System.String%2CSystem.Collections.Generic.IEnumerable%7B%60%600%7D%29> method.
 
- [!code-csharp[System.String.Join#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join2.cs#2)]
- [!code-vb[System.String.Join#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join2.vb#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.join/cs/join2.cs" interactive="try-dotnet" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.join/vb/join2.vb" id="Snippet2":::
 
  ]]></format>
         </remarks>
@@ -9062,7 +9046,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.This method begins searching at the `startIndex` character position of this instance and proceeds backward toward the beginning of the current instance until either `value` is found or the first character position has been examined. For example, if `startIndex` is <xref:System.String.Length%2A> - 1, the method searches every character from the last character in the string to the beginning. The search is case-sensitive.
+ Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1. This method begins searching at the `startIndex` character position of this instance and proceeds backward toward the beginning of the current instance until either `value` is found or the first character position has been examined. For example, if `startIndex` is <xref:System.String.Length%2A> - 1, the method searches every character from the last character in the string to the beginning. The search is case-sensitive.
 
  This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
@@ -9700,9 +9684,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example finds the index of the last occurrence of any character in the string "is" within another string.
 
- [!code-cpp[string.lastindexofany1#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.LastIndexOfAny1/CPP/lastixany1.cpp#1)]
- [!code-csharp[string.lastindexofany1#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.LastIndexOfAny1/CS/lastixany1.cs#1)]
- [!code-vb[string.lastindexofany1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.LastIndexOfAny1/VB/lastixany1.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.LastIndexOfAny1/CPP/lastixany1.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.LastIndexOfAny1/CS/lastixany1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.LastIndexOfAny1/VB/lastixany1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -9774,9 +9758,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example finds the index of the last occurrence of any character in the string "is" within a substring of another string.
 
- [!code-cpp[string.lastindexofany2#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.LastIndexOfAny2/CPP/lastixany2.cpp#1)]
- [!code-csharp[string.lastindexofany2#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.LastIndexOfAny2/CS/lastixany2.cs#1)]
- [!code-vb[string.lastindexofany2#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.LastIndexOfAny2/VB/lastixany2.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.LastIndexOfAny2/CPP/lastixany2.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.LastIndexOfAny2/CS/lastixany2.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.LastIndexOfAny2/VB/lastixany2.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -9856,9 +9840,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example finds the index of the last occurrence of any character in the string "aid" within a substring of another string.
 
- [!code-cpp[string.lastindexofany3#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.LastIndexOfAny3/CPP/lastixany3.cpp#1)]
- [!code-csharp[string.lastindexofany3#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.LastIndexOfAny3/CS/lastixany3.cs#1)]
- [!code-vb[string.lastindexofany3#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.LastIndexOfAny3/VB/lastixany3.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.LastIndexOfAny3/CPP/lastixany3.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.LastIndexOfAny3/CS/lastixany3.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.LastIndexOfAny3/VB/lastixany3.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -10176,9 +10160,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates the equality operator.
 
- [!code-cpp[system.string.equality#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Equality/CPP/equalityop.cpp#1)]
- [!code-csharp[system.string.equality#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Equality/CS/equalityop.cs#1)]
-
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Equality/CPP/equalityop.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Equality/CS/equalityop.cs" interactive="try-dotnet" id="Snippet1":::
+ 
  ]]></format>
         </remarks>
       </Docs>
@@ -10282,8 +10266,8 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates the inequality operator.
 
- [!code-cpp[system.string.inequality#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Inequality/CPP/inequalityop.cpp#1)]
- [!code-csharp[system.string.inequality#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Inequality/CS/inequalityop.cs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Inequality/CPP/inequalityop.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Inequality/CS/inequalityop.cs" interactive="try-dotnet" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -10359,9 +10343,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates the <xref:System.String.PadLeft%2A> method.
 
- [!code-cpp[Classic String.PadLeft Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic String.PadLeft Example/CPP/source.cpp#1)]
- [!code-csharp[Classic String.PadLeft Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic String.PadLeft Example/CS/source.cs#1)]
- [!code-vb[Classic String.PadLeft Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic String.PadLeft Example/VB/source.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic String.PadLeft Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic String.PadLeft Example/CS/source.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic String.PadLeft Example/VB/source.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -10429,9 +10413,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates the <xref:System.String.PadLeft%2A> method.
 
- [!code-cpp[Classic String.PadLeft1 Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic String.PadLeft1 Example/CPP/source.cpp#1)]
- [!code-csharp[Classic String.PadLeft1 Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic String.PadLeft1 Example/CS/source.cs#1)]
- [!code-vb[Classic String.PadLeft1 Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic String.PadLeft1 Example/VB/source.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic String.PadLeft1 Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic String.PadLeft1 Example/CS/source.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic String.PadLeft1 Example/VB/source.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -10513,9 +10497,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates the <xref:System.String.PadRight%2A> method.
 
- [!code-cpp[Classic String.PadRight Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic String.PadRight Example/CPP/source.cpp#1)]
- [!code-csharp[Classic String.PadRight Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic String.PadRight Example/cs/source.cs#1)]
- [!code-vb[Classic String.PadRight Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic String.PadRight Example/VB/source.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic String.PadRight Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic String.PadRight Example/cs/source.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic String.PadRight Example/VB/source.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -10583,9 +10567,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates the <xref:System.String.PadRight%2A> method.
 
- [!code-cpp[Classic String.PadRight1 Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic String.PadRight1 Example/CPP/source.cpp#1)]
- [!code-csharp[Classic String.PadRight1 Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic String.PadRight1 Example/cs/source.cs#1)]
- [!code-vb[Classic String.PadRight1 Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic String.PadRight1 Example/VB/source.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic String.PadRight1 Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic String.PadRight1 Example/cs/source.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic String.PadRight1 Example/VB/source.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -10664,9 +10648,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates the <xref:System.String.Remove%2A> method. The next-to-last case removes all text starting from the specified index through the end of the string. The last case removes three characters starting from the specified index.
 
- [!code-cpp[string.remove#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.remove/CPP/r.cpp#1)]
- [!code-csharp[string.remove#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.remove/CS/r.cs#1)]
- [!code-vb[string.remove#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.remove/VB/r.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.remove/CPP/r.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.remove/CS/r.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.remove/VB/r.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -10748,9 +10732,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 ## Examples
  The following example demonstrates how you can remove the middle name from a complete name.
 
- [!code-cpp[stringremove#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringremove/CPP/stringremove.cpp#1)]
- [!code-csharp[stringremove#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringremove/CS/stringremove.cs#1)]
- [!code-vb[stringremove#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringremove/VB/stringremove.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/stringremove/CPP/stringremove.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringremove/CS/stringremove.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringremove/VB/stringremove.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -12116,9 +12100,9 @@ This method performs a word (case-sensitive and culture-sensitive) comparison us
 
 The following example defines a `StripStartTags` method that uses the <xref:System.String.StartsWith%28System.String%29> method to remove HTML start tags from the beginning of a string. Note that the `StripStartTags` method is called recursively to ensure that multiple HTML start tags at the beginning of the line are removed. The example does not remove HTML tags embedded in a string.
 
-[!code-cpp[stringstartswith#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringstartswith/CPP/stringstartswith.cpp#1)]
-[!code-csharp[stringstartswith#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringstartswith/CS/stringstartswith.cs#1)]
-[!code-vb[stringstartswith#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringstartswith/VB/stringstartswith.vb#1)]
+:::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/stringstartswith/CPP/stringstartswith.cpp" id="Snippet1":::
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringstartswith/CS/stringstartswith.cs" interactive="try-dotnet" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringstartswith/VB/stringstartswith.vb" id="Snippet1":::
 
           ]]></format>
         </remarks>
@@ -12192,9 +12176,9 @@ The following example defines a `StripStartTags` method that uses the <xref:Syst
 ## Examples
  The following example searches for the string "the" at the beginning of a longer string that begins with the word "The". As the output from the example shows, a call to the <xref:System.String.StartsWith%28System.String%2CSystem.StringComparison%29> method that performs a culture-insensitive but case-sensitive comparison fails to match the string, while a call that performs a culture- and case-insensitive comparison matches the string.
 
- [!code-cpp[System.String.StartsWith#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.string.startswith/cpp/StartsWith2.cpp#2)]
- [!code-csharp[System.String.StartsWith#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.startswith/cs/StartsWith2.cs#2)]
- [!code-vb[System.String.StartsWith#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.startswith/vb/StartsWith2.vb#2)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.string.startswith/cpp/StartsWith2.cpp" id="Snippet2":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.startswith/cs/StartsWith2.cs" interactive="try-dotnet" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.startswith/vb/StartsWith2.vb" id="Snippet2":::
 
  The following example determines whether a string starts with a particular substring. It initializes a two-dimensional string array. The first element in the second dimension contains a string, and the second element contains the string to search for at the start of the first string. The results are affected by the choice of culture, whether case is ignored, and whether an ordinal comparison is performed. Note that when the string instance contains a ligature, culture-sensitive comparisons with its consecutive characters successfully match.
 
@@ -12632,11 +12616,11 @@ The following example defines a `StripStartTags` method that uses the <xref:Syst
         <summary>Compares this instance with a specified <see cref="T:System.Object" /> and indicates whether this instance precedes, follows, or appears in the same position in the sort order as the specified <see cref="T:System.Object" />.</summary>
         <returns>A 32-bit signed integer that indicates whether this instance precedes, follows, or appears in the same position in the sort order as the <paramref name="value" /> parameter.
 
-          <list type="table"><listheader><term>Value</term><description>Condition</description></listheader><item><term>Less than zero</term><description>This instance precedes <paramref name="value" />.</description></item><item><term>Zero</term><description>This instance has the same position in the sort order as <paramref name="value" />.</description></item><item><term>Greater than zero</term><description>This instance follows <paramref name="value" />.
+<list type="table"><listheader><term>Value</term><description>Condition</description></listheader><item><term>Less than zero</term><description>This instance precedes <paramref name="value" />.</description></item><item><term>Zero</term><description>This instance has the same position in the sort order as <paramref name="value" />.</description></item><item><term>Greater than zero</term><description>This instance follows <paramref name="value" />.
 
-                -or-
+-or-
 
-                <paramref name="value" /> is <see langword="null" />.</description></item></list></returns>
+<paramref name="value" /> is <see langword="null" />.</description></item></list></returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -12701,9 +12685,9 @@ The following example uses the <xref:System.String.CompareTo%2A> method with an 
 
 The following example displays the <xref:System.TypeCode> enumerated constant for the <xref:System.String> type.
 
-[!code-cpp[string.gettypecode#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.gettypecode/CPP/gtc.cpp#1)]
-[!code-csharp[string.gettypecode#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.gettypecode/CS/gtc.cs#1)]
-[!code-vb[string.gettypecode#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.gettypecode/VB/gtc.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.gettypecode/CPP/gtc.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.gettypecode/CS/gtc.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.gettypecode/VB/gtc.vb" id="Snippet1":::
 
           ]]></format>
         </remarks>
@@ -13710,14 +13694,14 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples
  The following example calls the <xref:System.String.ToCharArray%2A> method to extract the characters in a string to a character array. It then displays the original string and the elements in the array.
 
- [!code-csharp[System.String.ToCharArray#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.tochararray/cs/ToCharArray1.cs#1)]
- [!code-vb[System.String.ToCharArray#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.tochararray/vb/ToCharArray1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.tochararray/cs/ToCharArray1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.tochararray/vb/ToCharArray1.vb" id="Snippet1":::
 
  The following example defines a string containing the characters that serve as delimiters in a delimited string. It then calls the <xref:System.String.ToCharArray%2A> method to create a character array that can be passed to the <xref:System.String.Split%28System.Char%5B%5D%29> method to separate the delimited string into its individual substrings.
 
- [!code-cpp[StringSplit2#1](~/samples/snippets/cpp/VS_Snippets_CLR/StringSplit2/CPP/stringsplit2.cpp#1)]
- [!code-csharp[StringSplit2#1](~/samples/snippets/csharp/VS_Snippets_CLR/StringSplit2/CS/stringsplit2.cs#1)]
- [!code-vb[StringSplit2#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/StringSplit2/VB/stringsplit2.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/StringSplit2/CPP/stringsplit2.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/StringSplit2/CS/stringsplit2.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/StringSplit2/VB/stringsplit2.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -13800,9 +13784,9 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples
  The following example converts a substring within a string to an array of characters, then enumerates and displays the elements of the array.
 
- [!code-cpp[string.tochararray1#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.ToCharArray1/CPP/tocharry1.cpp#1)]
- [!code-csharp[string.tochararray1#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.ToCharArray1/CS/tocharry1.cs#1)]
- [!code-vb[string.tochararray1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.ToCharArray1/VB/tocharry1.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.ToCharArray1/CPP/tocharry1.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.ToCharArray1/CS/tocharry1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.ToCharArray1/VB/tocharry1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -13885,9 +13869,9 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples
  The following example converts several mixed case strings to lowercase.
 
- [!code-cpp[stringlowerupper#1](~/samples/snippets/cpp/VS_Snippets_CLR/stringlowerupper/CPP/stringtolower.cpp#1)]
- [!code-csharp[stringlowerupper#1](~/samples/snippets/csharp/VS_Snippets_CLR/stringlowerupper/CS/stringtolower.cs#1)]
- [!code-vb[stringlowerupper#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/stringlowerupper/VB/stringtolower.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/stringlowerupper/CPP/stringtolower.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/stringlowerupper/CS/stringtolower.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/stringlowerupper/VB/stringtolower.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -13958,9 +13942,9 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples
  The following example converts two strings of uppercase characters to lowercase characters using the English-United States and Turkish-Turkey cultures, then compares the lowercase strings. The uppercase strings are identical except that for each occurrence of the Unicode LATIN CAPITAL LETTER I in one string, the other string contains LATIN CAPITAL LETTER I WITH DOT ABOVE.
 
- [!code-cpp[string.tolower1#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.tolower1/CPP/tolower.cpp#1)]
- [!code-csharp[string.tolower1#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.tolower1/CS/tolower.cs#1)]
- [!code-vb[string.tolower1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.tolower1/VB/tolower.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.tolower1/CPP/tolower.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.tolower1/CS/tolower.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.tolower1/VB/tolower.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -14031,8 +14015,8 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples
  The following example defines a string array that contains a single word in a number of languages. The <xref:System.String.ToLowerInvariant%2A> method is used to populate the elements of a parallel array with the case-insensitive version of each word. The <xref:System.Array.Sort%60%602%28%60%600%5B%5D%2C%60%601%5B%5D%2CSystem.Collections.Generic.IComparer%7B%60%600%7D%29?displayProperty=nameWithType> method is used to sort the case-sensitive array based on the order of elements in the lowercase array to ensure that elements appear in the same order regardless of language.
 
- [!code-csharp[System.String.ToLowerInvariant#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.tolowerinvariant/cs/tolowerinvariant.cs#1)]
- [!code-vb[System.String.ToLowerInvariant#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.tolowerinvariant/vb/tolowerinvariant.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.tolowerinvariant/cs/tolowerinvariant.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.tolowerinvariant/vb/tolowerinvariant.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -14109,9 +14093,9 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples
  The following example demonstrates the <xref:System.String.ToString%2A> method.Note that the example does not explicitly call the <xref:System.String.ToString%2A> method. Instead, the method is called implicitly by the [composite formatting](~/docs/standard/base-types/composite-formatting.md) feature.
 
- [!code-cpp[string.tostring#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.tostring/CPP/string.tostring.cpp#1)]
- [!code-csharp[string.tostring#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.tostring/CS/string.tostring.cs#1)]
- [!code-vb[string.tostring#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.tostring/VB/string.tostring.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/string.tostring/CPP/string.tostring.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/string.tostring/CS/string.tostring.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/string.tostring/VB/string.tostring.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -14941,8 +14925,8 @@ The `TrimStart(System.Char[])` method removes from the current string all leadin
 
 The following example demonstrates the basic functionality of the <xref:System.String.TrimStart%2A> method:
 
-[!code-csharp[System.String.TrimStart#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.TrimStart/cs/sample.cs#1)]
-[!code-vb[System.String.TrimStart#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.TrimStart/vb/sample.vb#1)]
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.TrimStart/cs/sample.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.TrimStart/vb/sample.vb" id="Snippet1":::
 
 The following example uses the <xref:System.String.TrimStart%2A> method to trim white space and comment characters from lines of source code. The `StripComments` method wraps a call to <xref:System.String.TrimStart%2A> and passes it a character array that contains a space and the comment character, which is an apostrophe ( ' ) in Visual Basic and a slash ( / ) in C#. The <xref:System.String.TrimStart%2A> method is also called to remove leading white space when evaluating whether a string is a comment.
 

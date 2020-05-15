@@ -12,6 +12,6 @@ private void serializer_UnknownNode
    Console.WriteLine
    ("UnknownNode Name: " + e.Name);
 }
-   
+
 // </Snippet1>
 }

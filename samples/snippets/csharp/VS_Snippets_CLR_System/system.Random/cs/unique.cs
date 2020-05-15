@@ -10,7 +10,7 @@ public class Example
       Random rnd1 = new Random();
       Thread.Sleep(2000);
       Random rnd2 = new Random();
-      
+
       Console.WriteLine("\nThe first random number generator:");
       for (int ctr = 1; ctr <= 10; ctr++)
          Console.WriteLine("   {0}", rnd1.Next());
@@ -22,7 +22,7 @@ public class Example
 }
 // The example displays output like the following:
 //       Instantiating two random number generators...
-//       
+//
 //       The first random number generator:
 //          643164361
 //          1606571630
@@ -34,7 +34,7 @@ public class Example
 //          1840964542
 //          412380298
 //          47518930
-//       
+//
 //       The second random number generator:
 //          1251659083
 //          1514185439

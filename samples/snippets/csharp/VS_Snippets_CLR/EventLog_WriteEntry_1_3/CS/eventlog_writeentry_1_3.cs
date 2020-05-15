@@ -2,11 +2,11 @@
 // System.Diagnostics.EventLog.WriteEntry(String, String, EventLogEntryType, Int32, Int16, Byte[])
 // System.Diagnostics.EventLog.EventLog.WriteEntry(String, EventLogEntryType, Int32, Int16)
 
-/* The following example demonstrates the method 
-  'WriteEntry(String, String, EventLogEntryType, Int32, Int16)', 
-  'WriteEntry(String, String, EventLogEntryType, Int32, Int16, Byte[]) ' 
-   and 'WriteEntry(String, EventLogEntryType, Int32, Int16)' of class 
-  'EventLog'.The following example writes the information to an event log. 
+/* The following example demonstrates the
+  'WriteEntry(String, String, EventLogEntryType, Int32, Int16)',
+  'WriteEntry(String, String, EventLogEntryType, Int32, Int16, Byte[])',
+   and 'WriteEntry(String, EventLogEntryType, Int32, Int16)' methods of the
+  'EventLog' class. The following example writes the information to an event log.
 */
 using System;
 using System.Diagnostics;
@@ -44,10 +44,10 @@ class MyEventLog
         EventLog myLog = new EventLog();
         myLog.Source = "ThirdSource";
 
-        // Write an informational entry to the event log.    
+        // Write an informational entry to the event log.
         Console.WriteLine("Write from third source ");
         myLog.WriteEntry("Writing warning to event log.",
                           EventLogEntryType.Warning, myEventID, myCategory);
-        // </Snippet3>   
+        // </Snippet3>
     }
 }

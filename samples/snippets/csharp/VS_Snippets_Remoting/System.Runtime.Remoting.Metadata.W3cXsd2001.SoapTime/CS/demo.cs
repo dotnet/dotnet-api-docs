@@ -1,6 +1,6 @@
 ﻿/// Class:  System.Runtime.Remoting.Metadata.W3cXsd2001.SoapTime
 /// Need snippets:
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(DateTime)
 ///    13    GetXsdType
@@ -8,11 +8,11 @@
 ///    12    ToString
 ///    14    Value
 ///    16    XsdType
-///    
+///
 ///    Bugs:
-///    
-///    Parse should take up to 9 digits in fractional seconds, but only 
-///    accepts up to 7. Also it only parses the first three, and ignores 
+///
+///    Parse should take up to 9 digits in fractional seconds, but only
+///    accepts up to 7. Also it only parses the first three, and ignores
 ///    the others (fractional second digits).
 
 //<snippet10>
@@ -31,7 +31,7 @@ public class Demo
         //</snippet11>
 
         //<snippet12>
-        // Display the time in XSD format. 
+        // Display the time in XSD format.
         Console.WriteLine("The time in XSD format is {0}.",
             time.ToString());
         //</snippet12>

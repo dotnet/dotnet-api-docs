@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-// A generic class with a field whose type is specified by the 
+// A generic class with a field whose type is specified by the
 // generic type parameter of the class.
 public class Test<T>
 {
@@ -17,7 +17,7 @@ public class Example
         RuntimeTypeHandle rth = typeof(Test<string>).TypeHandle;
         RuntimeFieldHandle rfh = typeof(Test<string>).GetField("TestField").FieldHandle;
 
-        // When a field belongs to a constructed generic type, 
+        // When a field belongs to a constructed generic type,
         // such as Test<String>, retrieving the field from the
         // field handle requires the type handle of the constructed
         // generic type. An exception is thrown if the type is not
@@ -37,8 +37,8 @@ public class Example
         Console.WriteLine("\r\nThe type of {0} is: {1}", fi.Name, fi.FieldType);
 
         // All constructions of Test<T> for which T is a reference
-        // type share the same implementation, so the same runtime 
-        // field handle can be used to retrieve the FieldInfo for 
+        // type share the same implementation, so the same runtime
+        // field handle can be used to retrieve the FieldInfo for
         // TestField on any such construction. Here the runtime field
         // handle is used with Test<Object>.
         fi = FieldInfo.GetFieldFromHandle(rfh, typeof(Test<object>).TypeHandle);
@@ -46,8 +46,8 @@ public class Example
 
         // Each construction of Test<T> for which T is a value type
         // has its own unique implementation, and an exception is thrown
-        // if you supply a constructed type other than the one that 
-        // the runtime field handle belongs to.  
+        // if you supply a constructed type other than the one that
+        // the runtime field handle belongs to.
         try
         {
             fi = FieldInfo.GetFieldFromHandle(rfh, typeof(Test<int>).TypeHandle);

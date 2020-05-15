@@ -7,7 +7,7 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Security.Permissions;
 
-namespace RemotingSamples 
+namespace RemotingSamples
 {
    public class MyIChannelReceiverChannelDataClientClass
    {
@@ -26,11 +26,11 @@ namespace RemotingSamples
          {
             HelloServer myHelloServer = (HelloServer)Activator.GetObject
                            (typeof(RemotingSamples.HelloServer), myChannelURL);
-         if (myHelloServer == null) 
+         if (myHelloServer == null)
          {
             Console.WriteLine("Could not locate server.");
          }
-         else 
+         else
          {
             Console.WriteLine(myHelloServer.HelloMethod("Caveman"));
          }

@@ -45,12 +45,12 @@ Class NetworkCredential_GetCredential
             Console.WriteLine(ControlChars.Cr + ControlChars.Cr + "Request to Url is sent.Waiting for response...Please wait ...")
             Dim myWebResponse As WebResponse = myWebRequest.GetResponse()
             ' Process the response.
-            Console.WriteLine(ControlChars.Cr + "Response received sucessfully")
+            Console.WriteLine(ControlChars.Cr + "Response received successfully")
             ' Release the resources of the response object.
             myWebResponse.Close()
 ' </Snippet1>
         Catch e As WebException
-            Console.WriteLine(ControlChars.Lf + ControlChars.Cr + "WebException is raised.The Reason for failure is : {0}", e.Status)
+            Console.WriteLine(ControlChars.Lf + ControlChars.Cr + "WebException is raised. The Reason for failure is : {0}", e.Status)
         Catch e As Exception
             Console.WriteLine(ControlChars.Cr + "The following exception was raised : {0}", e.Message)
         End Try

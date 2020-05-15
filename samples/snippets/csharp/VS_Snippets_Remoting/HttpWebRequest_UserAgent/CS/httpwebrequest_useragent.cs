@@ -1,8 +1,8 @@
 ﻿/*System.Net.HttpWebRequest.UserAgent
-This program demonstrates 'UserAgent' property of 'HttpWebRequest' Class.
-A new 'HttpWebRequest' object is created.The 'UserAgent' property is set to
+This program demonstrates the 'UserAgent' property of the 'HttpWebRequest' Class.
+A new 'HttpWebRequest' object is created. The 'UserAgent' property is set to
 "Mozilla/4.0 (compatible; MSIE 6.0b; Windows NT 5.0; COM+ 1.0.2702)".
-This inturn sets the 'User-Agent' field of HTTP Request headers.
+This in turn sets the 'User-Agent' field of HTTP Request headers.
 The response is obtained and displayed to the console.
 */
 
@@ -28,7 +28,7 @@ class HttpWebRequest_UserAgent
 			Char[] readBuff = new Char[256];
 			int count = streamRead.Read( readBuff, 0, 256 );
 			Console.WriteLine("\nThe contents of HTML Page are :\n");	
-			while (count > 0) 
+			while (count > 0)
 			{
 				String outputData = new String(readBuff, 0, count);
 				Console.Write(outputData);

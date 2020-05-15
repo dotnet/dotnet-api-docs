@@ -3,13 +3,13 @@
 // System.Web.Services.Description.PortTypeCollection.IndexOf()
 // System.Web.Services.Description.PortTypeCollection.Item[string]
 
-/* 
+/*
   The following sample demonstrates the methods 'IndexOf()','Insert()','Contains()' and
-  indexer 'Item[string]' of class 'PortTypeCollection'. This sample reads the contents 
-  of 'MathService.wsdl' into a 'ServiceDescription' instance. It gets the collection of 
-  'PortType' instances from 'ServiceDescription'. It removes a 'PortType' with the name 
-  'MathServiceSoap' and adds the same later. Then it checks whether the collection contains 
-  the added 'PortType'.The sample writes a new web service description file 'MathService_New.wsdl'.
+  indexer 'Item[string]' of class 'PortTypeCollection'. This sample reads the contents
+  of 'MathService.wsdl' into a 'ServiceDescription' instance. It gets the collection of
+  'PortType' instances from 'ServiceDescription'. It removes a 'PortType' with the name
+  'MathServiceSoap' and adds the same later. Then it checks whether the collection contains
+  the added 'PortType'. The sample writes a new web service description file 'MathService_New.wsdl'.
 */
 
 using System;
@@ -26,10 +26,10 @@ class MyPortTypeCollectionClass
 // <Snippet2>
 // <Snippet3>
 // <Snippet4>
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MathService_CS.wsdl");
 
-         PortTypeCollection myPortTypeCollection = 
+         PortTypeCollection myPortTypeCollection =
             myServiceDescription.PortTypes;
          int noOfPortTypes = myServiceDescription.PortTypes.Count;
          Console.WriteLine("\nTotal number of PortTypes: " + noOfPortTypes);
@@ -40,18 +40,18 @@ class MyPortTypeCollectionClass
          // Get the index in the collection.
          int index = myPortTypeCollection.IndexOf(myNewPortType);
 // </Snippet3>
-         Console.WriteLine("Removing the PortType named " 
+         Console.WriteLine("Removing the PortType named "
             + myNewPortType.Name);
 
          // Remove the PortType from the collection.
          myPortTypeCollection.Remove(myNewPortType);
          noOfPortTypes = myServiceDescription.PortTypes.Count;
-         Console.WriteLine("\nTotal number of PortTypes: " 
+         Console.WriteLine("\nTotal number of PortTypes: "
             + noOfPortTypes);
-         
+
          // Check whether the PortType exists in the collection.
          bool bContains = myPortTypeCollection.Contains(myNewPortType);
-         Console.WriteLine("Port Type'" + myNewPortType.Name + "' exists: " 
+         Console.WriteLine("Port Type'" + myNewPortType.Name + "' exists: "
             + bContains );
 
          Console.WriteLine("Adding the PortType");
@@ -64,7 +64,7 @@ class MyPortTypeCollectionClass
             + "adding a new port: " + myServiceDescription.PortTypes.Count);
 
          bContains = myPortTypeCollection.Contains(myNewPortType);
-         Console.WriteLine("Port Type'" + myNewPortType.Name + "' exists: " 
+         Console.WriteLine("Port Type'" + myNewPortType.Name + "' exists: "
             + bContains );
          myServiceDescription.Write("MathService_New.wsdl");
 // </Snippet1>

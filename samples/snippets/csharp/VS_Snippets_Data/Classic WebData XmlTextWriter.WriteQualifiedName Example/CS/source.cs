@@ -14,7 +14,7 @@ public class Sample
      writer = new XmlTextWriter (filename, null);
      // Use indenting for readability.
      writer.Formatting = Formatting.Indented;
-        
+
      // Write the root element.
      writer.WriteStartElement("schema");
 
@@ -35,10 +35,10 @@ public class Sample
 
      // Write the close tag for the root element.
      writer.WriteEndElement();
-             
+
      // Write the XML to file and close the writer.
      writer.Flush();
-     writer.Close();  
+     writer.Close();
 
      // Read the file back in and parse to ensure well formed XML.
      XmlDocument doc = new XmlDocument();
@@ -46,7 +46,7 @@ public class Sample
      doc.PreserveWhitespace = true;
      // Load the file.
      doc.Load(filename);
-    
+
      // Write the XML content to the console.
      Console.Write(doc.InnerXml);
   }

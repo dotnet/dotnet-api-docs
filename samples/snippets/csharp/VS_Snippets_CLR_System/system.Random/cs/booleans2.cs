@@ -8,7 +8,7 @@ public class Example
       Random rnd = new Random();
 
       int totalTrue = 0, totalFalse = 0;
-      
+
       // Generate 1,000,000 random Booleans, and keep a running total.
       for (int ctr = 0; ctr < 1000000; ctr++) {
           bool value = NextBoolean();
@@ -17,11 +17,11 @@ public class Example
           else
              totalFalse++;
       }
-      Console.WriteLine("Number of true values:  {0,7:N0} ({1:P3})", 
-                        totalTrue, 
+      Console.WriteLine("Number of true values:  {0,7:N0} ({1:P3})",
+                        totalTrue,
                         ((double) totalTrue)/(totalTrue + totalFalse));
-      Console.WriteLine("Number of false values: {0,7:N0} ({1:P3})", 
-                        totalFalse, 
+      Console.WriteLine("Number of false values: {0,7:N0} ({1:P3})",
+                        totalFalse,
                         ((double) totalFalse)/(totalTrue + totalFalse));
 
       bool NextBoolean()

@@ -2,13 +2,13 @@
 /**
 * The following sample is intended to demonstrate how to use a
 * TcpListener for synchronous communcation with a TCP client
-* It creates a TcpListener that listens on the specified port (13000). 
-* Any TCP client that wants to use this TcpListener has to explicitly connect 
+* It creates a TcpListener that listens on the specified port (13000).
+* Any TCP client that wants to use this TcpListener has to explicitly connect
 * to an address obtained by the combination of the server
 * on which this TcpListener is running and the port 13000.
 * This TcpListener simply echoes back the message sent by the client
-* after translating it into uppercase. 
-* Refer to the related client in the TcpClient class. 
+* after translating it into uppercase.
+* Refer to the related client in the TcpClient class.
 */
 using System;
 using System.Text;
@@ -41,7 +41,7 @@ public class TcpListenerSample
                 Console.Write("Waiting for a connection... ");
 
                 // Perform a blocking call to accept requests.
-                // You could also user server.AcceptSocket() here.
+                // You could also use server.AcceptSocket() here.
                 TcpClient client = server.AcceptTcpClient();
                 Console.WriteLine("Connected!");
 

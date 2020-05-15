@@ -27,8 +27,8 @@ public class Sample{
            break;
          case XmlNodeType.SignificantWhitespace:
            Console.Write(reader.Value);
-           break;         
-       }              
+           break;
+       }
      }
   }
 }

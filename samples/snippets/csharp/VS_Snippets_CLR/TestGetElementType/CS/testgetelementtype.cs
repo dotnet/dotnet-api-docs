@@ -1,8 +1,8 @@
 ﻿//<Snippet1>
 using System;
-class TestGetElementType 
+class TestGetElementType
 {
-    public static void Main() 
+    public static void Main()
     {
         int[] array = {1,2,3};
         Type t = array.GetType();

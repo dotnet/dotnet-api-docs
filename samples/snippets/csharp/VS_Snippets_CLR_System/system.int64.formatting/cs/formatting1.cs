@@ -24,7 +24,7 @@ public class Example
          Console.Write("{0,18:X2}", number);
          // Display value with eight hexadecimal digits.
          Console.WriteLine("{0,18:X8}", number);
-      }   
+      }
       // The example displays the following output:
       //    -1403     -->      -1403     -1,403.0  FFFFFFFFFFFFFA85  FFFFFFFFFFFFFA85
       //    0         -->        000          0.0                00          00000000
@@ -32,7 +32,7 @@ public class Example
       //    1483104   -->    1483104  1,483,104.0            16A160          0016A160
       // </Snippet1>
    }
-   
+
    private static void CallConvert()
    {
       // <Snippet2>

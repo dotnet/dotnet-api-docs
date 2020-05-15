@@ -20,11 +20,11 @@ public class StringParsing
       bool success = Int64.TryParse(value, out long number);
       if (success)
       {
-         Console.WriteLine("Converted '{0}' to {1}.", value, number);         
+         Console.WriteLine("Converted '{0}' to {1}.", value, number);
       }
       else
       {
-         if (value == null) value = ""; 
+         if (value == null) value = "";
          Console.WriteLine("Attempted conversion of '{0}' failed.", value);
       }
    }

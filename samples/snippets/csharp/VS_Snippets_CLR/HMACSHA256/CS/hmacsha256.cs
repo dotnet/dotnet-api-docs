@@ -54,7 +54,7 @@ public class HMACSHA256example
         }
     }  //end main
     // Computes a keyed hash for a source file and creates a target file with the keyed hash
-    // prepended to the contents of the source file. 
+    // prepended to the contents of the source file.
     public static void SignFile(byte[] key, String sourceFile, String destFile)
     {
         // Initialize the keyed hash object.
@@ -86,12 +86,12 @@ public class HMACSHA256example
         return;
     } // end SignFile
 
-    // Compares the key in the source file with a new key created for the data portion of the file. If the keys 
+    // Compares the key in the source file with a new key created for the data portion of the file. If the keys
     // compare the data has not been tampered with.
     public static bool VerifyFile(byte[] key, String sourceFile)
     {
         bool err = false;
-        // Initialize the keyed hash object. 
+        // Initialize the keyed hash object.
         using (HMACSHA256 hmac = new HMACSHA256(key))
         {
             // Create an array to hold the keyed hash value read from the file.
@@ -102,7 +102,7 @@ public class HMACSHA256example
                 // Read in the storedHash.
                 inStream.Read(storedHash, 0, storedHash.Length);
                 // Compute the hash of the remaining contents of the file.
-                // The stream is properly positioned at the beginning of the content, 
+                // The stream is properly positioned at the beginning of the content,
                 // immediately after the stored hash value.
                 byte[] computedHash = hmac.ComputeHash(inStream);
                 // compare the computed hash with the stored value

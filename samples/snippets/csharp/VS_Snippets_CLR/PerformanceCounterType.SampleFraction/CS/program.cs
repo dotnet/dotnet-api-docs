@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-// Provides a SampleFraction counter to measure the percentage of the user processor 
+// Provides a SampleFraction counter to measure the percentage of the user processor
 // time for this process to total processor time for the process.
 public class App
 {
@@ -124,8 +124,8 @@ public class App
     }
 
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
-    // Description - This counter type provides A percentage counter that shows the 
-    // average ratio of user proccessor time to total processor time  during the last 
+    // Description - This counter type provides A percentage counter that shows the
+    // average ratio of user proccessor time to total processor time  during the last
     // two sample intervals.
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
     private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)

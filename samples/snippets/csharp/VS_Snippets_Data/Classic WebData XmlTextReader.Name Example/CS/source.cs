@@ -8,12 +8,12 @@ public class Sample {
   private const String filename = "items.xml";
 
   public static void Main() {
-  
+
      XmlTextReader reader = null;
 
      try {
-       
-        // Load the reader with the data file and ignore all white space nodes.         
+
+        // Load the reader with the data file and ignore all white space nodes.
         reader = new XmlTextReader(filename);
         reader.WhitespaceHandling = WhitespaceHandling.None;
 
@@ -49,8 +49,8 @@ public class Sample {
              case XmlNodeType.EndElement:
                Console.Write("</{0}>", reader.Name);
                break;
-           }       
-        }           
+           }
+        }
      }
 
      finally {

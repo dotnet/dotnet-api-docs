@@ -1,49 +1,45 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 public class Example
 {
-   public static void Main()
-   {
-      var rnd = new Random();
-      int breakIndex = rnd.Next(1, 11);
-      Nullable<long> lowest = new Nullable<long>();
+    public static void Main()
+    {
+        var rnd = new Random();
+        int breakIndex = rnd.Next(1, 11);
 
-      Console.WriteLine("Will call Break at iteration {0}\n",
-                        breakIndex);
+        Console.WriteLine($"Will call Break at iteration {breakIndex}\n");
 
-      var result = Parallel.For(1, 101, (i, state) => {
-                                            Console.WriteLine("Beginning iteration {0}", i);
-                                            int delay;
-                                            Monitor.Enter(rnd);
-                                               delay = rnd.Next(1, 1001);
-                                            Monitor.Exit(rnd);
-                                            Thread.Sleep(delay);
-                                            
-                                            if (state.ShouldExitCurrentIteration) {
-                                               if (state.LowestBreakIteration < i)
-                                                  return;
-                                            }
+        var result = Parallel.For(1, 101, (i, state) => 
+        {
+            Console.WriteLine($"Beginning iteration {i}");
+            int delay;
+            lock (rnd)
+                delay = rnd.Next(1, 1001);
+            Thread.Sleep(delay);
 
-                                            if (i == breakIndex) {
-                                               Console.WriteLine("Break in iteration {0}", i);
-                                               state.Break();
-                                               if (state.LowestBreakIteration.HasValue)
-                                                  if (lowest < state.LowestBreakIteration)
-                                                     lowest = state.LowestBreakIteration;
-                                                  else
-                                                     lowest = state.LowestBreakIteration;
-                                            }
+            if (state.ShouldExitCurrentIteration)
+            {
+                if (state.LowestBreakIteration < i)
+                    return;
+            }
 
-                                            Console.WriteLine("Completed iteration {0}", i);
-                                       });
-         if (lowest.HasValue)
-            Console.WriteLine("\nLowest Break Iteration: {0}", lowest);
-         else
-            Console.WriteLine("\nNo lowest break iteration.");
-   }
+            if (i == breakIndex)
+            {
+                Console.WriteLine($"Break in iteration {i}");
+                state.Break();
+            }
+
+            Console.WriteLine($"Completed iteration {i}");
+        });
+
+        if (result.LowestBreakIteration.HasValue)
+            Console.WriteLine($"\nLowest Break Iteration: {result.LowestBreakIteration}");
+        else
+            Console.WriteLine($"\nNo lowest break iteration.");
+    }
 }
 // The example displays output like the following:
 //       Will call Break at iteration 8

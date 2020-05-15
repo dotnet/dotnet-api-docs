@@ -1,13 +1,13 @@
-﻿/* This file is a support file for demonstrating IClientChannelSinkProvider 
+﻿/* This file is a support file for demonstrating IClientChannelSinkProvider
 and ServerProcessing. */
 
 using System;
 
-public class MyHelloService : MarshalByRefObject 
+public class MyHelloService : MarshalByRefObject
 {
    static int myInstances;
 
-   public MyHelloService() 
+   public MyHelloService()
    {
       myInstances++;
       Console.WriteLine();

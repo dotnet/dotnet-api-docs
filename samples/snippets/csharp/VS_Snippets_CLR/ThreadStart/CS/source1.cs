@@ -22,7 +22,7 @@ public class ServerClass
         Console.WriteLine(
             "ServerClass.StaticMethod is running on another thread.");
 
-        // Pause for a moment to provide a delay to make 
+        // Pause for a moment to provide a delay to make
         // threads more apparent.
         Thread.Sleep(5000);
         Console.WriteLine(

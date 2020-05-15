@@ -1,6 +1,6 @@
 ﻿// System.Net.FileWebResponse.ResponseUri
 /* This program demonstrates the 'ResponseUri' property of the 'FileWebResponse' class.
-It creates a 'FileWebRequest' object and queries for a response.It then displays the Uri of the file
+It creates a 'FileWebRequest' object and queries for a response. It then displays the Uri of the file
 system resource that provided the response.*/
 using System;
 using System.Net;
@@ -41,7 +41,7 @@ class FileWebResponseSnippet
         }
         catch (WebException e)
         {
-            Console.WriteLine ("\r\nWebException thrown.The Reason for failure is : {0}", e.Status);
+            Console.WriteLine ("\r\nWebException thrown. The Reason for failure is : {0}", e.Status);
         }
         catch (Exception e)
         {

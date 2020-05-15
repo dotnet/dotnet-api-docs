@@ -7,13 +7,13 @@ public class Example
     static void Main()
     {
         Console.WriteLine("\r\nInterfaces implemented by Dictionary<int, string>:\r\n");
-        
+
         foreach (Type tinterface in typeof(Dictionary<int, string>).GetInterfaces())
         {
             Console.WriteLine(tinterface.ToString());
         }
 
-        //Console.ReadLine()      // Uncomment this line for Visual Studio. 
+        //Console.ReadLine()      // Uncomment this line for Visual Studio.
     }
 }
 

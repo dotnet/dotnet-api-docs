@@ -12,7 +12,7 @@ public class Class1
          if (number >= Int16.MinValue && number <= Int16.MaxValue)
          {
             newNumber = Convert.ToInt16(number);
-            Console.WriteLine("Successfully converted {0} to an Int16.", 
+            Console.WriteLine("Successfully converted {0} to an Int16.",
                               newNumber);
          }
          else
@@ -23,7 +23,7 @@ public class Class1
       // The example displays the following output to the console:
       //       Unable to convert 162345 to an Int16.
       //       Successfully converted 32183 to an Int16.
-      //       Unable to convert -54000 to an Int16.   
+      //       Unable to convert -54000 to an Int16.
       // </Snippet1>
    }
 }

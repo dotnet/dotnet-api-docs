@@ -10,9 +10,9 @@ public class Example
       {
          try {
             Console.WriteLine($"Abs({value}) = {Math.Abs(value)}");
-         }   
+         }
          catch (OverflowException) {
-            Console.WriteLine("Unable to calculate the absolute value of {0}.", 
+            Console.WriteLine("Unable to calculate the absolute value of {0}.",
                               value);
          }
       }

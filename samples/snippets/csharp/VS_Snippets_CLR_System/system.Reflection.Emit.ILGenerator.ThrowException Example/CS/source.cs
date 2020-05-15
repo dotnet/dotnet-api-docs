@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-class ILThrowExceptionDemo 
+class ILThrowExceptionDemo
 {
    public static void Main()
    {
@@ -13,7 +13,7 @@ class ILThrowExceptionDemo
       AssemblyBuilder myAsmBldr = current.DefineDynamicAssembly(myAsmName,
                                AssemblyBuilderAccess.RunAndSave);
 
-      ModuleBuilder myModBldr = myAsmBldr.DefineDynamicModule(myAsmName.Name, 
+      ModuleBuilder myModBldr = myAsmBldr.DefineDynamicModule(myAsmName.Name,
                          myAsmName.Name + ".dll");
 
       TypeBuilder myTypeBldr = myModBldr.DefineType("Adder");
@@ -29,23 +29,23 @@ class ILThrowExceptionDemo
                          typeof(int),
                          adderParams);
       ILGenerator adderIL = adderBldr.GetILGenerator();
- 
+
       // Types and methods used in the code to throw, catch, and
       // display OverflowException. Note that if the catch block were
-      // for a more general type, such as Exception, we would need 
+      // for a more general type, such as Exception, we would need
       // a MethodInfo for that type's ToString method.
-      // 
+      //
       Type overflow = typeof(OverflowException);
       ConstructorInfo exCtorInfo = overflow.GetConstructor(
                         new Type[]
                         {typeof(string)});
       MethodInfo exToStrMI = overflow.GetMethod("ToString");
       MethodInfo writeLineMI = typeof(Console).GetMethod("WriteLine",
-                        new Type[] 
+                        new Type[]
                         {typeof(string),
                          typeof(object)});
-                                                    
-      LocalBuilder tmp1 = adderIL.DeclareLocal(typeof(int));   
+
+      LocalBuilder tmp1 = adderIL.DeclareLocal(typeof(int));
       LocalBuilder tmp2 = adderIL.DeclareLocal(overflow);
 
       // In order to successfully branch, we need to create labels
@@ -65,7 +65,7 @@ class ILThrowExceptionDemo
       //
       adderIL.Emit(OpCodes.Ldarg_0);
       adderIL.Emit(OpCodes.Ldc_I4_S, 100);
-      adderIL.Emit(OpCodes.Bgt_S, failed); 
+      adderIL.Emit(OpCodes.Bgt_S, failed);
 
       // Now, check to see if argument 1 was greater than 100. If it was,
       // branch to "failed." Otherwise, fall through and perform the addition,
@@ -103,26 +103,26 @@ class ILThrowExceptionDemo
       // Throw the exception now on the stack.
 
       adderIL.ThrowException(overflow);
-      
+
       // Start the catch block for OverflowException.
       //
       adderIL.BeginCatchBlock(overflow);
 
-      // When we enter the catch block, the thrown exception 
+      // When we enter the catch block, the thrown exception
       // is on the stack. Store it, then load the format string
-      // for WriteLine. 
+      // for WriteLine.
       //
       adderIL.Emit(OpCodes.Stloc_S, tmp2);
       adderIL.Emit(OpCodes.Ldstr, "Caught {0}");
 
-      // Push the thrown exception back on the stack, then 
+      // Push the thrown exception back on the stack, then
       // call its ToString() method. Note that if this catch block
       // were for a more general exception type, like Exception,
       // it would be necessary to use the ToString for that type.
       //
       adderIL.Emit(OpCodes.Ldloc_S, tmp2);
       adderIL.EmitCall(OpCodes.Callvirt, exToStrMI, null);
-      
+
       // The format string and the return value from ToString() are
       // now on the stack. Call WriteLine(string, object).
       //
@@ -136,7 +136,7 @@ class ILThrowExceptionDemo
 
       // End the exception handling block.
 
-      adderIL.EndExceptionBlock();   
+      adderIL.EndExceptionBlock();
 
       // The end of the method. If no exception was thrown, the correct value
       // will be saved in tmp1. If an exception was thrown, tmp1 will be equal
@@ -145,10 +145,10 @@ class ILThrowExceptionDemo
       adderIL.MarkLabel(endOfMthd);
       adderIL.Emit(OpCodes.Ldloc_S, tmp1);
       adderIL.Emit(OpCodes.Ret);
-   
+
       Type adderType = myTypeBldr.CreateType();
 
-      object addIns = Activator.CreateInstance(adderType); 
+      object addIns = Activator.CreateInstance(adderType);
 
       object[] addParams = new object[2];
 
@@ -167,7 +167,7 @@ class ILThrowExceptionDemo
                BindingFlags.InvokeMethod,
                null,
                addIns,
-               addParams)); 
+               addParams));
    }
 }
 

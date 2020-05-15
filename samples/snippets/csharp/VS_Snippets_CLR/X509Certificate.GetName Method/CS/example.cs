@@ -17,7 +17,7 @@ public class X509
 
         // Get the value.
         string results = cert.GetName();
-       
+
         // Display the value to the console.
         Console.WriteLine(results);
     }

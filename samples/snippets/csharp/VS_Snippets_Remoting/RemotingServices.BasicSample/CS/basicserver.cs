@@ -14,10 +14,10 @@ public class Server {
             serverConfigFile = args[1];
         }
         RemotingConfiguration.Configure("channels.config");
-        RemotingConfiguration.Configure(serverConfigFile);               
+        RemotingConfiguration.Configure(serverConfigFile);
 
         Console.WriteLine("Listening...");
-        
+
         string keyState = "";
         while (String.Compare(keyState,"0", true) != 0) {
             Console.WriteLine("***** Press 0 to exit this service *****");

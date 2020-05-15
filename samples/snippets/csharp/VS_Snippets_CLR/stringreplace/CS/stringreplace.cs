@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class ReplaceTest 
+public class ReplaceTest
 {
-    public static void Main() 
+    public static void Main()
     {
 
         //<snippet1>

@@ -70,7 +70,7 @@ using System.Xml;
          OutputBinding myOutput = new OutputBinding();
          myOutput.Extensions.Add(mySoapBinding1);
           // Assign the 'OutPutBinding' to 'OperationBinding'.
-         myOperationBinding.Output = myOutput; 
+         myOperationBinding.Output = myOutput;
 
          // Add the 'OperationBinding' to 'Binding'.
          myBinding.Operations.Add(myOperationBinding);
@@ -83,7 +83,7 @@ using System.Xml;
          soapPort.Binding = new XmlQualifiedName("s0:Service1Soap");
 
          // Create a 'SoapAddressBinding' object for the 'SOAP' protocol.
-         SoapAddressBinding mySoapAddressBinding = 
+         SoapAddressBinding mySoapAddressBinding =
                                        new SoapAddressBinding();
          mySoapAddressBinding.Location = "http://localhost/AddNumbers.cs.asmx";
 
