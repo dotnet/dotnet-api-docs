@@ -19,7 +19,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Class for managing wrappers of COM IUnknown types.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -60,12 +60,23 @@
         <Parameter Name="count" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="flags">To be added.</param>
-        <param name="count">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="obj">Target of the returned Vtables.</param>
+        <param name="flags">Flags used to compute Vtables.</param>
+        <param name="count">The number of elements contained in the returned memory.</param>
+        <summary>Compute the desired Vtable for <paramref name="obj" /> respecting the values of <paramref name="flags" />.</summary>
+        <returns>
+          <see cref="T:System.Runtime.InteropServices.ComWrappers.ComInterfaceEntry" /> pointer containing memory for all COM interface entries.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+All memory returned from this function must either be unmanaged memory, pinned managed memory, or have been allocated with the <xref:System.Runtime.CompilerServices.RuntimeHelpers.AllocateTypeAssociatedMemory(System.Type,System.Int32)> API.
+ 
+ If the interface entries cannot be created and a negative `count` or <code>null</code> and a non-zero `count` are returned, the call to <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateComInterfaceForObject(System.Object,System.Runtime.InteropServices.CreateComInterfaceFlags)> will throw a <xref:System.ArgumentException>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateObject">
@@ -88,11 +99,19 @@
         <Parameter Name="flags" Type="System.Runtime.InteropServices.CreateObjectFlags" />
       </Parameters>
       <Docs>
-        <param name="externalComObject">To be added.</param>
-        <param name="flags">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="externalComObject">Object to import for usage into the .NET runtime.</param>
+        <param name="flags">Flags used to describe the external object.</param>
+        <summary>Create a managed object for the object pointed at by <paramref name="externalComObject" /> respecting the values of <paramref name="flags" />.</summary>
+        <returns>Returns a managed object associated with the supplied external COM object.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the object cannot be created and <code>null</code> is returned, the call to <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)> will throw a <xref:System.ArgumentNullException>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetIUnknownImpl">
@@ -116,10 +135,10 @@
         <Parameter Name="fpRelease" Type="System.IntPtr" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="fpQueryInterface">To be added.</param>
-        <param name="fpAddRef">To be added.</param>
-        <param name="fpRelease">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="fpQueryInterface">Function pointer to QueryInterface.</param>
+        <param name="fpAddRef">Function pointer to AddRef.</param>
+        <param name="fpRelease">Function pointer to Release.</param>
+        <summary>Get the runtime provided IUnknown implementation.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -143,10 +162,10 @@
         <Parameter Name="flags" Type="System.Runtime.InteropServices.CreateComInterfaceFlags" />
       </Parameters>
       <Docs>
-        <param name="instance">To be added.</param>
-        <param name="flags">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="instance">The managed object to expose outside the .NET runtime.</param>
+        <param name="flags">Flags used to configure the generated interface.</param>
+        <summary>Create a COM representation of the supplied object that can be passed to a non-managed environment.</summary>
+        <returns>The generated COM interface that can be passed outside the .NET runtime.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -170,10 +189,10 @@
         <Parameter Name="flags" Type="System.Runtime.InteropServices.CreateObjectFlags" />
       </Parameters>
       <Docs>
-        <param name="externalComObject">To be added.</param>
-        <param name="flags">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="externalComObject">Object to import for usage into the .NET runtime.</param>
+        <param name="flags">Flags used to describe the external object.</param>
+        <summary>Get the currently registered managed object or creates a new managed object and registers it.</summary>
+        <returns>Returns a managed object associated with the supplied external COM object.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -198,12 +217,20 @@
         <Parameter Name="wrapper" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="externalComObject">To be added.</param>
-        <param name="flags">To be added.</param>
-        <param name="wrapper">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="externalComObject">Object to import for usage into the .NET runtime.</param>
+        <param name="flags">Flags used to describe the external object.</param>
+        <param name="wrapper">The <see cref="T:System.Object" /> to be used as the wrapper for the external object</param>
+        <summary>Get the currently registered managed object or uses the supplied managed object and registers it.</summary>
+        <returns>Returns a managed object associated with the supplied external COM object.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the `wrapper` instance already has an associated external object a <xref:System.NotSupportedException> will be thrown.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="RegisterAsGlobalInstance">
@@ -246,8 +273,8 @@
         <Parameter Name="objects" Type="System.Collections.IEnumerable" />
       </Parameters>
       <Docs>
-        <param name="objects">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="objects">Collection of objects to release.</param>
+        <summary>Called when a request is made for a collection of objects to be released outside of normal object or COM interface lifetime.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
