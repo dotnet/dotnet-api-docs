@@ -5,7 +5,7 @@ using System.Globalization;
 public class Temperature
 {
    // Parses the temperature from a string. Temperature scale is
-   // indicated by 'F (for Fahrenheit) or 'C (for Celcius) at the end
+   // indicated by 'F (for Fahrenheit) or 'C (for Celsius) at the end
    // of the string.
    public static Temperature Parse(string s, NumberStyles styles,
                                    IFormatProvider provider)
