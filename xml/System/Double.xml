@@ -568,13 +568,13 @@
 ## Remarks  
  The value of the <xref:System.Double.Epsilon> property reflects the smallest positive <xref:System.Double> value that is significant in numeric operations or comparisons when the value of the <xref:System.Double> instance is zero. For example, the following code shows that zero and <xref:System.Double.Epsilon> are considered to be unequal values, whereas zero and half the value of <xref:System.Double.Epsilon> are considered to be equal.  
   
- [!code-csharp[System.Double.Epsilon#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/epsilon.cs#5)]
- [!code-vb[System.Double.Epsilon#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/epsilon.vb#5)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/epsilon.cs" interactive="try-dotnet" id="Snippet5":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/epsilon.vb" id="Snippet5"::: 
   
  More precisely, the floating point format consists of a sign, a 52-bit mantissa or significand, and an 11-bit exponent. As the following example shows, zero has an exponent of -1022 and a mantissa of 0. <xref:System.Double.Epsilon> has an exponent of -1022 and a mantissa of 1. This means that <xref:System.Double.Epsilon> is the smallest positive <xref:System.Double> value greater than zero and represents the smallest possible value and the smallest possible increment for a <xref:System.Double> whose exponent is -1022.  
   
- [!code-csharp[System.Double.Epsilon#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/epsilon1.cs#6)]
- [!code-vb[System.Double.Epsilon#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/epsilon1.vb#6)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/epsilon1.cs" interactive="try-dotnet" id="Snippet6":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/epsilon1.vb" id="Snippet6":::
   
  However, the <xref:System.Double.Epsilon> property is not a general measure of precision of the <xref:System.Double> type; it applies only to <xref:System.Double> instances that have a value of zero or an exponent of -1022.  
   
@@ -665,21 +665,21 @@
 ## Precision in Comparisons  
  The <xref:System.Double.Equals%2A> method should be used with caution, because two apparently equivalent values can be unequal due to the differing precision of the two values. The following example reports that the <xref:System.Double> value .333333 and the <xref:System.Double> value returned by dividing 1 by 3 are unequal.  
   
- [!code-csharp[System.Double.Epsilon#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/Equals_25051.cs#1)]
- [!code-vb[System.Double.Epsilon#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/Equals_25051.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/Equals_25051.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/Equals_25051.vb" id="Snippet1":::
   
  Rather than comparing for equality, one technique involves defining an acceptable relative margin of difference between two values (such as .001% of one of the values). If the absolute value of the difference between the two values is less than or equal to that margin, the difference is likely to be due to differences in precision and, therefore, the values are likely to be equal. The following example uses this technique to compare .33333 and 1/3, the two <xref:System.Double> values that the previous code example found to be unequal. In this case, the values are equal.  
   
- [!code-csharp[System.Double.Epsilon#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/Equals_25051.cs#2)]
- [!code-vb[System.Double.Epsilon#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/Equals_25051.vb#2)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/Equals_25051.cs" interactive="try-dotnet-method" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/Equals_25051.vb" id="Snippet2":::
   
 > [!NOTE]
 >  Because <xref:System.Double.Epsilon> defines the minimum expression of a positive value whose range is near zero, the margin of difference between two similar values must be greater than <xref:System.Double.Epsilon>. Typically, it is many times greater than <xref:System.Double.Epsilon>. Because of this, we recommend that you do not use <xref:System.Double.Epsilon> when comparing <xref:System.Double> values for equality.  
   
  A second technique involves comparing the difference between two floating-point numbers with some absolute value. If the difference is less than or equal to that absolute value, the numbers are equal. If it is greater, the numbers are not equal. One alternative is to arbitrarily select an absolute value. This is problematic, however, because an acceptable margin of difference depends on the magnitude of the <xref:System.Double> values. A second alternative takes advantage of a design feature of the floating-point format: The difference between the integer representation of two floating-point values indicates the number of possible floating-point values that separates them. For example, the difference between 0.0 and <xref:System.Double.Epsilon> is 1, because <xref:System.Double.Epsilon> is the smallest representable value when working with a <xref:System.Double> whose value is zero. The following example uses this technique to compare .33333 and 1/3, which are the two <xref:System.Double> values that the previous code example with the <xref:System.Double.Equals%28System.Double%29> method found to be unequal. Note that the example uses the <xref:System.BitConverter.DoubleToInt64Bits%2A?displayProperty=nameWithType> method to convert a double-precision floating-point value to its integer representation.  
   
- [!code-csharp[System.Double.Equals#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.equals/cs/equalsabs1.cs#1)]
- [!code-vb[System.Double.Equals#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.equals/vb/equalsabs1.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.equals/cs/equalsabs1.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.equals/vb/equalsabs1.vb" id="Snippet1"::: 
   
  The precision of floating-point numbers beyond the documented precision is specific to the implementation and version of the .NET Framework. Consequently, a comparison of two particular numbers might change between versions of the .NET Framework because the precision of the numbers' internal representation might change.  
   
@@ -690,8 +690,8 @@
         <block subset="none" type="usage">
           <para>Compiler overload resolution may account for an apparent difference in the behavior of the two <see cref="M:System.Double.Equals(System.Object)" /> method overloads. If an implicit conversion between the <paramref name="obj" /> argument and a <see cref="T:System.Double" /> is defined and the argument is not typed as an <see cref="T:System.Object" />, compilers may perform an implicit conversion and call the <see cref="M:System.Double.Equals(System.Double)" /> method. Otherwise, they call the <see cref="M:System.Double.Equals(System.Object)" /> method, which always returns <see langword="false" /> if its <paramref name="obj" /> argument is not a <see cref="T:System.Double" /> value. The following example illustrates the difference in behavior between the two method overloads. In the case of all primitive numeric types except for <see cref="T:System.Decimal" /> and in C#, the first comparison returns <see langword="true" /> because the compiler automatically performs a widening conversion and calls the <see cref="M:System.Double.Equals(System.Double)" /> method, whereas the second comparison returns <see langword="false" /> because the compiler calls the <see cref="M:System.Double.Equals(System.Object)" /> method.  
   
- [!code-csharp[System.Double.Equals#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.equals/cs/equalsoverl.cs#2)]
- [!code-vb[System.Double.Equals#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.equals/vb/equalsoverl.vb#2)]</para>
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.equals/cs/equalsoverl.cs" interactive="try-dotnet" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.equals/vb/equalsoverl.vb" id="Snippet2":::</para>
         </block>
         <altmember cref="M:System.Double.Equals(System.Object)" />
         <altmember cref="Overload:System.Double.CompareTo" />
@@ -745,8 +745,8 @@
 ## Remarks  
  The <xref:System.Double.Equals%2A> method should be used with caution, because two apparently equivalent values can be unequal due to the differing precision of the two values. The following example reports that the <xref:System.Double> value .3333 and the <xref:System.Double> returned by dividing 1 by 3 are unequal.  
   
- [!code-csharp[System.Double.Epsilon#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/Equals_25051.cs#3)]
- [!code-vb[System.Double.Epsilon#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/Equals_25051.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Epsilon/cs/Equals_25051.cs" interactive="try-dotnet-method" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Epsilon/vb/Equals_25051.vb" id="Snippet3":::
   
  For alternatives to calling the <xref:System.Double.Equals%2A> method, see the documentation for the <xref:System.Double.Equals%28System.Double%29> overload.  
   
@@ -762,8 +762,8 @@
         <block subset="none" type="usage">
           <para>Compiler overload resolution may account for an apparent difference in the behavior of the two <see cref="M:System.Double.Equals(System.Object)" /> method overloads. If an implicit conversion between the <paramref name="obj" /> argument and a <see cref="T:System.Double" /> is defined and the argument is not typed as an <see cref="T:System.Object" />, compilers may perform an implicit conversion and call the <see cref="M:System.Double.Equals(System.Double)" /> method. Otherwise, they call the <see cref="M:System.Double.Equals(System.Object)" /> method, which always returns <see langword="false" /> if its <paramref name="obj" /> argument is not a <see cref="T:System.Double" /> value. The following example illustrates the difference in behavior between the two method overloads. In the case of all primitive numeric types except for <see cref="T:System.Decimal" /> and in C#, the first comparison returns <see langword="true" /> because the compiler automatically performs a widening conversion and calls the <see cref="M:System.Double.Equals(System.Double)" /> method, whereas the second comparison returns <see langword="false" /> because the compiler calls the <see cref="M:System.Double.Equals(System.Object)" /> method.  
   
- [!code-csharp[System.Double.Equals#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.equals/cs/equalsoverl.cs#2)]
- [!code-vb[System.Double.Equals#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.equals/vb/equalsoverl.vb#2)]</para>
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.equals/cs/equalsoverl.cs" interactive="try-dotnet" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.equals/vb/equalsoverl.vb" id="Snippet2":::</para>
         </block>
         <altmember cref="M:System.Double.CompareTo(System.Object)" />
       </Docs>
@@ -1319,8 +1319,8 @@
   
  The result of an operation that exceeds <xref:System.Double.MaxValue?displayProperty=nameWithType> is <xref:System.Double.PositiveInfinity?displayProperty=nameWithType>. In the following example, <xref:System.Double.PositiveInfinity?displayProperty=nameWithType> results from addition, multiplication, and exponentiation operations when the result exceeds <xref:System.Double.MaxValue?displayProperty=nameWithType>.  
   
- [!code-csharp[System.Double.MaxValue#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.maxvalue/cs/maxvalueex.cs#1)]
- [!code-vb[System.Double.MaxValue#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.maxvalue/vb/maxvalueex.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.maxvalue/cs/maxvalueex.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.maxvalue/vb/maxvalueex.vb" id="Snippet1":::
   
    
   
@@ -1380,7 +1380,7 @@
   
  The result of an operation that is less than <xref:System.Double.MinValue?displayProperty=nameWithType> is <xref:System.Double.NegativeInfinity?displayProperty=nameWithType>. In the following example, <xref:System.Double.NegativeInfinity?displayProperty=nameWithType> results from subtraction and multiplication operations when the result is less than <xref:System.Double.MinValue?displayProperty=nameWithType>.  
   
- [!code-csharp[System.Double.MinValue#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.minvalue/cs/minvalueex.cs#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.minvalue/cs/minvalueex.cs" interactive="try-dotnet" id="Snippet1":::
  [!code-vb[System.Double.MinValue#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.minvalue/vb/minvalueex.vb#1)]  
   
    
@@ -1389,7 +1389,7 @@
  The following code example illustrates the use of <xref:System.Double.MinValue?displayProperty=nameWithType>:  
   
  [!code-cpp[Double Example#2](~/samples/snippets/cpp/VS_Snippets_CLR/Double Example/CPP/source.cpp#2)]
- [!code-csharp[Double Example#2](~/samples/snippets/csharp/VS_Snippets_CLR/Double Example/CS/source.cs#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/Double Example/CS/source.cs" interactive="try-dotnet-method" id="Snippet2":::
  [!code-vb[Double Example#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/Double Example/VB/source.vb#2)]  
   
  ]]></format>
@@ -1439,27 +1439,27 @@
 ## Remarks  
  A method or operator returns <xref:System.Double.NaN> when the result of an operation is undefined. For example, the result of dividing zero by zero is <xref:System.Double.NaN>, as the following example shows. (But note that dividing a non-zero number by zero returns either <xref:System.Double.PositiveInfinity> or <xref:System.Double.NegativeInfinity>, depending on the sign of the divisor.)  
   
- [!code-csharp[System.Double.NaN#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.nan/cs/nan1.cs#1)]
- [!code-vb[System.Double.NaN#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.nan/vb/nan1.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.nan/cs/nan1.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.nan/vb/nan1.vb" id="Snippet1"::: 
   
  In addition, a method call with a <xref:System.Double.NaN> value or an operation on a <xref:System.Double.NaN> value returns <xref:System.Double.NaN>, as the following example shows.  
   
- [!code-csharp[System.Double.NaN#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.nan/cs/nan1.cs#2)]
- [!code-vb[System.Double.NaN#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.nan/vb/nan1.vb#2)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.nan/cs/nan1.cs" interactive="try-dotnet-method" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.nan/vb/nan1.vb" id="Snippet2"::: 
   
  Use the <xref:System.Double.IsNaN%2A> method to determine whether a value is not a number. The <xref:System.Double.op_Equality%2A> operator considers two <xref:System.Double.NaN> values to be unequal to one another. In general, <xref:System.Double> operators cannot be used to compare <xref:System.Double.NaN?displayProperty=nameWithType> with other <xref:System.Double> values, although comparison methods (such as <xref:System.Double.Equals%2A> and <xref:System.Double.CompareTo%2A>) can. The following example illustrates the difference in behavior between <xref:System.Double> comparison operators and methods.  
   
- [!code-csharp[System.Double.NaN#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.nan/cs/double.nan4.cs#4)]
- [!code-vb[System.Double.NaN#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.nan/vb/double.nan4.vb#4)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.nan/cs/double.nan4.cs" interactive="try-dotnet" id="Snippet4":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.nan/vb/double.nan4.vb" id="Snippet4":::
   
    
   
 ## Examples  
  The following example illustrates the use of <xref:System.Double.NaN>:  
   
- [!code-cpp[System.Double#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Double/CPP/doublesample.cpp#7)]
- [!code-csharp[System.Double#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double/CS/doublesample.cs#7)]
- [!code-vb[System.Double#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double/VB/doublesample.vb#7)]  
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Double/CPP/doublesample.cpp" id="Snippet7":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double/CS/doublesample.cs" interactive="try-dotnet-method" id="Snippet7":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double/VB/doublesample.vb" id="Snippet7"::: 
   
  ]]></format>
         </remarks>
@@ -1928,8 +1928,8 @@
   
  Ordinarily, if you pass the <xref:System.Double.Parse%2A?displayProperty=nameWithType> method a string that is created by calling the <xref:System.Double.ToString%2A?displayProperty=nameWithType> method, the original <xref:System.Double> value is returned. However, on .NET Framework and on .NET Core 2.2 and earlier versions, the values may not be equal because of a loss of precision. In addition, attempting to parse the string representation of either <xref:System.Double.MinValue?displayProperty=nameWithType> or <xref:System.Double.MaxValue?displayProperty=nameWithType> fails to round-trip. On .NET Framework and .NET Core 2.2 and previous versions, it throws an <xref:System.OverflowException>. The following example provides an illustration. 
   
- [!code-csharp[System.Double.Parse#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/parse2.cs#3)]
- [!code-vb[System.Double.Parse#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/parse2.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/parse2.cs" interactive="try-dotnet-class" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/parse2.vb" id="Snippet3":::
 
 On .NET Framework and .NET Core 2.2 and earlier versions, if `s` is out of range of the <xref:System.Double> data type, the <xref:System.Double.Parse%28System.String%29> method throws an <xref:System.OverflowException>.
 
@@ -1940,9 +1940,9 @@ If a separator is encountered in the `s` parameter during a parse operation, and
 ## Examples  
  The following example illustrates the use of the <xref:System.Double.Parse%28System.String%29> method.  
   
- [!code-cpp[Double Example#5](~/samples/snippets/cpp/VS_Snippets_CLR/Double Example/CPP/source.cpp#5)]
- [!code-csharp[Double Example#5](~/samples/snippets/csharp/VS_Snippets_CLR/Double Example/CS/source.cs#5)]
- [!code-vb[Double Example#5](~/samples/snippets/visualbasic/VS_Snippets_CLR/Double Example/VB/source.vb#5)]  
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/Double Example/CPP/source.cpp" id="Snippet5":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/Double Example/CS/source.cs" interactive="try-dotnet-method" id="Snippet5":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/Double Example/VB/source.vb" id="Snippet5":::
   
  ]]></format>
         </remarks>
@@ -2056,8 +2056,8 @@ If a separator is encountered in the `s` parameter during a parse operation, and
   
  Ordinarily, if you pass the <xref:System.Double.Parse%2A?displayProperty=nameWithType> method a string that is created by calling the <xref:System.Double.ToString%2A?displayProperty=nameWithType> method, the original <xref:System.Double> value is returned. However, because of a loss of precision, the values may not be equal. In addition, attempting to parse the string representation of either <xref:System.Double.MinValue?displayProperty=nameWithType> or <xref:System.Double.MaxValue?displayProperty=nameWithType> fails to round-trip. On .NET Framework and .NET Core 2.2 and previous versions, it throws an <xref:System.OverflowException>. On .NET Core 3.0 and later versions, it returns <xref:System.Double.NegativeInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MinValue?displayProperty=nameWithtype> or <xref:System.Double.PositiveInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MaxValue?displayProperty=nameWithtype>. The following example provides an illustration. 
   
- [!code-csharp[System.Double.Parse#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/parse2.cs#3)]
- [!code-vb[System.Double.Parse#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/parse2.vb#3)]   
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/parse2.cs" interactive="try-dotnet-method" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/parse2.vb" id="Snippet3":::
 
 On .NET Framework and .NET Core 2.2 and earlier versions, if `s` is out of range of the <xref:System.Double> data type, the <xref:System.Double.Parse%28System.String%2CSystem.Globalization.NumberStyles%29> method throws an <xref:System.OverflowException>.
 
@@ -2068,8 +2068,8 @@ If a separator is encountered in the `s` parameter during a parse operation, and
 ## Examples  
  The following example uses the <xref:System.Double.Parse%28System.String%2CSystem.Globalization.NumberStyles%29> method to parse the string representations of <xref:System.Double> values using the en-US culture.  
   
- [!code-csharp[System.Double.Parse#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/Parse.cs#1)]
- [!code-vb[System.Double.Parse#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/Parse.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/Parse.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/Parse.vb" id="Snippet1":::
   
  ]]></format>
         </remarks>
@@ -2163,8 +2163,8 @@ If a separator is encountered in the `s` parameter during a parse operation, and
   
  Ordinarily, if you pass the <xref:System.Double.Parse%2A?displayProperty=nameWithType> method a string that is created by calling the <xref:System.Double.ToString%2A?displayProperty=nameWithType> method, the original <xref:System.Double> value is returned. However, because of a loss of precision, the values may not be equal. In addition, attempting to parse the string representation of either <xref:System.Double.MinValue?displayProperty=nameWithType> or <xref:System.Double.MaxValue?displayProperty=nameWithType> fails to round-trip. On .NET Framework and .NET Core 2.2 and previous versions, it throws an <xref:System.OverflowException>. On .NET Core 3.0 and later versions, it returns <xref:System.Double.NegativeInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MinValue?displayProperty=nameWithtype> or <xref:System.Double.PositiveInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MaxValue?displayProperty=nameWithtype>. The following example provides an illustration.
   
- [!code-csharp[System.Double.Parse#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/parse2.cs#3)]
- [!code-vb[System.Double.Parse#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/parse2.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/parse2.cs" interactive="try-dotnet-method" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/parse2.vb" id="Snippet3":::
 
 On .NET Framework and .NET Core 2.2 and earlier versions, if `s` is out of range of the <xref:System.Double> data type, the <xref:System.Double.Parse%28System.String%2CSystem.IFormatProvider%29> method throws an <xref:System.OverflowException>.
 
@@ -2345,8 +2345,8 @@ If `s` is out of range of the <xref:System.Double> data type, the method returns
   
  Ordinarily, if you pass the <xref:System.Double.Parse%2A?displayProperty=nameWithType> method a string that is created by calling the <xref:System.Double.ToString%2A?displayProperty=nameWithType> method, the original <xref:System.Double> value is returned. However, because of a loss of precision, the values may not be equal. In addition, attempting to parse the string representation of either <xref:System.Double.MinValue?displayProperty=nameWithtype> or <xref:System.Double.MaxValue?displayProperty=nameWithType> fails to round-trip. On .NET Framework and .NET Core 2.2 and previous versions, it throws an <xref:System.OverflowException>. On .NET Core 3.0 and later versions, it returns <xref:System.Double.NegativeInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MinValue?displayProperty=nameWithtype> or <xref:System.Double.PositiveInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MaxValue?displayProperty=nameWithtype>. The following example provides an illustration.   
   
- [!code-csharp[System.Double.Parse#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/parse2.cs#3)]
- [!code-vb[System.Double.Parse#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/parse2.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/parse2.cs" interactive="try-dotnet-method" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/parse2.vb" id="Snippet3":::
 
 On .NET Framework and .NET Core 2.2 and earlier versions, if `s` is out of range of the <xref:System.Double> data type, the <xref:System.Double.Parse%28System.String%2CSystem.Globalization.NumberStyles%2CSystem.IFormatProvider%29> method throws an <xref:System.OverflowException>.
 
@@ -2357,8 +2357,8 @@ If a separator is encountered in the `s` parameter during a parse operation, and
 ## Examples  
  The following example illustrates the use of the <xref:System.Double.Parse%28System.String%2CSystem.Globalization.NumberStyles%2CSystem.IFormatProvider%29> method to assign several string representations of temperature values to a `Temperature` object.  
   
- [!code-csharp[System.Double.Parse#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/Parse3.cs#2)]
- [!code-vb[System.Double.Parse#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/Parse3.vb#2)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.Parse/cs/Parse3.cs" interactive="try-dotnet" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.Parse/vb/Parse3.vb" id="Snippet2":::
   
  ]]></format>
         </remarks>
@@ -2430,9 +2430,9 @@ If a separator is encountered in the `s` parameter during a parse operation, and
 ## Examples  
  The following code example illustrates the use of <xref:System.Double.PositiveInfinity>:  
   
- [!code-cpp[System.Double#10](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Double/CPP/doublesample.cpp#10)]
- [!code-csharp[System.Double#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double/CS/doublesample.cs#10)]
- [!code-vb[System.Double#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double/VB/doublesample.vb#10)]  
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Double/CPP/doublesample.cpp" id="Snippet10":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double/CS/doublesample.cs" interactive="try-dotnet-method" id="Snippet10":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double/VB/doublesample.vb" id="Snippet10":::
   
  ]]></format>
         </remarks>
@@ -3421,8 +3421,8 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples  
  The following example uses the default <xref:System.Double.ToString?displayProperty=nameWithType> method to display the string representations of a number of <xref:System.Double> values.  
   
- [!code-csharp[System.Double.ToString#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/ToString1.cs#1)]
- [!code-vb[System.Double.ToString#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/ToString1.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/ToString1.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/ToString1.vb" id="Snippet1":::
   
  The following example illustrates the use of <xref:System.Double.ToString%2A>.  
   
@@ -3532,8 +3532,8 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples  
  The following example displays the string representation of two <xref:System.Double> values using <xref:System.Globalization.CultureInfo> objects that represent several different cultures.  
   
- [!code-csharp[System.Double.ToString#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/ToString1.cs#2)]
- [!code-vb[System.Double.ToString#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/ToString1.vb#2)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/ToString1.cs" interactive="try-dotnet-method" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/ToString1.vb" id="Snippet2":::  
   
  The following example illustrates the use of <xref:System.Double.ToString%2A>, taking a <xref:System.String> and an <xref:System.IFormatProvider> as parameters.  
   
@@ -3639,8 +3639,8 @@ This member is an explicit interface member implementation. It can be used only 
         <block subset="none" type="usage">
           <para>In some cases, <see cref="T:System.Double" /> values formatted with the "R" standard numeric format string do not successfully round-trip if compiled using the <see langword="/platform:x64" /> or <see langword="/platform:anycpu" /> switches and run on 64-bit systems. To work around this problem, you can format <see cref="T:System.Double" /> values by using the "G17" standard numeric format string. The following example uses the "R" format string with a <see cref="T:System.Double" /> value that does not round-trip successfully, and also uses the "G17" format string to successfully round-trip the original value.  
   
- [!code-csharp[System.Double.ToString#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/roundtripex2.cs#6)]
- [!code-vb[System.Double.ToString#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/roundtripex2.vb#6)]</para>
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/roundtripex2.cs" interactive="try-dotnet" id="Snippet6":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/roundtripex2.vb" id="Snippet6":::</para>
         </block>
         <altmember cref="M:System.Double.Parse(System.String)" />
         <related type="Article" href="~/docs/standard/base-types/formatting-types.md">Formatting Types in .NET</related>
@@ -3731,9 +3731,9 @@ This member is an explicit interface member implementation. It can be used only 
 ## Examples  
  The following example displays a <xref:System.Double> value using each of the supported standard numeric format specifiers for several different cultures.  
   
- [!code-cpp[System.Double.ToString#4](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Double.ToString/cpp/tostring1.cpp#4)]
- [!code-csharp[System.Double.ToString#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/ToString1.cs#4)]
- [!code-vb[System.Double.ToString#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/ToString1.vb#4)]  
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Double.ToString/cpp/tostring1.cpp" id="Snippet4":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/ToString1.cs" interactive="try-dotnet-method" id="Snippet4":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/ToString1.vb" id="Snippet4":::
   
  The following example illustrates the use of <xref:System.Double.ToString%2A>, taking a <xref:System.String> and an <xref:System.IFormatProvider> as parameters.  
   
@@ -3746,8 +3746,8 @@ This member is an explicit interface member implementation. It can be used only 
         <block subset="none" type="usage">
           <para>In some cases, <see cref="T:System.Double" /> values formatted with the "R" standard numeric format string do not successfully round-trip if compiled using the <see langword="/platform:x64" /> or <see langword="/platform:anycpu" /> switches and run on 64-bit systems. To work around this problem, you can format <see cref="T:System.Double" /> values by using the "G17" standard numeric format string. The following example uses the "R" format string with a <see cref="T:System.Double" /> value that does not round-trip successfully, and also uses the "G17" format string to successfully round-trip the original value.  
   
- [!code-csharp[System.Double.ToString#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/roundtripex1.cs#5)]
- [!code-vb[System.Double.ToString#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/roundtripex1.vb#5)]</para>
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.ToString/cs/roundtripex1.cs" interactive="try-dotnet" id="Snippet5":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.ToString/vb/roundtripex1.vb" id="Snippet5":::</para>
         </block>
         <altmember cref="M:System.Double.Parse(System.String)" />
         <related type="Article" href="~/docs/standard/base-types/formatting-types.md">Formatting Types in .NET</related>
@@ -3931,8 +3931,8 @@ This member is an explicit interface member implementation. It can be used only 
   
  Ordinarily, if you pass the <xref:System.Double.TryParse%2A?displayProperty=nameWithType> method a string that is created by calling the <xref:System.Double.ToString%2A?displayProperty=nameWithType> method, the original <xref:System.Double> value is returned. However, because of a loss of precision, the values may not be equal. In addition, attempting to parse the string representation of either <xref:System.Double.MinValue?displayProperty=nameWithType> or <xref:System.Double.MaxValue?displayProperty=nameWithType> fails to round-trip. On .NET Framework and .NET Core 2.2 and previous versions, it throws an <xref:System.OverflowException>. On .NET Core 3.0 and later versions, it returns <xref:System.Double.NegativeInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MinValue?displayProperty=nameWithtype> or <xref:System.Double.PositiveInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MaxValue?displayProperty=nameWithtype>. The following example provides an illustration. 
   
- [!code-csharp[System.Double.TryParse#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.TryParse/cs/tryparse2.cs#3)]
- [!code-vb[System.Double.TryParse#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.TryParse/vb/tryparse2.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.TryParse/cs/tryparse2.cs" interactive="try-dotnet" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.TryParse/vb/tryparse2.vb" id="Snippet3":::
 
 On .NET Framework and .NET Core 2.2 and earlier versions, if `s` is out of range of the <xref:System.Double> data type, the <xref:System.Double.TryParse%28System.String%2CSystem.Double%40%29> method throws an <xref:System.OverflowException>.
 
@@ -3943,8 +3943,8 @@ If a separator is encountered in the `s` parameter during a parse operation, and
 ## Examples  
  The following example uses the <xref:System.Double.TryParse%28System.String%2CSystem.Double%40%29> method to convert the string representations of numeric values to <xref:System.Double> values. It assumes that en-US is the current culture.  
   
- [!code-csharp[System.Double.TryParse#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.TryParse/cs/tryparse1a.cs#1)]
- [!code-vb[System.Double.TryParse#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.TryParse/vb/tryparse1a.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.TryParse/cs/tryparse1a.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.TryParse/vb/tryparse1a.vb" id="Snippet1":::
   
  ]]></format>
         </remarks>
@@ -4109,8 +4109,8 @@ If a separator is encountered in the `s` parameter during a parse operation, and
   
  Ordinarily, if you pass the <xref:System.Double.TryParse%2A?displayProperty=nameWithType> method a string that is created by calling the <xref:System.Double.ToString%2A?displayProperty=nameWithType> method, the original <xref:System.Double> value is returned. However, because of a loss of precision, the values may not be equal. In addition, attempting to parse the string representation of either <xref:System.Double.MinValue?displayProperty=nameWithType> or <xref:System.Double.MaxValue?displayProperty=nameWithType> fails to round-trip. On .NET Framework and .NET Core 2.2 and previous versions, it throws an <xref:System.OverflowException>. On .NET Core 3.0 and later versions, it returns <xref:System.Double.NegativeInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MinValue?displayProperty=nameWithtype> or <xref:System.Double.PositiveInfinity?displayProperty=nameWithType> if you attempt to parse <xref:System.Double.MaxValue?displayProperty=nameWithtype>. The following example provides an illustration.
   
- [!code-csharp[System.Double.TryParse#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.TryParse/cs/tryparse2.cs#3)]
- [!code-vb[System.Double.TryParse#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.TryParse/vb/tryparse2.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.TryParse/cs/tryparse2.cs" interactive="try-dotnet" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.TryParse/vb/tryparse2.vb" id="Snippet3":::
 
 On .NET Framework and .NET Core 2.2 and earlier versions, if `s` is out of range of the <xref:System.Double> data type, the <xref:System.Double.TryParse%28System.String%2CSystem.Globalization.NumberStyles%2CSystem.IFormatProvider%2CSystem.Double%40%29?displayProperty=nameWithType> method throws an <xref:System.OverflowException>.
 
@@ -4121,8 +4121,8 @@ On .NET Core 3.0 and later versions, no exception is thrown when `s` is out of r
 ## Examples  
  The following example demonstrates the use of the <xref:System.Double.TryParse%28System.String%2CSystem.Globalization.NumberStyles%2CSystem.IFormatProvider%2CSystem.Double%40%29?displayProperty=nameWithType> method to parse the string representation of numbers that have a particular style and are formatted using the conventions of a particular culture.  
   
- [!code-csharp[System.Double.TryParse#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.TryParse/cs/TryParse1.cs#2)]
- [!code-vb[System.Double.TryParse#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.TryParse/vb/TryParse1.vb#2)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Double.TryParse/cs/TryParse1.cs" interactive="try-dotnet-method" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Double.TryParse/vb/TryParse1.vb" id="Snippet2":::
   
  ]]></format>
         </remarks>
