@@ -56,7 +56,7 @@ namespace Examples.NegotiateStreamExample
             Task writeTask = authStream
                 .WriteAsync(message, 0, message.Length)
                 .ContinueWith(task =>
-                {                    
+                {
                     Console.WriteLine("Client ending write operation...");
                 });
 
