@@ -37,5 +37,5 @@ public class Example
    }
 }
 // The example displays the following output:
-//        01 = 0.99999999999999989: True
+//        1 = 0.99999999999999989: True
 // </Snippet1>
