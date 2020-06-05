@@ -13,8 +13,7 @@ namespace BasicCodeDomApp
         static string sourceFileName = "test.cs";
         static void Main(string[] args)
         {
-            CodeDomProvider provider =
-                CodeDomProvider.CreateProvider(providerName);
+            CodeDomProvider provider = CodeDomProvider.CreateProvider(providerName);
 
             LogMessage("Building CodeDOM graph...");
 
@@ -22,11 +21,11 @@ namespace BasicCodeDomApp
 
             cu = BuildHelloWorldGraph();
 
-     	     //<Snippet5>
+            //<Snippet5>
             StreamWriter sourceFile = new StreamWriter(sourceFileName);
             provider.GenerateCodeFromCompileUnit(cu, sourceFile, null);
             sourceFile.Close();
-	     //</Snippet5>
+            //</Snippet5>
 
             //<Snippet6>
             CompilerParameters opt = new CompilerParameters(new string[]{
@@ -59,8 +58,7 @@ namespace BasicCodeDomApp
         }
 
         //<Snippet2>
-        // Build a Hello World program graph using
-        // System.CodeDom types.
+        // Build a Hello World program graph using System.CodeDom types.
         public static CodeCompileUnit BuildHelloWorldGraph()
         {
             // Create a new CodeCompileUnit to contain
@@ -82,9 +80,9 @@ namespace BasicCodeDomApp
             class1.Comments.Add(new CodeCommentStatement("<summary>", true));
             class1.Comments.Add(new CodeCommentStatement(
                 "Create a Hello World application.", true));
+            class1.Comments.Add(new CodeCommentStatement("</summary>", true));
             class1.Comments.Add(new CodeCommentStatement(
                 @"<seealso cref=" + '"' + "Class1.Main" + '"' + "/>", true));
-            class1.Comments.Add(new CodeCommentStatement("</summary>", true));
 
             // Add the new type to the namespace type collection.
             samples.Types.Add(class1);
