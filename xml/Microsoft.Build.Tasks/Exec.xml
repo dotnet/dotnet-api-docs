@@ -26,9 +26,15 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Implements the <c>Exec</c> task. Use the <c>Exec</c> element in your project file to create and execute this task. For usage and parameter information, see [Exec Task](https://msdn.microsoft.com/library/c9b7525a-b1c9-40fc-8bce-77a5b8f960d8).</summary>
+    <summary>
+            This class defines an "Exec" MSBuild task, which simply invokes the specified process with the specified arguments, waits
+            for it to complete, and then returns True if the process completed successfully, and False if an error occurred.
+            </summary>
     <remarks>To be added.</remarks>
     <forInternalUseOnly />
+    <comments>
+            UNDONE: ToolTask has a "UseCommandProcessor" flag that duplicates much of the code in this class. Remove the duplication.
+            </comments>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -56,7 +62,9 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.Exec" /> class.</summary>
+        <summary>
+            Default constructor.
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -92,8 +100,10 @@
         <Parameter Name="commandLine" Type="Microsoft.Build.Tasks.CommandLineBuilderExtension" />
       </Parameters>
       <Docs>
-        <param name="commandLine">Command line builder to add arguments to.</param>
-        <summary>Generates command line arguments that the command line tool must run directly from the command line and not from a response file.</summary>
+        <param name="commandLine">command line builder class to add arguments to</param>
+        <summary>
+            Adds the arguments for cmd.exe
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -179,9 +189,11 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns the output as an Item. White space is trimmed.  
-  
- ConsoleOutput is enabled when ConsoleToMSBuild is true. This avoids holding lines in memory if they aren't used. ConsoleOutput is a combination of stdout and stderr.</summary>
+        <summary>
+            Returns the output as an Item.  Whitespace are trimmed.
+            ConsoleOutput is enabled when ConsoleToMSBuild is true.  This avoids holding lines in memory
+            if they aren't used.  ConsoleOutput is a combination of stdout and stderr.
+            </summary>
         <value>Returns <see cref="T:Microsoft.Build.Framework.ITaskItem" />.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -207,10 +219,15 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Enable the standard output to pipe to an item. (StandardOutput).</summary>
+        <summary>
+            Enable the pipe of the standard out to an item (StandardOutput).
+            </summary>
         <value>Returns <see cref="T:System.Boolean" />.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
+        <Remarks>
+            Even thought this is called a pipe, it is in fact a Tee.  Use StandardOutputImportance to adjust the visibility of the stdout.
+            </Remarks>
       </Docs>
     </Member>
     <Member MemberName="CustomErrorRegularExpression">
@@ -245,7 +262,11 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a regular expression to spot error lines in the tool output.</summary>
+        <summary>
+            Users can supply a regular expression that we should
+            use to spot error lines in the tool output. This is
+            useful for tools that produce unusually formatted output
+            </summary>
         <value>A regular expression to spot error lines in the tool output.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -290,7 +311,11 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a regular expression to spot warning lines in the tool output.</summary>
+        <summary>
+            Users can supply a regular expression that we should
+            use to spot warning lines in the tool output. This is
+            useful for tools that produce unusually formatted output
+            </summary>
         <value>A regular expression to spot warning lines in the tool output.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -339,16 +364,13 @@
         <param name="pathToTool">The path to the tool to execute.</param>
         <param name="responseFileCommands">Command line arguments that should go into a temporary response file.</param>
         <param name="commandLineCommands">Command line arguments that should be passed to the tool directly.</param>
-        <summary>Executes the cmd.exe tool, waits for its completion, and cleans up the batch file after execution completes.</summary>
-        <returns>The exit code that the tool returns.</returns>
+        <summary>
+            Executes cmd.exe and waits for it to complete
+            </summary>
+        <returns>Upon completion of the process, returns True if successful, False if not.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If errors were logged and the tool has an exit code of zero, then this method sets the exit code to -1.  
-  
- ]]></format>
-        </remarks>
+            Overridden to clean up the batch file afterwards.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -381,8 +403,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the full path to the system tool cmd.exe.</summary>
-        <returns>The full path to the system tool cmd.exe.</returns>
+        <summary>
+            Determining the path to cmd.exe
+            </summary>
+        <returns>path to cmd.exe</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -416,8 +440,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the working directory to use for the tool process.</summary>
-        <returns>The working directory to use for the tool process.</returns>
+        <summary>
+            Gets the working directory to use for the process. Should return null if ToolTask should use the
+            current directory.
+            May throw an IOException if the directory to be used is somehow invalid.
+            </summary>
+        <returns>working directory</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -458,17 +486,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Logs error message and handles exit code.</summary>
+        <summary>
+            Allows tool to handle the return code.
+            This method will only be called with non-zero exitCode set to true.
+            </summary>
         <returns>
           <see langword="true" /> if exit code was ignored; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method will only be called with a non-zero exit code.  
-  
- ]]></format>
-        </remarks>
+            Overridden to make sure we display the command we put in the batch file, not the cmd.exe command
+            used to run the batch file.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -547,7 +574,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a Boolean value that indicates whether to ignore the standard error and warning format and log errors and warnings from the output as regular messages.</summary>
+        <summary>
+            Whether to use pick out lines in the output that match
+            the standard error/warning format, and log them as errors/warnings.
+            Defaults to false.
+            </summary>
         <value>
           <see langword="true" /> if the <c>Exec</c> task should ignore the standard error and warning format and should log errors and warnings as regular messages; <see langword="false" /> if the <c>Exec</c> task should log the errors and warnings that match the standard error and warning format.</value>
         <remarks>
@@ -591,8 +622,13 @@
       <Docs>
         <param name="singleLine">Single line from the output to parse.</param>
         <param name="messageImportance">The importance to log the message with.</param>
-        <summary>Logs the specified single line of text as an error or warning if the single line matched custom or standard error and warning formats or as a regular message if <see cref="P:Microsoft.Build.Tasks.Exec.IgnoreStandardErrorWarningFormat" /> is set to <see langword="true" /> and no custom format matched.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+            Calls a method on the TaskLoggingHelper to parse a single line of text to
+            see if there are any errors or warnings in canonical format.
+            </summary>
+        <remarks>
+            Overridden to handle any custom regular expressions supplied.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -630,8 +666,12 @@
       <Docs>
         <param name="toolName">The tool name.</param>
         <param name="pathToTool">The current directory where the tool is run.</param>
-        <summary>Logs the tool name and path.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+            Logs the tool name and the path from where it is being run.
+            </summary>
+        <remarks>
+            Overridden to avoid logging the path to "cmd.exe", which is not interesting.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -666,9 +706,13 @@
         <Parameter Name="message" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="message">Specify an empty string. This parameter is not used.</param>
-        <summary>Logs the batch file command to be executed.</summary>
-        <remarks>To be added.</remarks>
+        <param name="message" />
+        <summary>
+            Logs the command to be executed.
+            </summary>
+        <remarks>
+            Overridden to log the batch file command instead of the cmd.exe command.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -754,7 +798,9 @@
         <ReturnType>System.Text.Encoding</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the encoding of the captured task standard error stream.</summary>
+        <summary>
+            Property specifying the encoding of the captured task standard error stream
+            </summary>
         <value>The encoding of the captured task standard error stream.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -788,7 +834,10 @@
         <ReturnType>Microsoft.Build.Framework.MessageImportance</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the importance to log ordinary messages with in the standard error stream.</summary>
+        <summary>
+            Importance with which to log ordinary messages in the
+            standard error stream.
+            </summary>
         <value>The importance to log ordinary messages with in the standard error stream.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -827,7 +876,9 @@
         <ReturnType>System.Text.Encoding</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the encoding of the captured task standard output stream.</summary>
+        <summary>
+            Property specifying the encoding of the captured task standard output stream
+            </summary>
         <value>The encoding of the captured task standard output stream.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -861,9 +912,14 @@
         <ReturnType>Microsoft.Build.Framework.MessageImportance</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the importance to log ordinary messages with in the standard out stream.</summary>
+        <summary>
+            Importance with which to log ordinary messages in the
+            standard out stream.
+            </summary>
         <value>The importance to log ordinary messages with in the standard out stream.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            Overridden to increase from the default "Low" up to "High".
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -900,7 +956,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the encoding of the captured task standard error stream that is visible to the project.</summary>
+        <summary>
+            Project visible property specifying the encoding of the captured task standard error stream
+            </summary>
         <value>The encoding of the captured task standard error stream that is visible to the project.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -939,7 +997,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the encoding of the captured task standard output stream that is visible to the project.</summary>
+        <summary>
+            Project visible property specifying the encoding of the captured task standard output stream
+            </summary>
         <value>The encoding of the captured task standard output stream that is visible to the project.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -973,7 +1033,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the name of the tool (cmd.exe).</summary>
+        <summary>
+            The name of the tool to execute
+            </summary>
         <value>The name of the tool (cmd.exe).</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -995,7 +1057,12 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Whether or not to use UTF8 encoding for the cmd file and console window.
+            Values: Always, Never, Detect
+            If set to Detect, the current code page will be used unless it cannot represent 
+            the Command string. In that case, UTF-8 is used.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1029,9 +1096,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Validates input parameters and logs errors or warnings, if any. Returns a Boolean value that indicates whether task execution should proceed.</summary>
-        <returns>
-          <see langword="true" /> if task execution should proceed; otherwise, <see langword="false" />.</returns>
+        <summary>
+            Validate the task arguments, log any warnings/errors
+            </summary>
+        <returns>true if arguments are corrent enough to continue processing, false otherwise</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>

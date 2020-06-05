@@ -19,7 +19,12 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>Encapsulates a set of related projects, their toolsets, a default set of global properties, and the loggers that should be used to build them. A global version of this class acts as the default project collection.</summary>
+    <summary>
+            This class encapsulates a set of related projects, their toolsets, a default set of global properties,
+            and the loggers that should be used to build them.
+            A global version of this class acts as the default ProjectCollection.
+            Multiple ProjectCollections can exist within an appdomain. However, these must not build concurrently.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -58,7 +63,10 @@
       </Attributes>
       <Parameters />
       <Docs>
-        <summary>Creates a project collection with no global properties or loggers. The project collection toolset is initialized from the configuration file and registry.</summary>
+        <summary>
+            Instantiates a project collection with no global properties or loggers that reads toolset 
+            information from the configuration file and registry.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -85,7 +93,11 @@
       </Parameters>
       <Docs>
         <param name="toolsetLocations">The locations from which to load toolsets.</param>
-        <summary>Creates a project collection with no global properties or loggers. The project collection toolset is initialized from toolsets in the given locations.</summary>
+        <summary>
+            Instantiates a project collection using toolsets from the specified locations,
+            and no global properties or loggers.
+            May throw InvalidToolsetDefinitionException.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -112,7 +124,11 @@
       </Parameters>
       <Docs>
         <param name="globalProperties">The default global properties to use. May be null.</param>
-        <summary>Instantiates a project collection with specified global properties, no loggers, and that reads toolset information from the configuration file and registry.</summary>
+        <summary>
+            Instantiates a project collection with specified global properties, no loggers,
+            and that reads toolset information from the configuration file and registry.
+            May throw InvalidToolsetDefinitionException.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -150,7 +166,11 @@
         <param name="globalProperties">The default global properties to use. May be null.</param>
         <param name="loggers">The loggers to register. May be null.</param>
         <param name="toolsetDefinitionLocations">The locations from which to load toolsets.</param>
-        <summary>Instantiates a project collection with specified global properties and loggers and using the specified toolset locations.</summary>
+        <summary>
+            Instantiates a project collection with specified global properties and loggers and using the
+            specified toolset locations.
+            May throw InvalidToolsetDefinitionException.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -189,7 +209,13 @@
         <param name="toolsetDefinitionLocations">The locations from which to load toolsets.</param>
         <param name="maxNodeCount">The maximum number of nodes to use for building.</param>
         <param name="onlyLogCriticalEvents">If set to true, only critical events will be logged.</param>
-        <summary>Creates a project collection with specified global properties, loggers, node count, and onlyLogCriticalEvents value. The project collection toolset is initialized from toolsets in the given locations.</summary>
+        <summary>
+            Instantiates a project collection with specified global properties and loggers and using the
+            specified toolset locations, node count, and setting of onlyLogCriticalEvents.
+            Global properties and loggers may be null.
+            Throws InvalidProjectFileException if any of the global properties are reserved.
+            May throw InvalidToolsetDefinitionException.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -221,7 +247,10 @@
       </Parameters>
       <Docs>
         <param name="toolset">The toolset to be added.</param>
-        <summary>Adds a new toolset to the project collection. Replaces any existing toolset with the same tools version.</summary>
+        <summary>
+            Add a new toolset.
+            Replaces any existing toolset with the same tools version.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -246,7 +275,10 @@
       </Parameters>
       <Docs>
         <param name="toolsVersion">The tools version to search for.</param>
-        <summary>Determines whether a toolset is defined for the given tools version.</summary>
+        <summary>
+            Returns true if there is a toolset defined for the specified 
+            tools version, otherwise false.
+            </summary>
         <returns>
           <see langword="true" /> if there is a toolset defined for the given tools version; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -269,7 +301,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of projects currently loaded into this collection.</summary>
+        <summary>
+            Number of projects currently loaded into this collection.
+            </summary>
         <value>The number of projects currently loaded into this collection.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -291,7 +325,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the default tools version of this project collection.</summary>
+        <summary>
+            The default tools version of this project collection. Projects use this tools version if they
+            aren't otherwise told what tools version to use.
+            This value is gotten from the .exe.config file, or else in the registry, 
+            or if neither specify a default tools version then it is hard-coded to the tools version "2.0".
+            Setter throws InvalidOperationException if a toolset with the provided tools version has not been defined.
+            Always defined.
+            </summary>
         <value>The default tools version of this project collection, which is always defined.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -330,7 +371,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a flag that determines whether <see cref="M:Microsoft.Build.Evaluation.Project.MarkDirty" /> is temporarily disabled on projects in this collection. This allows, for example, a global properties to be set without projects getting marked dirty for reevaluation as a consequence.</summary>
+        <summary>
+            Whether <see cref="M:Microsoft.Build.Evaluation.Project.MarkDirty">MarkDirty()</see> is temporarily disabled on
+            projects in this collection.
+            This allows, for example, global properties to be set without projects getting
+            marked dirty for reevaluation as a consequence.
+            </summary>
         <value>Returns a flag that determines whether <see langword="MarkDirty" /> is temporarily disabled.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -365,7 +411,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Releases both managed and unmanaged resources.  Called when a host no longer needs the project collection.</summary>
+        <summary>
+            Called when a host is completely done with the project collection.
+            UNDONE: This is a hack to make sure the logging thread shuts down if the build used the loggingservice
+            off the ProjectCollection. After CTP we need to rationalize this and see if we can remove the logging service from
+            the project collection entirely so this isn't necessary.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -396,8 +447,12 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">If true, releases both managed and unmanaged resources; otherwise releases only unmanaged resources.</param>
-        <summary>Releases both managed and unmanaged resources.  Called when a host no longer needs the project collection. Shuts down any logging services that the project collection owns and releases the logger thread.</summary>
+        <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources..</param>
+        <summary>
+            Following standard framework guideline dispose pattern.
+            Shut down logging service if the project collection owns one, in order
+            to shut down the logger thread and loggers.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -429,7 +484,12 @@
       </Parameters>
       <Docs>
         <param name="unescapedString">The string to be converted.</param>
-        <summary>Converts special characters in a string to MSBuild escape format.</summary>
+        <summary>
+            Escape a string using MSBuild escaping format. For example, "%3b" for ";".
+            Only characters that are especially significant to MSBuild parsing are escaped.
+            Callers can use this method to make a string safe to be parsed to other methods
+            that would otherwise expand it; or to make a string safe to be written to a project file.
+            </summary>
         <returns>The converted string.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -461,10 +521,12 @@
         <Parameter Name="toolsVersionFromProject" Type="System.String" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="explicitToolsVersion">To be added.</param>
-        <param name="toolsVersionFromProject">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="explicitToolsVersion">The user-specified ToolsVersion (through e.g. /tv: on the command line). May be null</param>
+        <param name="toolsVersionFromProject">The ToolsVersion from the project file. May be null</param>
+        <summary>
+            Figure out what ToolsVersion to use to actually build the project with. 
+            </summary>
+        <returns>The ToolsVersion we should use to build this project.  Should never be null.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -489,7 +551,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the property to be retrieved.</param>
-        <summary>Gets any global property on the project collection that has the specified name.</summary>
+        <summary>
+            Get any global property on the project collection that has the specified name,
+            otherwise returns null.
+            </summary>
         <returns>Any global property on the project collection that has the specified name; otherwise returns null.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -515,7 +580,11 @@
       </Parameters>
       <Docs>
         <param name="fullPath">The path to a project file to be matched.</param>
-        <summary>Gets all projects whose project path matches the given path.</summary>
+        <summary>
+            Returns any and all loaded projects with the provided path.
+            There may be more than one, if they are distinguished by global properties
+            and/or tools version.
+            </summary>
         <returns>All projects whose project path matches the given path.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -548,7 +617,10 @@
       </Parameters>
       <Docs>
         <param name="toolsVersion">The tools version to match.</param>
-        <summary>Gets the toolset with the specified tools version.</summary>
+        <summary>
+            Get the toolset with the specified tools version.
+            If it is not present, returns null.
+            </summary>
         <returns>The toolset with the specified tools version, or <see langword="null" /> if no toolset matching this tools version exists.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -570,7 +642,13 @@
         <ReturnType>Microsoft.Build.Evaluation.ProjectCollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the global project collection object.</summary>
+        <summary>
+            Retrieves the global project collection object.
+            This is a singleton project collection with no global properties or loggers that reads toolset 
+            information from the configuration file and registry.
+            May throw InvalidToolsetDefinitionException.
+            Thread safe.
+            </summary>
         <value>The global project collection object. This is a singleton project collection with no global properties or loggers. Toolset information is obtained from the configuration file and registry.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -599,16 +677,17 @@
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the read-only default global properties for all projects in this collection.</summary>
+        <summary>
+            Returns default global properties for all projects in this collection.
+            Read-only dead dictionary.
+            </summary>
         <value>The read-only default global properties for all projects in this collection.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use <xref:Microsoft.Build.Evaluation.ProjectCollection.SetGlobalProperty%2A> and <xref:Microsoft.Build.Evaluation.ProjectCollection.RemoveGlobalProperty%2A> to add, set, and remove global properties.  
-  
- ]]></format>
-        </remarks>
+            This is the publicly exposed getter, that translates into a read-only dead IDictionary&lt;string, string&gt;.
+            
+            To be consistent with Project, setting and removing global properties is done with 
+            <see cref="M:Microsoft.Build.Evaluation.ProjectCollection.SetGlobalProperty(System.String,System.String)">SetGlobalProperty</see> and <see cref="M:Microsoft.Build.Evaluation.ProjectCollection.RemoveGlobalProperty(System.String)">RemoveGlobalProperty</see>.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="HostServices">
@@ -633,7 +712,12 @@
         <ReturnType>Microsoft.Build.Execution.HostServices</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets an object that provides host services to tasks during builds of projects contained in the project collection.</summary>
+        <summary>
+            Object exposing host services to tasks during builds of projects
+            contained by this project collection.
+            By default, <see cref="P:Microsoft.Build.Evaluation.ProjectCollection.HostServices">HostServices</see> is used.
+            May be set to null, but the getter will create a new instance in that case.
+            </summary>
         <value>The host services object.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -676,7 +760,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether the targets and tasks of projects in the project collection can be built.</summary>
+        <summary>
+            This is the default value used by newly created projects for whether or not the building
+            of projects is enabled.  This is for security purposes in case a host wants to closely
+            control which projects it allows to run targets/tasks.
+            </summary>
         <value>
           <see langword="true" /> if the targets and tasks of projects in this project collection can be built; otherwise, <see langword="false" />.</value>
         <remarks>
@@ -706,7 +794,10 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Evaluation.Project&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the projects currently loaded into this collection.</summary>
+        <summary>
+            All the projects currently loaded into this collection.
+            Each has a unique combination of path, global properties, and tools version.
+            </summary>
         <value>All the projects currently loaded into this collection.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -760,9 +851,12 @@
         <Parameter Name="fileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">The project file to evaluate.</param>
-        <summary>Evaluates a project from the source code in the given project file. The source code is evaluated with the global properties and tools version of this project collection.</summary>
-        <returns>If an existing project in the collection has already been evaluated from the given project file, the existing project is returned. Otherwise, a new project is created, evaluated, added to the project collection, and returned.</returns>
+        <param name="fileName">The project file to load</param>
+        <summary>
+            Loads a project with the specified filename, using the collection's global properties and tools version.
+            If a matching project is already loaded, it will be returned, otherwise a new project will be loaded.
+            </summary>
+        <returns>A loaded project.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -798,9 +892,12 @@
         <Parameter Name="xmlReader" Type="System.Xml.XmlReader" />
       </Parameters>
       <Docs>
-        <param name="xmlReader">Xml reader to read project source code from.</param>
-        <summary>Evaluates a project from the source code read from the given XML reader. The source code is evaluated with the global properties and tools version of this project collection.</summary>
-        <returns>The new project.</returns>
+        <param name="xmlReader">Xml reader to read project from</param>
+        <summary>
+            Loads a project with the specified reader, using the collection's global properties and tools version.
+            The project will be added to this project collection when it is named.
+            </summary>
+        <returns>A loaded project.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -839,10 +936,13 @@
         <Parameter Name="toolsVersion" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">The project file to evaluate.</param>
+        <param name="fileName">The project file to load</param>
         <param name="toolsVersion">The tools version to use. May be null.</param>
-        <summary>Evaluates a project from the source code read from the given project file. The source code is evaluated with the global properties of this project collection and the given tools version.</summary>
-        <returns>If an existing project in the collection has already been evaluated from the given project file, and with the given tools version, then the existing project is returned. Otherwise, a new project is created, evaluated, added to the project collection, and returned.</returns>
+        <summary>
+            Loads a project with the specified filename and tools version, using the collection's global properties.
+            If a matching project is already loaded, it will be returned, otherwise a new project will be loaded.
+            </summary>
+        <returns>A loaded project.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -879,10 +979,13 @@
         <Parameter Name="toolsVersion" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="xmlReader">Xml reader to read project source code from.</param>
+        <param name="xmlReader">Xml reader to read project from</param>
         <param name="toolsVersion">The tools version to use. May be null.</param>
-        <summary>Evaluates a project from the source code read from the given XML reader. The source code is evaluated with the global properties of this project collection and the given tools version.</summary>
-        <returns>The new project.</returns>
+        <summary>
+            Loads a project with the specified reader and tools version, using the collection's global properties.
+            The project will be added to this project collection when it is named.
+            </summary>
+        <returns>A loaded project.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -917,11 +1020,14 @@
         <Parameter Name="toolsVersion" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">The project file to be evaluated.</param>
+        <param name="fileName">The project file to load</param>
         <param name="globalProperties">The global properties to use. May be null, in which case the containing project collection's global properties will be used.</param>
         <param name="toolsVersion">The tools version. May be null.</param>
-        <summary>Evaluates a project from the source code read from the given project file. The source code is evaluated with the given global properties and tools version.</summary>
-        <returns>If an existing project in the collection has already been evaluated from the given project file, and with the given global properties and tools version, then the existing project is returned. Otherwise, a new project is created, evaluated, added to the project collection, and returned.</returns>
+        <summary>
+            Loads a project with the specified filename, tools version and global properties.
+            If a matching project is already loaded, it will be returned, otherwise a new project will be loaded.
+            </summary>
+        <returns>A loaded project.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -957,8 +1063,11 @@
         <param name="xmlReader">Xml reader to read project from</param>
         <param name="globalProperties">The global properties to use. May be null in which case the containing project collection's global properties will be used.</param>
         <param name="toolsVersion">The tools version. May be null.</param>
-        <summary>Evaluates a project from the source code read from the given XML reader. The source code is evaluated with the given global properties and tools version.</summary>
-        <returns>The new project.</returns>
+        <summary>
+            Loads a project with the specified reader, tools version and global properties.
+            The project will be added to this project collection when it is named.
+            </summary>
+        <returns>A loaded project.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -993,7 +1102,12 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Framework.ILogger&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all loggers that projects in this collection can use for their builds.</summary>
+        <summary>
+            Loggers that all contained projects will use for their builds.
+            Loggers are added with the <see cref="M:Microsoft.Build.Evaluation.ProjectCollection.RegisterLogger(Microsoft.Build.Framework.ILogger)" />.
+            UNDONE: Currently they cannot be removed.
+            Returns an empty collection if there are no loggers.
+            </summary>
         <value>All loggers that projects in this collection can use for their builds.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1030,7 +1144,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether only critical events such as warnings and errors are logged.</summary>
+        <summary>
+            When true, only log critical events such as warnings and errors. Has to be in here for API compat
+            </summary>
         <value>
           <see langword="true" /> if only critical events such as warnings and errors are logged; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -1054,7 +1170,9 @@
         <ReturnType>Microsoft.Build.Evaluation.ProjectCollection+ProjectAddedEventHandler</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Event that is fired when a project is added to the ProjectRootElementCache of this project collection.</summary>
+        <summary>
+            Event that is fired when a project is added to the ProjectRootElementCache of this project collection.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1076,15 +1194,12 @@
         <ReturnType>System.EventHandler&lt;Microsoft.Build.Evaluation.ProjectChangedEventArgs&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Raised when a <see cref="T:Microsoft.Build.Evaluation.Project" /> contained by this instance is directly changed.</summary>
+        <summary>
+            Raised when a <see cref="T:Microsoft.Build.Evaluation.Project" /> contained by this instance is directly changed.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This event is NOT raised for direct project XML changes via the construction model.  
-  
- ]]></format>
-        </remarks>
+            This event is NOT raised for direct project XML changes via the construction model.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ProjectCollectionChanged">
@@ -1105,15 +1220,12 @@
         <ReturnType>System.EventHandler&lt;Microsoft.Build.Evaluation.ProjectCollectionChangedEventArgs&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Raised when state is changed on this instance.</summary>
+        <summary>
+            Raised when state is changed on this instance.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This event is NOT raised for changes in individual projects.  
-  
- ]]></format>
-        </remarks>
+            This event is NOT raised for changes in individual projects.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ProjectXmlChanged">
@@ -1134,15 +1246,12 @@
         <ReturnType>System.EventHandler&lt;Microsoft.Build.Evaluation.ProjectXmlChangedEventArgs&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Raised when a <see cref="T:Microsoft.Build.Construction.ProjectRootElement" /> contained by this instance is changed.</summary>
+        <summary>
+            Raised when a <see cref="T:Microsoft.Build.Construction.ProjectRootElement" /> contained by this instance is changed.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This event is NOT raised for changes to global properties, or any other change that doesn't actually dirty the XML.  
-  
- ]]></format>
-        </remarks>
+            This event is NOT raised for changes to global properties, or any other change that doesn't actually dirty the XML.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="RegisterForwardingLoggers">
@@ -1166,7 +1275,10 @@
       </Parameters>
       <Docs>
         <param name="remoteLoggers">The remote loggers to add. May be null.</param>
-        <summary>Adds the given remote loggers to the collection of remote loggers used for builds of projects in this collection.</summary>
+        <summary>
+            Adds some remote loggers to the collection of remote loggers used for builds of projects in this collection.
+            May be null.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1191,7 +1303,10 @@
       </Parameters>
       <Docs>
         <param name="logger">The logger to add.</param>
-        <summary>Adds the given logger to the collection of loggers used for builds of projects in this collection.</summary>
+        <summary>
+            Adds a logger to the collection of loggers used for builds of projects in this collection.
+            If the logger object is already in the collection, does nothing.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1223,7 +1338,11 @@
       </Parameters>
       <Docs>
         <param name="loggers">The loggers to be added. May be null.</param>
-        <summary>Adds the given loggers to the collection of loggers used for builds of projects in this collection.</summary>
+        <summary>
+            Adds some loggers to the collection of loggers used for builds of projects in this collection.
+            If any logger object is already in the collection, does nothing for that logger.
+            May be null.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1252,7 +1371,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Removes all toolsets from the project collection.</summary>
+        <summary>
+            Removes all toolsets.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1277,7 +1398,11 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the default global property to remove.</param>
-        <summary>Removes a global property from the set of default global properties.</summary>
+        <summary>
+            Removes a global property from the collection-level set of global properties,
+            and all projects in the project collection.
+            If it was on this project collection, returns true.
+            </summary>
         <returns>
           <see langword="true" /> if the global property is present before removal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -1304,7 +1429,10 @@
       </Parameters>
       <Docs>
         <param name="toolsVersion">The toolset to be removed.</param>
-        <summary>Removes a toolset from the project collection.</summary>
+        <summary>
+            Remove a toolset.
+            Returns true if it was present, otherwise false.
+            </summary>
         <returns>
           <see langword="true" /> if the toolset is present before removal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -1333,7 +1461,10 @@
       <Docs>
         <param name="name">The name of the default global property to be added or set.</param>
         <param name="value">The new value of the default global property.</param>
-        <summary>Sets the value of a property in the default set of global properties.</summary>
+        <summary>
+            Set a global property at the collection-level,
+            and on all projects in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1369,7 +1500,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value the indicates whether ReevaluateIfNecessary is temporarily disabled on projects in this collection. This is useful when the host expects to make a number of reads and writes to projects, and wants to temporarily sacrifice correctness for performance.</summary>
+        <summary>
+            Whether reevaluation is temporarily disabled on projects in this collection.
+            This is useful when the host expects to make a number of reads and writes 
+            to projects, and wants to temporarily sacrifice correctness for performance.
+            </summary>
         <value>A flag that determines whether ReevaluateIfNecessary is temporarily disabled.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1399,7 +1534,9 @@
         <ReturnType>Microsoft.Build.Evaluation.ToolsetDefinitionLocations</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the locations used to find the toolsets.</summary>
+        <summary>
+            Returns the locations used to find the toolsets.
+            </summary>
         <value>The locations used to find the toolsets.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1421,9 +1558,14 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Evaluation.Toolset&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the toolsets available to this project collection.</summary>
+        <summary>
+            Returns the toolsets this ProjectCollection knows about.
+            </summary>
         <value>The toolsets available to this project collection.</value>
         <remarks>To be added.</remarks>
+        <comments>
+            ValueCollection is already read-only
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="TryUnloadProject">
@@ -1446,8 +1588,13 @@
         <Parameter Name="projectRootElement" Type="Microsoft.Build.Construction.ProjectRootElement" />
       </Parameters>
       <Docs>
-        <param name="projectRootElement">The root element of the project to unload.</param>
-        <summary>Attempts to remove a project from the collection.</summary>
+        <param name="projectRootElement">The project XML root element to unload.</param>
+        <summary>
+            Unloads a project XML root element from the cache entirely, if it is not
+            in use by project loaded into this collection.
+            Returns true if it was unloaded successfully, or was not already loaded.
+            Returns false if it was not unloaded because it was still in use by a loaded <see cref="T:Microsoft.Build.Evaluation.Project" />.
+            </summary>
         <returns>
           <see langword="true" /> if the project was unloaded; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -1474,7 +1621,10 @@
       </Parameters>
       <Docs>
         <param name="escapedString">The string to be converted.</param>
-        <summary>Converts escaped characters in a string to MSBuild characters with special meaning.</summary>
+        <summary>
+            Unescape a string using MSBuild escaping format. For example, "%3b" for ";".
+            All escaped characters are unescaped.
+            </summary>
         <returns>The converted string.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1504,7 +1654,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Removes all projects in this project collection.</summary>
+        <summary>
+            Unloads all the projects contained by this ProjectCollection.
+            Host should call this when they are completely done with all the projects.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1544,17 +1697,17 @@
         <Parameter Name="projectRootElement" Type="Microsoft.Build.Construction.ProjectRootElement" />
       </Parameters>
       <Docs>
-        <param name="projectRootElement">The project root element to unload.</param>
-        <summary>Removes a project root element from the project root cache.</summary>
+        <param name="projectRootElement">The project XML root element to unload.</param>
+        <summary>
+            Unloads a project XML root element from the weak cache.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method is useful for the case where the host knows that all projects using this root element have been removed, and that any unsaved changes should be discarded.  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.InvalidOperationException">Thrown if the project root element to unload is still in use by a loaded project or its imports.</exception>
+            This method is useful for the case where the host knows that all projects using this XML element
+            are unloaded, and desires to discard any unsaved changes.
+            </remarks>
+        <exception cref="T:System.InvalidOperationException">
+            Thrown if the project XML root element to unload is still in use by a loaded project or its imports.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="UnloadProject">
@@ -1578,7 +1731,11 @@
       </Parameters>
       <Docs>
         <param name="project">The project to remove.</param>
-        <summary>Removes the given project from the project collection.</summary>
+        <summary>
+            Unloads the specific project specified.
+            Host should call this when they are completely done with the project.
+            If project was not already loaded, throws InvalidOperationException.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1609,7 +1766,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Removes all loggers from the collection of loggers used by project builds in this collection.</summary>
+        <summary>
+            Removes all loggers from the collection of loggers used for builds of projects in this collection.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1630,16 +1789,16 @@
         <ReturnType>System.Version</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the file version of the assembly file that contains the MSBuild engine.</summary>
+        <summary>
+            Gets the file version of the file in which the Engine assembly lies.
+            </summary>
         <value>The file version of the assembly file that contains the MSBuild engine.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This is the Windows file version (specifically the value of the ProductVersion resource), which is not necessarily the assembly version. To obtain the assembly version, use Constants.AssemblyVersion.
-  
- ]]></format>
-        </remarks>
+            This is the Windows file version (specifically the value of the FileVersion
+            resource), not necessarily the assembly version.
+            If you want the assembly version, use Constants.AssemblyVersion.
+            This is not the <see cref="P:Microsoft.Build.Evaluation.ProjectCollection.ToolsetsVersion">ToolsetCollectionVersion</see>.
+            </remarks>
       </Docs>
     </Member>
   </Members>

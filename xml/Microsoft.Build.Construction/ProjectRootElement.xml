@@ -23,7 +23,15 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Represents an MSBuild project, a targets file, or any other file that conforms to MSBuild project file schema. This class and its related classes allow a complete MSBuild project or targets file to be read and written.</summary>
+    <summary>
+            ProjectRootElement class represents an MSBuild project, an MSBuild targets file or any other file that conforms to MSBuild
+            project file schema.
+            This class and its related classes allow a complete MSBuild project or targets file to be read and written.
+            Comments and whitespace cannot be edited through this model at present.
+            
+            Each project root element is associated with exactly one ProjectCollection. This allows the owner of that project collection
+            to control its lifetime and not be surprised by edits via another project collection.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -55,7 +63,11 @@
       </Parameters>
       <Docs>
         <param name="project">The project to be imported.</param>
-        <summary>Adds a project import to this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            If import groups exist, inserts into the last one without a condition on it.
+            Otherwise, creates an import at the end of the project.
+            </summary>
         <returns>The added project import.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -85,7 +97,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates an import group at the end of this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Creates an import group at the end of the project.
+            </summary>
         <returns>The import group created at the end of this project.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -134,18 +149,15 @@
       <Docs>
         <param name="itemType">The item type of the item to be added.</param>
         <param name="include">The Include value of the item to be added.</param>
-        <summary>Adds an item to this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Finds item group with no condition with at least one item of same type, or else adds a new item group;
+            adds the item to that item group with items of the same type, ordered by include.
+            </summary>
         <returns>The added item.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Creates an item, then adds it to an item group with no Condition attribute and at least one item of same item type. If no such item group is found, creates a new item group and adds the item to it. Items are ordered by Include values.  
-  
- Does nothing if the item matches an existing wildcard expression for this item type.  
-  
- ]]></format>
-        </remarks>
+            Per the previous implementation, it actually finds the last suitable item group, not the first.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddItem">
@@ -173,16 +185,17 @@
         <param name="itemType">The item type of the item to be added.</param>
         <param name="include">The Include value of the item to be added.</param>
         <param name="metadata">The metadata to be added.</param>
-        <summary>Adds an item with metadata to this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Finds first item group with no condition with at least one item of same type, or else an empty item group; or else adds a new item group;
+            adds the item to that item group with items of the same type, ordered by include.
+            Does not attempt to check whether the item matches an existing wildcard expression; that is only possible
+            in the evaluated world.
+            </summary>
         <returns>The added item.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Creates an item, then adds it to an item group with no Condition attribute and at least one item of same item type. If no such item group is found, creates a new item group and adds the item to it. Items are ordered by Include values.  
-  
- ]]></format>
-        </remarks>
+            Per the previous implementation, it actually finds the last suitable item group, not the first.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddItemDefinition">
@@ -206,7 +219,10 @@
       </Parameters>
       <Docs>
         <param name="itemType">The item type of the item definition to be added.</param>
-        <summary>Adds an item definition to this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Finds first item definition group with no condition with at least one item definition of same item type, or else adds a new item definition group.
+            </summary>
         <returns>The added item definition.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -236,7 +252,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Adds an item definition group to this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Adds an item definition group after the last existing item definition group, if any; otherwise
+            adds an item definition group after the last existing property group, if any; otherwise
+            adds a new item definition group at the end of the project.
+            </summary>
         <returns>The added item definition group.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -266,7 +287,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates and adds an item group to this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Adds an item group after the last existing item group, if any; otherwise
+            adds an item group after the last existing property group, if any; otherwise
+            adds a new item group at the end of the project.
+            </summary>
         <returns>The added item group.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -301,7 +327,12 @@
       <Docs>
         <param name="name">The name of the property to be updated or added.</param>
         <param name="value">The value of the property to be updated or added.</param>
-        <summary>Updates or adds a property to this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic.
+            Updates the last existing property with the specified name that has no condition on itself or its property group, if any.
+            Otherwise, adds a new property in the first property group without a condition, creating a property group if necessary after
+            the last existing property group, else at the start of the project.
+            </summary>
         <returns>The updated or added property.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -331,7 +362,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Adds a new property group to this project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Adds a new property group after the last existing property group, if any; otherwise
+            at the start of the project.
+            </summary>
         <returns>The added property group.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -364,7 +399,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the target to be added.</param>
-        <summary>Adds a target to the project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Creates a target at the end of the project.
+            </summary>
         <returns>The added target.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -401,7 +439,11 @@
         <param name="name">The task name.</param>
         <param name="assemblyFile">The file path to the assembly.</param>
         <param name="assemblyName">The name of the assembly to load.</param>
-        <summary>Adds a <see href="/visualstudio/msbuild/usingtask-element-msbuild">UsingTask Element (MSBuild)</see> to the project.</summary>
+        <summary>
+            Convenience method that picks a location based on a heuristic:
+            Creates a usingtask at the end of the project.
+            Exactly one of assemblyName or assemblyFile must be null.
+            </summary>
         <returns>The added UsingTask element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -430,9 +472,13 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectChooseElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all child <see href="/visualstudio/msbuild/choose-element-msbuild">Choose Element (MSBuild)</see> in this project.</summary>
+        <summary>
+            Get a read-only collection of the child chooses, if any
+            </summary>
         <value>All child Choose elements.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            The name is inconsistent to make it more understandable, per API review.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Condition">
@@ -452,7 +498,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Always returns <see langword="null" /> because the Condition attribute is nonexistent for this element, and a nonexistent condition is implicitly <see langword="true" />.</summary>
+        <summary>
+            Condition should never be set, but the getter returns null instead of throwing 
+            because a nonexistent condition is implicitly true
+            </summary>
         <value>Always returns <see langword="null" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -474,7 +523,9 @@
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Do not use. The Condition attribute is nonexistent for <see cref="T:Microsoft.Build.Construction.ProjectRootElement" />. </summary>
+        <summary>
+            This does not allow conditions, so it should not be called.
+            </summary>
         <value>Always returns <see langword="null" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -506,7 +557,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates and initializes an in-memory, empty ProjectRootElement instance and adds it to the global project collection.</summary>
+        <summary>
+            Initialize an in-memory, empty ProjectRootElement instance that can be saved later.
+            Uses the global project collection.
+            </summary>
         <returns>The new project root.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -531,7 +585,10 @@
       </Parameters>
       <Docs>
         <param name="projectFileOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Initialize an in-memory, empty ProjectRootElement instance that can be saved later using the specified <see cref="T:Microsoft.Build.Evaluation.NewProjectFileOptions" />.
+            Uses the global project collection.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -557,7 +614,10 @@
       </Parameters>
       <Docs>
         <param name="projectCollection">The project collection to be added to.</param>
-        <summary>Creates and initializes an in-memory, empty ProjectRootElement instance and adds it to the specified project collection.</summary>
+        <summary>
+            Initialize an in-memory, empty ProjectRootElement instance that can be saved later.
+            Uses the specified project collection.
+            </summary>
         <returns>The new project root.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -583,7 +643,10 @@
       </Parameters>
       <Docs>
         <param name="path">The file path to the data used for initialization.</param>
-        <summary>Creates and initializes an in-memory, empty ProjectRootElement instance and adds it to the global project collection. The new project root is initialized from data found at the specified file path.</summary>
+        <summary>
+            Initialize an in-memory, empty ProjectRootElement instance that can be saved later.
+            Uses the global project collection.
+            </summary>
         <returns>The new project root.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -609,7 +672,11 @@
       </Parameters>
       <Docs>
         <param name="xmlReader">The XML reader used for initialization.</param>
-        <summary>Creates and initializes an in-memory, empty ProjectRootElement instance and adds it to the global project collection. The new project root is initialized from data read from the specified XmlReader.</summary>
+        <summary>
+            Initialize a ProjectRootElement instance from an XmlReader.
+            Uses the global project collection.
+            May throw InvalidProjectFileException.
+            </summary>
         <returns>The new project root.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -643,7 +710,9 @@
       <Docs>
         <param name="projectCollection">To be added.</param>
         <param name="projectFileOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Initialize an in-memory, empty ProjectRootElement instance that can be saved later using the specified <see cref="T:Microsoft.Build.Evaluation.ProjectCollection" /> and <see cref="T:Microsoft.Build.Evaluation.NewProjectFileOptions" />.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -670,7 +739,10 @@
       <Docs>
         <param name="path">To be added.</param>
         <param name="newProjectFileOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Initialize an in-memory, empty ProjectRootElement instance that can be saved later using the specified path and <see cref="T:Microsoft.Build.Evaluation.NewProjectFileOptions" />.
+            Uses the global project collection.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -698,7 +770,10 @@
       <Docs>
         <param name="path">The file path to the data used for initialization.</param>
         <param name="projectCollection">The project collection to be added to.</param>
-        <summary>Creates and initializes an in-memory, empty ProjectRootElement instance and adds it to the specified project collection. The new project root is initialized from data found at the specified file path.</summary>
+        <summary>
+            Initialize an in-memory, empty ProjectRootElement instance that can be saved later.
+            Uses the specified project collection.
+            </summary>
         <returns>The new project root.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -726,7 +801,11 @@
       <Docs>
         <param name="xmlReader">The XML reader used for initialization.</param>
         <param name="projectCollection">The project collection to be added to.</param>
-        <summary>Creates and initializes an in-memory, empty ProjectRootElement instance and adds it to the specified project collection. The new project root is initialized from data read from the specified XmlReader.</summary>
+        <summary>
+            Initialize a ProjectRootElement instance from an XmlReader.
+            Uses the specified project collection.
+            May throw InvalidProjectFileException.
+            </summary>
         <returns>The new project root.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -762,7 +841,10 @@
         <param name="path">To be added.</param>
         <param name="projectCollection">To be added.</param>
         <param name="newProjectFileOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Initialize an in-memory, empty ProjectRootElement instance that can be saved later.
+            Uses the specified project collection.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -791,7 +873,11 @@
         <param name="xmlReader">To be added.</param>
         <param name="projectCollection">To be added.</param>
         <param name="preserveFormatting">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Initialize a ProjectRootElement instance from an XmlReader.
+            Uses the specified project collection.
+            May throw InvalidProjectFileException.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -814,7 +900,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates a <see href="/visualstudio/msbuild/choose-element-msbuild">Choose Element (MSBuild)</see>.</summary>
+        <summary>
+            Creates a choose.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>A <see cref="T:Microsoft.Build.Construction.ProjectChooseElement" /> object.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -847,7 +936,10 @@
       </Parameters>
       <Docs>
         <param name="project">The project to be imported.</param>
-        <summary>Creates an <see href="/visualstudio/msbuild/import-element-msbuild">Import Element (MSBuild)</see>.</summary>
+        <summary>
+            Creates an import.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The created Import element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -877,7 +969,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates an import group.</summary>
+        <summary>
+            Creates an import group. 
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The import group.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -910,7 +1005,10 @@
       </Parameters>
       <Docs>
         <param name="itemType">The item type of the item definition.</param>
-        <summary>Creates an item definition.</summary>
+        <summary>
+            Creates an item definition.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The item definition.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -940,7 +1038,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates an item definition group.</summary>
+        <summary>
+            Creates an item definition group.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The item definition group.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -982,7 +1083,10 @@
       </Parameters>
       <Docs>
         <param name="itemType">The item type of the item.</param>
-        <summary>Creates an item.</summary>
+        <summary>
+            Creates an item node.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The item.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1017,7 +1121,10 @@
       <Docs>
         <param name="itemType">The item type of the item.</param>
         <param name="include">The Include value of the item.</param>
-        <summary>Creates an item with the specified Include value.</summary>
+        <summary>
+            Creates an item node with an include.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The item.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1047,7 +1154,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates an item group.</summary>
+        <summary>
+            Creates an item group.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The item group.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1089,7 +1199,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the metadata.</param>
-        <summary>Creates a metadata node with the specified name.</summary>
+        <summary>
+            Creates a metadata node.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The metadata node.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1124,7 +1237,10 @@
       <Docs>
         <param name="name">The name of the metadata.</param>
         <param name="unevaluatedValue">The value of the metadata.</param>
-        <summary>Creates a metadata node with the specified name and value.</summary>
+        <summary>
+            Creates a metadata node.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The metadata element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1155,8 +1271,10 @@
         <Parameter Name="owner" Type="Microsoft.Build.Construction.ProjectRootElement" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="owner">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="owner">The factory to use for creating the new instance.</param>
+        <summary>
+            Returns a new instance of ProjectRootElement that is affiliated with the same ProjectRootElementCache.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1182,7 +1300,10 @@
       </Parameters>
       <Docs>
         <param name="executeTargets">The targets to execute if a task fails.</param>
-        <summary>Creates an <see href="/visualstudio/msbuild/onerror-element-msbuild">OnError Element (MSBuild)</see>.</summary>
+        <summary>
+            Creates an on error node.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The OnError element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1212,7 +1333,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates an <see href="/visualstudio/msbuild/otherwise-element-msbuild">Otherwise Element (MSBuild)</see>. Caller must add it to the location of choice in the project.</summary>
+        <summary>
+            Creates an otherwise node.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The Otherwise element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1249,7 +1373,11 @@
         <param name="taskParameter">The name of the task's output parameter.</param>
         <param name="itemType">The item that receives the task's output parameter value.</param>
         <param name="propertyName">The property that receives the task's output parameter value.</param>
-        <summary>Creates an <see href="/visualstudio/msbuild/output-element-msbuild">Output Element (MSBuild)</see>.</summary>
+        <summary>
+            Creates an output node.
+            Exactly one of itemType and propertyName must be specified.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The Output element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1279,7 +1407,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates a <see href="/visualstudio/msbuild/projectextensions-element-msbuild">ProjectExtensions Element (MSBuild)</see>.</summary>
+        <summary>
+            Creates a project extensions node.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The ProjectExtensions element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1313,7 +1444,9 @@
       <Docs>
         <param name="sdkName">To be added.</param>
         <param name="sdkVersion">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Creates a project SDK element attached to this project.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1339,7 +1472,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the property.</param>
-        <summary>Creates a property.</summary>
+        <summary>
+            Creates a property.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The property.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1369,7 +1505,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates a property group.</summary>
+        <summary>
+            Creates a property group.
+            Caller must add it to the location of choice in the project.
+            </summary>
         <returns>The property group.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1402,7 +1541,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the target.</param>
-        <summary>Creates a target.</summary>
+        <summary>
+            Creates a target.
+            Caller must add it to the location of choice in this project.
+            </summary>
         <returns>The target.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1435,7 +1577,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the task.</param>
-        <summary>Creates a task.</summary>
+        <summary>
+            Creates a task.
+            Caller must add it to the location of choice in this project.
+            </summary>
         <returns>The task.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1470,7 +1615,10 @@
       <Docs>
         <param name="evaluate">The string to evaluate.</param>
         <param name="body">The body to add.</param>
-        <summary>Creates a task to be referenced by a <see href="/visualstudio/msbuild/usingtask-element-msbuild">UsingTask Element (MSBuild)</see>.</summary>
+        <summary>
+            Creates a Task element for use in a using task.
+            Caller must add it to the location of choice in the project under a using task.
+            </summary>
         <returns>The task.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1516,7 +1664,11 @@
         <param name="taskName">The task name.</param>
         <param name="assemblyFile">The file path to the assembly.</param>
         <param name="assemblyName">The name of the assembly to load.</param>
-        <summary>Adds a <see href="/visualstudio/msbuild/usingtask-element-msbuild">UsingTask Element (MSBuild)</see> to the project.</summary>
+        <summary>
+            Creates a using task.
+            Caller must add it to the location of choice in the project.
+            Exactly one of assembly file and assembly name must be provided.
+            </summary>
         <returns>The UsingTask element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1557,7 +1709,12 @@ The caller must add the UsingTask element to the location of choice in the proje
         <param name="assemblyName">The name of the assembly to load.</param>
         <param name="runtime">Optional runtime specifier.</param>
         <param name="architecture">Optional architecture specifier.</param>
-        <summary>Adds a <see href="/visualstudio/msbuild/usingtask-element-msbuild">UsingTask Element (MSBuild)</see> to the project.</summary>
+        <summary>
+            Creates a using task.
+            Caller must add it to the location of choice in the project.
+            Exactly one of assembly file and assembly name must be provided.
+            Also allows providing optional runtime and architecture specifiers.  Null is OK. 
+            </summary>
         <returns>The UsingTask element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1596,7 +1753,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <param name="output">Stores outputs from the task in the project file.</param>
         <param name="required">A user-defined task parameter that contains the parameter value as its value.</param>
         <param name="parameterType">The type of the parameter.</param>
-        <summary>Creates a parameter for use in a <see href="/visualstudio/msbuild/usingtask-element-msbuild">UsingTask Element (MSBuild)</see> parameter group.</summary>
+        <summary>
+            Creates a Parameter for use in a using ParameterGroup.
+            Caller must add it to the location of choice in the project under a using task.
+            </summary>
         <returns>The parameter.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1626,7 +1786,10 @@ The caller must add the UsingTask element to the location of choice in the proje
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates a parameter group for a <see href="/visualstudio/msbuild/usingtask-element-msbuild">UsingTask Element (MSBuild)</see>.</summary>
+        <summary>
+            Creates a ParameterGroup for use in a using task.
+            Caller must add it to the location of choice in the project under a using task.
+            </summary>
         <returns>The parameter group.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1659,7 +1822,10 @@ The caller must add the UsingTask element to the location of choice in the proje
       </Parameters>
       <Docs>
         <param name="condition">The value of the Condition attribute.</param>
-        <summary>Creates a <see href="/visualstudio/msbuild/when-element-msbuild">When Element (MSBuild)</see> with a specified Condition attribute.</summary>
+        <summary>
+            Creates a when.
+            Caller must add it to the location of choice in this project.
+            </summary>
         <returns>The When element.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1688,8 +1854,10 @@ The caller must add the UsingTask element to the location of choice in the proje
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>
+            Returns a clone of this project.
+            </summary>
+        <returns>The cloned element.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1718,7 +1886,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the value of the DefaultTargets attribute.</summary>
+        <summary>
+            Gets or sets the value of DefaultTargets. If there is no DefaultTargets, returns empty string.
+            If the value is null or empty, removes the attribute.
+            </summary>
         <value>The value of the DefaultTargets attribute, or an empty string if the DefaultTargets attribute is not present.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1747,7 +1918,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Location of the DefaultTargets attribute on this element, if any.</summary>
+        <summary>
+            Location of the defaulttargets attribute, if any
+            </summary>
         <value>The DefaultTargets attribute location, or <see langword="null" /> if there is no DefaultTargets attribute.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1784,7 +1957,14 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the directory path to the project file.</summary>
+        <summary>
+            The directory that the project is in. 
+            Essential for evaluating relative paths.
+            Is never null, even if the FullPath does not contain directory information.
+            If the project has not been loaded from disk and has not been given a path, returns the current-directory from 
+            the time the project was loaded - this is the same behavior as Whidbey/Orcas.
+            If the project has not been loaded from disk but has been given a path, this path may not exist.
+            </summary>
         <value>The directory path, which is never <see langword="null" />. If the project is not loaded from disk, returns the current directory at the time the project was loaded.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1813,16 +1993,14 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Text.Encoding</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the character encoding that the project file is to be saved in.</summary>
+        <summary>
+            Encoding that the project file is saved in, or will be saved in, unless
+            otherwise specified.
+            </summary>
         <value>The character encoding that the project file is to be saved in.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Returns the encoding given by the Xml declaration in the project file. If no encoding is specified, this defaults to UTF 8.  
-  
- ]]></format>
-        </remarks>
+            Returns the encoding from the Xml declaration if any, otherwise UTF8.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="FullPath">
@@ -1842,9 +2020,16 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the full path to the project file.</summary>
+        <summary>
+            Full path to the project file.
+            If the project has not been loaded from disk and has not been given a path, returns null.
+            If the project has not been loaded from disk but has been given a path, this path may not exist.
+            Setter renames the project, if it already had a name.
+            </summary>
         <value>The full path to the project file, or <see langword="null" /> if the project is not loaded from disk.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            Updates the ProjectRootElement cache.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="HasUnsavedChanges">
@@ -1864,7 +2049,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Determines whether the project has been modified since it was last loaded or saved.</summary>
+        <summary>
+            Whether the XML has been modified since it was last loaded or saved.
+            </summary>
         <value>
           <see langword="true" /> if the project has been modified; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -1887,7 +2074,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectImportGroupElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child import groups in this project.</summary>
+        <summary>
+            Get a read-only collection of the child import groups, if any.
+            </summary>
         <value>All the child import groups in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1909,7 +2098,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectImportGroupElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child import groups in this project, starting with the last group.</summary>
+        <summary>
+            Get a read-only collection of the child import groups, if any, in reverse order
+            </summary>
         <value>All the child import groups in this project, starting with the last group.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1931,7 +2122,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectImportElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child import elements in this project.</summary>
+        <summary>
+            Get a read-only collection of the child imports
+            </summary>
         <value>All the child import elements in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1961,7 +2154,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the value of the InitialTargets attribute.</summary>
+        <summary>
+            Gets or sets the value of InitialTargets. If there is no InitialTargets, returns empty string.
+            If the value is null or empty, removes the attribute.
+            </summary>
         <value>The InitialTargets attribute value, or an empty string if the InitialTargets attribute is not present.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1990,7 +2186,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Location of the InitialTargets attribute on this element, if any.</summary>
+        <summary>
+            Location of the initialtargets attribute, if any
+            </summary>
         <value>The location of the InitialTargets attribute, or <see langword="null" /> if there is no InitialTargets attribute.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2012,7 +2210,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectItemDefinitionGroupElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child item definition groups in this project.</summary>
+        <summary>
+            Get a read-only collection of the child item definition groups, if any
+            </summary>
         <value>All the child item definition groups in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2034,7 +2234,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectItemDefinitionGroupElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child item definition groups in this project, starting with the last group.</summary>
+        <summary>
+            Get a read-only collection of the child item definition groups, if any, in reverse order
+            </summary>
         <value>All the child item definition groups in this project, starting with the last group.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2056,7 +2258,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectItemDefinitionElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all child item definitions in all item definition groups anywhere in this project.</summary>
+        <summary>
+            Get a read-only collection of the child item definitions, if any, in all item definition groups anywhere in the project file.
+            </summary>
         <value>Gets all child item definitions in all item definition groups anywhere in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2078,7 +2282,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectItemGroupElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child item groups in this project.</summary>
+        <summary>
+            Get a read-only collection over the child item groups, if any.
+            Does not include any that may not be at the root, i.e. inside Choose elements.
+            </summary>
         <value>All the child item groups in this project.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2107,7 +2314,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectItemGroupElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child item groups present in this project, starting with the last group.</summary>
+        <summary>
+            Get a read-only collection of the child item groups, if any, in reverse order
+            </summary>
         <value>All the child item groups present in this project, starting with the last group.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2136,7 +2345,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectItemElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all child items in this project.</summary>
+        <summary>
+            Get a read-only collection of the child items, if any, in all item groups anywhere in the project file.
+            Not restricted to root item groups: traverses through Choose elements.
+            </summary>
         <value>All child items in this project, even if they are contained by Choose elements.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2166,7 +2378,11 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.DateTime</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the last-write-time of the project file.</summary>
+        <summary>
+            The last-write-time of the file that was read, when it was read.
+            This can be used to see whether the file has been changed on disk
+            by an external means.
+            </summary>
         <value>The last-write-time of the project file.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2208,7 +2424,11 @@ The caller must add the UsingTask element to the location of choice in the proje
       </Parameters>
       <Docs>
         <param name="path">The file path to the data.</param>
-        <summary>Initializes a project root in the global project collection by loading data from the specified file path.</summary>
+        <summary>
+            Initialize a ProjectRootElement instance by loading from the specified file path.
+            Uses the global project collection.
+            May throw InvalidProjectFileException.
+            </summary>
         <returns>The initialized project root.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2243,7 +2463,11 @@ The caller must add the UsingTask element to the location of choice in the proje
       <Docs>
         <param name="path">The file path to the data.</param>
         <param name="projectCollection">The project collection containing the project to be initialized.</param>
-        <summary>Initializes a project root in the specified project collection by loading data from the specified file path.</summary>
+        <summary>
+            Initialize a ProjectRootElement instance by loading from the specified file path.
+            Uses the specified project collection.
+            May throw InvalidProjectFileException.
+            </summary>
         <returns>The initialized project root.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2279,7 +2503,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <param name="path">To be added.</param>
         <param name="projectCollection">To be added.</param>
         <param name="preserveFormatting">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Initialize a ProjectRootElement instance by loading from the specified file path.
+            Uses the specified project collection and preserves the formatting of the document if specified.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2300,7 +2527,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Whether the XML is preserving formatting or not.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2322,7 +2551,11 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the location of the originating file itself, not any specific content within it. If the file has not been given a name, this is an empty location. This is a legitimate case of having no location.</summary>
+        <summary>
+            Location of the originating file itself, not any specific content within it.
+            If the file has not been given a name, returns an empty location.
+            This is a case where it is legitimate to "not have a location".
+            </summary>
         <value>The location of the originating file, or an empty location if the file has not been given a name.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2344,7 +2577,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectPropertyElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child properties in this project.</summary>
+        <summary>
+            Geta read-only collection of the child properties, if any, in all property groups anywhere in the project file.
+            Not restricted to root property groups: traverses through Choose elements.
+            </summary>
         <value>All child properties in this project, even if they are contained by Choose elements.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2366,7 +2602,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectPropertyGroupElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child property groups in this project.</summary>
+        <summary>
+            Get a read-only collection of the child property groups, if any.
+            Does not include any that may not be at the root, i.e. inside Choose elements.
+            </summary>
         <value>All the child property groups in this project.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2395,7 +2634,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectPropertyGroupElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child property groups present in this project, starting with the last group.</summary>
+        <summary>
+            Get a read-only collection of the child property groups, if any, in reverse order
+            </summary>
         <value>All the child property groups present in this project, starting with the last group.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2424,16 +2665,15 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the XML content that represents this project.</summary>
+        <summary>
+            Gets the XML representing this project as a string.
+            Does not remove any dirty flag.
+            </summary>
         <value>The XML content that represents this project as a string.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Does not mark the content as unmodified. The MSBuild object model provides no other way to access the XML content.  
-  
- ]]></format>
-        </remarks>
+            Useful for debugging.
+            Note that we do not expose an XmlDocument or any other specific XML API.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Reload">
@@ -2457,7 +2697,11 @@ The caller must add the UsingTask element to the location of choice in the proje
       <Docs>
         <param name="throwIfUnsavedChanges">To be added.</param>
         <param name="preserveFormatting">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Reload the existing project root element from its file.
+            An <see cref="T:System.InvalidOperationException" /> is thrown if the project root element is not associated with any file on disk.
+            
+            See <see cref="M:Microsoft.Build.Construction.ProjectRootElement.ReloadFrom(System.Xml.XmlReader,System.Boolean,System.Nullable{System.Boolean})" /></summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2484,7 +2728,11 @@ The caller must add the UsingTask element to the location of choice in the proje
         <param name="path">To be added.</param>
         <param name="throwIfUnsavedChanges">To be added.</param>
         <param name="preserveFormatting">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Reload the existing project root element from the given path
+            An <see cref="T:System.InvalidOperationException" /> is thrown if the path does not exist.
+            
+            See <see cref="M:Microsoft.Build.Construction.ProjectRootElement.ReloadFrom(System.Xml.XmlReader,System.Boolean,System.Nullable{System.Boolean})" /></summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2508,10 +2756,25 @@ The caller must add the UsingTask element to the location of choice in the proje
         <Parameter Name="preserveFormatting" Type="System.Nullable&lt;System.Boolean&gt;" Index="2" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="reader">To be added.</param>
-        <param name="throwIfUnsavedChanges">To be added.</param>
-        <param name="preserveFormatting">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="reader">Reader to read from</param>
+        <param name="throwIfUnsavedChanges">
+              If set to false, the reload operation will discard any unsaved changes.
+              Otherwise, an <see cref="T:System.InvalidOperationException" /> is thrown when unsaved changes are present.
+            </param>
+        <param name="preserveFormatting">
+              Whether the reload should preserve formatting or not. A null value causes the reload to reuse the existing <see cref="P:Microsoft.Build.Construction.ProjectRootElement.PreserveFormatting" /> value.
+            </param>
+        <summary>
+            Reload the existing project root element from the given <paramref name="reader" />
+            A reload operation completely replaces the state of this <see cref="T:Microsoft.Build.Construction.ProjectRootElement" /> object. This operation marks the 
+            object as dirty (see <see cref="M:Microsoft.Build.Construction.ProjectRootElement.MarkDirty(System.String,System.String)" /> for side effects). 
+            
+            If the new state has invalid XML or MSBuild syntax, then this method throws an <see cref="T:Microsoft.Build.Exceptions.InvalidProjectFileException" />.
+            When this happens, the state of this object does not change.
+            
+            Reloading from an XMLReader will retain the previous root element location (<see cref="P:Microsoft.Build.Construction.ProjectRootElement.FullPath" />, <see cref="P:Microsoft.Build.Construction.ProjectRootElement.DirectoryPath" />, <see cref="P:Microsoft.Build.Construction.ProjectRootElement.ProjectFileLocation" />).
+            
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2542,7 +2805,13 @@ The caller must add the UsingTask element to the location of choice in the proje
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Saves the project, if modified, to the file system.</summary>
+        <summary>
+            Save the project to the file system, if dirty.
+            Uses the Encoding returned by the Encoding property.
+            Creates any necessary directories.
+            May throw IO-related exceptions.
+            Clears the dirty flag.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2574,7 +2843,11 @@ The caller must add the UsingTask element to the location of choice in the proje
       </Parameters>
       <Docs>
         <param name="writer">The text writer to write the project to.</param>
-        <summary>Saves the project to the specified text writer, whether modified or not.</summary>
+        <summary>
+            Save the project to the provided TextWriter, whether or not it is dirty.
+            Uses the encoding of the TextWriter.
+            Clears the Dirty flag.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2606,7 +2879,12 @@ The caller must add the UsingTask element to the location of choice in the proje
       </Parameters>
       <Docs>
         <param name="path">The file path to the project in storage.</param>
-        <summary>Saves the project, if modified or if the file path to storage has changed.</summary>
+        <summary>
+            Save the project to the file system, if dirty or the path is different.
+            Creates any necessary directories.
+            May throw IO related exceptions.
+            Clears the Dirty flag.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2638,7 +2916,12 @@ The caller must add the UsingTask element to the location of choice in the proje
       </Parameters>
       <Docs>
         <param name="saveEncoding">The character encoding used to save the project.</param>
-        <summary>Saves the project, if modified, using the specified character encoding.</summary>
+        <summary>
+            Save the project to the file system, if dirty.
+            Creates any necessary directories.
+            May throw IO-related exceptions.
+            Clears the dirty flag.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2672,7 +2955,12 @@ The caller must add the UsingTask element to the location of choice in the proje
       <Docs>
         <param name="path">The file path to the project in storage.</param>
         <param name="encoding">The character encoding used to save the project.</param>
-        <summary>Saves the project, if modified or if the file path to storage has changed. Uses the specified character encoding.</summary>
+        <summary>
+            Save the project to the file system, if dirty or the path is different.
+            Creates any necessary directories.
+            May throw IO related exceptions.
+            Clears the Dirty flag.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2707,7 +2995,12 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets or sets a semicolon delimited list of software development kits (SDK) that the project uses.
+            If  a value is specified, an Sdk.props is simplicity imported at the top of the project and an
+            Sdk.targets is simplicity imported at the bottom from the specified SDK.
+            If the value is null or empty, removes the attribute.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2728,7 +3021,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Location of the Sdk attribute, if any
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2750,7 +3045,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectTargetElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all the child targets in this project.</summary>
+        <summary>
+            Get a read-only collection of the child targets
+            </summary>
         <value>All the child targets in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2777,9 +3074,14 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.DateTime</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the time that this project was last modified.</summary>
+        <summary>
+            The time that this object was last changed. If it hasn't
+            been changed since being loaded or created, its value is <see cref="F:System.DateTime.MinValue" />.
+            </summary>
         <value>The time that this project was last modified.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            This is used by the VB/C# project system.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ToolsVersion">
@@ -2807,7 +3109,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the value of the ToolsVersion attribute.</summary>
+        <summary>
+            Gets or sets the value of ToolsVersion. If there is no ToolsVersion, returns empty string.
+            If the value is null or empty, removes the attribute.
+            </summary>
         <value>The ToolsVersion attribute value, or an empty string if the ToolsVersion attribute is not present.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2836,7 +3141,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the location of the ToolsVersion attribute on this element, if any.</summary>
+        <summary>
+            Location of the toolsversion attribute, if any
+            </summary>
         <value>The location of the ToolsVersion attribute, or <see langword="null" /> if there is no ToolsVersion attribute.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2866,7 +3173,10 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the value of the TreatAsLocalProperty attribute.</summary>
+        <summary>
+            Gets or sets the value of TreatAsLocalProperty. If there is no tag, returns empty string.
+            If the value being set is null or empty, removes the attribute.
+            </summary>
         <value>The TreatAsLocalProperty attribute value, or an empty string if the TreatAsLocalProperty attribute is not present.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2897,7 +3207,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the location of the TreatAsLocalProperty attribute on this element, if any.</summary>
+        <summary>
+            Location of the TreatAsLocalProperty attribute, if any
+            </summary>
         <value>The TreatAsLocalProperty attribute location, or <see langword="null" /> if there is no TreatAsLocalProperty attribute.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2931,17 +3243,16 @@ The caller must add the UsingTask element to the location of choice in the proje
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">The path of the ProjectRootElement, cannot be <see langword="null" />.</param>
-        <summary>Gets the project root in the global project collection that was loaded into memory from the specified file path.</summary>
-        <returns>The project root, or <see langword="null" /> if no project was loaded into memory from the specified file path.</returns>
+        <param name="path">The path of the ProjectRootElement, cannot be null.</param>
+        <summary>
+            Returns the ProjectRootElement for the given path if it has been loaded, or null if it is not currently in memory.
+            Uses the global project collection.
+            </summary>
+        <returns>The loaded ProjectRootElement, or null if it is not currently in memory.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- It is possible for ProjectRootElements to be brought into memory and discarded due to memory pressure. If TryOpen returns null it does not indicate that the project root has never been loaded, only that it is not currently in memory.  
-  
- ]]></format>
-        </remarks>
+            It is possible for ProjectRootElements to be brought into memory and discarded due to memory pressure. Therefore
+            this method returning false does not indicate that it has never been loaded, only that it is not currently in memory.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryOpen">
@@ -2965,18 +3276,17 @@ The caller must add the UsingTask element to the location of choice in the proje
         <Parameter Name="projectCollection" Type="Microsoft.Build.Evaluation.ProjectCollection" />
       </Parameters>
       <Docs>
-        <param name="path">The path of the ProjectRootElement, cannot be <see langword="null" />.</param>
-        <param name="projectCollection">The project collection to search for the project root.</param>
-        <summary>Gets the project root in the specified project collection that was loaded into memory from the specified file path.</summary>
-        <returns>The project root, or <see langword="null" /> if no project was loaded into memory from the specified file path.</returns>
+        <param name="path">The path of the ProjectRootElement, cannot be null.</param>
+        <param name="projectCollection">The <see cref="T:Microsoft.Build.Evaluation.ProjectCollection" /> to load the project into.</param>
+        <summary>
+            Returns the ProjectRootElement for the given path if it has been loaded, or null if it is not currently in memory.
+            Uses the specified project collection.
+            </summary>
+        <returns>The loaded ProjectRootElement, or null if it is not currently in memory.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- It is possible for ProjectRootElements to be brought into memory and discarded due to memory pressure. If TryOpen returns `null` it does not indicate that the project root has never been loaded, only that it is not currently in memory.  
-  
- ]]></format>
-        </remarks>
+            It is possible for ProjectRootElements to be brought into memory and discarded due to memory pressure. Therefore
+            this method returning false does not indicate that it has never been loaded, only that it is not currently in memory.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryOpen">
@@ -3000,12 +3310,20 @@ The caller must add the UsingTask element to the location of choice in the proje
         <Parameter Name="preserveFormatting" Type="System.Nullable&lt;System.Boolean&gt;" Index="2" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <param name="projectCollection">To be added.</param>
-        <param name="preserveFormatting">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="path">The path of the ProjectRootElement, cannot be null.</param>
+        <param name="projectCollection">The <see cref="T:Microsoft.Build.Evaluation.ProjectCollection" /> to load the project into.</param>
+        <param name="preserveFormatting">
+            The formatting to open with. Must match the formatting in the collection to succeed.
+            </param>
+        <summary>
+            Returns the ProjectRootElement for the given path if it has been loaded, or null if it is not currently in memory.
+            Uses the specified project collection.
+            </summary>
+        <returns>The loaded ProjectRootElement, or null if it is not currently in memory.</returns>
+        <remarks>
+            It is possible for ProjectRootElements to be brought into memory and discarded due to memory pressure. Therefore
+            this method returning false does not indicate that it has never been loaded, only that it is not currently in memory.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="UsingTasks">
@@ -3025,7 +3343,9 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectUsingTaskElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all child <see href="/visualstudio/msbuild/usingtask-element-msbuild">UsingTask Element (MSBuild)</see> in this project.</summary>
+        <summary>
+            Get a read-only collection of the child usingtasks, if any
+            </summary>
         <value>All child UsingTask elements in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -3052,16 +3372,27 @@ The caller must add the UsingTask element to the location of choice in the proje
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the version number of this object.</summary>
+        <summary>
+            Version number of this object.
+            A host can compare this to a stored version number to determine whether
+            a project's XML has changed, even if it has also been saved since.
+            
+            The actual value is meaningless: an edit may increment it more than once,
+            so it should only be compared to a stored value.
+            </summary>
         <value>The version number of this object.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Compare this version number to a stored version number to determine whether the project XML content has changed, even if the project is saved after the change. An edit may increment the version number more than once, so Version should only be compared to a stored value.  
-  
- ]]></format>
-        </remarks>
+            Used by the Project class to figure whether changes have occurred that 
+            it might want to pick up by reevaluation.
+            
+            Used by the ProjectRootElement class to determine whether it needs to save.
+            
+            This number is unique to the appdomain. That means that it is possible
+            to know when a ProjectRootElement has been unloaded (perhaps after modification) and
+            reloaded -- the version won't reset to '0'.
+            
+            We're assuming we don't have over 2 billion edits.
+            </remarks>
       </Docs>
     </Member>
   </Members>

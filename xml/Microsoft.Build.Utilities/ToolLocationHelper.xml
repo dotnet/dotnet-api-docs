@@ -26,7 +26,11 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Provides utility methods for locating .NET Framework and .NET Framework SDK files and directories.</summary>
+    <summary>
+            ToolLocationHelper provides utility methods for locating .NET Framework and .NET Framework SDK directories and files.
+            NOTE: All public methods of this class are available to MSBuild projects for use in functions - they must be safe for
+            use during project evaluation.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -61,7 +65,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Clears the appDomain wide cache of platform and extension SDKs.</summary>
+        <summary>
+            Clear out the appdomain wide cache of Platform and Extension SDKs.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -81,7 +87,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            The current ToolsVersion. 
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -106,10 +114,13 @@
         <Parameter Name="extensionSdks" Type="System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="targetPlatformVersion">To be added.</param>
-        <param name="extensionSdks">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="targetPlatformVersion" />
+        <param name="extensionSdks" />
+        <summary>
+            Gets a dictionary containing a collection of extension SDKs and filter it based on the target platform version
+            if max platform version isn't set in the extension sdk manifest, add the extension sdk to the filtered list
+            </summary>
+        <returns>A IDictionary collection of filtered extension SDKs</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -134,11 +145,13 @@
         <Parameter Name="vsVersion" Type="System.Version" Index="2" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="targetPlatformSdkList">To be added.</param>
-        <param name="osVersion">To be added.</param>
-        <param name="vsVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="targetPlatformSdkList">List of platform sdks</param>
+        <param name="osVersion">Operating System version. Pass null to not filter based on this parameter</param>
+        <param name="vsVersion">Visual Studio version. Pass null not to filter based on this parameter</param>
+        <summary>
+            Filter list of platform sdks based on minimum OS and VS versions
+            </summary>
+        <returns>List of Target Platform SDKs</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -207,11 +220,25 @@
         <Parameter Name="targetProcessorArchitecture" Type="System.Reflection.ProcessorArchitecture" Index="2" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="configFile">To be added.</param>
-        <param name="targetFrameworkVersion">To be added.</param>
-        <param name="targetProcessorArchitecture">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="configFile">Full path to the Assembly Folders config file.</param>
+        <param name="targetFrameworkVersion">The targeted framework version (2.0, 3.0, 3.5, 4.0, etc).</param>
+        <param name="targetProcessorArchitecture">What processor architecture is being targeted. This determines which registry hives are searched in what order.
+             On a 64 bit operating system we do the following
+                     If you are targeting 64 bit (target x64 or ia64)
+                         Add in the 64 bit assembly folders first
+                         Add in the 32 bit assembly folders second
+                     If you are not targeting a 64 bit
+                        Add in the 32 bit assembly folders first
+                        Add in the 64 bit assembly folders second
+             On a 32 bit machine we only add in the 32 bit assembly folders.
+             </param>
+        <summary>
+             Get a sorted list of AssemblyFoldersFromConfigInfo which contain information about what directories the 3rd party assemblies are registered under for use during build and design time.
+            
+             This method will read the specified configuration file and enumerate the and return a list of AssemblyFoldersFromConfigInfo in the same order in which
+             they will be searched during both design and build time for reference assemblies.
+             </summary>
+        <returns>List of AssemblyFoldersFromConfigInfo</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -241,7 +268,11 @@
       <Docs>
         <param name="targetFrameworkDirectory">The target framework directory.</param>
         <param name="frameworkName">The framework name.</param>
-        <summary>Creates a display name given the target framework details.</summary>
+        <summary>
+            Figures out a display name given the target framework details. 
+            This is the equivalent of the target framework moniker, but for display.
+            If one cannot be found from the redist list file, a synthesized one is returned, so there is always a display name.
+            </summary>
         <returns>A display name given the target framework details.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -286,9 +317,11 @@
         <Parameter Name="version" Type="Microsoft.Build.Utilities.TargetDotNetFrameworkVersion" />
       </Parameters>
       <Docs>
-        <param name="version">The version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] to target.</param>
-        <summary>Gets the full name of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] root registry key.</summary>
-        <returns>A string containing the full name of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] root registry key.</returns>
+        <param name="version">Version of the targeted .NET Framework</param>
+        <summary>
+            Returns the full name of the .NET Framework root registry key
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -332,8 +365,13 @@
         <Parameter Name="version" Type="Microsoft.Build.Utilities.TargetDotNetFrameworkVersion" />
       </Parameters>
       <Docs>
-        <param name="version">The version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] to target.</param>
-        <summary>Gets the name of the value under the <see cref="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)" /> that contains the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK installation path.</summary>
+        <param name="version">Version of the targeted .NET Framework</param>
+        <summary>
+            Name of the value of GetDotNetFrameworkRootRegistryKey that contains the SDK install root path. When 
+            targeting .NET 3.5 or above, looks in the locations associated with Visual Studio 2010.  If you wish 
+            to target the .NET Framework SDK that ships with Visual Studio Dev11 or later, please use the override 
+            that specifies a VisualStudioVersion. 
+            </summary>
         <returns>A string containing the name of the registry key value under the <see cref="M:Microsoft.Build.Utilities.ToolLocationHelper.GetDotNetFrameworkRootRegistryKey(Microsoft.Build.Utilities.TargetDotNetFrameworkVersion)" /> that contains the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK installation path.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -364,7 +402,9 @@
       <Docs>
         <param name="version">Version of the targeted .NET Framework</param>
         <param name="visualStudioVersion">Version of Visual Studio the requested SDK is associated with</param>
-        <summary>Gets the name of the value of GetDotNetFrameworkRootRegistryKey that contains the SDK install root path.</summary>
+        <summary>
+            Name of the value of GetDotNetFrameworkRootRegistryKey that contains the SDK install root path
+            </summary>
         <returns>Returns <see cref="T:System.String" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -406,7 +446,12 @@
       </Parameters>
       <Docs>
         <param name="version">Version of the targeted .NET Framework</param>
-        <summary>Returns the full name of the .NET Framework SDK root registry key.</summary>
+        <summary>
+            Returns the full name of the .NET Framework SDK root registry key.  When targeting .NET 3.5 or
+            above, looks in the locations associated with Visual Studio 2010.  If you wish to target the 
+            .NET Framework SDK that ships with Visual Studio Dev11 or later, please use the override that 
+            specifies a VisualStudioVersion. 
+            </summary>
         <returns>A string representation of the registry key root which indicates where to find the .NETFramework sdk.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -437,7 +482,9 @@
       <Docs>
         <param name="version">Version of the targeted .NET Framework</param>
         <param name="visualStudioVersion">Version of Visual Studio the requested SDK is associated with</param>
-        <summary>Returns the full name of the .NET Framework SDK root registry key.</summary>
+        <summary>
+            Returns the full name of the .NET Framework SDK root registry key
+            </summary>
         <returns>Returns <see cref="T:System.String" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -473,9 +520,11 @@
         <Parameter Name="version" Type="Microsoft.Build.Utilities.TargetDotNetFrameworkVersion" />
       </Parameters>
       <Docs>
-        <param name="version">The version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] to target.</param>
-        <summary>Gets the prefix of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] folder.</summary>
-        <returns>The prefix of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] folder.</returns>
+        <param name="version">Version of the targeted .NET Framework</param>
+        <summary>
+            Returns the prefix of the .NET Framework version folder (e.g. "v2.0")
+            </summary>
+        <returns />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -506,10 +555,12 @@
         <Parameter Name="sdkVersion" Type="System.String" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkIdentifier">To be added.</param>
-        <param name="sdkVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkIdentifier">SDK for which to find the latest installed platform</param>
+        <param name="sdkVersion">SDK version for which to find the latest installed platform</param>
+        <summary>
+            Given an SDK Identifier and SDK version, return the latest installed platform.
+            </summary>
+        <returns>The latest installed version for the given SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -534,11 +585,13 @@
         <Parameter Name="sdkRoots" Type="System.String[]" Index="2" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkIdentifier">To be added.</param>
-        <param name="sdkVersion">To be added.</param>
-        <param name="sdkRoots">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkIdentifier">SDK for which to find the latest installed platform</param>
+        <param name="sdkVersion">SDK version for which to find the latest installed platform</param>
+        <param name="sdkRoots">SDK Root folders</param>
+        <summary>
+            Given an SDK Identifier and SDK version, return the latest installed platform.
+            </summary>
+        <returns>The latest installed version for the given SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -561,9 +614,11 @@
         <Parameter Name="toolsVersion" Type="System.String" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="toolsVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="toolsVersion">The ToolsVersion for which to get the tools path</param>
+        <summary>
+            Given a ToolsVersion, return the path to the MSBuild tools for that ToolsVersion
+            </summary>
+        <returns>The tools path folder of the appropriate ToolsVersion if it exists, otherwise null.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -587,10 +642,12 @@
         <Parameter Name="architecture" Type="Microsoft.Build.Utilities.DotNetFrameworkArchitecture" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="toolsVersion">To be added.</param>
-        <param name="architecture">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="toolsVersion">The ToolsVersion for which to get the tools path</param>
+        <param name="architecture">The architecture of the build tools location to get</param>
+        <summary>
+            Given a ToolsVersion, return the path to the MSBuild tools for that ToolsVersion
+            </summary>
+        <returns>The tools path folder of the appropriate ToolsVersion if it exists, otherwise null.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -614,10 +671,14 @@
         <Parameter Name="toolsVersion" Type="System.String" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="fileName">To be added.</param>
-        <param name="toolsVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="fileName">The file to find the path to</param>
+        <param name="toolsVersion">The ToolsVersion in which to find the file</param>
+        <summary>
+            Given the name of a file and a ToolsVersion, return the path to that file in the MSBuild 
+            tools path for that ToolsVersion
+            </summary>
+        <returns>The path to the file in the tools path folder of the appropriate ToolsVersion if it 
+            exists, otherwise null.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -642,11 +703,15 @@
         <Parameter Name="architecture" Type="Microsoft.Build.Utilities.DotNetFrameworkArchitecture" Index="2" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="fileName">To be added.</param>
-        <param name="toolsVersion">To be added.</param>
-        <param name="architecture">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="fileName">The file to find the path to</param>
+        <param name="toolsVersion">The ToolsVersion in which to find the file</param>
+        <param name="architecture">The architecture of the build tools file to get</param>
+        <summary>
+            Given the name of a file and a ToolsVersion, return the path to that file in the MSBuild 
+            tools path for that ToolsVersion
+            </summary>
+        <returns>The path to the file in the tools path folder of the appropriate ToolsVersion if it 
+            exists, otherwise null.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -695,9 +760,11 @@
         <Parameter Name="version" Type="Microsoft.Build.Utilities.TargetDotNetFrameworkVersion" />
       </Parameters>
       <Docs>
-        <param name="version">The version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] to target.</param>
-        <summary>Gets a fully qualified path to the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] root directory.</summary>
-        <returns>A string containing the fully qualified path to the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] root directory, or a null reference (<see langword="Nothing" /> in Visual Basic) if the targeted version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] is not installed.</returns>
+        <param name="version">Version of the targeted .NET Framework</param>
+        <summary>
+            Get a fully qualified path to the frameworks root directory.
+            </summary>
+        <returns>Will return 'null' if there is no target frameworks on this machine.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -727,8 +794,10 @@
       <Docs>
         <param name="version">Version of the targeted .NET Framework</param>
         <param name="architecture">Desired architecture, or DotNetFrameworkArchitecture.Current for the architecture this process is currently running under.</param>
-        <summary>Gets a fully qualified path to the framework's root directory.</summary>
-        <returns>A fully qualified path to the framework's root directory.</returns>
+        <summary>
+            Get a fully qualified path to the framework's root directory. 
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -778,10 +847,12 @@
         <Parameter Name="version" Type="Microsoft.Build.Utilities.TargetDotNetFrameworkVersion" />
       </Parameters>
       <Docs>
-        <param name="fileName">The file to locate in the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] directory.</param>
-        <param name="version">The version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] to target.</param>
-        <summary>Gets a fully qualified path to a file in the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] directory.</summary>
-        <returns>A string containing the fully qualified path to the specified file, or a null reference (<see langword="Nothing" /> in Visual Basic) if the targeted version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] is not installed.</returns>
+        <param name="fileName">File name to locate in the .NET Framework directory</param>
+        <param name="version">Version of the targeted .NET Framework</param>
+        <summary>
+            Get a fully qualified path to a file in the frameworks root directory.
+            </summary>
+        <returns>Will return 'null' if there is no target frameworks on this machine.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -823,8 +894,10 @@
         <param name="fileName">File name to locate in the .NET Framework directory</param>
         <param name="version">Version of the targeted .NET Framework</param>
         <param name="architecture">Desired architecture, or DotNetFrameworkArchitecture.Current for the architecture this process is currently running under.</param>
-        <summary>Gets a fully qualified path to a file in the frameworks root directory for the specified architecture.</summary>
-        <returns>A fully qualified path to a file in the frameworks root directory.</returns>
+        <summary>
+            Get a fully qualified path to a file in the frameworks root directory for the specified architecture.
+            </summary>
+        <returns>Will return 'null' if there is no target frameworks on this machine.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -856,8 +929,10 @@
       </Parameters>
       <Docs>
         <param name="version">Version of the targeted .NET Framework</param>
-        <summary>Returns the path to the reference assemblies location for the given framework version.</summary>
-        <returns>A string containing the fully qualified path to the Reference Assemblies folder, or a null reference (Nothing in Visual Basic) if the targeted version of the .NET Framework is not installed.</returns>
+        <summary>
+            Returns the path to the reference assemblies location for the given framework version.
+            </summary>
+        <returns>Path string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -887,8 +962,13 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>
+            Returns the path to the "bin" directory of the latest .NET Framework SDK. When targeting .NET 3.5 
+            or above, looks in the locations associated with Visual Studio 2010.  If you wish to target 
+            the .NET Framework SDK that ships with Visual Studio Dev11 or later, please use the override 
+            that specifies a VisualStudioVersion. 
+            </summary>
+        <returns>Path string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -923,9 +1003,14 @@
         <Parameter Name="version" Type="Microsoft.Build.Utilities.TargetDotNetFrameworkVersion" />
       </Parameters>
       <Docs>
-        <param name="version">The version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] to target.</param>
-        <summary>Gets the fully qualified path to the \bin directory of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK.</summary>
-        <returns>A string containing the fully qualified path to the \bin directory of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK, or a null reference (<see langword="Nothing" /> in Visual Basic) if the targeted version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK is not installed.</returns>
+        <param name="version">Version of the targeted .NET Framework</param>
+        <summary>
+            Returns the path to the "bin" directory of the .NET Framework SDK. When targeting .NET 3.5 
+            or above, looks in the locations associated with Visual Studio 2010.  If you wish to target 
+            the .NET Framework SDK that ships with Visual Studio Dev11 or later, please use the override 
+            that specifies a VisualStudioVersion. 
+            </summary>
+        <returns>Path string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -953,10 +1038,12 @@
         <Parameter Name="visualStudioVersion" Type="Microsoft.Build.Utilities.VisualStudioVersion" Index="1" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="version">Version of the targeted .NET Framework</param>
-        <param name="visualStudioVersion">Version of Visual Studio the requested SDK is associated with</param>
-        <summary>Returns the path to the "bin" directory of the .NET Framework SDK.</summary>
-        <returns>Path string.</returns>
+        <param name="version">The <see cref="T:Microsoft.Build.Utilities.TargetDotNetFrameworkVersion" /> of the .NET Framework.</param>
+        <param name="visualStudioVersion">The <see cref="T:Microsoft.Build.Utilities.VisualStudioVersion" /> of Visual Studio.</param>
+        <summary>
+            Returns the path to the .NET Framework SDK.
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -988,9 +1075,14 @@
         <Parameter Name="fileName" Type="System.String" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="fileName">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="fileName">File name to locate in the .NET Framework SDK directory</param>
+        <summary>
+            Get a fully qualified path to a file in the latest .NET Framework SDK. Error if the .NET Framework SDK can't be found.
+            When targeting .NET 3.5 or above, looks in the locations associated with Visual Studio 2010.  If you wish to 
+            target the .NET Framework SDK that ships with Visual Studio Dev11 or later, please use the override that 
+            specifies a VisualStudioVersion. 
+            </summary>
+        <returns>Path string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1031,10 +1123,15 @@
         <Parameter Name="version" Type="Microsoft.Build.Utilities.TargetDotNetFrameworkVersion" />
       </Parameters>
       <Docs>
-        <param name="fileName">The file to locate in the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK.</param>
-        <param name="version">The version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] to target.</param>
-        <summary>Gets the fully qualified path to a file in the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK.</summary>
-        <returns>A string containing the fully qualified path to the \bin directory of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK, or a null reference (<see langword="Nothing" /> in Visual Basic) if the targeted version of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] SDK is not installed.</returns>
+        <param name="fileName">File name to locate in the .NET Framework SDK directory</param>
+        <param name="version">Version of the targeted .NET Framework</param>
+        <summary>
+            Get a fully qualified path to a file in the .NET Framework SDK. Error if the .NET Framework SDK can't be found.
+            When targeting .NET 3.5 or above, looks in the locations associated with Visual Studio 2010.  If you wish to 
+            target the .NET Framework SDK that ships with Visual Studio Dev11 or later, please use the override that 
+            specifies a VisualStudioVersion. 
+            </summary>
+        <returns>Path string.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1080,8 +1177,10 @@
         <param name="fileName">File name to locate in the .NET Framework SDK directory</param>
         <param name="version">Version of the targeted .NET Framework</param>
         <param name="architecture">The required architecture of the requested file.</param>
-        <summary>Gets a fully qualified path to a file in the .NET Framework SDK.</summary>
-        <returns>A fully qualified path to a file in the .NET Framework SDK. Throws an error if the .NET Framework SDK can't be found.</returns>
+        <summary>
+            Get a fully qualified path to a file in the .NET Framework SDK. Error if the .NET Framework SDK can't be found.
+            </summary>
+        <returns>Path string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1112,8 +1211,10 @@
       <Docs>
         <param name="fileName">File name to locate in the .NET Framework SDK directory</param>
         <param name="version">Version of the targeted .NET Framework</param>
-        <param name="visualStudioVersion">Version of Visual Studio associated with the requested SDK.</param>
-        <summary>Gets a fully qualified path to a file in the .NET Framework SDK. Error if the .NET Framework SDK can't be found.</summary>
+        <param name="visualStudioVersion">Version of Visual Studio the requested SDK is associated with</param>
+        <summary>
+            Get a fully qualified path to a file in the .NET Framework SDK. Error if the .NET Framework SDK can't be found.
+            </summary>
         <returns>Path string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1146,9 +1247,11 @@
       <Docs>
         <param name="fileName">File name to locate in the .NET Framework SDK directory</param>
         <param name="version">Version of the targeted .NET Framework</param>
-        <param name="visualStudioVersion">Version of Visual Studio associated with the requested SDK.</param>
+        <param name="visualStudioVersion">Version of Visual Studio</param>
         <param name="architecture">The required architecture of the requested file.</param>
-        <summary>Gets a fully qualified path to a file in the .NET Framework SDK. Error if the .NET Framework SDK can't be found.</summary>
+        <summary>
+            Get a fully qualified path to a file in the .NET Framework SDK. Error if the .NET Framework SDK can't be found.
+            </summary>
         <returns>Path string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1185,9 +1288,14 @@
         <Parameter Name="frameworkName" Type="System.Runtime.Versioning.FrameworkName" Index="0" FrameworkAlternate="msbuild-15;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="frameworkName">The framework name.</param>
-        <summary>Gets the paths to the reference assemblies location for the given target framework.</summary>
-        <returns>The paths to the reference assemblies location.</returns>
+        <param name="frameworkName">Framework required</param>
+        <summary>
+            Returns the paths to the reference assemblies location for the given target framework.
+            This method will assume the requested ReferenceAssemblyRoot path will be the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles
+            In additon when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths
+            for the legacy .net frameworks. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.
+            </summary>
+        <returns>Collection of reference assembly locations.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1223,10 +1331,15 @@
         <Parameter Name="frameworkName" Type="System.Runtime.Versioning.FrameworkName" Index="1" FrameworkAlternate="msbuild-15;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="targetFrameworkRootPath">The root directory used to calculate the reference assembly path. The reference assemblies will be generated in the following way: TargetFrameworkRootPath\TargetFrameworkIdentifier\TargetFrameworkVersion\SubType\TargetFrameworkSubType.</param>
+        <param name="targetFrameworkRootPath">Root directory which will be used to calculate the reference assembly path. The references assemblies will be
+            generated in the following way TargetFrameworkRootPath\TargetFrameworkIdentifier\TargetFrameworkVersion\SubType\TargetFrameworkSubType.
+            </param>
         <param name="frameworkName">A frameworkName class which represents a TargetFrameworkMoniker. This cannot be null.</param>
-        <summary>Gets the paths to the reference assemblies location for the given framework version relative to a given targetFrameworkRoot.</summary>
-        <returns>The paths to the reference assemblies location.</returns>
+        <summary>
+            Returns the paths to the reference assemblies location for the given framework version relative to a given targetFrameworkRoot.
+            The method will not check to see if the path exists or not.
+            </summary>
+        <returns>Collection of reference assembly locations.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1258,11 +1371,16 @@
         <Parameter Name="frameworkName" Type="System.Runtime.Versioning.FrameworkName" Index="2" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="targetFrameworkRootPath">To be added.</param>
-        <param name="targetFrameworkFallbackSearchPaths">To be added.</param>
-        <param name="frameworkName">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="targetFrameworkRootPath">Root directory which will be used to calculate the reference assembly path. The references assemblies will be
+            generated in the following way TargetFrameworkRootPath\TargetFrameworkIdentifier\TargetFrameworkVersion\SubType\TargetFrameworkSubType.
+            </param>
+        <param name="targetFrameworkFallbackSearchPaths">';' separated list of paths that are looked up if the the framework cannot be found in @targetFrameworkRootPath</param>
+        <param name="frameworkName">A frameworkName class which represents a TargetFrameworkMoniker. This cannot be null.</param>
+        <summary>
+            Returns the paths to the reference assemblies location for the given framework version relative to a given targetFrameworkRoot.
+            The method will not check to see if the path exists or not.
+            </summary>
+        <returns>Collection of reference assembly locations.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1294,7 +1412,12 @@
         <param name="targetFrameworkIdentifier">Identifier being targeted</param>
         <param name="targetFrameworkVersion">Version being targeted</param>
         <param name="targetFrameworkProfile">Profile being targeted</param>
-        <summary>Returns the paths to the reference assemblies location for the given target framework. This method assumes the requested ReferenceAssemblyRoot path is the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles. In addition, when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths for the legacy .NET Framework versions. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.</summary>
+        <summary>
+            Returns the paths to the reference assemblies location for the given target framework.
+            This method will assume the requested ReferenceAssemblyRoot path will be the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles
+            In additon when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths
+            for the legacy .net frameworks. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.
+            </summary>
         <returns>Collection of reference assembly locations.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
@@ -1322,13 +1445,22 @@
         <Parameter Name="targetFrameworkRootPath" Type="System.String" Index="3" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="targetFrameworkIdentifier">To be added.</param>
-        <param name="targetFrameworkVersion">To be added.</param>
-        <param name="targetFrameworkProfile">To be added.</param>
-        <param name="targetFrameworkRootPath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="targetFrameworkIdentifier">Identifier being targeted</param>
+        <param name="targetFrameworkVersion">Version being targeted</param>
+        <param name="targetFrameworkProfile">Profile being targeted</param>
+        <param name="targetFrameworkRootPath">Root directory which will be used to calculate the reference assembly path. The references assemblies will be
+            generated in the following way TargetFrameworkRootPath\TargetFrameworkIdentifier\TargetFrameworkVersion\SubType\TargetFrameworkSubType.
+            Uses the default path if this is null.
+            </param>
+        <summary>
+            Returns the paths to the reference assemblies location for the given target framework.
+            This method will assume the requested ReferenceAssemblyRoot path will be the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles
+            In additon when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths
+            for the legacy .net frameworks. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.
+            </summary>
+        <returns>Collection of reference assembly locations.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
       </Docs>
     </Member>
     <Member MemberName="GetPathToReferenceAssemblies">
@@ -1354,14 +1486,24 @@
         <Parameter Name="targetFrameworkFallbackSearchPaths" Type="System.String" Index="4" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="targetFrameworkIdentifier">To be added.</param>
-        <param name="targetFrameworkVersion">To be added.</param>
-        <param name="targetFrameworkProfile">To be added.</param>
-        <param name="targetFrameworkRootPath">To be added.</param>
         <param name="targetFrameworkFallbackSearchPaths">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="targetFrameworkIdentifier">Identifier being targeted</param>
+        <param name="targetFrameworkVersion">Version being targeted</param>
+        <param name="targetFrameworkProfile">Profile being targeted</param>
+        <param name="targetFrameworkRootPath">Root directory which will be used to calculate the reference assembly path. The references assemblies will be
+            <param name="targetFrameworkFallbackSearchPaths">';' separated list of paths that are looked up if the the framework cannot be found in @targetFrameworkRootPath</param>
+            generated in the following way TargetFrameworkRootPath\TargetFrameworkIdentifier\TargetFrameworkVersion\SubType\TargetFrameworkSubType.
+            Uses the default path if this is null.
+            </param>
+        <summary>
+            Returns the paths to the reference assemblies location for the given target framework.
+            This method will assume the requested ReferenceAssemblyRoot path will be the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles
+            In additon when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths
+            for the legacy .net frameworks. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.
+            </summary>
+        <returns>Collection of reference assembly locations.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="GetPathToStandardLibraries">
@@ -1401,7 +1543,12 @@
         <param name="targetFrameworkIdentifier">Identifier being targeted</param>
         <param name="targetFrameworkVersion">Version being targeted</param>
         <param name="targetFrameworkProfile">Profile being targeted</param>
-        <summary>Returns the path to the reference assemblies location for the given target framework's standard libraries (i.e. mscorlib). This method will assume the requested ReferenceAssemblyRoot path will be the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles In addition, when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths for the legacy .NET Framework versions. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.</summary>
+        <summary>
+            Returns the path to the reference assemblies location for the given target framework's standard libraries (i.e. mscorlib).
+            This method will assume the requested ReferenceAssemblyRoot path will be the ProgramFiles directory specified by Environment.SpecialFolder.ProgramFiles
+            In additon when the .NETFramework or .NET Framework targetFrameworkIdentifiers are seen and targetFrameworkVersion is 2.0, 3.0, 3.5 or 4.0 we will return the correctly chained reference assembly paths
+            for the legacy .net frameworks. This chaining will use the existing GetPathToDotNetFrameworkReferenceAssemblies to build up the list of reference assembly paths.
+            </summary>
         <returns>Collection of reference assembly locations.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
@@ -1436,8 +1583,10 @@
         <param name="targetFrameworkIdentifier">Identifier being targeted</param>
         <param name="targetFrameworkVersion">Version being targeted</param>
         <param name="targetFrameworkProfile">Profile being targeted</param>
-        <param name="platformTarget">This is used to determine where we should look for the standard libraries. Note, this parameter is only used for .NET Framework 3.5 or less.</param>
-        <summary>Returns the path to mscorlib and system.dll.</summary>
+        <param name="platformTarget">What is the targeted platform, this is used to determine where we should look for the standard libraries. Note, this parameter is only used for .net frameworks less than 4.0</param>
+        <summary>
+            Returns the path to mscorlib and system.dll
+            </summary>
         <returns>Collection of reference assembly locations.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
@@ -1466,14 +1615,17 @@
         <Parameter Name="targetFrameworkRootPath" Type="System.String" Index="4" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="targetFrameworkIdentifier">To be added.</param>
-        <param name="targetFrameworkVersion">To be added.</param>
-        <param name="targetFrameworkProfile">To be added.</param>
-        <param name="platformTarget">To be added.</param>
-        <param name="targetFrameworkRootPath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="targetFrameworkIdentifier">Identifier being targeted</param>
+        <param name="targetFrameworkVersion">Version being targeted</param>
+        <param name="targetFrameworkProfile">Profile being targeted</param>
+        <param name="platformTarget">What is the targeted platform, this is used to determine where we should look for the standard libraries. Note, this parameter is only used for .net frameworks less than 4.0</param>
+        <param name="targetFrameworkRootPath">Root directory where the target framework will be looked for. Uses default path if this is null</param>
+        <summary>
+            Returns the path to mscorlib and system.dll
+            </summary>
+        <returns>Collection of reference assembly locations.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
       </Docs>
     </Member>
     <Member MemberName="GetPathToStandardLibraries">
@@ -1500,15 +1652,18 @@
         <Parameter Name="targetFrameworkFallbackSearchPaths" Type="System.String" Index="5" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="targetFrameworkIdentifier">To be added.</param>
-        <param name="targetFrameworkVersion">To be added.</param>
-        <param name="targetFrameworkProfile">To be added.</param>
-        <param name="platformTarget">To be added.</param>
-        <param name="targetFrameworkRootPath">To be added.</param>
-        <param name="targetFrameworkFallbackSearchPaths">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="targetFrameworkIdentifier">Identifier being targeted</param>
+        <param name="targetFrameworkVersion">Version being targeted</param>
+        <param name="targetFrameworkProfile">Profile being targeted</param>
+        <param name="platformTarget">What is the targeted platform, this is used to determine where we should look for the standard libraries. Note, this parameter is only used for .net frameworks less than 4.0</param>
+        <param name="targetFrameworkRootPath">Root directory where the target framework will be looked for. Uses default path if this is null</param>
+        <param name="targetFrameworkFallbackSearchPaths">';' separated list of paths that are looked up if the the framework cannot be found in @targetFrameworkRootPath</param>
+        <summary>
+            Returns the path to mscorlib and system.dll
+            </summary>
+        <returns>Collection of reference assembly locations.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">When the frameworkName is null</exception>
       </Docs>
     </Member>
     <Member MemberName="GetPathToSystemFile">
@@ -1542,9 +1697,11 @@
         <Parameter Name="fileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">The file to locate in the System folder.</param>
-        <summary>Gets a fully qualified path to a file in the system directory.</summary>
-        <returns>A string containing the fully qualified path to the file in the system directory.</returns>
+        <param name="fileName">File name to locate in the system directory</param>
+        <summary>
+            Get a fully qualified path to a file in the system directory (i.e. %SystemRoot%\System32)
+            </summary>
+        <returns>Path string.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1586,7 +1743,10 @@
       <Docs>
         <param name="version">Target .NET Framework version</param>
         <param name="visualStudioVersion">Version of Visual Studio associated with the SDK.</param>
-        <summary>Returns the path to the Windows SDK for the desired .NET Framework and Visual Studio version. Note that this is only supported for a targeted .NET Framework version of 4.5 and above.</summary>
+        <summary>
+            Returns the path to the Windows SDK for the desired .NET Framework and Visual Studio version.  Note that 
+            this is only supported for a targeted .NET Framework version of 4.5 and above. 
+            </summary>
         <returns>Path to the appropriate Windows SDK location</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1633,7 +1793,10 @@
         <param name="fileName">The name of the file being requested.</param>
         <param name="version">Target .NET Framework version.</param>
         <param name="visualStudioVersion">Version of Visual Studio associated with the SDK.</param>
-        <summary>Returns the path to a file in the Windows SDK for the desired .NET Framework and Visual Studio version. Note that this is only supported for a targeted .NET Framework version of 4.5 and above.</summary>
+        <summary>
+            Returns the path to a file in the Windows SDK for the desired .NET Framework and Visual Studio version.  Note that 
+            this is only supported for a targeted .NET Framework version of 4.5 and above. 
+            </summary>
         <returns>Path to the appropriate Windows SDK file</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1671,9 +1834,12 @@
       <Docs>
         <param name="fileName">The name of the file being requested.</param>
         <param name="version">Target .NET Framework version.</param>
-        <param name="visualStudioVersion">Version of Visual Studio associated with the requested SDK.</param>
+        <param name="visualStudioVersion">Version of Visual Studio associated with the SDK.</param>
         <param name="architecture">Desired architecture of the resultant file.</param>
-        <summary>Returns the path to a file in the Windows SDK for the desired .NET Framework and Visual Studio version and the desired architecture. Note that this is only supported for a targeted .NET Framework version of 4.5 and above.</summary>
+        <summary>
+            Returns the path to a file in the Windows SDK for the desired .NET Framework and Visual Studio version and the desired 
+            architecture.  Note that this is only supported for a targeted .NET Framework version of 4.5 and above. 
+            </summary>
         <returns>Path to the appropriate Windows SDK file</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1715,7 +1881,9 @@
         <param name="sdkMoniker">Moniker for the sdk</param>
         <param name="targetPlatformIdentifier">Identifier for the platform</param>
         <param name="targetPlatformVersion">Version of the platform</param>
-        <summary>Given an SDK moniker and the targeted platform get the path to the SDK root if it exists.</summary>
+        <summary>
+            Given an SDK moniker and the targeted platform get the path to the SDK root if it exists.
+            </summary>
         <returns>A full path to the sdk root if the sdk exists in the targeted platform or an empty string if it does not exist.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1748,9 +1916,10 @@
         <param name="sdkMoniker">Name of the SDK to determine the installation location for.</param>
         <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
         <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
-        <summary>Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name.  
-  
- The format of the sdk moniker is SDKName, Version=X.X.</summary>
+        <summary>
+            Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name.
+            The format of the sdk moniker is  SDKName, Version=X.X
+            </summary>
         <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1787,9 +1956,10 @@
         <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
         <param name="diskRoots">List of disk roots to search for sdks within</param>
         <param name="registryRoot">Registry root to look for sdks within</param>
-        <summary>Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name.  
-  
- The format of the sdk moniker is SDKName, Version=X.X.</summary>
+        <summary>
+            Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name.
+            The format of the sdk moniker is  SDKName, Version=X.X
+            </summary>
         <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1826,9 +1996,10 @@
         <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
         <param name="diskRoots">List of disk roots to search for sdks within</param>
         <param name="registryRoot">Registry root to look for sdks within</param>
-        <summary>Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name.  
-  
- The format of the sdk moniker is SDKName, Version=X.X.</summary>
+        <summary>
+            Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name.
+            The format of the sdk moniker is  SDKName, Version=X.X
+            </summary>
         <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1857,14 +2028,17 @@
         <Parameter Name="registryRoot" Type="System.String" Index="5" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkMoniker">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <param name="diskRoots">To be added.</param>
-        <param name="extensionDiskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkMoniker">Name of the SDK to determine the installation location for.</param>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <param name="diskRoots">List of disk roots to search for sdks within</param>
+        <param name="extensionDiskRoots">List of disk roots to look for manifest driven extension sdks</param>
+        <param name="registryRoot">Registry root to look for sdks within</param>
+        <summary>
+            Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name.
+            The format of the sdk moniker is  SDKName, Version=X.X
+            </summary>
+        <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1892,14 +2066,17 @@
         <Parameter Name="registryRoot" Type="System.String" Index="5" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkMoniker">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <param name="diskRoots">To be added.</param>
-        <param name="extensionDiskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkMoniker">Name of the SDK to determine the installation location for.</param>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <param name="diskRoots">List of disk roots to search for sdks within</param>
+        <param name="extensionDiskRoots">List of disk roots to look for manifest driven extension sdks</param>
+        <param name="registryRoot">Registry root to look for sdks within</param>
+        <summary>
+            Given an SDKName, targetPlatformIdentifier and TargetPlatformVersion search the default sdk locations for the passed in sdk name.
+            The format of the sdk moniker is  SDKName, Version=X.X
+            </summary>
+        <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1938,7 +2115,9 @@
       <Docs>
         <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
         <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
-        <summary>Gets a list of SDK's installed on the machine for a given target platform.</summary>
+        <summary>
+            Get a list of SDK's installed on the machine for a given target platform
+            </summary>
         <returns>IDictionary of installed SDKS and their location. K:SDKName V:SDK installation location</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1973,7 +2152,9 @@
         <param name="registryRoot">Root registry location to look for sdks</param>
         <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
         <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
-        <summary>Gets a list of SDK's installed on the machine for a given target platform.</summary>
+        <summary>
+            Get a list of SDK's installed on the machine for a given target platform
+            </summary>
         <returns>IDictionary of installed SDKS and their location. K:SDKName V:SDK installation location</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2001,13 +2182,15 @@
         <Parameter Name="targetPlatformVersion" Type="System.Version" Index="4" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="diskRoots">To be added.</param>
-        <param name="extensionDiskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="diskRoots">Array of disk locations to search for sdks</param>
+        <param name="extensionDiskRoots">New style extension SDK roots</param>
+        <param name="registryRoot">Root registry location to look for sdks</param>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <summary>
+            Get a list of SDK's installed on the machine for a given target platform
+            </summary>
+        <returns>IDictionary of installed SDKS and their location. K:SDKName V:SDK installation location</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2031,10 +2214,12 @@
         <Parameter Name="targetPlatformVersion" Type="System.Version" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <summary>
+            Get a list of SDK's installed on the machine for a given target platform
+            </summary>
+        <returns>IDictionary of installed SDKS and their tuples containing (location, platform version).</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2060,12 +2245,14 @@
         <Parameter Name="targetPlatformVersion" Type="System.Version" Index="3" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="diskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="diskRoots">Array of disk locations to search for sdks</param>
+        <param name="registryRoot">Root registry location to look for sdks</param>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <summary>
+            Set of installed SDKs and their location and platform versions
+            </summary>
+        <returns>IDictionary of installed SDKS and their tuples containing (location, platform version).</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2092,13 +2279,15 @@
         <Parameter Name="targetPlatformVersion" Type="System.Version" Index="4" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="diskRoots">To be added.</param>
-        <param name="multiPlatformDiskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="diskRoots">Array of disk locations to search for sdks</param>
+        <param name="multiPlatformDiskRoots">Array of disk locations to search for SDKs that target multiple versions</param>
+        <param name="registryRoot">Root registry location to look for sdks</param>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <summary>
+            Set of installed SDKs and their location and platform versions
+            </summary>
+        <returns>IDictionary of installed SDKS and their tuples containing (location, platform version). Version may be null if the SDK targets multiple versions.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2126,13 +2315,15 @@
         <Parameter Name="registryRoot" Type="System.String" Index="5" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="extensionSdkMoniker">To be added.</param>
-        <param name="targetSdkIdentifier">To be added.</param>
-        <param name="targetSdkVersion">To be added.</param>
-        <param name="diskRoots">To be added.</param>
-        <param name="extensionDiskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="extensionSdkMoniker">The moniker is the Name/Version string. Example: "Windows Desktop, Version=10.0.0.1"</param>
+        <param name="targetSdkIdentifier">The target SDK name.</param>
+        <param name="targetSdkVersion">The target SDK version.</param>
+        <param name="diskRoots">The disk roots used to gather installed SDKs.</param>
+        <param name="extensionDiskRoots">The disk roots used to gather installed extension SDKs.</param>
+        <param name="registryRoot">The registry root used to gather installed extension SDKs.</param>
+        <summary>
+            Gathers the specified extension SDK references for the given target SDK
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2163,15 +2354,17 @@
         <Parameter Name="targetPlatformVersion" Type="System.String" Index="7" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="extensionSdkMoniker">To be added.</param>
-        <param name="targetSdkIdentifier">To be added.</param>
-        <param name="targetSdkVersion">To be added.</param>
-        <param name="diskRoots">To be added.</param>
-        <param name="extensionDiskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="extensionSdkMoniker">The moniker is the Name/Version string. Example: "Windows Desktop, Version=10.0.0.1"</param>
+        <param name="targetSdkIdentifier">The target SDK name.</param>
+        <param name="targetSdkVersion">The target SDK version.</param>
+        <param name="targetPlatformIdentifier">The target platform name.</param>
+        <param name="targetPlatformVersion">The target platform version.</param>
+        <param name="diskRoots">The disk roots used to gather installed SDKs.</param>
+        <param name="extensionDiskRoots">The disk roots used to gather installed extension SDKs.</param>
+        <param name="registryRoot">The registry root used to gather installed extension SDKs.</param>
+        <summary>
+            Gathers the specified extension SDK references for the given target SDK
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2198,7 +2391,9 @@
       <Docs>
         <param name="targetPlatformIdentifier">To be added.</param>
         <param name="targetPlatformVersion">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Given a target platform identifier and version, get the display name for that platform SDK. 
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2229,7 +2424,9 @@
         <param name="targetPlatformVersion">To be added.</param>
         <param name="diskRoots">To be added.</param>
         <param name="registryRoot">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Given a target platform identifier and version, get the display name for that platform SDK. 
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2267,10 +2464,12 @@
         <Parameter Name="targetPlatformVersion" Type="System.String" Index="1" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="targetPlatformIdentifier">Targeted platform for which to find SDK.</param>
-        <param name="targetPlatformVersion">Targeted platform version for which to find SDK.</param>
-        <summary>Given a target platform identifier and a target platform version, searches the default SDK locations for the platform SDK for that target platform.</summary>
-        <returns>The location of the SDK, or an empty string if the SDK could not be found.</returns>
+        <param name="targetPlatformIdentifier">Identifier for the platform</param>
+        <param name="targetPlatformVersion">Version of the platform</param>
+        <summary>
+            Given a target platform identifier and a target platform version search the default sdk locations for the platform sdk for the target platform.
+            </summary>
+        <returns>A full path to the sdk root if the sdk exists in the targeted platform or an empty string if it does not exist.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2298,10 +2497,12 @@
         <Parameter Name="targetPlatformVersion" Type="System.Version" Index="1" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="targetPlatformIdentifier">Targeted platform for which to find SDK.</param>
-        <param name="targetPlatformVersion">Targeted platform version for which to find SDK.</param>
-        <summary>Given a target platform identifier and a target platform version, searches the default SDK locations for the platform SDK for that target platform.</summary>
-        <returns>The location of the SDK, or an empty string if the SDK could not be found.</returns>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <summary>
+            Given a target platform identifier and a target platform version search the default sdk locations for the platform sdk for the target platform.
+            </summary>
+        <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2331,12 +2532,14 @@
         <Parameter Name="registryRoot" Type="System.String" Index="3" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="targetPlatformIdentifier">Targeted platform for which to find SDK.</param>
-        <param name="targetPlatformVersion">Targeted platform version for which to find SDK.</param>
-        <param name="diskRoots">Array of disk roots within which to search for SDK.</param>
-        <param name="registryRoot">Registry root within which to search for SDK.</param>
-        <summary>Given a target platform identifier and a target platform version, searches the default SDK locations for the platform SDK for that target platform.</summary>
-        <returns>The location of the SDK, or an empty string if the SDK could not be found.</returns>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <param name="diskRoots">List of disk roots to search for sdks within</param>
+        <param name="registryRoot">Registry root to look for sdks within</param>
+        <summary>
+            Given a target platform identifier and a target platform version search the default sdk locations for the platform sdk for the target platform.
+            </summary>
+        <returns>Location of the platform SDK if it is found, empty string if it could not be found</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2366,12 +2569,14 @@
         <Parameter Name="registryRoot" Type="System.String" Index="3" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="targetPlatformIdentifier">Targeted platform for which to find SDK.</param>
-        <param name="targetPlatformVersion">Targeted platform version for which to find SDK.</param>
-        <param name="diskRoots">Array of disk roots within which to search for SDK.</param>
-        <param name="registryRoot">Registry root within which to search for SDK.</param>
-        <summary>Given a target platform identifier and a target platform version, searches the default SDK locations for the platform SDK for that target platform.</summary>
-        <returns>The location of the SDK, or an empty string if the SDK could not be found.</returns>
+        <param name="targetPlatformIdentifier">Targeted platform to find SDKs for</param>
+        <param name="targetPlatformVersion">Targeted platform version to find SDKs for</param>
+        <param name="diskRoots">List of disk roots to search for sdks within</param>
+        <param name="registryRoot">Registry root to look for sdks within</param>
+        <summary>
+            Given a target platform identifier and a target platform version search the default sdk locations for the platform sdk for the target platform.
+            </summary>
+        <returns>Location of the SDK if it is found, empty string if it could not be found</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2398,13 +2603,15 @@
         <Parameter Name="targetPlatformVersion" Type="System.String" Index="4" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkIdentifier">To be added.</param>
-        <param name="sdkVersion">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformMinVersion">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkIdentifier">The OneCore SDK identifier that defines OnceCore SDK root</param>
+        <param name="sdkVersion">The verision of the OneCore SDK</param>
+        <param name="targetPlatformIdentifier">Identifier for the targeted platform</param>
+        <param name="targetPlatformMinVersion">The min version of the targeted platform</param>
+        <param name="targetPlatformVersion">The version of the targeted platform</param>
+        <summary>
+            Get the location of the target platform SDK props file for a given {SDKI, SDKV, TPI, TPMinV, TPV} combination.
+            </summary>
+        <returns>Location of the target platform SDK props file without .props filename</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2433,15 +2640,17 @@
         <Parameter Name="registryRoot" Type="System.String" Index="6" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkIdentifier">To be added.</param>
-        <param name="sdkVersion">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformMinVersion">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <param name="diskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkIdentifier">The OneCore SDK identifier that defines OnceCore SDK root</param>
+        <param name="sdkVersion">The verision of the OneCore SDK</param>
+        <param name="targetPlatformIdentifier">Identifier for the targeted platform</param>
+        <param name="targetPlatformMinVersion">The min version of the targeted platform</param>
+        <param name="targetPlatformVersion">The version of the targeted platform</param>
+        <param name="diskRoots">List of disk roots to search for sdks within</param>
+        <param name="registryRoot">Registry root to look for sdks within</param>
+        <summary>
+            Get the location of the target platform SDK props file for a given {SDKI, SDKV, TPI, TPMinV, TPV} combination.
+            </summary>
+        <returns>Location of the target platform SDK props file without .props filename</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2465,10 +2674,12 @@
         <Parameter Name="sdkVersion" Type="System.Version" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkIdentifier">To be added.</param>
-        <param name="sdkVersion">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkIdentifier">SDK for which to find the installed platforms</param>
+        <param name="sdkVersion">SDK version for which to find the installed platforms</param>
+        <summary>
+            Given an SDK identifier and an SDK version, return a list of installed platforms.
+            </summary>
+        <returns>A list of keys for the installed platforms for the given SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2494,12 +2705,14 @@
         <Parameter Name="registryRoot" Type="System.String" Index="3" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkIdentifier">To be added.</param>
-        <param name="sdkVersion">To be added.</param>
-        <param name="diskRoots">To be added.</param>
-        <param name="registryRoot">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkIdentifier">SDK for which to find the installed platforms</param>
+        <param name="sdkVersion">SDK version for which to find the installed platforms</param>
+        <param name="diskRoots">List of disk roots to search for sdks within</param>
+        <param name="registryRoot">Registry root to look for sdks within</param>
+        <summary>
+            Given an SDK identifier and an SDK version, return a list of installed platforms.
+            </summary>
+        <returns>A list of keys for the installed platforms for the given SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2524,8 +2737,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets the root location for the reference assembly directory under the program files directory.</summary>
-        <returns>The root location for the reference assembly directory.</returns>
+        <summary>
+            Will return the root location for the reference assembly directory under the program files directory.
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2553,15 +2768,17 @@
         <Parameter Name="diskRoot" Type="System.String" Index="6" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="sdkIdentifier">To be added.</param>
-        <param name="sdkVersion">To be added.</param>
-        <param name="targetPlatformIdentifier">To be added.</param>
-        <param name="targetPlatformMinVersion">To be added.</param>
-        <param name="targetPlatformVersion">To be added.</param>
-        <param name="folderName">To be added.</param>
-        <param name="diskRoot">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sdkIdentifier">The identifier of the SDK</param>
+        <param name="sdkVersion">The verision of the SDK</param>
+        <param name="targetPlatformIdentifier">The identifier of the targeted platform</param>
+        <param name="targetPlatformMinVersion">The min version of the targeted platform</param>
+        <param name="targetPlatformVersion">The version of the targeted platform</param>
+        <param name="folderName">The content folder name under SDK path</param>
+        <param name="diskRoot">An optional disk root to search.  A value should only be passed from a unit test.</param>
+        <summary>
+            Return the versioned/unversioned SDK content folder path
+            </summary>
+        <returns>The SDK content folder path</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2597,9 +2814,12 @@
         <Parameter Name="sdkRoot" Type="System.String" Index="0" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="sdkRoot">The root folder for the SDK, must contain a design-time folder.</param>
-        <summary>Gets the list of SDK folders that contain the design-time files for the SDK at the specified SDK root. The list is in the order that must be used in searching for references.</summary>
-        <returns>The list of folders to be used in searching for design-time files in the SDK, in the order that must be used for the search.</returns>
+        <param name="sdkRoot">Root folder for the SDK must contain a Designtime folder</param>
+        <summary>
+            Get the list of SDK folders which contains the designtime files for the sdk at the sdkRoot provided
+            in the order in which they should be searched for references.
+            </summary>
+        <returns>A list of folders in the order which they should be used when looking for DesignTime files in the SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2628,11 +2848,14 @@
         <Parameter Name="targetArchitecture" Type="System.String" Index="2" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="sdkRoot">The root folder for the SDK, must contain a design-time folder.</param>
-        <param name="targetConfiguration">The configuration the SDK is targeting. This is "Debug" or "Retail".</param>
-        <param name="targetArchitecture">The architecture the SDK is targeting.</param>
-        <summary>Gets the list of SDK folders that contain the design-time files for the SDK at the specified SDK root. The list is in the order that must be used in searching for references.</summary>
-        <returns>The list of folders to be used in searching for design-time files in the SDK, in the order that must be used for the search.</returns>
+        <param name="sdkRoot">Root folder for the SDK must contain a DesignTime folder</param>
+        <param name="targetConfiguration">The configuration the SDK is targeting. This should be Debug or Retail</param>
+        <param name="targetArchitecture">The architecture the SDK is targeting</param>
+        <summary>
+            Get the list of SDK folders which contains the DesignTime files for the sdk at the sdkRoot provided
+            in the order in which they should be searched for references.
+            </summary>
+        <returns>A list of folders in the order which they should be used when looking for DesignTime files in the SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2668,9 +2891,12 @@
         <Parameter Name="sdkRoot" Type="System.String" Index="0" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="sdkRoot">The root folder for the SDK, must contain a redist folder.</param>
-        <summary>Gets the list of SDK folders that contain the redist files for the SDK at the specified SDK root. The list is in the order that must be used in searching for references.</summary>
-        <returns>The list of folders to be used in searching for redist files in the SDK, in the order that must be used for the search.</returns>
+        <param name="sdkRoot">Root folder for the SDK must contain a redist folder</param>
+        <summary>
+            Get the list of SDK folders which contains the redist files for the sdk at the sdkRoot provided
+            in the order in which they should be searched for references.
+            </summary>
+        <returns>A list of folders in the order which they should be used when looking for redist files in the SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2699,11 +2925,14 @@
         <Parameter Name="targetArchitecture" Type="System.String" Index="2" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="sdkRoot">The root folder for the SDK, must contain a redist folder.</param>
-        <param name="targetConfiguration">The configuration the SDK is targeting. This is "Debug" or "Retail".</param>
-        <param name="targetArchitecture">The architecture the SDK is targeting.</param>
-        <summary>Gets the list of SDK folders that contain the redist files for the SDK at the specified SDK root. The list is in the order that must be used in searching for references.</summary>
-        <returns>The list of folders to be used in searching for redist files in the SDK, in the order that must be used for the search.</returns>
+        <param name="sdkRoot">Root folder for the SDK must contain a redist folder</param>
+        <param name="targetConfiguration">The configuration the SDK is targeting. This should be Debug or Retail</param>
+        <param name="targetArchitecture">The architecture the SDK is targeting</param>
+        <summary>
+            Get the list of SDK folders which contains the redist files for the sdk at the sdkRoot provided
+            in the order in which they should be searched for references.
+            </summary>
+        <returns>A list of folders in the order which they should be used when looking for redist files in the SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2739,9 +2968,12 @@
         <Parameter Name="sdkRoot" Type="System.String" Index="0" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="sdkRoot">The root folder for the SDK.</param>
-        <summary>Gets the list of SDK folders that contain the references for the SDK at the specified SDK root. The list is in the order that must be used in searching for references.</summary>
-        <returns>The list of folders to be used in searching for references in the SDK, in the order that must be used for the search.</returns>
+        <param name="sdkRoot">Root folder for the SDK</param>
+        <summary>
+            Get the list of SDK folders which contains the references for the sdk at the sdkRoot provided
+            in the order in which they should be searched for references.
+            </summary>
+        <returns>A list of folders in the order which they should be used when looking for references in the SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2770,11 +3002,14 @@
         <Parameter Name="targetArchitecture" Type="System.String" Index="2" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="sdkRoot">The root folder for the SDK.</param>
-        <param name="targetConfiguration">The configuration the SDK is targeting. This is "Debug" or "Retail".</param>
-        <param name="targetArchitecture">The architecture the SDK is targeting.</param>
-        <summary>Gets the list of SDK folders that contain the references for the SDK at the specified SDK root. The list is in the order that must be used in searching for references.</summary>
-        <returns>The list of folders to be used in searching for references in the SDK, in the order that must be used for the search.</returns>
+        <param name="sdkRoot">Root folder for the SDK</param>
+        <param name="targetConfiguration">The configuration the SDK is targeting. This should be Debug or Retail</param>
+        <param name="targetArchitecture">The architecture the SDK is targeting</param>
+        <summary>
+            Get the list of SDK folders which contains the references for the sdk at the sdkRoot provided
+            in the order in which they should be searched for references.
+            </summary>
+        <returns>A list of folders in the order which they should be used when looking for references in the SDK</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2799,7 +3034,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets a list of supported target framework monikers.</summary>
+        <summary>
+            Gets a IList of supported target framework monikers.
+            </summary>
         <returns>list of supported target framework monikers</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2832,7 +3069,9 @@
         <param name="targetPlatformIdentifier">To be added.</param>
         <param name="targetPlatformMinVersion">To be added.</param>
         <param name="targetPlatformVersion">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Gathers the set of platform winmds for a particular {SDKI, SDKV, TPI, TPMinV, TPV} combination
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2869,7 +3108,9 @@
         <param name="targetPlatformVersion">To be added.</param>
         <param name="diskRoots">To be added.</param>
         <param name="registryRoot">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Gathers the set of platform winmds for a particular {SDKI, SDKV, TPI, TPMinV, TPV} combination
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2904,7 +3145,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets a list of target platform SDKs on the machine.</summary>
+        <summary>
+            Get a list target platform sdks on the machine.
+            </summary>
         <returns>List of Target Platform SDKs, Item1: TargetPlatformName Item2: Version of SDK Item3: Path to sdk root</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2933,10 +3176,12 @@
         <Parameter Name="registryRoot" Type="System.String" Index="1" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="diskRoots">List of disk locations to search for platform SDKs.</param>
-        <param name="registryRoot">Registry root location to look for platform SDKs.</param>
-        <summary>Gets a list of target platform SDKs on the machine.</summary>
-        <returns>A list of target platform SDKs.</returns>
+        <param name="diskRoots">List of disk locations to search for platform sdks</param>
+        <param name="registryRoot">Registry root location to look for platform sdks</param>
+        <summary>
+            Get a list target platform sdks on the machine.
+            </summary>
+        <returns>List of Target Platform SDKs</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2966,7 +3211,10 @@
       <Docs>
         <param name="targetFrameworkRootDirectory">Target framework root directory.</param>
         <param name="frameworkIdentifier">Framework identifier.</param>
-        <summary>Gets the highest version of a target framework moniker based on the identifier.</summary>
+        <summary>
+            This method will return the highest version of a target framework moniker based on the identifier. This method will only 
+            find full frameworks, this means no profiles will be returned.
+            </summary>
         <returns>The highest version of a target framework moniker based on the identifier. This method will only find full frameworks; no profiles will be returned.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2999,8 +3247,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the fully qualified path of the system directory.</summary>
-        <value>A string containing a directory path to the system directory.</value>
+        <summary>
+            Gets the fully qualified path to the system directory i.e. %SystemRoot%\System32
+            </summary>
+        <value>The system path.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   

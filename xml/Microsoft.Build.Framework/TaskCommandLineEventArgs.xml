@@ -22,15 +22,20 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Provides data for the <see cref="E:Microsoft.Build.Framework.IEventSource.MessageRaised" /> event.</summary>
+    <summary>
+            This class is used by tasks to log their command lines. This class extends
+            <see cref="T:Microsoft.Build.Framework.BuildMessageEventArgs" /> so that command lines can be logged as
+            messages. Logging a command line is only relevant for tasks that wrap an
+            underlying executable/tool, or emulate a shell command. Tasks that have
+            no command line equivalent should not raise this extended message event.
+            </summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:Microsoft.Build.Framework.TaskCommandLineEventArgs> extends <xref:Microsoft.Build.Framework.BuildMessageEventArgs> so that the command line string used by a task to execute an underlying program can be logged as a message. Logging a command line string is only relevant for tasks that wrap an underlying program or emulate a shell command. Tasks that have no command line equivalent should not raise this extended message event.  
-  
- ]]></format>
-    </remarks>
+            WARNING: marking a type [Serializable] without implementing ISerializable
+            imposes a serialization contract -- it is a promise to never change the
+            type's fields i.e. the type is immutable; adding new fields in the next
+            version of the type without following certain special FX guidelines, can
+            break both forward and backward compatibility
+            </remarks>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -63,7 +68,9 @@
       </Attributes>
       <Parameters />
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Framework.TaskCommandLineEventArgs" /> class.</summary>
+        <summary>
+            Default (family) constructor.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -88,10 +95,14 @@
         <Parameter Name="importance" Type="Microsoft.Build.Framework.MessageImportance" />
       </Parameters>
       <Docs>
-        <param name="commandLine">The command line used by the task to run the underlying program.</param>
-        <param name="taskName">The name of the task raising the event.</param>
-        <param name="importance">The <see cref="T:Microsoft.Build.Framework.MessageImportance" /> of the message.</param>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Framework.TaskCommandLineEventArgs" /> class with the specified command line and <see cref="T:Microsoft.Build.Framework.MessageImportance" />.</summary>
+        <param name="commandLine">The command line used by a task to launch
+            its underlying tool/executable.</param>
+        <param name="taskName">The name of the task raising this event.</param>
+        <param name="importance">Importance of command line -- controls whether
+            the command line will be displayed by less verbose loggers.</param>
+        <summary>
+            Creates an instance of this class for the given task command line.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -115,11 +126,15 @@
         <Parameter Name="eventTimestamp" Type="System.DateTime" Index="3" FrameworkAlternate="msbuild-15;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="commandLine">The command line used by the task to run the underlying program.</param>
-        <param name="taskName">The name of the task raising the event.</param>
-        <param name="importance">The <see cref="T:Microsoft.Build.Framework.MessageImportance" /> of the message.</param>
-        <param name="eventTimestamp">The time the event occurred.</param>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Framework.TaskCommandLineEventArgs" /> class with the specified command line, task name and <see cref="T:Microsoft.Build.Framework.MessageImportance" />.</summary>
+        <param name="commandLine">The command line used by a task to launch
+            its underlying tool/executable.</param>
+        <param name="taskName">The name of the task raising this event.</param>
+        <param name="importance">Importance of command line -- controls whether
+            the command line will be displayed by less verbose loggers.</param>
+        <param name="eventTimestamp">Timestamp when the event was created</param>
+        <summary>
+            Creates an instance of this class for the given task command line. This constructor allows the timestamp to be set
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -142,7 +157,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the command line used by the task to run the underlying program.</summary>
+        <summary>
+            Gets the task command line associated with this event.
+            </summary>
         <value>The command line used by the task to run the underlying program.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -166,7 +183,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the name of the task that raised the event.</summary>
+        <summary>
+            Gets the name of the task that raised this event.
+            </summary>
         <value>The name of the task that raised the event.</value>
         <remarks>To be added.</remarks>
       </Docs>

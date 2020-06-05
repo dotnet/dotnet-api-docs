@@ -15,15 +15,17 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>A specialization of the ConsoleLogger that logs to a file instead of the console.</summary>
+    <summary>
+            A specialization of the ConsoleLogger that logs to a file instead of the console.
+            The output in terms of what is written and how it looks is identical. For example you can 
+            log verbosely to a file using the FileLogger while simultaneously logging only high priority events
+            to the console using a ConsoleLogger.
+            </summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The output in terms of what is written and how it looks is identical. For example you can log verbosely to a file using the FileLogger while simultaneously logging only high priority events to the console using a ConsoleLogger.  
-  
- ]]></format>
-    </remarks>
+            It's unfortunate that this is derived from ConsoleLogger, which is itself a facade; it makes things more
+            complex -- for example, there is parameter parsing in this class, plus in BaseConsoleLogger. However we have
+            to derive FileLogger from ConsoleLogger because it shipped that way in Whidbey.
+            </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -40,7 +42,9 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Creates a file logger.</summary>
+        <summary>
+            Default constructor.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -73,8 +77,11 @@
         <Parameter Name="eventSource" Type="Microsoft.Build.Framework.IEventSource" />
       </Parameters>
       <Docs>
-        <param name="eventSource">The available events.</param>
-        <summary>Signs up the console file logger for the given build events.</summary>
+        <param name="eventSource">Available events.</param>
+        <summary>
+            Signs up the console file logger for all build events.
+            This is the backward-compatible overload.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -106,7 +113,9 @@
       <Docs>
         <param name="eventSource">The event source.</param>
         <param name="nodeCount">The node count.</param>
-        <summary>Initializes a file logger in a multiprocessor environment.</summary>
+        <summary>
+            Multiproc aware initialization
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -128,7 +137,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Called when the build is finished.</summary>
+        <summary>
+            Shutdown method implementation of ILogger - we need to flush and close our logfile.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   

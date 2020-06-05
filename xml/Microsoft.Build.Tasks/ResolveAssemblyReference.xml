@@ -26,7 +26,10 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Implements the <c>ResolveAssemblyReference</c> task. Use the <c>ResolveAssemblyReference</c> element in your project file to create and execute this task. For usage and parameter information, see [ResolveAssemblyReference Task](/visualstudio/msbuild/resolveassemblyreference-task).</summary>
+    <summary>
+            Given a list of assemblyFiles, determine the closure of all assemblyFiles that
+            depend on those assemblyFiles including second and nth-order dependencies too.
+            </summary>
     <remarks>To be added.</remarks>
     <forInternalUseOnly />
   </Docs>
@@ -56,7 +59,9 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Tasks.ResolveAssemblyReference" /> class.</summary>
+        <summary>
+            Construct
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -97,7 +102,10 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the assembly extensions that will be considered during references resolution.</summary>
+        <summary>
+            [default=.exe;.dll]
+            These are the assembly extensions that will be considered during references resolution.
+            </summary>
         <value>The assembly extensions that will be considered during references resolution.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -146,7 +154,10 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the extensions that will be considered when searching for related files.</summary>
+        <summary>
+            [default=.pdb;.xml]
+            These are the extensions that will be considered when looking for related files.
+            </summary>
         <value>The extensions that will be considered when searching for related files.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -195,8 +206,13 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the App.Config file path.</summary>
-        <value>The App.Config file path.</value>
+        <summary>
+             If this file name is passed in, then we parse it as an app.config file and extract bindingRedirect mappings. These mappings are used in the dependency
+             calculation process to remap versions of assemblies.
+            
+             If this parameter is passed in, then AutoUnify must be false, otherwise error.
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -244,7 +260,41 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the assembly names to resolve into full paths and to find dependencies for.</summary>
+        <summary>
+             These can either be simple fusion names like:
+            
+                  System
+            
+             or strong names like
+            
+                 System, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+            
+             These names will be resolved into full paths and all dependencies will be found.
+            
+             Optional attributes are:
+                 bool Private [default=true] -- means 'CopyLocal'
+                 string HintPath [default=''] -- location of file name to consider as a reference, 
+                     used when {HintPathFromItem} is one of the paths in SearchPaths.
+                 bool SpecificVersion [default=absent] -- 
+                     when true, the exact fusionname in the Include must be matched. 
+                     when false, any assembly with the same simple name will be a match.
+                     when absent, then look at the value in Include. 
+                       If its a simple name then behave as if specific version=false.
+                       If its a strong name name then behave as if specific version=true.
+                 string ExecutableExtension [default=absent] -- 
+                     when present, the resolved assembly must have this extension.
+                     when absent, .dll is considered and then .exe for each directory looked at.
+                 string SubType -- only items with empty SubTypes will be considered. Items 
+                     with non-empty subtypes will be ignored.
+                 string AssemblyFolderKey [default=absent] -- supported for legacy AssemblyFolder 
+                     resolution. This key can have a value like 'hklm\vendor folder'. When set, only
+                     this particular assembly folder key will be used.
+                        This is to support the scenario in VSWhidey#357946 in which there are multiple
+                        side-by-side libraries installed and the user wants to pick an exact version.
+                 bool EmbedInteropTyeps [default=absent] -- 
+                     when true, we should treat this assembly as if it has no dependencies and should 
+                     be completely embedded into the target assembly.
+             </summary>
         <value>The assembly names to resolve into full paths and to find dependencies for.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -293,7 +343,19 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a list of fully qualified assembly paths to find dependencies for.</summary>
+        <summary>
+             A list of fully qualified paths-to-assemblyFiles to find dependencies for.
+            
+             Optional attributes are:
+                 bool Private [default=true] -- means 'CopyLocal'
+                 string FusionName -- the simple or strong fusion name for this item. If this 
+                     attribute is present it can save time since the assembly file won't need
+                     to be opened to get the fusion name.
+                 bool ExternallyResolved [default=false] -- indicates that the reference and its
+                    dependencies are resolved by an external system (commonly from nuget assets) and
+                    so several steps can be skipped as an optimization: finding dependencies, 
+                    satellite assemblies, etc.
+             </summary>
         <value>The list of fully qualified assembly paths to find dependencies for.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -335,9 +397,32 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether the resulting dependency graph is automatically treated as if there were an App.Config file passed in to the <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.AppConfigFile" /> property.</summary>
-        <value>
-          <see langword="true" /> if the resulting dependency graph is automatically treated as if there were an App.Config file passed in to the <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.AppConfigFile" /> property; otherwise, <see langword="false" />.</value>
+        <summary>
+             [default=false]
+             This parameter is used for building assemblies, such as DLLs, which cannot have a normal
+             App.Config file.
+            
+             When true, the resulting dependency graph is automatically treated as if there were an
+             App.Config file passed in to the AppConfigFile parameter. This virtual
+             App.Config file has a bindingRedirect entry for each conflicting set of assemblies such
+             that the highest version assembly is chosen. A consequence of this is that there will never
+             be a warning about conflicting assemblies because every conflict will have been resolved.
+            
+             When true, each distinct remapping will result in a high priority comment indicating the
+             old and new versions and the fact that this was done automatically because AutoUnify was true.
+            
+             When true, the AppConfigFile parameter should be empty. Otherwise, it's an
+             error.
+            
+             When false, no assembly version remapping will occur automatically. When two versions of an
+             assembly are present, there will be a warning.
+            
+             When false, each distinct conflict between different versions of the same assembly will
+             result in a high priority comment. After all of these comments are displayed, there will be
+             a single warning with a unique error code and text that reads "Found conflicts between
+             different versions of reference and dependent assemblies".
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -387,7 +472,13 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a list of assemblies, which must be absolute file names or project-relative file names, to use for the search and resolution process.</summary>
+        <summary>
+             A list of assembly files that can be part of the search and resolution process.
+             These must be absolute filesnames, or project-relative filenames.
+            
+             Assembly files in this list will be considered when SearchPaths contains
+             {CandidateAssemblyFiles} as one of the paths to consider.
+             </summary>
         <value>The list of assemblies to use for the search and resolution process.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -428,7 +519,24 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that determines how dependencies are determined, and whether or not a dependency is copied locally.</summary>
+        <summary>
+             When determining if a dependency should be copied locally one of the checks done is to see if the 
+             parent reference in the project file has the Private metadata set or not. If that metadata is set then 
+             We will use that for the dependency as well. 
+             
+            However, if the metadata is not set then the dependency will go through the same checks as the parent reference. 
+            One of these checks is to see if the reference is in the GAC. If a reference is in the GAC then we will not copy it locally
+            as it is assumed it will be in the gac on the target machine as well. However this only applies to that specific reference and not its dependencies.
+            
+            This means a reference in the project file may be copy local false due to it being in the GAC but the dependencies may still be copied locally because they are not in the GAC.
+            This is the default behavior for RAR and causes the default value for this property to be true.
+            
+            When this property is false we will still check project file references to see if they are in the GAC and set their copy local state as appropriate. 
+            However for dependencies we will not only check to see if they are in the GAC but we will also check to see if the parent reference from the project file is in the GAC. 
+            If the parent reference from the project file is in the GAC then we will not copy the dependency locally.
+            
+            NOTE: If there are multiple parent reference and ANY of them does not come from the GAC then we will set copy local to true.
+            </summary>
         <value>
           <see langword="true" /> if, when determining if a dependency should be copied locally, one of the checks done is to see if the parent reference in the project file has the Private metadata set. If that metadata is set, we will use that for the dependency as well.  
   
@@ -486,8 +594,11 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns all files in the <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.ResolvedFiles" />, <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.ResolvedDependencyFiles" />, <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.RelatedFiles" />, <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.SatelliteFiles" />, and <see cref="T:Microsoft.Build.Tasks.ResolveAssemblyReference" /> properties that have the <c>CopyLocal</c> item metadata with a value of <see langword="true" />.</summary>
-        <value>All files in the <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.ResolvedFiles" />, <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.ResolvedDependencyFiles" />, <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.RelatedFiles" />, <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.SatelliteFiles" />, and <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.ScatterFiles" /> properties that have the <c>CopyLocal</c> item metadata with a value of <see langword="true" />.</value>
+        <summary>
+            Returns every file in ResolvedFiles+ResolvedDependencyFiles+RelatedFiles+SatelliteFiles+ScatterFiles+SatelliteAssemblyFiles
+            that have CopyLocal flags set to 'true'.
+            </summary>
+        <value />
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -513,7 +624,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Whether the assembly or any of its primary references depends on netstandard
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -539,7 +652,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Whether the assembly or any of its primary references depends on system.runtime. (Aka needs Facade references to resolve duplicate types)
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -560,7 +675,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            [default=false]
+            Enables legacy mode for CopyLocal determination. If true, referenced assemblies will not be copied locally if they
+            are found in the GAC. If false, assemblies will be copied locally unless they were found only in the GAC.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -594,9 +713,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Executes the <c>ResolveAssemblyReference</c> task.</summary>
-        <returns>
-          <see langword="true" /> if task execution succeeded; otherwise, <see langword="false" />.</returns>
+        <summary>
+            Execute the task.
+            </summary>
+        <returns>True if there was success.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -634,7 +754,9 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the items written to disk.</summary>
+        <summary>
+            The names of all files written to disk.
+            </summary>
         <value>The items written to disk.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -676,9 +798,13 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a Boolean value that specifies whether dependencies will be found (<see langword="true" />) or only primary references will be found (<see langword="false" />).</summary>
-        <value>
-          <see langword="true" /> if dependencies will be found; <see langword="false" /> if only primary references will be found.</value>
+        <summary>
+             If set, then dependencies will be found. Otherwise, only Primary references will be
+             resolved.
+            
+             Default is true.
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -706,9 +832,15 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Force dependencies to be walked even when a reference is marked with ExternallyResolved=true
+            metadata.
+            </summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            This is used to ensure that we suggest appropriate binding redirects for assembly version
+            conflicts within an externally resolved graph.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="FindRelatedFiles">
@@ -747,9 +879,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether related files such as .pdb files and .xml files will be found.</summary>
-        <value>
-          <see langword="true" /> if related files such as .pdb files and .xml files will be found; otherwise, <see langword="false" />.</value>
+        <summary>
+             If set, then related files (.pdbs and .xmls) will be found.
+            
+             Default is true.
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -797,9 +932,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether satellite assemblies will be found.</summary>
-        <value>
-          <see langword="true" /> if satellite assemblies will be found; otherwise, <see langword="false" />.</value>
+        <summary>
+             If set, then satellites will be found.
+            
+             Default is true.
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -847,9 +985,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether the serialization assemblies will be found.</summary>
-        <value>
-          <see langword="true" /> if the serialization assemblies will be found; otherwise, <see langword="false" />.</value>
+        <summary>
+             If set, then serialization assemblies will be found.
+            
+             Default is true.
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -886,7 +1027,22 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a list of items representing XML files that contain the full framework for the profile.</summary>
+        <summary>
+            A list of XML files that contain the full framework for the profile.
+            
+            Normally nothing is passed in here, this is for the cases where the location of the xml file for the full framework 
+            is not under a RedistList folder.
+            
+            Format of the file is like:
+            
+                <FileList Redist="MatchingRedistListName"><File AssemblyName="System" Version="2.0.0.0" PublicKeyToken="b77a5c561934e089" Culture="neutral" ProcessorArchitecture="MSIL" FileVersion="2.0.40824.0" InGAC="true" />
+                    etc.
+                </FileList>
+            
+            Items in this list must specify the "FrameworkDirectory" metadata to associate an redist list
+            with a particular framework directory. If the association is not made an error will be logged. The reason is, 
+            The logic in rar assumes if a FrameworkDirectory is not set it will use the target framework directory.
+            </summary>
         <value>A list of items representing XML files that contain the full framework for the profile.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -938,7 +1094,11 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a list of folders which contain a RedistList directory which represent the full framework for a given client profile, for example:%programfiles%\reference assemblies\microsoft\framework\v4.0.</summary>
+        <summary>
+            Set of folders which containd a RedistList directory which represent the full framework for a given client profile.
+            An example would be 
+            %programfiles%\reference assemblies\microsoft\framework\v4.0
+            </summary>
         <value>A list of folders which contain a RedistList directory which represent the full framework for a given client profile</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -973,7 +1133,12 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a string that contains the names of the subsets of the specified target framework.</summary>
+        <summary>
+            Provide a set of names which if seen in the TargetFrameworkSubset list will cause the ignoring 
+            of TargetFrameworkSubsets.
+            
+            Full, Complete
+            </summary>
         <value>A string value that contains subset names.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1018,7 +1183,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a Boolean value that specifies whether the task should look for and use additional installed assembly subset tables (also known as Subset Lists), which are found in the SubsetList directory under the provided TargetFrameworkDirectories.</summary>
+        <summary>
+            [default=false]
+            Boolean property to control whether or not the task should look for and use additional installed 
+            assembly subset tables (a.k.a Subset Lists) found in the SubsetList directory underneath the provided
+            TargetFrameworkDirectories.
+            </summary>
         <value>
           <see langword="true" /> if additional assembly subset tables are used; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -1057,7 +1227,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a Boolean value that specifies whether the <c>ResolveAssemblyReference</c> task should ignore additional installed assembly tables found in the RedistList directory underneath the provided <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.TargetFrameworkDirectories" /> (<see langword="true" />) or should search for and use these installed assembly tables (<see langword="false" />).</summary>
+        <summary>
+            [default=false]
+            Boolean property to control whether or not the task should look for and use additional installed 
+            assembly tables (a.k.a Redist Lists) found in the RedistList directory underneath the provided
+            TargetFrameworkDirectories.
+            </summary>
         <value>
           <see langword="true" /> if the task should ignore the additional installed assembly tables; <see langword="false" /> if the task should search for and use the additional installed assembly tables.</value>
         <remarks>
@@ -1091,7 +1266,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether to ignore the framework attribute when checking if an assembly is compatible with the targeted framework.</summary>
+        <summary>
+            Should the framework attribute be ignored when checking to see if an assembly is compatible with the targeted framework.
+            </summary>
         <value>
           <see langword="true" /> to ignore the framework attribute; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -1118,7 +1295,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether to ignore the version information on the framework assembly and actually resolve the framework assembly from the currently targeted framework. The flag applies if the primary reference is a framework assembly.</summary>
+        <summary>
+            If the primary reference is a framework assembly ignore its version information and actually resolve the framework assembly from the currently targeted framework.
+            </summary>
         <value>
           <see langword="true" /> to ignore the version information; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -1154,7 +1333,21 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets an <see cref="T:Microsoft.Build.Framework.ITaskItem" /> that represents a list of XML files that contain assemblies that are expected to be in the target subset.</summary>
+        <summary>
+            A list of XML files that contain assemblies that are expected to be in the target subset
+            
+            Format of the file is like:
+            
+                <FileList Redist="ClientSubset"><File AssemblyName="System" Version="2.0.0.0" PublicKeyToken="b77a5c561934e089" Culture="neutral" ProcessorArchitecture="MSIL" FileVersion="2.0.40824.0" InGAC="true" />
+                    etc.
+                </FileList>
+            
+            Items in this list may optionally specify the "FrameworkDirectory" metadata to associate an InstalledAssemblySubsetTable
+            with a particular framework directory. 
+            If there is only a single TargetFrameworkDirectories element, then any items in this list missing the
+            "FrameworkDirectory" metadata will be treated as though this metadata is set to the lone (unique) value passed
+            to TargetFrameworkDirectories.
+            </summary>
         <value>A list of XML files.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1220,7 +1413,25 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a list of XML files that contain assemblies that are expected to be installed on the target machine.</summary>
+        <summary>
+            A list of XML files that contain assemblies that are expected to be installed on the target machine.
+            
+            Format of the file is like:
+            
+                <FileList Redist="Microsoft-Windows-CLRCoreComp"><File AssemblyName="System" Version="2.0.0.0" PublicKeyToken="b77a5c561934e089" Culture="neutral" ProcessorArchitecture="MSIL" FileVersion="2.0.40824.0" InGAC="true" />
+                    etc.
+                </FileList>
+            
+            When present, assemblies from this list will be candidates to automatically "unify" from prior versions up to
+            the version listed in the XML. Also, assemblies with InGAC='true' will be considered prerequisites and will be CopyLocal='false'
+            unless explicitly overridden.
+            Items in this list may optionally specify the "FrameworkDirectory" metadata to associate an InstalledAssemblyTable
+            with a particular framework directory.  However, this setting will be ignored unless the Redist name begins with
+            "Microsoft-Windows-CLRCoreComp".
+            If there is only a single TargetFrameworkDirectories element, then any items in this list missing the
+            "FrameworkDirectory" metadata will be treated as though this metadata is set to the lone (unique) value passed
+            to TargetFrameworkDirectories.
+            </summary>
         <value>A list of XML files that contain assemblies that are expected to be installed on the target machine.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1254,7 +1465,12 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the list of directories which contain the redist lists for the most current framework which can be targeted on the machine.</summary>
+        <summary>
+            The list of directories which contain the redist lists for the most current 
+            framework which can be targeted on the machine. If this is not set
+            Then we will looks for the highest framework installed on the machine 
+            for a given target framework identifier and use that.
+            </summary>
         <value>The list of directories which contain the redist lists for the most current framework which can be targeted on the machine. If this is not set, then the highest framework installed on the machine for a given target framework identifier is searched and used.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1285,7 +1501,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the name of the target framework profile. For example, Client, Web, or Network.</summary>
+        <summary>
+            Name of the target framework profile we are targeting.
+            Eg. Client, Web, or Network
+            </summary>
         <value>The name of the target framework profile. For example, Client, Web, or Network.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1327,7 +1546,12 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets related files, such as .xml and .pdb files with the same base name as a reference.</summary>
+        <summary>
+            Related files are files like intellidoc (.XML) and symbols (.PDB) that have the same base
+            name as a reference.
+                bool Primary [always false] - true if this assembly was passed in with Assemblies.
+                bool CopyLocal - whether the given reference should be copied to the output directory.
+            </summary>
         <value>The related files.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1369,7 +1593,19 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the *n*th order paths to dependencies.</summary>
+        <summary>
+            A list of all n-th order paths-to-dependencies with the following attributes:
+                bool CopyLocal - whether the given reference should be copied to the output directory.
+                string FusionName - the fusion name for this dependency.
+                string ResolvedFrom - the literal search path that this file was resolved from.
+                bool IsRedistRoot - Whether or not this assembly is the representative for an entire redist.
+                    'true' means the assembly is representative of an entire redist and should be indicated as 
+                    an application dependency in an application manifest.
+                    'false' means the assembly is internal to a redist and should not be part of the 
+                    application manifest.
+                string Redist - The name (if any) of the redist that contains this assembly.
+            Does not include first order primary references--this list is in ResolvedFiles.
+            </summary>
         <value>The *n*th order paths to dependencies.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1411,7 +1647,18 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a list of all primary references resolved to full paths.</summary>
+        <summary>
+            This is a list of all primary references resolved to full paths.
+                bool CopyLocal - whether the given reference should be copied to the output directory.
+                string FusionName - the fusion name for this dependency.
+                string ResolvedFrom - the literal search path that this file was resolved from.
+                bool IsRedistRoot - Whether or not this assembly is the representative for an entire redist.
+                    'true' means the assembly is representative of an entire redist and should be indicated as
+                    an application dependency in an application manifest.
+                    'false' means the assembly is internal to a redist and should not be part of the
+                    application manifest.
+                string Redist - The name (if any) of the redist that contains this assembly.
+            </summary>
         <value>The list of all primary references resolved to full paths.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1437,9 +1684,10 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a list of resolved SDK references which contain the sdk name, sdk location and the targeted configuration.  
-  
- These locations will only be searched if the reference has the SDKName metadata attached to it.</summary>
+        <summary>
+            A list of resolved SDK references which contain the sdk name, sdk location and the targeted configuration.
+            These locations will only be searched if the reference has the SDKName metadata attached to it.
+            </summary>
         <value>A list of resolved SDK references.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1481,7 +1729,13 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets any satellite files found.</summary>
+        <summary>
+            Any satellite files found. These will be CopyLocal=true iff the reference or dependency 
+            that caused this item to exist is CopyLocal=true.
+                bool CopyLocal - whether the given reference should be copied to the output directory.
+                string DestinationSubDirectory - the relative destination directory that this file 
+                  should be copied to. This is mainly for satellites.
+            </summary>
         <value>Any satellite files found.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1530,7 +1784,10 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the scatter files associated with one of the given assemblies.</summary>
+        <summary>
+            Scatter files associated with one of the given assemblies.
+                bool CopyLocal - whether the given reference should be copied to the output directory.
+            </summary>
         <value>The scatter files associated with one of the given assemblies.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1575,8 +1832,44 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the directories or special locations that are searched to find the files on disk that represent the assemblies.</summary>
-        <value>The directories or special locations that are searched to find the files on disk that represent the assemblies.</value>
+        <summary>
+             List of locations to search for assemblyFiles when resolving dependencies.
+             The following types of things can be passed in here:
+             (1) A plain old directory path.
+             (2) {HintPathFromItem} -- Look at the HintPath attribute from the base item.
+                 This attribute must be a file name *not* a directory name.
+             (3) {CandidateAssemblyFiles} -- Look at the files passed in through the CandidateAssemblyFiles
+                 parameter.
+             (4) {Registry:_AssemblyFoldersBase_,_RuntimeVersion_,_AssemblyFoldersSuffix_}
+                  Where:
+            
+                     _AssemblyFoldersBase_ = Software\Microsoft\[.NetFramework | .NetCompactFramework]
+                     _RuntimeVersion_ = the runtime version property from the project file
+                     _AssemblyFoldersSuffix_ = [ PocketPC | SmartPhone | WindowsCE]\AssemblyFoldersEx
+            
+                  Then look in the registry for keys with the following schema:
+            
+                     [HKLM | HKCU]\SOFTWARE\MICROSOFT\.NetFramework\
+                       v1.0.3705
+                         AssemblyFoldersEx
+                             ControlVendor.GridControl.1.0:
+                                 @Default = c:\program files\ControlVendor\grid control\1.0\bin
+                                 @Description = Grid Control for .NET version 1.0
+                                 9466
+                                     @Default = c:\program files\ControlVendor\grid control\1.0sp1\bin
+                                     @Description = SP1 for Grid Control for .NET version 1.0
+            
+                  The based registry key is composed as:
+            
+                      [HKLM | HKCU]\_AssemblyFoldersBase_\_RuntimeVersion_\_AssemblyFoldersSuffix_
+            
+             (5) {AssemblyFolders} -- Use the VisualStudion 2003 .NET finding-assemblies-from-registry scheme.
+             (6) {GAC} -- Look in the GAC.
+             (7) {RawFileName} -- Consider the Include value to be an exact path and file name.
+            
+            
+             </summary>
+        <value />
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -1617,7 +1910,11 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the serialization assemblies.</summary>
+        <summary>
+            Any XML serialization assemblies found. These will be CopyLocal=true iff the reference or dependency 
+            that caused this item to exist is CopyLocal=true.
+                bool CopyLocal - whether the given reference should be copied to the output directory.
+            </summary>
         <value>The serialization assemblies.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1659,9 +1956,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether no messages are logged.</summary>
-        <value>
-          <see langword="true" /> if no messages are logged; otherwise, <see langword="false" />.</value>
+        <summary>
+             If set, then don't log any messages to the screen.
+            
+             Default is false.
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1709,8 +2009,11 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a file name that indicates where to save the intermediate build state for this task.</summary>
-        <value>The file name that indicates where to save the intermediate build state for this task.</value>
+        <summary>
+            An optional file name that indicates where to save intermediate build state
+            for this task. If not specified, then no inter-build caching will occur.
+            </summary>
+        <value />
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -1751,7 +2054,15 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets one item for every distinct conflicting assembly identity, regardless of the value of the <see cref="P:Microsoft.Build.Tasks.ResolveAssemblyReference.AutoUnify" /> property.</summary>
+        <summary>
+             Regardless of the value of AutoUnify, returns one item for every distinct conflicting assembly 
+             identity--including culture and PKT--that was found that did not have a suitable bindingRedirect 
+             entry in the ApplicationConfigurationFile. 
+            
+             Each returned ITaskItem will have the following values:
+              ItemSpec - the full fusion name of the assembly family with empty version=0.0.0.0
+              MaxVersion - the maximum version number.
+             </summary>
         <value>The items that correspond to distinct conflicting assembly identities.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1780,8 +2091,10 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>
+            This is true if the project type supports "AutoGenerateBindingRedirects" (currently only for EXE projects).
+            </summary>
+        <value />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1813,7 +2126,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the name of the runtime being targeted. For example, 2.0.57027.</summary>
+        <summary>
+            What is the runtime we are targeting, is it 2.0.57027 or anotherone, It can have a v or not prefixed onto it.
+            </summary>
         <value>The name of the runtime being targeted. A "v" may be prefixed to the name.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1855,7 +2170,12 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the path to the target framework directory.</summary>
+        <summary>
+            Path to the target frameworks directory. Required to figure out CopyLocal status 
+            for resulting items.
+            If not present, then no resulting items will be deemed CopyLocal='true' unless they explicity 
+            have a Private='true' attribute on their source item.
+            </summary>
         <value>The path to the target framework directory.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1898,8 +2218,12 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the target framework moniker being targeted, if any.</summary>
-        <value>The target framework moniker, if any, or an empty string by default.</value>
+        <summary>
+             The target framework moniker we are targeting if any. This is used for logging purposes.
+            
+             Default is empty.
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1939,7 +2263,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the display name of the target framework moniker being targeted, if any.</summary>
+        <summary>
+            The display name of the target framework moniker, if any. This is only for logging.
+            </summary>
         <value>The display name of the target framework moniker, if any.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1981,7 +2307,9 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a list of target framework subset names that will be searched for in the target framework directories.</summary>
+        <summary>
+            List of target framework subset names which will be searched for in the target framework directories
+            </summary>
         <value>A list of target framework subset names.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -2019,8 +2347,12 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the project target framework version used for reference filtering.</summary>
-        <value>The project target framework version used for reference filtering.</value>
+        <summary>
+             The project target framework version.
+            
+             Default is empty. which means there will be no filtering for the reference based on their target framework.
+             </summary>
+        <value />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2068,7 +2400,18 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the preferred target processor architecture used for resolving Global Assembly Cache (GAC) references, which can have a value of <c>x86</c>, <c>IA64</c>, or <c>AMD64</c>.</summary>
+        <summary>
+            The preferred target processor architecture. Used for resolving {GAC} references. 
+            Should be like x86, IA64 or AMD64.
+            
+            This is the order of preference:
+            (1) Assemblies in the GAC that match the supplied ProcessorArchitecture.
+            (2) Assemblies in the GAC that have ProcessorArchitecture=MSIL
+            (3) Assemblies in the GAC that have no ProcessorArchitecture.
+            
+            If absent, then only consider assemblies in the GAC that have ProcessorArchitecture==MSIL or
+            no ProcessorArchitecture (these are pre-Whidbey assemblies).
+            </summary>
         <value>The preferred target processor architecture used for resolving Global Assembly Cache (GAC) references.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -2090,7 +2433,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            If set to true, it forces to unresolve framework assemblies with versions higher or equal the version of the target framework, regardless of the target framework
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2115,7 +2460,15 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a string value specifying the behavior when a mismatch between the target processor architecture and the architecture of a primary reference. When this is "Error", an error will be logged for a mismatch. When this is "Warning", a warning will be logged for a mismatch. When this is "None", no error or warning will be logged for a mismatch.</summary>
+        <summary>
+            If there is a mismatch between the targetprocessor architecture and the architecture of a primary reference.
+            
+            When this is error,  an error will be logged. 
+            
+            When this is warn, if there is a mismatch between the targetprocessor architecture and the architecture of a primary reference a warning will be logged.
+            
+            When this is none, no error or warning will be logged.
+            </summary>
         <value>A string value of "Error", "Warning" or "None".</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />

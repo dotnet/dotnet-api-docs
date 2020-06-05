@@ -26,18 +26,51 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Comprises utility methods for constructing a command line.</summary>
+    <summary>
+             (1) Make sure values containing hyphens are quoted (RC at least requires this)
+             (2) Escape any embedded quotes. 
+                 -- Literal double quotes should be written in the form \" not ""
+                 -- Backslashes falling just before doublequotes must be doubled.
+                 -- Literal double quotes can only occur in pairs (you cannot pass a single literal double quote)
+             	-- Functional double quotes (for example to handle spaces) are best put around both name and value
+             	    in switches like /Dname=value.
+             </summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example creates a <xref:Microsoft.Build.Utilities.ToolTask> that runs [Ilasm.exe (IL Assembler)](/dotnet/framework/tools/ilasm-exe-il-assembler). The <xref:Microsoft.Build.Utilities.CommandLineBuilder>, <xref:Microsoft.Build.Utilities.ToolLocationHelper>, and <xref:Microsoft.Build.Utilities.TaskLoggingHelper> classes are used to generate the information needed to run the task.  
-  
- [!code-csharp[msbuild_ToolTask#1](~/samples/snippets/csharp/VS_Snippets_Misc/msbuild_ToolTask/CS/ILAsm.cs#1)]
- [!code-vb[msbuild_ToolTask#1](~/samples/snippets/visualbasic/VS_Snippets_Misc/msbuild_ToolTask/VB/ILAsm.vb#1)]  
-  
- ]]></format>
-    </remarks>
+             
+             Below are some quoting experiments, using the /D switch with the CL and RC preprocessor.
+             The /D switch is a little more tricky than most switches, because it has a name=value pair.
+             The table below contains what the preprocessor actually embeds when passed the switch in the
+             first column:
+             
+                                  CL via cmd line         CL via response file       RC
+                 /DFOO="A"                A                   A   
+                 /D"FOO="A""              A                   A                       A
+                 /DFOO=A                  A                   A   
+                 /D"FOO=A"                A                   A   
+                 /DFOO=""A""              A                   A                       A
+                     
+                 /DFOO=\"A\"             "A"                                         "A"
+                 /DFOO="""A"""           "A"                broken                   "A"
+                 /D"FOO=\"A\""           "A"                                         "A"
+                 /D"FOO=""A"""           "A"                                         "A"
+                     
+                 /DFOO="A B"             A B                 A B 
+                 /D"FOO=A B"             A B                 A B 
+                     
+                 /D"FOO="A B""          broken      
+                 /DFOO=\"A B\"          broken      
+                 /D"FOO=\"A B\""        "A B"               "A B"                   "A B"
+                 /D"FOO=""A B"""        "A B"               broken                  broken
+            
+             From my experiments (with CL and RC only) it seems that 
+                -- Literal double quotes are most reliably written in the form \" not ""
+                -- Backslashes falling just before doublequotes must be doubled.
+                -- Values containing literal double quotes must be quoted.
+                -- Literal double quotes can only occur in pairs (you cannot pass a single literal double quote)
+                -- For /Dname=value style switches, functional double quotes (for example to handle spaces) are best put around both 
+                       name and value (in other words, these kinds of switches don't need special treatment for their '=' signs).
+                -- Values containing hyphens should be quoted; RC requires this, and CL does not mind.
+             </remarks>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -74,7 +107,9 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.CommandLineBuilder" /> class.</summary>
+        <summary>
+            Default constructor
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -113,7 +148,9 @@
       </Parameters>
       <Docs>
         <param name="quoteHyphensOnCommandLine">If true, hyphens should be quoted.</param>
-        <summary>Parameterless constructor</summary>
+        <summary>
+            Default constructor
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -136,7 +173,9 @@
       <Docs>
         <param name="quoteHyphensOnCommandLine">To be added.</param>
         <param name="useNewLineSeparator">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Default constructor
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -191,8 +230,11 @@
         <Parameter Name="fileItem" Type="Microsoft.Build.Framework.ITaskItem" />
       </Parameters>
       <Docs>
-        <param name="fileItem">The task item specification to append to the command line. If it is <see langword="null" />, then this method has no effect.</param>
-        <summary>Appends the command line with the file name of the specified <see cref="T:Microsoft.Build.Framework.ITaskItem" /> object.</summary>
+        <param name="fileItem">File name to append, if it's null this method has no effect</param>
+        <summary>
+            Appends a file name quoting it if necessary.
+            This method appends a space to the command line (if it's not currently empty) before the file name.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -211,6 +253,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            See the string overload version
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendFileNameIfNotNull">
@@ -244,8 +289,11 @@
         <Parameter Name="fileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">The file name to append. If it is <see langword="null" />, then this method has no effect.</param>
-        <summary>Appends the command line with file name represented by the parameter, inserting quotation marks if necessary.</summary>
+        <param name="fileName">File name to append, if it's null this method has no effect</param>
+        <summary>
+            Appends a file name quoting it if necessary.
+            This method appends a space to the command line (if it's not currently empty) before the file name.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -263,6 +311,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            AppendFileNameIfNotNull("-StrangeFileName.cs") =&gt; ".\-StrangeFileName.cs"
+            </example>
       </Docs>
     </Member>
     <MemberGroup MemberName="AppendFileNamesIfNotNull">
@@ -306,9 +357,12 @@
         <Parameter Name="delimiter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileItems">The task item specifications to append. If the array is <see langword="null" />, then this method has no effect.</param>
-        <param name="delimiter">The delimiter to put between task item specifications in the command line.</param>
-        <summary>Appends the command line with the list of file names in the specified <see cref="T:Microsoft.Build.Framework.ITaskItem" /> array, separated by the specified delimiter.</summary>
+        <param name="fileItems">Task items to append, if null this method has no effect</param>
+        <param name="delimiter">Delimiter to put between items in the command line</param>
+        <summary>
+            Appends array of ITaskItem specs as file names, quoting them if necessary, delimited by a delimiter.
+            This method appends a space to the command line (if it's not currently empty) before the file names.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -324,6 +378,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            See the string[] overload version
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendFileNamesIfNotNull">
@@ -358,9 +415,12 @@
         <Parameter Name="delimiter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileNames">The file names to append. If the array is <see langword="null" />, then this method has no effect.</param>
-        <param name="delimiter">The delimiter to put between file names in the command line.</param>
-        <summary>Appends the command line with the list of file names in the specified <see langword="string" /> array, separated by the specified delimiter.</summary>
+        <param name="fileNames">File names to append, if it's null this method has no effect</param>
+        <param name="delimiter">The delimiter between file names</param>
+        <summary>
+            Appends array of file name strings, quoting them if necessary, delimited by a delimiter.
+            This method appends a space to the command line (if it's not currently empty) before the file names.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -376,6 +436,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            AppendFileNamesIfNotNull(new string[] {"Alpha.cs", "Beta.cs"}, ",") =&gt; "Alpha.cs,Beta.cs"
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendFileNameWithQuoting">
@@ -409,23 +472,19 @@
         <Parameter Name="fileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">The file name to append.</param>
-        <summary>Appends the command line with a file name, and surrounds the file name with quotation marks as necessary.</summary>
+        <param name="fileName">The file name to append</param>
+        <summary>
+            Appends a file name. Quotes are added if they are needed. 
+            If the first character of the file name is a dash, ".\" is prepended to avoid confusing the file name with a switch
+            This method does not append a space to the command line before executing.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the first character of the file name is a dash, then `.\` is added to the beginning of the file name to distinguish it from a switch.  
-  
- This method does not append the command line with a space, before executing.  
-  
-   
-  
-## Examples  
- `AppendFileNameWithQuoting("-StrangeFileName.cs")` yields `.\-StrangeFileName.cs`.  
-  
- ]]></format>
-        </remarks>
+            In the future, this function may fixup 'text' to handle
+            literal embedded quotes.
+            </remarks>
+        <example>
+            AppendFileNameWithQuoting("-StrangeFileName.cs") =&gt; ".\-StrangeFileName.cs"
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendQuotedTextToBuffer">
@@ -456,9 +515,11 @@
         <Parameter Name="unquotedTextToAppend" Type="System.String" Index="1" FrameworkAlternate="msbuild-15;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="buffer">The buffer to append to.</param>
-        <param name="unquotedTextToAppend">The text to be quoted.</param>
-        <summary>Appends given text to the buffer after first quoting the text if necessary.</summary>
+        <param name="buffer" />
+        <param name="unquotedTextToAppend" />
+        <summary>
+            Appends given text to the buffer after first quoting the text if necessary.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -491,15 +552,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Adds a space to the specified string, given the string is not empty.</summary>
+        <summary>
+            Add a space or newline to the specified string if and only if it's not empty.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method is only available to inherited classes.  
-  
- ]]></format>
-        </remarks>
+            This is a pretty obscure method and so it's only available to inherited classes.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="AppendSwitch">
@@ -533,8 +591,11 @@
         <Parameter Name="switchName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <summary>Appends the command line with the specified switch.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <summary>
+            Appends a command-line switch that has no separate value, without any quoting.
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -551,6 +612,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            AppendSwitch("/utf8output") =&gt; "/utf8output"
+            </example>
       </Docs>
     </Member>
     <MemberGroup MemberName="AppendSwitchIfNotNull">
@@ -594,9 +658,12 @@
         <Parameter Name="parameter" Type="Microsoft.Build.Framework.ITaskItem" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <param name="parameter">The switch parameter to append to the command line. Quotation marks will be added as necessary. If this value is <see langword="null" />, then this method has no effect.</param>
-        <summary>Appends the command line with a switch that takes a task item specification that acts a single string parameter.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <param name="parameter">Switch parameter to append, quoted if necessary. If null, this method has no effect.</param>
+        <summary>
+            Append a switch [overload]
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -612,6 +679,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            See the string overload version
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendSwitchIfNotNull">
@@ -646,9 +716,12 @@
         <Parameter Name="parameter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <param name="parameter">The switch parameter to append to the command line. Quotation marks will be added as necessary. If this value is <see langword="null" />, then this method has no effect.</param>
-        <summary>Appends the command line with a switch that takes a single string parameter.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <param name="parameter">Switch parameter to append, quoted if necessary. If null, this method has no effect.</param>
+        <summary>
+            Appends a command-line switch that takes a single string parameter, quoting the parameter if necessary.
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -664,6 +737,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            AppendSwitchIfNotNull("/source:", "File Name.cs") =&gt; "/source:\"File Name.cs\""
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendSwitchIfNotNull">
@@ -699,10 +775,14 @@
         <Parameter Name="delimiter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <param name="parameters">An array of switch parameters to append to the command line. Quotation marks will be added as necessary. If the array is <see langword="null" />, then this method has no effect.</param>
-        <param name="delimiter">The delimiter that separates individual parameters. This value can be empty, but it cannot be <see langword="null" />.</param>
-        <summary>Appends the command line with a switch that takes an array of task item specifications that act as string parameters.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <param name="parameters">Switch parameters to append, quoted if necessary. If null, this method has no effect.</param>
+        <param name="delimiter">Delimiter to put between individual parameters, may not be null (may be empty)</param>
+        <summary>
+            Appends a command-line switch that takes a ITaskItem[] parameter,
+            and add double-quotes around the individual filenames if necessary.
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -718,6 +798,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            See the string[] overload version
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendSwitchIfNotNull">
@@ -753,10 +836,14 @@
         <Parameter Name="delimiter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <param name="parameters">An array of switch parameters to append to the command line. Quotation marks will be added as necessary. If the array is <see langword="null" />, then this method has no effect.</param>
-        <param name="delimiter">The delimiter that separates individual parameters. This value can be empty, but it cannot be <see langword="null" />.</param>
-        <summary>Appends the command line with a switch that takes an array of string parameters.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <param name="parameters">Switch parameters to append, quoted if necessary. If null, this method has no effect.</param>
+        <param name="delimiter">Delimiter to put between individual parameters, may not be null (may be empty)</param>
+        <summary>
+            Appends a command-line switch that takes a string[] parameter,
+            and add double-quotes around the individual filenames if necessary.
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -772,6 +859,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            AppendSwitchIfNotNull("/sources:", new string[] {"Alpha.cs", "Be ta.cs"}, ";") =&gt; "/sources:Alpha.cs;\"Be ta.cs\""
+            </example>
       </Docs>
     </Member>
     <MemberGroup MemberName="AppendSwitchUnquotedIfNotNull">
@@ -815,9 +905,12 @@
         <Parameter Name="parameter" Type="Microsoft.Build.Framework.ITaskItem" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <param name="parameter">The switch parameter to append to the command line. Quotation marks will not be added. If this value is <see langword="null" />, then this method has no effect.</param>
-        <summary>Appends the command line with a switch that takes a task item specification as a single string parameter, without attempting to encapsulate the switch parameter with quotation marks.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <param name="parameter">Switch parameter to append, not quoted. If null, this method has no effect.</param>
+        <summary>
+            Appends the literal parameter without trying to quote.
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -831,6 +924,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            See the string overload version
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendSwitchUnquotedIfNotNull">
@@ -865,9 +961,12 @@
         <Parameter Name="parameter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <param name="parameter">The switch parameter to append to the command line. Quotation marks will not be added. If this value is <see langword="null" />, then this method has no effect.</param>
-        <summary>Appends the command line with a switch that takes a single string parameter, without attempting to encapsulate the switch parameter with quotation marks.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <param name="parameter">Switch parameter to append, not quoted. If null, this method has no effect.</param>
+        <summary>
+            Appends the literal parameter without trying to quote.
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -881,6 +980,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            AppendSwitchUnquotedIfNotNull("/source:", "File Name.cs") =&gt; "/source:File Name.cs"
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendSwitchUnquotedIfNotNull">
@@ -916,10 +1018,13 @@
         <Parameter Name="delimiter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <param name="parameters">An array of switch parameters to append to the command line. Quotation marks will not be added. If the array is <see langword="null" />, then this method has no effect.</param>
-        <param name="delimiter">The delimiter that separates individual parameters. This value can be empty, but it cannot be <see langword="null" />.</param>
-        <summary>Appends the command line with a switch that takes an array of task item specifications that act as string parameters, without attempting to encapsulate them with quotation marks.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <param name="parameters">Switch parameters to append, not quoted. If null, this method has no effect.</param>
+        <param name="delimiter">Delimiter to put between individual parameters, may not be null (may be empty)</param>
+        <summary>
+            Appends a command-line switch that takes a ITaskItem[] parameter, not quoting the individual parameters
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -933,6 +1038,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            See the string[] overload version
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendSwitchUnquotedIfNotNull">
@@ -968,10 +1076,13 @@
         <Parameter Name="delimiter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="switchName">The name of the switch to append to the command line. This value cannot be <see langword="null" />.</param>
-        <param name="parameters">An array of switch parameters to append to the command line. Quotation marks will not be added. If the array is <see langword="null" />, then this method has no effect.</param>
-        <param name="delimiter">The delimiter that separates individual parameters. This value can be empty, but it cannot be <see langword="null" />.</param>
-        <summary>Appends the command line with a switch that takes an array of string parameters, without attempting to encapsulate switch parameters with quotation marks.</summary>
+        <param name="switchName">The switch to append to the command line, may not be null</param>
+        <param name="parameters">Switch parameters to append, not quoted. If null, this method has no effect.</param>
+        <param name="delimiter">Delimiter to put between individual parameters, may not be null (may be empty)</param>
+        <summary>
+            Appends a command-line switch that takes a string[] parameter, not quoting the individual parameters
+            This method appends a space to the command line (if it's not currently empty) before the switch.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -985,6 +1096,9 @@
   
  ]]></format>
         </remarks>
+        <example>
+            AppendSwitchUnquotedIfNotNull("/sources:", new string[] {"Alpha.cs", "Be ta.cs"}, ";") =&gt; "/sources:Alpha.cs;Be ta.cs"
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendTextUnquoted">
@@ -1022,21 +1136,18 @@
         <Parameter Name="textToAppend" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="textToAppend">The string to append to the command line.</param>
-        <summary>Appends the command line with string, without attempting to encapsulate the string with quotation marks.</summary>
+        <param name="textToAppend">The string to append</param>
+        <summary>
+            Appends a string. No quotes are added.
+            This method does not append a space to the command line before executing.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method does not append the command line with a space, before executing.  
-  
-   
-  
-## Examples  
- `AppendTextUnquoted(@"Folder name\filename.cs")` yields `Folder name\\filename.cs`.  
-  
- ]]></format>
-        </remarks>
+            In the future, this function may fixup 'textToAppend' to handle
+            literal embedded quotes.
+            </remarks>
+        <example>
+            AppendTextUnquoted(@"Folder name\filename.cs") =&gt; "Folder name\\filename.cs"
+            </example>
       </Docs>
     </Member>
     <Member MemberName="AppendTextWithQuoting">
@@ -1070,21 +1181,14 @@
         <Parameter Name="textToAppend" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="textToAppend">The string to append to the command line.</param>
-        <summary>Appends the command line with string, and surrounds the string with quotations marks as necessary.</summary>
+        <param name="textToAppend">The string to append</param>
+        <summary>
+            Appends a string. Quotes are added if they are needed.
+            This method does not append a space to the command line before executing.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method does not append the command line with a space, before executing.  
-  
-   
-  
-## Examples  
- `AppendTextWithQuoting(@"Folder name\filename.cs")` yields `\"Folder name\\filename.cs\"`.  
-  
- ]]></format>
-        </remarks>
+            Escapes any double quotes in the string.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="CommandLine">
@@ -1120,7 +1224,9 @@
         <ReturnType>System.Text.StringBuilder</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the <see cref="T:System.Text.StringBuilder" /> instance representing the command line for inheriting classes.</summary>
+        <summary>
+            Retrieves the private StringBuilder instance for inheriting classes
+            </summary>
         <value>A <see cref="T:System.Text.StringBuilder" /> for inheriting classes.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1156,10 +1262,11 @@
         <Parameter Name="parameter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="parameter">The string to examine for characters that require quotation marks.</param>
-        <summary>Determines whether the specified string parameter should be surrounded with quotation marks because it contains white space.</summary>
-        <returns>
-          <see langword="true" />, if the switch parameter should be surrounded with quotation marks; otherwise, <see langword="false" />.</returns>
+        <param name="parameter">the string to examine for characters that require quoting</param>
+        <summary>
+            Checks the given switch parameter to see if it must/can be quoted.
+            </summary>
+        <returns>true, if parameter should be quoted</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1183,7 +1290,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Represents the length of the command line.</summary>
+        <summary>
+            Returns the length of the current command
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1217,8 +1326,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the command line as a string.</summary>
-        <returns>A <see cref="T:System.String" /> that represents the command line.</returns>
+        <summary>
+            Return the command-line as a string.
+            </summary>
+        <returns />
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1263,9 +1374,12 @@
         <Parameter Name="parameter" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="switchName">A string representing the switch name for the error message.</param>
-        <param name="parameter">A string representing the switch parameter to scan for double-quotes.</param>
-        <summary>Returns an error if the command line parameter contains a double-quote (") character. Because double quotes are illegal in command line parameters, this method helps prevent parameter injection attacks.</summary>
+        <param name="switchName">Switch name for error message</param>
+        <param name="parameter">Switch parameter to scan</param>
+        <summary>
+            Throws if the parameter has a double-quote in it. This is used to prevent parameter
+            injection. It's virtual so that tools can override this method if they want to have quotes escaped in filenames
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   

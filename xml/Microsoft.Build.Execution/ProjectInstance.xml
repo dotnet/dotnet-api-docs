@@ -23,7 +23,11 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Represents a project instance.</summary>
+    <summary>
+            What the user gets when they clone off a ProjectInstance.
+            They can hold onto this, change/query items and properties,
+            and call it several times to build it.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -38,6 +42,13 @@
   
  ]]></format>
     </remarks>
+    <comments>
+            Neither this class nor none of its constituents are allowed to have 
+            references to any of the Construction or Evaluation objects.
+            This class is immutable except for adding instance items and setting instance properties.
+            It only exposes items and properties: targets, host services, and the task registry are not exposed as they are only the concern of build.
+            Constructors are internal in order to direct users to Project class instead; these are only createable via Project objects.
+            </comments>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -66,8 +77,13 @@
         <Parameter Name="xml" Type="Microsoft.Build.Construction.ProjectRootElement" />
       </Parameters>
       <Docs>
-        <param name="xml">The project root element.</param>
-        <summary>Creates a new project instance and initializes it from the given project root, using the default project collection.</summary>
+        <param name="xml">The project root element</param>
+        <summary>
+            Creates a ProjectInstance directly.
+            No intermediate Project object is created.
+            This is ideal if the project is simply going to be built, and not displayed or edited.
+            Uses the default project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -101,7 +117,12 @@
       </Parameters>
       <Docs>
         <param name="projectFile">The name of the project file.</param>
-        <summary>Creates a new project instance and initializes it from the given project file, using the default project collection.</summary>
+        <summary>
+            Creates a ProjectInstance directly.
+            No intermediate Project object is created.
+            This is ideal if the project is simply going to be built, and not displayed or edited.
+            Uses the default project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -134,7 +155,12 @@
         <param name="projectFile">The name of the project file.</param>
         <param name="globalProperties">The global properties to use.</param>
         <param name="toolsVersion">The tools version.</param>
-        <summary>Creates a new project instance and initializes it from the given project file, using the given global properties, tools version, and the default project collection.</summary>
+        <summary>
+            Creates a ProjectInstance directly.
+            No intermediate Project object is created.
+            This is ideal if the project is simply going to be built, and not displayed or edited.
+            Uses the default project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -166,10 +192,16 @@
       </Parameters>
       <Docs>
         <param name="xml">The project root element</param>
-        <param name="globalProperties">The global properties to use. May be null.</param>
-        <param name="toolsVersion">The tools version. May be null.</param>
+        <param name="globalProperties">The global properties to use.</param>
+        <param name="toolsVersion">The tools version.</param>
         <param name="projectCollection">Project collection</param>
-        <summary>Creates a new project instance and initializes it from the given project root, using the given global properties, tools version, and project collection.</summary>
+        <summary>
+            Creates a ProjectInstance directly.
+            No intermediate Project object is created.
+            This is ideal if the project is simply going to be built, and not displayed or edited.
+            Global properties may be null.
+            Tools version may be null.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -201,10 +233,16 @@
       </Parameters>
       <Docs>
         <param name="projectFile">The name of the project file.</param>
-        <param name="globalProperties">The global properties to use. May be null.</param>
-        <param name="toolsVersion">The tools version. May be null.</param>
+        <param name="globalProperties">The global properties to use.</param>
+        <param name="toolsVersion">The tools version.</param>
         <param name="projectCollection">Project collection</param>
-        <summary>Creates a new project instance and initializes it from the given project file, using the given global properties, tools version, and project collection.</summary>
+        <summary>
+            Creates a ProjectInstance directly.
+            No intermediate Project object is created.
+            This is ideal if the project is simply going to be built, and not displayed or edited.
+            Global properties may be null.
+            Tools version may be null.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -236,12 +274,19 @@
         <Parameter Name="projectCollection" Type="Microsoft.Build.Evaluation.ProjectCollection" Index="4" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="xml">The project root element.</param>
-        <param name="globalProperties">The global properties to use. May be null.</param>
-        <param name="toolsVersion">The tools version. May be null.</param>
-        <param name="subToolsetVersion">The sub toolset version. May be null.</param>
-        <param name="projectCollection">Project collection.</param>
-        <summary>Creates a new project instance and initializes it from the given project root, using the given global properties, tools version, and project collection.</summary>
+        <param name="xml">The project root element</param>
+        <param name="globalProperties">The global properties to use.</param>
+        <param name="toolsVersion">The tools version.</param>
+        <param name="subToolsetVersion">The sub-toolset version, used in tandem with the ToolsVersion to determine the set of toolset properties.</param>
+        <param name="projectCollection">Project collection</param>
+        <summary>
+            Creates a ProjectInstance directly.
+            No intermediate Project object is created.
+            This is ideal if the project is simply going to be built, and not displayed or edited.
+            Global properties may be null.
+            Tools version may be null.
+            Sub-toolset version may be null, but if specified will override all other methods of determining the sub-toolset.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -274,11 +319,17 @@
       </Parameters>
       <Docs>
         <param name="projectFile">The name of the project file.</param>
-        <param name="globalProperties">The global properties to use. May be null.</param>
-        <param name="toolsVersion">The tools version. May be null.</param>
-        <param name="subToolsetVersion">The sub toolset version. May be null.</param>
-        <param name="projectCollection">Project collection.</param>
-        <summary>Creates a new project instance and initializes it from the given project file, using the given global properties, tools version, sub toolset version, and project collection.</summary>
+        <param name="globalProperties">The global properties to use.</param>
+        <param name="toolsVersion">The tools version.</param>
+        <param name="subToolsetVersion">The sub-toolset version, used in tandem with the ToolsVersion to determine the set of toolset properties.</param>
+        <param name="projectCollection">Project collection</param>
+        <summary>
+            Creates a ProjectInstance directly.
+            No intermediate Project object is created.
+            This is ideal if the project is simply going to be built, and not displayed or edited.
+            Global properties may be null.
+            Tools version may be null.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -321,16 +372,19 @@
       <Docs>
         <param name="itemType">The item type of the item to be added.</param>
         <param name="evaluatedInclude">The evaluated Include attribute of the item.</param>
-        <summary>Adds an item with no metadata to the project.</summary>
+        <summary>
+            Adds an item with no metadata to the project
+            </summary>
         <returns>The new item.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- We don't take a ProjectItemInstance to make sure we don't have one that's already in use by another ProjectInstance.  
-  
- ]]></format>
-        </remarks>
+            We don't take a ProjectItemInstance to make sure we don't have one that's already
+            in use by another ProjectInstance.
+            </remarks>
+        <comments>
+            For purposes of declaring the project that defined this item (for use with e.g. the 
+            DeclaringProject* metadata), the entrypoint project is used for synthesized items 
+            like those added by this API. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="AddItem">
@@ -358,16 +412,20 @@
         <param name="itemType">The item type of the item to be added.</param>
         <param name="evaluatedInclude">The evaluated Include attribute of the item.</param>
         <param name="metadata">The metadata of the item.</param>
-        <summary>Adds an item with the given metadata to the project.</summary>
+        <summary>
+            Adds an item with metadata to the project.
+            Metadata may be null.
+            </summary>
         <returns>Return the new item.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- We don't take a ProjectItemInstance to make sure we don't have one that's already in use by another ProjectInstance.  
-  
- ]]></format>
-        </remarks>
+            We don't take a ProjectItemInstance to make sure we don't have one that's already
+            in use by another ProjectInstance.
+            </remarks>
+        <comments>
+            For purposes of declaring the project that defined this item (for use with e.g. the 
+            DeclaringProject* metadata), the entrypoint project is used for synthesized items 
+            like those added by this API. 
+            </comments>
       </Docs>
     </Member>
     <MemberGroup MemberName="Build">
@@ -402,7 +460,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Builds the default targets of the project with loggers of the project collection.</summary>
+        <summary>
+            Build default target/s with loggers of the project collection.
+            Returns true on success, false on failure.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> if the build succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -434,17 +496,18 @@
       </Parameters>
       <Docs>
         <param name="loggers">The loggers to use for the build. May be null.</param>
-        <summary>Builds the default targets of the project with the given loggers.</summary>
+        <summary>
+            Build default target/s with specified loggers.
+            Returns true on success, false on failure.
+            Loggers may be null.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> if the build succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Throws InvalidOperationException if any of the loggers supplied are already attached to the logging service.  
-  
- ]]></format>
-        </remarks>
+            If any of the loggers supplied are already attached to the logging service we
+            were passed, throws InvalidOperationException.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -475,17 +538,18 @@
       <Docs>
         <param name="loggers">The loggers to use for the build. May be null.</param>
         <param name="remoteLoggers">The remote loggers to use for the build. May be null.</param>
-        <summary>Builds the default targets of the project with the given loggers and remote loggers.</summary>
+        <summary>
+            Build default target/s with specified loggers.
+            Returns true on success, false on failure.
+            Loggers may be null.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> if the build succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Throws InvalidOperationException if any of the loggers supplied are already attached to the logging service.  
-  
- ]]></format>
-        </remarks>
+            If any of the loggers supplied are already attached to the logging service we
+            were passed, throws InvalidOperationException.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -516,17 +580,19 @@
       <Docs>
         <param name="target">The target to build. May be null.</param>
         <param name="loggers">The loggers to use for the build. May be null.</param>
-        <summary>Builds the given target of the project with the given loggers.</summary>
+        <summary>
+            Build a target with specified loggers.
+            Returns true on success, false on failure.
+            Target may be null.
+            Loggers may be null.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> if the build succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Throws InvalidOperationException if any of the loggers supplied are already attached to the logging service.  
-  
- ]]></format>
-        </remarks>
+            If any of the loggers supplied are already attached to the logging service we
+            were passed, throws InvalidOperationException.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -557,17 +623,19 @@
       <Docs>
         <param name="targets">The targets to build. May be null.</param>
         <param name="loggers">The loggers to use for the build. May be null.</param>
-        <summary>Builds the given targets of the project with the given loggers.</summary>
+        <summary>
+            Build a list of targets with specified loggers.
+            Returns true on success, false on failure.
+            Targets may be null.
+            Loggers may be null.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> if the build succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Throws InvalidOperationException if any of the loggers supplied are already attached to the logging service.  
-  
- ]]></format>
-        </remarks>
+            If any of the loggers supplied are already attached to the logging service we
+            were passed, throws InvalidOperationException.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -595,17 +663,20 @@
         <param name="target">The target to build. May be null.</param>
         <param name="loggers">The loggers to use for the build. May be null.</param>
         <param name="remoteLoggers">The remote loggers to use for the build. May be null.</param>
-        <summary>Builds the given target of the project with the given loggers and remote loggers.</summary>
+        <summary>
+            Build a target with specified loggers.
+            Returns true on success, false on failure.
+            Target may be null.
+            Loggers may be null.
+            Remote loggers may be null.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> if the build succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Throws InvalidOperationException if any of the loggers supplied are already attached to the logging service.  
-  
- ]]></format>
-        </remarks>
+            If any of the loggers supplied are already attached to the logging service we
+            were passed, throws InvalidOperationException.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -638,17 +709,19 @@
         <param name="targets">List of targets to build. May be null.</param>
         <param name="loggers">Enumerated list of loggers to use for building targets.</param>
         <param name="targetOutputs">Outputs of target builds.</param>
-        <summary>Build a list of targets with specified loggers. Targets may be null. Loggers may be null.</summary>
+        <summary>
+            Build a list of targets with specified loggers.
+            Returns true on success, false on failure.
+            Targets may be null.
+            Loggers may be null.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> on success, false on failure.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If any of the loggers supplied are already attached to the logging service we were passed, throws InvalidOperationException.  
-  
- ]]></format>
-        </remarks>
+            If any of the loggers supplied are already attached to the logging service we
+            were passed, throws InvalidOperationException.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -676,17 +749,20 @@
         <param name="targets">The targets to build. May be null.</param>
         <param name="loggers">The loggers to use for the build. May be null.</param>
         <param name="remoteLoggers">The remote loggers to use for the build. May be null.</param>
-        <summary>Builds the given targets of the project with the given loggers and remote loggers.</summary>
+        <summary>
+            Build a list of targets with specified loggers.
+            Returns true on success, false on failure.
+            Targets may be null.
+            Loggers may be null.
+            Remote loggers may be null.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> if the build succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Throws InvalidOperationException if any of the loggers supplied are already attached to the logging service.  
-  
- ]]></format>
-        </remarks>
+            If any of the loggers supplied are already attached to the logging service we
+            were passed, throws InvalidOperationException.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -721,17 +797,20 @@
         <param name="loggers">The loggers to use for the build. May be null.</param>
         <param name="remoteLoggers">The remote loggers to use for the build. May be null.</param>
         <param name="targetOutputs">The target outputs.</param>
-        <summary>Builds the given targets with the given target outputs and with the given loggers and remote loggers.</summary>
+        <summary>
+            Build a list of targets with specified loggers.
+            Returns true on success, false on failure.
+            Targets may be null.
+            Loggers may be null.
+            Remote loggers may be null.
+            Only valid if mutable.
+            </summary>
         <returns>
           <see langword="true" /> if the build succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Throws InvalidOperationException if any of the loggers supplied are already attached to the logging service.  
-  
- ]]></format>
-        </remarks>
+            If any of the loggers supplied are already attached to the logging service we
+            were passed, throws InvalidOperationException.
+            </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="DeepCopy">
@@ -761,7 +840,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates an independent, deep clone of this project and everything in it. Clone has the same mutability as the original. Useful for compiling a single file or for keeping build results between builds.</summary>
+        <summary>
+            Create an independent, deep clone of this object and everything in it.
+            Useful for compiling a single file; or for keeping build results between builds.
+            Clone has the same mutability as the original.
+            </summary>
         <returns>Creates an independent, deep clone of this project.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -787,7 +870,11 @@
       </Parameters>
       <Docs>
         <param name="isImmutable">Flag indicating clone mutability.</param>
-        <summary>Creates an independent, deep clone of this project and everything in it, with specified mutability. Useful for compiling a single file or for keeping build results between builds.</summary>
+        <summary>
+            Create an independent, deep clone of this object and everything in it, with
+            specified mutability.
+            Useful for compiling a single file; or for keeping build results between builds.
+            </summary>
         <returns>An independent, deep clone of this project, with specified mutability.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -814,7 +901,13 @@
         <ReturnType>System.Collections.Generic.List&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the list of default targets for this project.</summary>
+        <summary>
+            DefaultTargets specified in the project, or
+            the logically first target if no DefaultTargets is
+            specified in the project.
+            The build builds these if no targets are explicitly specified
+            to build.
+            </summary>
         <value>The list of default targets for this project.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -851,7 +944,12 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the project root directory. Used for evaluation of relative paths and setting the current directory during build. Is never null: projects not loaded from disk use the current directory from the time the build started.</summary>
+        <summary>
+            The project's root directory, for evaluation of relative paths and
+            setting the current directory during build.
+            Is never null: projects not loaded from disk use the current directory from
+            the time the build started.
+            </summary>
         <value>The project root directory, which is never null. Projects not loaded from disk return the current directory at the time the build was started.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -877,7 +975,12 @@
       </Parameters>
       <Docs>
         <param name="condition">The string to be expanded.</param>
-        <summary>Evaluates the provided string as a condition by expanding items and properties, using the current items and properties available, then doing a logical evaluation.</summary>
+        <summary>
+            Evaluates the provided string as a condition by expanding items and properties,
+            using the current items and properties available, then doing a logical evaluation.
+            This is useful for the immediate window.
+            Does not expand bare metadata expressions.
+            </summary>
         <returns>
           <see langword="true" /> if the string evaluates to true; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -890,6 +993,9 @@
   
  ]]></format>
         </remarks>
+        <comment>
+            Not for internal use.
+            </comment>
       </Docs>
     </Member>
     <Member MemberName="EvaluatedItemElements">
@@ -908,7 +1014,9 @@
         <ReturnType>System.Collections.Generic.List&lt;Microsoft.Build.Construction.ProjectItemElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets a <see cref="T:System.Collections.Generic.List`1" /> object containing evaluated items.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -929,7 +1037,11 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            The ID of the evaluation that produced this ProjectInstance.
+            
+            See <see cref="P:Microsoft.Build.Evaluation.Project.LastEvaluationId" />.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -955,7 +1067,12 @@
       </Parameters>
       <Docs>
         <param name="unexpandedValue">The string to be expanded.</param>
-        <summary>Evaluates the provided string by expanding items and properties, using the current items and properties available.</summary>
+        <summary>
+            Evaluates the provided string by expanding items and properties,
+            using the current items and properties available.
+            This is useful for some hosts, or for the debugger immediate window.
+            Does not expand bare metadata expressions.
+            </summary>
         <returns>The expanded string value.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -967,6 +1084,9 @@
   
  ]]></format>
         </remarks>
+        <comment>
+            Not for internal use.
+            </comment>
       </Docs>
     </Member>
     <Member MemberName="FilteredCopy">
@@ -988,10 +1108,16 @@
         <Parameter Name="filter" Type="Microsoft.Build.Execution.RequestedProjectState" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="filter">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="filter">Project state that should be returned.</param>
+        <summary>
+            Create an independent clone of this object, keeping ONLY the explicitly
+            requested project state.
+            </summary>
+        <returns />
+        <remarks>
+            Useful for reducing the wire cost of IPC for out-of-proc nodes used during
+            design-time builds that only need to populate a known set of data.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="FullPath">
@@ -1016,7 +1142,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the full path to the project file. Used for logging.</summary>
+        <summary>
+            The full path to the project, for logging.
+            If the project was never given a path, returns empty string.
+            </summary>
         <value>The full path to the project file, or <see langword="null" /> if the project was never named.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1051,7 +1180,9 @@
       </Parameters>
       <Docs>
         <param name="item">The item definition to be evaluated and escaped.</param>
-        <summary>Gets the evaluated, escaped value of the Include attribute of the provided item definition.</summary>
+        <summary>
+            Returns the evaluated, escaped value of the provided item definition's include.
+            </summary>
         <returns>The evaluated, escaped value of the Include attribute of the provided item definition.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1077,7 +1208,9 @@
       </Parameters>
       <Docs>
         <param name="item">The item to be evaluated and escaped.</param>
-        <summary>Gets the evaluated, escaped value of the Include attribute of the provided item.</summary>
+        <summary>
+            Returns the evaluated, escaped value of the provided item's include.
+            </summary>
         <returns>The evaluated, escaped value of the Include attribute of the provided item.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1103,7 +1236,11 @@
       </Parameters>
       <Docs>
         <param name="itemType">The item type of the items to be retrieved.</param>
-        <summary>Gets all the items in this project of the specified type. This is a read-only list.</summary>
+        <summary>
+            Get a list of all the items in the project of the specified
+            type, or an empty list if there are none.
+            This is a read-only list.
+            </summary>
         <returns>All the items in this project of the specified type. Returns an empty list if there are none.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1140,7 +1277,9 @@
       <Docs>
         <param name="itemType">The item type of the items to be retrieved.</param>
         <param name="evaluatedInclude">The evaluated include value of the items to be retrieved</param>
-        <summary>Gets all the items in this project of the specified type and evaluated include value. This is a read-only list.</summary>
+        <summary>
+            get items by item type and evaluated include value
+            </summary>
         <returns>All the items in this project of the specified type and evaluated include value. Returns an empty collection if there are none.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1175,7 +1314,9 @@
       </Parameters>
       <Docs>
         <param name="metadatum">The metadatum to be escaped.</param>
-        <summary>Gets the escaped value of the provided metadatum.</summary>
+        <summary>
+            Gets the escaped value of the provided metadatum. 
+            </summary>
         <returns>The escaped value of the provided metadatum.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1203,7 +1344,9 @@
       <Docs>
         <param name="item">The item definition to provide the metadatum value.</param>
         <param name="name">The name of the metadatum.</param>
-        <summary>Gets the escaped value of the metadatum with the provided name of the provided item definition.</summary>
+        <summary>
+            Gets the escaped value of the metadatum with the provided name on the provided item definition. 
+            </summary>
         <returns>The escaped value of the metadatum with the provided name of the provided item definition.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1231,7 +1374,9 @@
       <Docs>
         <param name="item">The item to provide the metadatum value.</param>
         <param name="name">The name of the metadatum.</param>
-        <summary>Gets the escaped value of the metadatum with the provided name on the provided item.</summary>
+        <summary>
+            Gets the escaped value of the metadatum with the provided name on the provided item. 
+            </summary>
         <returns>The escaped value of the metadatum with the provided name on the provided item.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1262,7 +1407,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the property to retrieve.</param>
-        <summary>Gets the property with the given name.</summary>
+        <summary>
+            Get any property in the item that has the specified name,
+            otherwise returns null
+            </summary>
         <returns>The property with the given name, or <see langword="null" /> if no property exists with that name.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1288,16 +1436,21 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the property whose value is to be retrieved.</param>
-        <summary>Gets the value of the property with the given name.</summary>
+        <summary>
+            Get the value of a property in this project, or 
+            an empty string if it does not exist.
+            </summary>
         <returns>The value of the property with the given name, or an empty string if no property exists with that name. The value returned has no escaped character sequences.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method does not distinguish between a property with a value of empty string and no property with the given name.  
-  
- ]]></format>
-        </remarks>
+            A property with a value of empty string and no property
+            at all are not distinguished between by this method.
+            This is because the build does not distinguish between the two.
+            The reason this method exists when users can simply do GetProperty(..).EvaluatedValue,
+            is that the caller would have to check for null every time. For properties, empty and undefined are 
+            not distinguished, so it much more useful to also have a method that returns empty string in
+            either case.
+            This function returns the unescaped value.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetPropertyValueEscaped">
@@ -1321,7 +1474,9 @@
       </Parameters>
       <Docs>
         <param name="property">The property to be escaped.</param>
-        <summary>Gets the escaped value of the provided property.</summary>
+        <summary>
+            Get the escaped value of the provided property
+            </summary>
         <returns>The escaped value of the provided property.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1348,20 +1503,15 @@
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the dictionary of global properties this project was evaluated with, if any.</summary>
+        <summary>
+            Global properties this project was evaluated with, if any.
+            Read only collection.
+            Traverses project references.
+            </summary>
         <value>The dictionary of global properties this project was evaluated with.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Read only collection.  
-  
- Traverses project references.  
-  
- This is the publicly exposed getter, that translates into a read-only dead IDictionary\<string, string>.  
-  
- ]]></format>
-        </remarks>
+            This is the publicly exposed getter, that translates into a read-only dead IDictionary&lt;string, string&gt;.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="InitialTargets">
@@ -1386,7 +1536,11 @@
         <ReturnType>System.Collections.Generic.List&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the list of initial targets for the project and all its imports, depth-first. These targets are built before any other targets.</summary>
+        <summary>
+            InitialTargets specified in the project, plus those
+            in all imports, gathered depth-first.
+            The build runs these before anything else.
+            </summary>
         <value>The list of initial targets for the project and all its imports, depth-first.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1408,7 +1562,10 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value that indicates whether the project instance is immutable. This flag is set permanently when the instance is created.</summary>
+        <summary>
+            Whether the instance is immutable.
+            This is set permanently when the instance is created.
+            </summary>
         <value>
           <see langword="true" /> if the project instance is immutable; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -1439,7 +1596,10 @@
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,Microsoft.Build.Execution.ProjectItemDefinitionInstance&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a read-only dictionary of the item definitions in the project, keyed by item type.</summary>
+        <summary>
+            Read-only dictionary of item definitions in this project.
+            Keyed by item type
+            </summary>
         <value>A read-only dictionary of the item definitions in the project, keyed by item type.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1466,7 +1626,9 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Execution.ProjectItemInstance&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all items in this project.</summary>
+        <summary>
+            Enumerator over items in this project.
+            </summary>
         <value>All items in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1493,7 +1655,9 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all item types in this project.</summary>
+        <summary>
+            Enumerator over item types of the items in this project
+            </summary>
         <value>All item types in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1515,7 +1679,10 @@
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the location of the originating file itself. Never null.</summary>
+        <summary>
+            Location of the originating file itself, not any specific content within it.
+            Never returns null, even if the file has not got a path yet.
+            </summary>
         <value>The location of the originating file. Never returns <see langword="null" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1542,7 +1709,9 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Execution.ProjectPropertyInstance&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all properties in this project.</summary>
+        <summary>
+            Enumerator over properties in this project
+            </summary>
         <value>All properties in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1568,7 +1737,10 @@
       </Parameters>
       <Docs>
         <param name="item">The item to be removed.</param>
-        <summary>Removes an item from the project, if present. Returns true if it was present, false otherwise.</summary>
+        <summary>
+            Removes an item from the project, if present.
+            Returns true if it was present, false otherwise.
+            </summary>
         <returns>
           <see langword="true" /> if the item was present before removal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -1595,7 +1767,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the property to be removed.</param>
-        <summary>Removes a property with the given name. Returns true if the property had a value (possibly empty string), otherwise false.</summary>
+        <summary>
+            Removes any property with the specified name.
+            Returns true if the property had a value (possibly empty string), otherwise false.
+            </summary>
         <returns>
           <see langword="true" /> if the property had a value (possibly an empty string) before removal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -1624,16 +1799,15 @@
       <Docs>
         <param name="name">The name of the property to add.</param>
         <param name="evaluatedValue">The evaluated value of the property to add.</param>
-        <summary>Add a property with the specified name and value to the project. Overwrites any property with the same name already in the property collection.</summary>
+        <summary>
+            Add a property with the specified name and value.
+            Overwrites any property with the same name already in the collection.
+            </summary>
         <returns>The new property.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- We don't take a ProjectPropertyInstance to make sure we don't have one that's already in use by another ProjectPropertyInstance.  
-  
- ]]></format>
-        </remarks>
+            We don't take a ProjectPropertyInstance to make sure we don't have one that's already
+            in use by another ProjectPropertyInstance.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Targets">
@@ -1661,7 +1835,11 @@
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,Microsoft.Build.Execution.ProjectTargetInstance&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an enumerator over all targets in this project. This collection is read-only.</summary>
+        <summary>
+            Targets in the project. The build process can find one by looking for its name
+            in the dictionary.
+            This collection is read-only.
+            </summary>
         <value>An enumerator over all targets in this project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1683,7 +1861,11 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the tools version this project was evaluated with, if any.</summary>
+        <summary>
+            The tools version this project was evaluated with, if any.
+            Not necessarily the same as the tools version on the Project tag, if any;
+            it may have been externally specified, for example with a /tv switch.
+            </summary>
         <value>The tools version this project was evaluated with, if any.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1713,7 +1895,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates a ProjectRootElement from the contents of this ProjectInstance.</summary>
+        <summary>
+            Creates a ProjectRootElement from the contents of this ProjectInstance.
+            </summary>
         <returns>A ProjectRootElement which represents this instance.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1734,7 +1918,13 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Serialize the entire project instance state.
+            
+            When false, only a part of the project instance state is serialized (properties and items).
+            In this case out of proc nodes re-evaluate the project instance from disk to obtain the un-serialized state.
+            This partial state recombination may lead to build issues when the project instance state differs from what is on disk.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1759,8 +1949,12 @@
         <Parameter Name="projectState" Type="Microsoft.Build.Execution.ProjectInstance" Index="0" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="projectState">The <see langword="ProjectInstance" /> to update from.</param>
-        <summary>Replaces the project state <see cref="P:Microsoft.Build.Execution.ProjectInstance.GlobalProperties" />, <see cref="P:Microsoft.Build.Execution.ProjectInstance.Properties" /> and <see cref="P:Microsoft.Build.Execution.ProjectInstance.Items" /> with those from the specified <see cref="T:Microsoft.Build.Execution.ProjectInstance" />.</summary>
+        <param name="projectState">
+          <see cref="T:Microsoft.Build.Execution.ProjectInstance" /> with the state to use.</param>
+        <summary>
+            Replaces the project state (<see cref="P:Microsoft.Build.Execution.ProjectInstance.GlobalProperties" />, <see cref="P:Microsoft.Build.Execution.ProjectInstance.Properties" /> and <see cref="P:Microsoft.Build.Execution.ProjectInstance.Items" />) with that
+            from the <see cref="T:Microsoft.Build.Execution.ProjectInstance" /> provided.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

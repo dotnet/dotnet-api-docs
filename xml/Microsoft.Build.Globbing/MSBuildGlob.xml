@@ -18,7 +18,13 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>
+                Represents a parsed MSBuild glob.
+                An MSBuild glob is composed of three parts:
+                - fixed directory part: "a/b/" in "a/b/**/*test*/**/*.cs"
+                - wildcard directory part: "**/*test*/**/" in "a/b/**/*test*/**/*.cs"
+                - file name part: "*.cs" in "a/b/**/*test*/**/*.cs"
+            </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -38,7 +44,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+                The file name part
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -59,7 +67,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+                The fixed directory part.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -80,7 +90,16 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+                Whether the glob was parsed sucsesfully from a string.
+                Illegal glob strings contain:
+                - invalid path characters (other than the wildcard characters themselves)
+                - "..."
+                - ":"
+                In addition, the wildcard directory part:
+                - cannot contain ".."
+                - if ** is present it must appear alone between slashes
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -111,6 +130,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="MatchInfo">
@@ -132,9 +152,11 @@
         <Parameter Name="stringToMatch" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="stringToMatch">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="stringToMatch" />
+        <summary>
+                Similar to <see cref="M:Microsoft.Build.Globbing.MSBuildGlob.IsMatch(System.String)" /> but also provides the match groups for the glob parts
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -157,9 +179,12 @@
         <Parameter Name="fileSpec" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileSpec">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="fileSpec" />
+        <summary>
+                See <see cref="M:Microsoft.Build.Globbing.MSBuildGlob.Parse(System.String,System.String)" />.
+                The glob root will be the current working directory.
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -183,10 +208,19 @@
         <Parameter Name="fileSpec" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="globRoot">To be added.</param>
-        <param name="fileSpec">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="globRoot">
+                The root of the glob.
+                The fixed directory part of the glob and the match arguments (<see cref="M:Microsoft.Build.Globbing.MSBuildGlob.IsMatch(System.String)" /> and <see cref="M:Microsoft.Build.Globbing.MSBuildGlob.MatchInfo(System.String)" />)
+                will get normalized against this root.
+                If empty, the current working directory is used.
+                Cannot be null, and cannot contain invalid path arguments.
+            </param>
+        <param name="fileSpec">The string to parse</param>
+        <summary>
+                Parse the given <paramref name="fileSpec" /> into a <see cref="T:Microsoft.Build.Globbing.MSBuildGlob" /> using a given
+                <paramref name="globRoot" />.
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -206,7 +240,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+                The wildcard directory part
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

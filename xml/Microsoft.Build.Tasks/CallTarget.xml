@@ -32,7 +32,12 @@
   </Attributes>
   <Docs>
     <summary>Implements the <c>CallTarget</c> task. Use the <c>CallTarget</c> element in your project file to create and execute this task. For usage and parameter information, see [CallTarget Task](https://msdn.microsoft.com/library/bb1fe2c4-4383-436f-8326-c24cc4a46150).</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+            This class implements the "CallTarget" task, which invokes other targets within the same
+            project file.  Marked RunInMTA because we do not want this task to ever be invoked explicitly
+            on the STA if the RequestBuilder is running on another thread, as this will cause thread
+            id validation checks to fail.
+            </remarks>
     <forInternalUseOnly />
   </Docs>
   <Members>
@@ -95,9 +100,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Instructs the [!INCLUDE[vstecmsbuild](~/includes/vstecmsbuild-md.md)] engine to build one or more targets in the current project.</summary>
-        <returns>
-          <see langword="true" /> if all targets built successfully; otherwise, <see langword="false" />.</returns>
+        <summary>
+            Instructs the MSBuild engine to build one or more targets in the current project.
+            </summary>
+        <returns>true if all targets built successfully; false if any target fails</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -138,7 +144,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a Boolean value that indicates whether the [!INCLUDE[vstecmsbuild](~/includes/vstecmsbuild-md.md)] engine is called once per target (<see langword="true" />) or the [!INCLUDE[vstecmsbuild](~/includes/vstecmsbuild-md.md)] engine is called once to build all targets (<see langword="false" />).</summary>
+        <summary>
+            When this is true, instead of calling the engine once to build all the targets (for each project),
+            we would call the engine once per target (for each project).  The benefit of this is that
+            if one target fails, you can still continue with the remaining targets.
+            </summary>
         <value>
           <see langword="true" /> if the [!INCLUDE[vstecmsbuild](~/includes/vstecmsbuild-md.md)] engine is called once per target; <see langword="false" /> if the [!INCLUDE[vstecmsbuild](~/includes/vstecmsbuild-md.md)] engine is called once to build all targets.</value>
         <remarks>To be added.</remarks>
@@ -178,8 +188,10 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the outputs of all built targets.</summary>
-        <value>The outputs of all built targets.</value>
+        <summary>
+            Outputs of the targets built in each project.
+            </summary>
+        <value>Array of output items.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -220,9 +232,14 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the target or targets to build.</summary>
-        <value>The target or targets to build.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+            The targets to build.
+            </summary>
+        <value>Array of target names.</value>
+        <remarks>
+            This is a required parameter. If you want to build the 
+            default targets, use the &lt;MSBuild&gt; task and pass in Projects=$(MSBuildProjectFile).
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -258,7 +275,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a Boolean value that indicates whether the MSBuild engine will return the built targets from the cache.</summary>
+        <summary>
+            If true the cached result will be returned if present and a if MSBuild
+            task is run its result will be cached in a scope (ProjectFileName, GlobalProperties)[TargetNames]
+            as a list of build items
+            </summary>
         <value>
           <see langword="true" /> if the MSBuild engine will return the built targets from the cache; otherwise, <see langword="false" />.</value>
         <remarks>

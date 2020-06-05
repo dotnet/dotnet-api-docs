@@ -30,7 +30,9 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>When overridden in a derived form, provides functionality for tasks.</summary>
+    <summary>
+            This helper base class provides default functionality for tasks. This class can only be instantiated in a derived form.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -84,7 +86,9 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.Task" /> class.</summary>
+        <summary>
+            Default (family) constructor.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -117,7 +121,9 @@
       </Parameters>
       <Docs>
         <param name="taskResources">The task resources.</param>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.Task" /> class with the specified <see cref="P:Microsoft.Build.Utilities.Task.TaskResources" />.</summary>
+        <summary>
+            This (family) constructor allows derived task classes to register their resources.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -158,8 +164,13 @@
       </Parameters>
       <Docs>
         <param name="taskResources">The task resources.</param>
-        <param name="helpKeywordPrefix">The prefix to append to string resources to create Help keywords.</param>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.Task" /> class with the specified <see cref="P:Microsoft.Build.Utilities.Task.TaskResources" /> and <see cref="P:Microsoft.Build.Utilities.Task.HelpKeywordPrefix" />.</summary>
+        <param name="helpKeywordPrefix">The help keyword prefix.</param>
+        <summary>
+            This (family) constructor allows derived task classes to register their resources, as well as provide a prefix for
+            composing help keywords from string resource names. If the prefix is an empty string, then string resource names will
+            be used verbatim as help keywords. For an example of how the prefix is used, see the
+            TaskLoggingHelper.LogErrorWithCodeFromResources(string, object[]) method.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -209,8 +220,10 @@
         <ReturnType>Microsoft.Build.Framework.IBuildEngine</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the instance of the <see cref="T:Microsoft.Build.Framework.IBuildEngine" /> object used by the task.</summary>
-        <value>The <see cref="T:Microsoft.Build.Framework.IBuildEngine" /> available to tasks.</value>
+        <summary>
+            The build engine automatically sets this property to allow tasks to call back into it.
+            </summary>
+        <value>The build engine interface available to tasks.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -245,8 +258,12 @@
         <ReturnType>Microsoft.Build.Framework.IBuildEngine2</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the instance of the <see cref="T:Microsoft.Build.Framework.IBuildEngine2" /> object used by the task.</summary>
-        <value>The <see cref="T:Microsoft.Build.Framework.IBuildEngine2" /> available to tasks.</value>
+        <summary>
+            The build engine automatically sets this property to allow tasks to call back into it.
+            This is a convenience property so that task authors inheriting from this class do not
+            have to cast the value from IBuildEngine to IBuildEngine2.
+            </summary>
+        <value>The build engine interface available to tasks.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -270,7 +287,9 @@
         <ReturnType>Microsoft.Build.Framework.IBuildEngine3</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the instance of the <see cref="T:Microsoft.Build.Framework.IBuildEngine3" /> object used by the task.</summary>
+        <summary>
+            Retrieves the IBuildEngine3 version of the build engine interface provided by the host.
+            </summary>
         <value>The <see cref="T:Microsoft.Build.Framework.IBuildEngine3" /> available to tasks.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -295,7 +314,9 @@
         <ReturnType>Microsoft.Build.Framework.IBuildEngine4</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the instance of the <see cref="T:Microsoft.Build.Framework.IBuildEngine4" /> object used by the task.</summary>
+        <summary>
+            Retrieves the IBuildEngine4 version of the build engine interface provided by the host.
+            </summary>
         <value>The <see cref="T:Microsoft.Build.Framework.IBuildEngine4" /> available to tasks.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -316,7 +337,9 @@
         <ReturnType>Microsoft.Build.Framework.IBuildEngine5</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Retrieves the IBuildEngine5 version of the build engine interface provided by the host.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -353,9 +376,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>When overridden in a derived class, executes the task.</summary>
-        <returns>
-          <see langword="true" /> if the task successfully executed; otherwise, <see langword="false" />.</returns>
+        <summary>
+            Must be implemented by derived class.
+            </summary>
+        <returns>true, if successful</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -401,8 +425,13 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the prefix used to compose Help keywords from resource names.</summary>
-        <value>The prefix used to compose Help keywords from resource names.</value>
+        <summary>
+            Gets or sets the prefix used to compose help keywords from string resource names. If a task does not have help
+            keywords associated with its messages, it can ignore this property or set it to null. If the prefix is set to an empty
+            string, then string resource names will be used verbatim as help keywords. For an example of how this prefix is used,
+            see the TaskLoggingHelper.LogErrorWithCodeFromResources(string, object[]) method.
+            </summary>
+        <value>The help keyword prefix string (can be null).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -452,8 +481,10 @@
         <ReturnType>Microsoft.Build.Framework.ITaskHost</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the host object associated with the task.</summary>
-        <value>The host object associated with the task. This value can be <see langword="null" />.</value>
+        <summary>
+            The build engine sets this property if the host IDE has associated a host object with this particular task.
+            </summary>
+        <value>The host object instance (can be null).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -499,7 +530,12 @@
         <ReturnType>Microsoft.Build.Utilities.TaskLoggingHelper</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an instance of a <see cref="T:Microsoft.Build.Utilities.TaskLoggingHelper" /> class containing task logging methods.</summary>
+        <summary>
+            Gets an instance of a TaskLoggingHelper class containing task logging methods.
+            The taskLoggingHelper is a MarshallByRef object which needs to have MarkAsInactive called
+            if the parent task is making the appdomain and marshaling this object into it. If the appdomain is not unloaded at the end of 
+            the task execution and the MarkAsInactive method is not called this will result in a leak of the task instances in the appdomain the task was created within.
+            </summary>
         <value>The logging helper object.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -541,8 +577,11 @@
         <ReturnType>System.Resources.ResourceManager</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the culture-specific resources associated with the task.</summary>
-        <value>The culture-specific resources associated with the task. This value can be <see langword="null" />.</value>
+        <summary>
+            Gets or sets the task's culture-specific resources. Derived classes should register their resources either during
+            construction, or via this property, if they have localized strings.
+            </summary>
+        <value>The task's resources (can be null).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   

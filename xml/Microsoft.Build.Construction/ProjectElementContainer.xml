@@ -15,7 +15,9 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Provides an abstract container class for project elements.</summary>
+    <summary>
+            A container for project elements
+            </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -41,7 +43,10 @@
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Microsoft.Build.Construction.ProjectElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a recursive depth-first enumerator over all child elements.</summary>
+        <summary>
+            Get an enumerator over all children, gotten recursively.
+            Walks the children in a depth-first manner.
+            </summary>
         <value>A recursive depth-first enumerator over all child elements.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -74,7 +79,12 @@
       </Parameters>
       <Docs>
         <param name="child">The project element to be appended.</param>
-        <summary>Appends the <paramref name="child" /> element as the last child of this project container.</summary>
+        <summary>
+            Inserts the provided element as the last child.
+            Throws if the parent is not itself parented.
+            Throws if the node to add is already parented.
+            Throws if the node to add was created from a different project than this node.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -107,7 +117,9 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all child elements.</summary>
+        <summary>
+            Get enumerable over all the children
+            </summary>
         <value>All child elements.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -134,7 +146,9 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Construction.ProjectElement&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all child elements, starting from the last child.</summary>
+        <summary>
+            Get enumerable over all the children, starting from the last
+            </summary>
         <value>All child elements, starting from the last child.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -164,7 +178,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of child elements.</summary>
+        <summary>
+            Number of children of any kind
+            </summary>
         <value>The number of child elements.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -189,10 +205,12 @@
         <Parameter Name="parent" Type="Microsoft.Build.Construction.ProjectElementContainer" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="factory">To be added.</param>
-        <param name="parent">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="factory">The factory to use for creating the new instance.</param>
+        <param name="parent">The parent to append the cloned element to as a child.</param>
+        <summary>
+            Returns a clone of this project element and all its children.
+            </summary>
+        <returns>The cloned element.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -215,8 +233,10 @@
         <Parameter Name="element" Type="Microsoft.Build.Construction.ProjectElementContainer" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="element">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="element">The element to act as a template to copy from.</param>
+        <summary>
+            Applies properties from the specified type to this instance.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -248,7 +268,10 @@
         <ReturnType>Microsoft.Build.Construction.ProjectElement</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the first child element.</summary>
+        <summary>
+            First child, if any, otherwise null.
+            Cannot be set directly; use <see cref="M:Microsoft.Build.Construction.ProjectElementContainer.PrependChild(Microsoft.Build.Construction.ProjectElement)">PrependChild()</see>.
+            </summary>
         <value>The first child element, or <see langword="null" /> if no child element exists.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -283,17 +306,18 @@
       <Docs>
         <param name="child">The project element to be inserted.</param>
         <param name="reference">The project element to be inserted after.</param>
-        <summary>Inserts the <paramref name="child" /> element after the <paramref name="reference" /> element.</summary>
+        <summary>
+            Insert the child after the reference child.
+            Reference child if provided must be parented by this element.
+            Reference child may be null, in which case this is equivalent to <see cref="M:Microsoft.Build.Construction.ProjectElementContainer.PrependChild(Microsoft.Build.Construction.ProjectElement)">PrependChild(child)</see>.
+            Throws if the parent is not itself parented.
+            Throws if the reference node does not have this node as its parent.
+            Throws if the node to add is already parented.
+            Throws if the node to add was created from a different project than this node.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the `reference` element is null, this method is equivalent to <xref:Microsoft.Build.Construction.ProjectElementContainer.PrependChild%2A>.  
-  
- Throws an exception if this project container is not parented, or if the `child` element is already parented, or if the `child` element was created by a different <xref:Microsoft.Build.Construction.ProjectRootElement>, or if the `reference` element is not a child of this project container.  
-  
- ]]></format>
-        </remarks>
+            Semantics are those of XmlNode.InsertAfterChild.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="InsertBeforeChild">
@@ -319,17 +343,18 @@
       <Docs>
         <param name="child">The project element to be inserted.</param>
         <param name="reference">The project element to be inserted before.</param>
-        <summary>Inserts the <paramref name="child" /> element before the <paramref name="reference" /> element.</summary>
+        <summary>
+            Insert the child before the reference child.
+            Reference child if provided must be parented by this element.
+            Reference child may be null, in which case this is equivalent to <see cref="M:Microsoft.Build.Construction.ProjectElementContainer.AppendChild(Microsoft.Build.Construction.ProjectElement)">AppendChild(child)</see>.
+            Throws if the parent is not itself parented.
+            Throws if the reference node does not have this node as its parent.
+            Throws if the node to add is already parented.
+            Throws if the node to add was created from a different project than this node.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the `reference` element is null, this method is equivalent to <xref:Microsoft.Build.Construction.ProjectElementContainer.AppendChild%2A>.  
-  
- Throws an exception if this project container is not parented, or if the `child` element is already parented, or if the `child` element was created by a different <xref:Microsoft.Build.Construction.ProjectRootElement>, or if the `reference` element is not a child of this project container.  
-  
- ]]></format>
-        </remarks>
+            Semantics are those of XmlNode.InsertBeforeChild.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="LastChild">
@@ -360,7 +385,10 @@
         <ReturnType>Microsoft.Build.Construction.ProjectElement</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the last child element.</summary>
+        <summary>
+            Last child, if any, otherwise null.
+            Cannot be set directly; use <see cref="M:Microsoft.Build.Construction.ProjectElementContainer.AppendChild(Microsoft.Build.Construction.ProjectElement)">AppendChild()</see>.
+            </summary>
         <value>The last child element, or <see langword="null" /> if no child element exists.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -393,7 +421,12 @@
       </Parameters>
       <Docs>
         <param name="child">The project element to be prepended.</param>
-        <summary>Prepends the <paramref name="child" /> element as the first child of this project container.</summary>
+        <summary>
+            Inserts the provided element as the first child.
+            Throws if the parent is not itself parented.
+            Throws if the node to add is already parented.
+            Throws if the node to add was created from a different project than this node.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -422,15 +455,13 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Removes all the children, if any, from this project container.</summary>
+        <summary>
+            Remove all the children, if any.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- It is safe to modify the children in this way during enumeration.  
-  
- ]]></format>
-        </remarks>
+            It is safe to modify the children in this way
+            during enumeration. See <cref see="RemoveChild">RemoveChild</cref>.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="RemoveChild">
@@ -454,15 +485,19 @@
       </Parameters>
       <Docs>
         <param name="child">The project element to be removed.</param>
-        <summary>Removes a <paramref name="child" /> element from this project container.</summary>
+        <summary>
+            Removes the specified child.
+            Throws if the child is not currently parented by this object.
+            This is O(1).
+            May be safely called during enumeration of the children.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Throws an exception if the child element is not currently parented by this project container. It is safe to remove a child this way during enumeration.  
-  
- ]]></format>
-        </remarks>
+            This is actually safe to call during enumeration of children, because it
+            doesn't bother to clear the child's NextSibling (or PreviousSibling) pointers.
+            To determine whether a child is unattached, check whether its parent is null,
+            or whether its NextSibling and PreviousSibling point back at it.
+            DO NOT BREAK THIS VERY USEFUL SAFETY CONTRACT.
+            </remarks>
       </Docs>
     </Member>
   </Members>

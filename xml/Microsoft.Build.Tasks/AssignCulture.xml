@@ -26,7 +26,23 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Implements the <c>AssignCulture</c> task. Use the <c>AssignCulture</c> element in your project file to create and execute this task. For usage and parameter information, see [AssignCulture Task](https://msdn.microsoft.com/library/8f8314cc-82a6-4f16-a62d-b9f0d1d5e274).</summary>
+    <summary>
+            Class: AssignCulture
+            
+            This task takes a list of resource file names and sets an attribute that
+            contains the culture name embedded in the file name:
+            
+                 MyResources.fr.resx     ==&gt; Culture='fr'
+            
+            The task can also return a list of "Culture-neutral" file names, like:
+            
+                 MyGlyph.fr.bmp          ==&gt; MyGlyph.bmp [Culture='fr']
+            
+            This is because embedded resources are referred to this way.
+            
+            There are plenty of corner cases with this task. See the unit test for
+            more details.
+            </summary>
     <remarks>To be added.</remarks>
     <forInternalUseOnly />
   </Docs>
@@ -97,7 +113,18 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a list of <see cref="P:Microsoft.Build.Tasks.AssignCulture.Files" /> with a <c>Culture</c> metadata entry added to each item.</summary>
+        <summary>
+            This outgoing list of files is exactly the same as the incoming Files
+            list except that an attribute name "Culture" will have been added if 
+            the particular file name is in the form:
+            
+                 MyResource.&lt;any-valid-culture-id&gt;.resx
+            
+            The value of Culture will be "&lt;any-valid-culture-id&gt;".
+            
+            If the incoming item from Files already has a Culture attribute then
+            that original attribute is used instead.
+            </summary>
         <value>The list of <see cref="P:Microsoft.Build.Tasks.AssignCulture.Files" />, with a <c>Culture</c> metadata entry added to each item.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -148,7 +175,17 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a subset of <see cref="P:Microsoft.Build.Tasks.AssignCulture.AssignedFiles" /> that have a <c>Culture</c> metadata entry.</summary>
+        <summary>
+            This is a subset of AssignedFiles that has all of the items that
+            ended up have a Culture assigned to them. This includes items that
+            already had a Culture in the incoming Files list as well as items
+            that were assigned a Culture because they had a valid culture ID
+            embedded in their file name.
+            
+            The following is always true:
+            
+                 AssignedFiles = AssignedFilesWithCulture + AssignedFilesWithNoCulture
+            </summary>
         <value>A subset of <see cref="P:Microsoft.Build.Tasks.AssignCulture.AssignedFiles" /> that have a <c>Culture</c> metadata entry.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -190,7 +227,14 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a subset of <see cref="P:Microsoft.Build.Tasks.AssignCulture.AssignedFiles" /> that do not have a <c>Culture</c> metadata entry.</summary>
+        <summary>
+            This is a subset of AssignedFiles that has all of the items that
+            ended up with no Culture assigned to them. 
+            
+            The following is always true:
+            
+                 AssignedFiles = AssignedFilesWithCulture + AssignedFilesWithNoCulture
+            </summary>
         <value>A subset of <see cref="P:Microsoft.Build.Tasks.AssignCulture.AssignedFiles" /> that do not have a <c>Culture</c> metadata entry.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -232,7 +276,32 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a subset of <see cref="P:Microsoft.Build.Tasks.AssignCulture.AssignedFiles" /> that do not have a <c>Culture</c> metadata entry.</summary>
+        <summary>
+            This list has the same number of items as the Files list or the
+            AssignedFiles list.
+            
+            Items in this list have the file name from Files or AssignedFiles
+            but with the culture stripped if it was embedded in the file name.
+            
+            So for example, if the incoming item in Files was:
+            
+                 MyBitmap.fr.bmp
+            
+            then the corresponding file in CultureNeutralAssignedFiles will be:
+            
+                 MyBitmap.bmp
+            
+            The culture will only be stripped if it is a valid culture identifier.
+            So for example,
+            
+                 MyCrazyFile.XX.txt
+            
+            will result in exactly the same file name:
+            
+                 MyCrazyFile.XX.txt
+            
+            because 'XX' is not a valid culture identifier.
+            </summary>
         <value>A subset of <see cref="P:Microsoft.Build.Tasks.AssignCulture.AssignedFiles" /> that do not have a <c>Culture</c> metadata entry.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -267,9 +336,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Executes the <c>AssignCulture</c> task.</summary>
-        <returns>
-          <see langword="true" /> if task execution succeeded; otherwise, <see langword="false" />.</returns>
+        <summary>
+            Execute.
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -313,7 +383,9 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a list of files with embedded culture names to assign a culture to.</summary>
+        <summary>
+            The incoming list of files to assign a culture to.
+            </summary>
         <value>The list of files with embedded culture names to assign a culture to.</value>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />

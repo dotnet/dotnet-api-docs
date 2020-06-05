@@ -26,7 +26,9 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Implements the <c>CreateItem</c> task. Use the <c>CreateItem</c> element in your project file to create and execute this task. For usage and parameter information, see <see href="/visualstudio/msbuild/createitem-task">CreateItem Task</see>.</summary>
+    <summary>
+            Forward a list of items from input to output. This allows dynamic item lists.
+            </summary>
     <remarks>To be added.</remarks>
     <forInternalUseOnly />
   </Docs>
@@ -102,16 +104,18 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets additional metadata to attach to the output items.</summary>
+        <summary>
+            A list of metadata name/value pairs to apply to the output items.  
+            A typical input: "metadataname1=metadatavalue1", "metadataname2=metadatavalue2", ...
+            </summary>
         <value>Additional metadata to attach to the output items.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Specify the metadata name and value for the item with the following syntax: *MetadataName*`=`*MetadataValue*. Multiple metadata name/value pairs should be separated with a semicolon. If either the name or the value contains a semicolon or any other special characters, they must be escaped. For more information, see [How to: Escape Special Characters in MSBuild](/visualstudio/msbuild/how-to-escape-special-characters-in-msbuild).  
-  
- ]]></format>
-        </remarks>
+            The fact that this is a string[] makes the following illegal:
+                <CreateItem AdditionalMetadata="TargetPath=@(OutputPathItem)" />
+            The engine fails on this because it doesn't like item lists being concatenated with string
+            constants when the data is being passed into an array parameter.  So the workaround is to 
+            write this in the project file:
+                <CreateItem AdditionalMetadata="@(OutputPathItem-&gt;'TargetPath=%(Identity)')" /></remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -193,7 +197,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Executes the <c>CreateItem</c> task.</summary>
+        <summary>
+            Execute.
+            </summary>
         <returns>
           <see langword="true" /> if task execution succeeded; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -284,7 +290,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a Boolean value that indicates whether to apply the additional metadata only if none already exists.</summary>
+        <summary>
+            Only apply the additional metadata is none already exists
+            </summary>
         <value>
           <see langword="true" /> if the <c>CreateItem</c> task should apply the additional metadata only if none already exists; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>

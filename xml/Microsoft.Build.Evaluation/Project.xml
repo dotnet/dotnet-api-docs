@@ -23,8 +23,14 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Represents a project with design time semantics. This class can load project files, edit items and properties and build projects.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+            Represents an evaluated project with design time semantics.
+            Always backed by XML; can be built directly, or an instance can be cloned off to add virtual items/properties and build.
+            Edits to this project always update the backing XML.
+            </summary>
+    <remarks>
+            UNDONE: (Multiple configurations.) Protect against problems when attempting to edit, after edits were made to the same ProjectRootElement either directly or through other projects evaluated from that ProjectRootElement.
+            </remarks>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -50,7 +56,11 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Constructs an empty project using the global project collection global properties and default tools version.</summary>
+        <summary>
+            Construct an empty project, evaluating with the global project collection's
+            global properties and default tools version.
+            Project will be added to the global project collection when it is named.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -83,8 +93,14 @@
         <Parameter Name="xml" Type="Microsoft.Build.Construction.ProjectRootElement" />
       </Parameters>
       <Docs>
-        <param name="xml">ProjectRootElement to use for evaluation.</param>
-        <summary>Constructs an empty project and evaluates it using the given project root and the global project collection global properties and default tools version.</summary>
+        <param name="xml">ProjectRootElement to use</param>
+        <summary>
+            Construct over a ProjectRootElement object, evaluating with the global project collection's
+            global properties and default tools version.
+            Project is added to the global project collection if it has a name, or else when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -114,7 +130,11 @@
       </Parameters>
       <Docs>
         <param name="newProjectFileOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Construct an empty project, evaluating with the global project collection's
+            global properties and default tools version.
+            Project will be added to the global project collection when it is named.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -136,7 +156,11 @@
       </Parameters>
       <Docs>
         <param name="projectCollection">The project collection that the new project is added to.</param>
-        <summary>Constructs an empty project using the given project collection global properties and default tools version.</summary>
+        <summary>
+            Construct an empty project, evaluating with the specified project collection's
+            global properties and default tools version.
+            Project will be added to the specified project collection when it is named.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -170,7 +194,14 @@
       </Parameters>
       <Docs>
         <param name="projectFile">The source project file to be evaluated.</param>
-        <summary>Constructs a project and evaluates it from the given source project file and with the global project collection global properties and default tools version.</summary>
+        <summary>
+            Construct over an existing project file, evaluating with the global project collection's
+            global properties and default tools version.
+            Project is added to the global project collection.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            May throw IO-related exceptions.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -206,8 +237,14 @@
         <Parameter Name="xmlReader" Type="System.Xml.XmlReader" />
       </Parameters>
       <Docs>
-        <param name="xmlReader">Xml reader to read project source code from.</param>
-        <summary>Constructs a project and evaluates the source code from the given XML reader. The source code is evaluated with the global project collection global properties and default tools version.</summary>
+        <param name="xmlReader">Xml reader to read project from</param>
+        <summary>
+            Construct over a text reader over project xml, evaluating with the global project collection's
+            global properties and default tools version.
+            Project will be added to the global project collection when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -239,7 +276,11 @@
       <Docs>
         <param name="projectCollection">To be added.</param>
         <param name="newProjectFileOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>
+            Construct an empty project, evaluating with the specified project collection's
+            global properties and default tools version.
+            Project will be added to the specified project collection when it is named.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -262,10 +303,16 @@
         <Parameter Name="toolsVersion" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="xml">The project root to use for evaluation.</param>
+        <param name="xml">ProjectRootElement to use</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <summary>Constructs an empty project and evaluates it using the given project root and with the given global properties and given tools version.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <summary>
+            Construct over a ProjectRootElement object, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project is added to the global project collection if it has a name, or else when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -298,9 +345,13 @@
       </Parameters>
       <Docs>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">The tools version used to evaluate the project. May be null.</param>
-        <param name="projectCollection">The project collection the new project will be added to.</param>
-        <summary>Constructs an empty project, to be evaluated with the given project collection and with the given global properties and given tools version.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <param name="projectCollection">The <see cref="P:Microsoft.Build.Evaluation.Project.ProjectCollection" /> the project is added to.</param>
+        <summary>
+            Construct an empty project, evaluating with the specified project collection and
+            the specified global properties and default tools version, either of which may be null.
+            Project will be added to the specified project collection when it is named.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -333,7 +384,14 @@
         <param name="projectFile">The path to the source project file to be evaluated.</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
         <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <summary>Constructs a project and evaluates it from the given source project file and with the given global properties and given tools version.</summary>
+        <summary>
+            Construct over an existing project file, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project is added to the global project collection.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            May throw IO-related exceptions.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -365,10 +423,16 @@
         <Parameter Name="toolsVersion" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="xmlReader">Xml reader to read project source code from.</param>
+        <param name="xmlReader">Xml reader to read project from</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <summary>Constructs a project and evaluates the source code from the given XML reader. The source code is evaluated with the given global properties and given tools version.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <summary>
+            Construct over a text reader over project xml, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project will be added to the global project collection when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -406,11 +470,17 @@
         <Parameter Name="projectCollection" Type="Microsoft.Build.Evaluation.ProjectCollection" />
       </Parameters>
       <Docs>
-        <param name="xml">The project root to use for evaluation.</param>
+        <param name="xml">ProjectRootElement to use</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to.</param>
-        <summary>Constructs a project and evaluates it using the given project root and with the given global properties and given tools version.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <param name="projectCollection">The <see cref="P:Microsoft.Build.Evaluation.Project.ProjectCollection" /> the project is added to.</param>
+        <summary>
+            Construct over a ProjectRootElement object, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project is added to the global project collection if it has a name, or else when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -442,11 +512,15 @@
         <Parameter Name="newProjectFileOptions" Type="Microsoft.Build.Evaluation.NewProjectFileOptions" Index="3" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="globalProperties">To be added.</param>
-        <param name="toolsVersion">To be added.</param>
-        <param name="projectCollection">To be added.</param>
-        <param name="newProjectFileOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <param name="projectCollection">The <see cref="P:Microsoft.Build.Evaluation.Project.ProjectCollection" /> the project is added to.</param>
+        <param name="newProjectFileOptions">The <see cref="T:Microsoft.Build.Evaluation.NewProjectFileOptions" /> to use for the new project.</param>
+        <summary>
+            Construct an empty project, evaluating with the specified project collection and
+            the specified global properties and default tools version, either of which may be null.
+            Project will be added to the specified project collection when it is named.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -475,11 +549,18 @@
         <Parameter Name="projectCollection" Type="Microsoft.Build.Evaluation.ProjectCollection" />
       </Parameters>
       <Docs>
-        <param name="projectFile">The path to the source project file to be evaluated.</param>
+        <param name="projectFile">The project file</param>
         <param name="globalProperties">The global properties. May be null.</param>
         <param name="toolsVersion">The tools version. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to. May not be null.</param>
-        <summary>Constructs a project and evaluates it from the given source project file and with the given global properties and given tools version.</summary>
+        <param name="projectCollection">The collection with which this project should be associated. May not be null.</param>
+        <summary>
+            Construct over an existing project file, evaluating with the specified global properties and 
+            using the tools version provided, either or both of which may be null.
+            Project is added to the global project collection.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            May throw IO-related exceptions.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -517,11 +598,17 @@
         <Parameter Name="projectCollection" Type="Microsoft.Build.Evaluation.ProjectCollection" />
       </Parameters>
       <Docs>
-        <param name="xmlReader">Xml reader to read project source code from.</param>
+        <param name="xmlReader">Xml reader to read project from</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to. May not be null.</param>
-        <summary>Constructs a project and evaluates the source code from the given XML reader. The source code is evaluated with the given global properties and given tools version.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <param name="projectCollection">The collection with which this project should be associated. May not be null.</param>
+        <summary>
+            Construct over a text reader over project xml, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project will be added to the specified project collection when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -555,12 +642,18 @@
         <Parameter Name="loadSettings" Type="Microsoft.Build.Evaluation.ProjectLoadSettings" />
       </Parameters>
       <Docs>
-        <param name="xml">The project root to use for evaluation.</param>
+        <param name="xml">ProjectRootElement to use</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to. May not be null.</param>
-        <param name="loadSettings">The load settings to use for evaluation.</param>
-        <summary>Constructs a project and evaluates it using the given project root and with the given global properties, given tools version, and given load settings.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <param name="projectCollection">The <see cref="P:Microsoft.Build.Evaluation.Project.ProjectCollection" /> the project is added to.</param>
+        <param name="loadSettings">The <see cref="T:Microsoft.Build.Evaluation.ProjectLoadSettings" /> to use for evaluation.</param>
+        <summary>
+            Construct over a ProjectRootElement object, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project is added to the global project collection if it has a name, or else when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -594,12 +687,19 @@
         <Parameter Name="loadSettings" Type="Microsoft.Build.Evaluation.ProjectLoadSettings" />
       </Parameters>
       <Docs>
-        <param name="projectFile">The path to the source project file to be evaluated.</param>
-        <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
+        <param name="projectFile">The project file</param>
+        <param name="globalProperties">The global properties. May be null.</param>
         <param name="toolsVersion">The tools version. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to. May not be null.</param>
-        <param name="loadSettings">The load settings to use for evaluation.</param>
-        <summary>Constructs a project and evaluates it from the given source project file and with the given global properties, given tools version, and given load settings.</summary>
+        <param name="projectCollection">The collection with which this project should be associated. May not be null.</param>
+        <param name="loadSettings">The load settings for this project.</param>
+        <summary>
+            Construct over an existing project file, evaluating with the specified global properties and 
+            using the tools version provided, either or both of which may be null.
+            Project is added to the global project collection.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            May throw IO-related exceptions.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -633,12 +733,18 @@
         <Parameter Name="loadSettings" Type="Microsoft.Build.Evaluation.ProjectLoadSettings" />
       </Parameters>
       <Docs>
-        <param name="xmlReader">Xml reader from which to read project source code.</param>
+        <param name="xmlReader">Xml reader to read project from</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to. May not be null.</param>
-        <param name="loadSettings">The load settings to use for evaluation.</param>
-        <summary>Constructs a project and evaluates the source code from the given XML reader. The source code is evaluated with the given global properties and given tools version.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <param name="projectCollection">The collection with which this project should be associated. May not be null.</param>
+        <param name="loadSettings">The <see cref="T:Microsoft.Build.Evaluation.ProjectLoadSettings" /> to use for evaluation.</param>
+        <summary>
+            Construct over a text reader over project xml, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project will be added to the specified project collection when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -673,13 +779,19 @@
         <Parameter Name="loadSettings" Type="Microsoft.Build.Evaluation.ProjectLoadSettings" Index="5" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="xml">The project root to use for evaluation.</param>
+        <param name="xml">ProjectRootElement to use</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <param name="subToolsetVersion">Sub toolset version to evaluate with. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to. May not be null.</param>
-        <param name="loadSettings">The load settings to use for evaluation.</param>
-        <summary>Constructs a project and evaluates it using the given project root and with the given global properties, tools and sub-toolset versions, project collection, and load settings.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <param name="subToolsetVersion">Sub-toolset version to explicitly evaluate the toolset with.  May be null.</param>
+        <param name="projectCollection">The <see cref="P:Microsoft.Build.Evaluation.Project.ProjectCollection" /> the project is added to.</param>
+        <param name="loadSettings">The <see cref="T:Microsoft.Build.Evaluation.ProjectLoadSettings" /> to use for evaluation.</param>
+        <summary>
+            Construct over a ProjectRootElement object, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project is added to the global project collection if it has a name, or else when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -714,13 +826,20 @@
         <Parameter Name="loadSettings" Type="Microsoft.Build.Evaluation.ProjectLoadSettings" Index="5" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="projectFile">The path to the source project file to be evaluated.</param>
-        <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
+        <param name="projectFile">The project file</param>
+        <param name="globalProperties">The global properties. May be null.</param>
         <param name="toolsVersion">The tools version. May be null.</param>
-        <param name="subToolsetVersion">The sub toolset version. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to. May not be null.</param>
-        <param name="loadSettings">The load settings to use for evaluation.</param>
-        <summary>Constructs a project and evaluates it from the given source project file and with the given global properties, tools and sub-toolset versions, project collection, and load settings.</summary>
+        <param name="subToolsetVersion">Sub-toolset version to explicitly evaluate the toolset with.  May be null.</param>
+        <param name="projectCollection">The collection with which this project should be associated. May not be null.</param>
+        <param name="loadSettings">The load settings for this project.</param>
+        <summary>
+            Construct over an existing project file, evaluating with the specified global properties and 
+            using the tools version provided, either or both of which may be null.
+            Project is added to the global project collection.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            May throw IO-related exceptions.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -755,13 +874,19 @@
         <Parameter Name="loadSettings" Type="Microsoft.Build.Evaluation.ProjectLoadSettings" Index="5" FrameworkAlternate="msbuild-15;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
-        <param name="xmlReader">Xml reader to read project source code from.</param>
+        <param name="xmlReader">Xml reader to read project from</param>
         <param name="globalProperties">Global properties to evaluate with. May be null in which case the containing project collection's global properties will be used.</param>
-        <param name="toolsVersion">Tools version to evaluate with. May be null.</param>
-        <param name="subToolsetVersion">Sub Toolset version to evaluate with. May be null.</param>
-        <param name="projectCollection">The project collection the project is added to. May not be null.</param>
-        <param name="loadSettings">The load settings to use for evaluation.</param>
-        <summary>Constructs a project and evaluates the source code from the given XML reader. The source code is evaluated with the given global properties, tools and sub-toolset versions, project collection, and load settings.</summary>
+        <param name="toolsVersion">Tools version to evaluate with. May be null</param>
+        <param name="subToolsetVersion">Sub-toolset version to explicitly evaluate the toolset with.  May be null.</param>
+        <param name="projectCollection">The collection with which this project should be associated. May not be null.</param>
+        <param name="loadSettings">The load settings for this project.</param>
+        <summary>
+            Construct over a text reader over project xml, evaluating with specified
+            global properties and toolset, either or both of which may be null.
+            Project will be added to the specified project collection when it is named.
+            Throws InvalidProjectFileException if the evaluation fails.
+            Throws InvalidOperationException if there is already an equivalent project loaded in the project collection.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -811,7 +936,15 @@
       <Docs>
         <param name="itemType">The item type of the added item.</param>
         <param name="unevaluatedInclude">Include attribute of the item to be added.</param>
-        <summary>Adds an item with no metadata to the project.</summary>
+        <summary>
+            Adds an item with no metadata to the project.
+            Any metadata can be added subsequently.
+            Does not modify the XML if a wildcard expression would already include the new item.
+            Evaluates on a best-effort basis:
+                -expands with all items. Items that are defined in the XML below the new item may be used, even though in a real evaluation they would not be.
+                -only this item is evaluated. Other items that might depend on it is not affected.
+            This is a convenience that it is understood does not necessarily leave the project in a perfectly self consistent state until reevaluation.
+            </summary>
         <returns>The added item.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -850,7 +983,15 @@
         <param name="itemType">The item type of the added item.</param>
         <param name="unevaluatedInclude">Include attribute of the item to be added.</param>
         <param name="metadata">The metadata of the added item.</param>
-        <summary>Adds an item with the given metadata to the project.</summary>
+        <summary>
+            Adds an item with metadata to the project.
+            Metadata may be null, indicating no metadata.
+            Does not modify the XML if a wildcard expression would already include the new item.
+            Evaluates on a best-effort basis:
+                -expands with all items. Items that are defined in the XML below the new item may be used, even though in a real evaluation they would not be.
+                -only this item is evaluated. Other items that might depend on it is not affected.
+            This is a convenience that it is understood does not necessarily leave the project in a perfectly self consistent state until reevaluation.
+            </summary>
         <returns>The added item.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -901,7 +1042,16 @@
       <Docs>
         <param name="itemType">The item type to be added.</param>
         <param name="unevaluatedInclude">The unevaluated Include attribute to be added to the item.</param>
-        <summary>Adds an item with no metadata to the project.  Makes no effort to see if an existing wildcard would already match the new item, unless it is the first item in an item group.  Makes no effort to locate the new item near similar items.</summary>
+        <summary>
+            Adds an item with no metadata to the project.
+            Makes no effort to see if an existing wildcard would already match the new item, unless it is the first item in an item group.
+            Makes no effort to locate the new item near similar items.
+            Appends the item to the first item group that does not have a condition and has either no children or whose first child is an item of the same type.
+            Evaluates on a best-effort basis:
+                -expands with all items. Items that are defined in the XML below the new item may be used, even though in a real evaluation they would not be.
+                -only this item is evaluated. Other items that might depend on it is not affected.
+            This is a convenience that it is understood does not necessarily leave the project in a perfectly self consistent state until reevaluation.
+            </summary>
         <returns>A list of the project items added.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -944,7 +1094,17 @@
         <param name="itemType">The item type to be added.</param>
         <param name="unevaluatedInclude">The unevaluated Include attribute to be added to the item.</param>
         <param name="metadata">The metadata to be added.</param>
-        <summary>Adds an item with metadata to the project. Metadata may be null, indicating no metadata. Makes no effort to see if an existing wildcard would already match the new item, unless it is the first item in an item group. Makes no effort to locate the new item near similar items.</summary>
+        <summary>
+            Adds an item with metadata to the project.
+            Metadata may be null, indicating no metadata.
+            Makes no effort to see if an existing wildcard would already match the new item, unless it is the first item in an item group.
+            Makes no effort to locate the new item near similar items.
+            Appends the item to the first item group that does not have a condition and has either no children or whose first child is an item of the same type.
+            Evaluates on a best-effort basis:
+                -expands with all items. Items that are defined in the XML below the new item may be used, even though in a real evaluation they would not be.
+                -only this item is evaluated. Other items that might depend on it is not affected.
+            This is a convenience that it is understood does not necessarily leave the project in a perfectly self consistent state until reevaluation.
+            </summary>
         <returns>A list of the project items added.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -979,7 +1139,13 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Evaluation.ProjectMetadata&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all item definition metadata encountered during evaluation.</summary>
+        <summary>
+            Item definition metadata encountered during evaluation. These are read during the second evaluation pass.
+            Unlike those returned by the ItemDefinitions property, these are ordered, and include any metadata that
+            were subsequently overridden by others with the same name and item type. It does not include any 
+            elements whose conditions did not evaluate to true.
+            It does not include any item definition metadata added since the last evaluation.
+            </summary>
         <value>All item definition metadata encountered during evaluation. This does not include any elements whose conditions did not evaluate to true, nor any item definition metadata added since the last evaluation.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1008,7 +1174,15 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Evaluation.ProjectItem&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an enumerator over all items encountered during evaluation. These are read during the third evaluation pass.</summary>
+        <summary>
+            Items encountered during evaluation. These are read during the third evaluation pass.
+            Unlike those returned by the Items property, these are ordered with respect to all other items 
+            encountered during evaluation, not just ordered with respect to items of the same item type.
+            In some applications, like the F# language, this complete mutual ordering is significant, and such hosts
+            can use this property.
+            It does not include any elements whose conditions did not evaluate to true.
+            It does not include any items added since the last evaluation.
+            </summary>
         <value>An enumerator over all items encountered during evaluation. These are read during the third evaluation pass.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1041,7 +1215,13 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Evaluation.ProjectProperty&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all properties encountered during evaluation.</summary>
+        <summary>
+            Properties encountered during evaluation. These are read during the first evaluation pass.
+            Unlike those returned by the Properties property, these are ordered, and includes any properties that
+            were subsequently overridden by others with the same name. It does not include any 
+            properties whose conditions did not evaluate to true.
+            It does not include any properties added since the last evaluation.
+            </summary>
         <value>All properties encountered during evaluation. This does not include any properties whose conditions did not evaluate to true, nor any properties added since the last evaluation.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1085,7 +1265,13 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Builds this project, using the default targets.</summary>
+        <summary>
+            Starts a build using this project, building the default targets.
+            Returns true on success, false on failure.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1119,7 +1305,13 @@
       </Parameters>
       <Docs>
         <param name="logger">The logger to be used during the build.</param>
-        <summary>Builds this project, using the default targets and the given logger.</summary>
+        <summary>
+            Starts a build using this project, building the default targets and the specified logger.
+            Returns true on success, false on failure.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1158,7 +1350,13 @@
       </Parameters>
       <Docs>
         <param name="loggers">An enumerator over all loggers to be used during the build.</param>
-        <summary>Builds this project, using the default targets and the given loggers.</summary>
+        <summary>
+            Starts a build using this project, building the default targets and the specified loggers.
+            Returns true on success, false on failure.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1197,7 +1395,13 @@
       </Parameters>
       <Docs>
         <param name="target">The target to be built.</param>
-        <summary>Builds this project, building the given target.</summary>
+        <summary>
+            Starts a build using this project, building the specified target.
+            Returns true on success, false on failure.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1236,7 +1440,13 @@
       </Parameters>
       <Docs>
         <param name="targets">An array of targets to be built.</param>
-        <summary>Builds this project, building the given targets.</summary>
+        <summary>
+            Starts a build using this project, building the specified targets.
+            Returns true on success, false on failure.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1277,7 +1487,13 @@
       <Docs>
         <param name="loggers">The loggers to be used during the build.</param>
         <param name="remoteLoggers">The remote loggers to be used during the build.</param>
-        <summary>Builds this project, using the default targets and the given loggers and remote loggers.</summary>
+        <summary>
+            Starts a build using this project, building the default targets and the specified loggers.
+            Returns true on success, false on failure.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1318,7 +1534,13 @@
       <Docs>
         <param name="target">The target to be built.</param>
         <param name="loggers">The loggers to be used during the build.</param>
-        <summary>Builds this project, building the given target and using the given loggers.</summary>
+        <summary>
+            Starts a build using this project, building the specified target with the specified loggers.
+            Returns true on success, false on failure.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1359,7 +1581,14 @@
       <Docs>
         <param name="targets">The targets to be built.</param>
         <param name="loggers">The loggers to be used during the build.</param>
-        <summary>Builds this project, building the given targets and using the given loggers.</summary>
+        <summary>
+            Starts a build using this project, building the specified targets with the specified loggers.
+            Returns true on success, false on failure.
+            If build is disabled on this project, does not build, and returns false.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1397,7 +1626,13 @@
         <param name="target">The target to be built.</param>
         <param name="loggers">The loggers to be used during the build.</param>
         <param name="remoteLoggers">The remote loggers to be used during the build.</param>
-        <summary>Builds this project, building the given target and using the given loggers and remote loggers.</summary>
+        <summary>
+            Starts a build using this project, building the specified target with the specified loggers.
+            Returns true on success, false on failure.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1435,7 +1670,14 @@
         <param name="targets">The targets to be built.</param>
         <param name="loggers">The loggers to be used during the build.</param>
         <param name="remoteLoggers">The remote loggers to be used during the build.</param>
-        <summary>Builds this project, building the given targets and using the given loggers and remote loggers.</summary>
+        <summary>
+            Starts a build using this project, building the specified targets with the specified loggers.
+            Returns true on success, false on failure.
+            If build is disabled on this project, does not build, and returns false.
+            Works on a privately cloned instance. To set or get
+            virtual items for build purposes, clone an instance explicitly and build that.
+            Does not modify the Project object.
+            </summary>
         <returns>
           <see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1473,8 +1715,9 @@
         <param name="targets">To be added.</param>
         <param name="loggers">To be added.</param>
         <param name="remoteLoggers">To be added.</param>
-        <param name="evaluationContext">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluationContext">The evaluation context to use in case reevaluation is required</param>
+        <summary>
+            See <see cref="M:Microsoft.Build.Evaluation.Project.Build(System.String[],System.Collections.Generic.IEnumerable{Microsoft.Build.Framework.ILogger},System.Collections.Generic.IEnumerable{Microsoft.Build.Logging.ForwardingLoggerRecord})" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1501,7 +1744,22 @@
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,System.Collections.Generic.List&lt;System.String&gt;&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a collection of possible property values for properties used to evaluate conditions found on properties, property groups, imports, and whens.</summary>
+        <summary>
+            Collection of possible values implied for properties contained in the conditions found on properties,
+            property groups, imports, and whens.
+            
+            For example, if the following conditions existed on properties in a project:
+            
+            Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'"
+            Condition="'$(Configuration)' == 'Release'"
+            
+            the table would be populated with
+            
+            { "Configuration", { "Debug", "Release" }}
+            { "Platform", { "x86" }}
+            
+            This is used by Visual Studio to determine the configurations defined in the project.
+            </summary>
         <value>A collection of possible property values for properties used to evaluate conditions found on properties, property groups, imports, and whens. The collection is in canonical form. The name of the entry is the name of the property to be evaluated, and the value is a list of possible property values.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1548,7 +1806,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates a project instance based on this project, but completely disconnected from it.</summary>
+        <summary>
+            Returns an instance based on this project, but completely disconnected.
+            This instance can be used to build independently.
+            Before creating the instance, this will reevaluate the project if necessary, so it will not be dirty.
+            </summary>
         <returns>The project instance.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1581,7 +1843,13 @@
       </Parameters>
       <Docs>
         <param name="settings">Determines whether created project instance is immutable and whether it contains a look up table to improve performance.</param>
-        <summary>Creates a project instance based on this project, but completely disconnected from it.</summary>
+        <summary>
+            Returns an instance based on this project, but completely disconnected.
+            This instance can be used to build independently.
+            Before creating the instance, this will reevaluate the project if necessary, so it will not be dirty.
+            The instance is immutable; none of the objects that form it can be modified. This makes it safe to 
+            access concurrently from multiple threads.
+            </summary>
         <returns>The project instance.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1614,9 +1882,10 @@
       </Parameters>
       <Docs>
         <param name="settings">To be added.</param>
-        <param name="evaluationContext">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="evaluationContext">The evaluation context to use in case reevaluation is required</param>
+        <summary>
+            See <see cref="M:Microsoft.Build.Evaluation.Project.CreateProjectInstance(Microsoft.Build.Execution.ProjectInstanceSettings)" /></summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1642,7 +1911,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the root directory for this project.</summary>
+        <summary>
+            The root directory for this project.
+            Is never null: in-memory projects use the current directory from the time of load.
+            </summary>
         <value>The root directory for this project. The root directory is never null; in-memory projects use the current directory at the time of project load.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1678,7 +1950,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether <see cref="M:Microsoft.Build.Evaluation.Project.MarkDirty" /> is temporarily disabled. This allows, for example, a global property to be set without the project getting marked dirty for reevaluation as a consequence.</summary>
+        <summary>
+            Whether <see cref="M:Microsoft.Build.Evaluation.Project.MarkDirty">MarkDirty()</see> is temporarily disabled.
+            This allows, for example, a global property to be set without the project getting
+            marked dirty for reevaluation as a consequence.
+            </summary>
         <value>
           <see langword="true" /> to indicate <see langword="MarkDirty" /> is temporarily disabled; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -1706,7 +1982,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a number that is incremented every time that project is re-evaluated.</summary>
+        <summary>
+            Obsolete. Use <see cref="P:Microsoft.Build.Evaluation.Project.LastEvaluationId" /> instead.
+            </summary>
         <value>The incremented value.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1739,7 +2017,13 @@
       </Parameters>
       <Docs>
         <param name="unexpandedValue">The string to be evaluated.</param>
-        <summary>Evaluates the given string by expanding items and properties. The string is evaluated as if it were found at the very end of the project file.</summary>
+        <summary>
+            Evaluates the provided string by expanding items and properties,
+            as if it was found at the very end of the project file.
+            This is useful for some hosts for which this kind of best-effort
+            evaluation is sufficient.
+            Does not expand bare metadata expressions.
+            </summary>
         <returns>The evaluated string.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1771,10 +2055,12 @@
         <Parameter Name="options" Type="Microsoft.Build.Definition.ProjectOptions" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="file">The file to evaluate the project from.</param>
+        <param name="options">The <see cref="T:Microsoft.Build.Definition.ProjectOptions" /> to use.</param>
+        <summary>
+            Create a file based project.
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1798,9 +2084,11 @@
         <Parameter Name="options" Type="Microsoft.Build.Definition.ProjectOptions" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="rootElement">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="rootElement">The <see cref="T:Microsoft.Build.Construction.ProjectRootElement" /> to evaluate the project from.</param>
+        <param name="options">The <see cref="T:Microsoft.Build.Definition.ProjectOptions" /> to use.</param>
+        <summary>
+            Create a <see cref="T:Microsoft.Build.Construction.ProjectRootElement" /> based project.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1825,9 +2113,11 @@
         <Parameter Name="options" Type="Microsoft.Build.Definition.ProjectOptions" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="reader">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="reader">The <see cref="T:System.Xml.XmlReader" /> to evaluate the project from.</param>
+        <param name="options">The <see cref="T:Microsoft.Build.Definition.ProjectOptions" /> to use.</param>
+        <summary>
+            Create a <see cref="T:System.Xml.XmlReader" /> based project.
+            </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1857,7 +2147,11 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the full path to the project source file.</summary>
+        <summary>
+            The full path to this project's file.
+            May be null, if the project was not loaded from disk.
+            Setter renames the project, if it already had a name.
+            </summary>
         <value>The full path to the project source file, or an empty string if the project was not loaded from disk.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1886,9 +2180,39 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>
+             Finds all the globs specified in item includes.
+             </summary>
+        <returns>
+             List of <see cref="T:Microsoft.Build.Evaluation.GlobResult" />.
+             </returns>
+        <remarks>
+          <see cref="P:Microsoft.Build.Evaluation.GlobResult.MsBuildGlob" /> is a <see cref="T:Microsoft.Build.Globbing.IMSBuildGlob" /> that combines all globs in the include element and ignores
+             all the fragments in the exclude attribute and all the fragments in all Remove elements that apply to the include element.
+             
+             Users can construct a composite glob that incorporates all the globs in the Project:
+             <code>
+             var uberGlob = new CompositeGlob(project.GetAllGlobs().Select(r =&gt; r.MSBuildGlob).ToArray());
+             uberGlob.IsMatch("foo.cs");
+             </code></remarks>
+        <example>
+          <code>
+            <P>*.txt</P>
+            <Bar Include="bar" /> (both outside and inside project cone)
+            <Zar Include="C:\**\*.foo" /> (both outside and inside project cone)
+            <Foo Include="*.a;*.b" Exclude="3.a" /><Foo Remove="2.a" /><Foo Include="**\*.b" Exclude="1.b;**\obj\*.b;**\bar\*.b" /><Foo Include="$(P)" /><Foo Include="*.a;@(Bar);3.a" /> (If Bar has globs, they will have been included when querying Bar ProjectItems for globs)
+            <Foo Include="*.cs" Exclude="@(Bar)" /></code>
+             
+            Example result: 
+            [
+            GlobResult(glob: "C:\**\*.foo", exclude: []),
+            GlobResult(glob: ["*.a", "*.b"], exclude=["3.a"], remove=["2.a"]),
+            GlobResult(glob: "**\*.b", exclude=["1.b, **\obj\*.b", **\bar\*.b"]),
+            GlobResult(glob: "*.txt", exclude=[]),
+            GlobResult(glob: "*.a", exclude=[]),
+            GlobResult(glob: "*.cs", exclude=["bar"])
+            ]
+             </example>
       </Docs>
     </Member>
     <Member MemberName="GetAllGlobs">
@@ -1910,8 +2234,11 @@
         <Parameter Name="evaluationContext" Type="Microsoft.Build.Evaluation.Context.EvaluationContext" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="evaluationContext">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluationContext">
+                The evaluation context to use in case reevaluation is required.
+                To avoid reevaluation use <see cref="F:Microsoft.Build.Evaluation.ProjectLoadSettings.RecordEvaluatedItemElements" /></param>
+        <summary>
+            See <see cref="M:Microsoft.Build.Evaluation.Project.GetAllGlobs" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1935,8 +2262,9 @@
         <Parameter Name="itemType" Type="System.String" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="itemType">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="itemType">Confine search to item elements of this type</param>
+        <summary>
+            Overload of <see cref="M:Microsoft.Build.Evaluation.Project.GetAllGlobs" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1962,8 +2290,11 @@
       </Parameters>
       <Docs>
         <param name="itemType">To be added.</param>
-        <param name="evaluationContext">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluationContext">
+                The evaluation context to use in case reevaluation is required.
+                To avoid reevaluation use <see cref="F:Microsoft.Build.Evaluation.ProjectLoadSettings.RecordEvaluatedItemElements" /></param>
+        <summary>
+            See <see cref="M:Microsoft.Build.Evaluation.Project.GetAllGlobs(System.String)" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1998,7 +2329,9 @@
       </Parameters>
       <Docs>
         <param name="item">The item to be evaluated and escaped.</param>
-        <summary>Gets evaluated, escaped value of the Include attribute of the provided items.</summary>
+        <summary>
+            Returns the evaluated, escaped value of the provided item's include.
+            </summary>
         <returns>The evaluated, escaped value of the Include attribute of the provided items.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2024,7 +2357,9 @@
       </Parameters>
       <Docs>
         <param name="item">The item definition to be evaluated and escaped.</param>
-        <summary>Gets the evaluated, escaped value of the Include attribute of the provided item definition.</summary>
+        <summary>
+            Returns the evaluated, escaped value of the provided item definition's include.
+            </summary>
         <returns>The value of the Include attribute.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2048,8 +2383,13 @@
         <Parameter Name="item" Type="Microsoft.Build.Evaluation.ProjectItem" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="item"> 
+            The ProjectItem object that indicates: the itemspec to match and the item type to constrain the search in.
+            The search is also constrained on item elements appearing before the item element that produced this <paramref name="item" />.
+            The element that produced this <paramref name="item" /> is included in the results.
+            </param>
+        <summary>
+            Overload of <see cref="M:Microsoft.Build.Evaluation.Project.GetItemProvenance(System.String)" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2073,10 +2413,40 @@
         <Parameter Name="itemToMatch" Type="System.String" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="itemToMatch">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="itemToMatch">The string to perform matching against</param>
+        <summary>
+             Finds all the item elements in the logical project with itemspecs that match the given string:
+             - elements that would include (or exclude) the string
+             - elements that would update the string (not yet implemented)
+             - elements that would remove the string (not yet implemented)
+             </summary>
+        <returns>
+             A list of <see cref="T:Microsoft.Build.Evaluation.ProvenanceResult" />, sorted in project evaluation order.
+             </returns>
+        <remarks>
+             This method and its overloads are useful for clients that need to inspect all the item elements
+             that might refer to a specific item instance. For example, Visual Studio uses it to inspect
+             projects with globs. Upon a file system or IDE file artifact change, VS calls this method to find all the items
+             that might refer to the detected file change (e.g. 'which item elements refer to "Program.cs"?').
+             It uses such information to know which elements it should edit to reflect the user or file system changes.
+             
+             Literal string matching tries to first match the strings. If the check fails, it then tries to match
+             the strings as if they represented files: it normalizes both strings as files relative to the current project directory
+            
+             GetItemProvenance suffers from some sources of inaccuracy:
+             - it is performed after evaluation, thus is insensitive to item data flow when item references are present
+             (it sees items as they are at the end of evaluation)
+             
+             This API and its return types are prone to change.
+             </remarks>
+        <example>
+             The following snippet shows what <c>GetItemProvenance("a.cs")</c> returns for various item elements
+             <code><A Include="a.cs;*.cs" /> // Occurrences:2; Operation: Include; Provenance: StringLiteral | Glob
+             <B Include="*.cs" Exclude="a.cs" /> // Occurrences: 1; Operation: Exclude; Provenance: StringLiteral
+             <C Include="b.cs" /> // NA
+             <D Include="@(A)" /> // Occurrences: 2; Operation: Include; Provenance: Inconclusive (it is an indirect occurence from a referenced item)
+             <E Include="$(P)" /> // Occurrences: 4; Operation: Include; Provenance: FromLiteral (direct reference in $P) | Glob (direct reference in $P) | Inconclusive (it is an indirect occurrence from referenced properties and items)
+             <PropertyGroup><P>a.cs;*.cs;@(A)</P></PropertyGroup></code></example>
       </Docs>
     </Member>
     <Member MemberName="GetItemProvenance">
@@ -2100,8 +2470,11 @@
       </Parameters>
       <Docs>
         <param name="item">To be added.</param>
-        <param name="evaluationContext">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluationContext">
+                The evaluation context to use in case reevaluation is required.
+                To avoid reevaluation use <see cref="F:Microsoft.Build.Evaluation.ProjectLoadSettings.RecordEvaluatedItemElements" /></param>
+        <summary>
+            See <see cref="M:Microsoft.Build.Evaluation.Project.GetItemProvenance(Microsoft.Build.Evaluation.ProjectItem)" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2127,8 +2500,11 @@
       </Parameters>
       <Docs>
         <param name="itemToMatch">To be added.</param>
-        <param name="evaluationContext">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluationContext">
+                The evaluation context to use in case reevaluation is required.
+                To avoid reevaluation use <see cref="F:Microsoft.Build.Evaluation.ProjectLoadSettings.RecordEvaluatedItemElements" /></param>
+        <summary>
+            See <see cref="M:Microsoft.Build.Evaluation.Project.GetItemProvenance(System.String)" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2153,9 +2529,10 @@
         <Parameter Name="itemType" Type="System.String" Index="1" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="itemToMatch">To be added.</param>
-        <param name="itemType">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="itemToMatch">The string to perform matching against</param>
+        <param name="itemType">The item type to constrain the search in</param>
+        <summary>
+            Overload of <see cref="M:Microsoft.Build.Evaluation.Project.GetItemProvenance(System.String)" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2183,8 +2560,11 @@
       <Docs>
         <param name="itemToMatch">To be added.</param>
         <param name="itemType">To be added.</param>
-        <param name="evaluationContext">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluationContext">
+                The evaluation context to use in case reevaluation is required.
+                To avoid reevaluation use <see cref="F:Microsoft.Build.Evaluation.ProjectLoadSettings.RecordEvaluatedItemElements" /></param>
+        <summary>
+            See <see cref="M:Microsoft.Build.Evaluation.Project.GetItemProvenance(System.String,System.String)" /></summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2210,7 +2590,12 @@
       </Parameters>
       <Docs>
         <param name="itemType">The item type to be retrieved.</param>
-        <summary>Gets all the items in the project of the given item type. If there are none, returns an empty list. Use AddItem or RemoveItem to modify items in this project.</summary>
+        <summary>
+            All the items in the project of the specified
+            type.
+            If there are none, returns an empty list.
+            Use AddItem or RemoveItem to modify items in this project.
+            </summary>
         <returns>All the items in the project of the given item type, or an empty list if there are no items with the given item name.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2220,6 +2605,9 @@
   
  ]]></format>
         </remarks>
+        <comments>
+            data.GetItems returns a read-only collection, so no need to re-wrap it here. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="GetItemsByEvaluatedInclude">
@@ -2243,7 +2631,13 @@
       </Parameters>
       <Docs>
         <param name="evaluatedInclude">The evaluated Include attribute.</param>
-        <summary>Gets all items that have the given evaluated Include attribute.</summary>
+        <summary>
+            Returns all items that have the specified evaluated include.
+            For example, all items that have the evaluated include "bar.cpp".
+            Typically there will be zero or one, but sometimes there are two items with the
+            same path and different item types, or even the same item types. This will return
+            them all.
+            </summary>
         <returns>All items that have the given evaluated Include attribute.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2253,6 +2647,10 @@
   
  ]]></format>
         </remarks>
+        <comments>
+            data.GetItemsByEvaluatedInclude already returns a read-only collection, so no need
+            to wrap it further.
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="GetItemsIgnoringCondition">
@@ -2276,7 +2674,11 @@
       </Parameters>
       <Docs>
         <param name="itemType">The item type to be retrieved.</param>
-        <summary>Gets all the items in the project of the given type, whether or not their Condition attribute evaluates to true. This is a read-only list: use AddItem or RemoveItem to modify items in this project.</summary>
+        <summary>
+            All the items in the project of the specified
+            type, irrespective of whether the conditions on them evaluated to true.
+            This is a read-only list: use AddItem or RemoveItem to modify items in this project.
+            </summary>
         <returns>All the items in the project of the given type, whether or not their Condition attribute evaluates to true.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2286,6 +2688,9 @@
   
  ]]></format>
         </remarks>
+        <comments>
+            ItemDictionary[] returns a read only collection, so no need to wrap it. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="GetLogicalProject">
@@ -2312,7 +2717,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets an enumerator over all the elements in the "logical project". The logical project is defined as the unevaluated project obtained from the single MSBuild file that is the result of inlining the text of all imports of the original MSBuild project manifest file.</summary>
+        <summary>
+            Returns an iterator over the "logical project". The logical project is defined as
+            the unevaluated project obtained from the single MSBuild file that is the result 
+            of inlining the text of all imports of the original MSBuild project manifest file.
+            </summary>
         <returns>An enumerator over all the elements in the "logical project".</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2354,7 +2763,9 @@
       </Parameters>
       <Docs>
         <param name="metadatum">The metadatum to be escaped.</param>
-        <summary>Gets the escaped value of the provided metadatum.</summary>
+        <summary>
+            Gets the escaped value of the provided metadatum. 
+            </summary>
         <returns>The escaped value of the provided metadatum.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2382,7 +2793,9 @@
       <Docs>
         <param name="item">The item whose metadata is to be escaped.</param>
         <param name="name">The name of the metadata to be escaped.</param>
-        <summary>Gets the escaped value of the metadatum with the provided name on the provided item.</summary>
+        <summary>
+            Gets the escaped value of the metadatum with the provided name on the provided item. 
+            </summary>
         <returns>The escaped value of the metadatum with the provided name on the provided item.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2410,7 +2823,9 @@
       <Docs>
         <param name="item">The item definition whose metadata is to be escaped.</param>
         <param name="name">The name of the metadata to be escaped.</param>
-        <summary>Gets the escaped value of the metadatum with the provided name on the provided item definition.</summary>
+        <summary>
+            Gets the escaped value of the metadatum with the provided name on the provided item definition. 
+            </summary>
         <returns>The escaped value of the metadatum with the provided name on the provided item definition.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2441,7 +2856,10 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the property to retrieve.</param>
-        <summary>Gets any property in the project that has the specified name.</summary>
+        <summary>
+            Get any property in the project that has the specified name,
+            otherwise returns null
+            </summary>
         <returns>Any property in the project that has the specified name, or <see langword="null" /> if no property of that name exists.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2467,16 +2885,17 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the property whose value is retrieved.</param>
-        <summary>Gets the value of the given property in this project.</summary>
+        <summary>
+            Get the unescaped value of a property in this project, or 
+            an empty string if it does not exist.
+            </summary>
         <returns>The value of the given property in this project, or an empty string if no property of that name exists. Escape sequences are converted before returning the string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A property with a value of empty string and no property at all are not distinguished between by this method. To determine if a property is set at all in the project, use GetProperty(name).  
-  
- ]]></format>
-        </remarks>
+            A property with a value of empty string and no property
+            at all are not distinguished between by this method.
+            That makes it easier to use. To find out if a property is set at
+            all in the project, use GetProperty(name).
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetPropertyValueEscaped">
@@ -2500,7 +2919,9 @@
       </Parameters>
       <Docs>
         <param name="property">The property to be escaped.</param>
-        <summary>Gets the escaped value of the provided property.</summary>
+        <summary>
+            Get the escaped value of the provided property
+            </summary>
         <returns>The escaped value of the provided property.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2527,18 +2948,17 @@
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a dictionary of the global properties used for the evaluation of this project.</summary>
+        <summary>
+            Read only dictionary of the global properties used in the evaluation
+            of this project.
+            </summary>
         <value>A dictionary of the global properties used for the evaluation of this project.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This is the publicly exposed getter, that translates into a read-only dead IDictionary\<string, string>.  
-  
- In order to easily tell when we're dirtied, setting and removing global properties is done with <xref:Microsoft.Build.Evaluation.Project.SetGlobalProperty%2A> and <xref:Microsoft.Build.Evaluation.Project.RemoveGlobalProperty%2A>.  
-  
- ]]></format>
-        </remarks>
+            This is the publicly exposed getter, that translates into a read-only dead IDictionary&lt;string, string&gt;.
+            
+            In order to easily tell when we're dirtied, setting and removing global properties is done with 
+            <see cref="M:Microsoft.Build.Evaluation.Project.SetGlobalProperty(System.String,System.String)">SetGlobalProperty</see> and <see cref="M:Microsoft.Build.Evaluation.Project.RemoveGlobalProperty(System.String)">RemoveGlobalProperty</see>.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Imports">
@@ -2558,18 +2978,19 @@
         <ReturnType>System.Collections.Generic.IList&lt;Microsoft.Build.Evaluation.ResolvedImport&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a list of all the files that contributed to the evaluation of this project.</summary>
+        <summary>
+            All the files that during evaluation contributed to this project, as ProjectRootElements,
+            with the ProjectImportElement that caused them to be imported.
+            This does not include projects that were never imported because a condition on an Import element was false.
+            The outer ProjectRootElement that maps to this project itself is not included.
+            </summary>
         <value>A list of all the files that contributed to the evaluation of this project.  
   
  The name of each item is the Import element that caused the file to be imported. The value of each item is the project root of the imported project. Import elements whose Condition attribute evaluated to false are not included.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The project root of this project is not included.  
-  
- ]]></format>
-        </remarks>
+            This can be used by the host to figure out what projects might be impacted by a change to a particular file.
+            It could also be used, for example, to find the .user file, and use its ProjectRootElement to modify properties in it.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ImportsIncludingDuplicates">
@@ -2589,7 +3010,9 @@
         <ReturnType>System.Collections.Generic.IList&lt;Microsoft.Build.Evaluation.ResolvedImport&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a list of duplicate imports if an import was imported multiple times. However, only the first import was used in evaluation.</summary>
+        <summary>
+            This list will contain duplicate imports if an import is imported multiple times. However, only the first import was used in evaluation.
+            </summary>
         <value>A list of duplicate imports.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2619,7 +3042,15 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a property that selects whether the targets and tasks of this project can be built.</summary>
+        <summary>
+            This controls whether or not the building of targets/tasks is enabled for this
+            project.  This is for security purposes in case a host wants to closely
+            control which projects it allows to run targets/tasks.  By default, for a newly
+            created project, we will use whatever setting is in the parent project collection.
+            When build is disabled, the Build method on this class will fail. However if
+            the host has already created a ProjectInstance, it can still build it. (It is 
+            free to put a similar check around where it does this.)
+            </summary>
         <value>
           <see langword="true" /> if the targets and tasks of this project can be built; otherwise, <see langword="false" />.</value>
         <remarks>
@@ -2649,7 +3080,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value that indicates whether this project has been modified so that it must be reevaluated.</summary>
+        <summary>
+            Whether this project is dirty such that it needs reevaluation.
+            This may be because its underlying XML has changed (either through this project or another)
+            either the XML of the main project or an imported file; 
+            or because its toolset may have changed.
+            </summary>
         <value>
           <see langword="true" /> if this project has been modified so that it must be reevaluated; otherwise, <see langword="false" />.</value>
         <remarks>
@@ -2684,7 +3120,10 @@
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,Microsoft.Build.Evaluation.ProjectItemDefinition&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a dictionary of item definitions in this project, keyed by item type.</summary>
+        <summary>
+            Read-only dictionary of item definitions in this project.
+            Keyed by item type
+            </summary>
         <value>A dictionary of item definitions in this project, keyed by item type.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2711,7 +3150,9 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Evaluation.ProjectItem&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an enumerator over all items in this project, ordered within groups of item types.</summary>
+        <summary>
+            Items in this project, ordered within groups of item types
+            </summary>
         <value>An enumerator over all items in this project, ordered within groups of item types.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2738,7 +3179,13 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Evaluation.ProjectItem&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an enumerator over all items in this project, ordered within groups of item types.</summary>
+        <summary>
+            Items in this project, ordered within groups of item types,
+            including items whose conditions evaluated to false, or that were
+            contained within item groups who themselves had conditioned evaluated to false.
+            This is useful for hosts that wish to display all items, even if they might not be part 
+            of the build in the current configuration.
+            </summary>
         <value>An enumerator over all items in this project, ordered within groups of item types, including items whose conditions evaluate to false, or are contained within item groups whose condition evaluates to <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2772,9 +3219,16 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an enumerator over all item types in this project.</summary>
+        <summary>
+            Item types in this project.
+            This is an ordered collection.
+            </summary>
         <value>An enumerator over all item types in this project. This is an ordered collection.</value>
         <remarks>To be added.</remarks>
+        <comments>
+            data.ItemTypes is a KeyCollection, so it doesn't need any 
+            additional read-only protection
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="LastEvaluationId">
@@ -2793,7 +3247,19 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            The ID of the last evaluation for this Project.
+            A project is always evaluated upon construction and can subsequently get evaluated multiple times via
+            <see cref="M:Microsoft.Build.Evaluation.Project.ReevaluateIfNecessary" />
+            
+            It is an arbitrary number that changes when this project reevaluates.
+            Hosts don't know whether an evaluation actually happened in an interval, but they can compare this number to
+            their previously stored value to find out, and if so perhaps decide to update their own state.
+            Note that the number may not increase monotonically.
+            
+            This number corresponds to the <seealso cref="P:Microsoft.Build.Framework.BuildEventContext.EvaluationId" /> and can be used to connect
+            evaluation logging events back to the Project instance.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2816,7 +3282,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Marks this project as modified.</summary>
+        <summary>
+            Called to forcibly mark the project as dirty requiring reevaluation. Generally this is not necessary to set; all edits affecting
+            this project will automatically make it dirty. However there are potential corner cases where it is necessary to mark the project dirty
+            directly. For example, if the project has an import conditioned on a file existing on disk, and the file did not exist at
+            evaluation time, then someone subsequently creates that file, the project cannot know that reevaluation would be productive.
+            In such a case the host can help us by setting the dirty flag explicitly so that <see cref="M:Microsoft.Build.Evaluation.Project.ReevaluateIfNecessary">ReevaluateIfNecessary()</see>
+            will recognize an evaluation is indeed necessary.
+            Does not mark the underlying project file as requiring saving.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2856,7 +3330,11 @@
         <ReturnType>Microsoft.Build.Evaluation.ProjectCollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the project collection which contains this project.</summary>
+        <summary>
+            Gets or sets the project collection which contains this project.
+            Can never be null.
+            Cannot be modified.
+            </summary>
         <value>The project collection that contains this project, which is never <see langword="null" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2878,7 +3356,10 @@
         <ReturnType>Microsoft.Build.Construction.ElementLocation</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The location of the originating file itself, not any specific content within it. If the file has not been given a name, this is an empty location. This is a legitimate case of having no location.</summary>
+        <summary>
+            Location of the originating file itself, not any specific content within it.
+            If the file has not been given a name, returns an empty location.
+            </summary>
         <value>The originating file location, or an empty location if the file has not been given a name.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2905,7 +3386,10 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;Microsoft.Build.Evaluation.ProjectProperty&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an enumerator over all properties in this project. This is an unordered collection.</summary>
+        <summary>
+            Properties in this project.
+            Since evaluation has occurred, this is an unordered collection.
+            </summary>
         <value>An enumerator over all properties in this project. Since properties are evaluated as they appear, this is an unordered collection.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2928,7 +3412,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Reevaluates the project to incorporate any changes.</summary>
+        <summary>
+            Reevaluate the project to get it into a queryable state, if it's dirty.
+            This incorporates all changes previously made to the backing XML by editing this project.
+            Throws InvalidProjectFileException if the evaluation fails.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2960,8 +3448,9 @@
         <Parameter Name="evaluationContext" Type="Microsoft.Build.Evaluation.Context.EvaluationContext" Index="0" FrameworkAlternate="msbuild-15" />
       </Parameters>
       <Docs>
-        <param name="evaluationContext">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluationContext">The <see cref="T:Microsoft.Build.Evaluation.Context.EvaluationContext" /> to use. See <see cref="T:Microsoft.Build.Evaluation.Context.EvaluationContext" /></param>
+        <summary>
+            See <see cref="M:Microsoft.Build.Evaluation.Project.ReevaluateIfNecessary" /></summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2986,7 +3475,11 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the global property to be removed.</param>
-        <summary>Removes a global property and marks the project as modified.</summary>
+        <summary>
+            Removes a global property.
+            If it was set, returns true, and marks the project
+            as requiring reevaluation.
+            </summary>
         <returns>
           <see langword="true" /> if the value of the global property was set.</returns>
         <remarks>To be added.</remarks>
@@ -3013,21 +3506,23 @@
       </Parameters>
       <Docs>
         <param name="item">The item to be removed.</param>
-        <summary>Removes an item from the project. The item to be removed must be present in the project, and must not originate from an imported file.</summary>
+        <summary>
+            Removes an item from the project.
+            Item must be associated with this project.
+            Item must not originate from an imported file.
+            Returns true if the item was in this evaluated project, otherwise false.
+            As a convenience, if the parent item group becomes empty, it is also removed.
+            If the item originated from a wildcard or semicolon separated expression, expands that expression into multiple items first.
+            Updates the evaluated project, but does not affect anything else in the project until reevaluation. For example,
+            if an item of type "i" is removed, "j" which is evaluated from "@(i)" will not be modified until reevaluation.
+            This is a convenience that it is understood does not necessarily leave the project in a perfectly self consistent state until reevaluation.
+            </summary>
         <returns>
           <see langword="true" /> if the item is present in this evaluated project; otherwise, <see langword="false" />. Normally this method returns true, since if the requested item is not present, the method throws an exception. If the item is present only in the ItemsIgnoringCondition collection, however, the method returns <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the item group containing the item becomes empty, it is also removed.  
-  
- If the item originates from a wildcard or semicolon-separated expression, the expression is first expanded into multiple items.  
-  
- The project is updated, but no further evaluation occurs until reevaluation. For example, if an item of type "i" is removed, "j" which is evaluated from "@(i)" is not modified until reevaluation.  
-  
- ]]></format>
-        </remarks>
+            Normally this will return true, since if the item isn't in the project, it will throw.
+            The exception is removing an item that was only in ItemsIgnoringCondition.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="RemoveItems">
@@ -3051,15 +3546,16 @@
       </Parameters>
       <Docs>
         <param name="items">The items to be removed.</param>
-        <summary>Removes all the given items from the project, unless they originate from an imported project.</summary>
+        <summary>
+            Removes all the specified items from the project.
+            Items that are not associated with this project are skipped.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If an item originates from an imported project, it is simply skipped.  
-  
- ]]></format>
-        </remarks>
+            Removing one item could cause the backing XML
+            to be expanded, which could zombie (disassociate) the next item.
+            To make this case easy for the caller, if an item
+            is not associated with this project it is simply skipped.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="RemoveProperty">
@@ -3083,7 +3579,16 @@
       </Parameters>
       <Docs>
         <param name="property">The property to remove.</param>
-        <summary>Removes an property from the project. The property to be removed must be present in the project, and must not originate from an imported file.</summary>
+        <summary>
+            Removes the specified property.
+            Property must be associated with this project.
+            Property must not originate from an imported file.
+            Returns true if the property was in this evaluated project, otherwise false.
+            As a convenience, if the parent property group becomes empty, it is also removed.
+            Updates the evaluated project, but does not affect anything else in the project until reevaluation. For example,
+            if "p" is removed, it will be removed from the evaluated project, but "q" which is evaluated from "$(p)" will not be modified until reevaluation.
+            This is a convenience that it is understood does not necessarily leave the project in a perfectly self consistent state.
+            </summary>
         <returns>
           <see langword="true" /> if the property is present in this evaluated project; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -3125,7 +3630,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Saves the project to the file system, if modified, using the default character encoding.</summary>
+        <summary>
+            Save the project to the file system, if dirty.
+            Uses the default encoding.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3150,7 +3658,11 @@
       </Parameters>
       <Docs>
         <param name="writer">The text writer to save the project to.</param>
-        <summary>Saves the project to the provided text writer, whether or not the project has been modified. Uses the character encoding of the text writer and marks the project as unmodified.</summary>
+        <summary>
+            Save the project to the provided TextWriter, whether or not it is dirty.
+            Uses the encoding of the TextWriter.
+            Clears the Dirty flag.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3175,7 +3687,10 @@
       </Parameters>
       <Docs>
         <param name="path">The path to the project source code.</param>
-        <summary>Saves the project to the file system, if modified or if the path to the project source code changes, using the default character encoding.</summary>
+        <summary>
+            Save the project to the file system, if dirty or the path is different.
+            Uses the default encoding.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3200,7 +3715,9 @@
       </Parameters>
       <Docs>
         <param name="encoding">The character encoding used to save the project.</param>
-        <summary>Saves the project to the file system, if modified, using the given character encoding.</summary>
+        <summary>
+            Save the project to the file system, if dirty.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3227,7 +3744,9 @@
       <Docs>
         <param name="path">The path to the project source code.</param>
         <param name="encoding">The character encoding used to save the project.</param>
-        <summary>Saves the project to the file system, if modified or if the path to the project source code changes, using the given character encoding.</summary>
+        <summary>
+            Save the project to the file system, if dirty or the path is different.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3252,7 +3771,10 @@
       </Parameters>
       <Docs>
         <param name="writer">The writer that saves the project file.</param>
-        <summary>Saves a "logical" or "preprocessed" project file, that includes all the imported files as if they formed a single file.</summary>
+        <summary>
+            Saves a "logical" or "preprocessed" project file, that includes all the imported 
+            files as if they formed a single file.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3279,7 +3801,11 @@
       <Docs>
         <param name="name">The name of the global property to set.</param>
         <param name="escapedValue">The new value of the global property.</param>
-        <summary>Sets a global property after the project has been evaluated. If the value changes, the project is marked to require reevaluation.</summary>
+        <summary>
+            Change a global property after the project has been evaluated.
+            If the value changes, this makes the project require reevaluation.
+            If the value changes, returns true, otherwise false.
+            </summary>
         <returns>
           <see langword="true" /> if the value changes; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -3308,7 +3834,20 @@
       <Docs>
         <param name="name">The name of the property to set.</param>
         <param name="unevaluatedValue">The new unevaluated value of the property.</param>
-        <summary>Sets or adds a property with the given name and value to the project. Overwrites the value of a property with the same name if it did not originate in an imported file.</summary>
+        <summary>
+            Set or add a property with the specified name and value.
+            Overwrites the value of any property with the same name already in the collection if it did not originate in an imported file.
+            If there is no such existing property, uses this heuristic:
+            Updates the last existing property with the specified name that has no condition on itself or its property group, if any,
+            and is in this project file rather than an imported file.
+            Otherwise, adds a new property in the first property group without a condition, creating a property group if necessary after
+            the last existing property group, else at the start of the project.
+            Returns the property set.
+            Evaluates on a best-effort basis:
+                -expands with all properties. Properties that are defined in the XML below the new property may be used, even though in a real evaluation they would not be.
+                -only this property is evaluated. Anything else that would depend on its value is not affected.
+            This is a convenience that it is understood does not necessarily leave the project in a perfectly self consistent state until reevaluation.
+            </summary>
         <returns>The property.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -3355,7 +3894,11 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether ReevaluateIfNecessary is temporarily disabled. This is useful when the host expects to make a number of reads and writes to the project, and wants to temporarily sacrifice correctness for performance.</summary>
+        <summary>
+            Whether ReevaluateIfNecessary is temporarily disabled.
+            This is useful when the host expects to make a number of reads and writes 
+            to the project, and wants to temporarily sacrifice correctness for performance.
+            </summary>
         <value>A flag that determines whether ReevaluateIfNecessary is temporarily disabled.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -3377,7 +3920,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the value of the SubToolsetVersion attribute, if any. This value was combined with the value of the ToolsVersion attribute to determine the toolset properties for this project.</summary>
+        <summary>
+            The sub-toolset version that, combined with the ToolsVersion, was used to determine
+            the toolset properties for this project.  
+            </summary>
         <value>The SubToolsetVersion attribute value, or an empty string if the attribute is not present.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -3404,7 +3950,11 @@
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,Microsoft.Build.Execution.ProjectTargetInstance&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a dictionary of all targets in this project, keyed by target name.</summary>
+        <summary>
+            Targets in the project. The key to the dictionary is the target's name.
+            Overridden targets are not included in this collection.
+            This collection is read-only.
+            </summary>
         <value>A read-only dictionary of all targets in this project, keyed by target name. Overridden targets are not included in this collection. </value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -3433,7 +3983,24 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+             Certain item operations split the item element in multiple elements if the include
+             contains globs, references to items or properties, or multiple item values.
+            
+             The items operations that may expand item elements are:
+             - <see cref="M:Microsoft.Build.Evaluation.Project.RemoveItem(Microsoft.Build.Evaluation.ProjectItem)" />
+             - <see cref="M:Microsoft.Build.Evaluation.Project.RemoveItems(System.Collections.Generic.IEnumerable{Microsoft.Build.Evaluation.ProjectItem})" />
+             - <see cref="M:Microsoft.Build.Evaluation.Project.AddItem(System.String,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})" />
+             - <see cref="M:Microsoft.Build.Evaluation.Project.AddItemFast(System.String,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})" />
+             - <see cref="M:Microsoft.Build.Evaluation.ProjectItem.ChangeItemType(System.String)" />
+             - <see cref="M:Microsoft.Build.Evaluation.ProjectItem.Rename(System.String)" />
+             - <see cref="M:Microsoft.Build.Evaluation.ProjectItem.RemoveMetadata(System.String)" />
+             - <see cref="M:Microsoft.Build.Evaluation.ProjectItem.SetMetadataValue(System.String,System.String)" />
+             - <see cref="M:Microsoft.Build.Evaluation.ProjectItem.SetMetadataValue(System.String,System.String,System.Boolean)" />
+             
+             When this property is set to true, the previous item operations throw an <exception cref="T:System.InvalidOperationException" />
+             instead of expanding the item element. 
+             </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -3455,16 +4022,17 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the tools version that this project was evaluated with, if any.</summary>
+        <summary>
+            The tools version this project was evaluated with, if any.
+            Not necessarily the same as the tools version on the Project tag, if any;
+            it may have been externally specified, for example with a /tv switch.
+            The actual tools version on the Project tag, can be gotten from <see cref="P:Microsoft.Build.Evaluation.Project.Xml">Xml.ToolsVersion</see>.
+            Cannot be changed once the project has been created.
+            </summary>
         <value>The tools version that this project was evaluated with, if any.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Set by the constructor. This is not necessarily the same as the tools version on the Project tag, if any; it may have been externally specified, for example with a /tv switch on the command line. The actual tools version on the Project tag can be obtained from <xref:Microsoft.Build.Evaluation.Project.Xml%2A>. The tools version cannot be changed once the project has been created.  
-  
- ]]></format>
-        </remarks>
+            Set by construction.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Xml">
@@ -3492,16 +4060,14 @@
         <ReturnType>Microsoft.Build.Construction.ProjectRootElement</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the root project associated with this project. Can never be <see langword="null" />.</summary>
+        <summary>
+            The backing Xml project.
+            Can never be null
+            </summary>
         <value>The root project associated with this project, which can never be <see langword="null" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- There is no way to set this property. If you have a new project root, evaluate it into a new project.  
-  
- ]]></format>
-        </remarks>
+            There is no setter here as that doesn't make sense. If you have a new ProjectRootElement, evaluate it into a new Project.
+            </remarks>
       </Docs>
     </Member>
   </Members>

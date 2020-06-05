@@ -28,15 +28,13 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Wraps an evaluated item for build purposes.</summary>
+    <summary>
+            Wraps an evaluated item for build purposes
+            </summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Does not store item element information, because all evaluation and verification has already been performed.  
-  
- ]]></format>
-    </remarks>
+            Does not store XML location information. That is not needed by the build process as all correctness checks
+            and evaluation has already been performed, so it is unnecessary bulk.
+            </remarks>
   </Docs>
   <Members>
     <Member MemberName="DirectMetadataCount">
@@ -56,7 +54,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of pieces of metadata on this item.</summary>
+        <summary>
+            Number of pieces of metadata on this item
+            </summary>
         <value>The number of pieces of metadata on this item.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -86,7 +86,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the evaluated Include attribute value.</summary>
+        <summary>
+            Evaluated include value.
+            May be empty string.
+            </summary>
         <value>The evaluated Include attribute value, which may be empty string.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -112,7 +115,12 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the metadata.</param>
-        <summary>Gets the metadata with the given name, including metadata inherited from item definitions.</summary>
+        <summary>
+            Get any metadata in the item that has the specified name,
+            otherwise returns null. 
+            Includes any metadata inherited from item definitions.
+            Includes any built-in metadata.
+            </summary>
         <returns>The metadata with the given name, or <see langword="null" /> if no metadata exists with that name.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -145,7 +153,13 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the metadata.</param>
-        <summary>Gets the value of the metadata with the given name, including metadata inherited from item definitions.</summary>
+        <summary>
+            Get the value of a metadata on this item, or 
+            String.Empty if it does not exist or has no value.
+            Includes any metadata inherited from item definitions and any built-in metadata.
+            To determine whether a piece of metadata is actually present
+            but with an empty value, use <see cref="M:Microsoft.Build.Execution.ProjectItemInstance.HasMetadata(System.String)">HasMetadata</see>.
+            </summary>
         <returns>The value of the metadata with the given name, including metadata inherited from item definitions, or an empty string if no metadata exists with that name.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -180,17 +194,17 @@
       </Parameters>
       <Docs>
         <param name="name">The name of the metadata.</param>
-        <summary>Determines whether the metadata with the given name is defined on this item (even if its value is empty string).</summary>
+        <summary>
+            Returns true if a particular piece of metadata is defined on this item (even if
+            its value is empty string) otherwise false.
+            This includes built-in metadata and metadata from item definitions.
+            </summary>
         <returns>
           <see langword="true" /> if the metadata with the given name is defined on this item (even if its value is empty string); otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This searches built-in metadata and metadata from item definitions, because this method is used for batching, where it doesn't matter where the metadata originated.  
-  
- ]]></format>
-        </remarks>
+            It has to include all of these because it's used for batching, which doesn't
+            care where the metadata originated.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ItemType">
@@ -221,16 +235,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the item type. For example, "Compile".</summary>
+        <summary>
+            Item type, for example "Compile"
+            </summary>
         <value>The item type. For example, "Compile".</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This cannot be set, as it is used as the key into the project's items table.  
-  
- ]]></format>
-        </remarks>
+            This cannot be set, as it is used as the key into 
+            the project's items table.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Metadata">
@@ -250,7 +262,13 @@
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Microsoft.Build.Execution.ProjectMetadataInstance&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an enumerator over the evaluated metadata of the item. This is a read-only collection.</summary>
+        <summary>
+            Unordered collection of evaluated metadata on the item.
+            If there is no metadata, returns an empty collection.
+            Does not include built-in metadata.
+            Includes any from item definitions.
+            This is a read-only collection. To modify the metadata, use <see cref="M:Microsoft.Build.Execution.ProjectItemInstance.SetMetadata(System.String,System.String)" />.
+            </summary>
         <value>An enumerator over the evaluated metadata of the item.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -262,6 +280,9 @@
   
  ]]></format>
         </remarks>
+        <comment>
+            Computed, not necessarily fast.
+            </comment>
       </Docs>
     </Member>
     <Member MemberName="MetadataCount">
@@ -284,7 +305,11 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of metadata entries, including metadata inherited from item definitions.</summary>
+        <summary>
+            Returns the number of metadata entries.
+            Includes any from applicable item definitions.
+            Includes both custom and built-in metadata.
+            </summary>
         <value>The number of metadata entries, including metadata inherited from item definitions</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -294,6 +319,9 @@
   
  ]]></format>
         </remarks>
+        <comment>
+            Computed, not necessarily fast.
+            </comment>
       </Docs>
     </Member>
     <Member MemberName="MetadataNames">
@@ -313,7 +341,11 @@
         <ReturnType>System.Collections.Generic.ICollection&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets all metadata names of this item, including metadata inherited from item definitions.</summary>
+        <summary>
+            Returns all the metadata names on this item.
+            Includes names from any applicable item definitions.
+            Includes names of built-in metadata.
+            </summary>
         <value>All metadata names of this item, including metadata inherited from item definitions.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -323,6 +355,9 @@
   
  ]]></format>
         </remarks>
+        <comment>
+            Computed, not necessarily fast.
+            </comment>
       </Docs>
     </Member>
     <Member MemberName="Microsoft.Build.Framework.ITaskItem.CloneCustomMetadata">
@@ -346,7 +381,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>ITaskItem implementation. Gets the collection of custom metadata.</summary>
+        <summary>
+            ITaskItem implementation
+            </summary>
         <returns>The collection of custom metadata.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -361,6 +398,9 @@
   
  ]]></format>
         </remarks>
+        <comments>
+            Returns a dictionary of the UNESCAPED values of the metadata
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="Microsoft.Build.Framework.ITaskItem.CopyMetadataTo">
@@ -387,7 +427,9 @@
       </Parameters>
       <Docs>
         <param name="destinationItem">The item to copy the metadata entries to.</param>
-        <summary>ITaskItem implementation. Copies the custom metadata entries to another item.</summary>
+        <summary>
+            ITaskItem implementation
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -433,16 +475,13 @@
       </Parameters>
       <Docs>
         <param name="metadataName">The name of the metadata entry.</param>
-        <summary>ITaskItem implementation. Gets the value of the specified metadata entry.</summary>
+        <summary>
+            ITaskItem implementation.
+            </summary>
         <returns>The value of the <paramref name="attributeName" /> metadata.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Should not return null if metadata is not present.  
-  
- ]]></format>
-        </remarks>
+            ITaskItem should not return null if metadata is not present.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Microsoft.Build.Framework.ITaskItem.ItemSpec">
@@ -473,7 +512,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>ITaskItem implementation. Gets or sets the item specification.</summary>
+        <summary>
+            ITaskItem implementation
+            </summary>
         <value>The item specification.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -520,9 +561,14 @@
         <ReturnType>System.Collections.ICollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>ITaskItem implementation. Gets the names of the metadata entries associated with the item.</summary>
+        <summary>
+            ITaskItem implementation
+            </summary>
         <value>The names of the metadata entries associated with the item.</value>
         <remarks>To be added.</remarks>
+        <comment>
+            Computed, not necessarily fast.
+            </comment>
       </Docs>
     </Member>
     <Member MemberName="Microsoft.Build.Framework.ITaskItem.SetMetadata">
@@ -551,8 +597,13 @@
       <Docs>
         <param name="metadataName">Metadata name to be added or changed.</param>
         <param name="metadataValue">Metadata value to be added or changed.</param>
-        <summary>ITaskItem implementation. Adds or changes a custom metadata entry to the item.</summary>
+        <summary>
+            ITaskItem implementation
+            </summary>
         <remarks>To be added.</remarks>
+        <comments>
+            MetadataValue is assumed to be in its escaped form. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="Microsoft.Build.Framework.ITaskItem2.CloneCustomMetadataEscaped">
@@ -576,9 +627,14 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>ITaskItem2 implementation. Returns a clone of the metadata on this object.  Values returned are in their original escaped form.</summary>
+        <summary>
+            ITaskItem2 implementation
+            </summary>
         <returns>The cloned metadata, with values' escaping preserved.</returns>
         <remarks>To be added.</remarks>
+        <comments>
+            Returns a dictionary of the ESCAPED values of the metadata
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="Microsoft.Build.Framework.ITaskItem2.EvaluatedIncludeEscaped">
@@ -606,7 +662,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>ITaskItem2 implementation. Evaluated include value, escaped as necessary. May be empty string. Gets or sets the item include value e.g. for disk-based items this would be the file path.</summary>
+        <summary>
+            Evaluated include value, escaped as necessary.
+            May be empty string.
+            </summary>
         <value>The item include value.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -642,16 +701,13 @@
       </Parameters>
       <Docs>
         <param name="name">The metadata to be queried.</param>
-        <summary>ITaskItem2 implementation. Allows the values of metadata on the item to be queried.</summary>
+        <summary>
+            ITaskItem2 implementation.
+            </summary>
         <returns>The escaped metadata value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Taking the opportunity to fix the property name, although this doesn't make it obvious it's an improvement on GetMetadata.  
-  
- ]]></format>
-        </remarks>
+            ITaskItem2 should not return null if metadata is not present.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Microsoft.Build.Framework.ITaskItem2.SetMetadataValueLiteral">
@@ -680,7 +736,9 @@
       <Docs>
         <param name="metadataName">The metadata name.</param>
         <param name="metadataValue">The metadata value.</param>
-        <summary>ITaskItem2 implementation. Allows a piece of custom metadata to be set on the item. Assumes that the value passed in is unescaped, and escapes the value as necessary in order to maintain its value.</summary>
+        <summary>
+            ITaskItem2 implementation
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -689,6 +747,9 @@
   
  ]]></format>
         </remarks>
+        <comments>
+            Assumes metadataValue is unescaped. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="Project">
@@ -716,7 +777,9 @@
         <ReturnType>Microsoft.Build.Execution.ProjectInstance</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the owning project.</summary>
+        <summary>
+            Owning project
+            </summary>
         <value>The owning project.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -745,7 +808,10 @@
       </Parameters>
       <Docs>
         <param name="metadataName">The metadata name.</param>
-        <summary>Removes metadata with the given name.</summary>
+        <summary>
+            Removes a metadatum with the specified name.
+            Used by TaskItem
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -786,7 +852,10 @@
       </Parameters>
       <Docs>
         <param name="metadataDictionary">The metadata to add.</param>
-        <summary>Adds metadata with the given names and values. Overwrites any metadata with the same name already in the collection.</summary>
+        <summary>
+            Add a metadata with the specified names and values.
+            Overwrites any metadata with the same name already in the collection.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -813,7 +882,10 @@
       <Docs>
         <param name="name">The name of the metadata to add.</param>
         <param name="evaluatedValue">The evaluated value of the metadata to add.</param>
-        <summary>Add metadata with the given name and value. Overwrites any metadata with the same name already in the collection.</summary>
+        <summary>
+            Add a metadata with the specified name and value.
+            Overwrites any metadata with the same name already in the collection.
+            </summary>
         <returns>The new metadata.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -836,7 +908,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets a string that represents the current item.</summary>
+        <summary>
+            Produce a string representation.
+            </summary>
         <returns>A string that represents the current item.</returns>
         <remarks>To be added.</remarks>
       </Docs>

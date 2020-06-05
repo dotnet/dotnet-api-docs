@@ -45,7 +45,14 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>Defines a single item of the project as it is passed into a task.</summary>
+    <summary>
+            This class represents a single item of the project, as it is passed into a task. TaskItems do not exactly correspond to
+            item elements in project files, because then tasks would have access to data that wasn't explicitly passed into the task
+            via the project file. It's not a security issue, but more just an issue with project file clarity and transparency.
+            
+            Note: This class has to be sealed.  It has to be sealed because the engine instantiates it's own copy of this type and
+            thus if someone were to extend it, they would not get the desired behavior from the engine.  
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -56,6 +63,9 @@
   
  ]]></format>
     </remarks>
+    <comment>
+            Surprisingly few of these Utilities TaskItems are created: typically several orders of magnitude fewer than the number of engine TaskItems.
+            </comment>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -92,7 +102,9 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskItem" /> class.</summary>
+        <summary>
+            Default constructor -- we need it so this type is COM-createable.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -132,7 +144,9 @@
       </Parameters>
       <Docs>
         <param name="sourceItem">The item to copy.</param>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskItem" /> class using the specified source <see cref="T:Microsoft.Build.Framework.ITaskItem" />.</summary>
+        <summary>
+            This constructor creates a new TaskItem, using the given ITaskItem.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -164,9 +178,12 @@
         <Parameter Name="itemSpec" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="itemSpec">The item specification.</param>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskItem" /> class using the specified item-specification string.</summary>
+        <param name="itemSpec">The item-spec string.</param>
+        <summary>
+            This constructor creates a new task item, given the item spec.
+            </summary>
         <remarks>To be added.</remarks>
+        <comments>Assumes the itemspec passed in is escaped.</comments>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -198,10 +215,16 @@
         <Parameter Name="itemMetadata" Type="System.Collections.IDictionary" />
       </Parameters>
       <Docs>
-        <param name="itemSpec">The item specification.</param>
-        <param name="itemMetadata">The custom metadata for the item specification.</param>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Build.Utilities.TaskItem" /> class using the specified item-specification string and its metadata.</summary>
+        <param name="itemSpec">The item-spec string.</param>
+        <param name="itemMetadata">Custom metadata on the item.</param>
+        <summary>
+            This constructor creates a new TaskItem, using the given item spec and metadata.
+            </summary>
         <remarks>To be added.</remarks>
+        <comments>
+            Assumes the itemspec passed in is escaped, and also that any escapable metadata values
+            are passed in escaped form.
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="CloneCustomMetadata">
@@ -236,16 +259,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Clones the collection of custom metadata for the item specification.</summary>
+        <summary>
+            Get the collection of custom metadata. This does not include built-in metadata.
+            </summary>
         <returns>An <see cref="T:System.Collections.IDictionary" /> that represents a clone of the custom metadata.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method does not include built-in metadata.  
-  
- ]]></format>
-        </remarks>
+            RECOMMENDED GUIDELINES FOR METHOD IMPLEMENTATIONS:
+            1) this method should return a clone of the metadata
+            2) writing to this dictionary should not be reflected in the underlying item.
+            </remarks>
+        <comments>
+            Returns an UNESCAPED version of the custom metadata. For the escaped version (which 
+            is how it is stored internally), call ITaskItem2.CloneCustomMetadataEscaped. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="CopyMetadataTo">
@@ -282,8 +308,11 @@
         <Parameter Name="destinationItem" Type="Microsoft.Build.Framework.ITaskItem" />
       </Parameters>
       <Docs>
-        <param name="destinationItem">The item that this method will copy metadata to.</param>
-        <summary>Copies the item-specification metadata to the specified destination task item.</summary>
+        <param name="destinationItem">The item to copy metadata to.</param>
+        <summary>
+            Copy the metadata (but not the ItemSpec) to destinationItem. If a particular metadata already exists on the
+            destination item, then it is not overwritten -- the original value wins.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -331,9 +360,15 @@
       </Parameters>
       <Docs>
         <param name="metadataName">The name of the metadata to retrieve.</param>
-        <summary>Retrieves the specified metadata on the item.</summary>
-        <returns>A <see cref="T:System.String" /> that represents the metadata value.</returns>
+        <summary>
+            Retrieves one of the arbitrary metadata on the item.
+            If not found, returns empty string.
+            </summary>
+        <returns>The metadata value.</returns>
         <remarks>To be added.</remarks>
+        <comments>
+            Returns the unescaped value of the metadata requested. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="InitializeLifetimeService">
@@ -410,8 +445,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the item specification.</summary>
-        <value>A <see cref="T:System.String" /> that represents the item specification.</value>
+        <summary>
+            Gets or sets the item-spec.
+            </summary>
+        <value>The item-spec string.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -426,6 +463,11 @@
   
  ]]></format>
         </remarks>
+        <comments>
+            This one is a bit tricky.  Orcas assumed that the value being set was escaped, but 
+            that the value being returned was unescaped.  Maintain that behaviour here.  To get
+            the escaped value, use ITaskItem2.EvaluatedIncludeEscaped. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="MetadataCount">
@@ -459,8 +501,10 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of metadata set on the item.</summary>
-        <value>An <see cref="T:System.Int32" /> that represents the count of metadata set on the item.</value>
+        <summary>
+            Gets the number of metadata set on the item.
+            </summary>
+        <value>Count of metadata.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -495,8 +539,10 @@
         <ReturnType>System.Collections.ICollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the names of all the metadata on the item.</summary>
-        <value>An <see cref="T:System.Collections.ICollection" /> of metadata names.</value>
+        <summary>
+            Gets the names of all the item's metadata.
+            </summary>
+        <value>List of metadata names.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -525,8 +571,10 @@
       <Parameters />
       <Docs>
         <summary>
-          <see cref="T:Microsoft.Build.Framework.ITaskItem2" /> implementation which returns a clone of the metadata on this object. Values returned are in their original escaped form.</summary>
-        <returns>The cloned metadata, with values' escaping preserved.</returns>
+            ITaskItem2 implementation which returns a clone of the metadata on this object.
+            Values returned are in their original escaped form. 
+            </summary>
+        <returns>The cloned metadata.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -554,9 +602,13 @@
       </ReturnValue>
       <Docs>
         <summary>
-          <see cref="T:Microsoft.Build.Framework.ITaskItem2" /> implementation which gets or sets the item include value.  For disk-based items this would be the file path.</summary>
+            Gets or sets the escaped include, or "name", for the item.
+            </summary>
         <value>The item include value.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            Taking the opportunity to fix the property name, although this doesn't
+            make it obvious it's an improvement on ItemSpec.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Microsoft.Build.Framework.ITaskItem2.GetMetadataValueEscaped">
@@ -587,7 +639,8 @@
       <Docs>
         <param name="metadataName">The metadata to be queried</param>
         <summary>
-          <see cref="T:Microsoft.Build.Framework.ITaskItem2" /> implementation which allows the values of metadata on the item to be queried.</summary>
+            Returns the escaped value of the metadata with the specified key.
+            </summary>
         <returns>The escaped metadata value.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -622,8 +675,12 @@
         <param name="metadataName">The metadata name.</param>
         <param name="metadataValue">The metadata value.</param>
         <summary>
-          <see cref="T:Microsoft.Build.Framework.ITaskItem2" /> implementation which allows a piece of custom metadata to be set on the item. Assumes that the value passed in is unescaped, and escapes the value as necessary in order to maintain its value.</summary>
+            Sets the escaped value of the metadata with the specified name.
+            </summary>
         <remarks>To be added.</remarks>
+        <comments>
+            Assumes the value is passed in unescaped. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="op_Explicit">
@@ -658,8 +715,10 @@
       </Parameters>
       <Docs>
         <param name="taskItemToCast">The item to operate on.</param>
-        <summary>Allows an explicit type cast from a <see cref="T:Microsoft.Build.Utilities.TaskItem" /> to a <see cref="T:System.String" />, and returns the <see cref="P:Microsoft.Build.Utilities.TaskItem.ItemSpec" /> for that item.</summary>
-        <returns>The <see cref="P:Microsoft.Build.Utilities.TaskItem.ItemSpec" /> for the item.</returns>
+        <summary>
+            This allows an explicit typecast from a "TaskItem" to a "string", returning the escaped ItemSpec for this item.
+            </summary>
+        <returns>The item-spec of the item.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[The equivalent method for this operator is <xref:Microsoft.Build.Utilities.TaskItem.ToString?displayProperty=nameWithType>]]></format>
         </remarks>
@@ -699,8 +758,10 @@
         <Parameter Name="metadataName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="metadataName">The name of metadata to remove.</param>
-        <summary>Removes the specified metadata on the item.</summary>
+        <param name="metadataName">Name of metadata to remove.</param>
+        <summary>
+            Removes one of the arbitrary metadata on the item.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -739,10 +800,15 @@
         <Parameter Name="metadataValue" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="metadataName">The name of metadata to set or modify.</param>
-        <param name="metadataValue">The new value of metadata.</param>
-        <summary>Sets or modifies the value of the specified metadata on the item.</summary>
+        <param name="metadataName">Name of metadata to set or change.</param>
+        <param name="metadataValue">Value of metadata.</param>
+        <summary>
+            Sets one of the arbitrary metadata on the item.
+            </summary>
         <remarks>To be added.</remarks>
+        <comments>
+            Assumes that the value being passed in is in its escaped form. 
+            </comments>
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -774,8 +840,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets the item specification.</summary>
-        <returns>A <see cref="T:System.String" /> that represents the item specification.</returns>
+        <summary>
+            Gets the item-spec.
+            </summary>
+        <returns>The item-spec string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
