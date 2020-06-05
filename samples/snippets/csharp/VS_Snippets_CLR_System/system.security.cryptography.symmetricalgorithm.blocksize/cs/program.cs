@@ -80,7 +80,7 @@ namespace SymmetricAlgo
         }
     }
 }
-//This sample produces the following output:
+//This sample produces the following output when run on .NET Framework:
 //AesManaged
 //        Legal min key size = 128
 //        Legal max key size = 256
@@ -101,6 +101,33 @@ namespace SymmetricAlgo
 //        Legal max key size = 256
 //        Legal min block size = 128
 //        Legal max block size = 256
+//TripleDESCryptoServiceProvider
+//        Legal min key size = 128
+//        Legal max key size = 192
+//        Legal min block size = 64
+//        Legal max block size = 64
+//
+//This sample produces the following output when run on .NET Core:
+//AesManaged
+//        Legal min key size = 128
+//        Legal max key size = 256
+//        Legal min block size = 128
+//        Legal max block size = 128
+//DESCryptoServiceProvider
+//        Legal min key size = 64
+//        Legal max key size = 64
+//        Legal min block size = 64
+//        Legal max block size = 64
+//RC2CryptoServiceProvider
+//        Legal min key size = 40
+//        Legal max key size = 128
+//        Legal min block size = 64
+//        Legal max block size = 64
+//RijndaelManaged
+//        Legal min key size = 128
+//        Legal max key size = 256
+//        Legal min block size = 128
+//        Legal max block size = 128
 //TripleDESCryptoServiceProvider
 //        Legal min key size = 128
 //        Legal max key size = 192
