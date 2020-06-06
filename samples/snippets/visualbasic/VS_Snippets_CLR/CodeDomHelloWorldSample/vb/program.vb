@@ -4,8 +4,6 @@ Imports System.CodeDom.Compiler
 Imports System.IO
 Imports System.Text.RegularExpressions
 
-
-
 Class Program
     Private Shared providerName As String = "vb"
     Private Shared sourceFileName As String = "test.vb"
@@ -21,7 +19,6 @@ Class Program
         cu = BuildHelloWorldGraph()
 
         '<Snippet5>
-
         Dim sourceFile As New StreamWriter(sourceFileName)
 
         LogMessage("Generating code...")
@@ -56,7 +53,6 @@ Class Program
 
     End Sub
 
-
     '<Snippet2>
     ' Build a Hello World program graph using 
     ' System.CodeDom types.
@@ -80,10 +76,10 @@ Class Program
         class1.Comments.Add(New CodeCommentStatement("<summary>", True))
         class1.Comments.Add(New CodeCommentStatement( _
             "Create a Hello World application.", True))
+        class1.Comments.Add(New CodeCommentStatement("</summary>", True))
         class1.Comments.Add(New CodeCommentStatement( _
             "<seealso cref=" & ControlChars.Quote & "Class1.Main" & _
             ControlChars.Quote & "/>", True))
-        class1.Comments.Add(New CodeCommentStatement("</summary>", True))
 
         ' Add the new type to the namespace type collection.
         samples.Types.Add(class1)
@@ -138,7 +134,6 @@ Class Program
         Console.WriteLine([text])
 
     End Sub
-
 
     Shared Sub OutputResults(ByVal results As CompilerResults)
         LogMessage(("NativeCompilerReturnValue=" & _
