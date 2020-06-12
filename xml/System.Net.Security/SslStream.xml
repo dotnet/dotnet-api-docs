@@ -792,11 +792,34 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="sslClientAuthenticationOptions">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="sslClientAuthenticationOptions">Property bag for the SSL connection.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+<summary>Called by clients to authenticate the server and optionally the client in a client-server connection as an asynchronous operation. The authentication process uses information specified in the <see param="sslClientAuthenticationOptions" />.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+ When authentication succeeds, you must check the <xref:System.Net.Security.SslStream.IsEncrypted%2A> and <xref:System.Net.Security.SslStream.IsSigned%2A> properties to determine what security services are used by the <xref:System.Net.Security.SslStream>. Check the <xref:System.Net.Security.SslStream.IsMutuallyAuthenticated%2A> property to determine whether mutual authentication occurred.  
+  
+ If the authentication fails, you receive a <xref:System.Security.Authentication.AuthenticationException>, and this <xref:System.Net.Security.SslStream> is no longer useable. You should close this object and remove all references to it so that it can be collected by the garbage collector.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sslClientAuthenticationOptions" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Server authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AuthenticateAsClientAsync">
