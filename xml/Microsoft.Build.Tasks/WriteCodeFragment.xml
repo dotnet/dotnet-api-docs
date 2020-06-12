@@ -18,8 +18,14 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Generates a temporary code file with the specified generated code fragment.  Does not delete the file.</summary>
+    <summary>
+            Generates a temporary code file with the specified generated code fragment.
+            Does not delete the file.
+            </summary>
     <remarks>To be added.</remarks>
+    <comment>
+            Currently only supports writing .NET attributes.
+            </comment>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -76,7 +82,15 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the attributes to write.</summary>
+        <summary>
+            Description of attributes to write.
+            Item include is the full type name of the attribute.
+            For example, "System.AssemblyVersionAttribute".
+            Each piece of metadata is the name-value pair of a parameter, which must be of type System.String.
+            Some attributes only allow positional constructor arguments, or the user may just prefer them.
+            To set those, use metadata names like "_Parameter1", "_Parameter2" etc.
+            If a parameter index is skipped, it's an error.
+            </summary>
         <value>An item whose value is the full type name of the attribute. For example, "System.AssemblyVersionAttribute".</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -111,7 +125,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Executes the WriteCodeFragment method.</summary>
+        <summary>
+            Main entry point.
+            </summary>
         <returns>
           <see langword="true" /> if the code fragment was written; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -148,7 +164,12 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the language of code to generate.</summary>
+        <summary>
+            Language of code to generate.
+            Language name can be any language for which a CodeDom provider is
+            available. For example, "C#", "VisualBasic".
+            Emitted file will have the default extension for that language.
+            </summary>
         <value>The language of code to generate.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -188,7 +209,10 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the destination folder for the generated code, typically the intermediate folder.</summary>
+        <summary>
+            Destination folder for the generated code.
+            Typically the intermediate folder.
+            </summary>
         <value>The destination folder for the generated code.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -224,7 +248,13 @@
         <ReturnType>Microsoft.Build.Framework.ITaskItem</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the path to the file that was generated.</summary>
+        <summary>
+            The path to the file that was generated.
+            If this is set, and a file name, the destination folder will be prepended.
+            If this is set, and is rooted, the destination folder will be ignored.
+            If this is not set, the destination folder will be used, an arbitrary file name will be used, and 
+            the default extension for the language selected.
+            </summary>
         <value>The path to the file that was generated.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
