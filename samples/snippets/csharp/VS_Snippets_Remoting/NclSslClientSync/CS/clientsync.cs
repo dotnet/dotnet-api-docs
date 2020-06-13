@@ -40,7 +40,7 @@ namespace Examples.System.Net
             //<snippet4>
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
-            TcpClient client = new TcpClient(machineName,443);
+            TcpClient client = new TcpClient(machineName,8080);
             Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
             SslStream sslStream = new SslStream(
