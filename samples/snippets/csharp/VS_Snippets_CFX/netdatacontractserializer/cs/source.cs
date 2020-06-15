@@ -5,13 +5,10 @@ using System.Reflection;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
-using System.Security.Permissions;
 using System.Runtime.Serialization.Formatters;
 using System.Xml.Linq;
 
 [assembly: CLSCompliant(true)]
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 
 namespace DataContractSerializerExample
 {

@@ -4,9 +4,7 @@ using System.Collections;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Reflection;
-using System.Security.Permissions;
 
-[assembly: SecurityPermission(SecurityAction.RequestMinimum)]
 namespace Examples
 {
     // The SerializableAttribute specifies that instances of the class
@@ -25,7 +23,6 @@ namespace Examples
         }
     }
 
-    [SecurityPermission(SecurityAction.Demand)]
     public sealed class Test
     {
         public static void Main()

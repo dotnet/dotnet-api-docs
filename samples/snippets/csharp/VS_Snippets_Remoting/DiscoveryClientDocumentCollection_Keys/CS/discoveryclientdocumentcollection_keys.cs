@@ -15,7 +15,6 @@ using System;
 using System.Net;
 using System.IO;
 using System.Collections;
-using System.Security.Permissions;
 using System.Web.Services.Discovery;
 
 class DiscoveryClientDocumentCollectionSample_Keys
@@ -25,7 +24,6 @@ class DiscoveryClientDocumentCollectionSample_Keys
       Run();
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    static void Run()
    {
       DiscoveryClientProtocol myDiscoveryClientProtocol =

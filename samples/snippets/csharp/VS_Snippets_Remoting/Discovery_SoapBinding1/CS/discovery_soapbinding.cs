@@ -14,7 +14,6 @@
 
 using System;
 using System.Net;
-using System.Security.Permissions;
 using System.Xml;
 using System.Web.Services.Discovery;
 
@@ -25,7 +24,6 @@ class DiscoverySoapBindingClass
       Run();
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    static void Run()
    {
       try

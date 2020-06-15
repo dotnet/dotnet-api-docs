@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime;
 using System.Reflection;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 
 namespace StreamWriterSample
 {
@@ -81,7 +80,6 @@ namespace StreamWriterSample
         //</snippet2>
 
         //<snippet3>
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags=SecurityPermissionFlag.Infrastructure)]
         private void BeginWrite(string logFile)
         {
             //</snippet3>

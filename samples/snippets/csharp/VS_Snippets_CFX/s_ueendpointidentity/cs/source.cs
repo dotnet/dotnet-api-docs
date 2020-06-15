@@ -9,7 +9,6 @@ using System.ServiceModel.Description;
 using System.ServiceModel.Security;
 using System.ServiceModel.Security.Tokens;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.Security.Principal;
 using System.Threading;
@@ -1052,7 +1051,6 @@ namespace TestPrincipalPermission
 
         class SecureService : ISecureService
         {
-            [PrincipalPermission(SecurityAction.Demand, Role = "everyone")]
             public string Method1()
             {
                 return String.Format("Hello, \"{0}\"", Thread.CurrentPrincipal.Identity.Name);

@@ -2,9 +2,7 @@
 using System;
 using System.Runtime.Remoting.Lifetime;
 using System.Security.Principal;
-using System.Security.Permissions;
 
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class ClientActivatedType : MarshalByRefObject
 {
    // Override the lease settings for this object.

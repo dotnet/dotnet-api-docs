@@ -16,11 +16,9 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Services;
-using System.Security.Permissions;
 
 public class ServerProcess
 {
-   [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main()
    {
 // <Snippet2>

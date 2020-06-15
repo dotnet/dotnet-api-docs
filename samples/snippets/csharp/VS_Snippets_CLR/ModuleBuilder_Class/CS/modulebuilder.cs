@@ -11,8 +11,7 @@ class and created class is called from the 'TestClass'.
    using System;
    using System.Reflection;
    using System.Reflection.Emit;
-   using System.Security.Permissions;
-
+   
    public class CodeGenerator
    {
       AssemblyBuilder myAssemblyBuilder;
@@ -62,7 +61,6 @@ class and created class is called from the 'TestClass'.
    }
    public class TestClass
    {
-      [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
       public static void Main()
       {
          CodeGenerator myCodeGenerator = new CodeGenerator();

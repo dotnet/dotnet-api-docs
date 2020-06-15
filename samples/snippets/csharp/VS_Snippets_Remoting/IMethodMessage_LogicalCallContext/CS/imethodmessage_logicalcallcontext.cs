@@ -16,17 +16,14 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Proxies;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class MyProxyAttribute : ProxyAttribute
 {
-[SecurityPermission(SecurityAction.LinkDemand)]
    public MyProxyAttribute()
    {
    }
 
-[SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.Infrastructure)]
    public override MarshalByRefObject CreateInstance(Type serverType)
    {
       if (serverType.IsMarshalByRef)
@@ -51,7 +48,6 @@ public class MyProxyAttribute : ProxyAttribute
    String stringUri;
    MarshalByRefObject targetObject;
 
-[SecurityPermission(SecurityAction.LinkDemand)]
 public MyProxy(Type type) : base(type)
 {
       targetObject = (MarshalByRefObject)Activator.CreateInstance(type);
@@ -59,14 +55,12 @@ public MyProxy(Type type) : base(type)
       stringUri = myObject.URI;
    }
 
-   [SecurityPermission(SecurityAction.LinkDemand)]
    public MyProxy(Type type, MarshalByRefObject targetObject) : base(type)
    {
       this.targetObject = targetObject;
    }
 
 // <Snippet2>
-[SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.Infrastructure)]
    public override IMessage Invoke(IMessage message)
    {
       message.Properties["__Uri"] = stringUri;
@@ -98,7 +92,6 @@ public class Zip : MarshalByRefObject, ILogicalThreadAffinative
 
 public class ProxySample
 {
-   [SecurityPermission(SecurityAction.LinkDemand)]
    public static void Main()
    {
       MyProxy proxy = new MyProxy(typeof(Zip));

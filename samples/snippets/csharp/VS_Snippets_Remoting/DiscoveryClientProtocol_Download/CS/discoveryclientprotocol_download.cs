@@ -11,7 +11,6 @@
 using System;
 using System.Net;
 using System.IO;
-using System.Security.Permissions;
 using System.Web.Services.Discovery;
 
 class DiscoveryClientProtocol_Download
@@ -21,7 +20,6 @@ class DiscoveryClientProtocol_Download
       Run();
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    static void Run()
    {
 // <Snippet1>

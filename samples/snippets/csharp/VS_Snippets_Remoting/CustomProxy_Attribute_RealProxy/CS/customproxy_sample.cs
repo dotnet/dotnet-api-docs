@@ -32,13 +32,11 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Proxies;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Contexts;
-using System.Security.Permissions;
 
 namespace Samples
 {
 // <Snippet11>
    [AttributeUsage(AttributeTargets.Class)]
-   [SecurityPermissionAttribute(SecurityAction.Demand, Flags=SecurityPermissionFlag.Infrastructure)]
    public class MyProxyAttribute : ProxyAttribute
    {
       public MyProxyAttribute()
@@ -72,7 +70,6 @@ namespace Samples
 // </Snippet3>
 // </Snippet2>
    }
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    [MyProxyAttribute]
    public class CustomServer :ContextBoundObject
    {
@@ -86,7 +83,6 @@ namespace Samples
       }
    }
 // </Snippet11>
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class MyProxy : RealProxy
    {
       String myUri;
@@ -156,7 +152,6 @@ namespace Samples
       }
 // </Snippet6>
 // <Snippet7>
-      [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
       public override void GetObjectData( SerializationInfo info,
                                           StreamingContext context)
       {
@@ -164,7 +159,6 @@ namespace Samples
          base.GetObjectData(info, context);
       }
 // </Snippet7>
-      [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
       public class CustomObjRef :ObjRef
       {
          public CustomObjRef(MarshalByRefObject myMarshalByRefObject,Type serverType):
@@ -173,7 +167,6 @@ namespace Samples
             Console.WriteLine("ObjRef 'Constructor' called");
          }
          // Override this method to store custom data.
-         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter=true)]
          public override void GetObjectData(SerializationInfo info,
                                             StreamingContext context)
          {
@@ -184,7 +177,6 @@ namespace Samples
    public class ProxySample
    {
       // Acts as a custom proxy user.
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          Console.WriteLine("");

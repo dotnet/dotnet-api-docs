@@ -26,7 +26,6 @@
 // <Snippet1>
 using System;
 using System.Reflection;
-using System.Security.Permissions;
 using System.Web.Services.Protocols;
 
 public class MyService
@@ -39,7 +38,6 @@ public class MyService
 
 class LogicalMethodInfo_Constructor
 {
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    static void Run()
    {
       Type myType = typeof(MyService);

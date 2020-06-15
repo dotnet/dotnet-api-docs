@@ -3,7 +3,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.ComponentModel;
-using System.Security.Permissions;
 using System.Security;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
@@ -11,8 +10,6 @@ using System.Runtime.ConstrainedExecution;
 
 namespace SafeHandleDemo
 {
-    [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode = true)]
-    [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
     internal class MySafeFileHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
         // Create a SafeHandle, informing the base class
@@ -76,10 +73,6 @@ namespace SafeHandleDemo
 
         public MyFileReader(String fileName)
         {
-            // Security permission check.
-            String fullPath = Path.GetFullPath(fileName);
-            new FileIOPermission(FileIOPermissionAccess.Read, fullPath).Demand();
-
             // Open a file, and save its handle in _handle.
             // Note that the most optimized code turns into two processor
             // instructions: 1) a call, and 2) moving the return value into
@@ -125,7 +118,6 @@ namespace SafeHandleDemo
         // if it hasn't already been disposed.
         // Howerver, there may be a need for a subclass to
         // introduce a finalizer, so Dispose is properly implemented here.
-        [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
         protected virtual void Dispose(bool disposing)
         {
             // Note there are three interesting states here:
@@ -142,7 +134,6 @@ namespace SafeHandleDemo
             // SafeHandle records the fact that we've called Dispose.
         }
 
-        [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
         public byte[] ReadContents(int length)
         {
             if (_handle.IsInvalid)  // Is the handle disposed?

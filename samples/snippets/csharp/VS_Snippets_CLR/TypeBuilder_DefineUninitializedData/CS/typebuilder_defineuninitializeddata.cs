@@ -13,11 +13,9 @@ using System.Threading;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 
 public sealed class Example
 {
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       Type myHelloWorldType = CreateCallee(Thread.GetDomain());

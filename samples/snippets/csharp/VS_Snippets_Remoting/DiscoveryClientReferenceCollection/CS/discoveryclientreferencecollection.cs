@@ -12,7 +12,6 @@
 using System;
 using System.Net;
 using System.Collections;
-using System.Security.Permissions;
 using System.Web.Services.Discovery;
 
 class MyDiscoveryClientReferenceCollection
@@ -22,7 +21,6 @@ class MyDiscoveryClientReferenceCollection
       Run();
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    static void Run()
    {
       DiscoveryClientProtocol myDiscoveryClientProtocol =

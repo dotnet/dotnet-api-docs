@@ -5,14 +5,12 @@ using System.Text;
 using System.Security.Policy;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.Hosting;
 
 namespace ActivationContextSample
 {
     public class Program : MarshalByRefObject
     {
-        [SecurityPermission(SecurityAction.LinkDemand, ControlDomainPolicy=true)]
         public static void Main(string[] args)
         {
             //<Snippet2>
@@ -35,7 +33,6 @@ namespace ActivationContextSample
             //</Snippet4>
             Console.Read();
         }
-	[SecurityPermission(SecurityAction.LinkDemand, ControlDomainPolicy=true)]
         public void Run()
         {
             Main(new string[] { });

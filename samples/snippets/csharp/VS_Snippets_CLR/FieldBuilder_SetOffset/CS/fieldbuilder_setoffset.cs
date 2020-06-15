@@ -16,7 +16,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Security.Permissions;
 using System.Runtime.CompilerServices;
 
 public class FieldBuilder_Sample
@@ -68,7 +67,6 @@ public class FieldBuilder_Sample
       return myType;
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       try

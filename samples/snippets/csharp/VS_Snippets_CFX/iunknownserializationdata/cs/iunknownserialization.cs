@@ -1,7 +1,4 @@
-﻿using System.Security.Permissions;
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
-namespace IExtensibleDataObjectExample
+﻿namespace IExtensibleDataObjectExample
 {
     //<snippet0>
     using System;

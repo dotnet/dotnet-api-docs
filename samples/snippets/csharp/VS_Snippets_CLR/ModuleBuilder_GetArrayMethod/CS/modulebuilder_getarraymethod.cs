@@ -12,7 +12,6 @@ method in dynamic module is displayed using 'GetArrayMethodToken' method.
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Security.Permissions;
 
    internal class CodeGenerator
    {

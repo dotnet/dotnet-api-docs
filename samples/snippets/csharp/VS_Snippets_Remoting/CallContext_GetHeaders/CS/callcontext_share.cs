@@ -7,7 +7,6 @@ using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Contexts;
 using System.Security;
 using System.Security.Principal;
-using System.Security.Permissions;
 
 namespace RemotingSamples
 {
@@ -20,7 +19,6 @@ namespace RemotingSamples
          return "Hello " + name;
       }
 
-      [PermissionSet(SecurityAction.LinkDemand)]
       public string HeaderMethod(string name,Header[] arrHeader)
       {
          Console.WriteLine("HeaderMethod " + name);

@@ -5,11 +5,9 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 public class ObjRefExample {
 
-   [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main() {
 
       ChannelServices.RegisterChannel(new HttpChannel(8090));
@@ -34,7 +32,6 @@ public class ObjRefExample {
    }
 }
 
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class RemoteObject : MarshalByRefObject {
 
    public void Method1(LocalObject param) {
@@ -45,7 +42,6 @@ public class RemoteObject : MarshalByRefObject {
 
 // <Snippet1>
 // a custom ObjRef class that outputs its status
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class MyObjRef : ObjRef {
 
    // only instantiate using marshaling or deserialization
@@ -107,7 +103,6 @@ public class MyObjRef : ObjRef {
 }
 
 // a class that uses MyObjRef
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class LocalObject : MarshalByRefObject {
    // overriding CreateObjRef will allow us to return a custom ObjRef
    public override ObjRef CreateObjRef(Type t) {

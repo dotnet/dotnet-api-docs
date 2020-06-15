@@ -19,7 +19,6 @@ using System.Collections;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Proxies;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
 namespace IMethodCallMessageNS
 {
@@ -27,7 +26,6 @@ namespace IMethodCallMessageNS
    // In the same class, in the Invoke method, the methods and properties of the
    // IMethodCallMessage are demonstrated.
 
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class MyProxy : RealProxy
    {
       public MyProxy(Type myType) : base(myType)

@@ -1,10 +1,8 @@
 ﻿// <Snippet1>
 using System;
-using System.Security.Permissions;
 
 public class Example
 {
-   [SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.ControlAppDomain)]
    public static void Main()
    {
       AppDomain currentDomain = AppDomain.CurrentDomain;

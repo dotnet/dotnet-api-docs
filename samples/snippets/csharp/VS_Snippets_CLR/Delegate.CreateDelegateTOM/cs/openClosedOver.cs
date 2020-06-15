@@ -3,7 +3,6 @@
 //<Snippet1>
 using System;
 using System.Reflection;
-using System.Security.Permissions;
 
 // Declare three delegate types for demonstrating the combinations
 // of static versus instance methods and open versus closed

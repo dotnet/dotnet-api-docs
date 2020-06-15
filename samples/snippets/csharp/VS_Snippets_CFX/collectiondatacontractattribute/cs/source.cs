@@ -3,10 +3,8 @@ using System.Collections;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Security.Permissions;
 using System.Collections.Generic;
 
-[assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution=true)]
 namespace Microsoft.Security.Samples
 {
     //<snippet1>

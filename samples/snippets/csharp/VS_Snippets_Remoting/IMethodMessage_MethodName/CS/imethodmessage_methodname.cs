@@ -19,9 +19,7 @@ using System;
 using System.Reflection;
 using System.Runtime.Remoting.Proxies;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class Reverser : MarshalByRefObject
 {
    private string stringReversed;
@@ -47,7 +45,6 @@ public class Reverser : MarshalByRefObject
 }
 
 // <Snippet1>
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class MyProxyClass : RealProxy
 {
    private Object  myObjectInstance  = null;
@@ -96,7 +93,6 @@ public class MyProxyClass : RealProxy
 
 public class ApplicationClass
 {
-   [SecurityPermission(SecurityAction.LinkDemand)]
    public static void Main()
    {
       MyProxyClass myProxy = new MyProxyClass(typeof(Reverser));

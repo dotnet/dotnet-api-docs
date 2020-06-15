@@ -1,8 +1,5 @@
-﻿using System.Security.Permissions;
-using System;
+﻿using System;
 using System.Runtime.Serialization;
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 //<snippet1>
 [assembly: ContractNamespaceAttribute("http://www.cohowinery.com/employees",
     ClrNamespace = "Microsoft.Contracts.Examples")]

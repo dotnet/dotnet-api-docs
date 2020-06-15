@@ -11,11 +11,9 @@
 using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 
 public class Client
 {
-   [SecurityPermission(SecurityAction.LinkDemand)]
    public static void Main()
    {
       // Load the configuration file.
@@ -46,7 +44,6 @@ public class MyClientSponsor : MarshalByRefObject, ISponsor
       lastRenewal = DateTime.Now;
    }
 
-   [SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.Infrastructure)]
    public TimeSpan Renewal(ILease lease)
    {
       Console.WriteLine("Request to renew the lease time.");

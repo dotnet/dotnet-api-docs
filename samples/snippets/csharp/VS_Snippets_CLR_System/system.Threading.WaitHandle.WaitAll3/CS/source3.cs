@@ -1,7 +1,6 @@
 ﻿// <Snippet1>
 using System;
 using System.IO;
-using System.Security.Permissions;
 using System.Threading;
 
 class Test

@@ -1,6 +1,5 @@
 ﻿// <Snippet1>
 using System;
-using System.Security.Permissions;
 using System.Threading;
 
 class ThreadInterrupt

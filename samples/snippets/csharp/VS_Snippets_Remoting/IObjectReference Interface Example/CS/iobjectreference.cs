@@ -5,13 +5,9 @@ using System.IO;
 using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 // There should be only one instance of this type per AppDomain.
 [Serializable]
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
-[AspNetHostingPermission(SecurityAction.LinkDemand,
-    Level=AspNetHostingPermissionLevel.Minimal)]
 public sealed class Singleton : ISerializable
 {
     // This is the one instance of this type.
@@ -48,8 +44,6 @@ public sealed class Singleton : ISerializable
     }
 
     // A method called when serializing a Singleton.
-   [SecurityPermissionAttribute(SecurityAction.LinkDemand,
-   Flags=SecurityPermissionFlag.SerializationFormatter)]
     void ISerializable.GetObjectData(
         SerializationInfo info, StreamingContext context)
     {
@@ -64,11 +58,6 @@ public sealed class Singleton : ISerializable
 }
 
 [Serializable]
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
-[SecurityPermissionAttribute(SecurityAction.LinkDemand,
-    Flags=SecurityPermissionFlag.SerializationFormatter)]
-[AspNetHostingPermission(SecurityAction.LinkDemand,
-   Level=AspNetHostingPermissionLevel.Minimal)]
 internal sealed class SingletonSerializationHelper : IObjectReference
 {
     // This object has no fields (although it could).

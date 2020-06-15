@@ -12,7 +12,6 @@
 using System;
 using System.Net;
 using System.Collections;
-using System.Security.Permissions;
 using System.Web.Services.Discovery;
 
 class DiscoveryClientReferenceCollection_Keys
@@ -22,7 +21,6 @@ class DiscoveryClientReferenceCollection_Keys
       Run();
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    static void Run()
    {
 // <Snippet1>

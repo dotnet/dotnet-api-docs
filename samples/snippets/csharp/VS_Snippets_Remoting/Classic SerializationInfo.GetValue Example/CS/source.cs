@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 // <Snippet1>
 // A serializable LinkedList example.  For the full LinkedList implementation
@@ -14,7 +13,6 @@ class LinkedList: ISerializable {
    Node m_tail = null;
 
    // Serializes the object.
-   [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter=true)]
    public void GetObjectData(SerializationInfo info, StreamingContext context){
       // Stores the m_head and m_tail references in the SerializationInfo info.
       info.AddValue("head", m_head, m_head.GetType());
@@ -23,7 +21,6 @@ class LinkedList: ISerializable {
 
    // Constructor that is called automatically during deserialization.
    // Reconstructs the object from the information in SerializationInfo info
-   [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter=true)]
    private LinkedList(SerializationInfo info, StreamingContext context)
    {
       Node temp = new Node(0);

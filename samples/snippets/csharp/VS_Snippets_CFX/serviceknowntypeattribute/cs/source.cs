@@ -7,9 +7,6 @@ using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.Reflection;
 //</snippet0>
-using System.Security.Permissions;
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 namespace Microsoft.ServiceModel.Samples
 {
     public class Test

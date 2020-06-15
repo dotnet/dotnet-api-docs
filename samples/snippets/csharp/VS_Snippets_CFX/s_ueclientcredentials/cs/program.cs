@@ -43,11 +43,8 @@ using System.Collections.ObjectModel;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Security.Principal;
 //</snippet0>
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 namespace Microsoft.Security.Samples
 {    internal class Service
     {

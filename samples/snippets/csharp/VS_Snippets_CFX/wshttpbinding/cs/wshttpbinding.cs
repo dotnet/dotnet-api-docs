@@ -8,7 +8,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Security;
 using System.ServiceModel.Security.Tokens;
-using System.Security.Permissions;
 
 // Define a service contract for the calculator.
 [ServiceContract()]

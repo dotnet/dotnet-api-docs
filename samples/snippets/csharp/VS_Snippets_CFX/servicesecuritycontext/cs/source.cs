@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.IdentityModel.Policy;
 using System.IdentityModel.Claims;
 
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 namespace Microsoft.ServiceModel.Samples
 {
     public class Test

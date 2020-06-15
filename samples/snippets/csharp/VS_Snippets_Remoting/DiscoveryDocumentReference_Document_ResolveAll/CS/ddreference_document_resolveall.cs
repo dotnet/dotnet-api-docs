@@ -13,7 +13,6 @@
 using System;
 using System.Web.Services.Discovery;
 using System.Collections;
-using System.Security.Permissions;
 
 class DiscoveryDocumentReference_Document_ResolveAll
 {
@@ -23,7 +22,6 @@ class DiscoveryDocumentReference_Document_ResolveAll
       Run();
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    static void Run()
    {
       try

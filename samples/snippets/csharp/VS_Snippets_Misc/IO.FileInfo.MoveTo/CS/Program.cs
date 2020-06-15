@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Reflection;
-using System.Security.Permissions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;

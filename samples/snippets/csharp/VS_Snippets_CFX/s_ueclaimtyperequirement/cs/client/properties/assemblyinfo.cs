@@ -4,7 +4,6 @@ using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 
 #endregion
 
@@ -13,7 +12,6 @@ using System.Security.Permissions;
 // associated with an assembly.
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
-[assembly: SecurityPermissionAttribute(SecurityAction.RequestMinimum)]
 [assembly: AssemblyTitle("client")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

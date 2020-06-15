@@ -11,13 +11,11 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Security.Permissions;
 
 namespace RemotingSamples
 {
    public class MyChannelServices_Client
    {
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          ListDictionary myProperties = new ListDictionary();

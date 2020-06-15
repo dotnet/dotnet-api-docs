@@ -1,9 +1,6 @@
-﻿using System.Security.Permissions;
-using System;
+﻿using System;
 using System.ServiceModel;
 using System.Runtime.Serialization;
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 namespace XmlSerializerFormatAttributeExample
 {
     //<snippet1>

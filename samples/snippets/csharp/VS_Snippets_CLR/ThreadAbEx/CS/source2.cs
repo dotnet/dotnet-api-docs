@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Security.Permissions;
 
 public class ThreadWork
 {

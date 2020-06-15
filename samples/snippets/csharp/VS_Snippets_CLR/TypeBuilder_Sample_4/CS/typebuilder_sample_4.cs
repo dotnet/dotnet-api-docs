@@ -20,11 +20,9 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
-using System.Security.Permissions;
 
 public class MyTypeBuilder
 {
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       Console.WriteLine("TypeBuilder Sample");

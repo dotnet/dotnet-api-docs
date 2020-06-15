@@ -11,12 +11,10 @@ using System;
 using System.Web.Services.Discovery;
 using System.IO;
 using System.Collections;
-using System.Security.Permissions;
 
 class DiscoveryDocumentReference_ReadDocument
 {
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    static void Run()
 {
       try

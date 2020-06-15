@@ -5,10 +5,8 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Principal;
-using System.Security.Permissions;
 
 public class ClientClass {
-   [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main() {
 
       GenericIdentity ident = new GenericIdentity("Bob");

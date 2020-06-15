@@ -17,13 +17,11 @@ using System.Threading;
 using  System.Net.Sockets;
 using System.Runtime.Remoting.Channels;
 using System.Text.RegularExpressions;
-using System.Security.Permissions;
 
 namespace RemotingSamples
 {
    public class MyIChannelReceiverChannelDataServerClass
    {
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          MyCustomChannel myChannel = new MyCustomChannel(8085);

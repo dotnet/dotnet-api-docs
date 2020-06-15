@@ -1,6 +1,5 @@
 ﻿// <Snippet1>
 using System;
-using System.Security.Permissions;
 using Microsoft.Win32;
 
 class RegKey

@@ -3,7 +3,6 @@ using System;
 using System.Text;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Principal;
-using System.Security.Permissions;
 
 public class HelloServiceClass : MarshalByRefObject {
 
@@ -20,7 +19,6 @@ public class HelloServiceClass : MarshalByRefObject {
       Console.WriteLine("Destroyed instance {0} of HelloServiceClass.", instanceNum);
    }
 
-   [PermissionSet(SecurityAction.LinkDemand)]
    public String HelloMethod(String name) {
 
       //Extract the call context data

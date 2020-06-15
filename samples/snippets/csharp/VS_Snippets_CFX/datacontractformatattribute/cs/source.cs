@@ -1,12 +1,9 @@
-﻿using System.Security.Permissions;
-using System;
+﻿using System;
 using System.Collections;
 using System.ServiceModel;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 namespace Microsoft.ServiceModel.Samples
 {
 

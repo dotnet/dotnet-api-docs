@@ -1,7 +1,6 @@
 ﻿//<Snippet1>
 using System;
 using System.Reflection;
-using System.Security.Permissions;
 
 [assembly:AssemblyVersionAttribute("1.0.2000.0")]
 

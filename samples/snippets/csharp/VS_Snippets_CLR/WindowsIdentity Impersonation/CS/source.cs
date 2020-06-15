@@ -9,7 +9,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
-using System.Security.Permissions;
 using Microsoft.Win32.SafeHandles;
 using System.Runtime.ConstrainedExecution;
 using System.Security;
@@ -25,7 +24,6 @@ public class ImpersonationDemo
 
     // Test harness.
     // If you incorporate this code into a DLL, be sure to demand FullTrust.
-    [PermissionSetAttribute(SecurityAction.Demand, Name = "FullTrust")]
     public static void Main(string[] args)
     {
         SafeTokenHandle safeTokenHandle;

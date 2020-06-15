@@ -5,7 +5,6 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Security.Policy;
 using Microsoft.Win32.SafeHandles;
-using System.Security.Permissions;
 
 [assembly: CLSCompliantAttribute(true)]
 
@@ -59,7 +58,6 @@ class ConsoleApp
         lp.SportsUrl = Console.ReadLine();
     }
 }
-[SecurityPermissionAttribute(SecurityAction.Demand, Flags=SecurityPermissionFlag.UnmanagedCode)]
 public class LoginPrefs
 {
     public LoginPrefs(string myUserName)

@@ -7,7 +7,6 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
-using System.Security.Permissions;
 
 // Person is a serializable base class.
 [Serializable]
@@ -55,7 +54,6 @@ public class Manager : Employee, ISerializable
     }
 
     //<snippet2>
-    [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
     public void GetObjectData(SerializationInfo info, StreamingContext context)
     {
 
@@ -96,7 +94,6 @@ public class Manager : Employee, ISerializable
     }
     //</snippet3>
 
-    [SecurityPermissionAttribute(SecurityAction.Demand, Flags=SecurityPermissionFlag.SerializationFormatter)]
     protected Manager(SerializationInfo info, StreamingContext context) : base(null)
     {
 

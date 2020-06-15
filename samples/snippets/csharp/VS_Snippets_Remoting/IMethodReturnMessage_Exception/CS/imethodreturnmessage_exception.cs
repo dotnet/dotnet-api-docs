@@ -13,7 +13,6 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Proxies;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
 namespace CustomProxySample
 {
@@ -25,7 +24,6 @@ namespace CustomProxySample
       }
    }
 
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class MyProxy : RealProxy
    {
       String _URI;
@@ -58,7 +56,6 @@ namespace CustomProxySample
 
    public class ProxySample
    {
-      [SecurityPermission(SecurityAction.LinkDemand)]
       public static void Main()
       {
          // Create an instance of MyProxy.

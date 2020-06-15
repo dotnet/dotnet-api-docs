@@ -3,7 +3,6 @@
 //<Snippet1>
 using System;
 using System.Reflection;
-using System.Security.Permissions;
 
 // Declare a delegate type. The object of this code example
 // is to show all the methods this delegate can bind to.

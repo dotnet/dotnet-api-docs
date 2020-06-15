@@ -1,13 +1,9 @@
 ﻿using System;
 using System.ServiceModel;
-using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.Data;
-
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 
 namespace Example
 {

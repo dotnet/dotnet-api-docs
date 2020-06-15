@@ -4,7 +4,6 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Security;
 using System.Security.Policy;
-using System.Security.Permissions;
 using System.Security.Cryptography.X509Certificates;
 
 class Program

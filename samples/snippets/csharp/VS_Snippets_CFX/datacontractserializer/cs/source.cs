@@ -5,11 +5,8 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Xml;
-using System.Security.Permissions;
 
 [assembly: CLSCompliant(true)]
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 //<snippet0>
 namespace DataContractSerializerExample
 {

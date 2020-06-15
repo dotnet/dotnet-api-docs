@@ -16,11 +16,9 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Collections;
 using  System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
 public class MyHttpClientChannel
 {
-   [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main()
    {
       try

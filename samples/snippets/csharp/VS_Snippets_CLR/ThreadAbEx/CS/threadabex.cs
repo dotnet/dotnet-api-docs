@@ -1,7 +1,6 @@
 ﻿//<Snippet1>
 using System;
 using System.Threading;
-using System.Security.Permissions;
 
 public class ThreadWork {
     public static void DoWork() {

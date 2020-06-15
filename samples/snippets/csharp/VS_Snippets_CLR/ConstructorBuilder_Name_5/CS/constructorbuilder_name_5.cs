@@ -16,7 +16,6 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Security.Permissions;
 
 public class MyConstructorBuilder
 {
@@ -85,7 +84,6 @@ public class MyConstructorBuilder
       }
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       MyConstructorBuilder myConstructorBuilder = new MyConstructorBuilder();

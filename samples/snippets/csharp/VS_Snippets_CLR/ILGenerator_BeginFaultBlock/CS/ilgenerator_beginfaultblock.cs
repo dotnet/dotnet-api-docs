@@ -13,7 +13,6 @@ using System;
 using System.Threading;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Security.Permissions;
 
 public class ILGenerator_BeginFaultBlock
 {
@@ -102,7 +101,6 @@ public class ILGenerator_BeginFaultBlock
 
       return myTypeBuilder.CreateType();
    }
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       Type myAddType = AddType();

@@ -16,13 +16,11 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels.Http;
-using System.Security.Permissions;
 
 namespace RemotingSamples
 {
    public class MyChannelServices_Server
    {
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          try

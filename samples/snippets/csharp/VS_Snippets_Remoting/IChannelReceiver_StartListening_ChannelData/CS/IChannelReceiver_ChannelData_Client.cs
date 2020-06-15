@@ -5,13 +5,11 @@ using System.Net;
 using System.Collections.Specialized;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using System.Security.Permissions;
 
 namespace RemotingSamples
 {
    public class MyIChannelReceiverChannelDataClientClass
    {
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          string myChannelURL = "tcp://" + Dns.Resolve(Dns.GetHostName())

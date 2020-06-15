@@ -1,7 +1,6 @@
 ﻿// <Snippet1>
 using System;
 using System.IO;
-using System.Security.Permissions;
 
 public class Watcher
 {
@@ -10,7 +9,6 @@ public class Watcher
         Run();
     }
 
-    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     private static void Run()
     {
         string[] args = Environment.GetCommandLineArgs();

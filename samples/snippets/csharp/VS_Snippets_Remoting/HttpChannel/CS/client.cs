@@ -5,7 +5,6 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 using SampleNamespace;
 
 // The following sample uses an HttpChannel constructor
@@ -19,7 +18,6 @@ public class SampleClient : MarshalByRefObject {
         SampleClient client = new SampleClient();
     }
 
-    [PermissionSet(SecurityAction.LinkDemand)]
     public SampleClient() {
 
         ChannelServices.RegisterChannel(new HttpChannel(0));
