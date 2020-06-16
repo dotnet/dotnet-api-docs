@@ -62,7 +62,6 @@ namespace Examples.NegotiateStreamExample
 
     //</snippet3>
             writeTask.Wait();
-            authStream.FlushAsync(default).Wait();
             Console.WriteLine("Sent {0} bytes.", message.Length);
             // Close the client connection.
             authStream.Close();
