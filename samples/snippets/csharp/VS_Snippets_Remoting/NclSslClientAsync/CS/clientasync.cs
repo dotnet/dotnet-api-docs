@@ -215,7 +215,7 @@ namespace Examples.Ssl
             sslStream.BeginAuthenticateAsClient(
                 serverName,
                 clientCertificates,
-                SslProtocols.Ssl3,
+                SslProtocols.None,
                 true,
                 new AsyncCallback(AuthenticateCallback),
                 sslStream);
