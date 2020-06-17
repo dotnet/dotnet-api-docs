@@ -48,10 +48,10 @@ namespace Examples.NegotiateStreamExample
                  // Encode the test data into a byte array.
                 byte[] message = System.Text.Encoding.UTF8.GetBytes("Hello from the client.");
                 authStream.Write(message, 0, message.Length);
-          authStream.Flush();
+                authStream.Flush();
                 Console.WriteLine("Sent {0} bytes.", message.Length);
-         }
-         // Close the client connection.
+            }
+            // Close the client connection.
             authStream.Close();
             Console.WriteLine("Client closed.");
     }
