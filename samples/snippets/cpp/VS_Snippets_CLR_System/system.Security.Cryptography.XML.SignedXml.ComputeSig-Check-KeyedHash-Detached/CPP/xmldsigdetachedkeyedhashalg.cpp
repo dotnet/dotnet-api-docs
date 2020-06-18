@@ -83,7 +83,7 @@ int main()
       String^ XmlFileName = "xmlsig.xml";
       
       // Generate a signing key.
-      HMACSHA1^ Key = gcnew HMACSHA1;
+      HMACSHA256^ Key = gcnew HMACSHA256;
       Console::WriteLine( "Signing: {0}", resourceToSign );
       
       // Sign the detached resourceand save the signature in an XML file.

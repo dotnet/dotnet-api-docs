@@ -23,7 +23,7 @@ Class XMLDSIGDetached
          Dim XmlFileName As String = "xmlsig.xml"
          
          ' Generate a signing key.
-         Dim Key As New HMACSHA1()
+         Dim Key As New HMACSHA256()
          
          Console.WriteLine("Signing: {0}", resourceToSign)
          
