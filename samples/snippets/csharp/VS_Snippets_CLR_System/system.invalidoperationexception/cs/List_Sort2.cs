@@ -34,6 +34,6 @@ public class Example
    }
 }
 // The example displays the following output:
-//       Jane Doe
 //       John Doe
+//       Jane Doe
 // </Snippet13>

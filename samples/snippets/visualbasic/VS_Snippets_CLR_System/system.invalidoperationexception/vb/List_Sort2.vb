@@ -33,8 +33,8 @@ Module Example
    End Sub
 End Module
 ' The example displays the following output:
-'       Jane Doe
 '       John Doe
+'       Jane Doe
 ' </Snippet13>
 
 
