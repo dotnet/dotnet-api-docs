@@ -16,8 +16,8 @@ Public Class Person : Implements IComparable(Of Person)
    Public Function CompareTo(other As Person) As Integer _
           Implements IComparable(Of Person).CompareTo
       Return String.Format("{0} {1}", LastName, FirstName).
-             CompareTo(String.Format("{0} {1}", LastName, FirstName))    
-   End Function       
+            CompareTo(String.Format("{0} {1}", other.LastName, other.FirstName))    
+   End Function
 End Class
 
 Module Example
@@ -33,8 +33,6 @@ Module Example
    End Sub
 End Module
 ' The example displays the following output:
-'       John Doe
 '       Jane Doe
+'       John Doe
 ' </Snippet13>
-
-
