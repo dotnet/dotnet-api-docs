@@ -27,14 +27,14 @@ Class RSACSPSample
             'Import key parameters into RSA.
             RSA.ImportParameters(RSAKeyInfo)
 
-            'Create a new instance of the RijndaelManaged class.
-            Dim RM As New RijndaelManaged()
+            'Create a new instance of the AesManaged class.
+            Dim AM As New AesManaged()
 
             'Encrypt the symmetric key and IV.
-            EncryptedSymmetricKey = RSA.Encrypt(RM.Key, False)
-            EncryptedSymmetricIV = RSA.Encrypt(RM.IV, False)
+            EncryptedSymmetricKey = RSA.Encrypt(AM.Key, False)
+            EncryptedSymmetricIV = RSA.Encrypt(AM.IV, False)
 
-            Console.WriteLine("RijndaelManaged Key and IV have been encrypted with RSACryptoServiceProvider.")
+            Console.WriteLine("AesManaged Key and IV have been encrypted with RSACryptoServiceProvider.")
 
             'Catch and display a CryptographicException  
             'to the console.
