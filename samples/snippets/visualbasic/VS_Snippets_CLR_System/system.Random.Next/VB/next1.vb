@@ -22,7 +22,7 @@ Module Example
       Console.WriteLine("   For a female:   {0}", femalePetNames(fIndex))
    End Sub
 End Module
-' The example displays output like the following:
+' The example displays output similar to the following:
 '       Suggested pet name of the day:
 '          For a male:     Koani
 '          For a female:   Maggie
