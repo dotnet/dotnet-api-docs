@@ -16,7 +16,7 @@ public class Person : IComparable<Person>
    public int CompareTo(Person other)
    {
       return String.Format("{0} {1}", LastName, FirstName).
-             CompareTo(String.Format("{0} {1}", LastName, FirstName));
+             CompareTo(String.Format("{0} {1}", other.LastName, other.FirstName));
    }
 }
 
@@ -34,6 +34,6 @@ public class Example
    }
 }
 // The example displays the following output:
-//       John Doe
 //       Jane Doe
+//       John Doe
 // </Snippet13>
