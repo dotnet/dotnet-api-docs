@@ -9,7 +9,7 @@ public class DataProtect
 {
     // Create a byte array for additional entropy when using the
     // Protect and Unprotect methods.
-    static byte[] s_aditionalEntropy = { 9, 8, 7, 6, 5 };
+    static byte[] s_additionalEntropy = { 9, 8, 7, 6, 5 };
 
     private static byte[] encryptedSecret;
     private static byte[] originalData;
@@ -149,7 +149,7 @@ public class DataProtect
             // the data.
             return ProtectedData.Protect(
                 data,
-                s_aditionalEntropy,
+                s_additionalEntropy,
                 DataProtectionScope.CurrentUser);
         }
         catch (CryptographicException e)
@@ -176,7 +176,7 @@ public class DataProtect
             //Decrypt the data using DataProtectionScope.CurrentUser.
             return ProtectedData.Unprotect(
                 data,
-                s_aditionalEntropy,
+                s_additionalEntropy,
                 DataProtectionScope.CurrentUser);
         }
         catch (CryptographicException e)
