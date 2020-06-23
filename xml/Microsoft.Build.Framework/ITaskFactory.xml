@@ -12,7 +12,9 @@
   </AssemblyInfo>
   <Interfaces />
   <Docs>
-    <summary>Interface that a task factory Instance should implement.</summary>
+    <summary>
+            Interface that a task factory Instance should implement
+            </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -37,8 +39,14 @@
       </Parameters>
       <Docs>
         <param name="task">The task to clean up.</param>
-        <summary>Cleans up any context or state that may have been built up for a given task.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+            Cleans up any context or state that may have been built up for a given task.
+            </summary>
+        <remarks>
+            For many factories, this method is a no-op.  But some factories may have built up
+            an AppDomain as part of an individual task instance, and this is their opportunity
+            to shutdown the AppDomain.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateTask">
@@ -61,9 +69,15 @@
         <Parameter Name="taskFactoryLoggingHost" Type="Microsoft.Build.Framework.IBuildEngine" />
       </Parameters>
       <Docs>
-        <param name="taskFactoryLoggingHost">The logging host for the task factory.</param>
-        <summary>Creates an instance of the task to be used in a batch. The task factory logging host will log messages in the context of the task.</summary>
-        <returns>An instance of the task to be used in a batch.</returns>
+        <param name="taskFactoryLoggingHost">
+            The task factory logging host will log messages in the context of the task.
+            </param>
+        <summary>
+            Create an instance of the task to be used.
+            </summary>
+        <returns>
+            The generated task, or <c>null</c> if the task failed to be created.
+            </returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -84,7 +98,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the name of the factory.</summary>
+        <summary>
+            Gets the name of the factory.
+            </summary>
         <value>The name of the factory.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -107,7 +123,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets the descriptions for all the task's parameters.</summary>
+        <summary>
+            Get the descriptions for all the task's parameters.
+            </summary>
         <returns>A non-null array of property descriptions.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -139,17 +157,16 @@
         <param name="parameterGroup">The parameter group.</param>
         <param name="taskBody">The task body.</param>
         <param name="taskFactoryLoggingHost">The task factory logging host.</param>
-        <summary>Initializes this factory for instantiating tasks with a particular inline task block.</summary>
+        <summary>
+            Initializes this factory for instantiating tasks with a particular inline task block.
+            </summary>
         <returns>A value indicating whether initialization was successful.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The MSBuild engine calls this method to initialize the factory. After initialization, the factory can be asked whether or not task names can be created by the factory.  
-  
- The `taskFactoryLoggingHost` will log messages in the context of the target where the task is first used.  
-  
- ]]></format>
+          <para>MSBuild engine will call this to initialize the factory. This should initialize the factory enough so that the factory can be asked
+            whether or not task names can be created by the factory.</para>
+          <para>
+            The taskFactoryLoggingHost will log messages in the context of the target where the task is first used.
+            </para>
         </remarks>
       </Docs>
     </Member>
@@ -170,7 +187,9 @@
         <ReturnType>System.Type</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the type of the task this factory will instantiate.</summary>
+        <summary>
+            Gets the type of the task this factory will instantiate.  Implementations must return a value for this property.
+            </summary>
         <value>The type of task.</value>
         <remarks>To be added.</remarks>
       </Docs>

@@ -26,7 +26,9 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Implements the <c>CreateProperty</c> task. Use the <c>CreateProperty</c> element in your project file to create and execute this task. For usage and parameter information, see [CreateProperty Task](https://msdn.microsoft.com/library/fbc31a88-62d4-43d2-b739-68ef3fac38f5).</summary>
+    <summary>
+            Just a straight pass-through of the inputs through to the outputs.
+            </summary>
     <remarks>To be added.</remarks>
     <forInternalUseOnly />
   </Docs>
@@ -95,9 +97,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Executes the <c>CreateProperty</c> task.</summary>
-        <returns>
-          <see langword="true" /> if task execution succeeded; otherwise, <see langword="false" />.</returns>
+        <summary>
+            Create the property. Since the input property is the same as the
+            output property, this is rather easy.
+            </summary>
+        <returns />
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -141,9 +145,29 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the value to copy to the new property.</summary>
+        <summary>
+            The in/out property value.
+            </summary>
         <value>The value to copy to the new property</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            So ... why is this a string[] instead of a string?
+            Basically if the project author passed in:
+            
+                    CreateProperty Value="Clean;Build"
+                        Output TaskParameter="Value" PropertyName="MyTargetsToBuild"
+                    /CreateProperty
+            
+            We need to respect the semicolon that he put in the value, and need to treat
+            this exactly as if he had done:
+            
+                    PropertyGroup
+                        MyTargetsToBuild="Clean;Build"
+                    /PropertyGroup
+            
+            If we make this parameter a "string", then the engine will escape the 
+            value on the way out from the task back to the engine, creating a property
+            that is set to "Clean%3BBuild", which is not what the user wanted.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -183,7 +207,15 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Contains the same value as the <see cref="P:Microsoft.Build.Tasks.CreateProperty.Value" /> property.</summary>
+        <summary>
+            This is to fool MSBuild into not doing its little TLDA trick whereby even if 
+            a target is up-to-date, it will still set the properties that were meant to
+            be set using the CreateProperty task.  This is because MSBuild is smart enough
+            to figure out the value of the output property without running the task.
+            But if the input parameter is differently named than the output parameter,
+            MSBuild can't be smart enough to do that.  This is an important scenario
+            for people who want to know whether a particular target was up-to-date or not.
+            </summary>
         <value>The same value as the <see cref="P:Microsoft.Build.Tasks.CreateProperty.Value" /> property.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
