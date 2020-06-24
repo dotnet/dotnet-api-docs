@@ -22,7 +22,9 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Defines an MSBuild item that can be consumed and emitted by tasks.</summary>
+    <summary>
+            This interface defines a project item that can be consumed and emitted by tasks.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -64,21 +66,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets the collection of custom metadata.</summary>
-        <returns>The collection of custom metadata.</returns>
+        <summary>
+            Get the collection of custom metadata. This does not include built-in metadata.
+            </summary>
+        <returns>Dictionary of cloned metadata</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
-  
--   Does not include built-in metadata.  
-  
--   This method should return a clone of the metadata.  
-  
--   Writing to this dictionary should not be reflected in the underlying item.  
-  
- ]]></format>
-        </remarks>
+            RECOMMENDED GUIDELINES FOR METHOD IMPLEMENTATIONS:
+            1) this method should return a clone of the metadata
+            2) writing to this dictionary should not be reflected in the underlying item.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="CopyMetadataTo">
@@ -103,22 +99,16 @@
         <Parameter Name="destinationItem" Type="Microsoft.Build.Framework.ITaskItem" />
       </Parameters>
       <Docs>
-        <param name="destinationItem">The item to copy the metadata entries to.</param>
-        <summary>Copies the custom metadata entries to another item.</summary>
+        <param name="destinationItem">The item to copy metadata to.</param>
+        <summary>
+            Allows custom metadata on the item to be copied to another item.
+            </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Follow the guidelines below when implementing this method.  
-  
--   Do not overwrite the <xref:Microsoft.Build.Framework.ITaskItem.ItemSpec%2A> property.  
-  
--   Do not overwrite existing metadata entries.  
-  
--   Do not copy metadata entries that do not make sense on the destination item.  
-  
- ]]></format>
-        </remarks>
+            RECOMMENDED GUIDELINES FOR METHOD IMPLEMENTATIONS:
+            1) this method should NOT copy over the item-spec
+            2) if a particular piece of metadata already exists on the destination item, it should NOT be overwritten
+            3) if there are pieces of metadata on the item that make no semantic sense on the destination item, they should NOT be copied
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetMetadata">
@@ -143,9 +133,11 @@
         <Parameter Name="metadataName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="metadataName">The name of the metadata entry.</param>
-        <summary>Gets the value of the specified metadata entry.</summary>
-        <returns>The value of the <paramref name="attributeName" /> metadata, or an empty string if no value can be found.</returns>
+        <param name="metadataName">The name of the metadata to retrieve.</param>
+        <summary>
+            Allows the values of metadata on the item to be queried.
+            </summary>
+        <returns>The value of the specified metadata.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -168,31 +160,13 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the item specification.</summary>
-        <value>The item specification.</value>
+        <summary>
+            Gets or sets the item "specification" e.g. for disk-based items this would be the file path.
+            </summary>
+        <value>The item-spec string.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The item specification is an arbitrary string. If the item represents a file on disk, the item specification will be the path of that file.  
-  
- The <xref:Microsoft.Build.Framework.ITaskItem.ItemSpec%2A> for the following item declaration in a project file is `File.cs`.  
-  
-```xml  
-<ItemGroup>  
-    <Compile Include="File.cs"/>  
-</ItemGroup>  
-```  
-  
-   
-  
-## Examples  
- The following example shows the code for a task that creates one or more directories.  
-  
- [!code-csharp[msbuild_MakeDirTask#1](~/samples/snippets/csharp/VS_Snippets_Misc/msbuild_MakeDirTask/CS/msbuild_MakeDirTask.cs#1)]  
-  
- ]]></format>
-        </remarks>
+            This should be named "EvaluatedInclude" but that would be a breaking change to this interface.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="MetadataCount">
@@ -214,8 +188,11 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of metadata entries associated with the item.</summary>
-        <value>The number of metadata entries associated with the item.</value>
+        <summary>
+            Gets the number of pieces of metadata on the item. Includes
+            both custom and built-in metadata.
+            </summary>
+        <value>Count of pieces of metadata.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -238,8 +215,11 @@
         <ReturnType>System.Collections.ICollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the names of the metadata entries associated with the item.</summary>
-        <value>The names of the metadata entries associated with the item.</value>
+        <summary>
+            Gets the names of all the metadata on the item.
+            Includes the built-in metadata like "FullPath".
+            </summary>
+        <value>The list of metadata names.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -265,8 +245,10 @@
         <Parameter Name="metadataName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="metadataName">The name of the metadata entry to remove.</param>
-        <summary>Removes the specified metadata entry from the item.</summary>
+        <param name="metadataName">The name of the metadata to remove.</param>
+        <summary>
+            Allows the removal of custom metadata set on the item.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -293,9 +275,11 @@
         <Parameter Name="metadataValue" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="metadataName">The name of the metadata entry.</param>
-        <param name="metadataValue">The value of the metadata entry.</param>
-        <summary>Adds or changes a custom metadata entry to the item.</summary>
+        <param name="metadataName">The name of the metadata to set.</param>
+        <param name="metadataValue">The metadata value.</param>
+        <summary>
+            Allows a piece of custom metadata to be set on the item.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
