@@ -14,7 +14,10 @@
   </AssemblyInfo>
   <Interfaces />
   <Docs>
-    <summary>Defines a task, which is a unit of executable code used by MSBuild to perform build operations.</summary>
+    <summary>
+            This interface defines a "task" in the build system. A task is an atomic unit of build operation. All task classes must
+            implement this interface to be recognized by the build engine.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -51,8 +54,10 @@
         <ReturnType>Microsoft.Build.Framework.IBuildEngine</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the build engine associated with the task.</summary>
-        <value>The build engine associated with the task.</value>
+        <summary>
+            This property is set by the build engine to allow a task to call back into it.
+            </summary>
+        <value>The interface on the build engine available to tasks.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -76,9 +81,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Executes a task.</summary>
-        <returns>
-          <see langword="true" /> if the task executed successfully; otherwise, <see langword="false" />.</returns>
+        <summary>
+            This method is called by the build engine to begin task execution. A task uses the return value to indicate
+            whether it was successful. If a task throws an exception out of this method, the engine will automatically
+            assume that the task has failed.
+            </summary>
+        <returns>true, if successful</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -108,8 +116,10 @@
         <ReturnType>Microsoft.Build.Framework.ITaskHost</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets any host object that is associated with the task.</summary>
-        <value>The host object associated with the task.</value>
+        <summary>
+            The build engine sets this property if the host IDE has associated a host object with this particular task.
+            </summary>
+        <value>The host object instance (can be null).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   

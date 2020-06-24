@@ -29,7 +29,7 @@ public class Sample
     {
         // <Snippet3>
         Color c = Color.Red;
-            Console.WriteLine(TypeDescriptor.GetConverter(c).ConvertToString(c));
+            Console.WriteLine(TypeDescriptor.GetConverter(typeof(Color)).ConvertToString(c));
         // </Snippet3>
     }
     public void Method2()
