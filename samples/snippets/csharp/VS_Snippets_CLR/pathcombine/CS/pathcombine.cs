@@ -57,7 +57,7 @@ public class ChangeExtensionTest {
 // When you combine '' and 'subdir\file.txt', the result is:
 // 'subdir\file.txt'
 //
-// You cannot combine '' and 'subdir\file.txt' because:
+// You cannot combine 'null' and 'subdir\file.txt' because:
 // Value cannot be null.
 // Parameter name: path1
 //</snippet1>
