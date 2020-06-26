@@ -8,6 +8,7 @@ public class Example
     internal void m_internal() {}
     protected void m_protected() {}
     protected internal void m_protected_public() {}
+    private protected void m_private_protected() {}
 
     public static void Main()
     {
@@ -42,5 +43,6 @@ m_public             True     False    False    False    False
 m_internal           False    True     False    False    False
 m_protected          False    False    True     False    False
 m_protected_public   False    False    False    True     False
+m_private_protected  False    False    False    False    True
  */
 // </Snippet1>

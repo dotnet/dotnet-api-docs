@@ -33,7 +33,7 @@
     <BaseTypeName>System.Net.Security.AuthenticatedStream</BaseTypeName>
   </Base>
   <Interfaces>
-    <Interface>
+    <Interface FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
       <InterfaceName>System.IDisposable</InterfaceName>
     </Interface>
   </Interfaces>
@@ -668,7 +668,7 @@
       <Docs>
         <param name="targetHost">The name of the server that will share this <see cref="T:System.Net.Security.SslStream" />.</param>
         <param name="clientCertificates">The <see cref="T:System.Security.Cryptography.X509Certificates.X509CertificateCollection" /> that contains client certificates.</param>
-        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents the protocol used for authentication.</param>
+        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents protocols used for authentication.</param>
         <param name="checkCertificateRevocation">A <see cref="T:System.Boolean" /> value that specifies whether the certificate revocation list is checked during authentication.</param>
         <summary>Called by clients to authenticate the server and optionally the client in a client-server connection. The authentication process uses the specified certificate collection and SSL protocol.</summary>
         <remarks>
@@ -792,11 +792,34 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="sslClientAuthenticationOptions">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="sslClientAuthenticationOptions">The property bag for the SSL connection.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        <summary>Called by clients to authenticate the server and optionally the client in a client-server connection as an asynchronous operation. The authentication process uses information specified in the <see param="System.Net.Security.SslClientAuthenticationOptions" /> property bag.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+ When authentication succeeds, you must check the <xref:System.Net.Security.SslStream.IsEncrypted%2A> and <xref:System.Net.Security.SslStream.IsSigned%2A> properties to determine what security services are used by the <xref:System.Net.Security.SslStream>. Check the <xref:System.Net.Security.SslStream.IsMutuallyAuthenticated%2A> property to determine whether mutual authentication occurred.  
+  
+ If the authentication fails, you receive a <xref:System.Security.Authentication.AuthenticationException>, and this <xref:System.Net.Security.SslStream> is no longer useable. You should close this object and remove all references to it so that it can be collected by the garbage collector.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sslClientAuthenticationOptions" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Server authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AuthenticateAsClientAsync">
@@ -851,6 +874,17 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Server authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AuthenticateAsClientAsync">
@@ -891,7 +925,7 @@
       <Docs>
         <param name="targetHost">The name of the server that will share this <see cref="T:System.Net.Security.SslStream" />.</param>
         <param name="clientCertificates">The <see cref="T:System.Security.Cryptography.X509Certificates.X509CertificateCollection" /> that contains client certificates.</param>
-        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents the protocol used for authentication.</param>
+        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents protocols used for authentication.</param>
         <param name="checkCertificateRevocation">A <see cref="T:System.Boolean" /> value that specifies whether the certificate revocation list is checked during authentication.</param>
         <summary>Called by clients to authenticate the server and optionally the client in a client-server connection as an asynchronous operation. The authentication process uses the specified certificate collection and SSL protocol.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
@@ -910,6 +944,17 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Server authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="AuthenticateAsServer">
@@ -1092,7 +1137,7 @@
       <Docs>
         <param name="serverCertificate">The X509Certificate used to authenticate the server.</param>
         <param name="clientCertificateRequired">A <see cref="T:System.Boolean" /> value that specifies whether the client is asked for a certificate for authentication. Note that this is only a request -- if no certificate is provided, the server still accepts the connection request.</param>
-        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents the protocol used for authentication.</param>
+        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents protocols used for authentication.</param>
         <param name="checkCertificateRevocation">A <see cref="T:System.Boolean" /> value that specifies whether the certificate revocation list is checked during authentication.</param>
         <summary>Called by servers to authenticate the server and optionally the client in a client-server connection using the specified certificates, requirements and security protocol.</summary>
         <remarks>
@@ -1230,11 +1275,34 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="sslServerAuthenticationOptions">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="sslServerAuthenticationOptions">The property bag for the SSL connection.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        <summary>Called by servers to authenticate the server and optionally the client in a client-server connection as an asynchronous operation. The authentication process uses information specified in the <see param="System.Net.Security.SslServerAuthenticationOptions" /> property bag.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ 
+ If the authentication fails, you receive a <xref:System.Security.Authentication.AuthenticationException>, and this <xref:System.Net.Security.SslStream> is no longer useable. You should close this object and remove all references to it so that it can be collected by the garbage collector.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          Either <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificateSelectionCallback" /> or <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificate" /> is <see langword="null" /> and <see cref="T:System.Net.Security.LocalCertificateSelectionCallback" /> is not set in the <see cref="M:System.Net.Security.SslStream.#ctor" /> constructor.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sslServerAuthenticationOptions" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Client authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AuthenticateAsServerAsync">
@@ -1284,6 +1352,19 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="serverCertificate" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Client authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AuthenticateAsServerAsync">
@@ -1324,7 +1405,7 @@
       <Docs>
         <param name="serverCertificate">The X509Certificate used to authenticate the server.</param>
         <param name="clientCertificateRequired">A <see cref="T:System.Boolean" /> value that specifies whether the client is asked for a certificate for authentication. Note that this is only a request -- if no certificate is provided, the server still accepts the connection request.</param>
-        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents the protocol used for authentication.</param>
+        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents protocols used for authentication.</param>
         <param name="checkCertificateRevocation">A <see cref="T:System.Boolean" /> value that specifies whether the certificate revocation list is checked during authentication.</param>
         <summary>Called by servers to authenticate the server and optionally the client in a client-server connection using the specified certificates, requirements and security protocol as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
@@ -1338,6 +1419,19 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="serverCertificate" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Client authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="BeginAuthenticateAsClient">
@@ -1548,7 +1642,7 @@
       <Docs>
         <param name="targetHost">The name of the server that shares this <see cref="T:System.Net.Security.SslStream" />.</param>
         <param name="clientCertificates">The <see cref="T:System.Security.Cryptography.X509Certificates.X509CertificateCollection" /> containing client certificates.</param>
-        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents the protocol used for authentication.</param>
+        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents protocols used for authentication.</param>
         <param name="checkCertificateRevocation">A <see cref="T:System.Boolean" /> value that specifies whether the certificate revocation list is checked during authentication.</param>
         <param name="asyncCallback">An <see cref="T:System.AsyncCallback" /> delegate that references the method to invoke when the authentication is complete.</param>
         <param name="asyncState">A user-defined object that contains information about the operation. This object is passed to the <paramref name="asyncCallback" /> delegate when the operation completes.</param>
@@ -1800,7 +1894,7 @@
       <Docs>
         <param name="serverCertificate">The X509Certificate used to authenticate the server.</param>
         <param name="clientCertificateRequired">A <see cref="T:System.Boolean" /> value that specifies whether the client is asked for a certificate for authentication. Note that this is only a request -- if no certificate is provided, the server still accepts the connection request.</param>
-        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents the protocol used for authentication.</param>
+        <param name="enabledSslProtocols">The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents protocols used for authentication.</param>
         <param name="checkCertificateRevocation">A <see cref="T:System.Boolean" /> value that specifies whether the certificate revocation list is checked during authentication.</param>
         <param name="asyncCallback">An <see cref="T:System.AsyncCallback" /> delegate that references the method to invoke when the authentication is complete.</param>
         <param name="asyncState">A user-defined object that contains information about the operation. This object is passed to the <paramref name="asyncCallback" /> delegate when the operation completes.</param>
@@ -2828,10 +2922,17 @@ Authentication has not occurred.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        <summary>Asynchronously writes any buffered data to the underlying device.</summary>
+        <returns>A task that represents the asynchronous flush operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method invokes <xref:System.IO.Stream.FlushAsync%2A> on the underlying stream.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="HashAlgorithm">
@@ -3441,9 +3542,9 @@ Authentication has not occurred.</exception>
         <ReturnType>System.Net.Security.SslApplicationProtocol</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The negotiated application protocol in TLS handshake.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>Available once authentication via one of of the <c>AuthenticateAs...</c> methods has been successfully processed.</remarks>
       </Docs>
     </Member>
     <Member MemberName="NegotiatedCipherSuite">
@@ -4041,7 +4142,7 @@ This property gets the cipher suite that is going to be used in the communicatio
       </ReturnValue>
       <Docs>
         <summary>Gets a value that indicates the security protocol used to authenticate this connection.</summary>
-        <value>The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents the protocol used for authentication.</value>
+        <value>The <see cref="T:System.Security.Authentication.SslProtocols" /> value that represents protocols used for authentication.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
