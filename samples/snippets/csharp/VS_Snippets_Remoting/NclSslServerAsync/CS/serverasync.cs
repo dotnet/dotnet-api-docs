@@ -192,7 +192,7 @@ namespace Examples.Ssl
             try
             {
                 state.stream.BeginAuthenticateAsServer (serverCertificate,
-                    true, SslProtocols.Tls, true,
+                    true, SslProtocols.None, true,
                     new AsyncCallback(AuthenticateCallback),
                     state);
             }
