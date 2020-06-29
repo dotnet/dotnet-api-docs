@@ -38,13 +38,13 @@ class RSACSPSample
 			RSA.ImportParameters(RSAKeyInfo);
 
 			//Create a new instance of the AesManaged class.
-			AesManaged AM = new AesManaged();
+			Aes aes = new Aes();
 
 			//Encrypt the symmetric key and IV.
-			EncryptedSymmetricKey = RSA.Encrypt(AM.Key, false);
-			EncryptedSymmetricIV = RSA.Encrypt(AM.IV, false);
+			EncryptedSymmetricKey = RSA.Encrypt(aes.Key, false);
+			EncryptedSymmetricIV = RSA.Encrypt(aes.IV, false);
 
-			Console.WriteLine("AesManaged Key and IV have been encrypted with RSACryptoServiceProvider."); 
+			Console.WriteLine("Aes Key and IV have been encrypted with RSACryptoServiceProvider."); 
 		}
 		//Catch and display a CryptographicException  
 		//to the console.

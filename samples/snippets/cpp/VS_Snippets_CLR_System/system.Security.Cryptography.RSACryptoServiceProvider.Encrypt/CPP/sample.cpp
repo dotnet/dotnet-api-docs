@@ -31,13 +31,13 @@ int main()
       //Import key parameters into RSA.
       RSA->ImportParameters( RSAKeyInfo );
       
-      //Create a new instance of the AesManaged class.
-      AesManaged^ AM = gcnew AesManaged;
+      //Create a new instance of the Aes class.
+      Aes^ aes = gcnew Aes;
       
       //Encrypt the symmetric key and IV.
-      EncryptedSymmetricKey = RSA->Encrypt( AM->Key, false );
-      EncryptedSymmetricIV = RSA->Encrypt( AM->IV, false );
-      Console::WriteLine( "AesManaged Key and IV have been encrypted with RSACryptoServiceProvider." );
+      EncryptedSymmetricKey = RSA->Encrypt( aes->Key, false );
+      EncryptedSymmetricIV = RSA->Encrypt( aes->IV, false );
+      Console::WriteLine( "Aes Key and IV have been encrypted with RSACryptoServiceProvider." );
    }
    catch ( CryptographicException^ e ) 
    {

@@ -77,17 +77,16 @@ Class Program
     ' <Snippet3>
     ' Encrypt a file using a public key.
     Private Shared Sub EncryptFile(ByVal inFile As String, ByVal rsaPublicKey As RSACryptoServiceProvider)
-        Dim aesManaged As New AesManaged()
+        Dim aes As New Aes()
         Try
-            ' Create instance of AesManaged for
+            ' Create instance of Aes for
             ' symetric encryption of the data.
-            aesManaged.KeySize = 256
-            aesManaged.BlockSize = 128
-            aesManaged.Mode = CipherMode.CBC
-            Dim transform As ICryptoTransform = aesManaged.CreateEncryptor()
+            aes.KeySize = 256
+            aes.Mode = CipherMode.CBC
+            Dim transform As ICryptoTransform = aes.CreateEncryptor()
             Try
                 Dim keyFormatter As New RSAPKCS1KeyExchangeFormatter(rsaPublicKey)
-                Dim keyEncrypted As Byte() = keyFormatter.CreateKeyExchange(aesManaged.Key, aesManaged.GetType())
+                Dim keyEncrypted As Byte() = keyFormatter.CreateKeyExchange(aes.Key, aes.GetType())
 
                 ' Create byte arrays to contain
                 ' the length values of the key and IV.
@@ -96,7 +95,7 @@ Class Program
 
                 Dim lKey As Integer = keyEncrypted.Length
                 LenK = BitConverter.GetBytes(lKey)
-                Dim lIV As Integer = aesManaged.IV.Length
+                Dim lIV As Integer = aesM.IV.Length
                 LenIV = BitConverter.GetBytes(lIV)
 
                 ' Write the following to the FileStream
@@ -117,7 +116,7 @@ Class Program
                     outFs.Write(LenK, 0, 4)
                     outFs.Write(LenIV, 0, 4)
                     outFs.Write(keyEncrypted, 0, lKey)
-                    outFs.Write(aesManaged.IV, 0, lIV)
+                    outFs.Write(aes.IV, 0, lIV)
 
                     ' Now write the cipher text using
                     ' a CryptoStream for encrypting.
@@ -131,7 +130,7 @@ Class Program
                         Dim offset As Integer = 0
 
                         ' blockSizeBytes can be any arbitrary size.
-                        Dim blockSizeBytes As Integer = aesManaged.BlockSize / 8
+                        Dim blockSizeBytes As Integer = aes.BlockSize / 8
                         Dim data(blockSizeBytes) As Byte
                         Dim bytesRead As Integer = 0
 
@@ -160,7 +159,7 @@ Class Program
                 transform.Dispose()
             End Try
         Finally
-            aesManaged.Dispose()
+            aes.Dispose()
         End Try
 
     End Sub
@@ -171,13 +170,12 @@ Class Program
     ' Decrypt a file using a private key.
     Private Shared Sub DecryptFile(ByVal inFile As String, ByVal rsaPrivateKey As RSACryptoServiceProvider)
 
-        ' Create instance of AesManaged for
+        ' Create instance of Aes for
         ' symetric decryption of the data.
-        Dim aesManaged As New AesManaged()
+        Dim aes As New Aes()
         Try
-            aesManaged.KeySize = 256
-            aesManaged.BlockSize = 128
-            aesManaged.Mode = CipherMode.CBC
+            aes.KeySize = 256
+            aes.Mode = CipherMode.CBC
 
             ' Create byte arrays to get the length of
             ' the encrypted key and IV.
@@ -230,7 +228,7 @@ Class Program
                 Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, False)
 
                 ' Decrypt the key.
-                Dim transform As ICryptoTransform = aesManaged.CreateDecryptor(KeyDecrypted, IV)
+                Dim transform As ICryptoTransform = aes.CreateDecryptor(KeyDecrypted, IV)
                 '</Snippet10>
                 ' Decrypt the cipher text from
                 ' from the FileSteam of the encrypted
@@ -246,7 +244,7 @@ Class Program
                     Dim count As Integer = 0
                     Dim offset As Integer = 0
 
-                    Dim blockSizeBytes As Integer = aesManaged.BlockSize / 8
+                    Dim blockSizeBytes As Integer = aes.BlockSize / 8
                     Dim data(blockSizeBytes) As Byte
 
                     ' By decrypting a chunk a time,
@@ -280,7 +278,7 @@ Class Program
             End Try
 
         Finally
-            aesManaged.Dispose()
+            aes.Dispose()
         End Try
 
 
