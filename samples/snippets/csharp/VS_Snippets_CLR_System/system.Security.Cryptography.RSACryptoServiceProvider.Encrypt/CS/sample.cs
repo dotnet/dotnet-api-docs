@@ -37,7 +37,7 @@ class RSACSPSample
 			//Import key parameters into RSA.
 			RSA.ImportParameters(RSAKeyInfo);
 
-			//Create a new instance of the AesManaged class.
+			//Create a new instance of the Aes class.
 			Aes aes = new Aes();
 
 			//Encrypt the symmetric key and IV.
