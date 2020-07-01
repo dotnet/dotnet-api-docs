@@ -70,7 +70,7 @@ If this change is undesirable, you can configure your application to use the old
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Creates an instance of a <see cref="T:System.Net.Http.SocketsHttpHandler" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -92,9 +92,25 @@ If this change is undesirable, you can configure your application to use the old
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a value that indicates whether the handler should follow redirection responses.</summary>
+        <value>
+          <see langword="true" /> if the handler should follow redirection responses; otherwise <see langword="false" />. The default value is <see langword="true" />.
+        </value>        
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Set <xref:System.Net.Http.SocketsHttpHandler.AllowAutoRedirect%2A> to `true` if you want the handler to automatically follow HTTP redirection headers to the new location of the resource. The maximum number of redirections to follow is set by the <xref:System.Net.Http.SocketsHttpHandler.MaxAutomaticRedirections%2A> property.
+
+ If <xref:System.Net.Http.SocketsHttpHandler.AllowAutoRedirect%2A> is set to `false`, all HTTP responses with an HTTP status code from 300 to 399 are returned to the application.
+
+ The Authorization header is cleared on auto-redirects and the handler automatically tries to re-authenticate to the redirected location. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module.
+
+> [!NOTE]
+>  The handler never follows a redirection from HTTPS to HTTP even if <xref:System.Net.Http.SocketsHttpHandler.AllowAutoRedirect%2A> is set to `true`.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AutomaticDecompression">
@@ -138,8 +154,8 @@ If this change is undesirable, you can configure your application to use the old
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets or sets the timespan to wait before the connection establishing times out.</summary>
+        <value>The timespan to wait before the connection establishing times out. The default value is <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -184,8 +200,8 @@ If this change is undesirable, you can configure your application to use the old
         <ReturnType>System.Net.ICredentials</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets or sets authentication information used by this handler.</summary>
+        <value>The authentication credentials associated with the handler. The default value is <see langword="null" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -262,9 +278,15 @@ The default proxy is used only when <xref:System.Net.Http.SocketsHttpHandler.Use
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the time-out value for server HTTP 100 Continue response.</summary>
+        <value>The timespan to wait for the HTTP 100 Continue. The default value is 1 second.</value>
+        <remarks>
+        <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When request contain `Expect: 100-continue` header the server should respond HTTP status `100 Continue` before the client sends the body. <xref:System.Net.Http.SocketsHttpHandler.Expect100ContinueTimeout%2A?displayProperty=nameWithType> define the timeout for the `100 Continue` server response.
+
+ ]]></format></remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxAutomaticRedirections">
@@ -413,9 +435,18 @@ For example, if the value is 64, then 65,536 bytes are allowed for the maximum r
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets how long a connection can be the pool to be considered reusable.</summary>
+        <value>The maximum time for a connection to be in the pool. The default value for this property is <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</value>
+        <remarks> <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This property define maximal connection lifetime in the pool regardles the connection is idle or active. The connection is reestablished periodically to reflect the DNS or other network changes.
+ 
+ If the connection endpoint is not the Doamin name but the IP address, the value can be <xref:System.Threading.Timeout.InfiniteTimeSpan>.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">The value specified is less than <see cref="F:System.TimeSpan.Zero" /> or is equal to <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="PreAuthenticate">
@@ -506,9 +537,15 @@ For example, if the value is 64, then 65,536 bytes are allowed for the maximum r
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the timespan to wait for data to be drained from responses.</summary>
+        <value>The timespan to wait for data to be drained from responses.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+Draining occurs when a request is cancelled or a response is disposed prior to fully reading the content. If the time exceeds the value, the connection will be closed rather than reused.
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SendAsync">
@@ -581,8 +618,8 @@ For example, if the value is 64, then 65,536 bytes are allowed for the maximum r
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets or sets a value that indicates whether the handler should use cookies.</summary>
+        <value>A value that indicates whether the handler should use cookies.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -604,8 +641,8 @@ For example, if the value is 64, then 65,536 bytes are allowed for the maximum r
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets or sets a value that indicates whether the handler should use a proxy.</summary>
+        <value>A value that indicates whether the handler should use a proxy.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

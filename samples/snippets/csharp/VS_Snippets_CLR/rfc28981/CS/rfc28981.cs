@@ -48,7 +48,7 @@ myIterations);
                 Rfc2898DeriveBytes k2 = new Rfc2898DeriveBytes(pwd1, salt1);
                 //</SNIPPET4>
                 // Encrypt the data.
-                TripleDES encAlg = TripleDES.Create();
+                Aes encAlg = Aes.Create();
                 encAlg.Key = k1.GetBytes(16);
                 MemoryStream encryptionStream = new MemoryStream();
                 CryptoStream encrypt = new CryptoStream(encryptionStream,
@@ -64,7 +64,7 @@ data1);
                 k1.Reset();
 
                 // Try to decrypt, thus showing it can be round-tripped.
-                TripleDES decAlg = TripleDES.Create();
+                Aes decAlg = Aes.Create();
                 decAlg.Key = k2.GetBytes(16);
                 decAlg.IV = encAlg.IV;
                 MemoryStream decryptionStreamBacking = new MemoryStream();
