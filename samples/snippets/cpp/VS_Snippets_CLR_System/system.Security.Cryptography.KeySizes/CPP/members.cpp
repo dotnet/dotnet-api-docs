@@ -102,9 +102,9 @@ int main()
 // 
 // KeySizes retrieved from the
 // System.Security.Cryptography.RSA object.
-// Minimum key size bits: 384
+// Minimum key size bits: 512
 // Maximum key size bits: 16384
-// Interval between key size bits: 8
-// RSA KeySize = 384
+// Interval between key size bits: 64
+// RSA KeySize = 2048
 // This sample completed successfully; press Enter to exit.
 //</Snippet1>
