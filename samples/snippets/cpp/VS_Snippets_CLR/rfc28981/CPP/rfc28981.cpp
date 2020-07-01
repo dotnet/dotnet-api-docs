@@ -46,7 +46,7 @@ int main()
          //</SNIPPET4>
 
          // Encrypt the data.
-         TripleDES^ encAlg = TripleDES::Create();
+         Aes^ encAlg = Aes::Create();
          encAlg->Key = k1->GetBytes( 16 );
          MemoryStream^ encryptionStream = gcnew MemoryStream;
          CryptoStream^ encrypt = gcnew CryptoStream( encryptionStream,encAlg->CreateEncryptor(),CryptoStreamMode::Write );
@@ -60,7 +60,7 @@ int main()
          k1->Reset();
 
          // Try to decrypt, thus showing it can be round-tripped.
-         TripleDES^ decAlg = TripleDES::Create();
+         Aes^ decAlg = Aes::Create();
          decAlg->Key = k2->GetBytes( 16 );
          decAlg->IV = encAlg->IV;
          MemoryStream^ decryptionStreamBacking = gcnew MemoryStream;

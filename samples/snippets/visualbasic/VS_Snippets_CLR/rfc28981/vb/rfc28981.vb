@@ -38,7 +38,7 @@ Public Class rfc2898test
                 Dim k2 As New Rfc2898DeriveBytes(pwd1, salt1)
                 '</SNIPPET4>
                 ' Encrypt the data.
-                Dim encAlg As TripleDES = TripleDES.Create()
+                Dim encAlg As Aes = Aes.Create()
                 encAlg.Key = k1.GetBytes(16)
                 Dim encryptionStream As New MemoryStream()
                 Dim encrypt As New CryptoStream(encryptionStream, encAlg.CreateEncryptor(), CryptoStreamMode.Write)
@@ -51,7 +51,7 @@ Public Class rfc2898test
                 k1.Reset()
 
                 ' Try to decrypt, thus showing it can be round-tripped.
-                Dim decAlg As TripleDES = TripleDES.Create()
+                Dim decAlg As Aes = Aes.Create()
                 decAlg.Key = k2.GetBytes(16)
                 decAlg.IV = encAlg.IV
                 Dim decryptionStreamBacking As New MemoryStream()
