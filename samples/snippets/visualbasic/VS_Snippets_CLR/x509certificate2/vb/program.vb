@@ -36,10 +36,10 @@ Class Program
 
 
         ' Encrypt the file using the public key from the certificate.
-        EncryptFile(originalFile, CType(cert.PublicKey.Key, RSACryptoServiceProvider))
+        EncryptFile(originalFile, CType(cert.PublicKey.Key, RSA))
 
         ' Decrypt the file using the private key from the certificate.
-        DecryptFile(encryptedFile, CType(cert.PrivateKey, RSACryptoServiceProvider))
+        DecryptFile(encryptedFile, CType(cert.PrivateKey, RSA))
 
         'Display the original data and the decrypted data.
         Console.WriteLine("Original:   {0}", File.ReadAllText(originalFile))
@@ -76,7 +76,7 @@ Class Program
     '</Snippet2>
     ' <Snippet3>
     ' Encrypt a file using a public key.
-    Private Shared Sub EncryptFile(ByVal inFile As String, ByVal rsaPublicKey As RSACryptoServiceProvider)
+    Private Shared Sub EncryptFile(ByVal inFile As String, ByVal rsaPublicKey As RSA)
         Dim aes As Aes = Aes.Create()
         Try
             ' Create instance of Aes for
@@ -168,7 +168,7 @@ Class Program
     ' </Snippet3>
     ' <Snippet4>
     ' Decrypt a file using a private key.
-    Private Shared Sub DecryptFile(ByVal inFile As String, ByVal rsaPrivateKey As RSACryptoServiceProvider)
+    Private Shared Sub DecryptFile(ByVal inFile As String, ByVal rsaPrivateKey As RSA)
 
         ' Create instance of Aes for
         ' symetric decryption of the data.
@@ -225,7 +225,7 @@ Class Program
                 '<Snippet10>
                 ' Use RSA
                 ' to decrypt the AES key.
-                Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, False)
+                Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, RSAEncryptionPadding.OaepSHA256)
 
                 ' Decrypt the key.
                 Dim transform As ICryptoTransform = aes.CreateDecryptor(KeyDecrypted, IV)
