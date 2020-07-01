@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 public class Sample
 {
 // <Snippet1>
-private static void EncryptData(String inName, String outName, byte[] rijnKey, byte[] rijnIV)
+private static void EncryptData(String inName, String outName, byte[] aesKey, byte[] aesIV)
  {
      //Create the file streams to handle the input and output files.
      FileStream fin = new FileStream(inName, FileMode.Open, FileAccess.Read);
@@ -19,8 +19,8 @@ private static void EncryptData(String inName, String outName, byte[] rijnKey, b
      long totlen = fin.Length;    //This is the total length of the input file.
      int len;                     //This is the number of bytes to be written at a time.
 
-     SymmetricAlgorithm rijn = SymmetricAlgorithm.Create(); //Creates the default implementation, which is RijndaelManaged.
-     CryptoStream encStream = new CryptoStream(fout, rijn.CreateEncryptor(rijnKey, rijnIV), CryptoStreamMode.Write);
+     Aes aes = Aes.Create();
+     CryptoStream encStream = new CryptoStream(fout, aes.CreateEncryptor(aesKey, aesIV), CryptoStreamMode.Write);
 
      Console.WriteLine("Encrypting...");
 

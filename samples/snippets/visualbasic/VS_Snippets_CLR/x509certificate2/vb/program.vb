@@ -209,7 +209,11 @@ Class Program
                 Dim lenC As Integer = (CType(inFs.Length, Integer) - startC)
 
                 ' Create the byte arrays for
+<<<<<<< HEAD
                 ' the encrypted AES key,
+=======
+                ' the encrypted Aes key,
+>>>>>>> rijndael-->aes
                 ' the IV, and the cipher text.
                 Dim KeyEncrypted() As Byte = New Byte(lengthK - 1) {}
                 Dim IV() As Byte = New Byte(lengthIV - 1) {}
@@ -224,7 +228,11 @@ Class Program
                 Directory.CreateDirectory(decrFolder)
                 '<Snippet10>
                 ' Use RSACryptoServiceProvider
+<<<<<<< HEAD
                 ' to decrypt the AES key.
+=======
+                ' to decrypt the Aes key.
+>>>>>>> rijndael-->aes
                 Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, False)
 
                 ' Decrypt the key.

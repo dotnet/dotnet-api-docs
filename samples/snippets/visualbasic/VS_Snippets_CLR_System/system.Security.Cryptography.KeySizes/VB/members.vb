@@ -26,9 +26,9 @@ Public Class Form1
         ShowKeys(New KeySizes(0) {keySizes}, "Custom Keys")
 
         ' Create a new symmetric algorithm and display its key values.
-        Dim rijn As SymmetricAlgorithm = SymmetricAlgorithm.Create()
-        WriteLine("rijn.blocksize:" + rijn.BlockSize.ToString())
-        ShowKeys(rijn.LegalKeySizes, rijn.ToString())
+        Dim aes As Aes = Aes.Create()
+        WriteLine("aes.blocksize:" + aes.BlockSize.ToString())
+        ShowKeys(aes.LegalKeySizes, aes.ToString())
 
         ' Create a new RSA algorithm and display its key values.
         Dim rsaCSP As New RSACryptoServiceProvider(384)
@@ -211,8 +211,8 @@ End Class
 ' Maximum key size bits: 1024
 ' Interval between key size bits: 64
 ' 
-' rijn.blocksize:128
-' KeySizes retrieved from the System.Security.Cryptography.RijndaelManaged
+' aes.blocksize:128
+' KeySizes retrieved from the System.Security.Cryptography.Aes
 ' object.
 ' Minimum key size bits: 128
 ' Maximum key size bits: 256

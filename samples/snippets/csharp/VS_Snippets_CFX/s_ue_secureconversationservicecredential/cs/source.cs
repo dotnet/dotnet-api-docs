@@ -78,7 +78,7 @@ namespace Example
     {
         RSACryptoServiceProvider rsaCryptoServiceProvider;
         CookieContainerSerializer serializer;
-        RijndaelManaged aesAlg;
+        Aes aesAlg;
 
         public CertificateSecurityStateEncoder(X509Certificate2 protectionCertificate)
         {
@@ -101,7 +101,7 @@ namespace Example
             serializer = new CookieContainerSerializer();
 
             // The symmetric key algorithm used to protect the cookie.
-            aesAlg = new RijndaelManaged();
+            aesAlg = new Aes();
         }
 
         protected override byte[] EncodeSecurityState(byte[] data)
@@ -139,7 +139,7 @@ namespace Example
         /// <param name="aesAlg">The symmetric key algorithm to use to decrypt the cookie block.</param>
         /// <param name="data">The byte array to deserialize.</param>
         /// <returns>The deserialized cookie container instance.</returns>
-        public CookieContainer Deserialize(RSACryptoServiceProvider rsaKey, RijndaelManaged aesAlg, byte[] data)
+        public CookieContainer Deserialize(RSACryptoServiceProvider rsaKey, Aes aesAlg, byte[] data)
         {
             CookieContainer cookieContainer = new CookieContainer(rsaKey, aesAlg);
             // Length of the IV according to the AES algorithm (in bytes).
@@ -221,7 +221,7 @@ namespace Example
         byte[] encryptedCookie;
         ICryptoTransform encryptor;
         ICryptoTransform decryptor;
-        RijndaelManaged aesAlg;
+        Aes aesAlg;
         RSACryptoServiceProvider protectionRsaKey;
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Example
         /// </summary>
         /// <param name="rsaKey">The RSA key to protect the generated symmetric key.</param>
         /// <param name="aesAlg">The symmetric key algorithm to use.</param>
-        public CookieContainer(RSACryptoServiceProvider rsaKey, RijndaelManaged aesAlg)
+        public CookieContainer(RSACryptoServiceProvider rsaKey, Aes aesAlg)
         {
             this.aesAlg = aesAlg;
             this.iv = aesAlg.IV;

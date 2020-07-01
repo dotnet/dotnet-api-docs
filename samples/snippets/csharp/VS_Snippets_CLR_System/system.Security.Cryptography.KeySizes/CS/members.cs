@@ -23,16 +23,15 @@ namespace Contoso
             ShowKeys(new KeySizes[1]{keySizes}, "Custom Keys");
 
             // Create a new symmetric algorithm and display its key values.
-            SymmetricAlgorithm rijn = SymmetricAlgorithm.Create();
-            ShowKeys(rijn.LegalKeySizes, rijn.ToString());
-            Console.WriteLine("rijn.blocksize:" + rijn.BlockSize);
+            Aes aes = Aes.Create();
+            ShowKeys(aes.LegalKeySizes, aes.ToString());
+            Console.WriteLine("aes.blocksize:" + aes.BlockSize);
 
             // Create a new RSA algorithm and display its key values.
-            RSACryptoServiceProvider rsaCSP = 
-                new RSACryptoServiceProvider(384);
-            ShowKeys(rsaCSP.LegalKeySizes, rsaCSP.ToString());
-            Console.WriteLine("RSACryptoServiceProvider KeySize = " + 
-                rsaCSP.KeySize);
+            RSA rsa = RSA.Create(384);
+            ShowKeys(rsa.LegalKeySizes, rsa.ToString());
+            Console.WriteLine("RSA KeySize = " + 
+                rsa.KeySize);
 
             Console.WriteLine("This sample completed successfully; " +
                 "press Enter to exit.");
@@ -77,18 +76,18 @@ namespace Contoso
 // Maximum key size bits: 1024
 // Interval between key size bits: 64
 // 
-// KeySizes retrieved from the System.Security.Cryptography.RijndaelManaged
+// KeySizes retrieved from the System.Security.Cryptography.Aes
 // object.
 // Minimum key size bits: 128
 // Maximum key size bits: 256
 // Interval between key size bits: 64
-// rijn.blocksize:128
+// aes.blocksize:128
 // 
 // KeySizes retrieved from the
-// System.Security.Cryptography.RSACryptoServiceProvider object.
+// System.Security.Cryptography.RSA object.
 // Minimum key size bits: 384
 // Maximum key size bits: 16384
 // Interval between key size bits: 8
-// RSACryptoServiceProvider KeySize = 384
+// RSA KeySize = 384
 // This sample completed successfully; press Enter to exit.
 //</Snippet1>

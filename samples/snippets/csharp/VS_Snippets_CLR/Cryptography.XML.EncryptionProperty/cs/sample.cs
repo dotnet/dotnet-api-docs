@@ -78,8 +78,8 @@ class Program
         // a new random symmetric key.
         //////////////////////////////////////////////////
 
-        // Create a 256 bit Rijndael key.
-        RijndaelManaged sessionKey = new RijndaelManaged();
+        // Create a 256 bit Aes key.
+        Aes sessionKey = Aes.Create();
         sessionKey.KeySize = 256;
 
         EncryptedXml eXml = new EncryptedXml();
