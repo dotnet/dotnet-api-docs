@@ -77,7 +77,7 @@ Class Program
     ' <Snippet3>
     ' Encrypt a file using a public key.
     Private Shared Sub EncryptFile(ByVal inFile As String, ByVal rsaPublicKey As RSACryptoServiceProvider)
-        Dim aes As New Aes()
+        Dim aes As Aes = Aes.Create()
         Try
             ' Create instance of Aes for
             ' symetric encryption of the data.
@@ -172,7 +172,7 @@ Class Program
 
         ' Create instance of Aes for
         ' symetric decryption of the data.
-        Dim aes As Aes = aes.Create()
+        Dim aes As Aes = Aes.Create()
         Try
             aes.KeySize = 256
             aes.Mode = CipherMode.CBC
