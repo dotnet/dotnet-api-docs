@@ -92,7 +92,7 @@ namespace Example
                 throw new ArgumentException("protectionCertificate does not contain the private key which is required for performing encypt / decrypt operations.");
             }
 
-            rsa = protectionCertificate.GetRSAPrivateKey as RSA;
+            rsa = protectionCertificate.GetRSAPrivateKey();
             if (rsa == null)
             {
                 throw new NotSupportedException("protectionCertificate must have a private key of type RSA.");
@@ -101,7 +101,7 @@ namespace Example
             serializer = new CookieContainerSerializer();
 
             // The symmetric key algorithm used to protect the cookie.
-            aesAlg = new Aes();
+            aesAlg = Aes.Create();
         }
 
         protected override byte[] EncodeSecurityState(byte[] data)
@@ -237,7 +237,7 @@ namespace Example
 
             // Use the RSA key in the X509Certificate to protect the symmetric key.
             this.protectionRsaKey = rsaKey;
-            this.encryptedSymmetricKey = protectionRsaKey.Encrypt(aesAlg.Key, true);
+            this.encryptedSymmetricKey = protectionRsaKey.Encrypt(aesAlg.Key, RSAEncryptionPadding.OaepSHA256);
 
             // Create the enryptor and decryptor that will perform the actual
             // cryptographic operations.
@@ -266,7 +266,7 @@ namespace Example
         {
             // Only a service configured with the right X509 certificate
             // can decrypt the symmetric key.
-            byte[] symmetricKey = protectionRsaKey.Decrypt(encryptedSymmetricKey, true);
+            byte[] symmetricKey = protectionRsaKey.Decrypt(encryptedSymmetricKey, RSAEncryptionPadding.OaepSHA256);
 
             // Create an encryptor based on the symmetric key which can be used to encrypt SCT cookie blob.
             this.encryptor = aesAlg.CreateEncryptor(symmetricKey, iv);
