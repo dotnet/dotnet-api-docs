@@ -52,7 +52,7 @@ End Module
 ' ------------------
 ' 20-00-00-2A-00-41-00-7D-00-C5-00-A8-03-29-04-AC-20
 '
-' index   array elements    char
+' index   array elements    Char
 ' -----   --------------    ----
 '     0            20-00
 '     1            00-00
