@@ -27,11 +27,10 @@ namespace CryptographySample
                  
             // Create a new symmetric algorithm and display its 
             // key values.
-            SymmetricAlgorithm^ symAlg = 
-                SymmetricAlgorithm::Create();
-            ShowKeys(symAlg->LegalKeySizes, symAlg->ToString());
+            Aes^ aes = Aes::Create();
+            ShowKeys(aes->LegalKeySizes, aes->ToString());
             Console::WriteLine("aes.blocksize:{0}", 
-                    symAlg->BlockSize);
+                    aes->BlockSize);
 
             // Create a new RSA algorithm and display its key values.
             RSA^ rsa = RSA::Create(384);
