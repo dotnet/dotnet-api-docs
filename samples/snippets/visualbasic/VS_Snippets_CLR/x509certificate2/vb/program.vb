@@ -1,4 +1,4 @@
-﻿'<Snippet1>
+'<Snippet1>
 Imports System.Security.Cryptography
 Imports System.Security.Cryptography.X509Certificates
 Imports System.IO
@@ -39,7 +39,7 @@ Class Program
         EncryptFile(originalFile, CType(cert.PublicKey.Key, RSA))
 
         ' Decrypt the file using the private key from the certificate.
-        DecryptFile(encryptedFile, CType(cert.PrivateKey, RSA))
+        DecryptFile(encryptedFile, CType(cert.GetRSAPrivateKey()))
 
         'Display the original data and the decrypted data.
         Console.WriteLine("Original:   {0}", File.ReadAllText(originalFile))
