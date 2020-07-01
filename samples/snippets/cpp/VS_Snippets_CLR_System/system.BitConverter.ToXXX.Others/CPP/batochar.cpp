@@ -36,24 +36,24 @@ int main()
 }
 
 /*
-This example of the BitConverter::ToChar( unsigned char[ ], int )
+This example of the BitConverter::ToChar(unsigned char[ ], int)
 method generates the following output. It converts elements of a
 byte array to __wchar_t values.
 
-initial unsigned char array
----------------------------
+initial byte array
+------------------
 20-00-00-2A-00-41-00-7D-00-C5-00-A8-03-29-04-AC-20
 
-index   array elements  __wchar_t
------   --------------  ---------
+index   array elements    char
+-----   --------------    ----
     0            20-00
     1            00-00
-    3            2A-00          *
-    5            41-00          A
-    7            7D-00          }
-    9            C5-00          �
-   11            A8-03          ?
-   13            29-04          ?
-   15            AC-20          ?
+    3            2A-00       *
+    5            41-00       A
+    7            7D-00       }
+    9            C5-00       Å
+   11            A8-03       Ψ
+   13            29-04       Щ
+   15            AC-20       €
 */
 //</Snippet2>

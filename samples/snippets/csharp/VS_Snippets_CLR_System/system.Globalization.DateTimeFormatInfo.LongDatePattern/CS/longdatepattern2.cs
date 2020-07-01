@@ -38,7 +38,7 @@ public class Example
 //
 //    Gregorian-Localized              dd MMMM, yyyy         07 آب, 2011
 //    UmAlQura                         dd/MMMM/yyyy          07/رمضان/1432
-//    Hijri                            dd/MM/yyyy            08/09/1432
+//    Hijri                            dd MMMM, yyyy         08 رمضان, 1432
 //    Gregorian-USEnglish              dddd, MMMM dd, yyyy   Sunday, August 07, 2011
 //    Gregorian-MiddleEastFrench       dddd, MMMM dd, yyyy   dimanche, août 07, 2011
 //    Gregorian-TransliteratedEnglish  dddd, MMMM dd, yyyy   الأحد, أغسطس 07, 2011
