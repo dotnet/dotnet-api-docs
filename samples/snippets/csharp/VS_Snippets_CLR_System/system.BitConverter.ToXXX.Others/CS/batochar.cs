@@ -46,7 +46,7 @@ class BytesToCharDemo
 }
 
 /*
-This example of the BitConverter.ToChar( byte[ ], int )
+This example of the BitConverter.ToChar(byte[ ], int)
 method generates the following output. It converts
 elements of a byte array to char values.
 
@@ -62,8 +62,8 @@ index   array elements    char
     5            41-00       A
     7            7D-00       }
     9            C5-00       Å
-   11            A8-03       ?
-   13            29-04       ?
-   15            AC-20       ?
+   11            A8-03       Ψ
+   13            29-04       Щ
+   15            AC-20       €
 */
 //</Snippet2>
