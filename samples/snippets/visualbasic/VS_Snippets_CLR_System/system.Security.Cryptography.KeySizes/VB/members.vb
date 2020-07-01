@@ -31,10 +31,10 @@ Public Class Form1
         ShowKeys(aes.LegalKeySizes, aes.ToString())
 
         ' Create a new RSA algorithm and display its key values.
-        Dim rsaCSP As New RSACryptoServiceProvider(384)
-        WriteLine("RSACryptoServiceProvider KeySize = " + _
-            rsaCSP.KeySize.ToString())
-        ShowKeys(rsaCSP.LegalKeySizes, rsaCSP.ToString())
+        Dim rsa As RSA = RSA.Create()
+        WriteLine("RSA KeySize = " + _
+            rsa.KeySize.ToString())
+        ShowKeys(rsa.LegalKeySizes, rsa.ToString())
 
         ' Reset the cursor and conclude application.
         WriteLine("This sample completed successfully;" + _
@@ -220,10 +220,10 @@ End Class
 ' 
 ' RSACryptoServiceProvider KeySize = 384
 ' KeySizes retrieved from the
-' System.Security.Cryptography.RSACryptoServiceProvider object.
-' Minimum key size bits: 384
+' System.Security.Cryptography.RSA object.
+' Minimum key size bits: 512
 ' Maximum key size bits: 16384
-' Interval between key size bits: 8
+' Interval between key size bits: 64
 ' 
 ' This sample completed successfully; press Exit to continue.
 '</Snippet1>
