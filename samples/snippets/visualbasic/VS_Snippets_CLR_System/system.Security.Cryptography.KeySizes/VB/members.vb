@@ -218,7 +218,7 @@ End Class
 ' Maximum key size bits: 256
 ' Interval between key size bits: 64
 ' 
-' RSACryptoServiceProvider KeySize = 384
+' RSA KeySize = 512
 ' KeySizes retrieved from the
 ' System.Security.Cryptography.RSA object.
 ' Minimum key size bits: 512
