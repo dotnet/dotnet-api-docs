@@ -95,7 +95,7 @@ Class Program
 
                 Dim lKey As Integer = keyEncrypted.Length
                 LenK = BitConverter.GetBytes(lKey)
-                Dim lIV As Integer = aesM.IV.Length
+                Dim lIV As Integer = aes.IV.Length
                 LenIV = BitConverter.GetBytes(lIV)
 
                 ' Write the following to the FileStream
@@ -172,7 +172,7 @@ Class Program
 
         ' Create instance of Aes for
         ' symetric decryption of the data.
-        Dim aes As New Aes()
+        Dim aes As Aes = aes.Create()
         Try
             aes.KeySize = 256
             aes.Mode = CipherMode.CBC
@@ -203,17 +203,13 @@ Class Program
                 Dim lengthIV As Integer = BitConverter.ToInt32(LenIV, 0)
 
                 ' Determine the start postition of
-                ' the ciphter text (startC)
+                ' the cipher text (startC)
                 ' and its length(lenC).
                 Dim startC As Integer = lengthK + lengthIV + 8
                 Dim lenC As Integer = (CType(inFs.Length, Integer) - startC)
 
                 ' Create the byte arrays for
-<<<<<<< HEAD
                 ' the encrypted AES key,
-=======
-                ' the encrypted Aes key,
->>>>>>> rijndael-->aes
                 ' the IV, and the cipher text.
                 Dim KeyEncrypted() As Byte = New Byte(lengthK - 1) {}
                 Dim IV() As Byte = New Byte(lengthIV - 1) {}
@@ -227,12 +223,8 @@ Class Program
                 inFs.Read(IV, 0, lengthIV)
                 Directory.CreateDirectory(decrFolder)
                 '<Snippet10>
-                ' Use RSACryptoServiceProvider
-<<<<<<< HEAD
+                ' Use RSA
                 ' to decrypt the AES key.
-=======
-                ' to decrypt the Aes key.
->>>>>>> rijndael-->aes
                 Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, False)
 
                 ' Decrypt the key.
