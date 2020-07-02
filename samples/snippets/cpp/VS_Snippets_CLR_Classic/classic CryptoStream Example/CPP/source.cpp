@@ -8,7 +8,7 @@ using namespace System::ComponentModel;
 using namespace System::Security::Cryptography;
 
 // <Snippet1>
-void EncryptData( String^ inName, String^ outName, array<Byte>^rijnKey, array<Byte>^rijnIV )
+void EncryptData( String^ inName, String^ outName, array<Byte>^aesKey, array<Byte>^aesIV )
 {
    
    //Create the file streams to handle the input and output files.
@@ -24,9 +24,9 @@ void EncryptData( String^ inName, String^ outName, array<Byte>^rijnKey, array<By
 
    int len; //This is the number of bytes to be written at a time.
 
-   SymmetricAlgorithm^ rijn = SymmetricAlgorithm::Create(); //Creates the default implementation, which is RijndaelManaged.         
+   Aes^ aes = Aes::Create();
 
-   CryptoStream^ encStream = gcnew CryptoStream( fout,rijn->CreateEncryptor( rijnKey, rijnIV ),CryptoStreamMode::Write );
+   CryptoStream^ encStream = gcnew CryptoStream( fout,aes->CreateEncryptor( aesKey, aesIV ),CryptoStreamMode::Write );
    Console::WriteLine( "Encrypting..." );
    
    //Read from the input file, then encrypt and write to the output file.

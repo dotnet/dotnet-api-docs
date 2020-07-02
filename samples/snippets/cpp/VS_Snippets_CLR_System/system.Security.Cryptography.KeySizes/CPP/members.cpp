@@ -27,19 +27,17 @@ namespace CryptographySample
                  
             // Create a new symmetric algorithm and display its 
             // key values.
-            SymmetricAlgorithm^ symAlg = 
-                SymmetricAlgorithm::Create();
-            ShowKeys(symAlg->LegalKeySizes, symAlg->ToString());
-            Console::WriteLine("rijn.blocksize:{0}", 
-                    symAlg->BlockSize);
+            Aes^ aes = Aes::Create();
+            ShowKeys(aes->LegalKeySizes, aes->ToString());
+            Console::WriteLine("aes.blocksize:{0}", 
+                    aes->BlockSize);
 
             // Create a new RSA algorithm and display its key values.
-            RSACryptoServiceProvider^ rsaCSP = 
-                   gcnew RSACryptoServiceProvider(384);
-            ShowKeys(rsaCSP->LegalKeySizes, rsaCSP->ToString());
-            Console::WriteLine("RSACryptoServiceProvider KeySize ="
+            RSA^ rsa = RSA::Create();
+            ShowKeys(rsa->LegalKeySizes, rsa->ToString());
+            Console::WriteLine("RSA KeySize ="
                 " {0}",
-                    rsaCSP->KeySize);
+                    rsa->KeySize);
 
             Console::WriteLine("This sample completed successfully; " 
                    "press Enter to exit.");
@@ -96,17 +94,17 @@ int main()
 // Interval between key size bits: 64
 // 
 // KeySizes retrieved from the 
-//  System.Security.Cryptography.RijndaelManaged object.
+//  System.Security.Cryptography.Aes object.
 // Minimum key size bits: 128
 // Maximum key size bits: 256
 // Interval between key size bits: 64
-// rijn.blocksize:128
+// aes.blocksize:128
 // 
 // KeySizes retrieved from the
-// System.Security.Cryptography.RSACryptoServiceProvider object.
-// Minimum key size bits: 384
+// System.Security.Cryptography.RSA object.
+// Minimum key size bits: 512
 // Maximum key size bits: 16384
-// Interval between key size bits: 8
-// RSACryptoServiceProvider KeySize = 384
+// Interval between key size bits: 64
+// RSA KeySize = 2048
 // This sample completed successfully; press Enter to exit.
 //</Snippet1>

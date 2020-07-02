@@ -38,7 +38,7 @@ class RSACSPSample
 			RSA.ImportParameters(RSAKeyInfo);
 
 			//Create a new instance of the Aes class.
-			Aes aes = new Aes();
+			Aes aes = Aes.Create();
 
 			//Encrypt the symmetric key and IV.
 			EncryptedSymmetricKey = RSA.Encrypt(aes.Key, false);

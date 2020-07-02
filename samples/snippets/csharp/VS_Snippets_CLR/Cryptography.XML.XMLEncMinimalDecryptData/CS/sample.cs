@@ -113,7 +113,7 @@ class Program
         {
             encryptionMethod = EncryptedXml.XmlEncDESUrl;
         }
-        else if (Alg is Rijndael)
+        else if (Alg is Aes)
         {
             switch (Alg.KeySize)
             {
