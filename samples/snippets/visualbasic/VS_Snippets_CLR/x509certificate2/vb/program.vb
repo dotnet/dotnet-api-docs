@@ -127,7 +127,6 @@ Class Program
                         ' a time, you can save memory
                         ' and accommodate large files.
                         Dim count As Integer = 0
-                        Dim offset As Integer = 0
 
                         ' blockSizeBytes can be any arbitrary size.
                         Dim blockSizeBytes As Integer = aes.BlockSize / 8
@@ -137,8 +136,7 @@ Class Program
                         Dim inFs As New FileStream(inFile, FileMode.Open)
                         Try
                             Do
-                                count = inFs.Read(data, offset, blockSizeBytes)
-                                offset += count
+                                count = inFs.Read(data, 0, blockSizeBytes)
                                 outStreamEncrypted.Write(data, 0, count)
                                 bytesRead += count
                             Loop While count > 0
@@ -225,7 +223,7 @@ Class Program
                 '<Snippet10>
                 ' Use RSA
                 ' to decrypt the AES key.
-                Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, RSAEncryptionPadding.OaepSHA256)
+                Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, RSAEncryptionPadding.Pkcs1)
 
                 ' Decrypt the key.
                 Dim transform As ICryptoTransform = aes.CreateDecryptor(KeyDecrypted, IV)
@@ -242,7 +240,6 @@ Class Program
                     ' for the decrypted file (outFs).
 
                     Dim count As Integer = 0
-                    Dim offset As Integer = 0
 
                     Dim blockSizeBytes As Integer = aes.BlockSize / 8
                     Dim data(blockSizeBytes) As Byte
@@ -256,8 +253,7 @@ Class Program
                     Dim outStreamDecrypted As New CryptoStream(outFs, transform, CryptoStreamMode.Write)
                     Try
                         Do
-                            count = inFs.Read(data, offset, blockSizeBytes)
-                            offset += count
+                            count = inFs.Read(data, 0, blockSizeBytes)
                             outStreamDecrypted.Write(data, 0, count)
                         Loop While count > 0
 
