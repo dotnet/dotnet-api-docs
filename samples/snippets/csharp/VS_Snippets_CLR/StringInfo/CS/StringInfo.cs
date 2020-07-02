@@ -58,12 +58,12 @@ public sealed class App {
    }
 }
 
-// This code produces the following output.
+// This code produces the following output:
 //
 // Result of GetTextElementEnumerator:
-// Character at index 0 is 'a-"'
+// Character at index 0 is 'ā̈'
 // Character at index 3 is 'b'
-// Character at index 4 is 'c,'
+// Character at index 4 is 'ç'
 //
 // Result of ParseCombiningCharacters:
 // Character 0 starts at index 0

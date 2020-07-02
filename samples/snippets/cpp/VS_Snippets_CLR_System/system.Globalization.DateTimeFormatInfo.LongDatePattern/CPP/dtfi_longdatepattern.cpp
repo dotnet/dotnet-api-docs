@@ -21,11 +21,11 @@ int main()
 }
 
 /*
-This code produces the following output.  The question marks take the place of native script characters.
+This code produces the following output:
 
 CULTURE    PROPERTY VALUE
 en-US     dddd, MMMM dd, yyyy
-ja-JP     yyyy'?'M'?'d'?'
+ja-JP     yyyy'年'M'月'd'日'
 fr-FR     dddd d MMMM yyyy
 
 */
