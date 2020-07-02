@@ -33,7 +33,7 @@ namespace CryptographySample
                     aes->BlockSize);
 
             // Create a new RSA algorithm and display its key values.
-            RSA^ rsa = RSA::Create(384);
+            RSA^ rsa = RSA::Create();
             ShowKeys(rsa->LegalKeySizes, rsa->ToString());
             Console::WriteLine("RSA KeySize ="
                 " {0}",
