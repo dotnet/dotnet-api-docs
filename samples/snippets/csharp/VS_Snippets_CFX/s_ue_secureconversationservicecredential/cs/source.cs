@@ -237,7 +237,7 @@ namespace Example
 
             // Use the RSA key in the X509Certificate to protect the symmetric key.
             this.protectionRsaKey = rsaKey;
-            this.encryptedSymmetricKey = protectionRsaKey.Encrypt(aesAlg.Key, RSAEncryptionPadding.OaepSHA256);
+            this.encryptedSymmetricKey = protectionRsaKey.Encrypt(aesAlg.Key, RSAEncryptionPadding.OaepSHA1);
 
             // Create the enryptor and decryptor that will perform the actual
             // cryptographic operations.
@@ -266,7 +266,7 @@ namespace Example
         {
             // Only a service configured with the right X509 certificate
             // can decrypt the symmetric key.
-            byte[] symmetricKey = protectionRsaKey.Decrypt(encryptedSymmetricKey, RSAEncryptionPadding.OaepSHA256);
+            byte[] symmetricKey = protectionRsaKey.Decrypt(encryptedSymmetricKey, RSAEncryptionPadding.OaepSHA1);
 
             // Create an encryptor based on the symmetric key which can be used to encrypt SCT cookie blob.
             this.encryptor = aesAlg.CreateEncryptor(symmetricKey, iv);
