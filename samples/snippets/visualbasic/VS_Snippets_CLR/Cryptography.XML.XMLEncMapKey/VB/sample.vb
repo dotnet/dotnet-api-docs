@@ -102,7 +102,7 @@ Module Program
             encryptionMethod = EncryptedXml.XmlEncTripleDESUrl
         ElseIf TypeOf Alg Is DES Then
             encryptionMethod = EncryptedXml.XmlEncDESUrl
-        ElseIf TypeOf Alg Is Rijndael Then
+        ElseIf TypeOf Alg Is Aes Then
             Select Case Alg.KeySize
                 Case 128
                     encryptionMethod = EncryptedXml.XmlEncAES128Url

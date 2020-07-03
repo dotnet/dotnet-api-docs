@@ -32,7 +32,7 @@ int main()
       RSA->ImportParameters( RSAKeyInfo );
       
       //Create a new instance of the Aes class.
-      Aes^ aes = gcnew Aes;
+      Aes^ aes = Aes::Create();
       
       //Encrypt the symmetric key and IV.
       EncryptedSymmetricKey = RSA->Encrypt( aes->Key, false );
