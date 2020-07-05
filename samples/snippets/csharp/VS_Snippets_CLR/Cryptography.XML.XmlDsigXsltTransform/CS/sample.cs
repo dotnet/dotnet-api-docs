@@ -17,7 +17,7 @@ public class SignVerifyEnvelope
     public static void Main(String[] args)
     {
         // Generate a signing key.
-        RSACryptoServiceProvider Key = new RSACryptoServiceProvider();
+        RSA Key = RSA.Create();
 
         string xsl = @"
     <xs:transform xmlns:xs='http://www.w3.org/1999/XSL/Transform' version='1.0'>

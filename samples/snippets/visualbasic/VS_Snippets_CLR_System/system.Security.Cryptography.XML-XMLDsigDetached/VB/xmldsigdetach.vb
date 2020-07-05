@@ -24,7 +24,7 @@ Class XMLDSIGDetached
       Try
          
          ' Generate a signing key.
-         Dim Key As New RSACryptoServiceProvider()
+         Dim Key As RSA = RSA.Create()
          
          Console.WriteLine("Signing: {0}", resourceToSign)
          

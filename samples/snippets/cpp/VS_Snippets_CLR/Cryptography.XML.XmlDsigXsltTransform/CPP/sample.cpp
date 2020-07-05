@@ -149,7 +149,7 @@ int main()
 {
    
    // Generate a signing key.
-   RSACryptoServiceProvider^ Key = gcnew RSACryptoServiceProvider;
+   RSA^ Key = RSA::Create();
    String^ xsl = L"\r\n    <xs:transform xmlns:xs='http://www.w3.org/1999/XSL/Transform' version='1.0'>\r\n        <xs:template match='/'>\r\n            <xs:apply-templates/>\r\n        </xs:template>\r\n        <xs:template match='ElementToTransform'> \r\n            <transformedElement/>\r\n        </xs:template>\r\n    </xs:transform>";
    try
    {

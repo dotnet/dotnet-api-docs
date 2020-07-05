@@ -121,7 +121,7 @@ int main()
 	{
 
 		// Generate a DSA signing key.
-		DSACryptoServiceProvider^ DSAKey = gcnew DSACryptoServiceProvider;
+		DSA^ DSAKey = DSA::Create();
 		Console::WriteLine( "Signing: {0}", resourceToSign );
 
 		// Sign the detached resourceand save the signature in an XML file.
