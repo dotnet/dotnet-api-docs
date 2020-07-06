@@ -27,7 +27,6 @@ Class RNGCSP
             i += 1
         End While
         rngCsp.Dispose()
-        Console.ReadLine()
     End Sub
 
 
