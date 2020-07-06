@@ -27,7 +27,7 @@ class XMLDSIGDetached
         {
 
             // Generate a DSA signing key.
-            DSACryptoServiceProvider DSAKey = new DSACryptoServiceProvider();
+            DSA DSAKey = DSA.Create();
 
             Console.WriteLine("Signing: {0}", resourceToSign);
 

@@ -22,7 +22,7 @@ Module Program
 
         ' Create a new RSA key.  This key will encrypt a symmetric key,
         ' which will then be imbedded in the XML document.  
-        Dim rsaKey As New RSACryptoServiceProvider()
+        Dim rsaKey As RSA = RSA.Create()
 
 
         Try

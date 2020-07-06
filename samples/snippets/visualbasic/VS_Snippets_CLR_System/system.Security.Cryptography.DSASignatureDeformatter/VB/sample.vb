@@ -8,14 +8,14 @@ Class DSASample
 
     Shared Sub Main()
         Try
-            'Create a new instance of DSACryptoServiceProvider.
-            Dim DSA As New DSACryptoServiceProvider()
+            'Create a new instance of DSA.
+            Dim DSA As DSA = DSA.Create()
 
             'The hash to sign.
             Dim Hash As Byte() = {59, 4, 248, 102, 77, 97, 142, 201, 210, 12, 224, 93, 25, 41, 100, 197, 213, 134, 130, 135}
 
             'Create an DSASignatureFormatter object and pass it the 
-            'DSACryptoServiceProvider to transfer the key information.
+            'DSA instance to transfer the key information.
             Dim DSAFormatter As New DSASignatureFormatter(DSA)
 
             'Set the hash algorithm to SHA1.
@@ -25,7 +25,7 @@ Class DSASample
             Dim SignedHash As Byte() = DSAFormatter.CreateSignature(Hash)
 
             'Create an DSASignatureDeformatter object and pass it the 
-            'DSACryptoServiceProvider to transfer the key information.
+            'DSA instance to transfer the key information.
             Dim DSADeformatter As New DSASignatureDeformatter(DSA)
 
             'Verify the hash and display the results to the console.

@@ -48,7 +48,7 @@ Class XMLDSIGDetached
         Try
 
             ' Generate a DSA signing key.
-            Dim DSAKey As New DSACryptoServiceProvider()
+            Dim DSAKey As DSA = DSA.Create()
 
             Console.WriteLine("Signing: {0}", resourceToSign)
 
