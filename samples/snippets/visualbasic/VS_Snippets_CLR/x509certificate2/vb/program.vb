@@ -1,4 +1,4 @@
-﻿'<Snippet1>
+'<Snippet1>
 Imports System.Security.Cryptography
 Imports System.Security.Cryptography.X509Certificates
 Imports System.IO
@@ -36,10 +36,10 @@ Class Program
 
 
         ' Encrypt the file using the public key from the certificate.
-        EncryptFile(originalFile, CType(cert.PublicKey.Key, RSACryptoServiceProvider))
+        EncryptFile(originalFile, CType(cert.PublicKey.Key, RSA))
 
         ' Decrypt the file using the private key from the certificate.
-        DecryptFile(encryptedFile, CType(cert.PrivateKey, RSACryptoServiceProvider))
+        DecryptFile(encryptedFile, cert.GetRSAPrivateKey())
 
         'Display the original data and the decrypted data.
         Console.WriteLine("Original:   {0}", File.ReadAllText(originalFile))
@@ -76,8 +76,8 @@ Class Program
     '</Snippet2>
     ' <Snippet3>
     ' Encrypt a file using a public key.
-    Private Shared Sub EncryptFile(ByVal inFile As String, ByVal rsaPublicKey As RSACryptoServiceProvider)
-        Dim aes As New Aes()
+    Private Shared Sub EncryptFile(ByVal inFile As String, ByVal rsaPublicKey As RSA)
+        Dim aes As Aes = Aes.Create()
         Try
             ' Create instance of Aes for
             ' symetric encryption of the data.
@@ -95,7 +95,7 @@ Class Program
 
                 Dim lKey As Integer = keyEncrypted.Length
                 LenK = BitConverter.GetBytes(lKey)
-                Dim lIV As Integer = aesM.IV.Length
+                Dim lIV As Integer = aes.IV.Length
                 LenIV = BitConverter.GetBytes(lIV)
 
                 ' Write the following to the FileStream
@@ -127,7 +127,6 @@ Class Program
                         ' a time, you can save memory
                         ' and accommodate large files.
                         Dim count As Integer = 0
-                        Dim offset As Integer = 0
 
                         ' blockSizeBytes can be any arbitrary size.
                         Dim blockSizeBytes As Integer = aes.BlockSize / 8
@@ -137,8 +136,7 @@ Class Program
                         Dim inFs As New FileStream(inFile, FileMode.Open)
                         Try
                             Do
-                                count = inFs.Read(data, offset, blockSizeBytes)
-                                offset += count
+                                count = inFs.Read(data, 0, blockSizeBytes)
                                 outStreamEncrypted.Write(data, 0, count)
                                 bytesRead += count
                             Loop While count > 0
@@ -168,11 +166,11 @@ Class Program
     ' </Snippet3>
     ' <Snippet4>
     ' Decrypt a file using a private key.
-    Private Shared Sub DecryptFile(ByVal inFile As String, ByVal rsaPrivateKey As RSACryptoServiceProvider)
+    Private Shared Sub DecryptFile(ByVal inFile As String, ByVal rsaPrivateKey As RSA)
 
         ' Create instance of Aes for
         ' symetric decryption of the data.
-        Dim aes As New Aes()
+        Dim aes As Aes = Aes.Create()
         Try
             aes.KeySize = 256
             aes.Mode = CipherMode.CBC
@@ -203,7 +201,7 @@ Class Program
                 Dim lengthIV As Integer = BitConverter.ToInt32(LenIV, 0)
 
                 ' Determine the start postition of
-                ' the ciphter text (startC)
+                ' the cipher text (startC)
                 ' and its length(lenC).
                 Dim startC As Integer = lengthK + lengthIV + 8
                 Dim lenC As Integer = (CType(inFs.Length, Integer) - startC)
@@ -223,9 +221,9 @@ Class Program
                 inFs.Read(IV, 0, lengthIV)
                 Directory.CreateDirectory(decrFolder)
                 '<Snippet10>
-                ' Use RSACryptoServiceProvider
+                ' Use RSA
                 ' to decrypt the AES key.
-                Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, False)
+                Dim KeyDecrypted As Byte() = rsaPrivateKey.Decrypt(KeyEncrypted, RSAEncryptionPadding.Pkcs1)
 
                 ' Decrypt the key.
                 Dim transform As ICryptoTransform = aes.CreateDecryptor(KeyDecrypted, IV)
@@ -242,7 +240,6 @@ Class Program
                     ' for the decrypted file (outFs).
 
                     Dim count As Integer = 0
-                    Dim offset As Integer = 0
 
                     Dim blockSizeBytes As Integer = aes.BlockSize / 8
                     Dim data(blockSizeBytes) As Byte
@@ -256,8 +253,7 @@ Class Program
                     Dim outStreamDecrypted As New CryptoStream(outFs, transform, CryptoStreamMode.Write)
                     Try
                         Do
-                            count = inFs.Read(data, offset, blockSizeBytes)
-                            offset += count
+                            count = inFs.Read(data, 0, blockSizeBytes)
                             outStreamDecrypted.Write(data, 0, count)
                         Loop While count > 0
 
