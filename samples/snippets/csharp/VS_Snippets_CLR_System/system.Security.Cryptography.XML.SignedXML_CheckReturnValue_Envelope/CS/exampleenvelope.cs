@@ -18,7 +18,7 @@ public class SignVerifyEnvelope
         try
         {
             // Generate a DSA signing key.
-            DSACryptoServiceProvider DSAKey = new DSACryptoServiceProvider();
+            DSA DSAKey = DSA.Create();
 
             // Create an XML file to sign.
             CreateSomeXml("Example.xml");

@@ -17,7 +17,7 @@ Public Class SignVerifyEnvelope
    Overloads Public Shared Sub Main(args() As [String])
       Try
          ' Generate a DSA signing key.
-         Dim DSAKey As New DSACryptoServiceProvider()
+         Dim DSAKey As DSA = DSA.Create()
          
          ' Create an XML file to sign.
          CreateSomeXml("Example.xml")

@@ -5,8 +5,8 @@ Friend Class RSASample
 
 	Shared Sub Main()
 		Try
-			'Create a new instance of RSACryptoServiceProvider.
-			Using rsa As New RSACryptoServiceProvider()
+			'Create a new instance of RSA.
+			Using rsa As RSA = RSA.Create()
 				'The hash to sign.
 				Dim hash() As Byte
 				Using sha256 As SHA256 = SHA256.Create()
@@ -15,7 +15,7 @@ Friend Class RSASample
 				End Using
 
 				'Create an RSASignatureFormatter object and pass it the 
-				'RSACryptoServiceProvider to transfer the key information.
+				'RSA to transfer the key information.
 				Dim RSAFormatter As New RSAPKCS1SignatureFormatter(rsa)
 
 				'Set the hash algorithm to SHA256.
