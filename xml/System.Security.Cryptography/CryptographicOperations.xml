@@ -1,4 +1,4 @@
-﻿<Type Name="CryptographicOperations" FullName="System.Security.Cryptography.CryptographicOperations">
+<Type Name="CryptographicOperations" FullName="System.Security.Cryptography.CryptographicOperations">
   <TypeSignature Language="C#" Value="public static class CryptographicOperations" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit CryptographicOperations extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.CryptographicOperations" />
@@ -8,17 +8,22 @@
   <AssemblyInfo>
     <AssemblyName>System.Security.Cryptography.Primitives</AssemblyName>
     <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>4.1.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Cryptography.Primitives" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides methods for use in working with cryptography to reduce the risk of side-channel information leakage.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -33,6 +38,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Primitives</AssemblyName>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -46,11 +53,24 @@
         <Parameter Name="right" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="left">The first buffer to compare.</param>
+        <param name="right">The second buffer to compare.</param>
+        <summary>Determines the equality of two byte sequences in an amount of time that depends on the length of the sequences, but not their values.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> have the same values for <see cref="P:System.ReadOnlySpan`1.Length" /> and the same contents; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method compares the contents from two buffers for equality in a way that doesn't leak timing information, making it ideal for use within cryptographic routines.
+
+This method will short-circuit and return `false` only if `left` and `right` have different lengths.
+
+Fixed-time behavior is guaranteed in all other cases, including when `left` and `right` reference the same address.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ZeroMemory">
@@ -64,6 +84,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Primitives</AssemblyName>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -76,9 +98,18 @@
         <Parameter Name="buffer" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The buffer to fill with zeros.</param>
+        <summary>Fills the provided buffer with zeros.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method exists to future-proof against potential optimizations in the .NET runtime that could eliminate memory writes that aren't followed by memory reads.
+While the C and C++ compilers have similar optimizations, no such optimizations are planned at this time for .NET.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

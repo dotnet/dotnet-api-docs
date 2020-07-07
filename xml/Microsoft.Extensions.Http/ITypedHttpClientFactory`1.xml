@@ -1,0 +1,140 @@
+<Type Name="ITypedHttpClientFactory&lt;TClient&gt;" FullName="Microsoft.Extensions.Http.ITypedHttpClientFactory&lt;TClient&gt;">
+  <TypeSignature Language="C#" Value="public interface ITypedHttpClientFactory&lt;TClient&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract ITypedHttpClientFactory`1&lt;TClient&gt;" />
+  <TypeSignature Language="DocId" Value="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" />
+  <TypeSignature Language="VB.NET" Value="Public Interface ITypedHttpClientFactory(Of TClient)" />
+  <TypeSignature Language="C++ CLI" Value="generic &lt;typename TClient&gt;&#xA;public interface class ITypedHttpClientFactory" />
+  <TypeSignature Language="F#" Value="type ITypedHttpClientFactory&lt;'Client&gt; = interface" />
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Extensions.Http</AssemblyName>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeParameters>
+    <TypeParameter Name="TClient" />
+  </TypeParameters>
+  <Interfaces />
+  <Docs>
+    <typeparam name="TClient">The type of typed client to create.</typeparam>
+    <summary>
+             A factory abstraction for a component that can create typed client instances with custom
+             configuration for a given logical name.
+             </summary>
+    <remarks>
+      <para>
+             The <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" /> is infrastructure that supports the
+             <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)" /> and
+             <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddTypedClient``1(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" /> functionality. This type
+             should rarely be used directly in application code, use <see cref="M:System.IServiceProvider.GetService(System.Type)" /> instead
+             to retrieve typed clients.
+             </para>
+      <para>
+             A default <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" /> can be registered in an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" />
+             by calling <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />.
+             The default <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" /> will be registered in the service collection as a singleton
+             open-generic service.
+             </para>
+      <para>
+             The default <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" /> uses type activation to create typed client instances. Typed
+             client types are not retrieved directly from the <see cref="T:System.IServiceProvider" />. See 
+             <see cref="M:Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(System.IServiceProvider,System.Type,System.Object[])" /> for details.
+             </para>
+    </remarks>
+    <example>
+             This sample shows the basic pattern for defining a typed client class.
+             <code>
+             class ExampleClient
+             {
+                 private readonly HttpClient _httpClient;
+                 private readonly ILogger _logger;
+            
+                 // typed clients can use constructor injection to access additional services
+                 public ExampleClient(HttpClient httpClient, ILogger&lt;ExampleClient&gt; logger)
+                 {
+                     _httpClient = httpClient;
+                     _logger = logger;     
+                 }
+            
+                 // typed clients can expose the HttpClient for application code to call directly
+                 public HttpClient HttpClient =&gt; _httpClient;
+            
+                 // typed clients can also define methods that abstract usage of the HttpClient
+                 public async Task SendHelloRequest()
+                 {
+                     var response = await _httpClient.GetAsync("/helloworld");
+                     response.EnsureSuccessStatusCode();
+                 }
+             }
+             </code></example>
+    <example>
+             This sample shows how to consume a typed client from an ASP.NET Core middleware.
+             <code>
+             // in Startup.cs
+             public void Configure(IApplicationBuilder app, ExampleClient exampleClient)
+             {
+                 app.Run(async (context) =&gt;
+                 {
+                     var response = await _exampleClient.GetAsync("/helloworld");
+                     await context.Response.WriteAsync("Remote server said: ");
+                     await response.Content.CopyToAsync(context.Response.Body);
+                 });
+             }
+             </code></example>
+    <example>
+             This sample shows how to consume a typed client from an ASP.NET Core MVC Controller.
+             <code>
+             // in Controllers/HomeController.cs
+             public class HomeController : ControllerBase(IApplicationBuilder app, ExampleClient exampleClient)
+             {
+                 private readonly ExampleClient _exampleClient;
+            
+                 public HomeController(ExampleClient exampleClient)
+                 {
+                     _exampleClient = exampleClient;
+                 }
+            
+                 public async Task&lt;IActionResult&gt; Index()
+                 {
+                     var response = await _exampleClient.GetAsync("/helloworld");
+                     var text = await response.Content.ReadAsStringAsync();
+                     return Content("Remote server said: " + text, "text/plain");
+                 };
+             }
+             </code></example>
+  </Docs>
+  <Members>
+    <Member MemberName="CreateClient">
+      <MemberSignature Language="C#" Value="public TClient CreateClient (System.Net.Http.HttpClient httpClient);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance !TClient CreateClient(class System.Net.Http.HttpClient httpClient) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.Http.ITypedHttpClientFactory`1.CreateClient(System.Net.Http.HttpClient)" />
+      <MemberSignature Language="VB.NET" Value="Public Function CreateClient (httpClient As HttpClient) As TClient" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; TClient CreateClient(System::Net::Http::HttpClient ^ httpClient);" />
+      <MemberSignature Language="F#" Value="abstract member CreateClient : System.Net.Http.HttpClient -&gt; 'Client" Usage="iTypedHttpClientFactory.CreateClient httpClient" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Http</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+        <AssemblyVersion>2.2.0.0</AssemblyVersion>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
+        <AssemblyVersion>3.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>TClient</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="httpClient" Type="System.Net.Http.HttpClient" />
+      </Parameters>
+      <Docs>
+        <param name="httpClient">
+            An <see cref="T:System.Net.Http.HttpClient" /> created by the <see cref="T:System.Net.Http.IHttpClientFactory" /> for the named client
+            associated with <typeparamref name="TClient" />.
+            </param>
+        <summary>Creates a typed client given an associated <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <returns>An instance of <typeparamref name="TClient" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

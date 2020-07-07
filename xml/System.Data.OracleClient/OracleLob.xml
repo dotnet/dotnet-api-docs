@@ -1,4 +1,4 @@
-﻿<Type Name="OracleLob" FullName="System.Data.OracleClient.OracleLob">
+<Type Name="OracleLob" FullName="System.Data.OracleClient.OracleLob">
   <TypeSignature Language="C#" Value="public sealed class OracleLob : System.IO.Stream, ICloneable, System.Data.SqlTypes.INullable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit OracleLob extends System.IO.Stream implements class System.Data.SqlTypes.INullable, class System.ICloneable, class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Data.OracleClient.OracleLob" />
@@ -53,15 +53,23 @@
   
  You can construct an <xref:System.Data.OracleClient.OracleLob> that is NULL using this format:  
   
-```  
+```csharp
 OracleLob myLob = OracleLob.Null;  
-```  
+```
+
+```vb
+Dim myLob As OracleLob = OracleLob.Null
+```
   
  This technique is used primarily to test whether a `LOB` returned from the server is NULL, as this example illustrates:  
   
-```  
-If(myLob == OracleLob.Null)  
-```  
+```csharp
+if (myLob == OracleLob.Null)  
+```
+
+```vb
+If (myLob = OracleLob.Null) Then
+```
   
  A NULL `LOB` behaves similarly to a zero-byte `LOB` in that <xref:System.Data.OracleClient.OracleLob.Read%2A> succeeds and always returns zero bytes.  
   
@@ -71,10 +79,10 @@ If(myLob == OracleLob.Null)
   
  You can also open a temporary `LOB` in Oracle by calling the DBMS_LOB.CREATETEMPORARY system stored procedure and binding a `LOB` output parameter. On the client side, a temporary `LOB` behaves like a table-based `LOB`. For example, to update the temporary `LOB`, it must be enclosed in a transaction.  
   
- The following C# example demonstrates how to open a temporary `LOB`.  
+The following example demonstrates how to open a temporary `LOB`:
   
-```  
-OracleConnection connection = new OracleConnection("server=MyServer; integrated security=yes;");  
+```csharp
+var connection = new OracleConnection("server=MyServer; integrated security=yes;");  
 connection.Open();  
 OracleTransaction transaction = connection.BeginTransaction();  
 OracleCommand command = connection.CreateCommand();  
@@ -82,8 +90,8 @@ command.Transaction = transaction;
 command.CommandText = "declare xx blob; begin dbms_lob.createtemporary(xx, false, 0); :tempblob := xx; end;";  
 command.Parameters.Add(new OracleParameter("tempblob", OracleType.Blob)).Direction = ParameterDirection.Output;  
 command.ExecuteNonQuery();  
-OracleLob tempLob = (OracleLob)command.Parameters[0].Value;  
-byte[] tempbuff = new byte[10000];  
+var tempLob = (OracleLob)command.Parameters[0].Value;  
+var tempbuff = new byte[10000];  
 tempLob.BeginBatch(OracleLobOpenMode.ReadWrite);  
 tempLob.Write(tempbuff,0,tempbuff.Length);  
 tempLob.EndBatch();  
@@ -93,7 +101,7 @@ command.CommandType = CommandType.StoredProcedure;
 command.Parameters.Add(new OracleParameter("ImportDoc", OracleType.Blob)).Value = tempLob;  
 command.ExecuteNonQuery();  
 transaction.Commit();  
-connection.Close  
+connection.Close(); 
 ```  
   
 > [!NOTE]
@@ -438,7 +446,8 @@ connection.Close
       <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob)" />
       <MemberSignature Language="VB.NET" Value="Public Function CopyTo (destination As OracleLob) As Long" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; long CopyTo(System::Data::OracleClient::OracleLob ^ destination);" />
-      <MemberSignature Language="F#" Value="override this.CopyTo : System.Data.OracleClient.OracleLob -&gt; int64" Usage="oracleLob.CopyTo destination" />
+      <MemberSignature Language="F#" Value="member this.CopyTo : System.Data.OracleClient.OracleLob -&gt; int64" Usage="oracleLob.CopyTo destination" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5" />
+      <MemberSignature Language="F#" Value="override this.CopyTo : System.Data.OracleClient.OracleLob -&gt; int64" Usage="oracleLob.CopyTo destination" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Data.OracleClient</AssemblyName>
@@ -484,7 +493,8 @@ connection.Close
       <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob,System.Int64)" />
       <MemberSignature Language="VB.NET" Value="Public Function CopyTo (destination As OracleLob, destinationOffset As Long) As Long" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; long CopyTo(System::Data::OracleClient::OracleLob ^ destination, long destinationOffset);" />
-      <MemberSignature Language="F#" Value="override this.CopyTo : System.Data.OracleClient.OracleLob * int64 -&gt; int64" Usage="oracleLob.CopyTo (destination, destinationOffset)" />
+      <MemberSignature Language="F#" Value="member this.CopyTo : System.Data.OracleClient.OracleLob * int64 -&gt; int64" Usage="oracleLob.CopyTo (destination, destinationOffset)" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5" />
+      <MemberSignature Language="F#" Value="override this.CopyTo : System.Data.OracleClient.OracleLob * int64 -&gt; int64" Usage="oracleLob.CopyTo (destination, destinationOffset)" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Data.OracleClient</AssemblyName>
@@ -541,7 +551,8 @@ connection.Close
       <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleLob.CopyTo(System.Int64,System.Data.OracleClient.OracleLob,System.Int64,System.Int64)" />
       <MemberSignature Language="VB.NET" Value="Public Function CopyTo (sourceOffset As Long, destination As OracleLob, destinationOffset As Long, amount As Long) As Long" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; long CopyTo(long sourceOffset, System::Data::OracleClient::OracleLob ^ destination, long destinationOffset, long amount);" />
-      <MemberSignature Language="F#" Value="override this.CopyTo : int64 * System.Data.OracleClient.OracleLob * int64 * int64 -&gt; int64" Usage="oracleLob.CopyTo (sourceOffset, destination, destinationOffset, amount)" />
+      <MemberSignature Language="F#" Value="member this.CopyTo : int64 * System.Data.OracleClient.OracleLob * int64 * int64 -&gt; int64" Usage="oracleLob.CopyTo (sourceOffset, destination, destinationOffset, amount)" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5" />
+      <MemberSignature Language="F#" Value="override this.CopyTo : int64 * System.Data.OracleClient.OracleLob * int64 * int64 -&gt; int64" Usage="oracleLob.CopyTo (sourceOffset, destination, destinationOffset, amount)" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Data.OracleClient</AssemblyName>
@@ -1095,61 +1106,62 @@ If(myLob == OracleLob.Null)
   
  The .NET Framework Data Provider for Oracle handles all `CLOB` and `NCLOB` data as Unicode. Therefore, when accessing `CLOB` and `NCLOB` data types, you are always dealing with the number of bytes, where each character is 2 bytes. For example, if a string of text containing three characters is saved as an `NCLOB` on an Oracle server where the character set is 4 bytes per character, and you perform a `Read` operation, you specify the length of the string as 6 bytes, although it is stored as 12 bytes on the server.  
   
- The following C# example demonstrates how to read <xref:System.Data.OracleClient.OracleLob> objects.  
+ The following example demonstrates how to read <xref:System.Data.OracleClient.OracleLob> objects.  
   
-```  
+```csharp
 public static void ReadLobExample(OracleCommand command)  
 {  
-   int actual = 0;  
+    int actual = 0;  
   
-   //Select some data.  
-   // Table Schema:  
-   //  "CREATE TABLE TableWithLobs (a int, b BLOB, c CLOB, d NCLOB)";  
-   //  "INSERT INTO TableWithLobs values (1, 'AA', 'AAA', N'AAAA')";  
-   command.CommandText = "SELECT * FROM TableWithLobs";  
-   OracleDataReader reader = command.ExecuteReader();  
-   using(reader)  
-   {  
-      //Obtain the first row of data.  
-      reader.Read();  
-      //Obtain the LOBs (all 3 varieties).  
-      OracleLob BLOB = reader.GetOracleLob(1);  
-      OracleLob CLOB  = reader.GetOracleLob(2);  
-      OracleLob NCLOB = reader.GetOracleLob(3);  
+    // Select some data.  
+    // Table Schema:  
+    //  "CREATE TABLE TableWithLobs (a int, b BLOB, c CLOB, d NCLOB)";  
+    //  "INSERT INTO TableWithLobs values (1, 'AA', 'AAA', N'AAAA')";  
+    command.CommandText = "SELECT * FROM TableWithLobs";  
+    OracleDataReader reader = command.ExecuteReader();  
+    using(reader)  
+    {  
+        // Obtain the first row of data.  
+        reader.Read();  
+        // Obtain the LOBs (all 3 varieties).  
+        OracleLob BLOB = reader.GetOracleLob(1);  
+        OracleLob CLOB  = reader.GetOracleLob(2);  
+        OracleLob NCLOB = reader.GetOracleLob(3);  
   
-      //Example - Reading binary data (in chunks).  
-      byte[] buffer = new byte[100];  
-      while((actual = BLOB.Read(buffer, 0, buffer.Length)) >0)  
-         Console.WriteLine(BLOB.LobType + ".Read(" + buffer + ", " + buffer.Length + ") => " + actual);  
+        // Example - Reading binary data (in chunks).  
+        var buffer = new byte[100];  
+        while((actual = BLOB.Read(buffer, 0, buffer.Length)) > 0)  
+            Console.WriteLine(BLOB.LobType + ".Read(" + buffer + ", " + buffer.Length + ") => " + actual);  
   
-      //Example - Reading CLOB/NCLOB data (in chunks).  
-      //Note: You can read character data as raw Unicode bytes (using OracleLob.Read as in the above example).  
-      //However, because the OracleLob object inherits directly from the.NET stream object,   
-      //all the existing classes that manipulate streams can also be used. For example, the   
-      //.NET StreamReader makes converting the raw bytes into actual characters easier.  
-      StreamReader streamreader = new StreamReader(CLOB, Encoding.Unicode);  
-      char[] cbuffer = new char[100];  
-      while((actual = streamreader.Read(cbuffer, 0, cbuffer.Length)) >0)  
-         Console.WriteLine(CLOB.LobType + ".Read(" + new string(cbuffer, 0, actual) + ", " + cbuffer.Length + ") => " + actual);  
+        // Example - Reading CLOB/NCLOB data (in chunks).  
+        // Note: You can read character data as raw Unicode bytes (using OracleLob.Read as in the above example).  
+        // However, because the OracleLob object inherits directly from the.NET stream object,   
+        // all the existing classes that manipulate streams can also be used. For example, the   
+        // .NET StreamReader makes converting the raw bytes into actual characters easier.  
+        var streamreader = new StreamReader(CLOB, Encoding.Unicode);  
+        var cbuffer = new char[100];  
+        while((actual = streamreader.Read(cbuffer, 0, cbuffer.Length)) >0)  
+            Console.WriteLine(CLOB.LobType + ".Read(" + new string(cbuffer, 0, actual) + ", " + cbuffer.Length + ") => " + actual);  
   
-      //Example - Reading data (all at once).  
-      //You could use StreamReader.ReadToEnd to obtain all the string data,or simply  
-      //call OracleLob.Value to obtain a contiguous allocation of all the data.  
-      Console.WriteLine(NCLOB.LobType + ".Value => " + NCLOB.Value);  
-   }  
+        //Example - Reading data (all at once).  
+        //You could use StreamReader.ReadToEnd to obtain all the string data,or simply  
+        //call OracleLob.Value to obtain a contiguous allocation of all the data.  
+        Console.WriteLine(NCLOB.LobType + ".Value => " + NCLOB.Value);  
+    }  
 }  
 ```  
   
  You can construct an <xref:System.Data.OracleClient.OracleLob> that is NULL using this format:  
   
-```  
+```csharp
 OracleLob myLob = OracleLob.Null;  
-```  
+```
+
   
  This technique is used primarily to test whether a `LOB` returned from the server is NULL, as the following example illustrates.  
   
-```  
-If(myLob == OracleLob.Null)  
+```csharp
+if (myLob == OracleLob.Null)  
 ```  
   
  A NULL `LOB` behaves similarly to a zero byte `LOB` in that <xref:System.Data.OracleClient.OracleLob.Read%2A> succeeds and always returns zero bytes.  
@@ -1337,49 +1349,49 @@ If(myLob == OracleLob.Null)
   
  To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  
   
- The following C# example demonstrates how to write to <xref:System.Data.OracleClient.OracleLob> objects.  
+ The following example demonstrates how to write to <xref:System.Data.OracleClient.OracleLob> objects:
   
-```  
+```csharp
 public static void WriteLobExample(OracleCommand command)  
 {  
-   //Note: Updating LOB data requires a transaction.  
-   command.Transaction = command.Connection.BeginTransaction();  
-   //Select some data.  
-   //    Table Schema:  
-   //        "CREATE TABLE tablewithlobs (a int, b BLOB, c BLOB)";  
-   //        "INSERT INTO tablewithlobs values (1, 'AA', 'AAA')";  
-   command.CommandText = "SELECT * FROM TableWithLobs FOR UPDATE";  
-   OracleDataReader reader = command.ExecuteReader();  
-   using(reader)  
-   {  
-      //Obtain the first row of data.  
-      reader.Read();  
-      //Obtain both LOBs.  
-      OracleLob BLOB1    = reader.GetOracleLob(1);  
-      OracleLob BLOB2    = reader.GetOracleLob(2);  
-      //Perform any desired operations on the LOB, (read, position, and so on).  
-      //...  
-      //Example - Writing binary data (directly to the backend).  
-      //To write, you can use any of the stream classes, or write raw binary data using   
-      //the OracleLob write method. Writing character vs. binary is the same;  
-      //however note that character is always in terms of Unicode byte counts  
-      //(for example: even number of bytes - 2 bytes for every Unicode character).  
-      byte[] buffer = new byte[100];  
-      buffer[0] = 0xCC;  
-      buffer[1] = 0xDD;  
-      BLOB1.Write(buffer, 0, 2);  
-      BLOB1.Position = 0;  
-      Console.WriteLine(BLOB1.LobType + ".Write(" + buffer + ", 0, 2) => " + BLOB1.Value);  
-  
-      //Example - Copying data into another LOB.  
-      long actual = BLOB1.CopyTo(BLOB2);  
-      Console.WriteLine(BLOB1.LobType + ".CopyTo(" + BLOB2.Value + ") => " + actual);  
-  
-      //Commit the transaction now that everything succeeded.  
-      //Note: On error, Transaction.Dispose is called (from the using statement)  
-      //and will automatically roll-back the pending transaction.  
-      command.Transaction.Commit();  
-   }  
+    // Note: Updating LOB data requires a transaction.  
+    command.Transaction = command.Connection.BeginTransaction();  
+    // Select some data.  
+    //    Table Schema:  
+    //        "CREATE TABLE tablewithlobs (a int, b BLOB, c BLOB)";  
+    //        "INSERT INTO tablewithlobs values (1, 'AA', 'AAA')";  
+    command.CommandText = "SELECT * FROM TableWithLobs FOR UPDATE";  
+    OracleDataReader reader = command.ExecuteReader();  
+    using(reader)  
+    {  
+        // Obtain the first row of data.  
+        reader.Read();  
+        // Obtain both LOBs.  
+        OracleLob BLOB1 = reader.GetOracleLob(1);  
+        OracleLob BLOB2 = reader.GetOracleLob(2);  
+        // Perform any desired operations on the LOB, (read, position, and so on).  
+        // ...  
+        // Example - Writing binary data (directly to the backend).  
+        // To write, you can use any of the stream classes, or write raw binary data using   
+        // the OracleLob write method. Writing character vs. binary is the same;  
+        // however note that character is always in terms of Unicode byte counts  
+        // (for example: even number of bytes - 2 bytes for every Unicode character).  
+        var buffer = new byte[100];  
+        buffer[0] = 0xCC;  
+        buffer[1] = 0xDD;  
+        BLOB1.Write(buffer, 0, 2);  
+        BLOB1.Position = 0;  
+        Console.WriteLine(BLOB1.LobType + ".Write(" + buffer + ", 0, 2) => " + BLOB1.Value);  
+	    
+        // Example - Copying data into another LOB.  
+        long actual = BLOB1.CopyTo(BLOB2);  
+        Console.WriteLine(BLOB1.LobType + ".CopyTo(" + BLOB2.Value + ") => " + actual);  
+	    
+        // Commit the transaction now that everything succeeded.  
+        // Note: On error, Transaction.Dispose is called (from the using statement)  
+        // and will automatically roll-back the pending transaction.  
+        command.Transaction.Commit();  
+    }  
 }  
 ```  
   

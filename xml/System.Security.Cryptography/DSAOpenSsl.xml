@@ -1,4 +1,4 @@
-﻿<Type Name="DSAOpenSsl" FullName="System.Security.Cryptography.DSAOpenSsl">
+<Type Name="DSAOpenSsl" FullName="System.Security.Cryptography.DSAOpenSsl">
   <TypeSignature Language="C#" Value="public sealed class DSAOpenSsl : System.Security.Cryptography.DSA" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit DSAOpenSsl extends System.Security.Cryptography.DSA" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.DSAOpenSsl" />
@@ -10,14 +10,29 @@
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
     <AssemblyVersion>4.1.1.0</AssemblyVersion>
     <AssemblyVersion>4.1.2.0</AssemblyVersion>
+    <AssemblyVersion>4.1.3.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Security.Cryptography.DSA</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides an implementation of the Digital Signature Algorithm (DSA) backed by OpenSSL.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This class should only be used directly when doing platform interop with the system OpenSSL library. When platform interop is not needed, you should use the <xref:System.Security.Cryptography.DSA.Create%2A?displayProperty=nameWithType> factory methods instead of a specific derived implementation.
+
+> [!IMPORTANT]
+> Newer asymmetric algorithms are available. Consider using the <xref:System.Security.Cryptography.RSA> class or the <xref:System.Security.Cryptography.ECDsa> class instead of the <xref:System.Security.Cryptography.DSA> class. Use <xref:System.Security.Cryptography.DSA> only for compatibility with legacy applications and data.  
+
+DSAOpenSSL provides the FIPS 186-3 version of DSA.
+
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -32,11 +47,23 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.DSAOpenSsl" /> class with a default key size of 2048 bits.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This constructor does not generate a new DSA public/private keypair immediately, it just sets the size which will be used to generate a key when one is needed.
+If key is loaded via the <xref:System.Security.Cryptography.DSAOpenSsl.ImportParameters%2A> method, or other key import method, the key size from this constructor has no meaning.
+
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Security.Cryptography.DSA.Create" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -52,14 +79,27 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="keySize" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="keySize">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="keySize">The size of the key to generate, when a key is needed.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.DSAOpenSsl" /> class with a specified key size.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This constructor does not generate a new DSA public/private keypair immediately, it just sets the size which will be used to generate a key when one is needed.
+If key is loaded via the <xref:System.Security.Cryptography.DSAOpenSsl.ImportParameters%2A> method, or other key import method, the `keySize` provided to this constructor has no meaning.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="keySize" /> value is not supported by this implementation.</exception>
+        <altmember cref="M:System.Security.Cryptography.DSA.Create(System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -75,14 +115,32 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="handle" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="handle">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="handle">The OpenSSL <c>DSA*</c> value to use as the key.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.DSAOpenSsl" /> class from an existing OpenSSL key represented as a <c>DSA*</c>.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+> [!IMPORTANT]
+> OpenSSL supports multiple library versions being loaded within the same process.
+> Before calling this constructor, verify your pointer value came from the same version of OpenSSL that this class uses. 
+> For more information, see <xref:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion>.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="handle" /> is <see cref="F:System.IntPtr.Zero" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="handle" /> is not a valid <c>DSA*</c>.</exception>
+        <altmember cref="P:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -98,14 +156,27 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="parameters" Type="System.Security.Cryptography.DSAParameters" />
       </Parameters>
       <Docs>
-        <param name="parameters">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="parameters">The key parameters to import.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.DSAOpenSsl" /> class and imports parameters from an existing key.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="parameters" /> is missing required fields.
+
+-or-
+
+<paramref name="parameters" /> has fields with inconsistent lengths for a valid key.
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="parameters" /> does not represent a valid DSA key parameter set.</exception>
+        <altmember cref="M:System.Security.Cryptography.DSA.Create(System.Security.Cryptography.DSAParameters)" />
+        <altmember cref="M:System.Security.Cryptography.DSA.ImportParameters(System.Security.Cryptography.DSAParameters)" />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -121,14 +192,34 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="pkeyHandle" Type="System.Security.Cryptography.SafeEvpPKeyHandle" />
       </Parameters>
       <Docs>
-        <param name="pkeyHandle">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="pkeyHandle">The OpenSSL <c>EVP_PKEY*</c> value to use as the key, represented as a <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.DSAOpenSsl" /> class from an existing OpenSSL key represented as an <c>EVP_PKEY*</c>.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+> [!IMPORTANT]
+> OpenSSL supports multiple library versions being loaded within the same process.
+> Before calling this constructor, verify your pointer value came from the same version of OpenSSL that this class uses.
+> For more information, see <xref:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion>.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="pkeyHandle" /> represents an invalid handle.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pkeyHandle" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="pkeyHandle" /> does not represent a DSA key.</exception>
+        <altmember cref="P:System.Security.Cryptography.SafeEvpPKeyHandle.OpenSslVersion" />
       </Docs>
     </Member>
     <Member MemberName="CreateSignature">
@@ -144,6 +235,8 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -152,10 +245,18 @@
         <Parameter Name="rgbHash" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="rgbHash">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="rgbHash">The hash value to be signed.</param>
+        <summary>When overridden in a derived class, creates the <see cref="T:System.Security.Cryptography.DSA" /> signature for the specified hash value.</summary>
+        <returns>The digital signature for the specified hash value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="rgbHash" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">This instance represents only a public key.
+
+-or-
+
+An error occurred during signature creation.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -171,6 +272,8 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -179,8 +282,9 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="disposing">
+          <see langword="true" /> to release managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
+        <summary>Releases the resources used by the current instance of the <see xref="T:System.Security.Cryptography.DSAOpenSsl" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -197,15 +301,26 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.SafeEvpPKeyHandle</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle" /> representation of the cryptographic key.</summary>
+        <returns>A <see cref="T:System.Security.Cryptography.SafeEvpPKeyHandle" /> representation of the cryptographic key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Each call to this method produces a new <xref:System.Security.Cryptography.SafeEvpPKeyHandle> object with its own lifetime.
+The objects returned by this method can safely be used even after this <xref:System.Security.Cryptography.DSAOpenSsl> instance has been disposed.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ExportParameters">
@@ -221,6 +336,8 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.DSAParameters</ReturnType>
@@ -229,10 +346,13 @@
         <Parameter Name="includePrivateParameters" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="includePrivateParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="includePrivateParameters">
+          <see langword="true" /> to include private parameters; otherwise, <see langword="false" />.</param>
+        <summary>Exports the <see cref="T:System.Security.Cryptography.DSAParameters" /> representing this key.</summary>
+        <returns>The DSA parameters for the current cryptographic key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="includePrivateParameters" /> is <see langword="true" />, but this instance represents only a DSA public key.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashData">
@@ -248,6 +368,8 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -257,10 +379,10 @@
         <Parameter Name="hashAlgorithm" Type="System.Security.Cryptography.HashAlgorithmName" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="data">The binary stream to hash.</param>
+        <param name="hashAlgorithm">The algorithm to use to hash the data.</param>
+        <summary>Computes the hash value of a specified binary stream by using a specified hashing algorithm.</summary>
+        <returns>The hashed data.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -277,6 +399,8 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -288,12 +412,12 @@
         <Parameter Name="hashAlgorithm" Type="System.Security.Cryptography.HashAlgorithmName" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="data">The data to be hashed.</param>
+        <param name="offset">The index of the first byte in <paramref name="data" /> that is to be hashed.</param>
+        <param name="count">The number of bytes to hash.</param>
+        <param name="hashAlgorithm">The algorithm to use to hash the data.</param>
+        <summary>When overridden in a derived class, computes the hash value of a specified portion of a byte array by using a specified hashing algorithm.</summary>
+        <returns>The hashed data.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -310,6 +434,8 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -318,9 +444,20 @@
         <Parameter Name="parameters" Type="System.Security.Cryptography.DSAParameters" />
       </Parameters>
       <Docs>
-        <param name="parameters">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="parameters">The key parameters to import.</param>
+        <summary>Imports the specified <see cref="T:System.Security.Cryptography.DSAParameters" />.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="parameters" /> is missing required fields.
+
+-or-
+
+<paramref name="parameters" /> has fields with inconsistent lengths for a valid key.
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="parameters" /> does not represent a valid DSA key parameter set.</exception>
+        <altmember cref="M:System.Security.Cryptography.DSA.Create(System.Security.Cryptography.DSAParameters)" />
+        <altmember cref="M:System.Security.Cryptography.DSA.ImportParameters(System.Security.Cryptography.DSAParameters)" />
       </Docs>
     </Member>
     <Member MemberName="KeySize">
@@ -336,14 +473,27 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the size, in bits, of the key modulus used by the asymmetric algorithm.</summary>
+        <value>The size, in bits, of the key modulus used by the asymmetric algorithm.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Setting this property to its current value has no visible effect.
+Setting this property to a new legal value discards the current key, but defers creation of a new key until one is needed.
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="value" /> is not permitted by <see cref="P:System.Security.Cryptography.DSAOpenSsl.LegalKeySizes" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="LegalKeySizes">
@@ -359,13 +509,15 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.KeySizes[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the key sizes, in bits, that are supported by the DSA algorithm.</summary>
+        <value>An array that contains the key sizes supported by the algorithm.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -382,6 +534,8 @@
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -391,11 +545,13 @@
         <Parameter Name="rgbSignature" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="rgbHash">To be added.</param>
-        <param name="rgbSignature">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="rgbHash">The signed hash.</param>
+        <param name="rgbSignature">The digital signature to be verified.</param>
+        <summary>Verifies if the specified digital signature matches the specified hash.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="rgbSignature" /> matches the signature computed using the specified hash; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="rgbHash" /> or <paramref name="rgbSignature" /> parameters are <see langword="null" />.</exception>
       </Docs>
     </Member>
   </Members>

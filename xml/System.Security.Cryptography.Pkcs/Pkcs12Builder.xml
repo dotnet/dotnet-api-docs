@@ -1,4 +1,4 @@
-﻿<Type Name="Pkcs12Builder" FullName="System.Security.Cryptography.Pkcs.Pkcs12Builder">
+<Type Name="Pkcs12Builder" FullName="System.Security.Cryptography.Pkcs.Pkcs12Builder">
   <TypeSignature Language="C#" Value="public sealed class Pkcs12Builder" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Pkcs12Builder extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Pkcs.Pkcs12Builder" />
@@ -9,13 +9,15 @@
     <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
     <AssemblyVersion>4.0.4.0</AssemblyVersion>
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Enables the creation of PKCS#12 PFX data values. This class cannot be inherited.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -30,10 +32,12 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Initializes a new value of the <see cref="T:System.Security.Cryptography.Pkcs.Pkcs12Builder" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -41,6 +45,7 @@
       <MemberSignature Language="C#" Value="public void AddSafeContentsEncrypted (System.Security.Cryptography.Pkcs.Pkcs12SafeContents safeContents, byte[] passwordBytes, System.Security.Cryptography.PbeParameters pbeParameters);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddSafeContentsEncrypted(class System.Security.Cryptography.Pkcs.Pkcs12SafeContents safeContents, unsigned int8[] passwordBytes, class System.Security.Cryptography.PbeParameters pbeParameters) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs12Builder.AddSafeContentsEncrypted(System.Security.Cryptography.Pkcs.Pkcs12SafeContents,System.Byte[],System.Security.Cryptography.PbeParameters)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddSafeContentsEncrypted (safeContents As Pkcs12SafeContents, passwordBytes As Byte(), pbeParameters As PbeParameters)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddSafeContentsEncrypted(System::Security::Cryptography::Pkcs::Pkcs12SafeContents ^ safeContents, cli::array &lt;System::Byte&gt; ^ passwordBytes, System::Security::Cryptography::PbeParameters ^ pbeParameters);" />
       <MemberSignature Language="F#" Value="member this.AddSafeContentsEncrypted : System.Security.Cryptography.Pkcs.Pkcs12SafeContents * byte[] * System.Security.Cryptography.PbeParameters -&gt; unit" Usage="pkcs12Builder.AddSafeContentsEncrypted (safeContents, passwordBytes, pbeParameters)" />
       <MemberType>Method</MemberType>
@@ -48,6 +53,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -58,17 +65,34 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="safeContents">To be added.</param>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="safeContents">The contents to add to the PFX.</param>
+        <param name="passwordBytes">The byte array to use as a password when encrypting the contents.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the contents.</param>
+        <summary>Add contents to the PFX in an bundle encrypted with a byte-based password from a byte array.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`.
+ This enables compatibility with other systems which use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+
+ The contents of `safeContents` are read during the call to this method, encrypted, and stored internally as encrypted content.
+ Any changes to the <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeContents> or any <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag> it references made after this method call are not reflected in the final output.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="safeContents" /> or <paramref name="pbeParameters" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="safeContents" /> parameter value is already encrypted.</exception>
+        <exception cref="T:System.InvalidOperationException">The PFX is already sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="true" />).</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="pbeParameters" /> indicates that <see cref="F:System.Security.Cryptography.PbeEncryptionAlgorithm.TripleDes3KeyPkcs12" /> should be used, which requires <see cref="T:System.Char" />-based passwords.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddSafeContentsEncrypted">
       <MemberSignature Language="C#" Value="public void AddSafeContentsEncrypted (System.Security.Cryptography.Pkcs.Pkcs12SafeContents safeContents, ReadOnlySpan&lt;byte&gt; passwordBytes, System.Security.Cryptography.PbeParameters pbeParameters);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddSafeContentsEncrypted(class System.Security.Cryptography.Pkcs.Pkcs12SafeContents safeContents, valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; passwordBytes, class System.Security.Cryptography.PbeParameters pbeParameters) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs12Builder.AddSafeContentsEncrypted(System.Security.Cryptography.Pkcs.Pkcs12SafeContents,System.ReadOnlySpan{System.Byte},System.Security.Cryptography.PbeParameters)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddSafeContentsEncrypted (safeContents As Pkcs12SafeContents, passwordBytes As ReadOnlySpan(Of Byte), pbeParameters As PbeParameters)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddSafeContentsEncrypted(System::Security::Cryptography::Pkcs::Pkcs12SafeContents ^ safeContents, ReadOnlySpan&lt;System::Byte&gt; passwordBytes, System::Security::Cryptography::PbeParameters ^ pbeParameters);" />
       <MemberSignature Language="F#" Value="member this.AddSafeContentsEncrypted : System.Security.Cryptography.Pkcs.Pkcs12SafeContents * ReadOnlySpan&lt;byte&gt; * System.Security.Cryptography.PbeParameters -&gt; unit" Usage="pkcs12Builder.AddSafeContentsEncrypted (safeContents, passwordBytes, pbeParameters)" />
       <MemberType>Method</MemberType>
@@ -76,6 +100,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -86,17 +112,34 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="safeContents">To be added.</param>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="safeContents">The contents to add to the PFX.</param>
+        <param name="passwordBytes">The byte span to use as a password when encrypting the contents.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the contents.</param>
+        <summary>Add contents to the PFX in an bundle encrypted with a byte-based password from a span.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`.
+ This enables compatibility with other systems which use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+
+ The contents of `safeContents` are read during the call to this method, encrypted, and stored internally as encrypted content.
+ Any changes to the <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeContents> or any <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag> it references made after this method call are not reflected in the final output.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="safeContents" /> or <paramref name="pbeParameters" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="safeContents" /> parameter value is already encrypted.</exception>
+        <exception cref="T:System.InvalidOperationException">The PFX is already sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="true" />).</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="pbeParameters" /> indicates that <see cref="F:System.Security.Cryptography.PbeEncryptionAlgorithm.TripleDes3KeyPkcs12" /> should be used, which requires <see cref="T:System.Char" />-based passwords.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddSafeContentsEncrypted">
       <MemberSignature Language="C#" Value="public void AddSafeContentsEncrypted (System.Security.Cryptography.Pkcs.Pkcs12SafeContents safeContents, ReadOnlySpan&lt;char&gt; password, System.Security.Cryptography.PbeParameters pbeParameters);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddSafeContentsEncrypted(class System.Security.Cryptography.Pkcs.Pkcs12SafeContents safeContents, valuetype System.ReadOnlySpan`1&lt;char&gt; password, class System.Security.Cryptography.PbeParameters pbeParameters) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs12Builder.AddSafeContentsEncrypted(System.Security.Cryptography.Pkcs.Pkcs12SafeContents,System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddSafeContentsEncrypted (safeContents As Pkcs12SafeContents, password As ReadOnlySpan(Of Char), pbeParameters As PbeParameters)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddSafeContentsEncrypted(System::Security::Cryptography::Pkcs::Pkcs12SafeContents ^ safeContents, ReadOnlySpan&lt;char&gt; password, System::Security::Cryptography::PbeParameters ^ pbeParameters);" />
       <MemberSignature Language="F#" Value="member this.AddSafeContentsEncrypted : System.Security.Cryptography.Pkcs.Pkcs12SafeContents * ReadOnlySpan&lt;char&gt; * System.Security.Cryptography.PbeParameters -&gt; unit" Usage="pkcs12Builder.AddSafeContentsEncrypted (safeContents, password, pbeParameters)" />
       <MemberType>Method</MemberType>
@@ -104,6 +147,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -114,17 +159,31 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="safeContents">To be added.</param>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="safeContents">The contents to add to the PFX.</param>
+        <param name="password">The span to use as a password when encrypting the contents.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the contents.</param>
+        <summary>Add contents to the PFX in an bundle encrypted with a char-based password from a span.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When `pbeParameters` indicates an algorithm that uses PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+
+ The contents of `safeContents` are read during the call to this method, encrypted, and stored internally as encrypted content.
+ Any changes to the <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeContents> or any <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag> it references made after this method call are not reflected in the final output.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="safeContents" /> or <paramref name="pbeParameters" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="safeContents" /> parameter value is already encrypted.</exception>
+        <exception cref="T:System.InvalidOperationException">The PFX is already sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="true" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="AddSafeContentsEncrypted">
       <MemberSignature Language="C#" Value="public void AddSafeContentsEncrypted (System.Security.Cryptography.Pkcs.Pkcs12SafeContents safeContents, string password, System.Security.Cryptography.PbeParameters pbeParameters);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddSafeContentsEncrypted(class System.Security.Cryptography.Pkcs.Pkcs12SafeContents safeContents, string password, class System.Security.Cryptography.PbeParameters pbeParameters) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs12Builder.AddSafeContentsEncrypted(System.Security.Cryptography.Pkcs.Pkcs12SafeContents,System.String,System.Security.Cryptography.PbeParameters)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddSafeContentsEncrypted (safeContents As Pkcs12SafeContents, password As String, pbeParameters As PbeParameters)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddSafeContentsEncrypted(System::Security::Cryptography::Pkcs::Pkcs12SafeContents ^ safeContents, System::String ^ password, System::Security::Cryptography::PbeParameters ^ pbeParameters);" />
       <MemberSignature Language="F#" Value="member this.AddSafeContentsEncrypted : System.Security.Cryptography.Pkcs.Pkcs12SafeContents * string * System.Security.Cryptography.PbeParameters -&gt; unit" Usage="pkcs12Builder.AddSafeContentsEncrypted (safeContents, password, pbeParameters)" />
       <MemberType>Method</MemberType>
@@ -132,6 +191,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -142,11 +203,24 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="safeContents">To be added.</param>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="safeContents">The contents to add to the PFX.</param>
+        <param name="password">The string to use as a password when encrypting the contents.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the contents.</param>
+        <summary>Add contents to the PFX in an bundle encrypted with a char-based password from a string.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When `pbeParameters` indicates an algorithm that uses PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+
+ The contents of `safeContents` are read during the call to this method, encrypted, and stored internally as encrypted content.
+ Any changes to the <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeContents> or any <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag> it references made after this method call are not reflected in the final output.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="safeContents" /> or <paramref name="pbeParameters" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="safeContents" /> parameter value is already encrypted.</exception>
+        <exception cref="T:System.InvalidOperationException">The PFX is already sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="true" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="AddSafeContentsUnencrypted">
@@ -161,6 +235,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -169,9 +245,21 @@
         <Parameter Name="safeContents" Type="System.Security.Cryptography.Pkcs.Pkcs12SafeContents" />
       </Parameters>
       <Docs>
-        <param name="safeContents">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="safeContents">The contents to add to the PFX.</param>
+        <summary>Add contents to the PFX without encrypting them.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If the `safeContents` value is already encrypted, this method adds it to the PFX as-is.
+
+ The contents of `safeContents` are read during the call to this method, and stored internally as the encoded form of their content.
+ Any changes to the <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeContents> or any <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag> it references made after this method call are not reflected in the final output.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="safeContents" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The PFX is already sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="true" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="Encode">
@@ -186,15 +274,20 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Encodes the contents of a sealed PFX and returns it as a byte array.</summary>
+        <returns>A byte array representing the encoded form of the PFX.</returns>
         <remarks>To be added.</remarks>
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs12Builder.SealWithMac" />
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Pkcs12Builder.SealWithoutIntegrity" />
+        <exception cref="T:System.InvalidOperationException">The PFX is not sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="false" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="IsSealed">
@@ -209,14 +302,18 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the PFX data has been sealed.</summary>
+        <value>A value that indicates whether the PFX data has been sealed.</value>
         <remarks>To be added.</remarks>
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs12Builder.SealWithMac" />
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Pkcs12Builder.SealWithoutIntegrity" />
       </Docs>
     </Member>
     <Member MemberName="SealWithMac">
@@ -231,6 +328,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -241,11 +340,25 @@
         <Parameter Name="iterationCount" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="iterationCount">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use as a key for computing the MAC.</param>
+        <param name="hashAlgorithm">The hash algorithm to use when computing the MAC.</param>
+        <param name="iterationCount">The iteration count for the Key Derivation Function (KDF) used in computing the MAC.</param>
+        <summary>Seals the PFX against further changes by applying a password-based Message Authentication Code (MAC) over the contents with a password from a span.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+ Any hash algorithm that this method accepts can be processed by the <xref:System.Security.Cryptography.Pkcs.Pkcs12Info> class.
+ Some choices of hash algorithm may cause failures in <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor%2A> or <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import%2A?displayProperty=nameWithType> on some operating systems, because these methods depend on system libraries for support.
+
+ The hash algorithm used on a fresh installation of Windows 7 when exporting via <xref:System.Security.Cryptography.X509Certificates.X509Certificate.Export%2A?displayProperty=nameWithtype> as a PKCS#12 PFX is <xref:System.Security.Cryptography.HashAlgorithmName.SHA1> with an iteration count of 2000.
+ Due to collision problems with SHA1, Microsoft recommends a security model based on SHA256 or better; however, some PFX readers may only support SHA1.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="iterationCount" /> parameter is less than or equal to 0.</exception>
+        <exception cref="T:System.InvalidOperationException">The PFX is already sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="true" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="SealWithMac">
@@ -260,6 +373,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -270,11 +385,25 @@
         <Parameter Name="iterationCount" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="iterationCount">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use as a key for computing the MAC.</param>
+        <param name="hashAlgorithm">The hash algorithm to use when computing the MAC.</param>
+        <param name="iterationCount">The iteration count for the Key Derivation Function (KDF) used in computing the MAC.</param>
+        <summary>Seals the PFX against further changes by applying a password-based Message Authentication Code (MAC) over the contents with a password from a string.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+ Any hash algorithm that this method accepts can be processed by the <xref:System.Security.Cryptography.Pkcs.Pkcs12Info> class.
+ Some choices of hash algorithm may cause failures in <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor%2A> or <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import%2A?displayProperty=nameWithType> on some operating systems, because these methods depend on system libraries for support.
+
+ The hash algorithm used on a fresh installation of Windows 7 when exporting via <xref:System.Security.Cryptography.X509Certificates.X509Certificate.Export%2A?displayProperty=nameWithType> as a PKCS#12 PFX is <xref:System.Security.Cryptography.HashAlgorithmName.SHA1> with an iteration count of 2000.
+ Due to collision problems with SHA1, Microsoft recommends a security model based on SHA256 or better; however, some PFX readers may only support SHA1.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="iterationCount" /> parameter is less than or equal to 0.</exception>
+        <exception cref="T:System.InvalidOperationException">The PFX is already sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="true" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="SealWithoutIntegrity">
@@ -289,14 +418,26 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Seals the PFX from further changes without applying tamper-protection.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+ This method exists for compatibility with the PKCS#12 specification, but its use is not recommended for purposes other than testing.
+ When building a PFX that can be used by the overloads of <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor%2A> or <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import%2A?displayProperty=nameWithType> which do not accept a password parameter, use the <xref:System.Security.Cryptography.Pkcs.Pkcs12Builder.SealWithMac(System.String,System.Security.Cryptography.HashAlgorithmName,System.Int32)> method with <xref:System.String.Empty?displayProperty=nameWithType> as the password.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The PFX is already sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="true" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="TryEncode">
@@ -305,12 +446,14 @@
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs12Builder.TryEncode(System.Span{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEncode (destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncode(Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="member this.TryEncode : Span&lt;byte&gt; *  -&gt; bool" Usage="pkcs12Builder.TryEncode (destination, bytesWritten)" />
+      <MemberSignature Language="F#" Value="member this.TryEncode : Span&lt;byte&gt; * int -&gt; bool" Usage="pkcs12Builder.TryEncode (destination, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -320,11 +463,13 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The byte span to receive the PKCS#12 PFX data.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to encode the contents of a sealed PFX into a provided buffer.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is big enough to receive the output; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The PFX is not sealed (<see cref="P:System.Security.Cryptography.Pkcs.Pkcs12Builder.IsSealed" /> is <see langword="false" />).</exception>
       </Docs>
     </Member>
   </Members>

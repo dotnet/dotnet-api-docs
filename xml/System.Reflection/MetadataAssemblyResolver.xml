@@ -1,4 +1,4 @@
-﻿<Type Name="MetadataAssemblyResolver" FullName="System.Reflection.MetadataAssemblyResolver">
+<Type Name="MetadataAssemblyResolver" FullName="System.Reflection.MetadataAssemblyResolver">
   <TypeSignature Language="C#" Value="public abstract class MetadataAssemblyResolver" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit MetadataAssemblyResolver extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Reflection.MetadataAssemblyResolver" />
@@ -8,13 +8,15 @@
   <AssemblyInfo>
     <AssemblyName>System.Reflection.MetadataLoadContext</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.0.1.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides the base class for binding algorithms used by <see cref="T:System.Reflection.MetadataLoadContext" />.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -28,10 +30,12 @@
       <AssemblyInfo>
         <AssemblyName>System.Reflection.MetadataLoadContext</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Initializes an instance of <see cref="T:System.Reflection.MetadataAssemblyResolver" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -39,12 +43,15 @@
       <MemberSignature Language="C#" Value="public abstract System.Reflection.Assembly Resolve (System.Reflection.MetadataLoadContext context, System.Reflection.AssemblyName assemblyName);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Reflection.Assembly Resolve(class System.Reflection.MetadataLoadContext context, class System.Reflection.AssemblyName assemblyName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Reflection.MetadataAssemblyResolver.Resolve(System.Reflection.MetadataLoadContext,System.Reflection.AssemblyName)" />
+      <MemberSignature Language="VB.NET" Value="Public MustOverride Function Resolve (context As MetadataLoadContext, assemblyName As AssemblyName) As Assembly" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; abstract System::Reflection::Assembly ^ Resolve(System::Reflection::MetadataLoadContext ^ context, System::Reflection::AssemblyName ^ assemblyName);" />
       <MemberSignature Language="F#" Value="abstract member Resolve : System.Reflection.MetadataLoadContext * System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="metadataAssemblyResolver.Resolve (context, assemblyName)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Reflection.MetadataLoadContext</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.Assembly</ReturnType>
@@ -54,11 +61,29 @@
         <Parameter Name="assemblyName" Type="System.Reflection.AssemblyName" />
       </Parameters>
       <Docs>
-        <param name="context">To be added.</param>
-        <param name="assemblyName">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="context">The metadata load context object that represents the closed universe of <see cref="T:System.Type" /> objects loaded for inspection-only purposes.</param>
+        <param name="assemblyName">The name of the assembly.</param>
+        <summary>Returns an assembly from a given assembly name.</summary>
+        <returns>The assembly for the provided <paramref name="assemblyName" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Binding an assembly name to an assembly occurs when <xref:System.Reflection.MetadataLoadContext.LoadFromAssemblyName%2A> is called or when a type from one assembly has a dependency on another assembly. The handler that overrides `Resolve` should use <xref:System.Reflection.MetadataLoadContext.LoadFromStream%2A?displayProperty=nameWithType>, <xref:System.Reflection.MetadataLoadContext.LoadFromAssemblyPath%2A?displayProperty=nameWithType> or <xref:System.Reflection.MetadataLoadContext.LoadFromByteArray%2A?displayProperty=nameWithType> to load the requested assembly and return it.
+
+To indicate the failure to find an assembly, the handler should return `null` rather than throwing an exception. Returning `null` commits the failure so that future attempts to load that name will fail without re-invoking the handler.
+
+If the handler throws an exception, the exception will be passed through to the application that invoked the operation that triggered the binding. The <xref:System.Reflection.MetadataLoadContext> will not catch it, and no binding will occur.
+
+The handler will generally not be called more than once for the same name, unless two threads race to load the same assembly. Even in that case, one result will win and be atomically bound to the name.
+
+The <xref:System.Reflection.MetadataLoadContext> intentionally performs no ref-def matching on the returned assembly as what constitutes a ref-def match is a policy. It is also the kind of arbitrary restriction that <xref:System.Reflection.MetadataLoadContext> strives to avoid.
+
+The <xref:System.Reflection.MetadataLoadContext> cannot consume assemblies from other metadata load contexts or other type providers (such as the underlying runtime's own reflection system). If a handler returns such an assembly, the <xref:System.Reflection.MetadataLoadContext> throws a <xref:System.IO.FileLoadException>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

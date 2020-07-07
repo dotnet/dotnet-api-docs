@@ -1,0 +1,125 @@
+<Type Name="LoggingEventSource" FullName="Microsoft.Extensions.Logging.EventSource.LoggingEventSource">
+  <TypeSignature Language="C#" Value="public sealed class LoggingEventSource : System.Diagnostics.Tracing.EventSource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit LoggingEventSource extends System.Diagnostics.Tracing.EventSource" />
+  <TypeSignature Language="DocId" Value="T:Microsoft.Extensions.Logging.EventSource.LoggingEventSource" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class LoggingEventSource&#xA;Inherits EventSource" />
+  <TypeSignature Language="C++ CLI" Value="public ref class LoggingEventSource sealed : System::Diagnostics::Tracing::EventSource" />
+  <TypeSignature Language="F#" Value="type LoggingEventSource = class&#xA;    inherit EventSource" />
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Extensions.Logging.EventSource</AssemblyName>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Diagnostics.Tracing.EventSource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Diagnostics.Tracing.EventSource(Name="Microsoft-Extensions-Logging")</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>The LoggingEventSource is the bridge from all ILogger based logging to EventSource/EventListener logging.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+You turn this logging on by enabling the EventSource called `Microsoft-Extensions-Logging`.
+            
+When you enabled the EventSource, the EventLevel you set is translated in the obvious way to the level
+associated with the ILogger (thus Debug = verbose, Informational = Informational ... Critical == Critical)
+            
+This allows you to filter by event level in a straightforward way.
+            
+For finer control you can specify a EventSource Argument called `FilterSpecs`.
+            
+The `FilterSpecs` argument is a semicolon separated list of specifications. Where each specification is
+
+```
+SPEC =                          // empty spec, same as *
+     | NAME                     // Just a name the level is the default level
+     | NAME : LEVEL            // specifies level for a particular logger (can have a * suffix).
+```
+            
+Where Name is the name of a ILoggger (case matters), Name can have a \* which acts as a wildcard
+AS A SUFFIX. Thus, Net\* will match any loggers that start with the 'Net'.
+            
+The LEVEL is a number or a LogLevel string. 0=Trace, 1=Debug, 2=Information, 3=Warning,  4=Error, Critical=5
+This specifies the level for the associated pattern.  If the number is not specified, (first form
+of the specification) it is the default level for the EventSource.
+            
+First match is used if a particular name matches more than one pattern.
+            
+In addition to the level and FilterSpec argument, you can also set EventSource Keywords. See the Keywords
+definition below, but basically you get to decide if you wish to have
+            
+* Keywords.Message - You get the event with the data in parsed form.
+* Keywords.JsonMessage - you get an event with the data in parse form but as a JSON blob (not broken up by argument ...)
+* Keywords.FormattedMessage - you get an event with the data formatted as a string
+            
+It is expected that you will turn only one of these keywords on at a time, but you can turn them all on and get
+the same data logged three different ways.
+            
+## Examples
+            
+The following example shows how to use an EventListener to get ILogging information:
+            
+```csharp
+class MyEventListener : EventListener 
+{
+    protected override void OnEventSourceCreated(EventSource eventSource) 
+    {
+        if (eventSource.Name == "Microsoft-Extensions-Logging") 
+        {
+            // initialize a string, string dictionary of arguments to pass to the EventSource.
+            // Turn on loggers matching App* to Information, everything else (*) is the default level (which is EventLevel.Error)
+            var args = new Dictionary&lt;string, string&gt;() { { "FilterSpecs", "App*:Information;*" } };
+            // Set the default level (verbosity) to Error, and only ask for the formatted messages in this case.
+            EnableEvents(eventSource, EventLevel.Error, LoggingEventSource.Keywords.FormattedMessage, args);
+        }
+    }
+
+    protected override void OnEventWritten(EventWrittenEventArgs eventData) 
+    {
+        // Look for the formatted message event, which has the following argument layout (as defined in the LoggingEventSource.
+        // FormattedMessage(LogLevel Level, int FactoryID, string LoggerName, string EventId, string FormattedMessage);
+        if (eventData.EventName == "FormattedMessage")
+            Console.WriteLine("Logger {0}: {1}", eventData.Payload[2], eventData.Payload[4]);
+    }
+}
+```
+
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="OnEventCommand">
+      <MemberSignature Language="C#" Value="protected override void OnEventCommand (System.Diagnostics.Tracing.EventCommandEventArgs command);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void OnEventCommand(class System.Diagnostics.Tracing.EventCommandEventArgs command) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.Logging.EventSource.LoggingEventSource.OnEventCommand(System.Diagnostics.Tracing.EventCommandEventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Sub OnEventCommand (command As EventCommandEventArgs)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override void OnEventCommand(System::Diagnostics::Tracing::EventCommandEventArgs ^ command);" />
+      <MemberSignature Language="F#" Value="override this.OnEventCommand : System.Diagnostics.Tracing.EventCommandEventArgs -&gt; unit" Usage="loggingEventSource.OnEventCommand command" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Logging.EventSource</AssemblyName>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
+        <AssemblyVersion>3.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="command" Type="System.Diagnostics.Tracing.EventCommandEventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="command">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

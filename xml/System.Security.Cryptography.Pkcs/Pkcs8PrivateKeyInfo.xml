@@ -1,4 +1,4 @@
-﻿<Type Name="Pkcs8PrivateKeyInfo" FullName="System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo">
+<Type Name="Pkcs8PrivateKeyInfo" FullName="System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo">
   <TypeSignature Language="C#" Value="public sealed class Pkcs8PrivateKeyInfo" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Pkcs8PrivateKeyInfo extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo" />
@@ -9,18 +9,20 @@
     <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
     <AssemblyVersion>4.0.4.0</AssemblyVersion>
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Enables the inspection of and creation of PKCS#8 PrivateKeyInfo and EncryptedPrivateKeyInfo values. This class cannot be inherited.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Pkcs8PrivateKeyInfo (System.Security.Cryptography.Oid algorithmId, Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt; algorithmParameters, ReadOnlyMemory&lt;byte&gt; privateKey, bool skipCopies = false);" />
+      <MemberSignature Language="C#" Value="public Pkcs8PrivateKeyInfo (System.Security.Cryptography.Oid algorithmId, ReadOnlyMemory&lt;byte&gt;? algorithmParameters, ReadOnlyMemory&lt;byte&gt; privateKey, bool skipCopies = false);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Security.Cryptography.Oid algorithmId, valuetype System.Nullable`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; algorithmParameters, valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; privateKey, bool skipCopies) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.#ctor(System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.ReadOnlyMemory{System.Byte},System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (algorithmId As Oid, algorithmParameters As Nullable(Of ReadOnlyMemory(Of Byte)), privateKey As ReadOnlyMemory(Of Byte), Optional skipCopies As Boolean = false)" />
@@ -30,6 +32,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="algorithmId" Type="System.Security.Cryptography.Oid" />
@@ -38,12 +42,32 @@
         <Parameter Name="skipCopies" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="algorithmId">To be added.</param>
-        <param name="algorithmParameters">To be added.</param>
-        <param name="privateKey">To be added.</param>
-        <param name="skipCopies">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="algorithmId">The Object Identifier (OID) identifying the asymmetric algorithm this key is for.</param>
+        <param name="algorithmParameters">The BER-encoded algorithm parameters associated with this key, or <see langword="null" /> to omit algorithm parameters when encoding.</param>
+        <param name="privateKey">The algorithm-specific encoded private key.</param>
+        <param name="skipCopies">
+          <see langword="true" /> to store <paramref name="algorithmParameters" /> and <paramref name="privateKey" /> without making a defensive copy; otherwise, <see langword="false" />. The default is <see langword="false" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo" /> class.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+No validation is done on the `privateKey` parameter; not all algorithms require a BER-encoded value.
+
+The default behavior of this constructor is to make a defensive copy of both the `algorithmParameters` and the `privateKey` parameters.
+When the `skipCopies` parameter is `true`, this defensive copy is skipped.
+If the defensive copy is skipped and the contents of either `algorithmParameters` or `privateKey` change during the lifetime of the returned value or of any object produced by its
+methods or properties, then methods and properties on those objects may produce nonsense results or throw exceptions due to the corrupted state.
+Callers are therefore advised to only use a `true` value for the `skipCopies` parameter when they can be reasonably assured that the data will stay intact.
+    
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="algorithmId" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="algorithmParameters" /> parameter is not <see langword="null" />, empty, or a single BER-encoded value.</exception>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Create(System.Security.Cryptography.AsymmetricAlgorithm)" />
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Decode" />
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.DecryptAndDecode" />
       </Docs>
     </Member>
     <Member MemberName="AlgorithmId">
@@ -58,18 +82,20 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Oid</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the Object Identifier (OID) value identifying the algorithm this key is for.</summary>
+        <value>The Object Identifier (OID) value identifying the algorithm this key is for.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="AlgorithmParameters">
-      <MemberSignature Language="C#" Value="public Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt; AlgorithmParameters { get; }" />
+      <MemberSignature Language="C#" Value="public ReadOnlyMemory&lt;byte&gt;? AlgorithmParameters { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; AlgorithmParameters" />
       <MemberSignature Language="DocId" Value="P:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.AlgorithmParameters" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property AlgorithmParameters As Nullable(Of ReadOnlyMemory(Of Byte))" />
@@ -80,13 +106,15 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Nullable&lt;System.ReadOnlyMemory&lt;System.Byte&gt;&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a memory value containing the BER-encoded algorithm parameters associated with this key.</summary>
+        <value>A memory value containing the BER-encoded algorithm parameters associated with this key, or <see langword="null" /> if no parameters were present.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -102,13 +130,15 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.CryptographicAttributeObjectCollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the modifiable collection of attributes for this private key.</summary>
+        <value>The modifiable collection of attributes to encode with the private key.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -124,6 +154,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo</ReturnType>
@@ -132,10 +164,13 @@
         <Parameter Name="privateKey" Type="System.Security.Cryptography.AsymmetricAlgorithm" />
       </Parameters>
       <Docs>
-        <param name="privateKey">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="privateKey">The private key to represent in a PKCS#8 PrivateKeyInfo.</param>
+        <summary>Exports a specified key as a PKCS#8 PrivateKeyInfo and returns its decoded interpretation.</summary>
+        <returns>The decoded interpretation of the exported PKCS#8 PrivateKeyInfo.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="privateKey" /> parameter is <see langword="null" />.</exception>
+        <altmember cref="M:System.Security.Cryptography.AsymmetricAlgorithm.ExportPkcs8PrivateKey" />
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Decode" />
       </Docs>
     </Member>
     <Member MemberName="Decode">
@@ -143,12 +178,14 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo Decode(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; source, [out] int32&amp; bytesRead, bool skipCopy) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Decode(System.ReadOnlyMemory{System.Byte},System.Int32@,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Decode (source As ReadOnlyMemory(Of Byte), ByRef bytesRead As Integer, Optional skipCopy As Boolean = false) As Pkcs8PrivateKeyInfo" />
-      <MemberSignature Language="F#" Value="static member Decode : ReadOnlyMemory&lt;byte&gt; *  * bool -&gt; System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo" Usage="System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Decode (source, bytesRead, skipCopy)" />
+      <MemberSignature Language="F#" Value="static member Decode : ReadOnlyMemory&lt;byte&gt; * int * bool -&gt; System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo" Usage="System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Decode (source, bytesRead, skipCopy)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo</ReturnType>
@@ -159,12 +196,25 @@
         <Parameter Name="skipCopy" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="bytesRead">To be added.</param>
-        <param name="skipCopy">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">The data to interpret as a PKCS#8 PrivateKeyInfo value.</param>
+        <param name="bytesRead">When this method returns, contains a value that indicates the number of bytes read from <paramref name="source" />. This parameter is treated as uninitialized.</param>
+        <param name="skipCopy">
+          <see langword="true" /> to store <paramref name="source" /> without making a defensive copy; otherwise, <see langword="false" />. The default is <see langword="false" />.</param>
+        <summary>Reads the provided data as a PKCS#8 PrivateKeyInfo and returns an object view of the contents.</summary>
+        <returns>An object view of the contents decoded as a PKCS#8 PrivateKeyInfo.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks
+ The default behavior of this method is to make a defensive copy of the first `bytesConsumed` bytes from `source`.
+ When the `skipCopy` parameter is `true`, this defensive copy is skipped.
+ If the defensive copy is skipped and the contents of the first `bytesConsumed` bytes of `source` change during the lifetime of the returned value or of any object produced by its
+ methods or properties, then methods and properties on those objects may produce nonsense results or throw exceptions due to the corrupted state.
+ Callers are therefore advised to only use a `true` value for the `skipCopy` parameter when they can be reasonably assured that the data will stay intact.
+ 
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of the <paramref name="source" /> parameter were not successfully decoded as a PKCS#8 PrivateKeyInfo.</exception>
       </Docs>
     </Member>
     <Member MemberName="DecryptAndDecode">
@@ -173,12 +223,14 @@
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.DecryptAndDecode(System.ReadOnlySpan{System.Byte},System.ReadOnlyMemory{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecryptAndDecode (passwordBytes As ReadOnlySpan(Of Byte), source As ReadOnlyMemory(Of Byte), ByRef bytesRead As Integer) As Pkcs8PrivateKeyInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Security::Cryptography::Pkcs::Pkcs8PrivateKeyInfo ^ DecryptAndDecode(ReadOnlySpan&lt;System::Byte&gt; passwordBytes, ReadOnlyMemory&lt;System::Byte&gt; source, [Runtime::InteropServices::Out] int % bytesRead);" />
-      <MemberSignature Language="F#" Value="static member DecryptAndDecode : ReadOnlySpan&lt;byte&gt; * ReadOnlyMemory&lt;byte&gt; *  -&gt; System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo" Usage="System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.DecryptAndDecode (passwordBytes, source, bytesRead)" />
+      <MemberSignature Language="F#" Value="static member DecryptAndDecode : ReadOnlySpan&lt;byte&gt; * ReadOnlyMemory&lt;byte&gt; * int -&gt; System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo" Usage="System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.DecryptAndDecode (passwordBytes, source, bytesRead)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo</ReturnType>
@@ -189,13 +241,34 @@
         <Parameter Name="bytesRead" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="source">To be added.</param>
-        <param name="bytesRead">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="passwordBytes">The bytes to use as a password when decrypting the key material.</param>
+        <param name="source">The data to read as a PKCS#8 EncryptedPrivateKeyInfo structure in the ASN.1-BER encoding.</param>
+        <param name="bytesRead">When this method returns, contains a value that indicates the number of bytes read from <paramref name="source" />. This parameter is treated as uninitialized.</param>
+        <summary>Decrypts the provided data using the provided byte-based password and decodes the output into an object view of the PKCS#8 PrivateKeyInfo.</summary>
+        <returns>An object view of the contents decrypted decoded as a PKCS#8 PrivateKeyInfo.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`.
+ This enables compatibility with other systems which use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+
+ This method only supports the binary (BER/CER/DER) encoding of EncryptedPrivateKeyInfo.
+ If the value is Base64-encoded or in the PEM text format, the caller must Base64-decode the contents before calling this method.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The password is incorrect.
+
+-or-
+
+The contents of <paramref name="source" /> indicate the Key Derivation Function (KDF) to apply is the legacy PKCS#12 KDF, which requires <see cref="T:System.Char" />-based passwords.
+
+-or-
+
+The contents of <paramref name="source" /> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.</exception>
       </Docs>
+      <altmember cref="M:System.Security.Cryptography.AsymmetricAlgorithm.ImportPkcs8PrivateKey" />
     </Member>
     <Member MemberName="DecryptAndDecode">
       <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo DecryptAndDecode (ReadOnlySpan&lt;char&gt; password, ReadOnlyMemory&lt;byte&gt; source, out int bytesRead);" />
@@ -203,12 +276,14 @@
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.DecryptAndDecode(System.ReadOnlySpan{System.Char},System.ReadOnlyMemory{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecryptAndDecode (password As ReadOnlySpan(Of Char), source As ReadOnlyMemory(Of Byte), ByRef bytesRead As Integer) As Pkcs8PrivateKeyInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Security::Cryptography::Pkcs::Pkcs8PrivateKeyInfo ^ DecryptAndDecode(ReadOnlySpan&lt;char&gt; password, ReadOnlyMemory&lt;System::Byte&gt; source, [Runtime::InteropServices::Out] int % bytesRead);" />
-      <MemberSignature Language="F#" Value="static member DecryptAndDecode : ReadOnlySpan&lt;char&gt; * ReadOnlyMemory&lt;byte&gt; *  -&gt; System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo" Usage="System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.DecryptAndDecode (password, source, bytesRead)" />
+      <MemberSignature Language="F#" Value="static member DecryptAndDecode : ReadOnlySpan&lt;char&gt; * ReadOnlyMemory&lt;byte&gt; * int -&gt; System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo" Usage="System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.DecryptAndDecode (password, source, bytesRead)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo</ReturnType>
@@ -219,12 +294,23 @@
         <Parameter Name="bytesRead" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="source">To be added.</param>
-        <param name="bytesRead">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use when decrypting the key material.</param>
+        <param name="source">The bytes of a PKCS#8 EncryptedPrivateKeyInfo structure in the ASN.1-BER encoding.</param>
+        <param name="bytesRead">When this method returns, contains a value that indicates the number of bytes read from <paramref name="source" />. This parameter is treated as uninitialized.</param>
+        <summary>Decrypts the provided data using the provided character-based password and decodes the output into an object view of the PKCS#8 PrivateKeyInfo.</summary>
+        <returns>An object view of the contents decrypted decoded as a PKCS#8 PrivateKeyInfo.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When the contents of `source` indicate an algorithm that uses PBKDF1 (Password-Based Key Derivation Function 1) or PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+
+ This method only supports the binary (BER/CER/DER) encoding of EncryptedPrivateKeyInfo.
+ If the value is Base64-encoded or in the PEM text format, the caller must Base64-decode the contents before calling this method.
+
+ ]]></format>
+        </remarks>
+        <altmember cref="Overload:System.Security.Cryptography.AsymmetricAlgorithm.ImportEncryptedPkcs8PrivateKey" />
       </Docs>
     </Member>
     <Member MemberName="Encode">
@@ -239,21 +325,25 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Encodes the property data of this instance as a PKCS#8 PrivateKeyInfo and returns the encoding as a byte array.</summary>
+        <returns>A byte array representing the encoded form of the PKCS#8 PrivateKeyInfo.</returns>
         <remarks>To be added.</remarks>
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.TryEncode" />
       </Docs>
     </Member>
     <Member MemberName="Encrypt">
       <MemberSignature Language="C#" Value="public byte[] Encrypt (ReadOnlySpan&lt;byte&gt; passwordBytes, System.Security.Cryptography.PbeParameters pbeParameters);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance unsigned int8[] Encrypt(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; passwordBytes, class System.Security.Cryptography.PbeParameters pbeParameters) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Encrypt(System.ReadOnlySpan{System.Byte},System.Security.Cryptography.PbeParameters)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Encrypt (passwordBytes As ReadOnlySpan(Of Byte), pbeParameters As PbeParameters) As Byte()" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; cli::array &lt;System::Byte&gt; ^ Encrypt(ReadOnlySpan&lt;System::Byte&gt; passwordBytes, System::Security::Cryptography::PbeParameters ^ pbeParameters);" />
       <MemberSignature Language="F#" Value="member this.Encrypt : ReadOnlySpan&lt;byte&gt; * System.Security.Cryptography.PbeParameters -&gt; byte[]" Usage="pkcs8PrivateKeyInfo.Encrypt (passwordBytes, pbeParameters)" />
       <MemberType>Method</MemberType>
@@ -261,6 +351,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -270,17 +362,29 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="passwordBytes">The bytes to use as a password when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>Produces a PKCS#8 EncryptedPrivateKeyInfo from the property contents of this object after encrypting with the specified byte-based password and encryption parameters.</summary>
+        <returns>A byte array containing the encoded form of the PKCS#8 EncryptedPrivateKeyInfo.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`.
+ This enables compatibility with other systems which use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="pbeParameters" /> indicates that <see cref="F:System.Security.Cryptography.PbeEncryptionAlgorithm.TripleDes3KeyPkcs12" /> should be used, which requires <see cref="T:System.Char" />-based passwords.</exception>
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.TryEncrypt" />
       </Docs>
     </Member>
     <Member MemberName="Encrypt">
       <MemberSignature Language="C#" Value="public byte[] Encrypt (ReadOnlySpan&lt;char&gt; password, System.Security.Cryptography.PbeParameters pbeParameters);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance unsigned int8[] Encrypt(valuetype System.ReadOnlySpan`1&lt;char&gt; password, class System.Security.Cryptography.PbeParameters pbeParameters) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Encrypt(System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Encrypt (password As ReadOnlySpan(Of Char), pbeParameters As PbeParameters) As Byte()" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; cli::array &lt;System::Byte&gt; ^ Encrypt(ReadOnlySpan&lt;char&gt; password, System::Security::Cryptography::PbeParameters ^ pbeParameters);" />
       <MemberSignature Language="F#" Value="member this.Encrypt : ReadOnlySpan&lt;char&gt; * System.Security.Cryptography.PbeParameters -&gt; byte[]" Usage="pkcs8PrivateKeyInfo.Encrypt (password, pbeParameters)" />
       <MemberType>Method</MemberType>
@@ -288,6 +392,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -297,11 +403,19 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>Produces a PKCS#8 EncryptedPrivateKeyInfo from the property contents of this object after encrypting with the specified character-based password and encryption parameters.</summary>
+        <returns>A byte array containing the encoded form of the PKCS#8 EncryptedPrivateKeyInfo.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When `pbeParameters` indicates an algorithm that uses PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+
+ ]]></format>
+        </remarks>
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.TryEncrypt" />
       </Docs>
     </Member>
     <Member MemberName="PrivateKeyBytes">
@@ -316,13 +430,15 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ReadOnlyMemory&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a memory value that represents the algorithm-specific encoded private key.</summary>
+        <value>A memory value that represents the algorithm-specific encoded private key.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -332,12 +448,14 @@
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.TryEncode(System.Span{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEncode (destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncode(Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="member this.TryEncode : Span&lt;byte&gt; *  -&gt; bool" Usage="pkcs8PrivateKeyInfo.TryEncode (destination, bytesWritten)" />
+      <MemberSignature Language="F#" Value="member this.TryEncode : Span&lt;byte&gt; * int -&gt; bool" Usage="pkcs8PrivateKeyInfo.TryEncode (destination, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -347,24 +465,29 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The byte span to receive the PKCS#8 PrivateKeyInfo data.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to encode the property data of this instance as a PKCS#8 PrivateKeyInfo, writing the results into a provided buffer.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is big enough to receive the output; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Encode" />
       </Docs>
     </Member>
     <Member MemberName="TryEncrypt">
       <MemberSignature Language="C#" Value="public bool TryEncrypt (ReadOnlySpan&lt;byte&gt; passwordBytes, System.Security.Cryptography.PbeParameters pbeParameters, Span&lt;byte&gt; destination, out int bytesWritten);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEncrypt(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; passwordBytes, class System.Security.Cryptography.PbeParameters pbeParameters, valuetype System.Span`1&lt;unsigned int8&gt; destination, [out] int32&amp; bytesWritten) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.TryEncrypt(System.ReadOnlySpan{System.Byte},System.Security.Cryptography.PbeParameters,System.Span{System.Byte},System.Int32@)" />
+      <MemberSignature Language="VB.NET" Value="Public Function TryEncrypt (passwordBytes As ReadOnlySpan(Of Byte), pbeParameters As PbeParameters, destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncrypt(ReadOnlySpan&lt;System::Byte&gt; passwordBytes, System::Security::Cryptography::PbeParameters ^ pbeParameters, Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="member this.TryEncrypt : ReadOnlySpan&lt;byte&gt; * System.Security.Cryptography.PbeParameters * Span&lt;byte&gt; *  -&gt; bool" Usage="pkcs8PrivateKeyInfo.TryEncrypt (passwordBytes, pbeParameters, destination, bytesWritten)" />
+      <MemberSignature Language="F#" Value="member this.TryEncrypt : ReadOnlySpan&lt;byte&gt; * System.Security.Cryptography.PbeParameters * Span&lt;byte&gt; * int -&gt; bool" Usage="pkcs8PrivateKeyInfo.TryEncrypt (passwordBytes, pbeParameters, destination, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -376,26 +499,39 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="passwordBytes">The bytes to use as a password when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <param name="destination">The byte span to receive the PKCS#8 EncryptedPrivateKeyInfo data.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to produce a PKCS#8 EncryptedPrivateKeyInfo from the property contents of this object after encrypting with the specified byte-based password and encryption parameters, writing the results into a provided buffer.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is big enough to receive the output; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`.
+ This enables compatibility with other systems which use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+
+ ]]></format>
+        </remarks>
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Encrypt" />
       </Docs>
     </Member>
     <Member MemberName="TryEncrypt">
       <MemberSignature Language="C#" Value="public bool TryEncrypt (ReadOnlySpan&lt;char&gt; password, System.Security.Cryptography.PbeParameters pbeParameters, Span&lt;byte&gt; destination, out int bytesWritten);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEncrypt(valuetype System.ReadOnlySpan`1&lt;char&gt; password, class System.Security.Cryptography.PbeParameters pbeParameters, valuetype System.Span`1&lt;unsigned int8&gt; destination, [out] int32&amp; bytesWritten) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.TryEncrypt(System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters,System.Span{System.Byte},System.Int32@)" />
+      <MemberSignature Language="VB.NET" Value="Public Function TryEncrypt (password As ReadOnlySpan(Of Char), pbeParameters As PbeParameters, destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncrypt(ReadOnlySpan&lt;char&gt; password, System::Security::Cryptography::PbeParameters ^ pbeParameters, Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="member this.TryEncrypt : ReadOnlySpan&lt;char&gt; * System.Security.Cryptography.PbeParameters * Span&lt;byte&gt; *  -&gt; bool" Usage="pkcs8PrivateKeyInfo.TryEncrypt (password, pbeParameters, destination, bytesWritten)" />
+      <MemberSignature Language="F#" Value="member this.TryEncrypt : ReadOnlySpan&lt;char&gt; * System.Security.Cryptography.PbeParameters * Span&lt;byte&gt; * int -&gt; bool" Usage="pkcs8PrivateKeyInfo.TryEncrypt (password, pbeParameters, destination, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -407,13 +543,22 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <param name="destination">The byte span to receive the PKCS#8 EncryptedPrivateKeyInfo data.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to produce a PKCS#8 EncryptedPrivateKeyInfo from the property contents of this object after encrypting with the specified character-based password and encryption parameters, writing the result into a provided buffer.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is big enough to receive the output; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When `pbeParameters` indicates an algorithm that uses PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+
+ ]]></format>
+        </remarks>
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs8PrivateKeyInfo.Encrypt" />
       </Docs>
     </Member>
   </Members>

@@ -1,4 +1,4 @@
-﻿<Type Name="CreateCSharpManifestResourceName" FullName="Microsoft.Build.Tasks.CreateCSharpManifestResourceName">
+<Type Name="CreateCSharpManifestResourceName" FullName="Microsoft.Build.Tasks.CreateCSharpManifestResourceName">
   <TypeSignature Language="C#" Value="public class CreateCSharpManifestResourceName : Microsoft.Build.Tasks.CreateManifestResourceName" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit CreateCSharpManifestResourceName extends Microsoft.Build.Tasks.CreateManifestResourceName" />
   <TypeSignature Language="DocId" Value="T:Microsoft.Build.Tasks.CreateCSharpManifestResourceName" />
@@ -13,12 +13,23 @@
     <AssemblyName>Microsoft.Build.Tasks</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Build.Tasks.v3.5</AssemblyName>
+    <AssemblyVersion>3.5.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+    <AssemblyVersion>15.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
   <Base>
     <BaseTypeName>Microsoft.Build.Tasks.CreateManifestResourceName</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Creates a C#-style manifest name from a given resource file name.</summary>
+    <summary>
+            Base class for task that determines the appropriate manifest resource name to 
+            assign to a given resx or other resource.
+            </summary>
     <remarks>To be added.</remarks>
     <forInternalUseOnly />
   </Docs>
@@ -37,6 +48,14 @@
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.v3.5</AssemblyName>
+        <AssemblyVersion>3.5.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -66,6 +85,14 @@
         <AssemblyName>Microsoft.Build.Tasks</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.v3.5</AssemblyName>
+        <AssemblyVersion>3.5.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
@@ -77,13 +104,16 @@
         <Parameter Name="binaryStream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the resource file from which to create the C# manifest name.</param>
-        <param name="linkFileName">The name of the link file.</param>
-        <param name="rootNamespace">The root namespace of the resource file, typically taken from the project file. May be <see langword="null" />.</param>
-        <param name="dependentUponFileName">The file name of the parent of the resource file (usually a .cs file). May be <see langword="null" />.</param>
-        <param name="binaryStream">File contents binary stream. May be <see langword="null" />.</param>
-        <summary>Returns the C#-style manifest resource name that corresponds to the specified resource file.</summary>
-        <returns>The manifest resource name that corresponds to the specified resource file.</returns>
+        <param name="fileName">The file name of the dependent (usually a .resx)</param>
+        <param name="linkFileName">The file name of the dependent (usually a .resx)</param>
+        <param name="rootNamespace">The root namespace (usually from the project file). May be null</param>
+        <param name="dependentUponFileName">The file name of the parent of this dependency (usually a .cs file). May be null</param>
+        <param name="binaryStream">File contents binary stream, may be null</param>
+        <summary>
+            Utility function for creating a C#-style manifest name from 
+            a resource name. 
+            </summary>
+        <returns>Returns the manifest name</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -104,6 +134,14 @@
         <AssemblyName>Microsoft.Build.Tasks</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.v3.5</AssemblyName>
+        <AssemblyVersion>3.5.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -111,12 +149,34 @@
         <Parameter Name="fileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the file to examine.</param>
-        <summary>Indicates whether the specified file is a C# source file.</summary>
-        <returns>
-          <see langword="true" /> if the specified file is a C# source file; otherwise, <see langword="false" />.</returns>
+        <param name="fileName">Name of the candidate source file.</param>
+        <summary>
+            Return 'true' if this is a C# source file.
+            </summary>
+        <returns>True, if this is a validate source file.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
+      </Docs>
+    </Member>
+    <Member MemberName="SourceFileExtension">
+      <MemberSignature Language="C#" Value="protected override string SourceFileExtension { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string SourceFileExtension" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.CreateCSharpManifestResourceName.SourceFileExtension" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides ReadOnly Property SourceFileExtension As String" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual property System::String ^ SourceFileExtension { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.SourceFileExtension : string" Usage="Microsoft.Build.Tasks.CreateCSharpManifestResourceName.SourceFileExtension" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -1,4 +1,4 @@
-﻿<Type Name="Rune" FullName="System.Text.Rune">
+<Type Name="Rune" FullName="System.Text.Rune">
   <TypeSignature Language="C#" Value="public struct Rune : IComparable&lt;System.Text.Rune&gt;, IEquatable&lt;System.Text.Rune&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Rune extends System.ValueType implements class System.IComparable`1&lt;valuetype System.Text.Rune&gt;, class System.IEquatable`1&lt;valuetype System.Text.Rune&gt;" />
   <TypeSignature Language="DocId" Value="T:System.Text.Rune" />
@@ -8,6 +8,8 @@
   <AssemblyInfo>
     <AssemblyName>System.Runtime</AssemblyName>
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -26,8 +28,209 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a Unicode scalar value ([ U+0000..U+D7FF ], inclusive; or [ U+E000..U+10FFFF ], inclusive).</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A <xref:System.Text.Rune> instance represents a Unicode scalar value, which means any code point excluding the surrogate range (U+D800..U+DFFF). The type's constructors and conversion operators validate the input, so consumers can call the APIs assuming that the underlying <xref:System.Text.Rune> instance is well formed.
+
+If you aren't familiar with the terms Unicode scalar value, code point, surrogate range, and well-formed, see [Introduction to character encoding in .NET](/dotnet/standard/base-types/character-encoding-introduction).
+
+The following sections explain:
+
+* [When to use the Rune type](#when-to-use-the-rune-type)
+* [When not to use the Rune type](#when-not-to-use-rune)
+* [How to instantiate a Rune](#how-to-instantiate-a-rune)
+* [How to query properties of a Rune instance](#query-properties-of-a-rune)
+* [Convert a `Rune` to UTF-8 or UTF-16](#convert-a-rune-to-utf-8-or-utf-16)
+* [Rune in .NET vs. other languages](#rune-in-net-vs-other-languages)
+
+### When to use the Rune type
+
+Consider using the `Rune` type if your code:
+
+* Calls APIs that require Unicode scalar values
+* Explicitly handles surrogate pairs
+
+#### APIs that require Unicode scalar values
+
+If your code iterates through the `char` instances in a `string` or a `ReadOnlySpan<char>`, some of the `char` methods won't work correctly on `char` instances that are in the surrogate range. For example, the following APIs require a scalar value `char` to work correctly:
+
+* <xref:System.Char.GetNumericValue%2A?displayProperty=nameWithType>
+* <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsDigit%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsLetter%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsLetterOrDigit%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsLower%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsNumber%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsPunctuation%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsSymbol%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsUpper%2A?displayProperty=nameWithType>
+
+The following example shows code that won't work correctly if any of the `char` instances are surrogate code points:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInString.cs" id="SnippetBadExample":::
+
+Here's equivalent code that works with a `ReadOnlySpan<char>`:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInSpan.cs" id="SnippetBadExample":::
+
+The preceding code works correctly with some languages such as English:
+
+```csharp
+CountLettersInString("Hello")
+// Returns 5
+```
+
+But it won't work correctly for languages outside the Basic Multilingual Plane, such as Osage:
+
+```csharp
+CountLettersInString("𐓏𐓘𐓻𐓘𐓻𐓟 𐒻𐓟")
+// Returns 0
+```
+
+The reason this method returns incorrect results for Osage text is that the `char` instances for Osage letters are surrogate code points. No single surrogate code point has enough information to determine if it's a letter.
+
+If you change this code to use `Rune` instead of `char`, the method works correctly with code points outside the Basic Multilingual Plane:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInString.cs" id="SnippetGoodExample":::
+
+Here's equivalent code that works with a `ReadOnlySpan<char>`:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInSpan.cs" id="SnippetGoodExample":::
+
+The preceding code counts Osage letters correctly:
+
+```csharp
+CountLettersInString("𐓏𐓘𐓻𐓘𐓻𐓟 𐒻𐓟")
+// Returns 8
+```
+
+#### Code that explicitly handles surrogate pairs
+
+Consider using the `Rune` type if your code calls APIs that explicitly operate on surrogate code points, such as the following methods:
+
+* <xref:System.Char.IsSurrogate%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsSurrogatePair%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsHighSurrogate%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsLowSurrogate%2A?displayProperty=nameWithType>
+* <xref:System.Char.ConvertFromUtf32%2A?displayProperty=nameWithType>
+* <xref:System.Char.ConvertToUtf32%2A?displayProperty=nameWithType>
+
+For example, the following method has special logic to deal with surrogate `char` pairs:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/WorkWithSurrogates.cs" id="SnippetUseChar":::
+
+Such code is simpler if it uses `Rune`, as in the following example:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/WorkWithSurrogates.cs" id="SnippetUseRune":::
+
+### When not to use `Rune`
+
+You don't need to use the `Rune` type if your code:
+
+* Looks for exact `char` matches
+* Splits a string on a known char value
+
+Using the `Rune` type may return incorrect results if your code:
+
+* Counts the number of display characters in a `string`
+
+#### Look for exact `char` matches
+
+The following code iterates through a `string` looking for specific characters, returning the index of the first match. There's no need to change this code to use `Rune`, as the code is looking for characters that are represented by a single `char`.
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/FindFirstLetter.cs" id="SnippetExample":::
+
+#### Split a string on a known `char`
+
+It's common to call `string.Split` and use delimiters such as `' '` (space) or `','` (comma), as in the following example:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/SplitStringOnChar.cs" id="SnippetExample":::
+
+There is no need to use `Rune` here, because the code is looking for characters that are represented by a single `char`.
+
+#### Count the number of display characters in a `string`
+
+The number of `Rune` instances in a string might not match the number of user-perceivable characters shown when displaying the string.
+
+Since `Rune` instances represent Unicode scalar values, components that follow the [Unicode text segmentation guidelines](https://www.unicode.org/reports/tr29/) can use `Rune` as a building block for counting display characters.
+
+The <xref:System.Globalization.StringInfo> type can be used to count display characters, but in implementations of .NET other than .NET 5 it doesn't count correctly in all scenarios.
+
+For more information, see [Grapheme clusters](/dotnet/standard/base-types/character-encoding-introduction#grapheme-clusters).
+
+### How to instantiate a `Rune`
+
+There are several ways to get a `Rune` instance. You can use a constructor to create a `Rune` directly from:
+
+* A code point.
+
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetCodePoint":::
+
+* A single `char`.
+
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetChar":::
+
+* A surrogate `char` pair.
+
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetSurrogate":::
+
+All of the constructors throw an `ArgumentException` if the input doesn't represent a valid Unicode scalar value.
+
+There are <xref:System.Text.Rune.TryCreate%2A?displayProperty=nameWithType> methods available for callers who don't want exceptions to be thrown on failure.
+
+`Rune` instances can also be read from existing input sequences. For instance, given a `ReadOnlySpan<char>` that represents UTF-16 data, the <xref:System.Text.Rune.DecodeFromUtf16%2A?displayProperty=nameWithType> method returns the first `Rune` instance at the beginning of the input span. The <xref:System.Text.Rune.DecodeFromUtf8%2A?displayProperty=nameWithType> method operates similarly, accepting a `ReadOnlySpan<byte>` parameter that represents UTF-8 data. There are equivalent methods to read from the end of the span instead of the beginning of the span.
+
+### Query properties of a `Rune`
+
+To get the integer code point value of a `Rune` instance, use the <xref:System.Text.Rune.Value?displayProperty=nameWithType> property.
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetValue":::
+
+Many of the static APIs available on the `char` type are also available on the `Rune` type. For instance, <xref:System.Text.Rune.IsWhiteSpace%2A?displayProperty=nameWithType> and <xref:System.Text.Rune.GetUnicodeCategory%2A?displayProperty=nameWithType> are equivalents to <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> and <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType> methods. The `Rune` methods correctly handle surrogate pairs.
+
+The following example code takes a `ReadOnlySpan<char>` as input and trims from both the start and the end of the span every `Rune` that isn't a letter or a digit.
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/TrimNonLettersAndNonDigits.cs" id="SnippetExample":::
+
+There are some API differences between `char` and `Rune`. For example:
+
+* There is no `Rune` equivalent  to <xref:System.Char.IsSurrogate(System.Char)?displayProperty=nameWithType>, since `Rune` instances by definition can never be surrogate code points.
+* The <xref:System.Text.Rune.GetUnicodeCategory%2A?displayProperty=nameWithType> doesn't always return the same result as <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType>. It does return the same value as <xref:System.Globalization.CharUnicodeInfo.GetUnicodeCategory%2A?displayProperty=nameWithType>. For more information, see the **Remarks** on <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType>.
+
+### Convert a `Rune` to UTF-8 or UTF-16
+
+Since a `Rune` is a Unicode scalar value, it can be converted to UTF-8, UTF-16, or UTF-32 encoding. The `Rune` type has built-in support for conversion to UTF-8 and UTF-16.
+
+The <xref:System.Text.Rune.EncodeToUtf16%2A?displayProperty=nameWithType> converts a `Rune` instance to `char` instances. To query the number of `char` instances that would result from converting a `Rune` instance to UTF-16, use the <xref:System.Text.Rune.Utf16SequenceLength?displayProperty=nameWithType> property. Similar methods exist for UTF-8 conversion.
+
+The following example converts a `Rune` instance to a `char` array. The code assumes you have a `Rune` instance in the `rune` variable:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf16CharArray":::
+
+Since a `string` is a sequence of UTF-16 chars, the following example also converts a `Rune` instance to UTF-16:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf16String":::
+
+The following example converts a `Rune` instance to a `UTF-8` byte array:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf8ByteArray":::
+
+The <xref:System.Text.Rune.EncodeToUtf16%2A?displayProperty=nameWithType> and <xref:System.Text.Rune.EncodeToUtf8%2A?displayProperty=nameWithType> methods return the actual number of elements written. They throw an exception if the destination buffer is too short to contain the result. There are non-throwing <xref:System.Text.Rune.TryEncodeToUtf8%2A> and <xref:System.Text.Rune.EncodeToUtf16%2A> methods as well for callers who want to avoid exceptions.
+
+### Rune in .NET vs. other languages
+
+The term "rune" is not defined in the Unicode Standard. The term dates back to [the creation of UTF-8](https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt). Rob Pike and Ken Thompson were looking for a term to describe what would eventually become known as a code point. [They settled on the term "rune"](https://twitter.com/rob_pike/status/732353233474064384), and Rob Pike's later influence over the Go programming language helped popularize the term.
+
+However, the .NET `Rune` type is not the equivalent of the Go `rune` type. In Go, the `rune` type is an [alias for `int32`](https://blog.golang.org/strings). A Go rune is intended to represent a Unicode code point, but it can be any 32-bit value, including surrogate code points and values that are not legal Unicode code points.
+
+For similar types in other programming languages, see [Rust's primitive `char` type](https://doc.rust-lang.org/std/primitive.char.html) or [Swift's `Unicode.Scalar` type](https://developer.apple.com/documentation/swift/unicode/scalar), both of which represent Unicode scalar values. They provide functionality similar to .NET's `Rune` type, and they disallow instantiation of values that are not legal Unicode scalar values.
+
+          ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -41,14 +244,18 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="ch" Type="System.Char" />
       </Parameters>
       <Docs>
-        <param name="ch">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="ch">A UTF-16 code unit.</param>
+        <summary>Creates a <see cref="T:System.Text.Rune" /> from the provided UTF-16 code unit.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="ch" /> represents a UTF-16 surrogate code point (U+D800..U+DFFF, inclusive).</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -62,14 +269,18 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="value" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">A Unicode scalar value.</param>
+        <summary>Creates a <see cref="T:System.Text.Rune" /> from the specified 32-bit integer that represents a Unicode scalar value.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="value" /> does not represent a Unicode scalar value.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -83,6 +294,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -93,9 +306,11 @@
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">A Unicode scalar value.</param>
+        <summary>Creates a <see cref="T:System.Text.Rune" /> from the specified 32-bit unsigned integer that represents a Unicode scalar value.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="value" /> does not represent a Unicode scalar value.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -109,16 +324,24 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="highSurrogate" Type="System.Char" />
         <Parameter Name="lowSurrogate" Type="System.Char" />
       </Parameters>
       <Docs>
-        <param name="highSurrogate">To be added.</param>
-        <param name="lowSurrogate">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="highSurrogate">The high surrogate of the surrogate pair.</param>
+        <param name="lowSurrogate">The low surrogate of the surrogate pair.</param>
+        <summary>Creates a <see cref="T:System.Text.Rune" /> from the provided UTF-16 surrogate pair.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="highSurrogate" /> does not represent a UTF-16 high surrogate code point.
+          
+-or-
+
+<paramref name="lowSurrogate" /> does not represent a UTF-16 low surrogate code point.</exception>
       </Docs>
     </Member>
     <Member MemberName="CompareTo">
@@ -135,6 +358,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -143,9 +368,11 @@
         <Parameter Name="other" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="other">The instance to compare with the current instance.</param>
+        <summary>Compares the current instance to the specified <see cref="T:System.Text.Rune" /> instance.</summary>
+        <returns>A signed integer indicating the position of this instance in the sort order in relation to <paramref name="other" />: <br />- Less than zero: This instance precedes <paramref name="other" />. 
+<br />- Zero: The instance has the same position in the sort order as <paramref name="other" />.
+<br />- Greater than zero: This instance follows <paramref name="other" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -155,11 +382,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.DecodeFromUtf16(System.ReadOnlySpan{System.Char},System.Text.Rune@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecodeFromUtf16 (source As ReadOnlySpan(Of Char), ByRef result As Rune, ByRef charsConsumed As Integer) As OperationStatus" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeFromUtf16(ReadOnlySpan&lt;char&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % charsConsumed);" />
-      <MemberSignature Language="F#" Value="static member DecodeFromUtf16 : ReadOnlySpan&lt;char&gt; *  *  -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeFromUtf16 (source, result, charsConsumed)" />
+      <MemberSignature Language="F#" Value="static member DecodeFromUtf16 : ReadOnlySpan&lt;char&gt; * Rune * int -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeFromUtf16 (source, result, charsConsumed)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.OperationStatus</ReturnType>
@@ -170,12 +399,26 @@
         <Parameter Name="charsConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="result">To be added.</param>
-        <param name="charsConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">A read-only UTF-16 character span.</param>
+        <param name="result">When this method returns, the decoded rune.</param>
+        <param name="charsConsumed">When this method returns, the number of characters read to create the rune.</param>
+        <summary>Decodes the <see cref="T:System.Text.Rune" /> at the beginning of the provided UTF-16 source buffer.</summary>
+        <returns>
+          <see cref="F:System.Buffers.OperationStatus.Done" /> if the source buffer begins with a valid UTF-16 encoded scalar value. <paramref name="result" /> then contains the decoded <see cref="T:System.Text.Rune" />, and <paramref name="charsConsumed" /> contains the number of <see cref="T:System.Char" /> values used in the input buffer to encode the <see cref="T:System.Text.Rune" />.
+            
+<see cref="F:System.Buffers.OperationStatus.NeedMoreData" /> if the source buffer is empty or contains only a standalone UTF-16 high surrogate character. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="charsConsumed" /> contains the length of the input buffer.
+            
+<see cref="F:System.Buffers.OperationStatus.InvalidData" /> if the source buffer begins with an ill-formed UTF-16 encoded scalar value. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="charsConsumed" /> contains the number of <see cref="T:System.Char" /> values used to encode the ill-formed sequence.
+          .</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The general convention is to call this method in a loop, slicing the `source` buffer by `charsConsumed` elements on each iteration of the loop. On each iteration of the loop, `result` contains the real scalar value if the data was successfully decoded, or it contains <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> if the data was not successfully decoded. This pattern provides convenient automatic U+FFFD substitution of invalid sequences while iterating through the loop.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DecodeFromUtf8">
@@ -184,11 +427,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.DecodeFromUtf8(System.ReadOnlySpan{System.Byte},System.Text.Rune@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecodeFromUtf8 (source As ReadOnlySpan(Of Byte), ByRef result As Rune, ByRef bytesConsumed As Integer) As OperationStatus" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeFromUtf8(ReadOnlySpan&lt;System::Byte&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % bytesConsumed);" />
-      <MemberSignature Language="F#" Value="static member DecodeFromUtf8 : ReadOnlySpan&lt;byte&gt; *  *  -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeFromUtf8 (source, result, bytesConsumed)" />
+      <MemberSignature Language="F#" Value="static member DecodeFromUtf8 : ReadOnlySpan&lt;byte&gt; * Rune * int -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeFromUtf8 (source, result, bytesConsumed)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.OperationStatus</ReturnType>
@@ -199,12 +444,26 @@
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="result">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">A read-only UTF-8 encoded byte span.</param>
+        <param name="result">When this method returns, the decoded rune.</param>
+        <param name="bytesConsumed">When this method returns, the number of bytes read to create the rune.</param>
+        <summary>Decodes the <see cref="T:System.Text.Rune" /> at the beginning of the provided UTF-8 source buffer.</summary>
+        <returns>
+          <see cref="F:System.Buffers.OperationStatus.Done" /> if the source buffer begins with a valid UTF-8 encoded scalar value. <paramref name="result" /> then contains the decoded <see cref="T:System.Text.Rune" />, and <paramref name="bytesConsumed" /> contains the number of <see cref="T:System.Byte" /> values used in the input buffer to encode the <see cref="T:System.Text.Rune" />.
+            
+<see cref="F:System.Buffers.OperationStatus.NeedMoreData" /> if the source buffer is empty or contains only a standalone UTF-8 high surrogate character. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="bytesConsumed" /> contains the length of the input buffer.
+            
+<see cref="F:System.Buffers.OperationStatus.InvalidData" /> if the source buffer begins with an ill-formed UTF-8 encoded scalar value. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="bytesConsumed" /> contains the number of <see cref="T:System.Byte" /> values used in the input buffer to encode the ill-formed sequence.
+          .</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The general convention is to call this method in a loop, slicing the `source` buffer by `bytesConsumed` elements on each iteration of the loop. On each iteration of the loop, `result` contains the real scalar value if successfully decoded, or it contains <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> if the data could not be successfully decoded. This pattern provides convenient automatic U+FFFD substitution of invalid sequences while iterating through the loop.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DecodeLastFromUtf16">
@@ -213,11 +472,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.DecodeLastFromUtf16(System.ReadOnlySpan{System.Char},System.Text.Rune@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecodeLastFromUtf16 (source As ReadOnlySpan(Of Char), ByRef result As Rune, ByRef charsConsumed As Integer) As OperationStatus" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeLastFromUtf16(ReadOnlySpan&lt;char&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % charsConsumed);" />
-      <MemberSignature Language="F#" Value="static member DecodeLastFromUtf16 : ReadOnlySpan&lt;char&gt; *  *  -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeLastFromUtf16 (source, result, charsConsumed)" />
+      <MemberSignature Language="F#" Value="static member DecodeLastFromUtf16 : ReadOnlySpan&lt;char&gt; * Rune * int -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeLastFromUtf16 (source, result, charsConsumed)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.OperationStatus</ReturnType>
@@ -228,12 +489,26 @@
         <Parameter Name="charsConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="result">To be added.</param>
-        <param name="charsConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">A read-only UTF-16 encoded character span.</param>
+        <param name="result">When this method returns, the decoded rune.</param>
+        <param name="charsConsumed">When this method returns, the number of bytes read to create the rune.</param>
+        <summary>Decodes the <see cref="T:System.Text.Rune" /> at the end of the provided UTF-16 source buffer.</summary>
+        <returns>
+          <see cref="F:System.Buffers.OperationStatus.Done" /> if the source buffer begins with a valid UTF-16 encoded scalar value. <paramref name="result" /> then contains the decoded <see cref="T:System.Text.Rune" />, and <paramref name="charsConsumed" /> contains the number of <see cref="T:System.Char" /> values used in the input buffer to encode the <see cref="T:System.Text.Rune" />.
+            
+<see cref="F:System.Buffers.OperationStatus.NeedMoreData" /> if the source buffer is empty or contains only a standalone UTF-16 high surrogate character. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="charsConsumed" /> contains the length of the input buffer.
+            
+<see cref="F:System.Buffers.OperationStatus.InvalidData" /> if the source buffer begins with an ill-formed UTF-16 encoded scalar value. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="charsConsumed" /> contains the number of <see cref="T:System.Char" /> values used to encode the ill-formed sequence.
+          .</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is very similar to <xref:System.Text.Rune.DecodeFromUtf16(System.ReadOnlySpan{System.Char},System.Text.Rune@,System.Int32@)>, except it allows the caller to loop backward instead of forward. The typical calling convention is that on each iteration of the loop, the caller should slice off the final `charsConsumed` elements of the `source` buffer.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DecodeLastFromUtf8">
@@ -242,11 +517,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.DecodeLastFromUtf8(System.ReadOnlySpan{System.Byte},System.Text.Rune@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecodeLastFromUtf8 (source As ReadOnlySpan(Of Byte), ByRef value As Rune, ByRef bytesConsumed As Integer) As OperationStatus" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeLastFromUtf8(ReadOnlySpan&lt;System::Byte&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % value, [Runtime::InteropServices::Out] int % bytesConsumed);" />
-      <MemberSignature Language="F#" Value="static member DecodeLastFromUtf8 : ReadOnlySpan&lt;byte&gt; *  *  -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeLastFromUtf8 (source, value, bytesConsumed)" />
+      <MemberSignature Language="F#" Value="static member DecodeLastFromUtf8 : ReadOnlySpan&lt;byte&gt; * Rune * int -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeLastFromUtf8 (source, value, bytesConsumed)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.OperationStatus</ReturnType>
@@ -257,12 +534,26 @@
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">A read-only UTF-8 encoded byte span.</param>
+        <param name="value">When this method returns, the decoded rune.</param>
+        <param name="bytesConsumed">When this method returns, the number of bytes read to create the rune.</param>
+        <summary>Decodes the <see cref="T:System.Text.Rune" /> at the end of the provided UTF-8 source buffer.</summary>
+        <returns>
+          <see cref="F:System.Buffers.OperationStatus.Done" /> if the source buffer ends with a valid UTF-8 encoded scalar value. <paramref name="result" /> then contains the decoded <see cref="T:System.Text.Rune" />, and <paramref name="bytesConsumed" /> contains the number of <see cref="T:System.Byte" /> values used in the input buffer to encode the <see cref="T:System.Text.Rune" />.
+            
+<see cref="F:System.Buffers.OperationStatus.NeedMoreData" /> if the source buffer is empty or contains only a standalone UTF-8 high surrogate character. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="bytesConsumed" /> contains the length of the input buffer.
+            
+<see cref="F:System.Buffers.OperationStatus.InvalidData" /> if the source buffer ends with an ill-formed UTF-8 encoded scalar value. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="bytesConsumed" /> contains the number of <see cref="T:System.Byte" /> values used in the input buffer to encode the ill-formed sequence.
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.ReadOnlySpan{System.Byte},System.Text.Rune@,System.Int32@)>, except it allows the caller to loop backward instead of forward. The typical calling convention is that on each iteration of the loop, the caller should slice off the final `bytesConsumed` elements of the `source` buffer.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EncodeToUtf16">
@@ -276,6 +567,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -284,10 +577,12 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The buffer to which to write this value as UTF-16.</param>
+        <summary>Encodes this <see cref="T:System.Text.Rune" /> to a UTF-16 destination buffer.</summary>
+        <returns>The number of <see cref="T:System.Char" /> values written to <paramref name="destination" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destination" /> is not large enough to hold the output.</exception>
       </Docs>
     </Member>
     <Member MemberName="EncodeToUtf8">
@@ -301,6 +596,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -309,10 +606,12 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The buffer to which to write this value as UTF-8.</param>
+        <summary>Encodes this <see cref="T:System.Text.Rune" /> to a UTF-8 destination buffer.</summary>
+        <returns>The number of <see cref="T:System.Byte" /> values written to <paramref name="destination" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destination" /> is not large enough to hold the output.</exception>
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -326,6 +625,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -334,9 +635,10 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="obj">The object to compare with the current instance.</param>
+        <summary>Returns a value that indicates whether the current instance and a specified object are equal.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="obj" /> is of type <see cref="T:System.Text.Rune" /> and is equal to the current instance; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -354,6 +656,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -362,9 +666,10 @@
         <Parameter Name="other" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="other">The object to compare with the current instance.</param>
+        <summary>Returns a value that indicates whether the current instance and a specified rune are equal.</summary>
+        <returns>
+          <see langword="true" /> if the current instance and <paramref name="other" /> are equal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -379,14 +684,16 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the hash code for this instance.</summary>
+        <returns>The hash code for this instance.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -401,6 +708,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -409,10 +718,18 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune for which to get the numeric value.</param>
+        <summary>Gets the numeric value associated with the specified rune.</summary>
+        <returns>The numeric value associated with <paramref name="value" />, or -1 if <paramref name="value" /> doesn't represent a numeric character.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method has behavior equivalent to <xref:System.Globalization.CharUnicodeInfo.GetNumericValue%2A?displayProperty=nameWithType>. Refer to that documentation for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetRuneAt">
@@ -426,6 +743,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -435,11 +754,17 @@
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="input">To be added.</param>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="input">The string from which to create the rune.</param>
+        <param name="index">The starting position in <paramref name="input" /> at which to create the rune.</param>
+        <summary>Gets the <see cref="T:System.Text.Rune" /> that begins at a specified position in a string.</summary>
+        <returns>The rune obtained from <paramref name="input" /> at the specified <paramref name="index" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="input" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="index" /> does not reference the start of a valid scalar value in <paramref name="input" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="index" /> is outside the range of <paramref name="input" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetUnicodeCategory">
@@ -453,6 +778,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Globalization.UnicodeCategory</ReturnType>
@@ -461,10 +788,18 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune for which to get the Unicode category.</param>
+        <summary>Gets the Unicode category associated with the specified rune.</summary>
+        <returns>The Unicode category associated with <paramref name="value" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method has behavior equivalent to <xref:System.Globalization.CharUnicodeInfo.GetUnicodeCategory%2A?displayProperty=nameWithType>. Refer to that documentation for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsAscii">
@@ -478,13 +813,16 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the scalar value associated with this <see cref="T:System.Text.Rune" /> is within the ASCII encoding range.</summary>
+        <value>
+          <see langword="true" /> if the scalar value associated is within the ASCII encoding range ([ U+0000..U+007F ]) and therefore representable by a single UTF-8 code unit; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -499,13 +837,16 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the scalar value associated with this <see cref="T:System.Text.Rune" /> is within the BMP encoding range.</summary>
+        <value>
+          <see langword="true" /> if the scalar value associated is within the BMP encoding range ([ U+0000..U+FFFF ]) and therefore representable by a single UTF-16 code unit; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -520,6 +861,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -528,10 +871,23 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a control character.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a control character; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against <xref:System.Globalization.UnicodeCategory.Control>.
+
+Per [Unicode stability policies](https://www.unicode.org/policies/stability_policy.html), the set of control characters is permanently fixed to be the union of `[ U+0000..U+001F ]` and `[ U+007F..U+009F ]`.
+
+For more information, see <xref:System.Char.IsControl%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsDigit">
@@ -545,6 +901,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -553,10 +911,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a decimal digit.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a decimal digit; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against <xref:System.Globalization.UnicodeCategory.DecimalDigitNumber>.
+
+For more information, see <xref:System.Char.IsDigit%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsLetter">
@@ -570,6 +939,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -578,10 +949,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a letter.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a letter; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against any of the values <xref:System.Globalization.UnicodeCategory.UppercaseLetter>, <xref:System.Globalization.UnicodeCategory.LowercaseLetter>, <xref:System.Globalization.UnicodeCategory.TitlecaseLetter>, <xref:System.Globalization.UnicodeCategory.ModifierLetter>, and <xref:System.Globalization.UnicodeCategory.OtherLetter>.
+
+For more information, see <xref:System.Char.IsLetter%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsLetterOrDigit">
@@ -595,6 +977,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -603,10 +987,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a letter or a decimal digit.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a letter or a decimal digit; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against any of the values <xref:System.Globalization.UnicodeCategory.UppercaseLetter>, <xref:System.Globalization.UnicodeCategory.LowercaseLetter>, <xref:System.Globalization.UnicodeCategory.TitlecaseLetter>, <xref:System.Globalization.UnicodeCategory.ModifierLetter>, <xref:System.Globalization.UnicodeCategory.OtherLetter>, and <xref:System.Globalization.UnicodeCategory.DecimalDigitNumber>.
+
+For more information, see <xref:System.Char.IsLetterOrDigit%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsLower">
@@ -620,6 +1015,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -628,10 +1025,22 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a lowercase letter.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a lowercase letter; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)>
+and comparing the result against <xref:System.Globalization.UnicodeCategory.LowercaseLetter>.
+
+For more information, see <xref:System.Char.IsLower%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsNumber">
@@ -645,6 +1054,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -653,10 +1064,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a number.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a number; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against any of the values <xref:System.Globalization.UnicodeCategory.DecimalDigitNumber>, <xref:System.Globalization.UnicodeCategory.LetterNumber>, and <xref:System.Globalization.UnicodeCategory.OtherNumber>.
+
+For more information, see <xref:System.Char.IsNumber%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsPunctuation">
@@ -670,6 +1092,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -678,10 +1102,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a punctuation mark.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a punctuation mark; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against any of the values <xref:System.Globalization.UnicodeCategory.ConnectorPunctuation>, <xref:System.Globalization.UnicodeCategory.DashPunctuation>, <xref:System.Globalization.UnicodeCategory.OpenPunctuation>, <xref:System.Globalization.UnicodeCategory.ClosePunctuation>, <xref:System.Globalization.UnicodeCategory.InitialQuotePunctuation>, <xref:System.Globalization.UnicodeCategory.FinalQuotePunctuation>, and <xref:System.Globalization.UnicodeCategory.OtherPunctuation>.
+
+For more information, see <xref:System.Char.IsPunctuation%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsSeparator">
@@ -695,6 +1130,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -703,10 +1140,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a separator character.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a separator character; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against any of the values <xref:System.Globalization.UnicodeCategory.SpaceSeparator>, <xref:System.Globalization.UnicodeCategory.LineSeparator>, and <xref:System.Globalization.UnicodeCategory.ParagraphSeparator>.
+
+For more information, see <xref:System.Char.IsSeparator%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsSymbol">
@@ -720,6 +1168,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -728,10 +1178,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a symbol character.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a symbol character; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against any of the values <xref:System.Globalization.UnicodeCategory.MathSymbol>, <xref:System.Globalization.UnicodeCategory.CurrencySymbol>, <xref:System.Globalization.UnicodeCategory.ModifierSymbol>, and <xref:System.Globalization.UnicodeCategory.OtherSymbol>.
+
+For more information, see <xref:System.Char.IsSymbol%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsUpper">
@@ -745,6 +1206,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -753,10 +1216,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as an uppercase letter.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is an uppercase letter; otherwise,<see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against <xref:System.Globalization.UnicodeCategory.UppercaseLetter>.
+
+For more information, see <xref:System.Char.IsUpper%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsValid">
@@ -770,6 +1244,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -778,9 +1254,10 @@
         <Parameter Name="value" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The Unicode scalar value.</param>
+        <summary>Returns a value that indicates whether a 32-bit signed integer represents a valid Unicode scalar value; that is, it is in the range [ U+0000..U+D7FF ], inclusive; or [ U+E000..U+10FFFF ], inclusive.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a valid Unicode scalar value; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -795,6 +1272,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -808,9 +1287,10 @@
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The Unicode scalar value.</param>
+        <summary>Returns a value that indicates whether a 32-bit unsigned integer represents a valid Unicode scalar value; that is, it is in the range [ U+0000..U+D7FF ], inclusive, or [ U+E000..U+10FFFF ], inclusive.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a valid Unicode scalar value; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -825,6 +1305,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -833,10 +1315,21 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The rune to evaluate.</param>
+        <summary>Returns a value that indicates whether the specified rune is categorized as a white space character.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="value" /> is a white space character; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is generally equivalent to querying <xref:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)> and comparing the result against any of the values <xref:System.Globalization.UnicodeCategory.SpaceSeparator>, <xref:System.Globalization.UnicodeCategory.LineSeparator>, and <xref:System.Globalization.UnicodeCategory.ParagraphSeparator>. However, there are some <xref:System.Text.Rune>s in the <xref:System.Globalization.UnicodeCategory.Control> category which are also classified as white space characters, and this method accounts for those values.
+
+For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Equality">
@@ -850,6 +1343,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -859,10 +1354,11 @@
         <Parameter Name="right" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Returns a value that indicates whether two <see cref="T:System.Text.Rune" /> instances are equal.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are equal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -877,6 +1373,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -885,10 +1383,13 @@
         <Parameter Name="ch" Type="System.Char" />
       </Parameters>
       <Docs>
-        <param name="ch">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ch">The 16-bit Unicode character to convert.</param>
+        <summary>Defines an explicit conversion of a 16-bit Unicode character to a <see cref="T:System.Text.Rune" />.</summary>
+        <returns>
+          <paramref name="ch" /> as a 32-bit Unicode character.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="ch" /> is a Unicode scalar that represents a surrogate code point.</exception>
       </Docs>
     </Member>
     <Member MemberName="op_Explicit">
@@ -902,6 +1403,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -910,10 +1413,13 @@
         <Parameter Name="value" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The 32-bit signed integer to convert.</param>
+        <summary>Defines an explicit conversion of a 32-bit signed integer to a <see cref="T:System.Text.Rune" />.</summary>
+        <returns>
+          <paramref name="value" /> as a 32-bit Unicode character.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="value" /> is an invalid Unicode scalar.</exception>
       </Docs>
     </Member>
     <Member MemberName="op_Explicit">
@@ -927,6 +1433,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -940,10 +1448,13 @@
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The 32-bit signed integer to convert.</param>
+        <summary>Defines an explicit conversion of a 32-bit unsigned integer to a <see cref="T:System.Text.Rune" />.</summary>
+        <returns>
+          <paramref name="value" /> as a 32-bit Unicode character.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="value" /> is an invalid Unicode scalar.</exception>
       </Docs>
     </Member>
     <Member MemberName="op_GreaterThan">
@@ -957,6 +1468,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -966,10 +1479,11 @@
         <Parameter Name="right" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Returns a value indicating whether a specified <see cref="T:System.Text.Rune" /> is greater than another specified <see cref="T:System.Text.Rune" />.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> is greater than <paramref name="right" />; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -984,6 +1498,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -993,10 +1509,11 @@
         <Parameter Name="right" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Returns a value indicating whether a specified <see cref="T:System.Text.Rune" /> is greater than or equal to another specified <see cref="T:System.Text.Rune" />.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> is greater than or equal to <paramref name="right" />; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1011,6 +1528,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1020,10 +1539,11 @@
         <Parameter Name="right" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Returns a value that indicates whether two <see cref="T:System.Text.Rune" /> instances have different values.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are not equal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1038,6 +1558,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1047,10 +1569,11 @@
         <Parameter Name="right" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">the second value to compare.</param>
+        <summary>Returns a value indicating whether a specified <see cref="T:System.Text.Rune" /> is less than another specified <see cref="T:System.Text.Rune" />.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> is less than <paramref name="right" />; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1065,6 +1588,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1074,10 +1599,11 @@
         <Parameter Name="right" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Returns a value indicating whether a specified <see cref="T:System.Text.Rune" /> is less than or equal to another specified <see cref="T:System.Text.Rune" />.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> is less than or equal to <paramref name="right" />; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1092,13 +1618,15 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the Unicode plane (0 to 16, inclusive) that contains this scalar.</summary>
+        <value>The Unicode plane (0 to 16, inclusive) that contains this scalar.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1113,13 +1641,15 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a <see cref="T:System.Text.Rune" /> instance that represents the Unicode replacement character U+FFFD.</summary>
+        <value>A <see cref="T:System.Text.Rune" /> instance that represents the Unicode replacement character U+FFFD.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1134,6 +1664,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1143,10 +1675,10 @@
         <Parameter Name="culture" Type="System.Globalization.CultureInfo" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="culture">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The 32-bit Unicode character to convert.</param>
+        <param name="culture">An object that supplies culture-specific casing rules.</param>
+        <summary>Returns a copy of the specified <see cref="T:System.Text.Rune" /> converted to lowercase, using the casing rules of the specified culture.</summary>
+        <returns>The lowercase equivalent of <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1161,6 +1693,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1169,9 +1703,9 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The 32-bit Unicode character to convert.</param>
+        <summary>Returns a copy of the specified <see cref="T:System.Text.Rune" /> converted to lowercase using the casing rules of the invariant culture.</summary>
+        <returns>The lowercase equivalent of <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1186,14 +1720,16 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the string representation of this <see cref="T:System.Text.Rune" /> instance.</summary>
+        <returns>The string representation of this rune.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1208,6 +1744,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1217,10 +1755,10 @@
         <Parameter Name="culture" Type="System.Globalization.CultureInfo" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="culture">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The 32-bit Unicode character to convert.</param>
+        <param name="culture">An object that supplies culture-specific casing rules.</param>
+        <summary>Returns a copy of the specified <see cref="T:System.Text.Rune" /> converted to uppercase, using the casing rules of the specified culture.</summary>
+        <returns>The uppercase equivalent of <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1235,6 +1773,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1243,9 +1783,9 @@
         <Parameter Name="value" Type="System.Text.Rune" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The 32-bit Unicode character to convert.</param>
+        <summary>Returns a copy of the specified <see cref="T:System.Text.Rune" /> converted to uppercase using the casing rules of the invariant culture.</summary>
+        <returns>The uppercase equivalent of <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1255,11 +1795,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryCreate(System.Char,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryCreate (ch As Char, ByRef result As Rune) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(char ch, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
-      <MemberSignature Language="F#" Value="static member TryCreate : char *  -&gt; bool" Usage="System.Text.Rune.TryCreate (ch, result)" />
+      <MemberSignature Language="F#" Value="static member TryCreate : char * Rune -&gt; bool" Usage="System.Text.Rune.TryCreate (ch, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1269,10 +1811,11 @@
         <Parameter Name="result" Type="System.Text.Rune" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="ch">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ch">The character from which to create the rune.</param>
+        <param name="result">When this method returns, the rune that corresponds to <paramref name="ch" />.</param>
+        <summary>Attempts to create a <see cref="T:System.Text.Rune" /> from a specified character and returns a value that indicates whether the operation succeeded.</summary>
+        <returns>
+          <see langword="true" /> if the method succeeded; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1282,11 +1825,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryCreate(System.Int32,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryCreate (value As Integer, ByRef result As Rune) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(int value, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
-      <MemberSignature Language="F#" Value="static member TryCreate : int *  -&gt; bool" Usage="System.Text.Rune.TryCreate (value, result)" />
+      <MemberSignature Language="F#" Value="static member TryCreate : int * Rune -&gt; bool" Usage="System.Text.Rune.TryCreate (value, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1296,10 +1841,11 @@
         <Parameter Name="result" Type="System.Text.Rune" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The Unicode scalar value.</param>
+        <param name="result">When this method returns, the rune that corresponds to <paramref name="value" />.</param>
+        <summary>Attempts to create a <see cref="T:System.Text.Rune" /> from a specified signed integer that represents a Unicode scalar value.</summary>
+        <returns>
+          <see langword="true" /> if the method succeeded; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1309,11 +1855,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryCreate(System.UInt32,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryCreate (value As UInteger, ByRef result As Rune) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(System::UInt32 value, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
-      <MemberSignature Language="F#" Value="static member TryCreate : uint32 *  -&gt; bool" Usage="System.Text.Rune.TryCreate (value, result)" />
+      <MemberSignature Language="F#" Value="static member TryCreate : uint32 * Rune -&gt; bool" Usage="System.Text.Rune.TryCreate (value, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -1328,10 +1876,11 @@
         <Parameter Name="result" Type="System.Text.Rune" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The Unicode scalar value.</param>
+        <param name="result">When this method returns, the rune that corresponds to <paramref name="value" />.</param>
+        <summary>Attempts to create a <see cref="T:System.Text.Rune" /> from the specified 32-bit unsigned integer that represents a Unicode scalar value.</summary>
+        <returns>
+          <see langword="true" /> if the method succeeded; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1341,11 +1890,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryCreate(System.Char,System.Char,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryCreate (highSurrogate As Char, lowSurrogate As Char, ByRef result As Rune) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(char highSurrogate, char lowSurrogate, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
-      <MemberSignature Language="F#" Value="static member TryCreate : char * char *  -&gt; bool" Usage="System.Text.Rune.TryCreate (highSurrogate, lowSurrogate, result)" />
+      <MemberSignature Language="F#" Value="static member TryCreate : char * char * Rune -&gt; bool" Usage="System.Text.Rune.TryCreate (highSurrogate, lowSurrogate, result)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1356,11 +1907,12 @@
         <Parameter Name="result" Type="System.Text.Rune" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="highSurrogate">To be added.</param>
-        <param name="lowSurrogate">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="highSurrogate">The high surrogate of the surrogate pair.</param>
+        <param name="lowSurrogate">The low surrogate of the surrogate pair.</param>
+        <param name="result">The rune that corresponds to the specified surrogate pair.</param>
+        <summary>Attempts to create a <see cref="T:System.Text.Rune" /> from the specified UTF-16 surrogate pair and returns a value that indicates whether the operation was successful.</summary>
+        <returns>
+          <see langword="true" /> if the operation succeeded; <see langword="false" /> if the input values don't represent a well-formed UTF-16 surrogate pair.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1370,11 +1922,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryEncodeToUtf16(System.Span{System.Char},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEncodeToUtf16 (destination As Span(Of Char), ByRef charsWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncodeToUtf16(Span&lt;char&gt; destination, [Runtime::InteropServices::Out] int % charsWritten);" />
-      <MemberSignature Language="F#" Value="member this.TryEncodeToUtf16 : Span&lt;char&gt; *  -&gt; bool" Usage="rune.TryEncodeToUtf16 (destination, charsWritten)" />
+      <MemberSignature Language="F#" Value="member this.TryEncodeToUtf16 : Span&lt;char&gt; * int -&gt; bool" Usage="rune.TryEncodeToUtf16 (destination, charsWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1384,11 +1938,20 @@
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">The buffer to which to write this value as UTF-16 encoded value.</param>
+        <param name="charsWritten">The number of <see cref="T:System.Char" /> values written to <paramref name="destination" />, or 0 if the destination buffer is not large enough to contain the output.</param>
+        <summary>Encodes this <see cref="T:System.Text.Rune" /> to a UTF-16 encoded destination buffer.</summary>
+        <returns>
+          <see langword="true" /> if the value was written to the buffer; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+          
+## Remarks
+
+The <xref:System.Text.Rune.Utf16SequenceLength> property can be queried ahead of time to determine the required size of the `destination` buffer.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryEncodeToUtf8">
@@ -1397,11 +1960,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryEncodeToUtf8(System.Span{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEncodeToUtf8 (destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncodeToUtf8(Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="member this.TryEncodeToUtf8 : Span&lt;byte&gt; *  -&gt; bool" Usage="rune.TryEncodeToUtf8 (destination, bytesWritten)" />
+      <MemberSignature Language="F#" Value="member this.TryEncodeToUtf8 : Span&lt;byte&gt; * int -&gt; bool" Usage="rune.TryEncodeToUtf8 (destination, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1411,11 +1976,20 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">The buffer to which to write the UTF-8 encoded value.</param>
+        <param name="bytesWritten">The number of <see cref="T:System.Byte" /> values written to <paramref name="destination" />, or 0 if the destination buffer is not large enough to contain the output.</param>
+        <summary>Encodes this <see cref="T:System.Text.Rune" /> to a UTF-8 encoded destination buffer.</summary>
+        <returns>
+          <see langword="true" /> if the value was written to the buffer; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+          
+## Remarks
+
+The <xref:System.Text.Rune.Utf8SequenceLength> property can be queried ahead of time to determine the required size of the `destination` buffer.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetRuneAt">
@@ -1424,11 +1998,13 @@
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryGetRuneAt(System.String,System.Int32,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryGetRuneAt (input As String, index As Integer, ByRef value As Rune) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryGetRuneAt(System::String ^ input, int index, [Runtime::InteropServices::Out] System::Text::Rune % value);" />
-      <MemberSignature Language="F#" Value="static member TryGetRuneAt : string * int *  -&gt; bool" Usage="System.Text.Rune.TryGetRuneAt (input, index, value)" />
+      <MemberSignature Language="F#" Value="static member TryGetRuneAt : string * int * Rune -&gt; bool" Usage="System.Text.Rune.TryGetRuneAt (input, index, value)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1439,12 +2015,17 @@
         <Parameter Name="value" Type="System.Text.Rune" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="input">To be added.</param>
-        <param name="index">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="input">The string from which to extract the rune.</param>
+        <param name="index">The zero-based index from which to extract the rune.</param>
+        <param name="value">When this method returns, the decoded rune.</param>
+        <summary>Attempts to get the <see cref="T:System.Text.Rune" /> that begins at a specified position in a string, and return a value that indicates whether the operation succeeded.</summary>
+        <returns>
+          <see langword="true" /> if a scalar value was successfully extracted from the specified index; <see langword="false" /> if a value could not be extracted because of invalid data.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="input" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="index" /> is out of the range of <paramref name="input" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Utf16SequenceLength">
@@ -1458,14 +2039,24 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length in code units (<see cref="T:System.Char" />) of the UTF-16 sequence required to represent this scalar value.</summary>
+        <value>The length in code units (<see cref="T:System.Char" />) of the UTF-16 sequence required to represent this scalar value.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The return value will be 1 or 2.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Utf8SequenceLength">
@@ -1479,14 +2070,24 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length in code units of the UTF-8 sequence required to represent this scalar value.</summary>
+        <value>The length in code units of the UTF-8 sequence required to represent this scalar value.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The return value will be 1 through 4, inclusive.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Value">
@@ -1500,13 +2101,15 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the Unicode scalar value as an integer.</summary>
+        <value>The Unicode scalar value as an integer.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

@@ -1,4 +1,4 @@
-﻿<Type Name="WindowsRuntimeStorageExtensions" FullName="System.IO.WindowsRuntimeStorageExtensions">
+<Type Name="WindowsRuntimeStorageExtensions" FullName="System.IO.WindowsRuntimeStorageExtensions">
   <TypeSignature Language="C#" Value="public static class WindowsRuntimeStorageExtensions" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit WindowsRuntimeStorageExtensions extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.IO.WindowsRuntimeStorageExtensions" />
@@ -9,6 +9,7 @@
     <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
     <AssemblyVersion>4.0.10.0</AssemblyVersion>
     <AssemblyVersion>4.0.14.0</AssemblyVersion>
+    <AssemblyVersion>4.0.15.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -52,6 +53,26 @@ The next example shows the XAML code that is associated with the previous exampl
     </remarks>
   </Docs>
   <Members>
+    <MemberGroup MemberName="CreateSafeFileHandle">
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
+        <AssemblyVersion>4.0.14.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>Creates and returns a reference to a safe file handle for the IStorage instance that is being extended.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+With the Windows 10 Anniversary Update, new interfaces were added to <xref:Windows.Storage.IStorageFolder> and <xref:Windows.Storage.IStorageFile> that allow creating a standard Win32 file handle: `IStorageFolderHandleAccess` and `IStorageItemHandleAccess`. The `CreateSafeFileHandle` group of extension methods take advantage of the `Create` methods of these interfaces.
+
+The key benefit of the API is access to a brokered `SafeFileHandle`. This is critically important if you want to create a <xref:System.IO.FileStream> around an <xref:Windows.Storage.IStorageItem> or <xref:Windows.Storage.IStorageFolder> when you are running in an [AppContainer](https://docs.microsoft.com/windows/win32/secauthz/appcontainer-isolation). When running in an AppContainer, the application has very limited file access rights. Things like picture and document folders require the native file handle to be proxied via `RuntimeBroker.exe`, as the application process itself doesn't have rights to most files. This API gets the proxied handle. If accessing user data folders or using a file picker, this API should always be used to create <xref:System.IO.FileStream>. Using a path will often throw <xref:System.AccessViolationException> in these cases.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="CreateSafeFileHandle">
       <MemberSignature Language="C#" Value="public static Microsoft.Win32.SafeHandles.SafeFileHandle CreateSafeFileHandle (this Windows.Storage.IStorageFolder rootDirectory, string relativePath, System.IO.FileMode mode);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Microsoft.Win32.SafeHandles.SafeFileHandle CreateSafeFileHandle(class Windows.Storage.IStorageFolder rootDirectory, string relativePath, valuetype System.IO.FileMode mode) cil managed" />
@@ -63,9 +84,10 @@ The next example shows the XAML code that is associated with the previous exampl
       <AssemblyInfo>
         <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
         <AssemblyVersion>4.0.14.0</AssemblyVersion>
+        <AssemblyVersion>4.0.15.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-plat-ext-3.0">
+        <Attribute FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -73,17 +95,33 @@ The next example shows the XAML code that is associated with the previous exampl
         <ReturnType>Microsoft.Win32.SafeHandles.SafeFileHandle</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="rootDirectory" Type="Windows.Storage.IStorageFolder" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0" RefType="this" />
-        <Parameter Name="relativePath" Type="System.String" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="mode" Type="System.IO.FileMode" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0" />
+        <Parameter Name="rootDirectory" Type="Windows.Storage.IStorageFolder" RefType="this" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="relativePath" Type="System.String" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="mode" Type="System.IO.FileMode" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
       </Parameters>
       <Docs>
-        <param name="rootDirectory">To be added.</param>
-        <param name="relativePath">To be added.</param>
-        <param name="mode">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="rootDirectory">The current storage folder instance.</param>
+        <param name="relativePath">The name of the file that you want to get a handle to.</param>
+        <param name="mode">The mode in which the operating system should open the file.</param>
+        <summary>Creates a safe file handle for a file that is in the current storage folder instance.</summary>
+        <returns>A safe file handle instance if the operation succeeds; <see langword="null" /> if the conversion of the <paramref name="rootDirectory" /> to an IStorageFolderHandleAccess returns <see langword="null" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When calling this method, if the specified mode is <xref:System.IO.FileMode.Append?displayProperty=nameWithType>, the file will be opened with <xref:System.IO.FileAccess.Read?displayProperty=nameWithType> access permission. For any other modes, the file will be opened with <xref:System.IO.FileAccess.ReadWrite?displayProperty=nameWithType> access permission.
+
+Additionally, this method will open the file with <xref:System.IO.FileShare.Read?displayProperty=nameWithType> stream sharing access and with <xref:System.IO.FileOptions.None?displayProperty=nameWithType> advanced file creation options.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="rootDirectory" /> is <see langword="null" />.
+
+ -or-
+
+<paramref name="relativePath" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateSafeFileHandle">
@@ -96,9 +134,10 @@ The next example shows the XAML code that is associated with the previous exampl
       <AssemblyInfo>
         <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
         <AssemblyVersion>4.0.14.0</AssemblyVersion>
+        <AssemblyVersion>4.0.15.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-plat-ext-3.0">
+        <Attribute FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -106,19 +145,21 @@ The next example shows the XAML code that is associated with the previous exampl
         <ReturnType>Microsoft.Win32.SafeHandles.SafeFileHandle</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="windowsRuntimeFile" Type="Windows.Storage.IStorageFile" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0" RefType="this" />
-        <Parameter Name="access" Type="System.IO.FileAccess" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="share" Type="System.IO.FileShare" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="options" Type="System.IO.FileOptions" Index="3" FrameworkAlternate="dotnet-plat-ext-3.0" />
+        <Parameter Name="windowsRuntimeFile" Type="Windows.Storage.IStorageFile" RefType="this" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="access" Type="System.IO.FileAccess" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="share" Type="System.IO.FileShare" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="options" Type="System.IO.FileOptions" Index="3" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
       </Parameters>
       <Docs>
-        <param name="windowsRuntimeFile">To be added.</param>
-        <param name="access">To be added.</param>
-        <param name="share">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="windowsRuntimeFile">A storage file instance.</param>
+        <param name="access">The kind of access that should be used when opening the file. The default value is <see cref="F:System.IO.FileAccess.ReadWrite" />.</param>
+        <param name="share">The kind of stream sharing access other <see cref="T:System.IO.FileStream" /> objects can have to the same file. The default value is <see cref="F:System.IO.FileShare.Read" />.</param>
+        <param name="options">Advanced options for creating the <see cref="T:System.IO.FileStream" /> object. The default value is <see cref="F:System.IO.FileOptions.None" />.</param>
+        <summary>Creates a safe file handle for a the current storage file instance.</summary>
+        <returns>A safe file handle instance if the operation succeeds; <see langword="null" /> if the conversion of the <paramref name="windowsRuntimeFile" /> to an IStorageItemHandleAccess returns <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="windowsRuntimeFile" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateSafeFileHandle">
@@ -131,9 +172,10 @@ The next example shows the XAML code that is associated with the previous exampl
       <AssemblyInfo>
         <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
         <AssemblyVersion>4.0.14.0</AssemblyVersion>
+        <AssemblyVersion>4.0.15.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-plat-ext-3.0">
+        <Attribute FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -141,23 +183,29 @@ The next example shows the XAML code that is associated with the previous exampl
         <ReturnType>Microsoft.Win32.SafeHandles.SafeFileHandle</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="rootDirectory" Type="Windows.Storage.IStorageFolder" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0" RefType="this" />
-        <Parameter Name="relativePath" Type="System.String" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="mode" Type="System.IO.FileMode" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="access" Type="System.IO.FileAccess" Index="3" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="share" Type="System.IO.FileShare" Index="4" FrameworkAlternate="dotnet-plat-ext-3.0" />
-        <Parameter Name="options" Type="System.IO.FileOptions" Index="5" FrameworkAlternate="dotnet-plat-ext-3.0" />
+        <Parameter Name="rootDirectory" Type="Windows.Storage.IStorageFolder" RefType="this" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="relativePath" Type="System.String" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="mode" Type="System.IO.FileMode" Index="2" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="access" Type="System.IO.FileAccess" Index="3" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="share" Type="System.IO.FileShare" Index="4" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
+        <Parameter Name="options" Type="System.IO.FileOptions" Index="5" FrameworkAlternate="dotnet-plat-ext-3.0;dotnet-plat-ext-3.1" />
       </Parameters>
       <Docs>
-        <param name="rootDirectory">To be added.</param>
-        <param name="relativePath">To be added.</param>
-        <param name="mode">To be added.</param>
-        <param name="access">To be added.</param>
-        <param name="share">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="rootDirectory">The current storage folder instance.</param>
+        <param name="relativePath">The name of the file that you want to get a handle to.</param>
+        <param name="mode">The mode in which the operating system should open the file.</param>
+        <param name="access">The kind of access that should be used when opening the file.</param>
+        <param name="share">The kind of stream sharing access other <see cref="T:System.IO.FileStream" /> objects can have to the same file. The default value is <see cref="F:System.IO.FileShare.Read" />.</param>
+        <param name="options">Advanced options for creating the <see cref="T:System.IO.FileStream" /> object. The default value is <see cref="F:System.IO.FileOptions.None" />.</param>
+        <summary>Creates a safe file handle for a file that is in the current storage folder instance.</summary>
+        <returns>A safe file handle instance if the operation succeeds; <see langword="null" /> if the conversion of the <paramref name="rootDirectory" /> to an IStorageFolderHandleAccess returns <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="rootDirectory" /> is <see langword="null" />.
+
+ -or-
+
+<paramref name="relativePath" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="OpenStreamForReadAsync">
@@ -172,6 +220,7 @@ The next example shows the XAML code that is associated with the previous exampl
         <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
         <AssemblyVersion>4.0.10.0</AssemblyVersion>
         <AssemblyVersion>4.0.14.0</AssemblyVersion>
+        <AssemblyVersion>4.0.15.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -193,7 +242,7 @@ The next example shows the XAML code that is associated with the previous exampl
 ## Remarks
 
 > [!NOTE]
-> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFile>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](~/docs/visual-basic/programming-guide/language-features/procedures/extension-methods.md) or [Extension Methods (C# Programming Guide)](~/docs/csharp/programming-guide/classes-and-structs/extension-methods.md).
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFile>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
 ## Examples
 
@@ -225,6 +274,7 @@ The next example shows the XAML code that is associated with the previous exampl
         <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
         <AssemblyVersion>4.0.10.0</AssemblyVersion>
         <AssemblyVersion>4.0.14.0</AssemblyVersion>
+        <AssemblyVersion>4.0.15.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -249,7 +299,7 @@ The next example shows the XAML code that is associated with the previous exampl
 ## Remarks
 
 > [!NOTE]
-> In Visual Basic and C#, you can call this method as an instance method on any object of type IStorageFolder. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](~/docs/visual-basic/programming-guide/language-features/procedures/extension-methods.md) or [Extension Methods (C# Programming Guide)](~/docs/csharp/programming-guide/classes-and-structs/extension-methods.md).
+> In Visual Basic and C#, you can call this method as an instance method on any object of type IStorageFolder. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
 ## Examples
 
@@ -283,6 +333,7 @@ The next example shows the XAML code that is associated with the previous exampl
         <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
         <AssemblyVersion>4.0.10.0</AssemblyVersion>
         <AssemblyVersion>4.0.14.0</AssemblyVersion>
+        <AssemblyVersion>4.0.15.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -304,7 +355,7 @@ The next example shows the XAML code that is associated with the previous exampl
 ## Remarks
 
 > [!NOTE]
-> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFile>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](~/docs/visual-basic/programming-guide/language-features/procedures/extension-methods.md) or [Extension Methods (C# Programming Guide)](~/docs/csharp/programming-guide/classes-and-structs/extension-methods.md).
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFile>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
 ## Examples
 
@@ -328,6 +379,7 @@ The next example shows the XAML code that is associated with the previous exampl
       <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;System.IO.Stream&gt; OpenStreamForWriteAsync (this Windows.Storage.IStorageFolder rootDirectory, string relativePath, Windows.Storage.CreationCollisionOption creationCollisionOption);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class System.IO.Stream&gt; OpenStreamForWriteAsync(class Windows.Storage.IStorageFolder rootDirectory, string relativePath, valuetype Windows.Storage.CreationCollisionOption creationCollisionOption) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.WindowsRuntimeStorageExtensions.OpenStreamForWriteAsync(Windows.Storage.IStorageFolder,System.String,Windows.Storage.CreationCollisionOption)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function OpenStreamForWriteAsync (rootDirectory As IStorageFolder, relativePath As String, creationCollisionOption As CreationCollisionOption) As Task(Of Stream)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::Threading::Tasks::Task&lt;System::IO::Stream ^&gt; ^ OpenStreamForWriteAsync(Windows::Storage::IStorageFolder ^ rootDirectory, System::String ^ relativePath, Windows::Storage::CreationCollisionOption creationCollisionOption);" />
       <MemberSignature Language="F#" Value="static member OpenStreamForWriteAsync : Windows.Storage.IStorageFolder * string * Windows.Storage.CreationCollisionOption -&gt; System.Threading.Tasks.Task&lt;System.IO.Stream&gt;" Usage="System.IO.WindowsRuntimeStorageExtensions.OpenStreamForWriteAsync (rootDirectory, relativePath, creationCollisionOption)" />
       <MemberType>Method</MemberType>
@@ -335,6 +387,7 @@ The next example shows the XAML code that is associated with the previous exampl
         <AssemblyName>System.Runtime.WindowsRuntime</AssemblyName>
         <AssemblyVersion>4.0.10.0</AssemblyVersion>
         <AssemblyVersion>4.0.14.0</AssemblyVersion>
+        <AssemblyVersion>4.0.15.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -361,7 +414,7 @@ The next example shows the XAML code that is associated with the previous exampl
 ## Remarks
 
 > [!NOTE]
-> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFolder>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](~/docs/visual-basic/programming-guide/language-features/procedures/extension-methods.md) or [Extension Methods (C# Programming Guide)](~/docs/csharp/programming-guide/classes-and-structs/extension-methods.md).
+> In Visual Basic and C#, you can call this method as an instance method on any object of type <xref:Windows.Storage.IStorageFolder>. When you use instance method syntax to call this method, omit the first parameter. For more information, see [Extension Methods (Visual Basic)](/dotnet/visual-basic/programming-guide/language-features/procedures/extension-methods) or [Extension Methods (C# Programming Guide)](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods).
 
 ## Examples
 

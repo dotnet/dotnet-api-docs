@@ -1,4 +1,4 @@
-﻿<Type Name="ActivitySpanId" FullName="System.Diagnostics.ActivitySpanId">
+<Type Name="ActivitySpanId" FullName="System.Diagnostics.ActivitySpanId">
   <TypeSignature Language="C#" Value="public struct ActivitySpanId : IEquatable&lt;System.Diagnostics.ActivitySpanId&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit ActivitySpanId extends System.ValueType implements class System.IEquatable`1&lt;valuetype System.Diagnostics.ActivitySpanId&gt;" />
   <TypeSignature Language="DocId" Value="T:System.Diagnostics.ActivitySpanId" />
@@ -8,6 +8,8 @@
   <AssemblyInfo>
     <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
     <AssemblyVersion>4.0.4.0</AssemblyVersion>
+    <AssemblyVersion>4.0.5.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -18,8 +20,16 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a <see cref="P:System.Diagnostics.Activity.SpanId" /> formatted based on a W3C standard.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+The `ActivitySpanId` structure reflects the format that the W3C standard requires for the ID of a single span in a trace. It consists of 8 bytes, typically displayed as 16 hexadecimal characters. An `ActivitySpanId` is returned by the <xref:System.Diagnostics.Activity.SpanId?displayProperty=nameWithtype> for an <xref:System.Diagnostics.Activity> whose <xref:System.Diagnostics.Activity.IdFormat?displayProperty=nameWithType> is <xref:System.Diagnostics.ActivityIdFormat.W3C?displayProperty=nameWithtype>.
+
+Because an `ActivitySpanId` is a structure that contains 8 bytes, it can be passed by reference. `ActivitySpanId` contains methods for converting to and from hexadecimal string representation, tries to avoid changing formats until it has to, and caches its string representation after it is created. It is mostly useful as an exchange type.
+
+         ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="CopyTo">
@@ -33,6 +43,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -41,8 +53,8 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The span to which the 8 bytes of the SpanID are to be copied.</param>
+        <summary>Copies the 8 bytes of the current <see cref="T:System.Diagnostics.ActivitySpanId" /> to a specified span.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -57,6 +69,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
@@ -65,10 +79,12 @@
         <Parameter Name="idData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="idData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="idData">A read-only span of eight bytes.</param>
+        <summary>Creates a new <see cref="T:System.Diagnostics.ActivitySpanId" /> value from a read-only span of eight bytes.</summary>
+        <returns>The new span ID.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="idData" /> does not contain eight bytes.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromString">
@@ -82,6 +98,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
@@ -90,10 +108,24 @@
         <Parameter Name="idData" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="idData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="idData">A span that contains 16 hexadecimal characters.</param>
+        <summary>Creates a new <see cref="T:System.Diagnostics.ActivitySpanId" /> value from a read-only span of 16 hexadecimal characters.</summary>
+        <returns>The new span ID.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+`idData` can consist either of numbers and lower-case hexadecimal characters or of all zeros.
+
+         ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="idData" /> does not contain 16 hexadecimal characters.
+
+-or-
+          
+The characters in <paramref name="idData" /> are not all lower-case hexadecimal characters or all zeros.
+          
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromUtf8String">
@@ -107,6 +139,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
@@ -115,9 +149,9 @@
         <Parameter Name="idData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="idData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="idData">A read-only span of UTF8-encoded bytes.</param>
+        <summary>Creates a new <see cref="T:System.Diagnostics.ActivitySpanId" /> value from a read-only span of UTF8-encoded bytes.</summary>
+        <returns>The new span ID.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -132,14 +166,16 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Creates a new <see cref="T:System.Diagnostics.ActivitySpanId" /> based on a random number (that is very likely to be unique).</summary>
+        <returns>The new span ID.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -157,6 +193,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -165,9 +203,10 @@
         <Parameter Name="spanId" Type="System.Diagnostics.ActivitySpanId" />
       </Parameters>
       <Docs>
-        <param name="spanId">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="spanId">The instance to compare.</param>
+        <summary>Determines whether this instance and the specified <see cref="T:System.Diagnostics.ActivitySpanId" /> instance have the same value.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="spanId" /> has the same hex value as the current instance; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -182,6 +221,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -190,9 +231,10 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="obj">The object to compare.</param>
+        <summary>the current instance and a specified object, which also must be an <see cref="T:System.Diagnostics.ActivitySpanId" /> instance, have the same value.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="obj" /> is an instance of <see cref="T:System.Diagnostics.ActivitySpanId" /> and has the same hex value as the current instance; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -207,68 +249,76 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the hash code of the SpanId.</summary>
+        <returns>The hash code of the SpanId.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Equality">
-      <MemberSignature Language="C#" Value="public static bool operator == (ref System.Diagnostics.ActivitySpanId spanId1, ref System.Diagnostics.ActivitySpanId spandId2);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality([in]valuetype System.Diagnostics.ActivitySpanId&amp; spanId1, [in]valuetype System.Diagnostics.ActivitySpanId&amp; spandId2) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.ActivitySpanId.op_Equality(System.Diagnostics.ActivitySpanId@,System.Diagnostics.ActivitySpanId@)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Operator == (ByRef spanId1 As ActivitySpanId, ByRef spandId2 As ActivitySpanId) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator ==(System::Diagnostics::ActivitySpanId % spanId1, System::Diagnostics::ActivitySpanId % spandId2);" />
-      <MemberSignature Language="F#" Value="static member ( = ) :  *  -&gt; bool" Usage="spanId1 = spandId2" />
+      <MemberSignature Language="C#" Value="public static bool operator == (System.Diagnostics.ActivitySpanId spanId1, System.Diagnostics.ActivitySpanId spandId2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(valuetype System.Diagnostics.ActivitySpanId spanId1, valuetype System.Diagnostics.ActivitySpanId spandId2) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.ActivitySpanId.op_Equality(System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivitySpanId)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Operator == (spanId1 As ActivitySpanId, spandId2 As ActivitySpanId) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator ==(System::Diagnostics::ActivitySpanId spanId1, System::Diagnostics::ActivitySpanId spandId2);" />
+      <MemberSignature Language="F#" Value="static member ( = ) : System.Diagnostics.ActivitySpanId * System.Diagnostics.ActivitySpanId -&gt; bool" Usage="spanId1 = spandId2" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="spanId1" Type="System.Diagnostics.ActivitySpanId" RefType="ref" />
-        <Parameter Name="spandId2" Type="System.Diagnostics.ActivitySpanId" RefType="ref" />
+        <Parameter Name="spanId1" Type="System.Diagnostics.ActivitySpanId" />
+        <Parameter Name="spandId2" Type="System.Diagnostics.ActivitySpanId" />
       </Parameters>
       <Docs>
-        <param name="spanId1">To be added.</param>
-        <param name="spandId2">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="spanId1">The first instance to compare.</param>
+        <param name="spandId2">The second instance to compare.</param>
+        <summary>Determines whether two specified <see cref="T:System.Diagnostics.ActivitySpanId" /> instances have the same value.</summary>
+        <returns>
+          <see langword="true" /> if the SpanId of <paramref name="spanId1" /> is the same as the SpanId of <paramref name="spandId2" />; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Inequality">
-      <MemberSignature Language="C#" Value="public static bool operator != (ref System.Diagnostics.ActivitySpanId spanId1, ref System.Diagnostics.ActivitySpanId spandId2);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality([in]valuetype System.Diagnostics.ActivitySpanId&amp; spanId1, [in]valuetype System.Diagnostics.ActivitySpanId&amp; spandId2) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.ActivitySpanId.op_Inequality(System.Diagnostics.ActivitySpanId@,System.Diagnostics.ActivitySpanId@)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Operator != (ByRef spanId1 As ActivitySpanId, ByRef spandId2 As ActivitySpanId) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator !=(System::Diagnostics::ActivitySpanId % spanId1, System::Diagnostics::ActivitySpanId % spandId2);" />
-      <MemberSignature Language="F#" Value="static member op_Inequality :  *  -&gt; bool" Usage="System.Diagnostics.ActivitySpanId.op_Inequality (spanId1, spandId2)" />
+      <MemberSignature Language="C#" Value="public static bool operator != (System.Diagnostics.ActivitySpanId spanId1, System.Diagnostics.ActivitySpanId spandId2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(valuetype System.Diagnostics.ActivitySpanId spanId1, valuetype System.Diagnostics.ActivitySpanId spandId2) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.ActivitySpanId.op_Inequality(System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivitySpanId)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Operator != (spanId1 As ActivitySpanId, spandId2 As ActivitySpanId) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator !=(System::Diagnostics::ActivitySpanId spanId1, System::Diagnostics::ActivitySpanId spandId2);" />
+      <MemberSignature Language="F#" Value="static member op_Inequality : System.Diagnostics.ActivitySpanId * System.Diagnostics.ActivitySpanId -&gt; bool" Usage="System.Diagnostics.ActivitySpanId.op_Inequality (spanId1, spandId2)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="spanId1" Type="System.Diagnostics.ActivitySpanId" RefType="ref" />
-        <Parameter Name="spandId2" Type="System.Diagnostics.ActivitySpanId" RefType="ref" />
+        <Parameter Name="spanId1" Type="System.Diagnostics.ActivitySpanId" />
+        <Parameter Name="spandId2" Type="System.Diagnostics.ActivitySpanId" />
       </Parameters>
       <Docs>
-        <param name="spanId1">To be added.</param>
-        <param name="spandId2">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="spanId1">The first instance to compare.</param>
+        <param name="spandId2">The second instance to compare.</param>
+        <summary>Determine whether two specified <see cref="T:System.Diagnostics.ActivitySpanId" /> instances have unequal values.</summary>
+        <returns>
+          <see langword="true" /> if the SpanId of <paramref name="spanId1" /> is different from the SpanId of <paramref name="spandId2" />; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -283,14 +333,16 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns a 16-character hexadecimal string that represents this span ID.</summary>
+        <returns>The 16-character hecxadecimal string representation of this span ID.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -305,14 +357,16 @@
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns a 16-character hexadecimal string that represents this span ID.</summary>
+        <returns>The 16-character hexadecimal string representation of this span ID.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

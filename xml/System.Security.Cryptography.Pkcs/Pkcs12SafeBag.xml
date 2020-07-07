@@ -1,4 +1,4 @@
-﻿<Type Name="Pkcs12SafeBag" FullName="System.Security.Cryptography.Pkcs.Pkcs12SafeBag">
+<Type Name="Pkcs12SafeBag" FullName="System.Security.Cryptography.Pkcs.Pkcs12SafeBag">
   <TypeSignature Language="C#" Value="public abstract class Pkcs12SafeBag" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit Pkcs12SafeBag extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Pkcs.Pkcs12SafeBag" />
@@ -9,13 +9,15 @@
     <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
     <AssemblyVersion>4.0.4.0</AssemblyVersion>
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Defines the core behavior of a SafeBag value from the PKCS#12 specification and provides a base for derived classes.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -30,6 +32,8 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="bagIdValue" Type="System.String" />
@@ -37,11 +41,25 @@
         <Parameter Name="skipCopy" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="bagIdValue">To be added.</param>
-        <param name="encodedBagValue">To be added.</param>
-        <param name="skipCopy">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="bagIdValue">The Object Identifier (OID), in dotted decimal form, indicating the data type of this SafeBag.</param>
+        <param name="encodedBagValue">The ASN.1 BER encoded value of the SafeBag contents.</param>
+        <param name="skipCopy">
+          <see langword="true" /> to store <paramref name="encodedBagValue" /> without making a defensive copy; otherwise, <see langword="false" />. The default is <see langword="false" />.</param>
+        <summary>Called from constructors in derived classes to initialize the <see cref="T:System.Security.Cryptography.Pkcs.Pkcs12SafeBag" /> class.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+## Remarks
+ The default behavior of this method is to make a defensive copy of `encodedBagValue`.
+ When the `skipCopy` parameter is `true`, this defensive copy is skipped.
+ If the defensive copy is skipped and the contents of `encodedBagValue` change during the lifetime of the value, or any object produced by its
+ methods or properties, then methods and properties on those objects may produce nonsense results or throw exceptions due to the corrupted state.
+ Callers are therefore advised to only use a `true` value for the `skipCopy` parameter when they can be reasonably assured that the data will stay intact.
+ 
+ If the `bagIdValue` is not a legal dotted decimal format of an OID value an exception will be thrown from <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag.Encode> or <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag.TryEncode%2A>.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="bagIdValue" /> parameter is <see langword="null" /> or the empty string.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="encodedBagValue" /> parameter does not represent a single ASN.1 BER-encoded value.</exception>
       </Docs>
     </Member>
     <Member MemberName="Attributes">
@@ -56,13 +74,15 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.CryptographicAttributeObjectCollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the modifiable collection of attributes to encode with the SafeBag value.</summary>
+        <value>The modifiable collection of attributes to encode with the SafeBag value.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -78,15 +98,18 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Encodes the SafeBag value and returns it as a byte array.</summary>
+        <returns>A byte array representing the encoded form of the SafeBag.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The object identifier value passed to the constructor was invalid.</exception>
       </Docs>
     </Member>
     <Member MemberName="EncodedBagValue">
@@ -101,14 +124,26 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ReadOnlyMemory&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the ASN.1 BER encoding of the contents of this SafeBag.</summary>
+        <value>The ASN.1 BER encoding of the contents of this SafeBag.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+ In the encoded structure, the SafeBag.bagValue value is tagged as `[0] EXPLICIT`. The value of this property is only the contents within the explicit tag.
+ The explicit tag is automatically applied by <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag.Encode> or <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag.TryEncode%2A>,
+ and is removed during <xref:System.Security.Cryptography.Pkcs.Pkcs12Info.Decode%2A> and similar methods.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetBagId">
@@ -123,14 +158,16 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Oid</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets the Object Identifier (OID) identifying the content type of this SafeBag.</summary>
+        <returns>The Object Identifier (OID) identifying the content type of this SafeBag.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -140,12 +177,14 @@
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Pkcs12SafeBag.TryEncode(System.Span{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEncode (destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncode(Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="member this.TryEncode : Span&lt;byte&gt; *  -&gt; bool" Usage="pkcs12SafeBag.TryEncode (destination, bytesWritten)" />
+      <MemberSignature Language="F#" Value="member this.TryEncode : Span&lt;byte&gt; * int -&gt; bool" Usage="pkcs12SafeBag.TryEncode (destination, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -155,11 +194,13 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The byte span to receive the encoded SafeBag value.</param>
+        <param name="bytesWritten">When this method returns, contains a value that indicates the number of bytes written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to encode the SafeBag value into a provided buffer.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is big enough to receive the output; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The object identifier value passed to the constructor was invalid.</exception>
       </Docs>
     </Member>
   </Members>

@@ -1,4 +1,4 @@
-﻿<Type Name="BrotliDecoder" FullName="System.IO.Compression.BrotliDecoder">
+<Type Name="BrotliDecoder" FullName="System.IO.Compression.BrotliDecoder">
   <TypeSignature Language="C#" Value="public struct BrotliDecoder : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit BrotliDecoder extends System.ValueType implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.IO.Compression.BrotliDecoder" />
@@ -8,11 +8,16 @@
   <AssemblyInfo>
     <AssemblyName>System.IO.Compression.Brotli</AssemblyName>
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Compression.Brotli" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
@@ -22,7 +27,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides non-allocating, performant Brotli decompression methods. The methods decompress in a single pass without using a <see cref="T:System.IO.Compression.BrotliStream" /> instance.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -32,11 +37,13 @@
       <MemberSignature Language="DocId" Value="M:System.IO.Compression.BrotliDecoder.Decompress(System.ReadOnlySpan{System.Byte},System.Span{System.Byte},System.Int32@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function Decompress (source As ReadOnlySpan(Of Byte), destination As Span(Of Byte), ByRef bytesConsumed As Integer, ByRef bytesWritten As Integer) As OperationStatus" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Buffers::OperationStatus Decompress(ReadOnlySpan&lt;System::Byte&gt; source, Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesConsumed, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="member this.Decompress : ReadOnlySpan&lt;byte&gt; * Span&lt;byte&gt; *  *  -&gt; System.Buffers.OperationStatus" Usage="brotliDecoder.Decompress (source, destination, bytesConsumed, bytesWritten)" />
+      <MemberSignature Language="F#" Value="member this.Decompress : ReadOnlySpan&lt;byte&gt; * Span&lt;byte&gt; * int * int -&gt; System.Buffers.OperationStatus" Usage="brotliDecoder.Decompress (source, destination, bytesConsumed, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Compression.Brotli</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -52,13 +59,25 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">A buffer containing the compressed data.</param>
+        <param name="destination">When this method returns, a byte span containing the decompressed data.</param>
+        <param name="bytesConsumed">The total number of bytes that were read from <paramref name="source" />.</param>
+        <param name="bytesWritten">The total number of bytes that were written in the <paramref name="destination" />.</param>
+        <summary>Decompresses data that was compressed using the Brotli algorithm.</summary>
+        <returns>One of the enumeration values that indicates the status of the decompression operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The return value can be as follows:
+- <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: `source` was successfully and completely decompressed into `destination`.
+- <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType>: There is not enough space in `destination` to decompress `source`.
+- <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>: The decompression action is partially done at least one more byte is required to complete the decompression task. This method should be called again with more input to decompress.
+- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The data in `source` is invalid and could not be decompressed.
+
+           ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -75,6 +94,8 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Compression.Brotli</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -85,7 +106,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Releases all resources used by the current Brotli decoder instance.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -95,11 +116,13 @@
       <MemberSignature Language="DocId" Value="M:System.IO.Compression.BrotliDecoder.TryDecompress(System.ReadOnlySpan{System.Byte},System.Span{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryDecompress (source As ReadOnlySpan(Of Byte), destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryDecompress(ReadOnlySpan&lt;System::Byte&gt; source, Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="static member TryDecompress : ReadOnlySpan&lt;byte&gt; * Span&lt;byte&gt; *  -&gt; bool" Usage="System.IO.Compression.BrotliDecoder.TryDecompress (source, destination, bytesWritten)" />
+      <MemberSignature Language="F#" Value="static member TryDecompress : ReadOnlySpan&lt;byte&gt; * Span&lt;byte&gt; * int -&gt; bool" Usage="System.IO.Compression.BrotliDecoder.TryDecompress (source, destination, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Compression.Brotli</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -114,12 +137,21 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">A buffer containing the compressed data.</param>
+        <param name="destination">When this method returns, a byte span containing the decompressed data.</param>
+        <param name="bytesWritten">The total number of bytes that were written in the <paramref name="destination" />.</param>
+        <summary>Attempts to decompress data that was compressed with the Brotli algorithm.</summary>
+        <returns>
+          <see langword="true" /> on success; <see langword="false" /> otherwise.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If this method returns `false`, `destination` may be empty or contain partially decompressed data, with `bytesWritten` being zero or greater than zero but less than the expected total.
+
+           ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

@@ -1,4 +1,4 @@
-﻿<Type Name="Pkcs12ShroudedKeyBag" FullName="System.Security.Cryptography.Pkcs.Pkcs12ShroudedKeyBag">
+<Type Name="Pkcs12ShroudedKeyBag" FullName="System.Security.Cryptography.Pkcs.Pkcs12ShroudedKeyBag">
   <TypeSignature Language="C#" Value="public sealed class Pkcs12ShroudedKeyBag : System.Security.Cryptography.Pkcs.Pkcs12SafeBag" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Pkcs12ShroudedKeyBag extends System.Security.Cryptography.Pkcs.Pkcs12SafeBag" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Pkcs.Pkcs12ShroudedKeyBag" />
@@ -9,13 +9,15 @@
     <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
     <AssemblyVersion>4.0.4.0</AssemblyVersion>
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Security.Cryptography.Pkcs.Pkcs12SafeBag</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents the ShroudedKeyBag from PKCS#12, a container whose contents are a PKCS#8 EncryptedPrivateKeyInfo. This class cannot be inherited.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -30,16 +32,35 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="encryptedPkcs8PrivateKey" Type="System.ReadOnlyMemory&lt;System.Byte&gt;" />
         <Parameter Name="skipCopy" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="encryptedPkcs8PrivateKey">To be added.</param>
-        <param name="skipCopy">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="encryptedPkcs8PrivateKey">A BER-encoded PKCS#8 EncryptedPrivateKeyInfo value.</param>
+        <param name="skipCopy">
+          <see langword="true" /> to store <paramref name="encryptedPkcs8PrivateKey" /> without making a defensive copy; otherwise, <see langword="false" />. The default is <see langword="false" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Pkcs.Pkcs12ShroudedKeyBag" /> from an existing encoded PKCS#8 EncryptedPrivateKeyInfo value.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This method validates that `encryptedPkcs8PrivateKey` is a single BER-encoded value, but it does not verify that the value is a proper PKCS#8 EncryptedPrivateKeyInfo value.
+
+The default behavior of this method is to make a defensive copy of `encryptedPkcs8PrivateKey`.
+When the `skipCopy` parameter is `true`, this defensive copy is skipped.
+If the defensive copy is skipped and the contents of `encryptedPkcs8PrivateKey` change during the lifetime of the returned value or of any object produced by its
+methods or properties, then methods and properties on those objects may produce nonsense results or throw exceptions due to the corrupted state.
+Callers are therefore advised to only use a `true` value for the `skipCopy` parameter when they can be reasonably assured that the data will stay intact.
+    
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="encryptedPkcs8privateKey" /> parameter does not represent a single ASN.1 BER-encoded value.</exception>
+        <altmember cref="Overload:System.Security.Cryptography.Pkcs.Pkcs12SafeContents.AddShroudedKey" />
       </Docs>
     </Member>
     <Member MemberName="EncryptedPkcs8PrivateKey">
@@ -54,14 +75,26 @@
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ReadOnlyMemory&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a memory value containing the PKCS#8 EncryptedPrivateKeyInfo value transported by this bag.</summary>
+        <value>A memory value containing the PKCS#8 EncryptedPrivateKeyInfo value transported by this bag.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+No validation is performed that the returned value is a valid PKCS#8 EncryptedPrivateKeyInfo value.
+
+This property is an alias for the <xref:System.Security.Cryptography.Pkcs.Pkcs12SafeBag.EncodedBagValue?displayProperty=nameWithType> property.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

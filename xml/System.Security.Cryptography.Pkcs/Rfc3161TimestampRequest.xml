@@ -1,4 +1,4 @@
-﻿<Type Name="Rfc3161TimestampRequest" FullName="System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest">
+<Type Name="Rfc3161TimestampRequest" FullName="System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest">
   <TypeSignature Language="C#" Value="public sealed class Rfc3161TimestampRequest" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Rfc3161TimestampRequest extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest" />
@@ -11,18 +11,27 @@
     <AssemblyVersion>4.0.3.1</AssemblyVersion>
     <AssemblyVersion>4.0.4.0</AssemblyVersion>
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a time-stamping request from IETF RFC 3161.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+This class allows for the creation and inspection of `TimeStampReq` values as defined by IETF RFC 3161: Internet X.509 Public Key Infrastructure Time-Stamp Protocol (TSP).
+  
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="CreateFromData">
-      <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromData (ReadOnlySpan&lt;byte&gt; data, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.Oid requestedPolicyId = null, Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt; nonce = null, bool requestSignerCertificates = false, System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions = null);" />
+      <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromData (ReadOnlySpan&lt;byte&gt; data, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.Oid requestedPolicyId = default, ReadOnlyMemory&lt;byte&gt;? nonce = default, bool requestSignerCertificates = false, System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions = default);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromData(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; data, valuetype System.Security.Cryptography.HashAlgorithmName hashAlgorithm, class System.Security.Cryptography.Oid requestedPolicyId, valuetype System.Nullable`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; nonce, bool requestSignerCertificates, class System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromData(System.ReadOnlySpan{System.Byte},System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function CreateFromData (data As ReadOnlySpan(Of Byte), hashAlgorithm As HashAlgorithmName, Optional requestedPolicyId As Oid = null, Optional nonce As Nullable(Of ReadOnlyMemory(Of Byte)) = null, Optional requestSignerCertificates As Boolean = false, Optional extensions As X509ExtensionCollection = null) As Rfc3161TimestampRequest" />
@@ -34,6 +43,8 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest</ReturnType>
@@ -47,19 +58,39 @@
         <Parameter Name="extensions" Type="System.Security.Cryptography.X509Certificates.X509ExtensionCollection" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="requestedPolicyId">To be added.</param>
-        <param name="nonce">To be added.</param>
-        <param name="requestSignerCertificates">To be added.</param>
-        <param name="extensions">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="data">The data to timestamp, which will be hashed by this method.</param>
+        <param name="hashAlgorithm">The hash algorithm to use with this timestamp request.</param>
+        <param name="requestedPolicyId">The Object Identifier (OID) for a timestamp policy the Timestamp Authority (TSA) should use, or <see langword="null" /> to express no preference.</param>
+        <param name="nonce">An optional nonce (number used once) to uniquely identify this request to pair it with the response. The value is interpreted as an unsigned big-endian integer and may be normalized to the encoding format.</param>
+        <param name="requestSignerCertificates">
+          <see langword="true" /> to indicate the Timestamp Authority (TSA) must include the signing certificate in the issued timestamp token; otherwise, <see langword="false" />.</param>
+        <param name="extensions">An optional collection of extensions to include in the request.</param>
+        <summary>Creates a timestamp request by hashing the provided data with a specified algorithm.</summary>
+        <returns>An <see cref="T:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest" /> representing the chosen values.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Cryptographic timestamps are always applied to a combination of the hash of data and the algorithm identifier for the hash algorithm used to hash the data.
+This method is a convenient alternative to <xref:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromHash(System.ReadOnlyMemory{System.Byte},System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)> when the data has not already been hashed.
+
+The nonce value in this method is treated as an unsigned, big-endian integer.
+This method normalizes the input to a BER INTEGER encoding before assigning the nonce value.
+The normalized value is returned by the <xref:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.GetNonce> method.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="hashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or <see cref="F:System.String.Empty" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="hashAlgorithm" /> is not a known hash algorithm.</exception>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromHash(System.ReadOnlyMemory{System.Byte},System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromSignerInfo(System.Security.Cryptography.Pkcs.SignerInfo,System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
       </Docs>
     </Member>
     <Member MemberName="CreateFromHash">
-      <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromHash (ReadOnlyMemory&lt;byte&gt; hash, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.Oid requestedPolicyId = null, Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt; nonce = null, bool requestSignerCertificates = false, System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions = null);" />
+      <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromHash (ReadOnlyMemory&lt;byte&gt; hash, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.Oid requestedPolicyId = default, ReadOnlyMemory&lt;byte&gt;? nonce = default, bool requestSignerCertificates = false, System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions = default);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromHash(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; hash, valuetype System.Security.Cryptography.HashAlgorithmName hashAlgorithm, class System.Security.Cryptography.Oid requestedPolicyId, valuetype System.Nullable`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; nonce, bool requestSignerCertificates, class System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromHash(System.ReadOnlyMemory{System.Byte},System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function CreateFromHash (hash As ReadOnlyMemory(Of Byte), hashAlgorithm As HashAlgorithmName, Optional requestedPolicyId As Oid = null, Optional nonce As Nullable(Of ReadOnlyMemory(Of Byte)) = null, Optional requestSignerCertificates As Boolean = false, Optional extensions As X509ExtensionCollection = null) As Rfc3161TimestampRequest" />
@@ -71,6 +102,8 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest</ReturnType>
@@ -84,19 +117,38 @@
         <Parameter Name="extensions" Type="System.Security.Cryptography.X509Certificates.X509ExtensionCollection" />
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="requestedPolicyId">To be added.</param>
-        <param name="nonce">To be added.</param>
-        <param name="requestSignerCertificates">To be added.</param>
-        <param name="extensions">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="hash">The pre-computed hash value to be timestamped.</param>
+        <param name="hashAlgorithm">The hash algorithm used to produce <paramref name="hash" />.</param>
+        <param name="requestedPolicyId">The Object Identifier (OID) for the timestamp policy that the Timestamp Authority (TSA) should use, or <see langword="null" /> to express no preference.</param>
+        <param name="nonce">An optional value used to uniquely match a request to a response, or <see langword="null" /> to not include a nonce in the request.</param>
+        <param name="requestSignerCertificates">
+          <see langword="true" /> to indicate the Timestamp Authority (TSA) must include the signing certificate in the issued timestamp token; otherwise, <see langword="false" />.</param>
+        <param name="extensions">An optional collection of extensions to include in the request.</param>
+        <summary>Create a timestamp request using a pre-computed hash value and the name of the hash algorithm.</summary>
+        <returns>An <see cref="T:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest" /> representing the chosen values.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This method uses the `hashAlgorithm` parameter to determine the Object Identifier (OID) to include in the timestamp request.
+When building a request for a timestamp based on a hash algorithm that this method does not support, use the 
+<xref:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromHash(System.ReadOnlyMemory{System.Byte},System.Security.Cryptography.Oid,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)> overload.
+
+The nonce value in this method is treated as an unsigned, big-endian integer.
+This method normalizes the input to a BER INTEGER encoding before assigning the nonce value.
+The normalized value is returned by the <xref:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.GetNonce> method.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="hashAlgorithm" /> is not a known hash algorithm.</exception>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromData(System.ReadOnlySpan{System.Byte},System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromHash(System.ReadOnlyMemory{System.Byte},System.Security.Cryptography.Oid,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
       </Docs>
     </Member>
     <Member MemberName="CreateFromHash">
-      <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromHash (ReadOnlyMemory&lt;byte&gt; hash, System.Security.Cryptography.Oid hashAlgorithmId, System.Security.Cryptography.Oid requestedPolicyId = null, Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt; nonce = null, bool requestSignerCertificates = false, System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions = null);" />
+      <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromHash (ReadOnlyMemory&lt;byte&gt; hash, System.Security.Cryptography.Oid hashAlgorithmId, System.Security.Cryptography.Oid requestedPolicyId = default, ReadOnlyMemory&lt;byte&gt;? nonce = default, bool requestSignerCertificates = false, System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions = default);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromHash(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; hash, class System.Security.Cryptography.Oid hashAlgorithmId, class System.Security.Cryptography.Oid requestedPolicyId, valuetype System.Nullable`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; nonce, bool requestSignerCertificates, class System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromHash(System.ReadOnlyMemory{System.Byte},System.Security.Cryptography.Oid,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function CreateFromHash (hash As ReadOnlyMemory(Of Byte), hashAlgorithmId As Oid, Optional requestedPolicyId As Oid = null, Optional nonce As Nullable(Of ReadOnlyMemory(Of Byte)) = null, Optional requestSignerCertificates As Boolean = false, Optional extensions As X509ExtensionCollection = null) As Rfc3161TimestampRequest" />
@@ -108,6 +160,8 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest</ReturnType>
@@ -127,16 +181,31 @@
         <param name="nonce">An optional nonce (number used once) to uniquely identify this request to pair it with the response. The value is interpreted as an unsigned big-endian integer and may be normalized to the encoding format.</param>
         <param name="requestSignerCertificates">
           <see langword="true" /> to indicate the Timestamp Authority (TSA) must include the signing certificate in the issued timestamp token; otherwise, <see langword="false" />.</param>
-        <param name="extensions">RFC3161 extensions to present with the request.</param>
-        <summary>Create a timestamp request using a pre-computed hash value.</summary>
+        <param name="extensions">An optional collection of extensions to include in the request.</param>
+        <summary>Create a timestamp request using a pre-computed hash value and the Object Identifier for the hash algorithm.</summary>
         <returns>An <see cref="T:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest" /> representing the chosen values.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+The nonce value in this method is treated as an unsigned, big-endian integer.
+This method normalizes the input to a BER INTEGER encoding before assigning the nonce value.
+The normalized value is returned by the <xref:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.GetNonce> method.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="hashAlgorithmId" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="hashAlgorithmId" />.<see cref="P:System.Security.Cryptography.Oid.Value" /> is not a valid OID.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromSignerInfo">
-      <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromSignerInfo (System.Security.Cryptography.Pkcs.SignerInfo signerInfo, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.Oid requestedPolicyId = null, Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt; nonce = null, bool requestSignerCertificates = false, System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions = null);" />
+      <MemberSignature Language="C#" Value="public static System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromSignerInfo (System.Security.Cryptography.Pkcs.SignerInfo signerInfo, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.Oid requestedPolicyId = default, ReadOnlyMemory&lt;byte&gt;? nonce = default, bool requestSignerCertificates = false, System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions = default);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest CreateFromSignerInfo(class System.Security.Cryptography.Pkcs.SignerInfo signerInfo, valuetype System.Security.Cryptography.HashAlgorithmName hashAlgorithm, class System.Security.Cryptography.Oid requestedPolicyId, valuetype System.Nullable`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; nonce, bool requestSignerCertificates, class System.Security.Cryptography.X509Certificates.X509ExtensionCollection extensions) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromSignerInfo(System.Security.Cryptography.Pkcs.SignerInfo,System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function CreateFromSignerInfo (signerInfo As SignerInfo, hashAlgorithm As HashAlgorithmName, Optional requestedPolicyId As Oid = null, Optional nonce As Nullable(Of ReadOnlyMemory(Of Byte)) = null, Optional requestSignerCertificates As Boolean = false, Optional extensions As X509ExtensionCollection = null) As Rfc3161TimestampRequest" />
       <MemberSignature Language="F#" Value="static member CreateFromSignerInfo : System.Security.Cryptography.Pkcs.SignerInfo * System.Security.Cryptography.HashAlgorithmName * System.Security.Cryptography.Oid * Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt; * bool * System.Security.Cryptography.X509Certificates.X509ExtensionCollection -&gt; System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest" Usage="System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromSignerInfo (signerInfo, hashAlgorithm, requestedPolicyId, nonce, requestSignerCertificates, extensions)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -145,6 +214,8 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest</ReturnType>
@@ -158,15 +229,36 @@
         <Parameter Name="extensions" Type="System.Security.Cryptography.X509Certificates.X509ExtensionCollection" />
       </Parameters>
       <Docs>
-        <param name="signerInfo">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="requestedPolicyId">To be added.</param>
-        <param name="nonce">To be added.</param>
-        <param name="requestSignerCertificates">To be added.</param>
-        <param name="extensions">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="signerInfo">The CMS signer information to build a timestamp request for.</param>
+        <param name="hashAlgorithm">The hash algorithm to use with this timestamp request.</param>
+        <param name="requestedPolicyId">The Object Identifier (OID) for the timestamp policy that the Timestamp Authority (TSA) should use, or <see langword="null" /> to express no preference.</param>
+        <param name="nonce">An optional nonce (number used once) to uniquely identify this request to pair it with the response. The value is interpreted as an unsigned big-endian integer and may be normalized to the encoding format.</param>
+        <param name="requestSignerCertificates">
+          <see langword="true" /> to indicate the Timestamp Authority (TSA) must include the signing certificate in the issued timestamp token; otherwise, <see langword="false" />.</param>
+        <param name="extensions">An optional collection of extensions to include in the request.</param>
+        <summary>Creates a timestamp request by hashing the signature of the provided signer with a specified algorithm.</summary>
+        <returns>An <see cref="T:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest" /> representing the chosen values.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This constructor creates a timestamp for the signature value of a <xref:System.Security.Cryptography.Pkcs.SignerInfo> value,
+per the recommendation of IETF RFC 3161 Appendix A (Signature Time-stamp attribute using CMS).
+
+The nonce value in this method is treated as an unsigned, big-endian integer.
+This method normalizes the input to a BER INTEGER encoding before assigning the nonce value.
+The normalized value is returned by the <xref:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.GetNonce> method.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="signerInfo" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="hashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or <see cref="F:System.String.Empty" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="hashAlgorithm" /> is not a known hash algorithm.</exception>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.CreateFromData(System.ReadOnlySpan{System.Byte},System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Oid,System.Nullable{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Security.Cryptography.X509Certificates.X509ExtensionCollection)" />
       </Docs>
     </Member>
     <Member MemberName="Encode">
@@ -183,15 +275,19 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Encodes the timestamp request and returns it as a byte array.</summary>
+        <returns>A byte array containing the DER-encoded timestamp request.</returns>
         <remarks>To be added.</remarks>
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.TryDecode(System.ReadOnlyMemory{System.Byte},System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest@,System.Int32@)" />
+        <altmember cref="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.TryEncode(System.Span{System.Byte},System.Int32@)" />
       </Docs>
     </Member>
     <Member MemberName="GetExtensions">
@@ -208,15 +304,29 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.X509Certificates.X509ExtensionCollection</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a collection with a copy of the extensions present on this request.</summary>
+        <returns>A collection with a copy of the extensions present on this request.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+The collection returned by this method represents a snapshot of the data.
+No modification of the collection or any instance within the collection will result in a change in this instance.
+
+This method returns an empty collection when it has no extensions.
+To avoid the object creation in this common scenario, read <xref:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.HasExtensions>.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetMessageHash">
@@ -233,19 +343,21 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ReadOnlyMemory&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets the data hash for this timestamp request.</summary>
+        <returns>The data hash for this timestamp request as a read-only memory value.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetNonce">
-      <MemberSignature Language="C#" Value="public Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt; GetNonce ();" />
+      <MemberSignature Language="C#" Value="public ReadOnlyMemory&lt;byte&gt;? GetNonce ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Nullable`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; GetNonce() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.GetNonce" />
       <MemberSignature Language="VB.NET" Value="Public Function GetNonce () As Nullable(Of ReadOnlyMemory(Of Byte))" />
@@ -258,14 +370,16 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Nullable&lt;System.ReadOnlyMemory&lt;System.Byte&gt;&gt;</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets the nonce for this timestamp request.</summary>
+        <returns>The nonce for this timestamp request as a read-only memory value, if one was present; otherwise, <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -283,13 +397,16 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Indicates whether or not the request has extensions.</summary>
+        <value>
+          <see langword="true" /> if the request has any extensions; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -307,13 +424,15 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Oid</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the Object Identifier (OID) for the hash algorithm associated with the request.</summary>
+        <value>The Object Identifier (OID) for the hash algorithm associated with the request.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -323,7 +442,7 @@
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.ProcessResponse(System.ReadOnlyMemory{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function ProcessResponse (responseBytes As ReadOnlyMemory(Of Byte), ByRef bytesConsumed As Integer) As Rfc3161TimestampToken" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Security::Cryptography::Pkcs::Rfc3161TimestampToken ^ ProcessResponse(ReadOnlyMemory&lt;System::Byte&gt; responseBytes, [Runtime::InteropServices::Out] int % bytesConsumed);" />
-      <MemberSignature Language="F#" Value="member this.ProcessResponse : ReadOnlyMemory&lt;byte&gt; *  -&gt; System.Security.Cryptography.Pkcs.Rfc3161TimestampToken" Usage="rfc3161TimestampRequest.ProcessResponse (responseBytes, bytesConsumed)" />
+      <MemberSignature Language="F#" Value="member this.ProcessResponse : ReadOnlyMemory&lt;byte&gt; * int -&gt; System.Security.Cryptography.Pkcs.Rfc3161TimestampToken" Usage="rfc3161TimestampRequest.ProcessResponse (responseBytes, bytesConsumed)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
@@ -331,6 +450,8 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Pkcs.Rfc3161TimestampToken</ReturnType>
@@ -340,11 +461,22 @@
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="responseBytes">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="responseBytes">The DER encoded timestamp response.</param>
+        <param name="bytesConsumed">When this method returns, the number of bytes that were read from <paramref name="responseBytes" />. This parameter is treated as uninitialized.</param>
+        <summary>Combines an encoded timestamp response with this request to produce a <see cref="T:System.Security.Cryptography.Pkcs.Rfc3161TimestampToken" />.</summary>
+        <returns>The timestamp token from the response that corresponds to this request.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+This method interprets the beginning of `responseBytes` as an IETF RFC 3161 `TimeStampResp`.
+If the response cannot be decoded, the response status is not `granted` or `grantedWithMods`, the issued timestamp token does not successfully decode,
+or the timestamp token does not match this request per the acceptance criteria of IETF RFC 3161 (chiefly, sections 2.4.1 and 2.4.2), then
+a <xref:System.Security.Cryptography.CryptographicException> is thrown.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="RequestedPolicyId">
@@ -361,13 +493,15 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.Oid</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the policy ID for the request, or <see langword="null" /> when no policy ID was requested.</summary>
+        <value>The policy ID for the request, or <see langword="null" /> when no policy ID was requested.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -385,13 +519,16 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value indicating whether or not the request indicated that the timestamp authority certificate is required to be in the response.</summary>
+        <value>
+          <see langword="true" /> if the response must include the timestamp authority certificate; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -401,7 +538,7 @@
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.TryDecode(System.ReadOnlyMemory{System.Byte},System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryDecode (encodedBytes As ReadOnlyMemory(Of Byte), ByRef request As Rfc3161TimestampRequest, ByRef bytesConsumed As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryDecode(ReadOnlyMemory&lt;System::Byte&gt; encodedBytes, [Runtime::InteropServices::Out] System::Security::Cryptography::Pkcs::Rfc3161TimestampRequest ^ % request, [Runtime::InteropServices::Out] int % bytesConsumed);" />
-      <MemberSignature Language="F#" Value="static member TryDecode : ReadOnlyMemory&lt;byte&gt; *  *  -&gt; bool" Usage="System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.TryDecode (encodedBytes, request, bytesConsumed)" />
+      <MemberSignature Language="F#" Value="static member TryDecode : ReadOnlyMemory&lt;byte&gt; * Rfc3161TimestampRequest * int -&gt; bool" Usage="System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.TryDecode (encodedBytes, request, bytesConsumed)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
@@ -409,6 +546,8 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -419,11 +558,12 @@
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="encodedBytes">To be added.</param>
-        <param name="request">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="encodedBytes">The buffer containing a DER-encoded timestamp request.</param>
+        <param name="request">When this method returns, the successfully decoded timestamp request if decoding succeeded, or <see langword="null" /> if decoding failed. This parameter is treated as uninitialized.</param>
+        <param name="bytesConsumed">When this method returns, the number of bytes that were read from <paramref name="encodedBytes" />. This parameter is treated as uninitialized.</param>
+        <summary>Attemps to interpret the contents of <paramref name="encodedBytes" /> as a DER-encoded Timestamp Request.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="encodedBytes" /> was successfully interpreted as a Timestamp Request; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -433,7 +573,7 @@
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.Pkcs.Rfc3161TimestampRequest.TryEncode(System.Span{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEncode (destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncode(Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
-      <MemberSignature Language="F#" Value="member this.TryEncode : Span&lt;byte&gt; *  -&gt; bool" Usage="rfc3161TimestampRequest.TryEncode (destination, bytesWritten)" />
+      <MemberSignature Language="F#" Value="member this.TryEncode : Span&lt;byte&gt; * int -&gt; bool" Usage="rfc3161TimestampRequest.TryEncode (destination, bytesWritten)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Pkcs</AssemblyName>
@@ -441,6 +581,8 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -450,10 +592,11 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The buffer to receive the encoded request.</param>
+        <param name="bytesWritten">When this method returns, the total number of bytes written into <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to encode the instance as an IETF RFC 3161 <c>TimeStampReq</c>, writing the bytes into the provided buffer.</summary>
+        <returns>
+          <see langword="true" />if <paramref name="destination" /> is long enough to receive the encoded request; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -471,13 +614,15 @@
         <AssemblyVersion>4.0.3.1</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the data format version number for this request.</summary>
+        <value>The data format version number for this request.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

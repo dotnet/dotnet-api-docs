@@ -1,4 +1,4 @@
-﻿<Type Name="SecurityState" FullName="System.Security.SecurityState">
+<Type Name="SecurityState" FullName="System.Security.SecurityState">
   <TypeSignature Language="C#" Value="public abstract class SecurityState" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit SecurityState extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.SecurityState" />
@@ -16,6 +16,8 @@
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.1.0</AssemblyVersion>
     <AssemblyVersion>4.0.2.0</AssemblyVersion>
+    <AssemblyVersion>4.0.3.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -36,13 +38,13 @@
   
  For example, if you want to access a Web camera in your library code, you would create a `WebcamSecurityState` object and call the <xref:System.Security.SecurityState.EnsureState%2A> method to determine whether the host allows Web camera access, as shown in the following example.  (You can find the code for `WebcamSecurityState` in the "Example" section.)  
   
-```  
-WebcamSecurityState securityState = new WebcamSecurityState("Safe access to Webcam", WebcamSecurityOptions.SafeAccess);  
+```csharp
+var securityState = new WebcamSecurityState("Safe access to Webcam", WebcamSecurityOptions.SafeAccess);  
 try  
 {  
-   securityState.EnsureState();  
-   // Allocate memory.  
-   }  
+    securityState.EnsureState();  
+    // Allocate memory.  
+}  
 catch (ApplicationException e)  
 {  
     // Handle any exception that is thrown.  
@@ -52,32 +54,31 @@ catch (ApplicationException e)
   
  To process the call the <xref:System.AppDomainManager> must be made aware of `WebcamSecurityState` through an override of the <xref:System.AppDomainManager.CheckSecuritySettings%2A?displayProperty=nameWithType> method, as shown in the following example.  
   
-```  
+```csharp
 [SecurityCritical]  
 public override bool CheckSecuritySettings(System.Security.SecurityState securityState)  
 {  
-   switch (securityState.ToString())  
-   {  
-      case "WebcamSecurityState":  
-      {  
-          if ((securityState as WebcamSecurityState).Options == WebcamSecurityOptions.SafeAccess)  
-              return PromptUser((securityState as WebcamSecurityState).Description);  
-           return false;  
-      }  
-   }  
-      return false;  
+    switch (securityState.ToString())  
+    {  
+        case "WebcamSecurityState":  
+        {  
+            if ((securityState as WebcamSecurityState).Options == WebcamSecurityOptions.SafeAccess)  
+                return PromptUser((securityState as WebcamSecurityState).Description);  
+            return false;  
+        }  
+    }  
+    return false;  
 }  
 private bool PromptUser(string text)  
 {  
-   // Replace the OpenFileDialog with a custom user prompt.  
-   OpenFileDialog o = new OpenFileDialog();  
-   o.Title = text;  
-   if (o.ShowDialog() == DialogResult.OK)  
-      return true;  
-   else  
-      return false;  
-}  
-  
+    // Replace the OpenFileDialog with a custom user prompt.  
+    OpenFileDialog o = new OpenFileDialog();  
+    o.Title = text;  
+    if (o.ShowDialog() == DialogResult.OK)  
+        return true;  
+    else  
+        return false;  
+}   
 ```  
   
    
@@ -85,13 +86,13 @@ private bool PromptUser(string text)
 ## Examples  
  The following example shows how to override the <xref:System.Security.SecurityState> class.  
   
-```  
+```csharp
 [SecurityCritical]  
-public enum WebcamSecurityOptions  
-    {  
-        SafeAccess,  
-        FullAccess  
-    }  
+public enum WebcamSecurityOptions
+{
+    SafeAccess,  
+    FullAccess  
+}  
 [SecurityCritical]  
 public class WebcamSecurityState : SecurityState  
 {  
@@ -104,17 +105,14 @@ public class WebcamSecurityState : SecurityState
     public string Description { get; set; }  
     public override void EnsureState()  
     {  
-       if (!IsStateAvailable())  
-           throw new ApplicationException("WebcamSecurityState not available");  
+        if (!IsStateAvailable())  
+            throw new ApplicationException("WebcamSecurityState not available");  
     }  
- }  
-  
+}    
 ```  
   
  ]]></format>
     </remarks>
-    <permission cref="T:System.Security.SecurityCriticalAttribute">requires full trust for the immediate caller. This class cannot be used by partially trusted or transparent code.</permission>
-    <permission cref="F:System.Security.Permissions.SecurityAction.InheritanceDemand">for full trust for inheritors. This class cannot be inherited by partially trusted code.</permission>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -135,12 +133,13 @@ public class WebcamSecurityState : SecurityState
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
+        <AssemblyVersion>4.0.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Security.SecurityState" /> class.</summary>
         <remarks>To be added.</remarks>
-        <permission cref="T:System.Security.SecurityCriticalAttribute">requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
       </Docs>
     </Member>
     <Member MemberName="EnsureState">
@@ -162,6 +161,8 @@ public class WebcamSecurityState : SecurityState
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
+        <AssemblyVersion>4.0.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -175,7 +176,7 @@ public class WebcamSecurityState : SecurityState
 ## Remarks  
  The implementation of this method should be similar to the following example.  
   
-```  
+```csharp
 public override void EnsureState()  
 {  
     if (!IsStateAvailable())  
@@ -207,6 +208,8 @@ public override void EnsureState()
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
+        <AssemblyVersion>4.0.3.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -231,7 +234,6 @@ public override void EnsureState()
   
  ]]></format>
         </remarks>
-        <permission cref="T:System.Security.SecurityCriticalAttribute">requires full trust for the immediate caller. This member cannot be used by partially trusted or transparent code.</permission>
       </Docs>
     </Member>
   </Members>

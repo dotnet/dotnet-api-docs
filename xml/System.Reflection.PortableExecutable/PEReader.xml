@@ -1,4 +1,4 @@
-﻿<Type Name="PEReader" FullName="System.Reflection.PortableExecutable.PEReader">
+<Type Name="PEReader" FullName="System.Reflection.PortableExecutable.PEReader">
   <TypeSignature Language="C#" Value="public sealed class PEReader : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit PEReader extends System.Object implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Reflection.PortableExecutable.PEReader" />
@@ -13,6 +13,8 @@
     <AssemblyVersion>1.4.2.0</AssemblyVersion>
     <AssemblyVersion>1.4.3.0</AssemblyVersion>
     <AssemblyVersion>1.4.4.0</AssemblyVersion>
+    <AssemblyVersion>1.4.5.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -23,8 +25,16 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides a reader for Portable Executable format (PE) files.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The implementation is thread-safe. That is, multiple threads can read data from the reader in parallel. Disposal of the reader is not thread-safe (see <xref:System.Reflection.PortableExecutable.PEReader.Dispose>).
+
+          ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -43,14 +53,26 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="peImage" Type="System.Collections.Immutable.ImmutableArray&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="peImage">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="peImage">An immutable array of bytes representing the PE image.</param>
+        <summary>Creates a Portable Executable reader over a PE image stored in a byte array.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The content of the image is not read during the construction of the <xref:System.Reflection.PortableExecutable.PEReader>
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="peImage" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -69,14 +91,26 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="peStream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="peStream">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="peStream">PE image stream.</param>
+        <summary>Creates a Portable Executable reader over a PE image stored in a stream.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Ownership of the stream is transferred to the <xref:System.Reflection.PortableExecutable.PEReader> upon successful validation of constructor arguments. It will be disposed by the <xref:System.Reflection.PortableExecutable.PEReader> and the caller must not manipulate it.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="peStream" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -94,16 +128,33 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="peImage" Type="System.Byte*" />
         <Parameter Name="size" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="peImage">To be added.</param>
-        <param name="size">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="peImage">A pointer to the start of the PE image.</param>
+        <param name="size">The size of the PE image.</param>
+        <summary>Creates a Portable Executable reader over a PE image stored in memory.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The memory is owned by the caller and not released on disposal of the <xref:System.Reflection.PortableExecutable.PEReader>. The caller is responsible for keeping the memory alive and unmodified throughout the lifetime of the <xref:System.Reflection.PortableExecutable.PEReader>.
+
+
+The content of the image is not read during the construction of the <xref:System.Reflection.PortableExecutable.PEReader>
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="peImage" /> is <see cref="F:System.IntPtr.Zero" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="size" /> is negative.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -122,16 +173,37 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="peStream" Type="System.IO.Stream" />
         <Parameter Name="options" Type="System.Reflection.PortableExecutable.PEStreamOptions" />
       </Parameters>
       <Docs>
-        <param name="peStream">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="peStream">A PE image stream.</param>
+        <param name="options">Options specifying how sections of the PE image are read from the stream.</param>
+        <summary>Creates a Portable Executable reader over a PE image stored in a stream beginning at its current position and ending at the end of the stream.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ 
+Unless <xref:System.Reflection.PortableExecutable.PEStreamOptions.LeaveOpen?displayProperty=nameWithType> is specified, ownership of the stream is transferred to the <xref:System.Reflection.PortableExecutable.PEReader> upon successful argument validation. It will be disposed by the <xref:System.Reflection.PortableExecutable.PEReader> and the caller must not manipulate it.
+ 
+Unless <xref:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchMetadata?displayProperty=nameWithType> or <xref:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchEntireImage?displayProperty=nameWithType> is specified, no data is read from the stream during the construction of the <xref:System.Reflection.PortableExecutable.PEReader>. Furthermore, the stream must not be manipulated by caller while the <xref:System.Reflection.PortableExecutable.PEReader> is alive and undisposed.
+ 
+If `options` includes <xref:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchMetadata?displayProperty=nameWithType> or <xref:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchEntireImage?displayProperty=nameWithType>, the <xref:System.Reflection.PortableExecutable.PEReader> will have read all of the data requested during construction. As such, if <xref:System.Reflection.PortableExecutable.PEStreamOptions.LeaveOpen?displayProperty=nameWithType> is also specified, the caller retains full ownership of the stream and is assured that it will not be manipulated by the <xref:System.Reflection.PortableExecutable.PEReader> after construction.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="peStream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="options" /> has an invalid value.</exception>
+        <exception cref="T:System.IO.IOException">Error reading from the stream (only when prefetching data).</exception>
+        <exception cref="T:System.BadImageFormatException">
+          <see cref="F:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchMetadata" /> is specified, and the PE headers of the image are invalid.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -147,18 +219,36 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="peImage" Type="System.Byte*" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
-        <Parameter Name="size" Type="System.Int32" Index="1" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
-        <Parameter Name="isLoadedImage" Type="System.Boolean" Index="2" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
+        <Parameter Name="peImage" Type="System.Byte*" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
+        <Parameter Name="size" Type="System.Int32" Index="1" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
+        <Parameter Name="isLoadedImage" Type="System.Boolean" Index="2" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="peImage">To be added.</param>
-        <param name="size">To be added.</param>
-        <param name="isLoadedImage">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="peImage">A pointer to the start of the PE image.</param>
+        <param name="size">The size of the PE image.</param>
+        <param name="isLoadedImage">
+          <see langword="true" /> if the PE image has been loaded into memory by the OS loader; otherwise, <see langword="false" />.</param>
+        <summary>Creates a Portable Executable reader over a PE image stored in memory. A flag indicates whether the image has already been loaded into memory.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The memory is owned by the caller and is not released when the <xref:System.Reflection.PortableExecutable.PEReader> is disposed. The caller is responsible for keeping the memory alive and unmodified throughout the lifetime of the <xref:System.Reflection.PortableExecutable.PEReader>.
+
+
+The content of the image is not read during the construction of the <xref:System.Reflection.PortableExecutable.PEReader>
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="peImage" /> is <see cref="F:System.IntPtr.Zero" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="size" /> is negative.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -177,6 +267,8 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="peStream" Type="System.IO.Stream" />
@@ -184,11 +276,28 @@
         <Parameter Name="size" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="peStream">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="size">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="peStream">A PE image stream.</param>
+        <param name="options">Options specifying how sections of the PE image are read from the stream.</param>
+        <param name="size">The PE image size.</param>
+        <summary>Creates a Portable Executable reader over a PE image of the given size beginning at the stream's current position.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Unless <xref:System.Reflection.PortableExecutable.PEStreamOptions.LeaveOpen?displayProperty=nameWithType> is specified, ownership of the stream is transferred to the <xref:System.Reflection.PortableExecutable.PEReader> upon successful argument validation. It will be disposed by the <xref:System.Reflection.PortableExecutable.PEReader>, and the caller must not manipulate it.
+ 
+Unless <xref:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchMetadata?displayProperty=nameWithType> or <xref:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchEntireImage?displayProperty=nameWithType> is specified, no data is read from the stream during the construction of the <xref:System.Reflection.PortableExecutable.PEReader>. Furthermore, the stream must not be manipulated by the caller while the <xref:System.Reflection.PortableExecutable.PEReader> is alive and undisposed.
+ 
+If `options` includes the <xref:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchMetadata?displayProperty=nameWithType> or <xref:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchEntireImage?displayProperty=nameWithType> values, the <xref:System.Reflection.PortableExecutable.PEReader> will have read all of the data requested during construction. As such, if <xref:System.Reflection.PortableExecutable.PEStreamOptions.LeaveOpen?displayProperty=nameWithType> is also specified, the caller retains full ownership of the stream and is assured that it will not be manipulated by the <xref:System.Reflection.PortableExecutable.PEReader> after construction.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="size" /> is negative or extends past the end of the stream.</exception>
+        <exception cref="T:System.IO.IOException">Error reading from the stream (only when prefetching data).</exception>
+        <exception cref="T:System.BadImageFormatException">
+          <see cref="F:System.Reflection.PortableExecutable.PEStreamOptions.PrefetchMetadata" /> is specified, and the PE headers of the image are invalid.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -210,14 +319,26 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Disposes all memory allocated by the reader.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!IMPORTANT]
+> <xref:System.Reflection.PortableExecutable.PEReader.Dispose>  can be called multiple times, but not in parallel.
+> It is not safe to call <xref:System.Reflection.PortableExecutable.PEReader.Dispose> in parallel with any other operation on the <xref:System.Reflection.PortableExecutable.PEReader> or when reading from <xref:System.Reflection.PortableExecutable.PEMemoryBlock>s retrieved from the reader.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetEntireImage">
@@ -236,15 +357,24 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.PortableExecutable.PEMemoryBlock</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a <see cref="T:System.Reflection.PortableExecutable.PEMemoryBlock" /> object containing the entire PE image.</summary>
+        <returns>A memory block that contains the entire PE image.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+You can retrieve the value of the <xref:System.Reflection.PortableExecutable.PEReader.IsEntireImageAvailable> property to determine whether the <xref:System.Reflection.PortableExecutable.PEReader> makes the entire image available.
+
+         ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The entire PE image is not available.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetMetadata">
@@ -263,15 +393,20 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.PortableExecutable.PEMemoryBlock</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Loads a PE section that contains CLI metadata.</summary>
+        <returns>A memory block that contains the CLI metadata.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The PE image doesn't contain metadata (<see cref="P:System.Reflection.PortableExecutable.PEReader.HasMetadata" /> returns <see langword="false" />).</exception>
+        <exception cref="T:System.BadImageFormatException">The PE headers contain invalid data.</exception>
+        <exception cref="T:System.IO.IOException">IO error while reading from the underlying stream.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetSectionData">
@@ -290,6 +425,8 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.PortableExecutable.PEMemoryBlock</ReturnType>
@@ -298,10 +435,15 @@
         <Parameter Name="relativeVirtualAddress" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="relativeVirtualAddress">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="relativeVirtualAddress">The Relative Virtual Address of the data to read.</param>
+        <summary>Loads the PE section that contains the specified relative virtual address into memory and returns a memory block that starts at that address and ends at the end of the containing section.</summary>
+        <returns>A memory block that starats at <paramref name="relativeVirtualAddress" /> and ends at the end of the containing section, or an empty block if <paramref name="relativeVirtualAddress" /> doesn't represent a location in any of the PE sections of this PE image.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.BadImageFormatException">The PE headers contain invalid data.</exception>
+        <exception cref="T:System.IO.IOException">An IO error occurred while reading from the underlying stream.</exception>
+        <exception cref="T:System.InvalidOperationException">The PE image is not available.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="relativeVirtualAddress" /> is negative.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetSectionData">
@@ -318,18 +460,23 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.PortableExecutable.PEMemoryBlock</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="sectionName" Type="System.String" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
+        <Parameter Name="sectionName" Type="System.String" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="sectionName">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="sectionName">The name of the section.</param>
+        <summary>Loads the PE section with the specified name into memory and returns a memory block that spans the section.</summary>
+        <returns>A memory block that spans the section, or an empty block if no section of the given <paramref name="sectionName" /> exists in this PE image.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sectionName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The PE image is not available.</exception>
       </Docs>
     </Member>
     <Member MemberName="HasMetadata">
@@ -348,14 +495,19 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates if the PE image contains CLI metadata.</summary>
+        <value>
+          <see langword="true" /> if the PE image contains CLI metadata; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.BadImageFormatException">The PE headers contain invalid data.</exception>
+        <exception cref="T:System.IO.IOException">Error reading from the underlying stream.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsEntireImageAvailable">
@@ -374,14 +526,25 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a value that indicates if the reader can access the entire PE image.</summary>
+        <value>
+          <see langword="true" /> if the reader can access the entire PE image; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The property returns `false` if the <xref:System.Reflection.PortableExecutable.PEReader> is constructed from a stream and only part of it is prefetched into memory.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsLoadedImage">
@@ -398,13 +561,16 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates if the PE image has been loaded into memory by the OS loader.</summary>
+        <value>
+          <see langword="true" /> if the PE image has been loaded into memory by the OS loader; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -424,14 +590,18 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.PortableExecutable.PEHeaders</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the PE headers.</summary>
+        <value>The PE headers for this PE image.</value>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.BadImageFormatException">The headers contain invalid data.</exception>
+        <exception cref="T:System.IO.IOException">Error reading from the stream.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadCodeViewDebugDirectoryData">
@@ -449,18 +619,25 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.PortableExecutable.CodeViewDebugDirectoryData</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="entry" Type="System.Reflection.PortableExecutable.DebugDirectoryEntry" Index="0" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
+        <Parameter Name="entry" Type="System.Reflection.PortableExecutable.DebugDirectoryEntry" Index="0" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="entry">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="entry">A Debug Directory entry instance.</param>
+        <summary>Reads the data pointed to by the specified Debug Directory entry and interprets it as CodeView.</summary>
+        <returns>A code view debug directory data instance.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="entry" /> is not a CodeView entry.</exception>
+        <exception cref="T:System.BadImageFormatException">Bad format of the data.</exception>
+        <exception cref="T:System.IO.IOException">IO error while reading from the underlying stream.</exception>
+        <exception cref="T:System.InvalidOperationException">The PE image is not available.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadDebugDirectory">
@@ -478,15 +655,20 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Immutable.ImmutableArray&lt;System.Reflection.PortableExecutable.DebugDirectoryEntry&gt;</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads all Debug Directory table entries.</summary>
+        <returns>An array of Debug Directory table entries.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.BadImageFormatException">Bad format of the entry.</exception>
+        <exception cref="T:System.IO.IOException">IO error while reading from the underlying stream.</exception>
+        <exception cref="T:System.InvalidOperationException">The PE image is not available.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadEmbeddedPortablePdbDebugDirectoryData">
@@ -503,18 +685,24 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.Metadata.MetadataReaderProvider</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="entry" Type="System.Reflection.PortableExecutable.DebugDirectoryEntry" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
+        <Parameter Name="entry" Type="System.Reflection.PortableExecutable.DebugDirectoryEntry" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="entry">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="entry">The Debug Directory entry whose data is to be read.</param>
+        <summary>Reads the data pointed to by the specified Debug Directory entry and interprets it as an Embedded Portable PDB blob.</summary>
+        <returns>The provider of a metadata reader for reading a Portable PDB image.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="entry" /> is not a <see cref="F:System.Reflection.PortableExecutable.DebugDirectoryEntryType.EmbeddedPortablePdb" /> entry.</exception>
+        <exception cref="T:System.BadImageFormatException">Bad format of the data.</exception>
+        <exception cref="T:System.InvalidOperationException">PE image not available.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadPdbChecksumDebugDirectoryData">
@@ -529,18 +717,25 @@
         <AssemblyName>System.Reflection.Metadata</AssemblyName>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.PortableExecutable.PdbChecksumDebugDirectoryData</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="entry" Type="System.Reflection.PortableExecutable.DebugDirectoryEntry" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0" />
+        <Parameter Name="entry" Type="System.Reflection.PortableExecutable.DebugDirectoryEntry" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="entry">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="entry">The Debug Directory entry whose data is to be read.</param>
+        <summary>Reads the data pointed to by the specified Debug Directory entry and interprets it as a PDB Checksum entry.</summary>
+        <returns>The PDB Checksum entry.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="entry" /> is not a PDB Checksum entry.</exception>
+        <exception cref="T:System.BadImageFormatException">Bad format of the data.</exception>
+        <exception cref="T:System.IO.IOException">IO error while reading from the underlying stream.</exception>
+        <exception cref="T:System.InvalidOperationException">The PE image is not available.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryOpenAssociatedPortablePdb">
@@ -549,7 +744,7 @@
       <MemberSignature Language="DocId" Value="M:System.Reflection.PortableExecutable.PEReader.TryOpenAssociatedPortablePdb(System.String,System.Func{System.String,System.IO.Stream},System.Reflection.Metadata.MetadataReaderProvider@,System.String@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryOpenAssociatedPortablePdb (peImagePath As String, pdbFileStreamProvider As Func(Of String, Stream), ByRef pdbReaderProvider As MetadataReaderProvider, ByRef pdbPath As String) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryOpenAssociatedPortablePdb(System::String ^ peImagePath, Func&lt;System::String ^, System::IO::Stream ^&gt; ^ pdbFileStreamProvider, [Runtime::InteropServices::Out] System::Reflection::Metadata::MetadataReaderProvider ^ % pdbReaderProvider, [Runtime::InteropServices::Out] System::String ^ % pdbPath);" />
-      <MemberSignature Language="F#" Value="member this.TryOpenAssociatedPortablePdb : string * Func&lt;string, System.IO.Stream&gt; *  *  -&gt; bool" Usage="pEReader.TryOpenAssociatedPortablePdb (peImagePath, pdbFileStreamProvider, pdbReaderProvider, pdbPath)" />
+      <MemberSignature Language="F#" Value="member this.TryOpenAssociatedPortablePdb : string * Func&lt;string, System.IO.Stream&gt; * MetadataReaderProvider * string -&gt; bool" Usage="pEReader.TryOpenAssociatedPortablePdb (peImagePath, pdbFileStreamProvider, pdbReaderProvider, pdbPath)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Reflection.Metadata</AssemblyName>
@@ -557,24 +752,47 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="peImagePath" Type="System.String" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
-        <Parameter Name="pdbFileStreamProvider" Type="System.Func&lt;System.String,System.IO.Stream&gt;" Index="1" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
-        <Parameter Name="pdbReaderProvider" Type="System.Reflection.Metadata.MetadataReaderProvider" RefType="out" Index="2" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
-        <Parameter Name="pdbPath" Type="System.String" RefType="out" Index="3" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0" />
+        <Parameter Name="peImagePath" Type="System.String" Index="0" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
+        <Parameter Name="pdbFileStreamProvider" Type="System.Func&lt;System.String,System.IO.Stream&gt;" Index="1" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
+        <Parameter Name="pdbReaderProvider" Type="System.Reflection.Metadata.MetadataReaderProvider" RefType="out" Index="2" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
+        <Parameter Name="pdbPath" Type="System.String" RefType="out" Index="3" FrameworkAlternate="netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="peImagePath">To be added.</param>
-        <param name="pdbFileStreamProvider">To be added.</param>
-        <param name="pdbReaderProvider">To be added.</param>
-        <param name="pdbPath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="peImagePath">The path to the PE image. The path is used to locate the PDB file located in the directory containing the PE file.</param>
+        <param name="pdbFileStreamProvider">If specified, called to open a <see cref="T:System.IO.Stream" /> for a given file path. The provider is expected to either return a readable and seekable <see cref="T:System.IO.Stream" />, or <see langword="null" /> if the target file doesn't exist or should be ignored for some reason. The provider should throw <see cref="T:System.IO.IOException" /> if it fails to open the file due to an unexpected IO error.</param>
+        <param name="pdbReaderProvider">If successful, a new instance of <see cref="T:System.Reflection.Metadata.MetadataReaderProvider" /> to be used to read the Portable PDB,.</param>
+        <param name="pdbPath">If successful and the PDB is found in a file, the path to the file, or <see langword="null" /> if the PDB is embedded in the PE image itself.</param>
+        <summary>Opens a Portable PDB associated with this PE image.</summary>
+        <returns>
+          <see langword="true" /> if the PE image has a PDB associated with it and the PDB has been successfully opened; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method implements a simple PDB file lookup based on the content of the PE image Debug Directory. A more sophisticated tool might need to follow up with additional lookup on search paths or a symbol server.
+ 
+The method looks the PDB up in the following order:
+
+1) Checks for a matching PDB file of the name found in the CodeView entry in the directory containing the PE file (the directory of `peImagePath`).
+2) Checks for a PDB embedded in the PE image itself.
+ 
+The first PDB that matches the information specified in the Debug Directory is returned.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="peImagePath" /> or <paramref name="pdbFileStreamProvider" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The stream returned from <paramref name="pdbFileStreamProvider" /> doesn't support read and seek operations.</exception>
+        <exception cref="T:System.BadImageFormatException">No matching PDB file was found due to an error: The PE image or the PDB is invalid.</exception>
+        <exception cref="T:System.IO.IOException">No matching PDB file was found due to an error: An IO error occurred while reading the PE image or the PDB.</exception>
       </Docs>
     </Member>
   </Members>

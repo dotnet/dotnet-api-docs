@@ -1,4 +1,4 @@
-﻿<Type Name="FileSystemAclExtensions" FullName="System.IO.FileSystemAclExtensions">
+<Type Name="FileSystemAclExtensions" FullName="System.IO.FileSystemAclExtensions">
   <TypeSignature Language="C#" Value="public static class FileSystemAclExtensions" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit FileSystemAclExtensions extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.IO.FileSystemAclExtensions" />
@@ -11,6 +11,8 @@
     <AssemblyVersion>4.0.2.0</AssemblyVersion>
     <AssemblyVersion>4.0.3.0</AssemblyVersion>
     <AssemblyVersion>4.0.4.0</AssemblyVersion>
+    <AssemblyVersion>4.0.5.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -22,14 +24,216 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides Windows-specific static extension methods for manipulating Access Control List (ACL) security attributes for files and directories.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="public static void Create (this System.IO.DirectoryInfo directoryInfo, System.Security.AccessControl.DirectorySecurity directorySecurity);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Create(class System.IO.DirectoryInfo directoryInfo, class System.Security.AccessControl.DirectorySecurity directorySecurity) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.Create(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Sub Create (directoryInfo As DirectoryInfo, directorySecurity As DirectorySecurity)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static void Create(System::IO::DirectoryInfo ^ directoryInfo, System::Security::AccessControl::DirectorySecurity ^ directorySecurity);" />
+      <MemberSignature Language="F#" Value="static member Create : System.IO.DirectoryInfo * System.Security.AccessControl.DirectorySecurity -&gt; unit" Usage="System.IO.FileSystemAclExtensions.Create (directoryInfo, directorySecurity)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.FileSystem.AccessControl</AssemblyName>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="directoryInfo" Type="System.IO.DirectoryInfo" RefType="this" Index="0" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+        <Parameter Name="directorySecurity" Type="System.Security.AccessControl.DirectorySecurity" Index="1" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="directoryInfo">A directory that does not exist yet that will be created by the method.</param>
+        <param name="directorySecurity">The access control and audit security for the directory.</param>
+        <summary>Creates a new directory, ensuring it is created with the specified directory security. If the directory already exists, nothing is done.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This extension method was added to .NET Core to bring the functionality that was provided by the [DirectoryInfo.Create(DirectorySecurity)](https://docs.microsoft.com/dotnet/api/system.io.directoryinfo.create?view=netframework-4.8#System_IO_DirectoryInfo_Create_System_Security_AccessControl_DirectorySecurity_) .NET Framework method.
+
+## Examples
+
+The following code example creates a new directory inside the user's temporary folder with the specified directory security attributes:
+
+```csharp
+using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
+
+namespace ConsoleApp
+{
+    class Program
+    {
+        static void Main()
+        {
+            DirectorySecurity security = new DirectorySecurity();
+
+            SecurityIdentifier identity = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
+            FileSystemAccessRule accessRule = new FileSystemAccessRule(identity, FileSystemRights.FullControl, AccessControlType.Allow);
+            security.AddAccessRule(accessRule);
+
+            string path = Path.Combine(Path.GetTempPath(), "directoryToCreate");
+
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+
+            dirInfo.Create(security);
+        }
+    }
+}
+```
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="directoryInfo" /> or <paramref name="directorySecurity" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Could not find a part of the path.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">Access to the path is denied.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="public static System.IO.FileStream Create (this System.IO.FileInfo fileInfo, System.IO.FileMode mode, System.Security.AccessControl.FileSystemRights rights, System.IO.FileShare share, int bufferSize, System.IO.FileOptions options, System.Security.AccessControl.FileSecurity fileSecurity);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.IO.FileStream Create(class System.IO.FileInfo fileInfo, valuetype System.IO.FileMode mode, valuetype System.Security.AccessControl.FileSystemRights rights, valuetype System.IO.FileShare share, int32 bufferSize, valuetype System.IO.FileOptions options, class System.Security.AccessControl.FileSecurity fileSecurity) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.Create(System.IO.FileInfo,System.IO.FileMode,System.Security.AccessControl.FileSystemRights,System.IO.FileShare,System.Int32,System.IO.FileOptions,System.Security.AccessControl.FileSecurity)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function Create (fileInfo As FileInfo, mode As FileMode, rights As FileSystemRights, share As FileShare, bufferSize As Integer, options As FileOptions, fileSecurity As FileSecurity) As FileStream" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::IO::FileStream ^ Create(System::IO::FileInfo ^ fileInfo, System::IO::FileMode mode, System::Security::AccessControl::FileSystemRights rights, System::IO::FileShare share, int bufferSize, System::IO::FileOptions options, System::Security::AccessControl::FileSecurity ^ fileSecurity);" />
+      <MemberSignature Language="F#" Value="static member Create : System.IO.FileInfo * System.IO.FileMode * System.Security.AccessControl.FileSystemRights * System.IO.FileShare * int * System.IO.FileOptions * System.Security.AccessControl.FileSecurity -&gt; System.IO.FileStream" Usage="System.IO.FileSystemAclExtensions.Create (fileInfo, mode, rights, share, bufferSize, options, fileSecurity)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.FileSystem.AccessControl</AssemblyName>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IO.FileStream</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fileInfo" Type="System.IO.FileInfo" RefType="this" Index="0" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+        <Parameter Name="mode" Type="System.IO.FileMode" Index="1" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+        <Parameter Name="rights" Type="System.Security.AccessControl.FileSystemRights" Index="2" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+        <Parameter Name="share" Type="System.IO.FileShare" Index="3" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+        <Parameter Name="bufferSize" Type="System.Int32" Index="4" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+        <Parameter Name="options" Type="System.IO.FileOptions" Index="5" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+        <Parameter Name="fileSecurity" Type="System.Security.AccessControl.FileSecurity" Index="6" FrameworkAlternate="dotnet-plat-ext-3.1;netcore-3.1;dotnet-plat-ext-5.0;net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="fileInfo">A file that does not exist yet that will be created by the method.</param>
+        <param name="mode">One of the enumeration values that specifies how the operating system should open a file.</param>
+        <param name="rights">One of the enumeration values that defines the access rights to use when creating access and audit rules.</param>
+        <param name="share">One of the enumeration values for controlling the kind of access other file stream objects can have to the same file.</param>
+        <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
+        <param name="options">One of the enumeration values that describes how to create or overwrite the file.</param>
+        <param name="fileSecurity">An object that determines the access control and audit security for the file.</param>
+        <summary>Creates a new file stream, ensuring it is created with the specified properties and security settings.</summary>
+        <returns>A file stream for the newly created file.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This extension method was added to .NET Core to bring the functionality that was provided by:
+
+- The [FileStream(String, FileMode, FileSystemRights, FileShare, Int32, FileOptions, FileSecurity)](https://docs.microsoft.com/dotnet/api/system.io.filestream.-ctor?view=netframework-4.8#System_IO_FileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_System_Int32_System_IO_FileOptions_System_Security_AccessControl_FileSecurity_) .NET Framework constructor.
+- The [File.Create(String, Int32, FileOptions, FileSecurity](https://docs.microsoft.com/en-us/dotnet/api/system.io.file.create?view=netframework-4.8#System_IO_File_Create_System_String_System_Int32_System_IO_FileOptions_System_Security_AccessControl_FileSecurity_) .NET Framework method.
+
+## Examples
+
+The following code example creates a new text file (with the default buffer size of 4096) inside the user's temporary folder with the specified file security attributes:
+
+```csharp
+using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
+
+namespace ConsoleApp
+{
+    class Program
+    {
+        static void Main()
+        {
+            FileSecurity security = new FileSecurity();
+
+            SecurityIdentifier identity = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
+            FileSystemAccessRule accessRule = new FileSystemAccessRule(identity, FileSystemRights.FullControl, AccessControlType.Allow);
+            security.AddAccessRule(accessRule);
+
+            string path = Path.Combine(Path.GetTempPath(), "fileToCreate.txt");
+
+            FileInfo fileInfo = new FileInfo(path);
+
+            fileInfo.Create(FileMode.Create, FileSystemRights.FullControl, FileShare.Read, 4096, FileOptions.None, security);
+        }
+    }
+}
+```
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="rights" /> and <paramref name="mode" /> combination is invalid.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="fileInfo" /> or <paramref name="fileSecurity" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="mode" /> or <paramref name="share" /> are out of their legal enum range.
+
+-or-
+
+<paramref name="bufferSize" /> is not a positive number.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Could not find a part of the path.</exception>
+        <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">Access to the path is denied.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateDirectory">
+      <MemberSignature Language="C#" Value="public static System.IO.DirectoryInfo CreateDirectory (this System.Security.AccessControl.DirectorySecurity directorySecurity, string path);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.IO.DirectoryInfo CreateDirectory(class System.Security.AccessControl.DirectorySecurity directorySecurity, string path) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.CreateDirectory(System.Security.AccessControl.DirectorySecurity,System.String)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function CreateDirectory (directorySecurity As DirectorySecurity, path As String) As DirectoryInfo" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::IO::DirectoryInfo ^ CreateDirectory(System::Security::AccessControl::DirectorySecurity ^ directorySecurity, System::String ^ path);" />
+      <MemberSignature Language="F#" Value="static member CreateDirectory : System.Security.AccessControl.DirectorySecurity * string -&gt; System.IO.DirectoryInfo" Usage="System.IO.FileSystemAclExtensions.CreateDirectory (directorySecurity, path)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.FileSystem.AccessControl</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IO.DirectoryInfo</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="directorySecurity" Type="System.Security.AccessControl.DirectorySecurity" RefType="this" Index="0" FrameworkAlternate="dotnet-plat-ext-5.0;net-5.0" />
+        <Parameter Name="path" Type="System.String" Index="1" FrameworkAlternate="dotnet-plat-ext-5.0;net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="directorySecurity">An object that determines the access control and audit security for the directory.</param>
+        <param name="path">The path of the directory to create.</param>
+        <summary>Creates a directory and returns it, ensuring it is created with the specified directory security. If the directory already exists, the existing directory is returned.</summary>
+        <returns>A directory information object representing either a created directory with the provided security properties, or the existing directory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This extension method was added to .NET Core to bring the functionality that was provided by the `System.IO.Directory.CreateDirectory(System.String,System.Security.AccessControl.DirectorySecurity)` .NET Framework method.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="directorySecurity" /> or <paramref name="path" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="path" /> is empty.</exception>
+      </Docs>
+    </Member>
     <Member MemberName="GetAccessControl">
       <MemberSignature Language="C#" Value="public static System.Security.AccessControl.DirectorySecurity GetAccessControl (this System.IO.DirectoryInfo directoryInfo);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.AccessControl.DirectorySecurity GetAccessControl(class System.IO.DirectoryInfo directoryInfo) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function GetAccessControl (directoryInfo As DirectoryInfo) As DirectorySecurity" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::Security::AccessControl::DirectorySecurity ^ GetAccessControl(System::IO::DirectoryInfo ^ directoryInfo);" />
       <MemberSignature Language="F#" Value="static member GetAccessControl : System.IO.DirectoryInfo -&gt; System.Security.AccessControl.DirectorySecurity" Usage="System.IO.FileSystemAclExtensions.GetAccessControl directoryInfo" />
       <MemberType>Method</MemberType>
@@ -39,6 +243,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.AccessControl.DirectorySecurity</ReturnType>
@@ -47,9 +253,9 @@
         <Parameter Name="directoryInfo" Type="System.IO.DirectoryInfo" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="directoryInfo">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="directoryInfo">The existing directory from which to obtain the security information.</param>
+        <summary>Returns the security information of a directory.</summary>
+        <returns>The security descriptors of all the access control sections of the directory.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -57,6 +263,7 @@
       <MemberSignature Language="C#" Value="public static System.Security.AccessControl.FileSecurity GetAccessControl (this System.IO.FileInfo fileInfo);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.AccessControl.FileSecurity GetAccessControl(class System.IO.FileInfo fileInfo) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function GetAccessControl (fileInfo As FileInfo) As FileSecurity" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::Security::AccessControl::FileSecurity ^ GetAccessControl(System::IO::FileInfo ^ fileInfo);" />
       <MemberSignature Language="F#" Value="static member GetAccessControl : System.IO.FileInfo -&gt; System.Security.AccessControl.FileSecurity" Usage="System.IO.FileSystemAclExtensions.GetAccessControl fileInfo" />
       <MemberType>Method</MemberType>
@@ -66,6 +273,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.AccessControl.FileSecurity</ReturnType>
@@ -74,9 +283,9 @@
         <Parameter Name="fileInfo" Type="System.IO.FileInfo" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="fileInfo">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="fileInfo">The file from which to obtain the security information.</param>
+        <summary>Returns the security information of a file.</summary>
+        <returns>The security descriptors of all the access control sections of the file.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -84,6 +293,7 @@
       <MemberSignature Language="C#" Value="public static System.Security.AccessControl.FileSecurity GetAccessControl (this System.IO.FileStream fileStream);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.AccessControl.FileSecurity GetAccessControl(class System.IO.FileStream fileStream) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileStream)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function GetAccessControl (fileStream As FileStream) As FileSecurity" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::Security::AccessControl::FileSecurity ^ GetAccessControl(System::IO::FileStream ^ fileStream);" />
       <MemberSignature Language="F#" Value="static member GetAccessControl : System.IO.FileStream -&gt; System.Security.AccessControl.FileSecurity" Usage="System.IO.FileSystemAclExtensions.GetAccessControl fileStream" />
       <MemberType>Method</MemberType>
@@ -93,6 +303,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.AccessControl.FileSecurity</ReturnType>
@@ -101,16 +313,20 @@
         <Parameter Name="fileStream" Type="System.IO.FileStream" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="fileStream">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="fileStream">An existing file from which to obtain the security information.</param>
+        <summary>Returns the security information of a file.</summary>
+        <returns>The security descriptors of all the access control sections of the file.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="fileStream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">The file stream is closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAccessControl">
       <MemberSignature Language="C#" Value="public static System.Security.AccessControl.DirectorySecurity GetAccessControl (this System.IO.DirectoryInfo directoryInfo, System.Security.AccessControl.AccessControlSections includeSections);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.AccessControl.DirectorySecurity GetAccessControl(class System.IO.DirectoryInfo directoryInfo, valuetype System.Security.AccessControl.AccessControlSections includeSections) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.AccessControlSections)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function GetAccessControl (directoryInfo As DirectoryInfo, includeSections As AccessControlSections) As DirectorySecurity" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::Security::AccessControl::DirectorySecurity ^ GetAccessControl(System::IO::DirectoryInfo ^ directoryInfo, System::Security::AccessControl::AccessControlSections includeSections);" />
       <MemberSignature Language="F#" Value="static member GetAccessControl : System.IO.DirectoryInfo * System.Security.AccessControl.AccessControlSections -&gt; System.Security.AccessControl.DirectorySecurity" Usage="System.IO.FileSystemAclExtensions.GetAccessControl (directoryInfo, includeSections)" />
       <MemberType>Method</MemberType>
@@ -120,6 +336,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.AccessControl.DirectorySecurity</ReturnType>
@@ -129,10 +347,10 @@
         <Parameter Name="includeSections" Type="System.Security.AccessControl.AccessControlSections" />
       </Parameters>
       <Docs>
-        <param name="directoryInfo">To be added.</param>
-        <param name="includeSections">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="directoryInfo">An existing directory from which to obtain the security information.</param>
+        <param name="includeSections">The desired access control sections to retrieve.</param>
+        <summary>Returns the security information of a directory.</summary>
+        <returns>The security descriptors of the specified access control sections of the directory.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -140,6 +358,7 @@
       <MemberSignature Language="C#" Value="public static System.Security.AccessControl.FileSecurity GetAccessControl (this System.IO.FileInfo fileInfo, System.Security.AccessControl.AccessControlSections includeSections);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Security.AccessControl.FileSecurity GetAccessControl(class System.IO.FileInfo fileInfo, valuetype System.Security.AccessControl.AccessControlSections includeSections) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo,System.Security.AccessControl.AccessControlSections)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function GetAccessControl (fileInfo As FileInfo, includeSections As AccessControlSections) As FileSecurity" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::Security::AccessControl::FileSecurity ^ GetAccessControl(System::IO::FileInfo ^ fileInfo, System::Security::AccessControl::AccessControlSections includeSections);" />
       <MemberSignature Language="F#" Value="static member GetAccessControl : System.IO.FileInfo * System.Security.AccessControl.AccessControlSections -&gt; System.Security.AccessControl.FileSecurity" Usage="System.IO.FileSystemAclExtensions.GetAccessControl (fileInfo, includeSections)" />
       <MemberType>Method</MemberType>
@@ -149,6 +368,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.AccessControl.FileSecurity</ReturnType>
@@ -158,10 +379,10 @@
         <Parameter Name="includeSections" Type="System.Security.AccessControl.AccessControlSections" />
       </Parameters>
       <Docs>
-        <param name="fileInfo">To be added.</param>
-        <param name="includeSections">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="fileInfo">An existing file from which to obtain the security information.</param>
+        <param name="includeSections">The desired access control sections to retrieve from the file.</param>
+        <summary>Returns the security information of a file.</summary>
+        <returns>The security descriptors of the specified access control sections of the file.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -169,6 +390,7 @@
       <MemberSignature Language="C#" Value="public static void SetAccessControl (this System.IO.DirectoryInfo directoryInfo, System.Security.AccessControl.DirectorySecurity directorySecurity);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void SetAccessControl(class System.IO.DirectoryInfo directoryInfo, class System.Security.AccessControl.DirectorySecurity directorySecurity) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Sub SetAccessControl (directoryInfo As DirectoryInfo, directorySecurity As DirectorySecurity)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static void SetAccessControl(System::IO::DirectoryInfo ^ directoryInfo, System::Security::AccessControl::DirectorySecurity ^ directorySecurity);" />
       <MemberSignature Language="F#" Value="static member SetAccessControl : System.IO.DirectoryInfo * System.Security.AccessControl.DirectorySecurity -&gt; unit" Usage="System.IO.FileSystemAclExtensions.SetAccessControl (directoryInfo, directorySecurity)" />
       <MemberType>Method</MemberType>
@@ -178,6 +400,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -187,16 +411,19 @@
         <Parameter Name="directorySecurity" Type="System.Security.AccessControl.DirectorySecurity" />
       </Parameters>
       <Docs>
-        <param name="directoryInfo">To be added.</param>
-        <param name="directorySecurity">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="directoryInfo">An existing directory.</param>
+        <param name="directorySecurity">The security information to apply to the directory.</param>
+        <summary>Changes the security attributes of an existing directory.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="directorySecurity" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetAccessControl">
       <MemberSignature Language="C#" Value="public static void SetAccessControl (this System.IO.FileInfo fileInfo, System.Security.AccessControl.FileSecurity fileSecurity);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void SetAccessControl(class System.IO.FileInfo fileInfo, class System.Security.AccessControl.FileSecurity fileSecurity) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileInfo,System.Security.AccessControl.FileSecurity)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Sub SetAccessControl (fileInfo As FileInfo, fileSecurity As FileSecurity)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static void SetAccessControl(System::IO::FileInfo ^ fileInfo, System::Security::AccessControl::FileSecurity ^ fileSecurity);" />
       <MemberSignature Language="F#" Value="static member SetAccessControl : System.IO.FileInfo * System.Security.AccessControl.FileSecurity -&gt; unit" Usage="System.IO.FileSystemAclExtensions.SetAccessControl (fileInfo, fileSecurity)" />
       <MemberType>Method</MemberType>
@@ -206,6 +433,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -215,16 +444,19 @@
         <Parameter Name="fileSecurity" Type="System.Security.AccessControl.FileSecurity" />
       </Parameters>
       <Docs>
-        <param name="fileInfo">To be added.</param>
-        <param name="fileSecurity">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="fileInfo">An existing file.</param>
+        <param name="fileSecurity">The security information to apply to the file.</param>
+        <summary>Changes the security attributes of an existing file.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="fileSecurity" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetAccessControl">
       <MemberSignature Language="C#" Value="public static void SetAccessControl (this System.IO.FileStream fileStream, System.Security.AccessControl.FileSecurity fileSecurity);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void SetAccessControl(class System.IO.FileStream fileStream, class System.Security.AccessControl.FileSecurity fileSecurity) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileStream,System.Security.AccessControl.FileSecurity)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Sub SetAccessControl (fileStream As FileStream, fileSecurity As FileSecurity)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static void SetAccessControl(System::IO::FileStream ^ fileStream, System::Security::AccessControl::FileSecurity ^ fileSecurity);" />
       <MemberSignature Language="F#" Value="static member SetAccessControl : System.IO.FileStream * System.Security.AccessControl.FileSecurity -&gt; unit" Usage="System.IO.FileSystemAclExtensions.SetAccessControl (fileStream, fileSecurity)" />
       <MemberType>Method</MemberType>
@@ -234,6 +466,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
+        <AssemblyVersion>4.0.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -243,10 +477,13 @@
         <Parameter Name="fileSecurity" Type="System.Security.AccessControl.FileSecurity" />
       </Parameters>
       <Docs>
-        <param name="fileStream">To be added.</param>
-        <param name="fileSecurity">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="fileStream">An existing file.</param>
+        <param name="fileSecurity">The security information to apply to the file.</param>
+        <summary>Changes the security attributes of an existing file.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="fileStream" /> or <paramref name="fileSecurity" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">The file stream is closed.</exception>
       </Docs>
     </Member>
   </Members>

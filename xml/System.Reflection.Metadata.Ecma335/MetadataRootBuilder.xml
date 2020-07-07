@@ -1,4 +1,4 @@
-﻿<Type Name="MetadataRootBuilder" FullName="System.Reflection.Metadata.Ecma335.MetadataRootBuilder">
+<Type Name="MetadataRootBuilder" FullName="System.Reflection.Metadata.Ecma335.MetadataRootBuilder">
   <TypeSignature Language="C#" Value="public sealed class MetadataRootBuilder" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit MetadataRootBuilder extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Reflection.Metadata.Ecma335.MetadataRootBuilder" />
@@ -11,18 +11,28 @@
     <AssemblyVersion>1.4.2.0</AssemblyVersion>
     <AssemblyVersion>1.4.3.0</AssemblyVersion>
     <AssemblyVersion>1.4.4.0</AssemblyVersion>
+    <AssemblyVersion>1.4.5.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Builder of a Metadata Root to be embedded in a Portable Executable image.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Metadata root constitutes of a metadata header followed by metadata streams (`#~`, `#Strings`, `#US`, `#Guid` and `#Blob`).
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public MetadataRootBuilder (System.Reflection.Metadata.Ecma335.MetadataBuilder tablesAndHeaps, string metadataVersion = null, bool suppressValidation = false);" />
+      <MemberSignature Language="C#" Value="public MetadataRootBuilder (System.Reflection.Metadata.Ecma335.MetadataBuilder tablesAndHeaps, string metadataVersion = default, bool suppressValidation = false);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Reflection.Metadata.Ecma335.MetadataBuilder tablesAndHeaps, string metadataVersion, bool suppressValidation) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Reflection.Metadata.Ecma335.MetadataRootBuilder.#ctor(System.Reflection.Metadata.Ecma335.MetadataBuilder,System.String,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (tablesAndHeaps As MetadataBuilder, Optional metadataVersion As String = null, Optional suppressValidation As Boolean = false)" />
@@ -34,6 +44,8 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="tablesAndHeaps" Type="System.Reflection.Metadata.Ecma335.MetadataBuilder" />
@@ -41,11 +53,20 @@
         <Parameter Name="suppressValidation" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tablesAndHeaps">To be added.</param>
-        <param name="metadataVersion">To be added.</param>
-        <param name="suppressValidation">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="tablesAndHeaps">Builder populated with metadata entities stored in tables and values stored in heaps. The entities and values will be enumerated when serializing the metadata root.</param>
+        <param name="metadataVersion">The version string written to the metadata header. The default value is "v4.0.30319".</param>
+        <param name="suppressValidation">
+          <see langword="true" /> to suppress basic validation of metadata tables during serialization; otherwise, <paramref name="false" />.</param>
+        <summary>Creates a builder of a metadata root.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When `suppressValidation` is set to `true`, the validation verifies that entries in the tables were added in order required by the ECMA specification. It does not enforce all specification requirements on metadata tables.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MetadataVersion">
@@ -62,13 +83,15 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The metadata version.</summary>
+        <value>A string that represents the metadata version.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -86,6 +109,8 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -96,10 +121,10 @@
         <Parameter Name="mappedFieldDataStreamRva" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="builder">To be added.</param>
-        <param name="methodBodyStreamRva">To be added.</param>
-        <param name="mappedFieldDataStreamRva">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="builder">Builder to write to.</param>
+        <param name="methodBodyStreamRva">The relative virtual address of the start of the method body stream. Used to calculate the final value of RVA fields of MethodDef table.</param>
+        <param name="mappedFieldDataStreamRva">The relative virtual address of the start of the field init data stream. Used to calculate the final value of RVA fields of FieldRVA table.</param>
+        <summary>Serializes metadata root content into the given <see cref="T:System.Reflection.Metadata.BlobBuilder" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -117,12 +142,14 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Reflection.Metadata.Ecma335.MetadataSizes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns sizes of various metadata structures.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -141,13 +168,16 @@
         <AssemblyVersion>1.4.2.0</AssemblyVersion>
         <AssemblyVersion>1.4.3.0</AssemblyVersion>
         <AssemblyVersion>1.4.4.0</AssemblyVersion>
+        <AssemblyVersion>1.4.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Determines if basic validation of metadata tables should be suppressed. The validation verifies that entries in the tables were added in order required by the ECMA specification. It does not enforce all specification requirements on metadata tables.</summary>
+        <value>
+          <see langword="true" /> to suppress basic validation of metadata tables; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

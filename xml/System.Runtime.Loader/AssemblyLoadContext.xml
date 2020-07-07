@@ -1,16 +1,22 @@
-﻿<Type Name="AssemblyLoadContext" FullName="System.Runtime.Loader.AssemblyLoadContext">
-  <TypeSignature Language="C#" Value="public abstract class AssemblyLoadContext" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit AssemblyLoadContext extends System.Object" />
+<Type Name="AssemblyLoadContext" FullName="System.Runtime.Loader.AssemblyLoadContext">
+  <TypeSignature Language="C#" Value="public class AssemblyLoadContext" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AssemblyLoadContext extends System.Object" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
   <TypeSignature Language="DocId" Value="T:System.Runtime.Loader.AssemblyLoadContext" />
-  <TypeSignature Language="VB.NET" Value="Public MustInherit Class AssemblyLoadContext" />
-  <TypeSignature Language="C++ CLI" Value="public ref class AssemblyLoadContext abstract" />
+  <TypeSignature Language="VB.NET" Value="Public Class AssemblyLoadContext" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="C++ CLI" Value="public ref class AssemblyLoadContext" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
   <TypeSignature Language="F#" Value="type AssemblyLoadContext = class" />
+  <TypeSignature Language="C#" Value="public abstract class AssemblyLoadContext" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit AssemblyLoadContext extends System.Object" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
+  <TypeSignature Language="VB.NET" Value="Public MustInherit Class AssemblyLoadContext" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
+  <TypeSignature Language="C++ CLI" Value="public ref class AssemblyLoadContext abstract" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
   <AssemblyInfo>
     <AssemblyName>System.Runtime.Loader</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.2.0</AssemblyVersion>
     <AssemblyVersion>4.0.3.0</AssemblyVersion>
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
@@ -21,57 +27,64 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Represents the runtime's concept of a scope for binding. This class is abstract.</summary>
+    <summary>Represents the runtime's concept of a scope for assembly loading.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
-
 ## Remarks
- The <xref:System.Runtime.Loader.AssemblyLoadContext> represents a load context. Conceptually, a load context creates a scope for loading, resolving, and potentially unloading a set of assemblies.
+
+The <xref:System.Runtime.Loader.AssemblyLoadContext> represents a load context. Conceptually, a load context creates a scope for loading, resolving, and potentially unloading a set of assemblies.
  
- <xref:System.Runtime.Loader.AssemblyLoadContext> is an abstract class. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> needs to be implemented to create a concrete class.
+<xref:System.Runtime.Loader.AssemblyLoadContext> is an abstract class. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> method needs to be implemented to create a concrete class.
  
- The <xref:System.Runtime.Loader.AssemblyLoadContext> exists primarily to provide assembly binding isolation. It allows multiple versions of the same assembly to be loaded within a single process. It replaces the isolation mechanisms provided by multiple <xref:System.AppDomain> instances in the .NET Framework.
+The <xref:System.Runtime.Loader.AssemblyLoadContext> exists primarily to provide assembly loading isolation. It allows multiple versions of the same assembly to be loaded within a single process. It replaces the isolation mechanisms provided by multiple <xref:System.AppDomain> instances in the .NET Framework.
  
- > [!NOTE]
- > <xref:System.Runtime.Loader.AssemblyLoadContext> does not provide any security features. All code has full permissions of the process.
+> [!NOTE]
+> <xref:System.Runtime.Loader.AssemblyLoadContext> does not provide any security features. All code has full permissions of the process.
 
 ### Usage in the runtime
- The runtime implements two assembly load contexts:
- * <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> represents the runtime's default binding context which is used for the application main assembly and its static dependencies.
- * The <xref:System.Reflection.Assembly.LoadFile(System.String)?displayProperty=nameWithType> method isolates the assemblies it loads by instantiating the most basic <xref:System.Runtime.Loader.AssemblyLoadContext>. It has a simplistic isolation scheme which loads each assembly in its own <xref:System.Runtime.Loader.AssemblyLoadContext> with no dependency resolution.
+
+The runtime implements two assembly load contexts:
+
+* <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> represents the runtime's default context, which is used for the application main assembly and its static dependencies.
+* The <xref:System.Reflection.Assembly.LoadFile(System.String)?displayProperty=nameWithType> method isolates the assemblies it loads by instantiating the most basic <xref:System.Runtime.Loader.AssemblyLoadContext>. It has a simplistic isolation scheme that loads each assembly in its own <xref:System.Runtime.Loader.AssemblyLoadContext> with no dependency resolution.
  
 ### Application usage
- An application can create its own <xref:System.Runtime.Loader.AssemblyLoadContext> to create a custom solution for advanced binding scenarios. The customization focuses on defining dependency resolution mechanisms.
+
+An application can create its own <xref:System.Runtime.Loader.AssemblyLoadContext> to create a custom solution for advanced scenarios. The customization focuses on defining dependency resolution mechanisms.
  
- The <xref:System.Runtime.Loader.AssemblyLoadContext> provides two extension points to implement managed assembly resolution:
- 1. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> provides the first chance for the <xref:System.Runtime.Loader.AssemblyLoadContext> to resolve the assembly, load it and return it. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> returns `null`, the loader will try to load the assembly into the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType>.
- 2. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> is unable to resolve the assembly, the original <xref:System.Runtime.Loader.AssemblyLoadContext> gets a second chance to resolve the assembly. The runtime raises the <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event.
+The <xref:System.Runtime.Loader.AssemblyLoadContext> provides two extension points to implement managed assembly resolution:
+
+1. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> method provides the first chance for the <xref:System.Runtime.Loader.AssemblyLoadContext> to resolve, load, and return the assembly. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> method returns `null`, the loader tries to load the assembly into the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType>.
+2. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> is unable to resolve the assembly, the original <xref:System.Runtime.Loader.AssemblyLoadContext> gets a second chance to resolve the assembly. The runtime raises the <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event.
  
- Additionally the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll(System.String)?displayProperty=nameWithType> virtual method allows customization of the default unmanaged assembly resolution. The default implementation returns `null`, which causes the runtime search to use its default search policy which is sufficient for most scenarios.
+Additionally, the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll(System.String)?displayProperty=nameWithType> virtual method allows customization of the default unmanaged assembly resolution. The default implementation returns `null`, which causes the runtime search to use its default search policy. The default search policy is sufficient for most scenarios.
 
 ### Technical challenges
- * It is not possible to load multiple versions of the runtime in a single process.
+
+* It is not possible to load multiple versions of the runtime in a single process.
+
 	 > [!CAUTION]
-	 > Loading multiple copies or different versions of framework assemblies can lead to unexpected and hard to diagnose behavior.
+	 > Loading multiple copies or different versions of framework assemblies can lead to unexpected and hard-to-diagnose behavior.
 	 
 	 > [!TIP]
-	 > Use process boundaries with remoting and/or interprocess communication to solve this isolation problem.
+	 > Use process boundaries with remoting or interprocess communication to solve this isolation problem.
  
- * The timing of assembly loading can make testing and debugging difficult. Assemblies are typically loaded without their dependencies immediately being resolved. The dependencies are loaded as they are needed:
+* The timing of assembly loading can make testing and debugging difficult. Assemblies are typically loaded without their dependencies immediately being resolved. The dependencies are loaded as they are needed:
+
      * When code branches into a dependent assembly.
      * When code loads resources.
      * When code explicitly loads assemblies.
  
- * The implementation of <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> can add new dependencies which may need to be isolated to allow different versions to exist. The most natural implementation would place these dependencies in the default context. Careful design can isolate the new dependencies.
+* The implementation of <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> can add new dependencies that may need to be isolated to allow different versions to exist. The most natural implementation would place these dependencies in the default context. Careful design can isolate the new dependencies.
  
- * The binding isolation process creates multiple types with the same type name.
-     * This can lead to confusing error messages, for example "type Foo.Foo cannot be cast to type Foo.Foo."
-     * Marshaling across isolation boundaries is non-trivial. A typical solution would be to use an interface defined in an assembly which is only loaded into the default load context.
+* The same assembly is loaded multiple times into different contexts.
+     * This can lead to confusing error messages, for example "Unable to cast object of type 'Sample.Plugin' to type 'Sample.Plugin'".
+     * Marshaling across isolation boundaries is non-trivial. A typical solution is to use an interface defined in an assembly that's only loaded into the default load context.
  
  ]]></format>
     </remarks>
     <related type="Article" href="https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md">AssemblyLoadContext CoreCLR design document</related>
-    <related type="Article" href="/en-us/dotnet/standard/assembly/unloadability-howto">How to use and debug assembly unloadability in .NET Core</related>
+    <related type="Article" href="/dotnet/standard/assembly/unloadability">How to use and debug assembly unloadability in .NET Core</related>
     <related type="Article" href="https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/unloadability.md">AssemblyLoadContext unloadability design document</related>
   </Docs>
   <Members>
@@ -88,6 +101,8 @@
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -118,15 +133,25 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="isCollectible" Type="System.Boolean" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="isCollectible" Type="System.Boolean" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
         <param name="isCollectible">
-          <see langword="true" /> to enable garbage collection; otherwise, <see langword="false" />.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> class with a value that indicates whether garbage collection is enabled. </summary>
-        <remarks>To be added.</remarks>
+          <see langword="true" /> to enable <see cref="M:System.Runtime.Loader.AssemblyLoadContext.Unload" />; otherwise, <see langword="false" />. The default value is <see langword="false" /> because there is a performance cost associated with enabling unloading.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> class with a value that indicates whether unloading is enabled. </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This constructor is protected. It can only be called from the <xref:System.Runtime.Loader.AssemblyLoadContext> class or its derived classes.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -139,15 +164,18 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="netcore-3.0" />
-        <Parameter Name="isCollectible" Type="System.Boolean" Index="1" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
+        <Parameter Name="isCollectible" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="isCollectible">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="name">The value for <see cref="P:System.Runtime.Loader.AssemblyLoadContext.Name" /> in the new instance. Its value can be <see langword="null" />.</param>
+        <param name="isCollectible">
+          <see langword="true" /> to enable <see cref="M:System.Runtime.Loader.AssemblyLoadContext.Unload" />; otherwise, <see langword="false" />. The default value is <see langword="false" /> because there is a performance cost associated with enabling unloading.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> class with a name and a value that indicates whether unloading is enabled.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -162,13 +190,15 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Runtime.Loader.AssemblyLoadContext&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Returns a collection of all <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> instances.</summary>
+        <value>A collection of all <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> instances.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -183,13 +213,15 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Reflection.Assembly&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Returns a collection of the <see cref="T:System.Reflection.Assembly" /> instances loaded in the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" />.</summary>
+        <value>A collection of the <see cref="T:System.Reflection.Assembly" /> instances loaded in the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -204,14 +236,23 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Runtime.Loader.AssemblyLoadContext</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> set by the most recent call to <see cref="M:System.Runtime.Loader.AssemblyLoadContext.EnterContextualReflection" />.</summary>
+        <value>The <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> set by the most recent call to <see cref="M:System.Runtime.Loader.AssemblyLoadContext.EnterContextualReflection" />. This value can be <see langword="null" />. The value is stored in an <see cref="T:System.Threading.AsyncLocal`1" />, so the value is unique per asynchronous context.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+For more information, see [AssemblyLoadContext.CurrentContextualReflectionContext design doc in .NET Core](https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/AssemblyLoadContext.ContextualReflection.md).
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Default">
@@ -228,6 +269,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -253,15 +296,24 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Runtime.Loader.AssemblyLoadContext+ContextualReflectionScope</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Sets <see cref="P:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext" /> to <see langword="this" /><see cref="T:System.Runtime.Loader.AssemblyLoadContext" />.</summary>
+        <returns>An object to restore the previous value of <see cref="P:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext" />. It is intended to be used as an <see cref="T:System.IDisposable" /> in a <see langword="using" /> block.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+For more information, see [AssemblyLoadContext.CurrentContextualReflectionContext design doc in .NET Core](https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/AssemblyLoadContext.ContextualReflection.md).
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EnterContextualReflection">
@@ -275,17 +327,49 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Runtime.Loader.AssemblyLoadContext+ContextualReflectionScope</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="activating" Type="System.Reflection.Assembly" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="activating" Type="System.Reflection.Assembly" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="activating">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="activating">The assembly that is used to determine the requested <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> instance.</param>
+        <summary>Sets <see cref="P:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext" /> to the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> which loaded the assembly.</summary>
+        <returns>An object to restore the previous value of <see cref="P:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext" />. It is intended to be used as an <see cref="T:System.IDisposable" /> in a <see langword="using" /> block.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+For more information, see [AssemblyLoadContext.CurrentContextualReflectionContext design doc in .NET Core](https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/AssemblyLoadContext.ContextualReflection.md).
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Finalize">
+      <MemberSignature Language="C#" Value="~AssemblyLoadContext ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Finalize() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.Finalize" />
+      <MemberSignature Language="VB.NET" Value="Finalize ()" />
+      <MemberSignature Language="C++ CLI" Value="!AssemblyLoadContext ()" />
+      <MemberSignature Language="F#" Value="override this.Finalize : unit -&gt; unit" Usage="assemblyLoadContext.Finalize " />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Loader</AssemblyName>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Allows the object to try to free resources and perform other cleanup operations before it's reclaimed by garbage collection.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -303,6 +387,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -329,6 +415,7 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <MemberSignature Language="C#" Value="public static System.Runtime.Loader.AssemblyLoadContext GetLoadContext (System.Reflection.Assembly assembly);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Runtime.Loader.AssemblyLoadContext GetLoadContext(class System.Reflection.Assembly assembly) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(System.Reflection.Assembly)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function GetLoadContext (assembly As Assembly) As AssemblyLoadContext" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Runtime::Loader::AssemblyLoadContext ^ GetLoadContext(System::Reflection::Assembly ^ assembly);" />
       <MemberSignature Language="F#" Value="static member GetLoadContext : System.Reflection.Assembly -&gt; System.Runtime.Loader.AssemblyLoadContext" Usage="System.Runtime.Loader.AssemblyLoadContext.GetLoadContext assembly" />
       <MemberType>Method</MemberType>
@@ -338,6 +425,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -369,6 +458,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -381,18 +472,23 @@ This constructor is protected. It can only be called from the <xref:System.Runti
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- For more information see <see href="/en-us/dotnet/standard/assembly/unloadability-howto">How to use and debug assembly unloadability in .NET Core</see>.
+For more information, see [How to use and debug assembly unloadability in .NET Core](/dotnet/standard/assembly/unloadability).
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="Load">
-      <MemberSignature Language="C#" Value="protected abstract System.Reflection.Assembly Load (System.Reflection.AssemblyName assemblyName);" />
+      <MemberSignature Language="C#" Value="protected virtual System.Reflection.Assembly Load (System.Reflection.AssemblyName assemblyName);" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Reflection.Assembly Load(class System.Reflection.AssemblyName assemblyName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::Reflection::Assembly ^ Load(System::Reflection::AssemblyName ^ assemblyName);" />
-      <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function Load (assemblyName As AssemblyName) As Assembly" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Reflection::Assembly ^ Load(System::Reflection::AssemblyName ^ assemblyName);" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly&#xA;override this.Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="protected abstract System.Reflection.Assembly Load (System.Reflection.AssemblyName assemblyName);" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="VB.NET" Value="Protected MustOverride Function Load (assemblyName As AssemblyName) As Assembly" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::Reflection::Assembly ^ Load(System::Reflection::AssemblyName ^ assemblyName);" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
@@ -400,6 +496,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -432,6 +530,7 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <MemberSignature Language="C#" Value="public System.Reflection.Assembly LoadFromAssemblyName (System.Reflection.AssemblyName assemblyName);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Reflection.Assembly LoadFromAssemblyName(class System.Reflection.AssemblyName assemblyName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName(System.Reflection.AssemblyName)" />
+      <MemberSignature Language="VB.NET" Value="Public Function LoadFromAssemblyName (assemblyName As AssemblyName) As Assembly" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Reflection::Assembly ^ LoadFromAssemblyName(System::Reflection::AssemblyName ^ assemblyName);" />
       <MemberSignature Language="F#" Value="member this.LoadFromAssemblyName : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.LoadFromAssemblyName assemblyName" />
       <MemberType>Method</MemberType>
@@ -441,6 +540,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -460,20 +561,25 @@ This constructor is protected. It can only be called from the <xref:System.Runti
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName%2A> loads an assembly by resolving the <xref:System.Reflection.AssemblyName>. This triggers a full resolution. The resolution fallback sequence follows this process:
-     1. The method calls <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)>.
-         > [!IMPORTANT]
-         > <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)> must not call this method to prevent recursive stack overflow.
-     2. Unless the assembly is loaded or an exception is thrown, the method attempts to load the assembly in the default <xref:System.Runtime.Loader.AssemblyLoadContext>.
-     3. Unless the assembly is loaded or an exception is thrown, the method fires the <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event.
-     4. Unless the assembly is loaded or an exception is thrown, the method fires the <xref:System.AppDomain.AssemblyResolve> event.
+
+<xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName%2A> loads an assembly by resolving the <xref:System.Reflection.AssemblyName>. This triggers a full resolution. The resolution fallback sequence follows this process:
+
+1. The method calls <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)>.
+
+   > [!IMPORTANT]
+   > <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)> must not call this method to prevent recursive stack overflow.
+
+2. Unless the assembly is loaded or an exception is thrown, the method attempts to load the assembly in the default <xref:System.Runtime.Loader.AssemblyLoadContext>.
+3. Unless the assembly is loaded or an exception is thrown, the method fires the <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event.
+4. Unless the assembly is loaded or an exception is thrown, the method fires the <xref:System.AppDomain.AssemblyResolve> event.
  
- > [!NOTE]
- > <xref:System.IO.FileLoadException> is thrown if `assemblyRef` specifies the full assembly name, and the first assembly that matches the simple name has a incompatible version or culture. The loader does not continue probing for other assemblies that match the simple name.
+> [!NOTE]
+> <xref:System.IO.FileLoadException> is thrown if `assemblyRef` specifies the full assembly name, and the first assembly that matches the simple name has a incompatible version or culture. The loader does not continue probing for other assemblies that match the simple name.
  
- Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
-     * One version of an executable assembly.
-     * One version of a satellite assembly for each culture.
+Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
+ 
+* One version of an executable assembly.
+* One version of a satellite assembly for each culture.
  
  ]]></format>
         </remarks>
@@ -500,6 +606,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -538,6 +646,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -578,6 +688,7 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <MemberSignature Language="C#" Value="public System.Reflection.Assembly LoadFromStream (System.IO.Stream assembly);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Reflection.Assembly LoadFromStream(class System.IO.Stream assembly) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromStream(System.IO.Stream)" />
+      <MemberSignature Language="VB.NET" Value="Public Function LoadFromStream (assembly As Stream) As Assembly" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Reflection::Assembly ^ LoadFromStream(System::IO::Stream ^ assembly);" />
       <MemberSignature Language="F#" Value="member this.LoadFromStream : System.IO.Stream -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.LoadFromStream assembly" />
       <MemberType>Method</MemberType>
@@ -587,6 +698,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -613,6 +726,7 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <MemberSignature Language="C#" Value="public System.Reflection.Assembly LoadFromStream (System.IO.Stream assembly, System.IO.Stream assemblySymbols);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Reflection.Assembly LoadFromStream(class System.IO.Stream assembly, class System.IO.Stream assemblySymbols) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromStream(System.IO.Stream,System.IO.Stream)" />
+      <MemberSignature Language="VB.NET" Value="Public Function LoadFromStream (assembly As Stream, assemblySymbols As Stream) As Assembly" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Reflection::Assembly ^ LoadFromStream(System::IO::Stream ^ assembly, System::IO::Stream ^ assemblySymbols);" />
       <MemberSignature Language="F#" Value="member this.LoadFromStream : System.IO.Stream * System.IO.Stream -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.LoadFromStream (assembly, assemblySymbols)" />
       <MemberType>Method</MemberType>
@@ -622,6 +736,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -660,6 +776,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -674,12 +792,12 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <Docs>
         <param name="unmanagedDllName">Name of the unmanaged library. Typically this is the filename without its path or extensions. </param>
         <summary>Allows derived class to load an unmanaged library by name.</summary>
-        <returns>A handle to the loaded library, or <see langword="null" />.</returns>
+        <returns>A handle to the loaded library, or <see cref="F:System.IntPtr.Zero" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The default implementation always return `null`. When `null` is returned, the runtime loads the library with its default policy.
+ The default implementation always returns <xref:System.IntPtr.Zero?displayProperty=nameWithType>. When <xref:System.IntPtr.Zero?displayProperty=nameWithType> is returned, the runtime loads the library with its default policy.
  
  This virtual method can be overridden to customize the unmanaged library search algorithm. When overridden the name can be used to identify the library. The loaded library does not need to match the requested name, but can be transformed as needed. This could include adjusting the name for platform specific naming.
  
@@ -701,6 +819,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -715,12 +835,19 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <Docs>
         <param name="unmanagedDllPath">The path to the unmanaged library.</param>
         <summary>Loads an unmanaged library from the specified path.</summary>
-        <returns>A handle to the loaded library.</returns>
-        <remarks>To be added.</remarks>
+        <returns>The OS handle for the loaded native library.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+The OS handle returned by this method can be used with methods of the <xref:System.Runtime.InteropServices.NativeLibrary?displayProperty=nameWithType> class.
+
+         ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="unmanagedDllPath" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">The <paramref name="unmanagedDllPath" /> argument is not an absolute path.</exception>
-        <exception cref="T:System.IO.FileNotFoundException">The unmanaged library cannot be found.</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="unmanagedDllPath" /> argument is empty or not an absolute path.</exception>
+        <exception cref="T:System.DllNotFoundException">The library can't be found.</exception>
+        <exception cref="T:System.BadImageFormatException">The library is not valid.</exception>
       </Docs>
     </Member>
     <Member MemberName="Name">
@@ -734,13 +861,15 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Get the name of the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" />.</summary>
+        <value>The name of the <see cref="T:System.Runtime.Loader.AssemblyLoadContext" />. Its value can be <see langword="null" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -748,9 +877,10 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <MemberSignature Language="C#" Value="public event Func&lt;System.Runtime.Loader.AssemblyLoadContext,System.Reflection.AssemblyName,System.Reflection.Assembly&gt; Resolving;" />
       <MemberSignature Language="ILAsm" Value=".event class System.Func`3&lt;class System.Runtime.Loader.AssemblyLoadContext, class System.Reflection.AssemblyName, class System.Reflection.Assembly&gt; Resolving" />
       <MemberSignature Language="DocId" Value="E:System.Runtime.Loader.AssemblyLoadContext.Resolving" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event Resolving As Func(Of AssemblyLoadContext, AssemblyName, Assembly) " />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event Resolving As Func(Of AssemblyLoadContext, AssemblyName, Assembly) " FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event Func&lt;System::Runtime::Loader::AssemblyLoadContext ^, System::Reflection::AssemblyName ^, System::Reflection::Assembly ^&gt; ^ Resolving;" />
       <MemberSignature Language="F#" Value="member this.Resolving : Func&lt;System.Runtime.Loader.AssemblyLoadContext, System.Reflection.AssemblyName, System.Reflection.Assembly&gt; " Usage="member this.Resolving : System.Func&lt;System.Runtime.Loader.AssemblyLoadContext, System.Reflection.AssemblyName, System.Reflection.Assembly&gt; " />
+      <MemberSignature Language="VB.NET" Value="Public Event Resolving As Func(Of AssemblyLoadContext, AssemblyName, Assembly) " FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
@@ -758,6 +888,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -777,7 +909,7 @@ This constructor is protected. It can only be called from the <xref:System.Runti
  > [!IMPORTANT]
  >  If more than one event handler is registered for this event, the event handlers are called in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.
  
- For more information about handling events, see [Handling and Raising Events](~/docs/standard/events/index.md).
+ For more information about handling events, see [Handling and Raising Events](/dotnet/standard/events/).
  
  It is noteworthy that a handler can be added for this event on any <xref:System.Runtime.Loader.AssemblyLoadContext>, including the default context.
  
@@ -796,13 +928,21 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Func&lt;System.Reflection.Assembly,System.String,System.IntPtr&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Occurs when the resolution of a native library fails.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+This event is raised if the native library cannot be resolved by the default resolution logic (including <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll%2A>).
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SetProfileOptimizationRoot">
@@ -819,6 +959,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -831,9 +973,17 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <Parameter Name="directoryPath" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="directoryPath">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="directoryPath">The full path to the directory where the optimization profiles are stored.</param>
+        <summary>Sets the root path where the optimization profiles for this load context are stored.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[ 
+
+## Remarks		  
+
+The profile optimization improves the startup performance of the load context on multicore computers by performing background compilation of methods that are likely to be executed, based on profiles created during previous compilations. For more information, see <xref:System.Runtime.ProfileOptimization>.
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="StartProfileOptimization">
@@ -850,6 +1000,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -862,8 +1014,40 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <Parameter Name="profile" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="profile">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="profile">The name of the optimization profile.</param>
+        <summary>Starts the profile optimization for the specified profile.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[ 
+
+## Remarks		  
+
+The profile optimization improves the startup performance of the load context on multicore computers by performing background compilation of methods that are likely to be executed, based on profiles created during previous compilations. For more information, see <xref:System.Runtime.ProfileOptimization>.
+
+         ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.ToString" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ToString () As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::String ^ ToString();" />
+      <MemberSignature Language="F#" Value="override this.ToString : unit -&gt; string" Usage="assemblyLoadContext.ToString " />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Loader</AssemblyName>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Returns the string representation of this load context.</summary>
+        <returns>The string representation of this load context.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -878,6 +1062,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -903,9 +1089,10 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <MemberSignature Language="C#" Value="public event Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; Unloading;" />
       <MemberSignature Language="ILAsm" Value=".event class System.Action`1&lt;class System.Runtime.Loader.AssemblyLoadContext&gt; Unloading" />
       <MemberSignature Language="DocId" Value="E:System.Runtime.Loader.AssemblyLoadContext.Unloading" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event Unloading As Action(Of AssemblyLoadContext) " />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event Unloading As Action(Of AssemblyLoadContext) " FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event Action&lt;System::Runtime::Loader::AssemblyLoadContext ^&gt; ^ Unloading;" />
       <MemberSignature Language="F#" Value="member this.Unloading : Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; " Usage="member this.Unloading : System.Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; " />
+      <MemberSignature Language="VB.NET" Value="Public Event Unloading As Action(Of AssemblyLoadContext) " FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Loader</AssemblyName>
@@ -913,6 +1100,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>

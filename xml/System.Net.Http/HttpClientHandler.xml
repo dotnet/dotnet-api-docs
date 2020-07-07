@@ -1,4 +1,4 @@
-﻿<Type Name="HttpClientHandler" FullName="System.Net.Http.HttpClientHandler">
+<Type Name="HttpClientHandler" FullName="System.Net.Http.HttpClientHandler">
   <TypeSignature Language="C#" Value="public class HttpClientHandler : System.Net.Http.HttpMessageHandler" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit HttpClientHandler extends System.Net.Http.HttpMessageHandler" />
   <TypeSignature Language="DocId" Value="T:System.Net.Http.HttpClientHandler" />
@@ -12,12 +12,17 @@
     <AssemblyVersion>4.1.1.0</AssemblyVersion>
     <AssemblyVersion>4.2.0.0</AssemblyVersion>
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Net.Http.HttpMessageHandler</BaseTypeName>
   </Base>
@@ -25,40 +30,45 @@
   <Docs>
     <summary>The default message handler used by <see cref="T:System.Net.Http.HttpClient" /> in .NET Framework and .NET Core 2.0 and earlier.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `HttpClientHandler` class and classes derived from it enable developers to configure a variety of options ranging from proxies to authentication.  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The `HttpClientHandler` class and classes derived from it enable developers to configure a variety of options ranging from proxies to authentication.
+
 ### HttpClientHandler in .NET Core
 
-Starting with .NET Core 2.1, the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of `HttpClientHandler` provides the implementation used by higher-level HTTP networking APIs. You can configure your application to use `HttpClientHandler` instead in any of the following ways:
+Starting in .NET Core 2.1, the implementation of the `HttpClientHandler` class was changed to be based on the cross-platform HTTP protocol stack used by the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class. Prior to .NET Core 2.1, the `HttpClientHandler` class used older HTTP protocol stacks (<xref:System.Net.Http.WinHttpHandler> on Windows and `CurlHandler`, an internal class implemented on top of Linux's native libcurl component, on Linux).
 
-- By calling the <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> method as follows:
+You can configure your app to use the older HTTP protocol stacks in one of the following three ways:
+
+- Call the <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> method:
 
   ```csharp
-  AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
+  AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
   ```
+
   ```vb
-  AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
-  ``` 
-By defining the `System.Net.Http.useSocketsHttpHandler` switch in the *.netcore.runtimeconfig.json* configuration file:
+  AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", False)
+  ```
+
+- Define the `System.Net.Http.UseSocketsHttpHandler` switch in the *.netcore.runtimeconfig.json* configuration file:
 
   ```json
   "runtimeOptions": {
     "configProperties": {
-        "System.Net.Http.useSocketsHttpHandler": false
+        "System.Net.Http.UseSocketsHttpHandler": false
     }
   }
   ```
-  
-- By defining an environment variable named `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` and setting it to either `false` or 0.
 
-## Examples  
- [!code-csharp[System.Net.Http.HttpClientHandler#1](~/samples/snippets/csharp/VS_Snippets_Misc/system.net.http.httpclienthandler/cs/source.cs#1)]  
-  
+- Define an environment variable named `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` and set it to either `false` or **0**.
+
+## Examples
+ [!code-csharp[System.Net.Http.HttpClientHandler#1](~/samples/snippets/csharp/VS_Snippets_Misc/system.net.http.httpclienthandler/cs/source.cs#1)]
+
  The preceding code example uses an `async Task Main()` entry point. That feature requires C# 7.1 or later.
-  
+
  ]]></format>
     </remarks>
     <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkID=245696">Connecting to a web service</related>
@@ -82,6 +92,8 @@ By defining the `System.Net.Http.useSocketsHttpHandler` switch in the *.netcore.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -109,6 +121,8 @@ By defining the `System.Net.Http.useSocketsHttpHandler` switch in the *.netcore.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -123,19 +137,19 @@ By defining the `System.Net.Http.useSocketsHttpHandler` switch in the *.netcore.
         <value>
           <see langword="true" /> if the handler should follow redirection responses; otherwise <see langword="false" />. The default value is <see langword="true" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Set <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> to `true` if you want the handler to automatically follow HTTP redirection headers to the new location of the resource. The maximum number of redirections to follow is set by the <xref:System.Net.Http.HttpClientHandler.MaxAutomaticRedirections%2A> property.  
-  
- If <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> is set to `false`, all HTTP responses with an HTTP status code from 300 to 399 are  returned to the application.  
-  
- The Authorization header is cleared on auto-redirects and the handler automatically tries to re-authenticate to the redirected location. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module.  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Set <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> to `true` if you want the handler to automatically follow HTTP redirection headers to the new location of the resource. The maximum number of redirections to follow is set by the <xref:System.Net.Http.HttpClientHandler.MaxAutomaticRedirections%2A> property.
+
+ If <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> is set to `false`, all HTTP responses with an HTTP status code from 300 to 399 are  returned to the application.
+
+ The Authorization header is cleared on auto-redirects and the handler automatically tries to re-authenticate to the redirected location. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module.
 
 > [!NOTE]
 >  With <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> set to `true`, the .NET Framework will follow redirections even when being redirected to an HTTP URI from an HTTPS URI.
 .NET Core versions 1.0, 1.1 and 2.0 will not follow a redirection from HTTPS to HTTP even if <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> is set to `true`.
-  
+
  ]]></format>
         </remarks>
       </Docs>
@@ -155,6 +169,8 @@ By defining the `System.Net.Http.useSocketsHttpHandler` switch in the *.netcore.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -168,15 +184,15 @@ By defining the `System.Net.Http.useSocketsHttpHandler` switch in the *.netcore.
         <summary>Gets or sets the type of decompression method used by the handler for automatic decompression of the HTTP content response.</summary>
         <value>The automatic decompression method used by the handler.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
-## Remarks  
+## Remarks
 For the .NET Framework 4.x `System.Net.Http` binary in the Global Assembly Cache (GAC), the default value is <xref:System.Net.DecompressionMethods.None>.
 
 When the [`System.Net.Http` NuGet package](https://www.nuget.org/packages/System.Net.Http/) v4.1.0 to v4.3.2 is used, the default is <xref:System.Net.DecompressionMethods.GZip> and <xref:System.Net.DecompressionMethods.Deflate>.
 
 After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionMethods.None> is used.
-  
+
  ]]></format>
         </remarks>
       </Docs>
@@ -196,6 +212,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -233,6 +251,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -263,6 +283,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -298,6 +320,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -311,13 +335,13 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <summary>Gets or sets the cookie container used to store server cookies by the handler.</summary>
         <value>The cookie container used to store server cookies by the handler.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Net.Http.HttpClientHandler.CookieContainer%2A> property provides an instance of the <xref:System.Net.CookieContainer> class that contains the cookies associated with this handler.  
-  
- If the <xref:System.Net.Http.HttpClientHandler.UseCookies%2A> property is `true`, the <xref:System.Net.Http.HttpClientHandler.CookieContainer%2A> property represents the cookie container used to store the server cookies. The user can set custom cookies before sending requests using this property. If the  <xref:System.Net.Http.HttpClientHandler.UseCookies%2A> property is false and the user adds cookies to <xref:System.Net.Http.HttpClientHandler.CookieContainer%2A>, cookies are ignored and not sent to the server. Setting the <xref:System.Net.Http.HttpClientHandler.CookieContainer%2A> to `null` will throw an exception.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Net.Http.HttpClientHandler.CookieContainer%2A> property provides an instance of the <xref:System.Net.CookieContainer> class that contains the cookies associated with this handler.
+
+ If the <xref:System.Net.Http.HttpClientHandler.UseCookies%2A> property is `true`, the <xref:System.Net.Http.HttpClientHandler.CookieContainer%2A> property represents the cookie container used to store the server cookies. The user can set custom cookies before sending requests using this property. If the  <xref:System.Net.Http.HttpClientHandler.UseCookies%2A> property is false and the user adds cookies to <xref:System.Net.Http.HttpClientHandler.CookieContainer%2A>, cookies are ignored and not sent to the server. Setting the <xref:System.Net.Http.HttpClientHandler.CookieContainer%2A> to `null` will throw an exception.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -337,6 +361,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -364,6 +390,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -376,21 +404,21 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <summary>Gets a cached delegate that always returns <see langword="true" />.</summary>
         <value>A cached delegate that always returns <see langword="true" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Particularly in test scenarios, a common pattern use <xref:System.Net.Http.HttpClient> to connect to a server with a certificate that shouldn't be validated, such as a self-signed certificate. You commonly do this with <xref:System.Net.Http.HttpClientHandler> by setting the <xref:System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback%2A> property to a delegate that always returns `True`; this indicates that the certificate has passed validation. However, not all implementations support this callback, and some throw <xref:System.PlatformNotSupportedException>.  
-  
- The <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property addresses this limitation. The delegate returned by the <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property can be assigned to the <xref:System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback%2A> property, as the following example does:  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Particularly in test scenarios, a common pattern use <xref:System.Net.Http.HttpClient> to connect to a server with a certificate that shouldn't be validated, such as a self-signed certificate. You commonly do this with <xref:System.Net.Http.HttpClientHandler> by setting the <xref:System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback%2A> property to a delegate that always returns `True`; this indicates that the certificate has passed validation. However, not all implementations support this callback, and some throw <xref:System.PlatformNotSupportedException>.
+
+ The <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property addresses this limitation. The delegate returned by the <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property can be assigned to the <xref:System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback%2A> property, as the following example does:
+
 ```cs
-handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
 ```
 
- This gives <xref:System.Net.Http.HttpClientHandler> implementations a known object reference identity that expresses the developer's intention. If the object stored in the <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property is reference equals to <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A>, the runtime is able to entirely disable validation on a platform that would otherwise throw a <xref:System.PlatformNotSupportedException>.  
-  
- As a side benefit, developers can use this property to make it easier for tools to flag the danger of disabling certificate validation, which makes it easier for developers to avoid shipping insecure applications.  
-  
+ This gives <xref:System.Net.Http.HttpClientHandler> implementations a known object reference identity that expresses the developer's intention. If the object stored in the <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property is reference equals to <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A>, the runtime is able to entirely disable validation on a platform that would otherwise throw a <xref:System.PlatformNotSupportedException>.
+
+ As a side benefit, developers can use this property to make it easier for tools to flag the danger of disabling certificate validation, which makes it easier for developers to avoid shipping insecure applications.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -410,6 +438,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -445,6 +475,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -462,13 +494,13 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
           <see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to releases only unmanaged resources.</param>
         <summary>Releases the unmanaged resources used by the <see cref="T:System.Net.Http.HttpClientHandler" /> and optionally disposes of the managed resources.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize%2A> method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. <xref:System.Object.Finalize%2A> invokes `Dispose` with `disposing` set to `false`.  
-  
- When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.Net.Http.HttpClientHandler> references. This method invokes the `Dispose()` method of each referenced object.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize%2A> method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. <xref:System.Object.Finalize%2A> invokes `Dispose` with `disposing` set to `false`.
+
+ When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.Net.Http.HttpClientHandler> references. This method invokes the `Dispose()` method of each referenced object.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -488,6 +520,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -501,11 +535,11 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <summary>Gets or sets the maximum number of redirects that the handler follows.</summary>
         <value>The maximum number of redirection responses that the handler follows. The default value is 50.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Net.Http.HttpClientHandler.MaxAutomaticRedirections%2A> property sets the maximum number of redirections for the request to follow if the <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> property is `true`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Net.Http.HttpClientHandler.MaxAutomaticRedirections%2A> property sets the maximum number of redirections for the request to follow if the <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> property is `true`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -525,6 +559,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -560,6 +596,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -573,11 +611,11 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <summary>Gets or sets the maximum request content buffer size used by the handler.</summary>
         <value>The maximum request content buffer size in bytes. The default value is 2 gigabytes.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- An app can set the <xref:System.Net.Http.HttpClientHandler.MaxRequestContentBufferSize%2A> property to a lower value to limit the size of the request buffer. If the size of the request content is greater than the <xref:System.Net.Http.HttpClientHandler.MaxRequestContentBufferSize%2A> property, an exception is thrown.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ An app can set the <xref:System.Net.Http.HttpClientHandler.MaxRequestContentBufferSize%2A> property to a lower value to limit the size of the request buffer. If the size of the request content is greater than the <xref:System.Net.Http.HttpClientHandler.MaxRequestContentBufferSize%2A> property, an exception is thrown.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -597,6 +635,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -632,6 +672,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -646,15 +688,15 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <value>
           <see langword="true" /> for the handler to send an HTTP Authorization header with requests after authentication has taken place; otherwise, <see langword="false" />. The default is <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- After a client request to a specific <xref:System.Uri> is successfully authenticated, if the <xref:System.Net.Http.HttpClientHandler.PreAuthenticate%2A> property is `true` and credentials are supplied, <xref:System.Net.Http.HttpClientHandler> matches against the credential list supplied in the  <xref:System.Net.Http.HttpClientHandler.Credentials%2A> property. The Authorization header is sent with each request to any <xref:System.Uri> that matches the specific <xref:System.Uri> up to the last forward slash.  
-  
- If the client request to a specific <xref:System.Uri> is not successfully authenticated, the request uses standard authentication procedures.  
-  
- With the exception of the first request, the <xref:System.Net.Http.HttpClientHandler.PreAuthenticate%2A> property indicates whether to send authentication information with subsequent requests to a <xref:System.Uri> that matches the specific <xref:System.Uri> up to the last forward slash without waiting to be challenged by the server.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ After a client request to a specific <xref:System.Uri> is successfully authenticated, if the <xref:System.Net.Http.HttpClientHandler.PreAuthenticate%2A> property is `true` and credentials are supplied, <xref:System.Net.Http.HttpClientHandler> matches against the credential list supplied in the  <xref:System.Net.Http.HttpClientHandler.Credentials%2A> property. The Authorization header is sent with each request to any <xref:System.Uri> that matches the specific <xref:System.Uri> up to the last forward slash.
+
+ If the client request to a specific <xref:System.Uri> is not successfully authenticated, the request uses standard authentication procedures.
+
+ With the exception of the first request, the <xref:System.Net.Http.HttpClientHandler.PreAuthenticate%2A> property indicates whether to send authentication information with subsequent requests to a <xref:System.Uri> that matches the specific <xref:System.Uri> up to the last forward slash without waiting to be challenged by the server.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -674,6 +716,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -709,6 +753,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -727,23 +773,23 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <summary>Gets or sets proxy information used by the handler.</summary>
         <value>The proxy information used by the handler. The default value is <see langword="null" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property identifies the <xref:System.Net.WebProxy> object to use to process requests to Internet resources. To specify that no proxy should be used, set the <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property to the proxy instance returned by the <xref:System.Net.GlobalProxySelection.GetEmptyWebProxy%2A> method.  
-  
- The local computer or application config file may specify that a default proxy be used. If the <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property is specified, then the proxy settings from the <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property override the local computer or application config file and the handler will use the proxy settings specified. If no proxy is specified in a config file and the <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property is unspecified, the handler uses the proxy settings inherited from Internet Explorer on the local computer. If there are no proxy settings in Internet Explorer, the request is sent directly to the server.  
-  
- The <xref:System.Net.Http.HttpClientHandler> class parses a proxy bypass list with wildcard characters inherited from Internet Explorer the same as the bypass list is parsed directly by Internet Explorer. For example, the <xref:System.Net.Http.HttpClientHandler> class will parse a bypass list of "nt*" from Internet Explorer as a regular expression of "nt.\*". So a URL of " http://nt.com" would bypass the proxy using the <xref:System.Net.Http.HttpClientHandler> class and using Internet Explorer.  
-  
- The <xref:System.Net.Http.HttpClientHandler> class supports local proxy bypass. The class considers a destination to be local if any of the following conditions are met:  
-  
-1.  The destination contains a flat name (no dots in the URL).  
-  
-2.  The destination contains a loopback address (<xref:System.Net.IPAddress.Loopback> or <xref:System.Net.IPAddress.IPv6Loopback>) or the destination contains an <xref:System.Net.IPAddress> assigned to the local computer.  
-  
-3.  The domain suffix of the destination matches the local computer's domain suffix (<xref:System.Net.NetworkInformation.IPGlobalProperties.DomainName%2A>).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property identifies the <xref:System.Net.WebProxy> object to use to process requests to Internet resources. To specify that no proxy should be used, set the <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property to the proxy instance returned by the <xref:System.Net.GlobalProxySelection.GetEmptyWebProxy%2A> method.
+
+ The local computer or application config file may specify that a default proxy be used. If the <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property is specified, then the proxy settings from the <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property override the local computer or application config file and the handler will use the proxy settings specified. If no proxy is specified in a config file and the <xref:System.Net.Http.HttpClientHandler.Proxy%2A> property is unspecified, the handler uses the proxy settings inherited from Internet Explorer on the local computer. If there are no proxy settings in Internet Explorer, the request is sent directly to the server.
+
+ The <xref:System.Net.Http.HttpClientHandler> class parses a proxy bypass list with wildcard characters inherited from Internet Explorer the same as the bypass list is parsed directly by Internet Explorer. For example, the <xref:System.Net.Http.HttpClientHandler> class will parse a bypass list of "nt*" from Internet Explorer as a regular expression of "nt.\*". So a URL of `http://nt.com` would bypass the proxy using the <xref:System.Net.Http.HttpClientHandler> class and using Internet Explorer.
+
+ The <xref:System.Net.Http.HttpClientHandler> class supports local proxy bypass. The class considers a destination to be local if any of the following conditions are met:
+
+1.  The destination contains a flat name (no dots in the URL).
+
+2.  The destination contains a loopback address (<xref:System.Net.IPAddress.Loopback> or <xref:System.Net.IPAddress.IPv6Loopback>) or the destination contains an <xref:System.Net.IPAddress> assigned to the local computer.
+
+3.  The domain suffix of the destination matches the local computer's domain suffix (<xref:System.Net.NetworkInformation.IPGlobalProperties.DomainName%2A>).
+
  ]]></format>
         </remarks>
       </Docs>
@@ -752,6 +798,7 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
       <MemberSignature Language="C#" Value="protected internal override System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);" />
       <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class System.Net.Http.HttpResponseMessage&gt; SendAsync(class System.Net.Http.HttpRequestMessage request, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpClientHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend Overrides Function SendAsync (request As HttpRequestMessage, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="C++ CLI" Value="protected public:&#xA; override System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ SendAsync(System::Net::Http::HttpRequestMessage ^ request, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="F#" Value="override this.SendAsync : System.Net.Http.HttpRequestMessage * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClientHandler.SendAsync (request, cancellationToken)" />
       <MemberType>Method</MemberType>
@@ -762,6 +809,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -786,11 +835,11 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <summary>Creates an instance of  <see cref="T:System.Net.Http.HttpResponseMessage" /> based on the information provided in the <see cref="T:System.Net.Http.HttpRequestMessage" /> as an operation that will not block.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation is does not block. It returns an instance of <xref:System.Threading.Tasks.Task%601> to represent the asynchronous operation. When the operation completes, <xref:System.Threading.Tasks.Task%601.Result%2A> contains the response message.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation is does not block. It returns an instance of <xref:System.Threading.Tasks.Task%601> to represent the asynchronous operation. When the operation completes, <xref:System.Threading.Tasks.Task%601.Result%2A> contains the response message.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="request" /> was <see langword="null" />.</exception>
@@ -811,6 +860,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -846,6 +897,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -882,6 +935,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -913,6 +968,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -944,6 +1001,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -975,6 +1034,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1006,6 +1067,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1020,11 +1083,12 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <value>
           <see langword="true" /> if the default credentials are used; otherwise <see langword="false" />. The default value is <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Set this property to `true` when requests made by the <xref:System.Net.Http.HttpClientHandler> object should, if requested by the server, be authenticated using the credentials of the currently logged on user. For client applications, this is the desired behavior in most scenarios. For middle-tier applications, such as ASP.NET applications, instead of using this property, you would typically set the <xref:System.Net.Http.HttpClientHandler.Credentials%2A> property to the credentials of the client on whose behalf the request is made.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Set this property to `true` when requests made by the <xref:System.Net.Http.HttpClientHandler> object should, if requested by the server, be authenticated using the credentials of the currently logged on user. For client applications, this is the desired behavior in most scenarios. For middle-tier applications, such as ASP.NET applications, instead of using this property, you would typically set the <xref:System.Net.Http.HttpClientHandler.Credentials%2A> property to the credentials of the client on whose behalf the request is made.
+ 
+ This property doesn't affect proxy credentials. When the default (system) proxy is being used, set credentials explicitly by using the <xref:System.Net.Http.HttpClientHandler.DefaultProxyCredentials> property. When the proxy is set by the <xref:System.Net.Http.HttpClientHandler.Proxy> property, set credentials for the proxy via its <xref:System.Net.IWebProxy.Credentials> property.
  ]]></format>
         </remarks>
       </Docs>
@@ -1044,6 +1108,8 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
