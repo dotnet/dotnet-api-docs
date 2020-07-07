@@ -83,7 +83,7 @@ int main()
    {
       
       // Generate a signing key. This key should match the certificate.
-      RSACryptoServiceProvider^ Key = gcnew RSACryptoServiceProvider;
+      RSA^ Key = RSA::Create();
       Console::WriteLine( "Signing: {0}", resourceToSign );
       
       // Sign the detached resource and save the signature in an XML file.

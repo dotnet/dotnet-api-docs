@@ -25,7 +25,7 @@ class Program
 
         // Create a new RSA key.  This key will encrypt a symmetric key,
         // which will then be imbedded in the XML document.
-        RSA rsaKey = new RSACryptoServiceProvider();
+        RSA rsaKey = RSA.Create();
 
         try
         {

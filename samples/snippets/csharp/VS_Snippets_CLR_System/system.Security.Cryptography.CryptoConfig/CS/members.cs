@@ -31,7 +31,7 @@ class Members
 
         // Instantiate the RSA provider instance accessing the TestContainer
         // key container.
-        RSACryptoServiceProvider rsaProvider = (RSACryptoServiceProvider) 
+        RSA rsa = (RSA)
             CryptoConfig.CreateFromName("RSA",argsArray);
         //</Snippet5>
 
