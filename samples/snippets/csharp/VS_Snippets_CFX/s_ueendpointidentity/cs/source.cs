@@ -9,6 +9,7 @@ using System.ServiceModel.Description;
 using System.ServiceModel.Security;
 using System.ServiceModel.Security.Tokens;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.Security.Principal;
 using System.Threading;
