@@ -24,7 +24,7 @@ public class Example
             if (end - start > 0)
                words.Add(s.Substring(start, end - start));
 
-            start = end++;
+            start = end + 1;
          }
          else {
             if (start < s.Length - 1)
