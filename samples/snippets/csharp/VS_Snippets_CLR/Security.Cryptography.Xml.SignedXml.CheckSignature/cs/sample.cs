@@ -80,7 +80,7 @@ public class SignVerifyEnvelope
         SignedXml signedXml = new SignedXml(doc);
 
         // Add the key to the SignedXml document.
-        signedXml.SigningKey = cert.PrivateKey;
+        signedXml.SigningKey = cert.GetRSAPrivateKey();
 
         // Create a reference to be signed.
         Reference reference = new Reference();
