@@ -1051,6 +1051,7 @@ namespace TestPrincipalPermission
 
         class SecureService : ISecureService
         {
+            [PrincipalPermission(SecurityAction.Demand, Role = "everyone")]
             public string Method1()
             {
                 return String.Format("Hello, \"{0}\"", Thread.CurrentPrincipal.Identity.Name);
