@@ -17,8 +17,8 @@ public class SignVerifyEnvelope
     {
         try
         {
-            // Generate a RSA signing key.
-            RSA RSAKey = RSA.Create();
+            // Generate a DSA signing key.
+            DSA DSAKey = DSA.Create();
 
             // Create an XML file to sign.
             CreateSomeXml("Example.xml");
@@ -26,7 +26,7 @@ public class SignVerifyEnvelope
 
             // Sign the XML that was just created and save it in a 
             // new file.
-            SignXmlFile("Example.xml", "SignedExample.xml", RSAKey);
+            SignXmlFile("Example.xml", "SignedExample.xml", DSAKey);
             Console.WriteLine("XML file signed."); 
 
             // Verify the signature of the signed XML.
@@ -52,7 +52,7 @@ public class SignVerifyEnvelope
 
     // <Snippet2>
     // Sign an XML file and save the signature in a new file.
-    public static void SignXmlFile(string FileName, string SignedFileName, RSA RSAKey)
+    public static void SignXmlFile(string FileName, string SignedFileName, DSA DSAKey)
     {
         // Create a new XML document.
         XmlDocument doc = new XmlDocument();
@@ -66,8 +66,8 @@ public class SignVerifyEnvelope
         // Create a SignedXml object.
         SignedXml signedXml = new SignedXml(doc);
 
-        // Add the RSA key to the SignedXml document. 
-        signedXml.SigningKey = RSAKey;
+        // Add the DSA key to the SignedXml document. 
+        signedXml.SigningKey = DSAKey;
 
         // Create a reference to be signed.
         Reference reference = new Reference();
@@ -84,9 +84,9 @@ public class SignVerifyEnvelope
         // Add the reference to the SignedXml object.
         signedXml.AddReference(reference);
 
-        // Add a RSAKeyValue to the KeyInfo (optional; helps recipient find key to validate).
+        // Add a DSAKeyValue to the KeyInfo (optional; helps recipient find key to validate).
         KeyInfo keyInfo = new KeyInfo();
-        keyInfo.AddClause(new RSAKeyValue((RSA)RSAKey));
+        keyInfo.AddClause(new DSAKeyValue((DSA)DSAKey));
         signedXml.KeyInfo = keyInfo;
 
         // Compute the signature.
