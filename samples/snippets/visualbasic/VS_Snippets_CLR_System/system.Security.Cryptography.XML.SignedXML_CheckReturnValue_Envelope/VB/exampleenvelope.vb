@@ -16,8 +16,8 @@ Public Class SignVerifyEnvelope
    
    Overloads Public Shared Sub Main(args() As [String])
       Try
-         ' Generate a DSA signing key.
-         Dim DSAKey As DSA = DSA.Create()
+         ' Generate a RSA signing key.
+         Dim RSAKey As RSA = RSA.Create()
          
          ' Create an XML file to sign.
          CreateSomeXml("Example.xml")
@@ -25,7 +25,7 @@ Public Class SignVerifyEnvelope
          
          ' Sign the XML that was just created and save it in a 
          ' new file.
-         SignXmlFile("Example.xml", "SignedExample.xml", DSAKey)
+         SignXmlFile("Example.xml", "SignedExample.xml", RSAKey)
          Console.WriteLine("XML file signed.")
          
          ' Verify the signature of the signed XML.
@@ -47,7 +47,7 @@ Public Class SignVerifyEnvelope
    
    ' <Snippet2>
    ' Sign an XML file and save the signature in a new file.
-   Public Shared Sub SignXmlFile(FileName As String, SignedFileName As String, DSAKey As DSA)
+   Public Shared Sub SignXmlFile(FileName As String, SignedFileName As String, RSAKey As RSA)
       ' Create a new XML document.
       Dim doc As New XmlDocument()
       
@@ -60,8 +60,8 @@ Public Class SignVerifyEnvelope
       ' Create a SignedXml object.
       Dim signedXml As New SignedXml(doc)
       
-      ' Add the DSA key to the SignedXml document. 
-      signedXml.SigningKey = DSAKey
+      ' Add the RSA key to the SignedXml document. 
+      signedXml.SigningKey = RSAKey
       
       ' Create a reference to be signed.
       Dim reference As New Reference()
@@ -75,9 +75,9 @@ Public Class SignVerifyEnvelope
       signedXml.AddReference(reference)
       
       
-      ' Add a DSAKeyValue to the KeyInfo (optional; helps recipient find key to validate).
+      ' Add a RSAKeyValue to the KeyInfo (optional; helps recipient find key to validate).
       Dim keyInfo As New KeyInfo()
-      keyInfo.AddClause(New DSAKeyValue(CType(DSAKey, DSA)))
+      keyInfo.AddClause(New RSAKeyValue(CType(RSAKey, RSA)))
       signedXml.KeyInfo = keyInfo
       
       ' Compute the signature.
