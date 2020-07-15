@@ -22,8 +22,8 @@ Public Class SamplesListDictionary
       PrintKeysAndValues(myCol)
 
       ' Deletes a key.
-      myCol.Remove("Plums")
-      Console.WriteLine("The collection contains the following elements after removing ""Plums"":")
+      myCol.Remove("Gala Apples")
+      Console.WriteLine("The collection contains the following elements after removing ""Gala Apples"":")
       PrintKeysAndValues(myCol)
 
       ' Clears the entire collection.
@@ -58,11 +58,10 @@ End Class
 '   Granny Smith Apples       0.89
 '   Red Delicious Apples      0.99
 '
-'The collection contains the following elements after removing "Plums":
+'The collection contains the following elements after removing "Gala Apples":
 '   KEY                       VALUE
 '   Braeburn Apples           1.49
 '   Fuji Apples               1.29
-'   Gala Apples               1.49
 '   Golden Delicious Apples   1.29
 '   Granny Smith Apples       0.89
 '   Red Delicious Apples      0.99
