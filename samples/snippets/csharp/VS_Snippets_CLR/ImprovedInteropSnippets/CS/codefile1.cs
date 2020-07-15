@@ -3,7 +3,7 @@
 // <Snippet1>
 using System;
 using System.Runtime.InteropServices;
-// by default all classes in this assembly will use COM implementaion 
+// by default all classes in this assembly will use COM implementaion
 [assembly:IDispatchImpl(IDispatchImplType.CompatibleImpl)]
 
 namespace MyNamespace

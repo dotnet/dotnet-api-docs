@@ -12,9 +12,9 @@ public class Demo2
         //<snippet21>
         // Create a SoapNormalizedString object.
         SoapNormalizedString normalized = new SoapNormalizedString();
-        normalized.Value = "one two"; 
+        normalized.Value = "one two";
         Console.WriteLine(
-            "The value of the SoapNormalizedString object is {0}.", 
+            "The value of the SoapNormalizedString object is {0}.",
             normalized.ToString());
         //</snippet21>
     }
@@ -23,11 +23,11 @@ public class Demo2
     {
         //<snippet22>
         // Create a SoapNormalizedString object.
-        string testString = "one two"; 
-        SoapNormalizedString normalized = 
+        string testString = "one two";
+        SoapNormalizedString normalized =
             new SoapNormalizedString(testString);
         Console.WriteLine(
-            "The value of the SoapNormalizedString object is {0}.", 
+            "The value of the SoapNormalizedString object is {0}.",
             normalized.ToString());
         //</snippet22>
     }

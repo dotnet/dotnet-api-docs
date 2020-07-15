@@ -2,13 +2,13 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class
-        ManagementClass osClass = 
+        ManagementClass osClass =
             new ManagementClass("Win32_OperatingSystem");
 
         osClass.Options.UseAmendedQualifiers = true;
@@ -28,13 +28,13 @@ public class Sample
                 property.Qualifiers["Description"].Value);
             Console.WriteLine();
 
-            Console.WriteLine("Type: ");               
+            Console.WriteLine("Type: ");
             Console.WriteLine(property.Type);
 
             Console.WriteLine();
 
             Console.WriteLine("Qualifiers: ");
-            foreach(QualifierData q in 
+            foreach(QualifierData q in
                 property.Qualifiers)
             {
                 Console.WriteLine(q.Name);
@@ -46,10 +46,10 @@ public class Sample
                 Console.WriteLine("Value: ");
                 Console.WriteLine(
                     c.Properties[property.Name.ToString()].Value);
-        
+
                 Console.WriteLine();
             }
-        }    
+        }
     }
 }
 //</Snippet1>

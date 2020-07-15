@@ -32,14 +32,14 @@ Class XMLDSIGDetached
          
          ' Generate a signing key. This key should match the 
          ' certificate.
-         Dim Key As New RSACryptoServiceProvider()
+         Dim Key As RSA = RSA.Create()
          
          Console.WriteLine("Signing: {0}", resourceToSign)
          
          ' Sign the detached resourceand save the signature in an XML file.
          SignDetachedResource(resourceToSign, XmlFileName, Key, Certificate)
          
-         Console.WriteLine("XML signature was succesfully computed and saved to {0}.", XmlFileName)
+         Console.WriteLine("XML signature was successfully computed and saved to {0}.", XmlFileName)
       
       Catch e As CryptographicException
          Console.WriteLine(e.Message)

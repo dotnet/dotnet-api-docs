@@ -4,11 +4,11 @@ using System;
 using System.Text;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
     static StringBuilder sb = new StringBuilder();
 
-    public static void Main() 
+    public static void Main()
     {
     int    var1   = 111;
     float  var2   = 2.22F;

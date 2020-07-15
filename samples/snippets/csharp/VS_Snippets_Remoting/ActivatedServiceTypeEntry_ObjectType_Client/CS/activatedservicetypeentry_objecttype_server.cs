@@ -3,10 +3,10 @@
  // System.Runtime.Remoting.ActivatedServiceTypeEntry.ToString
 
 /*
-The following example demonstrates the 'ActivatedServiceTypeEntry' class and 
+The following example demonstrates the 'ActivatedServiceTypeEntry' class and
 the 'ObjectType' property ,'ToString' method of 'ActivatedServiceTypeEntry' class.
 It registers a 'TcpChannel' object with the channel services. Then registers the 'HelloServer'
-object at the service end that can be activated on request from a client.By using the 
+object at the service end that can be activated on request from a client.By using the
 'GetRegisteredActivatedServiceTypes' method it gets the registered activated service types
 and displays it's information to the console.
 */
@@ -26,7 +26,7 @@ and displays it's information to the console.
          // which holds the values for 'HelloServer' type.
          ActivatedServiceTypeEntry myActivatedServiceTypeEntry =
                       new ActivatedServiceTypeEntry(typeof(HelloServer));
-         // Register an object Type on the service end so that 
+         // Register an object Type on the service end so that
          // it can be activated on request from a client.
          RemotingConfiguration.RegisterActivatedServiceType(
                                             myActivatedServiceTypeEntry);
@@ -39,7 +39,7 @@ and displays it's information to the console.
                                 +" service type :");
          Console.WriteLine("Object type: "
                           +myActivatedServiceEntries[0].ObjectType);
-         Console.WriteLine("Description: " 
+         Console.WriteLine("Description: "
                               +myActivatedServiceEntries[0].ToString());
 // </Snippet3>
 // </Snippet2>

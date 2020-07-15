@@ -6,12 +6,12 @@ using System.ComponentModel.Design;
 class FieldInfo_IsSpecialName
 {
     public static void Main()
-    {     
+    {
         try
         {
             // Get the type handle of a specified class.
             Type myType = typeof(ViewTechnology);
-         
+
             // Get the fields of the specified class.
             FieldInfo[] myField = myType.GetFields();
 

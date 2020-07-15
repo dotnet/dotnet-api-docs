@@ -2,9 +2,9 @@
 ' System.Windows.Forms.DataGridTableStyle.HeaderBackColorChanged;System.Windows.Forms.DataGridTableStyle.HeaderBackColor
 
 ' The following program demonstrates the usage of properties 'HeaderBackColor',
-' 'HeaderForeColor' and events 'HeaderBackColorChanged','HeaderForeColorChanged'.
-'  A table is created and added to a datagrid with two coloumns.The table allows to change
-'  Header's  background and foreground colors through selection of combobox values.
+' 'HeaderForeColor' and the 'HeaderBackColorChanged' and 'HeaderForeColorChanged' events.
+'  A table is created and added to a datagrid with two coloumns. The table allows to change
+'  Header's background and foreground colors through selection of combobox values.
 
 Imports System.Drawing
 Imports System.Collections

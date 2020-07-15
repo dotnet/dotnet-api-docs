@@ -27,10 +27,16 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Sockets" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.IO.Stream</BaseTypeName>
   </Base>
   <Interfaces>
+    <Interface FrameworkAlternate="netframework-1.1">
+      <InterfaceName>System.IDisposable</InterfaceName>
+    </Interface>
   </Interfaces>
   <Docs>
     <summary>Provides the underlying stream of data for network access.</summary>
@@ -38,7 +44,7 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Net.Sockets.NetworkStream> class provides methods for sending and receiving data over <xref:System.Net.Sockets.SocketType.Stream> sockets in blocking mode. For more information about blocking versus nonblocking <xref:System.Net.Sockets.Socket>s, see [Using an Asynchronous Client Socket](~/docs/framework/network-programming/using-an-asynchronous-client-socket.md). You can use the <xref:System.Net.Sockets.NetworkStream> class for both synchronous and asynchronous data transfer. For more information about synchronous and asynchronous communication, see [Sockets](~/docs/framework/network-programming/sockets.md).  
+ The <xref:System.Net.Sockets.NetworkStream> class provides methods for sending and receiving data over <xref:System.Net.Sockets.SocketType.Stream> sockets in blocking mode. For more information about blocking versus nonblocking <xref:System.Net.Sockets.Socket>s, see [Using an Asynchronous Client Socket](/dotnet/framework/network-programming/using-an-asynchronous-client-socket). You can use the <xref:System.Net.Sockets.NetworkStream> class for both synchronous and asynchronous data transfer. For more information about synchronous and asynchronous communication, see [Sockets](/dotnet/framework/network-programming/sockets).  
   
  To create a <xref:System.Net.Sockets.NetworkStream>, you must provide a connected <xref:System.Net.Sockets.Socket>. You can also specify what <xref:System.IO.FileAccess> permission the <xref:System.Net.Sockets.NetworkStream> has over the provided <xref:System.Net.Sockets.Socket>. By default, closing the <xref:System.Net.Sockets.NetworkStream> does not close the provided <xref:System.Net.Sockets.Socket>. If you want the <xref:System.Net.Sockets.NetworkStream> to have permission to close the provided <xref:System.Net.Sockets.Socket>, you must specify `true` for the value of the `ownsSocket` parameter.  
   
@@ -134,7 +140,7 @@
   
  The <paramref name="socket" /> parameter is in a nonblocking state.</exception>
         <altmember cref="M:System.Net.Sockets.NetworkStream.Close(System.Int32)" />
-        <related type="Article" href="~/docs/framework/network-programming/using-streams-on-the-network.md">Using Streams on the Network</related>
+        <related type="Article" href="/dotnet/framework/network-programming/using-streams-on-the-network">Using Streams on the Network</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -402,7 +408,7 @@
   
  You must create a callback method that implements the <xref:System.AsyncCallback> delegate and pass its name to the <xref:System.Net.Sockets.NetworkStream.BeginRead%2A> method. At the very minimum, your `state` parameter must contain the <xref:System.Net.Sockets.NetworkStream>. Because you will want to obtain the received data within your callback method, you should create a small class or structure to hold a read buffer and any other useful information. Pass the structure or class instance to the <xref:System.Net.Sockets.NetworkStream.BeginRead%2A> method through the `state` parameter.  
   
- Your callback method should call the <xref:System.Net.Sockets.NetworkStream.EndRead%2A> method. When your application calls <xref:System.Net.Sockets.NetworkStream.BeginRead%2A>, the system will wait until data is received or an error occurs, and then the system will use a separate thread to execute the specified callback method, and blocks on <xref:System.Net.Sockets.NetworkStream.EndRead%2A> until the provided <xref:System.Net.Sockets.NetworkStream> reads data or throws an exception. If you want the original thread to block after you call the <xref:System.Net.Sockets.NetworkStream.BeginRead%2A> method, use the <xref:System.Threading.WaitHandle.WaitOne%2A> method. Call <xref:System.Threading.EventWaitHandle.Set%2A> in the callback method when you want the original thread to continue executing. For additional information about writing callback methods, see [Marshaling a Delegate as a Callback Method](~/docs/framework/interop/marshaling-a-delegate-as-a-callback-method.md).  
+ Your callback method should call the <xref:System.Net.Sockets.NetworkStream.EndRead%2A> method. When your application calls <xref:System.Net.Sockets.NetworkStream.BeginRead%2A>, the system will wait until data is received or an error occurs, and then the system will use a separate thread to execute the specified callback method, and blocks on <xref:System.Net.Sockets.NetworkStream.EndRead%2A> until the provided <xref:System.Net.Sockets.NetworkStream> reads data or throws an exception. If you want the original thread to block after you call the <xref:System.Net.Sockets.NetworkStream.BeginRead%2A> method, use the <xref:System.Threading.WaitHandle.WaitOne%2A> method. Call <xref:System.Threading.EventWaitHandle.Set%2A> in the callback method when you want the original thread to continue executing. For additional information about writing callback methods, see [Marshaling a Delegate as a Callback Method](/dotnet/framework/interop/marshaling-a-delegate-as-a-callback-method).  
   
  The <xref:System.Net.Sockets.NetworkStream.BeginRead%2A> method reads as much data as is available, up to the number of bytes specified by the `size` parameter.  
   
@@ -502,7 +508,7 @@
   
  You must create a callback method that implements the <xref:System.AsyncCallback> delegate and pass its name to the <xref:System.Net.Sockets.NetworkStream.BeginWrite%2A> method. At the very minimum, your `state` parameter must contain the <xref:System.Net.Sockets.NetworkStream>. If your callback needs more information, you can create a small class or structure to hold the <xref:System.Net.Sockets.NetworkStream> and the other required information. Pass the structure or class instance to the <xref:System.Net.Sockets.NetworkStream.BeginWrite%2A> method through the `state` parameter.  
   
- Your callback method should implement the <xref:System.Net.Sockets.NetworkStream.EndWrite%2A> method. When your application calls <xref:System.Net.Sockets.NetworkStream.BeginWrite%2A>, the system uses a separate thread to execute the specified callback method, and blocks on <xref:System.Net.Sockets.NetworkStream.EndWrite%2A> until the <xref:System.Net.Sockets.NetworkStream> sends the number of bytes requested or throws an exception. If you want the original thread to block after you call the <xref:System.Net.Sockets.NetworkStream.BeginWrite%2A> method, use the <xref:System.Threading.WaitHandle.WaitOne%2A> method. Call <xref:System.Threading.EventWaitHandle.Set%2A> in the callback method when you want the original thread to continue executing. For additional information about writing callback methods, see [Marshaling a Delegate as a Callback Method](~/docs/framework/interop/marshaling-a-delegate-as-a-callback-method.md).  
+ Your callback method should implement the <xref:System.Net.Sockets.NetworkStream.EndWrite%2A> method. When your application calls <xref:System.Net.Sockets.NetworkStream.BeginWrite%2A>, the system uses a separate thread to execute the specified callback method, and blocks on <xref:System.Net.Sockets.NetworkStream.EndWrite%2A> until the <xref:System.Net.Sockets.NetworkStream> sends the number of bytes requested or throws an exception. If you want the original thread to block after you call the <xref:System.Net.Sockets.NetworkStream.BeginWrite%2A> method, use the <xref:System.Threading.WaitHandle.WaitOne%2A> method. Call <xref:System.Threading.EventWaitHandle.Set%2A> in the callback method when you want the original thread to continue executing. For additional information about writing callback methods, see [Marshaling a Delegate as a Callback Method](/dotnet/framework/interop/marshaling-a-delegate-as-a-callback-method).  
   
 > [!NOTE]
 >  If you receive an <xref:System.IO.IOException>, check the <xref:System.Exception.InnerException%2A> property to determine if it was caused by a <xref:System.Net.Sockets.SocketException>. If so, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A> property to obtain the specific error code and refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.  
@@ -640,7 +646,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value that indicates whether the stream supports seeking. This property is not currently supported.This property always returns <see langword="false" />.</summary>
+        <summary>Gets a value that indicates whether the stream supports seeking. This property is not currently supported. This property always returns <see langword="false" />.</summary>
         <value>
           <see langword="false" /> in all cases to indicate that <see cref="T:System.Net.Sockets.NetworkStream" /> cannot seek a specific location in the stream.</value>
         <remarks>To be added.</remarks>
@@ -970,9 +976,9 @@ myNetworkStream->Close();
         </remarks>
         <block subset="none" type="overrides">
           <para>
-            <see langword="Dispose" /> can be called multiple times by other objects. When overriding <see langword="Dispose(Boolean)" />, be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />. For more information about how to implement <see langword="Dispose(Boolean)" />, see [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).  
+            <see langword="Dispose" /> can be called multiple times by other objects. When overriding <see langword="Dispose(Boolean)" />, be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />. For more information about how to implement <see langword="Dispose(Boolean)" />, see [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).  
   
- For more information about <see langword="Dispose" /> and <see cref="M:System.Object.Finalize" />, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md) and [Overriding the Finalize Method](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).</para>
+ For more information about <see langword="Dispose" /> and <see cref="M:System.Object.Finalize" />, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged) and [Overriding the Finalize Method](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).</para>
         </block>
       </Docs>
     </Member>
@@ -1167,7 +1173,7 @@ myNetworkStream->Close();
 ## Remarks  
  This method overrides <xref:System.Object.Finalize%2A?displayProperty=nameWithType>. Application code should not call this method; an object's <xref:System.Object.Finalize%2A> method is automatically invoked during garbage collection, unless finalization by the garbage collector has been disabled by a call to the <xref:System.GC.SuppressFinalize%2A?displayProperty=nameWithType> method.  
   
- For more information about using the Finalize method, see [Finalize Methods and Destructors](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/0s71x931(v%3dvs.100)), [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md), and [Overriding the Finalize Method](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).  
+ For more information about using the Finalize method, see [Finalize Methods and Destructors](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/0s71x931(v%3dvs.100)), [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged), and [Overriding the Finalize Method](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).  
   
  ]]></format>
         </remarks>
@@ -1485,7 +1491,7 @@ There is a failure reading from the network.</exception>
         <altmember cref="M:System.Net.Sockets.Socket.Receive(System.Byte[],System.Int32,System.Net.Sockets.SocketFlags)" />
         <altmember cref="P:System.Net.Sockets.NetworkStream.DataAvailable" />
         <altmember cref="P:System.Net.Sockets.NetworkStream.CanRead" />
-        <related type="Article" href="~/docs/framework/network-programming/using-streams-on-the-network.md">Using Streams on the Network</related>
+        <related type="Article" href="/dotnet/framework/network-programming/using-streams-on-the-network">Using Streams on the Network</related>
       </Docs>
     </Member>
     <Member MemberName="Readable">
@@ -1954,7 +1960,7 @@ There is a failure reading from the network.</exception>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks  
-Call `Dispose` when you are finished using the <xref:System.Net.Sockets.NetworkStream>. The `Dispose` method leaves the <xref:System.Net.Sockets.NetworkStream> in an unusable state. After calling `Dispose`, you must release all references to the <xref:System.Net.Sockets.NetworkStream> so the garbage collector can reclaim the memory that the <xref:System.Net.Sockets.NetworkStream> was occupying. For more information about using the Dispose method, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md) and [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).
+Call `Dispose` when you are finished using the <xref:System.Net.Sockets.NetworkStream>. The `Dispose` method leaves the <xref:System.Net.Sockets.NetworkStream> in an unusable state. After calling `Dispose`, you must release all references to the <xref:System.Net.Sockets.NetworkStream> so the garbage collector can reclaim the memory that the <xref:System.Net.Sockets.NetworkStream> was occupying. For more information about using the Dispose method, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged) and [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).
 
 > [!NOTE]
 > Always call `Dispose` before you release your last reference to the <xref:System.Net.Sockets.NetworkStream>. Otherwise, the resources it is using are not freed until the garbage collector calls the <xref:System.Net.Sockets.NetworkStream> object's Finalize method.

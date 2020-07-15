@@ -6,15 +6,15 @@ namespace MyProject
 {
 
 	/// <summary>
-	/// Provides a container class for the example. 
+	/// Provides a container class for the example.
 	/// </summary>
 	public class MyNewQueue
 	{
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//	 
-		// This example closes a queue and frees its 
+		//	
+		// This example closes a queue and frees its
 		// resources.
 		//**************************************************
 
@@ -68,7 +68,7 @@ namespace MyProject
 			
 			try
 			{
-				// Receive and format the message. 
+				// Receive and format the message.
 				Message myMessage1 = myQueue.Receive();
 				Message myMessage2 = myQueue.Receive();
 			}

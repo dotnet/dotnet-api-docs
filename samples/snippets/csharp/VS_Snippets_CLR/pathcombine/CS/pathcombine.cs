@@ -42,22 +42,22 @@ public class ChangeExtensionTest {
 }
 // This code produces output similar to the following:
 //
-// When you combine 'c:\temp' and 'subdir\file.txt', the result is: 
+// When you combine 'c:\temp' and 'subdir\file.txt', the result is:
 // 'c:\temp\subdir\file.txt'
-// 
-// When you combine 'c:\temp' and 'c:\temp.txt', the result is: 
+//
+// When you combine 'c:\temp' and 'c:\temp.txt', the result is:
 // 'c:\temp.txt'
-// 
-// When you combine 'c:\temp.txt' and 'subdir\file.txt', the result is: 
+//
+// When you combine 'c:\temp.txt' and 'subdir\file.txt', the result is:
 // 'c:\temp.txt\subdir\file.txt'
-// 
-// When you combine 'c:^*&)(_=@#'\^&#2.*(.txt' and 'subdir\file.txt', the result is: 
+//
+// When you combine 'c:^*&)(_=@#'\^&#2.*(.txt' and 'subdir\file.txt', the result is:
 // 'c:^*&)(_=@#'\^&#2.*(.txt\subdir\file.txt'
-// 
-// When you combine '' and 'subdir\file.txt', the result is: 
+//
+// When you combine '' and 'subdir\file.txt', the result is:
 // 'subdir\file.txt'
-// 
-// You cannot combine '' and 'subdir\file.txt' because: 
+//
+// You cannot combine '' and 'subdir\file.txt' because:
 // Value cannot be null.
 // Parameter name: path1
 //</snippet1>

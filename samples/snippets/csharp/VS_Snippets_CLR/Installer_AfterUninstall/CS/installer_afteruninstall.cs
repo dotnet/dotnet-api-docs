@@ -1,12 +1,12 @@
 ﻿/*
    System.Configuration.Install.Installer.AfterUninstall
 
-   The following example demonstrates the event 'AfterUninstall' of the 
+   The following example demonstrates the event 'AfterUninstall' of the
    'Installer' class. This event is raised by the method 'OnAfterUninstall'.
-   
-   Use the installer process 'InstallUtil -u' to run the assembly 
+
+   Use the installer process 'InstallUtil -u' to run the assembly
    'Installer_AfterUninstall.exe'.
-   
+
 */
 
 using System;
@@ -26,10 +26,10 @@ public class MyInstaller: Installer
    private void AfterUninstallEventHandler(object sender, InstallEventArgs e)
    {
       // Add steps to perform any actions before the Uninstall process.
-      Console.WriteLine("Code for AfterUninstallEventHandler"); 
+      Console.WriteLine("Code for AfterUninstallEventHandler");
    }
 // </Snippet1>
-   
+
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)
    {

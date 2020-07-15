@@ -32,6 +32,7 @@
     <AssemblyName>System.Net</AssemblyName>
   </AssemblyInfo>
   <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.WebClient" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="System.Net" FromVersion="4.0.0.0" To="System" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
   </TypeForwardingChain>
   <Base>
@@ -51,14 +52,14 @@
 ## Remarks
 
 > [!IMPORTANT]
->  We don't recommend that you use the `WebClient` class for new development. Instead, use the <xref:System.Net.Http.HttpClient?displayProperty=nameWithType> class.
+> We don't recommend that you use the `WebClient` class for new development. Instead, use the <xref:System.Net.Http.HttpClient?displayProperty=nameWithType> class.
 
  The <xref:System.Net.WebClient> class provides common methods for sending data to or receiving data from any local, intranet, or Internet resource identified by a URI.  
   
  The <xref:System.Net.WebClient> class uses the <xref:System.Net.WebRequest> class to provide access to resources. <xref:System.Net.WebClient> instances can access data with any <xref:System.Net.WebRequest> descendant registered with the <xref:System.Net.WebRequest.RegisterPrefix%2A?displayProperty=nameWithType> method.  
   
 > [!NOTE]
->  By default, the .NET Framework supports URIs that begin with `http:`, `https:`, `ftp:`, and `file:` scheme identifiers.  
+> By default, .NET Framework supports URIs that begin with `http:`, `https:`, `ftp:`, and `file:` scheme identifiers.  
   
  The following table describes <xref:System.Net.WebClient> methods for uploading data to a resource.  
   
@@ -88,13 +89,11 @@
 |<xref:System.Net.WebClient.DownloadString%2A>|Downloads a <xref:System.String> from a resource and returns a <xref:System.String>.|  
 |<xref:System.Net.WebClient.DownloadStringAsync%2A>|Downloads a <xref:System.String> from a resource, without blocking the calling thread.|  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to attempt to cancel asynchronous operations.  
   
  A <xref:System.Net.WebClient> instance does not send optional HTTP headers by default. If your request requires an optional header, you must add the header to the <xref:System.Net.WebClient.Headers%2A> collection. For example, to retain queries in the response, you must add a user-agent header. Also, servers may return 500 (Internal Server Error) if the user agent header is missing.  
   
- <xref:System.Net.HttpWebRequest.AllowAutoRedirect%2A> is set to `true` in <xref:System.Net.WebClient> instances.  
-  
-   
+ <xref:System.Net.HttpWebRequest.AllowAutoRedirect%2A> is set to `true` in <xref:System.Net.WebClient> instances.
   
 ## Examples  
  The following code example takes the URI of a resource, retrieves it, and displays the response.  
@@ -411,7 +410,10 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- If an operation is pending, this method calls <xref:System.Net.WebRequest.Abort%2A> on the underlying <xref:System.Net.WebRequest>.  
+ If an operation is pending, this method calls <xref:System.Net.WebRequest.Abort%2A> on the underlying <xref:System.Net.WebRequest>.
+ 
+ > [!NOTE]
+ > Starting in .NET Core 2.0, <xref:System.Net.WebClient.CancelAsync%2A> doesn't cancel the request immediately if the response has started to fetch. For optimum cancellation behavior, use the <xref:System.Net.Http.HttpClient> class instead of <xref:System.Net.WebClient>.
   
  When you call <xref:System.Net.WebClient.CancelAsync%2A>, your application still receives the completion event associated with the operation. For example, when you call <xref:System.Net.WebClient.CancelAsync%2A> to cancel a <xref:System.Net.WebClient.DownloadStringAsync%2A> operation, if you have specified an event handler for the <xref:System.Net.WebClient.DownloadStringCompleted> event, your event handler receives notification that the operation has ended. To learn whether the operation completed successfully, check the <xref:System.ComponentModel.AsyncCompletedEventArgs.Cancelled%2A> property on the base class of <xref:System.Net.DownloadDataCompletedEventArgs> in the event data object passed to the event handler.  
   
@@ -550,9 +552,7 @@
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example requests data from a server and displays the data returned. It assumes that `remoteUri` contains a valid URI for the requested data.  
@@ -621,7 +621,8 @@
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
- **Note** This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> [!NOTE]
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -689,14 +690,14 @@
   
  This method does not block the calling thread while downloading the resource. To download a resource and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.DownloadData%2A> methods. When the download completes, the <xref:System.Net.WebClient.DownloadDataCompleted> event is raised. Your application must handle this event to receive notification. The downloaded data is available in the <xref:System.Net.DownloadDataCompletedEventArgs.Result%2A> property.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -756,14 +757,14 @@
   
  This method does not block the calling thread while downloading the resource. To download a resource and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.DownloadData%2A> methods. When the download completes, the <xref:System.Net.WebClient.DownloadDataCompleted> event is raised. Your application must handle this event to receive notification. The downloaded data is available in the <xref:System.Net.DownloadDataCompletedEventArgs.Result%2A> property.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -818,7 +819,7 @@
   
  The <xref:System.Net.DownloadDataCompletedEventHandler> is the delegate for this event. The <xref:System.Net.DownloadDataCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -899,7 +900,7 @@
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  The following code example requests data from a server and displays the data returned. It assumes that `remoteUri` contains a valid URI for the requested data.  
   
@@ -968,7 +969,8 @@
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
- **Note** This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> [!NOTE]
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -1042,11 +1044,9 @@
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
- When using this method in a middle tier application, such as an ASP.NET page, you will receive an error if the account under which the application executes does not have permission to access the file.  
-  
-   
+ When using this method in a middle tier application, such as an ASP.NET page, you will receive an error if the account under which the application executes does not have permission to access the file.
   
 ## Examples  
  The following code example downloads a file from http://www.contoso.com to the local hard drive.  
@@ -1123,7 +1123,7 @@
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  When using this method in a middle tier application, such as an ASP.NET page, you will receive an error if the account under which the application executes does not have permission to access the file.  
   
@@ -1213,14 +1213,14 @@
   
  This method does not block the calling thread while the resource is being downloaded. To block while waiting for the download to complete, use one of the <xref:System.Net.WebClient.DownloadFile%2A> methods.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  When using this method in an ASP.NET page, you will receive an error if the account that the page executes under does not have permission to access the local file.  
   
@@ -1289,14 +1289,14 @@
   
  This method does not block the calling thread while the resource is being downloaded. To block while waiting for the download to complete, use one of the <xref:System.Net.WebClient.DownloadFile%2A> methods.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  When using this method in an ASP.NET page, you will receive an error if the account that the page executes under does not have permission to access the local file.  
   
@@ -1358,7 +1358,7 @@
   
  The <xref:System.ComponentModel.AsyncCompletedEventHandler> is the delegate for this event. The <xref:System.ComponentModel.AsyncCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -1436,14 +1436,14 @@
   
  This method downloads the resource at the URI specified by in the `address` parameter. When the download completes successfully, the downloaded file is named `fileName` on the local computer. The file is downloaded asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  When using this method in an ASP.NET page, you will receive an error if the account that the page executes under does not have permission to access the local file.  
   
@@ -1515,14 +1515,14 @@
   
  This method downloads the resource at the URI specified by in the `address` parameter. When the download completes successfully, the downloaded file is named `fileName` on the local computer. The file is downloaded asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  When using this method in an ASP.NET page, you will receive an error if the account that the page executes under does not have permission to access the local file.  
   
@@ -1590,10 +1590,10 @@
   
  The <xref:System.Net.DownloadProgressChangedEventHandler> is the delegate for this event. The <xref:System.Net.DownloadProgressChangedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
 > [!NOTE]
->  A passive FTP file transfer will always show a progress percentage of zero, since the server did not send the file size. To show progress, you can change the FTP connection to active by overriding the <xref:System.Net.WebClient.GetWebRequest%2A> virtual method:  
+> A passive FTP file transfer will always show a progress percentage of zero, since the server did not send the file size. To show progress, you can change the FTP connection to active by overriding the <xref:System.Net.WebClient.GetWebRequest%2A> virtual method:  
   
 ```csharp  
 internal class MyWebClient : WebClient
@@ -1605,9 +1605,7 @@ internal class MyWebClient : WebClient
         return req;  
     }  
 }  
-```  
-  
-   
+```
   
 ## Examples  
  The following code example demonstrates setting an event handler for this event.  
@@ -1686,9 +1684,7 @@ internal class MyWebClient : WebClient
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example demonstrates calling this method.  
@@ -1758,7 +1754,7 @@ internal class MyWebClient : WebClient
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -1832,14 +1828,14 @@ internal class MyWebClient : WebClient
   
  After downloading the resource, this method uses the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property to convert the resource to a <xref:System.String>. This method does not block the calling thread while downloading the resource. To download a resource and block while waiting for the server's response, use the <xref:System.Net.WebClient.DownloadString%2A> method. When the download completes, the <xref:System.Net.WebClient.DownloadStringCompleted> event is raised. Your application must handle this event to receive notification. The downloaded string is available in the <xref:System.Net.DownloadStringCompletedEventArgs.Result%2A> property.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -1899,14 +1895,14 @@ internal class MyWebClient : WebClient
   
  After downloading the resource, this method uses the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property to convert the resource to a <xref:System.String>. This method does not block the calling thread while downloading the resource. To download a resource and block while waiting for the server's response, use the <xref:System.Net.WebClient.DownloadString%2A> method. When the download completes, the <xref:System.Net.WebClient.DownloadStringCompleted> event is raised. Your application must handle this event to receive notification. The downloaded string is available in the <xref:System.Net.DownloadStringCompletedEventArgs.Result%2A> property.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -1961,7 +1957,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.DownloadStringCompletedEventHandler> is the delegate for this event. The <xref:System.Net.DownloadStringCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -2037,13 +2033,13 @@ internal class MyWebClient : WebClient
   
  After downloading the resource, this method uses the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property to convert the resource to a <xref:System.String>. This method does not block the calling thread while downloading the resource.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
- This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+ This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -2106,13 +2102,13 @@ internal class MyWebClient : WebClient
   
  After downloading the resource, this method uses the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property to convert the resource to a <xref:System.String>. This method does not block the calling thread while downloading the resource.  
   
- You can use the <xref:System.Net.WebClient.CancelAsync%2A> method to cancel asynchronous operations that have not completed.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
- This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+ This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -2547,7 +2543,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.DownloadDataCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md)  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/)  
   
  The <xref:System.Net.WebClient.OnDownloadDataCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -2610,7 +2606,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.DownloadFileCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnDownloadFileCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -2673,7 +2669,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.DownloadProgressChanged> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnDownloadProgressChanged%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -2736,7 +2732,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.DownloadStringCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnDownloadStringCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -2799,7 +2795,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.OpenReadCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnOpenReadCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -2862,7 +2858,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.OpenWriteCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnOpenWriteCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -2925,7 +2921,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.UploadDataCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnUploadDataCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -2988,7 +2984,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.UploadFileCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnUploadFileCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -3051,7 +3047,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.UploadProgressChanged> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnUploadProgressChanged%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -3114,7 +3110,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.UploadStringCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnUploadStringCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -3177,7 +3173,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  Classes that inherit from this class can override this method to perform additional tasks when the <xref:System.Net.WebClient.UploadValuesCompleted> event occurs.  
   
- Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  The <xref:System.Net.WebClient.OnUploadValuesCompleted%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class.  
   
@@ -3303,15 +3299,13 @@ internal class MyWebClient : WebClient
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
- The following code example opens the resource identified by `uriString` and displays the results on the system console. Note that the <xref:System.IO.Stream> returned by <xref:System.Net.WebClient.OpenRead%2A> is closed when the data has been read.  
+ The following code example opens the resource identified by `uriString` and displays the results on the system console. The <xref:System.IO.Stream> returned by <xref:System.Net.WebClient.OpenRead%2A> is closed when the data has been read.  
   
  [!code-cpp[WebClient_OpenRead#1](~/samples/snippets/cpp/VS_Snippets_Remoting/WebClient_OpenRead/CPP/webclient_openread.cpp#1)]
  [!code-csharp[WebClient_OpenRead#1](~/samples/snippets/csharp/VS_Snippets_Remoting/WebClient_OpenRead/CS/webclient_openread.cs#1)]
@@ -3377,9 +3371,10 @@ internal class MyWebClient : WebClient
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- **Note** This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> [!NOTE]
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -3451,18 +3446,18 @@ internal class MyWebClient : WebClient
  This method retrieves a <xref:System.IO.Stream> instance used to access the resource specified by the `address` parameter. The stream is obtained using thread resources that are automatically allocated from the thread pool. To receive notification when the stream is available, add an event handler to the <xref:System.Net.WebClient.OpenReadCompleted> event.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
  This method does not block the calling thread while the stream is opening. To block while waiting for the stream, use the <xref:System.Net.WebClient.OpenReadAsync%2A> method.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested resource. If the <xref:System.Net.WebClient.QueryString%2A> property is not `null`, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -3525,18 +3520,18 @@ internal class MyWebClient : WebClient
  This method retrieves a <xref:System.IO.Stream> instance used to access the resource specified by the `address` parameter. The stream is obtained using thread resources that are automatically allocated from the thread pool. To receive notification when the stream is available, add an event handler to the <xref:System.Net.WebClient.OpenReadCompleted> event.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
  This method does not block the calling thread while the stream is opening. To block while waiting for the stream, use the <xref:System.Net.WebClient.OpenRead%2A> method.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested resource. If the <xref:System.Net.WebClient.QueryString%2A> property is not `null`, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -3595,7 +3590,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.OpenReadCompletedEventHandler> is the delegate for this event. The <xref:System.Net.OpenReadCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -3672,16 +3667,16 @@ internal class MyWebClient : WebClient
  This method retrieves a <xref:System.IO.Stream> instance used to access the resource specified by the `address` parameter. The stream is obtained using thread resources that are automatically allocated from the thread pool.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested resource. If the <xref:System.Net.WebClient.QueryString%2A> property is not `null`, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -3750,16 +3745,16 @@ internal class MyWebClient : WebClient
  This method retrieves a <xref:System.IO.Stream> instance used to access the resource specified by the `address` parameter. The stream is obtained using thread resources that are automatically allocated from the thread pool.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested resource. If the <xref:System.Net.WebClient.QueryString%2A> property is not `null`, it is appended to `address`.  
   
  This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -3837,12 +3832,10 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
- The following code example reads data from the command line and uses <xref:System.Net.WebClient.OpenWrite%2A> to obtain a stream for writing the data. Note that the <xref:System.IO.Stream> returned by <xref:System.Net.WebClient.OpenWrite%2A> is closed after the data is sent.  
+ The following code example reads data from the command line and uses <xref:System.Net.WebClient.OpenWrite%2A> to obtain a stream for writing the data. The <xref:System.IO.Stream> returned by <xref:System.Net.WebClient.OpenWrite%2A> is closed after the data is sent.  
   
  [!code-cpp[WebClient_OpenWrite2#1](~/samples/snippets/cpp/VS_Snippets_Remoting/WebClient_OpenWrite2/CPP/webclient_openwrite2.cpp#1)]
  [!code-csharp[WebClient_OpenWrite2#1](~/samples/snippets/csharp/VS_Snippets_Remoting/WebClient_OpenWrite2/CS/webclient_openwrite2.cs#1)]
@@ -3913,7 +3906,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -3978,12 +3971,10 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not specify an absolute address, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
- The following code example reads data from the command line and uses <xref:System.Net.WebClient.OpenWrite%2A> to obtain a stream used to write the data. Note that the <xref:System.IO.Stream> returned by <xref:System.Net.WebClient.OpenWrite%2A> must be closed to send the data.  
+ The following code example reads data from the command line and uses <xref:System.Net.WebClient.OpenWrite%2A> to obtain a stream used to write the data. The <xref:System.IO.Stream> returned by <xref:System.Net.WebClient.OpenWrite%2A> must be closed to send the data.  
   
  [!code-cpp[WebClient_OpenWrite#1](~/samples/snippets/cpp/VS_Snippets_Remoting/WebClient_OpenWrite/CPP/webclient_openwrite.cpp#1)]
  [!code-csharp[WebClient_OpenWrite#1](~/samples/snippets/csharp/VS_Snippets_Remoting/WebClient_OpenWrite/CS/webclient_openwrite.cs#1)]
@@ -4049,7 +4040,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -4127,7 +4118,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -4190,7 +4181,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -4247,14 +4238,14 @@ internal class MyWebClient : WebClient
   
  If the `method` parameter specifies a method that is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  This method does not block the calling thread while the stream is being opened. To block while waiting for the stream, use one of the <xref:System.Net.WebClient.OpenWrite%2A> methods.  
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -4309,7 +4300,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.OpenWriteCompletedEventHandler> is the delegate for this event. The <xref:System.Net.OpenWriteCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -4386,15 +4377,15 @@ internal class MyWebClient : WebClient
  This method retrieves a <xref:System.IO.Stream> instance used to write data to the resource specified by the `address` parameter. The stream is obtained using thread resources that are automatically allocated from the thread pool.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
- This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+ This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -4459,15 +4450,15 @@ internal class MyWebClient : WebClient
  This method retrieves a <xref:System.IO.Stream> instance used to write data to the resource specified by the `address` parameter. The stream is obtained using thread resources that are automatically allocated from the thread pool.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
- This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+ This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -4533,17 +4524,17 @@ internal class MyWebClient : WebClient
  This method retrieves a <xref:System.IO.Stream> instance used to write data to the resource specified by the `address` parameter. The stream is obtained using thread resources that are automatically allocated from the thread pool.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
  If the `method` parameter specifies a method that is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
- This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+ This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -4610,17 +4601,17 @@ internal class MyWebClient : WebClient
  This method retrieves a <xref:System.IO.Stream> instance used to write data to the resource specified by the `address` parameter. The stream is obtained using thread resources that are automatically allocated from the thread pool.  
   
 > [!NOTE]
->  You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
+> You must call <xref:System.IO.Stream.Close%2A?displayProperty=nameWithType> when you are finished with the <xref:System.IO.Stream> to avoid running out of system resources.  
   
  If the `method` parameter specifies a method that is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
- This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+ This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -4674,7 +4665,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  The <xref:System.Net.WebClient.Proxy%2A> property identifies the <xref:System.Net.IWebProxy> instance that communicates with remote servers on behalf of this <xref:System.Net.WebClient> object. The proxy is set by the system using configuration files and the Internet Explorer Local Area Network settings. To specify that no proxy should be used, set the <xref:System.Net.WebClient.Proxy%2A> property to `null`.  
   
- For information on automatic proxy detection, see [Automatic Proxy Detection](~/docs/framework/network-programming/automatic-proxy-detection.md).  
+ For information on automatic proxy detection, see [Automatic Proxy Detection](/dotnet/framework/network-programming/automatic-proxy-detection).  
   
  ]]></format>
         </remarks>
@@ -4870,9 +4861,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example converts a string entered from the console to a <xref:System.Byte> array and posts the array to the specified server using <xref:System.Net.WebClient.UploadData%2A>. Any response from the server is displayed to the console.  
@@ -4958,7 +4947,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5035,9 +5024,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example converts a string entered from the console into a byte array and posts the array to the specified server using <xref:System.Net.WebClient.UploadData%2A>. Any response from the server is displayed to the console.  
@@ -5120,7 +5107,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5203,14 +5190,14 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the data is being sent. To send data and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadData%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5281,12 +5268,12 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the data is being sent. To send data and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadData%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5354,12 +5341,12 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the data is being sent. To send data and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadData%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5418,7 +5405,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.UploadDataCompletedEventHandler> is the delegate for this event. The <xref:System.Net.UploadDataCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -5496,14 +5483,14 @@ internal class MyWebClient : WebClient
   
  This method sends a data buffer to a resource. The data buffer is sent asynchronously using thread resources that are automatically allocated from the thread pool. The data is not encoded.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5572,14 +5559,14 @@ internal class MyWebClient : WebClient
   
  This method sends a data buffer to a resource. The data buffer is sent asynchronously using thread resources that are automatically allocated from the thread pool. The data is not encoded.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5650,12 +5637,12 @@ internal class MyWebClient : WebClient
   
  This method sends a data buffer to a resource. The data buffer is sent asynchronously using thread resources that are automatically allocated from the thread pool. The data is not encoded.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5726,12 +5713,12 @@ internal class MyWebClient : WebClient
   
  This method sends a data buffer to a resource. The data buffer is sent asynchronously using thread resources that are automatically allocated from the thread pool. The data is not encoded.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5812,9 +5799,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example uploads the specified file to the specified URI using <xref:System.Net.WebClient.UploadFile%2A>. Any response returned by the server is displayed on the console.  
@@ -5913,7 +5898,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -5996,9 +5981,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example uploads the specified file to the specified URI using <xref:System.Net.WebClient.UploadFile%2A>. Any response returned by the server is displayed on the console.  
@@ -6092,7 +6075,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -6183,14 +6166,14 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the file is being sent. To send a file and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadFile%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -6273,14 +6256,14 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the file is being sent. To send a file and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadFile%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -6360,14 +6343,14 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the file is being sent. To send a file and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadFile%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -6438,7 +6421,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.UploadFileCompletedEventHandler> is the delegate for this event. The <xref:System.Net.UploadFileCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -6514,14 +6497,14 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the file has been uploaded to the resource. The file is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -6600,14 +6583,14 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the file has been uploaded to the resource. The file is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -6688,14 +6671,14 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the file has been uploaded to the resource. The file is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  BY default, this method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -6776,14 +6759,14 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the file has been uploaded to the resource. The file is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string (""), `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  BY default, this method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -6860,7 +6843,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.UploadProgressChangedEventHandler> is the delegate for this event. The <xref:System.Net.UploadProgressChangedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -6943,9 +6926,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example demonstrates calling this method.  
@@ -7025,7 +7006,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7093,9 +7074,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example demonstrates calling this method.  
@@ -7174,7 +7153,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7257,14 +7236,14 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadString%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7335,12 +7314,12 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadString%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7412,12 +7391,12 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadString%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7480,7 +7459,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.UploadStringCompletedEventHandler> is the delegate for this event. The <xref:System.Net.UploadStringCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
    
   
@@ -7556,14 +7535,14 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the string has been uploaded to the resource. The string is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  Before uploading the string, this method converts it to a <xref:System.Byte> array using the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property. This method blocks while the string is transmitted.  
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7630,14 +7609,14 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the string has been uploaded to the resource. The string is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  Before uploading the string, this method converts it to a <xref:System.Byte> array using the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property. This method blocks while the string is transmitted.  
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7706,14 +7685,14 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the string has been uploaded to the resource. The string is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  Before uploading the string, this method converts it to a <xref:System.Byte> array using the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property. This method blocks while the string is transmitted.  
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7786,14 +7765,14 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the string has been uploaded to the resource. The string is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  Before uploading the string, this method converts it to a <xref:System.Byte> array using the encoding specified in the <xref:System.Net.WebClient.Encoding%2A> property. This method blocks while the string is transmitted.  
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -7880,9 +7859,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example gathers information from the user (name, age, and address) and posts the values to the server using <xref:System.Net.WebClient.UploadValues%2A>. Any response from the server is displayed on the console.  
@@ -7978,7 +7955,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8063,9 +8040,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
-  
-   
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example gathers information from the user (name, age, and address) and posts the values to the server using <xref:System.Net.WebClient.UploadValues%2A>. Any response from the server is displayed on the console.  
@@ -8156,7 +8131,7 @@ internal class MyWebClient : WebClient
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8247,14 +8222,14 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadString%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not an empty string, it is appended to `address`.  
   
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8329,12 +8304,12 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadValues%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not empty, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8410,12 +8385,12 @@ internal class MyWebClient : WebClient
   
  This method does not block the calling thread while the string is being sent. To send a string and block while waiting for the server's response, use one of the <xref:System.Net.WebClient.UploadValues%2A> methods.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the <xref:System.Net.WebClient.BaseAddress%2A> property is not an empty string ("") and `address` does not contain an absolute URI, `address` must be a relative URI that is combined with <xref:System.Net.WebClient.BaseAddress%2A> to form the absolute URI of the requested data. If the <xref:System.Net.WebClient.QueryString%2A> property is not empty, it is appended to `address`.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8478,7 +8453,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.UploadValuesCompletedEventHandler> is the delegate for this event. The <xref:System.Net.UploadValuesCompletedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  ]]></format>
         </remarks>
@@ -8545,7 +8520,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the name/value collection has been uploaded to the resource. The name/value collection is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the underlying request is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
@@ -8556,7 +8531,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8631,7 +8606,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the name/value collection has been uploaded to the resource. The name/value collection is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the underlying request is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
@@ -8642,7 +8617,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8719,7 +8694,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the name/value collection has been uploaded to the resource. The name/value collection is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the underlying request is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
@@ -8730,7 +8705,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8811,7 +8786,7 @@ internal class MyWebClient : WebClient
 ## Remarks  
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the name/value collection has been uploaded to the resource. The name/value collection is sent asynchronously using thread resources that are automatically allocated from the thread pool.  
   
- Asynchronous operations that have not completed can be canceled using the <xref:System.Net.WebClient.CancelAsync%2A> method.  
+ In .NET Framework and .NET Core 1.0, you can cancel asynchronous operations that have not completed by calling the <xref:System.Net.WebClient.CancelAsync%2A> method.
   
  If the underlying request is not understood by the server, the underlying protocol classes determine what occurs. Typically, a <xref:System.Net.WebException> is thrown with the <xref:System.Net.WebException.Status%2A> property set to indicate the error.  
   
@@ -8822,7 +8797,7 @@ internal class MyWebClient : WebClient
  This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](~/docs/framework/network-programming/network-tracing.md).  
+> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
  ]]></format>
         </remarks>
@@ -8952,7 +8927,7 @@ internal class MyWebClient : WebClient
   
  The <xref:System.Net.WriteStreamClosedEventHandler> is the delegate for this event. The <xref:System.Net.WriteStreamClosedEventArgs> class provides the event handler with event data.  
   
- For more information about how to handle events, see [Handling and Raising Events](~/docs/standard/events/index.md).  
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
   
  ]]></format>
         </remarks>

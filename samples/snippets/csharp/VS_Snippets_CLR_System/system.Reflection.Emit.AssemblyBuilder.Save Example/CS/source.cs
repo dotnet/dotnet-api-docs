@@ -12,9 +12,9 @@ using System.Reflection.Emit;
 //
 // We are constructing the type seen here dynamically, and will write it
 // out into a .exe file for later execution from the command-line.
-// --- 
+// ---
 // class Point {
-//   
+//
 //   private int x;
 //   private int y;
 //
@@ -26,22 +26,22 @@ using System.Reflection.Emit;
 //   }
 //
 //   public int DotProduct (Point p) {
-//   
+//
 //   	return ((this.x * p.x) + (this.y * p.y));
 //
 //   }
 //
 //   public static void PointMain() {
-//     
-//     Console.Write("Enter the 'x' value for point 1: "); 
+//
+//     Console.Write("Enter the 'x' value for point 1: ");
 //     int x1 = Convert.ToInt32(Console.ReadLine());
-//     
+//
 //     Console.Write("Enter the 'y' value for point 1: ");
 //     int y1 = Convert.ToInt32(Console.ReadLine());
 //
-//     Console.Write("Enter the 'x' value for point 2: "); 
+//     Console.Write("Enter the 'x' value for point 2: ");
 //     int x2 = Convert.ToInt32(Console.ReadLine());
-//     
+//
 //     Console.Write("Enter the 'y' value for point 2: ");
 //     int y2 = Convert.ToInt32(Console.ReadLine());
 //
@@ -50,7 +50,7 @@ using System.Reflection.Emit;
 //
 //     Console.WriteLine("({0}, {1}) . ({2}, {3}) = {4}.",
 //		       x1, y1, x2, y2, p1.DotProduct(p2));
-//   
+//
 //   }
 //
 // }
@@ -82,17 +82,17 @@ class AssemblyBuilderDemo {
 
 	ModuleBuilder myModuleBldr = myAsmBldr.DefineDynamicModule(asmFileName,
 							           asmFileName);
-      
+
 	TypeBuilder myTypeBldr =  myModuleBldr.DefineType("Point");
-    
+
         FieldBuilder xField = myTypeBldr.DefineField("x", typeof(int),
                                                      FieldAttributes.Private);
-        FieldBuilder yField = myTypeBldr.DefineField("y", typeof(int), 
-                                                     FieldAttributes.Private); 
+        FieldBuilder yField = myTypeBldr.DefineField("y", typeof(int),
+                                                     FieldAttributes.Private);
 
         // Build the constructor.
 
-        Type objType = Type.GetType("System.Object"); 
+        Type objType = Type.GetType("System.Object");
         ConstructorInfo objCtor = objType.GetConstructor(new Type[0]);
 
         Type[] ctorParams = new Type[] {typeof(int), typeof(int)};
@@ -105,10 +105,10 @@ class AssemblyBuilderDemo {
         ctorIL.Emit(OpCodes.Call, objCtor);
         ctorIL.Emit(OpCodes.Ldarg_0);
         ctorIL.Emit(OpCodes.Ldarg_1);
-        ctorIL.Emit(OpCodes.Stfld, xField); 
+        ctorIL.Emit(OpCodes.Stfld, xField);
         ctorIL.Emit(OpCodes.Ldarg_0);
         ctorIL.Emit(OpCodes.Ldarg_2);
-        ctorIL.Emit(OpCodes.Stfld, yField); 
+        ctorIL.Emit(OpCodes.Stfld, yField);
         ctorIL.Emit(OpCodes.Ret);
 
 	// Build the DotProduct method.
@@ -119,7 +119,7 @@ class AssemblyBuilderDemo {
 							    MethodAttributes.Public,
 							    typeof(int),
 							    new Type[] {myTypeBldr});
-							   
+							
 	ILGenerator dpIL = pointDPBldr.GetILGenerator();
 	dpIL.Emit(OpCodes.Ldarg_0);
 	dpIL.Emit(OpCodes.Ldfld, xField);
@@ -272,7 +272,7 @@ class AssemblyBuilderDemo {
 			   asmFileName);
 
 	// After execution, this program will have generated and written to disk,
-        // in the directory you executed it from, a program named 
+        // in the directory you executed it from, a program named
 	// <name_you_entered_here>.exe. You can run it by typing
 	// the name you gave it during execution, in the same directory where
 	// you executed this program.
@@ -282,18 +282,18 @@ class AssemblyBuilderDemo {
 
    public static void Main() {
 
-     Type myType = BuildDynAssembly(); 
+     Type myType = BuildDynAssembly();
      Console.WriteLine("---");
 
-     // Let's invoke the type 'Point' created in our dynamic assembly. 
-   
-     object ptInstance = Activator.CreateInstance(myType, new object[] {0,0}); 
-						  
+     // Let's invoke the type 'Point' created in our dynamic assembly.
+
+     object ptInstance = Activator.CreateInstance(myType, new object[] {0,0});
+						
      myType.InvokeMember("PointMain",
 			  BindingFlags.InvokeMethod,
 			  null,
 			  ptInstance,
-			  new object[0]); 
+			  new object[0]);
    }
 }
 

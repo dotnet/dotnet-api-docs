@@ -31,7 +31,7 @@ class SafeQueue<T>
    //</Snippet3>
 
    //<Snippet4>
-   // Try to add an element to the queue: Add the element to the queue 
+   // Try to add an element to the queue: Add the element to the queue
    // only if the lock is immediately available.
    public bool TryEnqueue(T qValue)
    {
@@ -57,7 +57,7 @@ class SafeQueue<T>
    //</Snippet4>
 
    //<Snippet5>
-   // Try to add an element to the queue: Add the element to the queue 
+   // Try to add an element to the queue: Add the element to the queue
    // only if the lock becomes available during the specified time
    // interval.
    public bool TryEnqueue(T qValue, int waitTime)
@@ -213,7 +213,7 @@ public class Example
          }
          else if (how < 48)
          {
-            // Even a very small wait significantly increases the success 
+            // Even a very small wait significantly increases the success
             // rate of the conditional enqueue operation.
             if (q.TryEnqueue(what, 10))
             {
@@ -240,12 +240,12 @@ public class Example
          {
             result[(int)ThreadResultIndex.RemoveCt] += 1;
             result[(int)ThreadResultIndex.RemovedCt] += q.Remove(what);
-         }         
+         }
       }
 
       results[threadNum] = result;
 
-      if (0 == Interlocked.Decrement(ref threadsRunning))      
+      if (0 == Interlocked.Decrement(ref threadsRunning))
       {
          StringBuilder sb = new StringBuilder(
             "                               Thread 1 Thread 2 Thread 3    Total\n");
@@ -269,26 +269,26 @@ public class Example
    }
 
    private static string[] titles = {
-      "Enqueue                       ", 
-      "TryEnqueue succeeded          ", 
-      "TryEnqueue failed             ", 
-      "TryEnqueue(T, wait) succeeded ", 
-      "TryEnqueue(T, wait) failed    ", 
-      "Dequeue attempts              ", 
-      "Dequeue exceptions            ", 
-      "Remove operations             ", 
+      "Enqueue                       ",
+      "TryEnqueue succeeded          ",
+      "TryEnqueue failed             ",
+      "TryEnqueue(T, wait) succeeded ",
+      "TryEnqueue(T, wait) failed    ",
+      "Dequeue attempts              ",
+      "Dequeue exceptions            ",
+      "Remove operations             ",
       "Queue elements removed        "};
 
    private enum ThreadResultIndex
    {
-      EnqueueCt, 
-      TryEnqueueSucceedCt, 
-      TryEnqueueFailCt, 
-      TryEnqueueWaitSucceedCt, 
-      TryEnqueueWaitFailCt, 
-      DequeueCt, 
-      DequeueExCt, 
-      RemoveCt, 
+      EnqueueCt,
+      TryEnqueueSucceedCt,
+      TryEnqueueFailCt,
+      TryEnqueueWaitSucceedCt,
+      TryEnqueueWaitFailCt,
+      DequeueCt,
+      DequeueExCt,
+      RemoveCt,
       RemovedCt
    };
 }

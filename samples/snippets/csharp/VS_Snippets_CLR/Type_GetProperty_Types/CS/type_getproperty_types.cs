@@ -25,7 +25,7 @@ class TestClass
         try
         {	
             Type myType = typeof(MyClass1);
-            // Get the PropertyInfo object representing MyProperty1. 
+            // Get the PropertyInfo object representing MyProperty1.
             PropertyInfo myStringProperties1 = myType.GetProperty("MyProperty1",
                 typeof(string));
             Console.WriteLine("The name of the first property of MyClass1 is {0}.", myStringProperties1.Name);

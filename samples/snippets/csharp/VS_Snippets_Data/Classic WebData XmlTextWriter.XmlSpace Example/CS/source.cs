@@ -4,7 +4,7 @@ using System.IO;
 using System.Xml;
 
 public class Sample
-{  
+{
   public static void Main()
   {
     // Create the writer.
@@ -30,9 +30,9 @@ public class Sample
 
     // Write the root end element.
     writer.WriteEndElement();
-             
+
     // Write the XML to file and close the writer.
-    writer.Close();  
+    writer.Close();
   }
 }
 // </Snippet1>

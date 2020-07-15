@@ -2,19 +2,19 @@
 // Example for the Math.E field.
 using System;
 
-class EField 
+class EField
 {
-    public static void Main() 
+    public static void Main()
     {
-        Console.WriteLine( 
+        Console.WriteLine(
             "This example of Math.E == {0:E16}\n" +
-            "generates the following output.\n", 
+            "generates the following output.\n",
             Math.E );
-        Console.WriteLine( 
+        Console.WriteLine(
             "Define the power series PS(n) = Sum(k->0,n)[1/k!]" );
         Console.WriteLine( " (limit n->infinity)PS(n) == e" );
-        Console.WriteLine( 
-            "Display PS(n) and Math.E - PS(n), " + 
+        Console.WriteLine(
+            "Display PS(n) and Math.E - PS(n), " +
             "and stop when delta < 1.0E-15\n" );
 
         CalcPowerSeries();
@@ -36,7 +36,7 @@ class EField
 
             // Calculate and display the power series.
             PS += 1.0 / factorial;
-            Console.WriteLine( 
+            Console.WriteLine(
                 "PS({0:D2}) == {1:E16},  Math.E - PS({0:D2}) == {2:E16}",
                 n, PS, Math.E - PS );
         }

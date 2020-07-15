@@ -1,12 +1,12 @@
 ﻿// System.Runtime.Remoting.Channels.ChannelServices.SyncDispatchMessage(IMessage)
 
 /*
-   The following example demonstrates 'SyncDispatchMessage' method of 
+   The following example demonstrates 'SyncDispatchMessage' method of
    'ChannelServices' class. In the example, 'MyProxy' extends 'RealProxy'
-   class and overrides its constructor and 'Invoke' messages. In the 'Main' 
-   method, the 'MyProxy' class is instantiated and 'MyPrintMethod' method 
+   class and overrides its constructor and 'Invoke' messages. In the 'Main'
+   method, the 'MyProxy' class is instantiated and 'MyPrintMethod' method
    is called on it.
-*/ 
+*/
 
 using System;
 using System.Collections;
@@ -22,7 +22,7 @@ using System.Security.Permissions;
 public class MyProxy : RealProxy
 {
    String myURIString;
-   MarshalByRefObject myMarshalByRefObject;   
+   MarshalByRefObject myMarshalByRefObject;
 
    [PermissionSet(SecurityAction.LinkDemand)]
    public MyProxy(Type myType) : base(myType)
@@ -54,7 +54,7 @@ public class MyProxy : RealProxy
       IDictionary myIDictionary = myIMessage.Properties;
       // Set the '__Uri' property of 'IMessage' to 'URI' property of 'ObjRef'.
       myIDictionary["__Uri"] = myURIString;
-      IDictionaryEnumerator myIDictionaryEnumerator = 
+      IDictionaryEnumerator myIDictionaryEnumerator =
          (IDictionaryEnumerator) myIDictionary.GetEnumerator();
 
       while (myIDictionaryEnumerator.MoveNext())
@@ -63,13 +63,13 @@ public class MyProxy : RealProxy
          String myKeyName = myKey.ToString();
          Object myValue = myIDictionaryEnumerator.Value;
 
-         Console.WriteLine("\t{0} : {1}", myKeyName, 
+         Console.WriteLine("\t{0} : {1}", myKeyName,
             myIDictionaryEnumerator.Value);
          if (myKeyName == "__Args")
          {
             Object[] myObjectArray = (Object[])myValue;
             for (int aIndex = 0; aIndex < myObjectArray.Length; aIndex++)
-               Console.WriteLine("\t\targ: {0} myValue: {1}", aIndex, 
+               Console.WriteLine("\t\targ: {0} myValue: {1}", aIndex,
                   myObjectArray[aIndex]);
          }
 
@@ -77,11 +77,11 @@ public class MyProxy : RealProxy
          {
             Object[] myObjectArray = (Object[])myValue;
             for (int aIndex = 0; aIndex < myObjectArray.Length; aIndex++)
-               Console.WriteLine("\t\targ: {0} myValue: {1}", aIndex, 
+               Console.WriteLine("\t\targ: {0} myValue: {1}", aIndex,
                   myObjectArray[aIndex]);
          }
       }
-      
+
       IMessage myReturnMessage;
 
       myIDictionary["__Uri"] = myURIString;
@@ -94,7 +94,7 @@ public class MyProxy : RealProxy
 
       IMethodReturnMessage myMethodReturnMessage = (IMethodReturnMessage)
          myReturnMessage;
-      Console.WriteLine("IMethodReturnMessage.ReturnValue: {0}", 
+      Console.WriteLine("IMethodReturnMessage.ReturnValue: {0}",
          myMethodReturnMessage.ReturnValue);
 
       Console.WriteLine("MyProxy.Invoke - Finish");
@@ -114,31 +114,31 @@ public class Client
          ChannelServices.RegisterChannel(myTcpChannel);
          MyProxy myProxyObject = new MyProxy(typeof(PrintServer));
          PrintServer myPrintServer = (PrintServer)myProxyObject.GetTransparentProxy();
-         if (myPrintServer == null) 
+         if (myPrintServer == null)
             Console.WriteLine("Could not locate server");
-         else 
+         else
             Console.WriteLine(myPrintServer.MyPrintMethod("String1", 1.2, 6));
          Console.WriteLine("Calling the Proxy");
          int kValue = myPrintServer.MyPrintMethod("String1", 1.2, 6);
-         Console.WriteLine("Checking result"); 
-   
+         Console.WriteLine("Checking result");
+
          if (kValue == 6)
          {
-            Console.WriteLine("PrintServer.MyPrintMethod PASSED : returned {0}", 
-               kValue);            
+            Console.WriteLine("PrintServer.MyPrintMethod PASSED : returned {0}",
+               kValue);
          }
          else
          {
-            Console.WriteLine("PrintServer.MyPrintMethod FAILED : returned {0}", 
-               kValue);            
+            Console.WriteLine("PrintServer.MyPrintMethod FAILED : returned {0}",
+               kValue);
          }
-         Console.WriteLine("Sample Done");    
-      } 
+         Console.WriteLine("Sample Done");
+      }
       catch(Exception e)
       {
          Console.WriteLine("Exception caught!!!");
          Console.WriteLine("The source of exception: "+e.Source);
          Console.WriteLine("The Message of exception: "+e.Message);
-      }     
-   }   
+      }
+   }
 }

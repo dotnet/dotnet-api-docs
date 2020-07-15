@@ -22,7 +22,7 @@ myResolver = new XmlSecureResolver(new XmlUrlResolver(), myEvidence);
 }
 
 //==============================
-// 
+//
 static void URI_Evidence() {
 string sourceURI = "http://serverName/data";
 //<snippet2>
@@ -32,7 +32,7 @@ XmlSecureResolver myResolver = new XmlSecureResolver(new XmlUrlResolver(), myEvi
 //</snippet2>
 }
 //==============================
-// 
+//
 static void Use_URL() {
 //<snippet3>
 XmlSecureResolver myResolver = new XmlSecureResolver(new XmlUrlResolver(), "http://myLocalSite/");
@@ -40,7 +40,7 @@ XmlSecureResolver myResolver = new XmlSecureResolver(new XmlUrlResolver(), "http
 }
 
 //==============================
-// 
+//
 static void Use_PermissionSet() {
 //<snippet4a>
 WebPermission myWebPermission = new WebPermission(PermissionState.None);
@@ -59,8 +59,8 @@ XmlSecureResolver myResolver = new XmlSecureResolver(new XmlUrlResolver(), myPer
 }
 
 //==============================
-// 
-static void Reader_Resolver() {  
+//
+static void Reader_Resolver() {
 XmlSecureResolver myResolver = new XmlSecureResolver(new XmlUrlResolver(), "http://myLocalSite/");
 //<snippet5a>
 XmlReaderSettings settings = new XmlReaderSettings();
@@ -72,8 +72,8 @@ XmlReader reader = XmlReader.Create("books.xml", settings);
 }
 
 //==============================
-// 
-static void XSLT_Resolver() {    
+//
+static void XSLT_Resolver() {
 XmlSecureResolver myResolver = new XmlSecureResolver(new XmlUrlResolver(), "http://myLocalSite/");
 //<snippet6>
 XslCompiledTransform xslt = new XslCompiledTransform();

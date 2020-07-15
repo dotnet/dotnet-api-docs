@@ -7,12 +7,12 @@ public class Example
    public static void Main()
    {
       DateTime value = new DateTime(2013, 9, 8, 14, 30, 0);
-      
+
       string[] formats = { "t", "T", "f", "F", "G", "g" };
       CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
       DateTimeFormatInfo dtfi = culture.DateTimeFormat;
       dtfi.TimeSeparator = ".";
-      
+
       foreach (var fmt in formats)
          Console.WriteLine("{0}: {1}", fmt, value.ToString(fmt, dtfi));
    }

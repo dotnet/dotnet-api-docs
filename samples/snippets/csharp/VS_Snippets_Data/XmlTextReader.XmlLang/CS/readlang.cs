@@ -11,7 +11,7 @@ public class Sample{
     string xmlFrag  = "<book xml:lang='en-US'> " +
                            "  <title xml:lang='en-GB'>Colour Analysis</title>" +
                            "  <title>Color Analysis</title>" +
-                           "</book>"; 
+                           "</book>";
 
     //Create the XmlNamespaceManager.
     NameTable nt = new NameTable();
@@ -36,11 +36,11 @@ public class Sample{
          case XmlNodeType.EndElement:
            Console.WriteLine("{0}: </{1}>", reader.XmlLang, reader.Name);
            break;
-       }       
-    }           
-  
+       }
+    }
+
     //Close the reader.
-    reader.Close();     
+    reader.Close();
   }
 }
 //</snippet1>

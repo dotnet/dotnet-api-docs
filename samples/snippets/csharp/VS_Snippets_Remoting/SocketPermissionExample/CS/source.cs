@@ -24,13 +24,13 @@ public static void MySocketPermission(){
                                 new SocketPermission(NetworkAccess.Connect, TransportType.Tcp, "www.southridgevideo.com", 11002);
 
      // Creates a SocketPermission from the union of two SocketPermissions.
-     SocketPermission mySocketPermissionUnion = 
+     SocketPermission mySocketPermissionUnion =
                                 (SocketPermission)mySocketPermission1.Union(mySocketPermission2);
 
      // Checks to see if the union was successfully created by using the IsSubsetOf method.
-     if (mySocketPermission1.IsSubsetOf(mySocketPermissionUnion) && 
+     if (mySocketPermission1.IsSubsetOf(mySocketPermissionUnion) &&
      	   mySocketPermission2.IsSubsetOf(mySocketPermissionUnion)){
-          Console.WriteLine("This union contains permissions from both mySocketPermission1 and mySocketPermission2"); 
+          Console.WriteLine("This union contains permissions from both mySocketPermission1 and mySocketPermission2");
 
           // Prints the allowable accept URIs to the console.
           Console.WriteLine("This union accepts connections on :");
@@ -38,7 +38,7 @@ public static void MySocketPermission(){
           IEnumerator myEnumerator = mySocketPermissionUnion.AcceptList;
 	   while (myEnumerator.MoveNext()) {
                Console.WriteLine(((EndpointPermission)myEnumerator.Current).ToString());
-	        }      
+	        }
 
              // Prints the allowable connect URIs to the console.
           Console.WriteLine("This union permits connections to :");
@@ -46,14 +46,14 @@ public static void MySocketPermission(){
           myEnumerator = mySocketPermissionUnion.ConnectList;
 	   while (myEnumerator.MoveNext()) {
                Console.WriteLine(((EndpointPermission)myEnumerator.Current).ToString());
-	        }      
+	        }
            }
 
 //</Snippet2>
 //<Snippet3>
 
      // Creates a SocketPermission from the intersect of two SocketPermissions.
-     SocketPermission mySocketPermissionIntersect = 
+     SocketPermission mySocketPermissionIntersect =
                                (SocketPermission)mySocketPermission1.Intersect(mySocketPermissionUnion);
 
      // mySocketPermissionIntersect should now contain the permissions of mySocketPermission1.
@@ -69,7 +69,7 @@ public static void MySocketPermission(){
 
 //<Snippet4>
 // Creates a copy of the intersect SocketPermission.
-     SocketPermission mySocketPermissionIntersectCopy = 
+     SocketPermission mySocketPermissionIntersectCopy =
                                (SocketPermission)mySocketPermissionIntersect.Copy();
 
      if (mySocketPermissionIntersectCopy.Equals(mySocketPermissionIntersect)){
@@ -88,7 +88,7 @@ public static void MySocketPermission(){
           //Do nothing.  There are no restrictions.
      }
      else{
-         // Enforces the permissions found in mySocketPermissionUnion on any Socket Resources used below this statement. 
+         // Enforces the permissions found in mySocketPermissionUnion on any Socket Resources used below this statement.
          mySocketPermissionUnion.Demand();
      }
 
@@ -103,10 +103,10 @@ public static void MySocketPermission(){
        }
        catch (Exception e){
             Console.WriteLine("Exception Thrown: " + e.ToString());
-       } 
+       }
 
       // Perform all socket operations in here.
-      
+
       s.Close();
 //</Snippet1>
 }

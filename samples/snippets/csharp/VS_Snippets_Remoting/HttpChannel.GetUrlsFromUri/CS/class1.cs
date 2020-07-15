@@ -9,9 +9,9 @@ class Class1 {
       // Create a remotable object.
       HttpChannel httpChannel = new HttpChannel(8085);
 
-      WellKnownServiceTypeEntry WKSTE = 
+      WellKnownServiceTypeEntry WKSTE =
          new WellKnownServiceTypeEntry(typeof(HelloService),
-                                       "Service", 
+                                       "Service",
                                        WellKnownObjectMode.Singleton);
       RemotingConfiguration.RegisterWellKnownServiceType(WKSTE);
 
@@ -19,7 +19,7 @@ class Class1 {
 
       // Print out the urls for HelloServer.
       string[] urls = httpChannel.GetUrlsForUri("HelloServer");
-      
+
       foreach (string url in urls)
          System.Console.WriteLine("{0}", url);
    }

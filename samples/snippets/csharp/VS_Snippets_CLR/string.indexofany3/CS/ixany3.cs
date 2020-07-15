@@ -3,7 +3,7 @@
 using System;
 
 class Sample {
-    public static void Main() 
+    public static void Main()
     {
     string br1 = "0----+----1----+----2----+----3----+----4----+----5----+----6----+-";
     string br2 = "0123456789012345678901234567890123456789012345678901234567890123456";
@@ -22,7 +22,7 @@ class Sample {
     Console.Write("A character in '{0}' occurs at position: ", target);
 
     at = str.IndexOfAny(anyOf, start, count);
-    if (at > -1) 
+    if (at > -1)
         Console.Write(at);
     else
         Console.Write("(not found)");

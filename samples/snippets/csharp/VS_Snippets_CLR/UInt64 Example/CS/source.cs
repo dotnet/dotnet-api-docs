@@ -27,7 +27,7 @@ namespace Snippets {
 	//<snippet1>
 	/// <summary>
 	/// Temperature class stores the value as UInt64
-	/// and delegates most of the functionality 
+	/// and delegates most of the functionality
 	/// to the UInt64 implementation.
 	/// </summary>
 	public class Temperature : IComparable, IFormattable {

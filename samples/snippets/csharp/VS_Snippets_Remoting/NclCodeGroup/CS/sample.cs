@@ -28,7 +28,7 @@ public class TestNetCodeGroups
         const string userPolicyLevel = "User";
         // Locate the User policy level.
         PolicyLevel level = null;
-        System.Collections.IEnumerator ph = 
+        System.Collections.IEnumerator ph =
             System.Security.SecurityManager.PolicyHierarchy();
         while(ph.MoveNext())
         {
@@ -76,7 +76,7 @@ public class TestNetCodeGroups
 // <snippet6>
     public static void DisplayFields ()
     {
-        Console.WriteLine("Origin scheme value:{0} AnyScheme value: {1}", 
+        Console.WriteLine("Origin scheme value:{0} AnyScheme value: {1}",
             CodeConnectAccess.OriginScheme, CodeConnectAccess.AnyScheme);
     }
 // </snippet6>
@@ -97,7 +97,7 @@ public class TestNetCodeGroups
         CodeConnectAccess a2 = new CodeConnectAccess(Uri.UriSchemeHttps, CodeConnectAccess.DefaultPort);
         // Create an object that represents access to the origin scheme and port.
         CodeConnectAccess a3 = CodeConnectAccess.CreateOriginSchemeAccess(CodeConnectAccess.OriginPort);
-        
+
         codeGroup.AddConnectAccess(Uri.UriSchemeHttp, a1);
         codeGroup.AddConnectAccess(Uri.UriSchemeHttp, a2);
         codeGroup.AddConnectAccess(Uri.UriSchemeHttp, a3);
@@ -123,7 +123,7 @@ public class TestNetCodeGroups
     // </snippet8>
     public static void Main()
     {
-        
+
         DisplayProperties(CreateFtpAndDefaultPortAccess());
         DisplayFields();
         DisplayProperties(CreateHttpAndOriginPortAccess());

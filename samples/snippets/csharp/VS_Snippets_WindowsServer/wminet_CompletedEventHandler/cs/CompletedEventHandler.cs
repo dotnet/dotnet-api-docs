@@ -2,22 +2,22 @@
 using System;
 using System.Management;
 
-public class InvokeMethodAsync 
+public class InvokeMethodAsync
 {
     private bool isComplete = false;
     private ManagementBaseObject returnObject;
 
     public InvokeMethodAsync()
     {
-        // Get the object on which the method 
+        // Get the object on which the method
         // will be invoked
-        ManagementClass processClass = 
+        ManagementClass processClass =
             new ManagementClass("Win32_Process");
 
         // Create a results and completion handler
-        ManagementOperationObserver handler = 
+        ManagementOperationObserver handler =
             new ManagementOperationObserver();
-        handler.Completed += 
+        handler.Completed +=
             new CompletedEventHandler(this.Completed);
 
         // Invoke method asynchronously
@@ -26,9 +26,9 @@ public class InvokeMethodAsync
         inParams["CommandLine"] = "calc.exe";
         processClass.InvokeMethod(
             handler, "Create", inParams, null);
-      
+
         // Do something while method is executing
-        while(!this.IsComplete) 
+        while(!this.IsComplete)
         {
             System.Threading.Thread.Sleep(1000);
         }
@@ -36,9 +36,9 @@ public class InvokeMethodAsync
 
     // Property allows accessing the result
     // object in the main function
-    private ManagementBaseObject ReturnObject 
+    private ManagementBaseObject ReturnObject
     {
-        get 
+        get
         {
             return returnObject;
         }
@@ -47,7 +47,7 @@ public class InvokeMethodAsync
     // Delegate called when the method completes
     // and results are available
     private void NewObject(object sender,
-        ObjectReadyEventArgs e) 
+        ObjectReadyEventArgs e)
     {
         Console.WriteLine("New Object arrived!");
         returnObject = e.NewObject;
@@ -55,9 +55,9 @@ public class InvokeMethodAsync
 
     // Used to determine whether the method
     // execution has completed
-    private bool IsComplete 
+    private bool IsComplete
     {
-        get 
+        get
         {
             return isComplete;
         }

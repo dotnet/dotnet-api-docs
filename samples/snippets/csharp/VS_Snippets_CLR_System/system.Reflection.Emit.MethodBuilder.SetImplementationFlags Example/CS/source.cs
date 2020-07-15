@@ -17,9 +17,9 @@ class MethodBuilderAssortedMembersDemo
 							     typeof(int) });	
 
 	// Specifies that the dynamic method declared above has a an MSIL implementation,
-        // is managed, synchronized (single-threaded) through the body, and that it 
+        // is managed, synchronized (single-threaded) through the body, and that it
 	// cannot be inlined.
- 
+
 	myMthdBuilder.SetImplementationFlags(MethodImplAttributes.IL |
 					     MethodImplAttributes.Managed |
 					     MethodImplAttributes.Synchronized |

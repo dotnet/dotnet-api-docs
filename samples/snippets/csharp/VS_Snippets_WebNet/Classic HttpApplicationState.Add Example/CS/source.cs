@@ -10,7 +10,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Application.Add("MyAppVar1", MyObject1);
-Application.Add("MyAppVar2", MyObject2);  
+Application.Add("MyAppVar2", MyObject2);
 // </Snippet1>
  }
 }

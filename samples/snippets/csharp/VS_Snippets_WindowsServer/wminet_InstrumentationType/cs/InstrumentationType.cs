@@ -15,7 +15,7 @@ using System.Management.Instrumentation;
 // Let the system know you will run
 // InstallUtil.exe tool against this assembly
 [System.ComponentModel.RunInstaller(true)]
-public class MyInstaller : 
+public class MyInstaller :
     DefaultManagementProjectInstaller {}
 
 namespace WMISample
@@ -33,13 +33,13 @@ namespace WMISample
 
     public class WMIInstrumentedEventExample
     {
-        public static void Main() 
+        public static void Main()
         {
             MyEvent e = new MyEvent();
             e.setEventName("Hello");
-        
+
             // Fire a management event
-            Instrumentation.Fire(e);        
+            Instrumentation.Fire(e);
             return;
         }
     }

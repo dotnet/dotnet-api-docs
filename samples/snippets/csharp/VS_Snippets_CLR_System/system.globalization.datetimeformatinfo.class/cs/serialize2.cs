@@ -8,19 +8,19 @@ public class Example
    public static void Main()
    {
       // Open the file and retrieve the date string.
-      StreamReader sr = new StreamReader(@".\DateData.dat");             
+      StreamReader sr = new StreamReader(@".\DateData.dat");
       String dateValue = sr.ReadToEnd();
-      
+
       // Parse the date.
-      DateTime parsedDate = DateTime.ParseExact(dateValue, "o", 
+      DateTime parsedDate = DateTime.ParseExact(dateValue, "o",
                             DateTimeFormatInfo.InvariantInfo);
-      // Convert it to local time.                             
+      // Convert it to local time.
       DateTime restoredDate = parsedDate.ToLocalTime();
       // Display information on the date and time.
       Console.WriteLine("Deserialized date: {0:F}", restoredDate);
-      Console.WriteLine("Current Culture:   {0}", 
+      Console.WriteLine("Current Culture:   {0}",
                         CultureInfo.CurrentCulture.Name);
-      Console.WriteLine("Time Zone:         {0}", 
+      Console.WriteLine("Time Zone:         {0}",
                         TimeZoneInfo.Local.DisplayName);
    }
 }

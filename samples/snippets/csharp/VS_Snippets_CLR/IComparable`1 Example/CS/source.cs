@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public class Temperature : IComparable<Temperature>
 {
-    // Implement the generic CompareTo method with the Temperature 
-    // class as the Type parameter. 
+    // Implement the generic CompareTo method with the Temperature
+    // class as the Type parameter.
     //
     public int CompareTo(Temperature other)
     {
         // If other is not a valid object reference, this instance is greater.
         if (other == null) return 1;
-        
-        // The temperature comparison depends on the comparison of 
-        // the underlying Double values. 
+
+        // The temperature comparison depends on the comparison of
+        // the underlying Double values.
         return m_value.CompareTo(other.m_value);
     }
 
@@ -22,7 +22,7 @@ public class Temperature : IComparable<Temperature>
     {
        return operand1.CompareTo(operand2) == 1;
     }
-    
+
     // Define the is less than operator.
     public static bool operator <  (Temperature operand1, Temperature operand2)
     {
@@ -34,7 +34,7 @@ public class Temperature : IComparable<Temperature>
     {
        return operand1.CompareTo(operand2) >= 0;
     }
-    
+
     // Define the is less than or equal to operator.
     public static bool operator <=  (Temperature operand1, Temperature operand2)
     {
@@ -44,7 +44,7 @@ public class Temperature : IComparable<Temperature>
     // The underlying temperature value.
     protected double m_value = 0.0;
 
-    public double Celsius    
+    public double Celsius
     {
         get
         {
@@ -52,7 +52,7 @@ public class Temperature : IComparable<Temperature>
         }
     }
 
-    public double Kelvin    
+    public double Kelvin
     {
         get
         {
@@ -81,7 +81,7 @@ public class Example
 {
     public static void Main()
     {
-        SortedList<Temperature, string> temps = 
+        SortedList<Temperature, string> temps =
             new SortedList<Temperature, string>();
 
         // Add entries to the sorted list, out of order.

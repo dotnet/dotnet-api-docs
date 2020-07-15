@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 HttpPostedFile MyPostedMember = Request.Files["CustInfo"];
  String MyFileName = MyPostedMember.FileName;
-    
+
 // </Snippet1>
  }
 }

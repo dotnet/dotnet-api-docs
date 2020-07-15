@@ -1,13 +1,13 @@
 ﻿/*
    System.Configuration.Install.Installer.AfterInstall
 
-   The following example demonstrates the event 'AfterInstall' of the 
+   The following example demonstrates the event 'AfterInstall' of the
    'Installer' class. The event 'AfterInstall' is raised by the method
    'OnAfterInstall'.
-   
-   Use the installer process 'InstallUtil' to run the assembly 
+
+   Use the installer process 'InstallUtil' to run the assembly
    'Installer_AfterInstall.exe'.
-   
+
 */
 
 using System;
@@ -27,10 +27,10 @@ public class MyInstaller: Installer
    private void AfterInstallEventHandler(object sender, InstallEventArgs e)
    {
       // Add steps to perform any actions after the install process.
-      Console.WriteLine("Code for AfterInstallEventHandler"); 
+      Console.WriteLine("Code for AfterInstallEventHandler");
    }
 // </Snippet1>
-   
+
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)
    {

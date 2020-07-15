@@ -5,9 +5,9 @@
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     string lowerABC = "abc";
     string upperABC = "ABC";
@@ -19,13 +19,13 @@ class Sample
 // Alternatively:
 //  CompareInfo cmpi = new CultureInfo("en-US").CompareInfo;
 
-// Create sort keys for lowercase and uppercase "abc", the en-US culture, and 
-// ignore case. 
+// Create sort keys for lowercase and uppercase "abc", the en-US culture, and
+// ignore case.
     SortKey sk1LowerIgnCase = cmpi.GetSortKey(lowerABC, CompareOptions.IgnoreCase);
     SortKey sk2UpperIgnCase = cmpi.GetSortKey(upperABC, CompareOptions.IgnoreCase);
 
-// Create sort keys for lowercase and uppercase "abc", the en-US culture, and 
-// use case. 
+// Create sort keys for lowercase and uppercase "abc", the en-US culture, and
+// use case.
     SortKey sk1LowerUseCase = cmpi.GetSortKey(lowerABC, CompareOptions.None);
     SortKey sk2UpperUseCase = cmpi.GetSortKey(upperABC, CompareOptions.None);
 
@@ -46,7 +46,7 @@ class Sample
     }
 
 // Display the results of a comparison.
-    private static void Display(int compareResult, string title, 
+    private static void Display(int compareResult, string title,
                                 string lower, string upper)
     {
     string lessThan    = "less than ";

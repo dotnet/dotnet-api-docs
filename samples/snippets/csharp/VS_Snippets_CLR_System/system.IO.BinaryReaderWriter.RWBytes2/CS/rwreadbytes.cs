@@ -22,7 +22,7 @@ namespace BinaryRW
                 using (BinaryReader binReader = new BinaryReader(binWriter.BaseStream))
                 {
                     binReader.BaseStream.Position = 0;
-                    
+
                     if (binReader.Read(verifyArray, 0, arrayLength) != arrayLength)
                     {
                         Console.WriteLine("Error writing the data.");

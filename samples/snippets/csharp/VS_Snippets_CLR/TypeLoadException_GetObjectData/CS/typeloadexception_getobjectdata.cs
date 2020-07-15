@@ -3,8 +3,8 @@
 
 /* This program demonstrates the 'GetObjectData' method and the
    protected constructor TypeLoadException(SerializationInfo,StreamingContext)
-   of 'TypeLoadException' class. It generates an exception and 
-   serializes the exception data to a file and then reconstitutes the 
+   of 'TypeLoadException' class. It generates an exception and
+   serializes the exception data to a file and then reconstitutes the
    exception.
 */
 
@@ -14,7 +14,7 @@
 using System;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Soap; 
+using System.Runtime.Serialization.Formatters.Soap;
 using System.Security.Permissions;
 using System.IO;
 
@@ -31,7 +31,7 @@ class GetObjectDataDemo
          Console.WriteLine ("Attempting to load a type not present in the assembly 'mscorlib'");
          // This loading of invalid type raises a TypeLoadException
          Type myType = mscorlib.GetType("System.NonExistentType", true);
-      }         
+      }
       catch (TypeLoadException)
       {
          // Serialize the exception to disk and reconstitute it.
@@ -60,20 +60,20 @@ class GetObjectDataDemo
 }
 
 // This class overrides the GetObjectData method and initializes
-// its data with current time. 
+// its data with current time.
 
 [Serializable]
-public class MyTypeLoadException : TypeLoadException 
+public class MyTypeLoadException : TypeLoadException
 {
    private System.DateTime _errorDateTime = DateTime.Now;
    public DateTime ErrorDateTime { get { return _errorDateTime; }}
 
-   public MyTypeLoadException(DateTime myDateTime) 
+   public MyTypeLoadException(DateTime myDateTime)
    {
       _errorDateTime = myDateTime;
    }
 
-   protected MyTypeLoadException(SerializationInfo sInfo, StreamingContext sContext) 
+   protected MyTypeLoadException(SerializationInfo sInfo, StreamingContext sContext)
        : base(sInfo, sContext)
    {
       // Reconstitute the deserialized information into the instance.
@@ -82,7 +82,7 @@ public class MyTypeLoadException : TypeLoadException
 
    // GetObjectData overrides must always have a demand for SerializationFormatter.
    [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter=true)]
-   public override void GetObjectData(SerializationInfo sInfo, StreamingContext sContext) 
+   public override void GetObjectData(SerializationInfo sInfo, StreamingContext sContext)
    {
       base.GetObjectData(sInfo, sContext);
       // Add a value to the Serialization information.

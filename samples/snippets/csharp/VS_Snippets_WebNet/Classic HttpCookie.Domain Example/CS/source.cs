@@ -10,7 +10,7 @@ public class Page1: Page
  {
 // <Snippet1>
 MyCookie.Domain = "Microsoft.com";
-    
+
 // </Snippet1>
  }
 }

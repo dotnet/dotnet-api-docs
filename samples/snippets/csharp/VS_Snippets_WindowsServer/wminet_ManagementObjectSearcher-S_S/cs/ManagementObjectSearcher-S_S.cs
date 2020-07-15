@@ -2,17 +2,17 @@
 using System;
 using System.Management;
 
-public class Sample 
+public class Sample
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
-        ManagementObjectSearcher s = 
+        ManagementObjectSearcher s =
             new ManagementObjectSearcher(
-            "root\\CIMV2", 
+            "root\\CIMV2",
             "SELECT * FROM Win32_Service" +
             " WHERE State='Running'");
 
-        foreach (ManagementObject service in s.Get()) 
+        foreach (ManagementObject service in s.Get())
         {
             // show the instance
             Console.WriteLine(service.ToString());

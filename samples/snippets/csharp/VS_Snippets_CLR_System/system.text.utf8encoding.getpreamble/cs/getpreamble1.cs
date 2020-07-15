@@ -12,11 +12,11 @@ public class Example
       // Write a file using the default constructor without a BOM.
       var enc = new UTF8Encoding();
       Byte[] bytes = enc.GetBytes(s);
-      WriteToFile(@".\NoPreamble.txt", enc, bytes);
+      WriteToFile("NoPreamble.txt", enc, bytes);
 
       // Use BOM.
       enc = new UTF8Encoding(true);
-      WriteToFile(@".\Preamble.txt", enc, bytes);
+      WriteToFile("Preamble.txt", enc, bytes);
    }
 
    private static void WriteToFile(String fn, Encoding enc, Byte[] bytes)

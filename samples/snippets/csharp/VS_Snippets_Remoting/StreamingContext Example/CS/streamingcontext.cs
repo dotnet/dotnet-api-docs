@@ -50,12 +50,12 @@ internal class Win32
     public static extern IntPtr GetCurrentProcess();
 }
 
-// This class wraps memory that can be simultaneously 
+// This class wraps memory that can be simultaneously
 // shared by multiple AppDomains and Processes.
 [Serializable]
 public sealed class SharedMemory : ISerializable, IDisposable
 {
-    // The handle and string that identify 
+    // The handle and string that identify
     // the Windows file-mapping object.
     private IntPtr m_hFileMap = IntPtr.Zero;
     private String m_name;
@@ -114,7 +114,7 @@ public sealed class SharedMemory : ISerializable, IDisposable
         return (flags & flagsToTest) != 0;
     }
 
-    // The security attribute demands that code that calls  
+    // The security attribute demands that code that calls
     // this method have permission to perform serialization.
     [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
     void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
@@ -122,7 +122,7 @@ public sealed class SharedMemory : ISerializable, IDisposable
         // The context's State member indicates
         // where the object will be deserialized.
 
-        // A SharedMemory object cannot be serialized 
+        // A SharedMemory object cannot be serialized
         // to any of the following destinations.
         const StreamingContextStates InvalidDestinations =
                   StreamingContextStates.CrossMachine |
@@ -155,12 +155,12 @@ public sealed class SharedMemory : ISerializable, IDisposable
         }
     }
 
-    // The security attribute demands that code that calls  
+    // The security attribute demands that code that calls
     // this method have permission to perform serialization.
     [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
     private SharedMemory(SerializationInfo info, StreamingContext context)
     {
-        // The context's State member indicates 
+        // The context's State member indicates
         // where the object was serialized from.
 
         const StreamingContextStates InvalidSources =
@@ -246,12 +246,12 @@ class App
         for (Int32 x = 0; x < b.Length; x++) b[x] = *(sm.Address + x);
         Console.WriteLine(BitConverter.ToString(b));
 
-        // To serialize the SharedMemory object, 
-        // you must first open a stream for writing. 
+        // To serialize the SharedMemory object,
+        // you must first open a stream for writing.
         // Use a file stream here.
         FileStream fs = new FileStream("DataFile.dat", FileMode.Create);
 
-        // Construct a BinaryFormatter and tell it where 
+        // Construct a BinaryFormatter and tell it where
         // the objects will be serialized to.
         BinaryFormatter formatter = new BinaryFormatter(null,
             new StreamingContext(StreamingContextStates.CrossAppDomain));
@@ -282,7 +282,7 @@ class App
             BinaryFormatter formatter = new BinaryFormatter(null,
                 new StreamingContext(StreamingContextStates.CrossAppDomain));
 
-            // Deserialize the SharedMemory object from the file and 
+            // Deserialize the SharedMemory object from the file and
             // assign the reference to the local variable.
             sm = (SharedMemory)formatter.Deserialize(fs);
         }
@@ -296,7 +296,7 @@ class App
             fs.Close();
         }
 
-        // To prove that the SharedMemory object deserialized correctly, 
+        // To prove that the SharedMemory object deserialized correctly,
         // display some of its bytes to the console.
         Byte[] b = new Byte[10];
         for (Int32 x = 0; x < b.Length; x++) b[x] = *(sm.Address + x);

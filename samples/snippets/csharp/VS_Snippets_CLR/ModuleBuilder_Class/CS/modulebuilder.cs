@@ -1,8 +1,8 @@
 ﻿// System.Reflection.Emit.ModuleBuilder
 
 /*
-The following example demonstrates the 'ModuleBuilder' class. 
- A dynamic assembly with a module in it is created in 'CodeGenerator' class. 
+The following example demonstrates the 'ModuleBuilder' class.
+ A dynamic assembly with a module in it is created in 'CodeGenerator' class.
 A run time class having a method and a field is created using the 'ModuleBuilder'
 class and created class is called from the 'TestClass'.
 */
@@ -36,7 +36,7 @@ class and created class is called from the 'TestClass'.
                                           ("TempClass",TypeAttributes.Public);
 
          // Add 'Greeting' field to the class, with the specified attribute and type.
-         FieldBuilder greetingField = myTypeBuilder.DefineField("Greeting", 
+         FieldBuilder greetingField = myTypeBuilder.DefineField("Greeting",
                                                                typeof(String), FieldAttributes.Public);
          Type[] myMethodArgs = { typeof(String) };
 
@@ -74,10 +74,10 @@ class and created class is called from the 'TestClass'.
          Console.WriteLine("The fully qualified name and path to this "
                                   + "module is :" +myModuleBuilder.FullyQualifiedName);
          Type myType = myModuleBuilder.GetType("TempClass");
-         MethodInfo myMethodInfo = 
+         MethodInfo myMethodInfo =
                                                    myType.GetMethod("MyMethod");
           // Get the token used to identify the method within this module.
-         MethodToken myMethodToken = 
+         MethodToken myMethodToken =
                            myModuleBuilder.GetMethodToken(myMethodInfo);
          Console.WriteLine("Token used to identify the method of 'myType'"
                        + " within the module is {0:x}",myMethodToken.Token);

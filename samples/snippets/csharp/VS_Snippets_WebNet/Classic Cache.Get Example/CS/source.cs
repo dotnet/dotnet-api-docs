@@ -9,7 +9,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Cache.Get("MyTextBox.Value");
-   
+
 // </Snippet1>
  }
 }

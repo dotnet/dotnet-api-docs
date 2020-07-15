@@ -1,14 +1,14 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-   
+
 class Sample
 {
-    public static int Main(string[] args) 
+    public static int Main(string[] args)
     {
-        ObjectGetOptions opt = 
+        ObjectGetOptions opt =
             new ObjectGetOptions(null, System.TimeSpan.MaxValue, true);
-        ManagementObject o = 
+        ManagementObject o =
             new ManagementObject(
             "root\\MyNamespace", "MyClass", opt);
 

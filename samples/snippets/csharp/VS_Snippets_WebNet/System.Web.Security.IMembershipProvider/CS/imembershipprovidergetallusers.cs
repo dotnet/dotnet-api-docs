@@ -1402,7 +1402,7 @@ public override MembershipUser GetUser(object providerUserKey, bool userIsOnline
             Convert.ToBase64String(EncryptPassword(Encoding.Unicode.GetBytes(password)));
           break;
         case MembershipPasswordFormat.Hashed:
-          HMACSHA1 hash = new HMACSHA1();
+          HMACSHA256 hash = new HMACSHA256();
           hash.Key = HexToByte(machineKey.ValidationKey);
           encodedPassword = 
             Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(password)));

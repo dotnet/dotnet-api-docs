@@ -9,7 +9,7 @@ public class Page1: Page
 
    // <Snippet1>
    HttpClientCertificate cs = Request.ClientCertificate;
- 
+
    Response.Write("ClientCertificate Settings:<br>");
    Response.Write("Certificate = " + cs.Certificate + "<br>");
    Response.Write("Cookie = " + cs.Cookie + "<br>");
@@ -26,7 +26,7 @@ public class Page1: Page
    Response.Write("ValidFrom = " + cs.ValidFrom + "<br>");
    Response.Write("ValidUntil = " + cs.ValidUntil + "<br>");
    Response.Write("What's this = " + cs.ToString() + "<br>");
-    
+
    // </Snippet1>
  }
 }

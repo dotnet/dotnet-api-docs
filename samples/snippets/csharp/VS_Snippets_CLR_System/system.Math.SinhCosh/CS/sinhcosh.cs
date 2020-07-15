@@ -1,20 +1,20 @@
 ﻿//<snippet1>
-// Example for the hyperbolic Math.Sinh( double ) 
+// Example for the hyperbolic Math.Sinh( double )
 // and Math.Cosh( double ) methods.
 using System;
 
-class SinhCosh 
+class SinhCosh
 {
-    public static void Main() 
+    public static void Main()
     {
-        Console.WriteLine( 
+        Console.WriteLine(
             "This example of hyperbolic Math.Sinh( double ) " +
             "and Math.Cosh( double )\n" +
             "generates the following output.\n" );
-        Console.WriteLine( 
+        Console.WriteLine(
             "Evaluate these hyperbolic identities " +
             "with selected values for X:" );
-        Console.WriteLine( 
+        Console.WriteLine(
             "   cosh^2(X) - sinh^2(X) == 1\n" +
             "   sinh(2 * X) == 2 * sinh(X) * cosh(X)" );
         Console.WriteLine( "   cosh(2 * X) == cosh^2(X) + sinh^2(X)" );
@@ -23,12 +23,12 @@ class SinhCosh
         UseSinhCosh(1.2);
         UseSinhCosh(4.9);
 
-        Console.WriteLine( 
+        Console.WriteLine(
             "\nEvaluate these hyperbolic identities " +
             "with selected values for X and Y:" );
-        Console.WriteLine( 
+        Console.WriteLine(
             "   sinh(X + Y) == sinh(X) * cosh(Y) + cosh(X) * sinh(Y)" );
-        Console.WriteLine( 
+        Console.WriteLine(
             "   cosh(X + Y) == cosh(X) * cosh(Y) + sinh(X) * sinh(Y)" );
 
         UseTwoArgs(0.1, 1.2);
@@ -42,28 +42,28 @@ class SinhCosh
         double coshArg = Math.Cosh(arg);
 
         // Evaluate cosh^2(X) - sinh^2(X) == 1.
-        Console.WriteLine( 
+        Console.WriteLine(
             "\n                         Math.Sinh({0}) == {1:E16}\n" +
             "                         Math.Cosh({0}) == {2:E16}",
             arg, Math.Sinh(arg), Math.Cosh(arg) );
-        Console.WriteLine( 
-            "(Math.Cosh({0}))^2 - (Math.Sinh({0}))^2 == {1:E16}", 
+        Console.WriteLine(
+            "(Math.Cosh({0}))^2 - (Math.Sinh({0}))^2 == {1:E16}",
             arg, coshArg * coshArg - sinhArg * sinhArg );
 
         // Evaluate sinh(2 * X) == 2 * sinh(X) * cosh(X).
-        Console.WriteLine( 
-            "                         Math.Sinh({0}) == {1:E16}", 
+        Console.WriteLine(
+            "                         Math.Sinh({0}) == {1:E16}",
             2.0 * arg, Math.Sinh(2.0 * arg) );
-        Console.WriteLine( 
-            "    2 * Math.Sinh({0}) * Math.Cosh({0}) == {1:E16}", 
+        Console.WriteLine(
+            "    2 * Math.Sinh({0}) * Math.Cosh({0}) == {1:E16}",
             arg, 2.0 * sinhArg * coshArg );
 
         // Evaluate cosh(2 * X) == cosh^2(X) + sinh^2(X).
-        Console.WriteLine( 
-            "                         Math.Cosh({0}) == {1:E16}", 
+        Console.WriteLine(
+            "                         Math.Cosh({0}) == {1:E16}",
             2.0 * arg, Math.Cosh(2.0 * arg) );
-        Console.WriteLine( 
-            "(Math.Cosh({0}))^2 + (Math.Sinh({0}))^2 == {1:E16}", 
+        Console.WriteLine(
+            "(Math.Cosh({0}))^2 + (Math.Sinh({0}))^2 == {1:E16}",
             arg, coshArg * coshArg + sinhArg * sinhArg );
     }
 
@@ -71,22 +71,22 @@ class SinhCosh
     static void UseTwoArgs(double argX, double argY)
     {
         // Evaluate sinh(X + Y) == sinh(X) * cosh(Y) + cosh(X) * sinh(Y).
-        Console.WriteLine( 
-            "\n        Math.Sinh({0}) * Math.Cosh({1}) +\n" + 
-            "        Math.Cosh({0}) * Math.Sinh({1}) == {2:E16}", 
+        Console.WriteLine(
+            "\n        Math.Sinh({0}) * Math.Cosh({1}) +\n" +
+            "        Math.Cosh({0}) * Math.Sinh({1}) == {2:E16}",
             argX, argY, Math.Sinh(argX) * Math.Cosh(argY) +
             Math.Cosh(argX) * Math.Sinh(argY));
-        Console.WriteLine( 
+        Console.WriteLine(
             "                         Math.Sinh({0}) == {1:E16}",
             argX + argY, Math.Sinh(argX + argY));
 
         // Evaluate cosh(X + Y) == cosh(X) * cosh(Y) + sinh(X) * sinh(Y).
-        Console.WriteLine( 
-            "        Math.Cosh({0}) * Math.Cosh({1}) +\n" + 
-            "        Math.Sinh({0}) * Math.Sinh({1}) == {2:E16}", 
+        Console.WriteLine(
+            "        Math.Cosh({0}) * Math.Cosh({1}) +\n" +
+            "        Math.Sinh({0}) * Math.Sinh({1}) == {2:E16}",
             argX, argY, Math.Cosh(argX) * Math.Cosh(argY) +
             Math.Sinh(argX) * Math.Sinh(argY));
-        Console.WriteLine( 
+        Console.WriteLine(
             "                         Math.Cosh({0}) == {1:E16}",
             argX + argY, Math.Cosh(argX + argY));
     }

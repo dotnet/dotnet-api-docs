@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-public class NameTest 
+public class NameTest
 {
-    public static void Main() 
+    public static void Main()
     {
         // Create a reference to the current directory.
         DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory);
@@ -16,7 +16,7 @@ public class NameTest
             Console.WriteLine(fiTemp.Name);
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //The following files exist in the current directory:

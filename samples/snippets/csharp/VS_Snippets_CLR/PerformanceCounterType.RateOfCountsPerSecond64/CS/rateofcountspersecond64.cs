@@ -127,9 +127,9 @@ public class App
     //		(D) represents the number of ticks elapsed during the last sample
     //		interval, and F is the frequency of the ticks.
     //
-    //	Average - (Nx - N0) / ((Dx - D0) / F) 
+    //	Average - (Nx - N0) / ((Dx - D0) / F)
     //
-    //  Example - System\ File Read Operations/sec 
+    //  Example - System\ File Read Operations/sec
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
     private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
     {

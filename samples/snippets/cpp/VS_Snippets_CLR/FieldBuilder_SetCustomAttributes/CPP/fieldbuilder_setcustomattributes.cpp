@@ -6,8 +6,8 @@
    and 'SetCustomAttribute(CustomAttributeBuilder)' methods of 'FieldBuilder' class.
    A dynamic assembly is created. A new class of type 'MyClass' is created.
    A 'Method' and a 'Field are defined in the class.Two 'CustomAttributes' are
-   set to the field.The method initializes a value to 'Field'.Value of the field
-   is displayed to console.Values of Attributes applied to field are retreived and
+   set to the field. The method initializes a value to 'Field'.Value of the field
+   is displayed to console.Values of Attributes applied to field are retrieved and
    displayed to console.
 */
 // <Snippet1>

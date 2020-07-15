@@ -1,11 +1,11 @@
 ﻿// System.Runtime.Remoting.Channels.ChannelServices.GetUrlsForObject(MarshalByRefObject)
 /*
-   The following example demonstrates the method 'GetUrlsForObject' 
-   of the class 'ChannelServices'. The example is just a client, it 
-   locates and connects to the server, retrieves a proxy for the remote 
-   object, and calls the 'HelloMethod' on the remote object, passing the 
+   The following example demonstrates the method 'GetUrlsForObject'
+   of the class 'ChannelServices'. The example is just a client, it
+   locates and connects to the server, retrieves a proxy for the remote
+   object, and calls the 'HelloMethod' on the remote object, passing the
    string 'Caveman' as a parameter. The server returns the string
-   'Hi there Caveman'.  
+   'Hi there Caveman'.
 */
 using System;
 using System.Runtime.Remoting;
@@ -47,7 +47,7 @@ namespace RemotingSamples {
             Console.WriteLine("Exception caught!!!");
             Console.WriteLine("The source of exception: "+e.Source);
             Console.WriteLine("The Message of exception: "+e.Message);
-         }      
-      } 
+         }
+      }
    }
 }

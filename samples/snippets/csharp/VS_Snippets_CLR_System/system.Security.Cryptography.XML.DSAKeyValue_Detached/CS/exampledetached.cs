@@ -27,14 +27,14 @@ class XMLDSIGDetached
         {
 
             // Generate a DSA signing key.
-            DSACryptoServiceProvider DSAKey = new DSACryptoServiceProvider();
+            DSA DSAKey = DSA.Create();
 
             Console.WriteLine("Signing: {0}", resourceToSign);
 
             // Sign the detached resourceand save the signature in an XML file.
             SignDetachedResource(resourceToSign, XmlFileName, DSAKey);
 
-            Console.WriteLine("XML signature was succesfully computed and saved to {0}.", XmlFileName);
+            Console.WriteLine("XML signature was successfully computed and saved to {0}.", XmlFileName);
 
             // Verify the signature of the signed XML.
             Console.WriteLine("Verifying signature...");

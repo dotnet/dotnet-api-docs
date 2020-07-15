@@ -1,4 +1,3 @@
-
 //<Snippet1>
 // This example shows a ReaderWriterLock protecting a shared
 // resource that is read concurrently and written exclusively
@@ -23,7 +22,6 @@ public:
    //</Snippet2>
    literal int numThreads = 26;
    static bool running = true;
-   static Random^ rnd = gcnew Random;
 
    // Statistics.
    static int readerTimeouts = 0;
@@ -32,10 +30,11 @@ public:
    static int writes = 0;
    static void ThreadProc()
    {
-      
+      Random^ rnd = gcnew Random;
+
       // As long as a thread runs, it randomly selects
-      // various ways to read and write from the shared 
-      // resource. Each of the methods demonstrates one 
+      // various ways to read and write from the shared
+      // resource. Each of the methods demonstrates one
       // or more features of ReaderWriterLock.
       while ( running )
       {
@@ -44,12 +43,12 @@ public:
                   ReadFromResource( 10 );
          else
          if ( action < .81 )
-                  ReleaseRestore( 50 );
+                  ReleaseRestore( rnd, 50 );
          else
          if ( action < .90 )
-                  UpgradeDowngrade( 100 );
+                  UpgradeDowngrade( rnd, 100 );
          else
-                  WriteToResource( 100 );
+                  WriteToResource( rnd, 100 );
       }
    }
 
@@ -64,7 +63,7 @@ public:
          rwl->AcquireReaderLock( timeOut );
          try
          {
-            
+
             // It is safe for this thread to read from
             // the shared resource.
             Display( String::Format( "reads resource value {0}", resource ) );
@@ -72,15 +71,15 @@ public:
          }
          finally
          {
-            
+
             // Ensure that the lock is released.
             rwl->ReleaseReaderLock();
          }
 
       }
-      catch ( ApplicationException^ ) 
+      catch ( ApplicationException^ )
       {
-         
+
          // The reader lock request timed out.
          Interlocked::Increment( readerTimeouts );
       }
@@ -92,14 +91,14 @@ public:
    //<Snippet4>
    // Shows how to request and release the writer lock, and
    // how to handle time-outs.
-   static void WriteToResource( int timeOut )
+   static void WriteToResource( Random^ rnd, int timeOut )
    {
       try
       {
          rwl->AcquireWriterLock( timeOut );
          try
          {
-            
+
             // It is safe for this thread to read or write
             // from the shared resource.
             resource = rnd->Next( 500 );
@@ -108,15 +107,15 @@ public:
          }
          finally
          {
-            
+
             // Ensure that the lock is released.
             rwl->ReleaseWriterLock();
          }
 
       }
-      catch ( ApplicationException^ ) 
+      catch ( ApplicationException^ )
       {
-         
+
          // The writer lock request timed out.
          Interlocked::Increment( writerTimeouts );
       }
@@ -129,32 +128,32 @@ public:
    // Shows how to request a reader lock, upgrade the
    // reader lock to the writer lock, and downgrade to a
    // reader lock again.
-   static void UpgradeDowngrade( int timeOut )
+   static void UpgradeDowngrade( Random^ rnd, int timeOut )
    {
       try
       {
          rwl->AcquireReaderLock( timeOut );
          try
          {
-            
+
             // It is safe for this thread to read from
             // the shared resource.
             Display( String::Format( "reads resource value {0}", resource ) );
             Interlocked::Increment( reads );
-            
+
             // If it is necessary to write to the resource,
-            // you must either release the reader lock and 
+            // you must either release the reader lock and
             // then request the writer lock, or upgrade the
             // reader lock. Note that upgrading the reader lock
             // puts the thread in the write queue, behind any
-            // other threads that might be waiting for the 
+            // other threads that might be waiting for the
             // writer lock.
             try
             {
                LockCookie lc = rwl->UpgradeToWriterLock( timeOut );
                try
                {
-                  
+
                   // It is safe for this thread to read or write
                   // from the shared resource.
                   resource = rnd->Next( 500 );
@@ -163,36 +162,36 @@ public:
                }
                finally
                {
-                  
+
                   // Ensure that the lock is released.
                   rwl->DowngradeFromWriterLock( lc );
                }
 
             }
-            catch ( ApplicationException^ ) 
+            catch ( ApplicationException^ )
             {
-               
+
                // The upgrade request timed out.
                Interlocked::Increment( writerTimeouts );
             }
 
-            
-            // When the lock has been downgraded, it is 
+
+            // When the lock has been downgraded, it is
             // still safe to read from the resource.
             Display( String::Format( "reads resource value {0}", resource ) );
             Interlocked::Increment( reads );
          }
          finally
          {
-            
+
             // Ensure that the lock is released.
             rwl->ReleaseReaderLock();
          }
 
       }
-      catch ( ApplicationException^ ) 
+      catch ( ApplicationException^ )
       {
-         
+
          // The reader lock request timed out.
          Interlocked::Increment( readerTimeouts );
       }
@@ -207,7 +206,7 @@ public:
    // to determine whether another thread has obtained
    // a writer lock since this thread last accessed the
    // resource.
-   static void ReleaseRestore( int timeOut )
+   static void ReleaseRestore( Random^ rnd, int timeOut )
    {
       int lastWriter;
       try
@@ -215,7 +214,7 @@ public:
          rwl->AcquireReaderLock( timeOut );
          try
          {
-            
+
             // It is safe for this thread to read from
             // the shared resource. Cache the value. (You
             // might do this if reading the resource is
@@ -223,21 +222,21 @@ public:
             int resourceValue = resource;
             Display( String::Format( "reads resource value {0}", resourceValue ) );
             Interlocked::Increment( reads );
-            
+
             // Save the current writer sequence number.
             lastWriter = rwl->WriterSeqNum;
-            
+
             // Release the lock, and save a cookie so the
             // lock can be restored later.
             LockCookie lc = rwl->ReleaseLock();
-            
-            // Wait for a random interval (up to a 
+
+            // Wait for a random interval (up to a
             // quarter of a second), and then restore
             // the previous state of the lock. Note that
             // there is no timeout on the Restore method.
             Thread::Sleep( rnd->Next( 250 ) );
             rwl->RestoreLock( lc );
-            
+
             // Check whether other threads obtained the
             // writer lock in the interval. If not, then
             // the cached value of the resource is still
@@ -255,15 +254,15 @@ public:
          }
          finally
          {
-            
+
             // Ensure that the lock is released.
             rwl->ReleaseReaderLock();
          }
 
       }
-      catch ( ApplicationException^ ) 
+      catch ( ApplicationException^ )
       {
-         
+
          // The reader lock request timed out.
          Interlocked::Increment( readerTimeouts );
       }
@@ -273,7 +272,7 @@ public:
 
    //</Snippet6>
    // Helper method briefly displays the most recent
-   // thread action. Comment out calls to Display to 
+   // thread action. Comment out calls to Display to
    // get a better idea of throughput.
    static void Display( String^ msg )
    {
@@ -288,7 +287,7 @@ public:
 int main()
 {
    array<String^>^args = Environment::GetCommandLineArgs();
-   
+
    // Start a series of threads. Each thread randomly
    // performs reads and writes on the shared resource.
    array<Thread^>^t = gcnew array<Thread^>(Test::numThreads);
@@ -301,7 +300,7 @@ int main()
             Thread::Sleep( 300 );
 
    }
-   
+
    // Tell the threads to shut down, then wait until they all
    // finish.
    Test::running = false;
@@ -310,7 +309,7 @@ int main()
       t[ i ]->Join();
 
    }
-   
+
    // Display statistics.
    Console::WriteLine( "\r\n {0} reads, {1} writes, {2} reader time-outs, {3} writer time-outs.", Test::reads, Test::writes, Test::readerTimeouts, Test::writerTimeouts );
    Console::WriteLine( "Press ENTER to exit." );

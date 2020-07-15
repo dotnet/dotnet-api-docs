@@ -4,7 +4,7 @@
 /*
    The following example demonstrates the usage of the 'OperationOutput'
    class and its constructor 'OperationOutput'. It creates a
-   'ServiceDescription' object by reading the file 'AddNumbersIn_cs.wsdl' and 
+   'ServiceDescription' object by reading the file 'AddNumbersIn_cs.wsdl' and
    then creates 'AddNumbersOut_cs.wsdl' file which corresponds to added
    attributes in the 'ServiceDescription' instance.
 */
@@ -21,13 +21,13 @@ class MyOperationOutputSample
    {
       try
       {
-         ServiceDescription myDescription = 
+         ServiceDescription myDescription =
             ServiceDescription.Read("AddNumbersIn_cs.wsdl");
 
          // Add the ServiceHttpPost binding.
          Binding myBinding = new Binding();
          myBinding.Name = "ServiceHttpPost";
-         XmlQualifiedName myXmlQualifiedName = 
+         XmlQualifiedName myXmlQualifiedName =
             new XmlQualifiedName("s0:ServiceHttpPost");
          myBinding.Type = myXmlQualifiedName;
          HttpBinding myHttpBinding = new HttpBinding();
@@ -43,7 +43,7 @@ class MyOperationOutputSample
 
          // Add the input binding.
          InputBinding myInput = new InputBinding();
-         MimeContentBinding postMimeContentbinding = 
+         MimeContentBinding postMimeContentbinding =
             new MimeContentBinding();
          postMimeContentbinding.Type= "application/x-www-form-urlencoded";
          myInput.Extensions.Add(postMimeContentbinding);
@@ -58,7 +58,7 @@ class MyOperationOutputSample
          myOutput.Extensions.Add(postMimeXmlbinding);
 
          // Add the OutPutBinding to the OperationBinding.
-         myOperationBinding.Output = myOutput; 
+         myOperationBinding.Output = myOutput;
 
          myBinding.Operations.Add(myOperationBinding);
          myDescription.Bindings.Add(myBinding);
@@ -77,13 +77,13 @@ class MyOperationOutputSample
          postPortType.Name = "ServiceHttpPost";
          Operation postOperation = new Operation();
          postOperation.Name = "AddNumbers";
-         OperationMessage postInput = 
+         OperationMessage postInput =
             (OperationMessage)new OperationInput();
-         postInput.Message =  
+         postInput.Message =
             new XmlQualifiedName("s0:AddNumbersHttpPostIn");
 // <Snippet2>
          OperationOutput postOutput = new OperationOutput();
-         postOutput.Message = 
+         postOutput.Message =
             new XmlQualifiedName("s0:AddNumbersHttpPostOut");
 
          postOperation.Messages.Add(postInput);
@@ -112,7 +112,7 @@ class MyOperationOutputSample
          MessagePart postMessagePart3 = new MessagePart();
          postMessagePart3.Name = "Body";
          postMessagePart3.Element = new XmlQualifiedName("s0:int");
-         postMessage2.Parts.Add(postMessagePart3); 
+         postMessage2.Parts.Add(postMessagePart3);
 
          myDescription.Messages.Add(postMessage1);
          myDescription.Messages.Add(postMessage2);

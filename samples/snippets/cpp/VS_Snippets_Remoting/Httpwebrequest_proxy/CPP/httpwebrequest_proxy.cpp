@@ -1,11 +1,11 @@
 /*System::Net::HttpWebRequest::Proxy
 This program demonstrates the 'Proxy' property of the 'HttpWebRequest' class.
-A 'HttpWebRequest' Object* and a  'Proxy' Object* is created.The Proxy Object is then assigned to
-the 'Proxy' Property of the 'HttpWebRequest' Object* and  printed onto the console(this is the default
+A 'HttpWebRequest' Object* and a 'Proxy' Object* is created. The Proxy Object is then assigned to
+the 'Proxy' property of the 'HttpWebRequest' Object* and printed onto the console (this is the default
 Proxy setting).New Proxy address and the credentials are requested from the User::A new Proxy Object* is
-then constructed from the supplied inputs.Then the 'Proxy' property of the request is associated with the new
+then constructed from the supplied inputs. Then the 'Proxy' property of the request is associated with the new
 Proxy Object*.
-Note:No credentials are required if the Proxy does not require any authentication.
+Note: No credentials are required if the Proxy does not require any authentication.
 */
 
 #using <System.dll>

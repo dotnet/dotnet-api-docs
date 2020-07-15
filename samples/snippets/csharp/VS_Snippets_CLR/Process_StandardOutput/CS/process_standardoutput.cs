@@ -13,7 +13,7 @@ class StandardOutputExample
             process.StartInfo.RedirectStandardOutput = true;
             process.Start();
 
-            // Synchronously read the standard output of the spawned process. 
+            // Synchronously read the standard output of the spawned process.
             StreamReader reader = process.StandardOutput;
             string output = reader.ReadToEnd();
 

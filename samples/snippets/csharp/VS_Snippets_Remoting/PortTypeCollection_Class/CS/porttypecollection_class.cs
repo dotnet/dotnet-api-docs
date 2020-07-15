@@ -5,7 +5,7 @@
   It gets the collection of 'PortType'from 'ServiceDescription'. It copies the
   collection into an array of 'PortType' and displays their names. Then it removes a
   'PortType', checks whether the collection contains the removed 'PortType'.
-  It adds the same 'PortType' and writes a new web service description file into 
+  It adds the same 'PortType' and writes a new web service description file into
   'MathService_New.wsdl'.
 */
 
@@ -22,18 +22,18 @@ class MyPortTypeCollectionClass
       try
       {
          // Read the existing Web service description file.
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MathService_CS.wsdl");
-         PortTypeCollection myPortTypeCollection = 
+         PortTypeCollection myPortTypeCollection =
             myServiceDescription.PortTypes;
          int noOfPortTypes = myServiceDescription.PortTypes.Count;
-         Console.WriteLine("\nTotal number of PortTypes: " 
+         Console.WriteLine("\nTotal number of PortTypes: "
             + myServiceDescription.PortTypes.Count);
-         
+
          // Get the first PortType in the collection.
          PortType myNewPortType = myPortTypeCollection["MathServiceSoap"];
          int index = myPortTypeCollection.IndexOf(myNewPortType);
-         Console.WriteLine("The PortType with the name " + myNewPortType.Name 
+         Console.WriteLine("The PortType with the name " + myNewPortType.Name
             + " is at index: " + (index+1));
 
          Console.WriteLine("Removing the PortType: " + myNewPortType.Name);
@@ -41,7 +41,7 @@ class MyPortTypeCollectionClass
          // Remove the PortType from the collection.
          myPortTypeCollection.Remove(myNewPortType);
          bool bContains = myPortTypeCollection.Contains(myNewPortType);
-         Console.WriteLine("The PortType with the name " + myNewPortType.Name 
+         Console.WriteLine("The PortType with the name " + myNewPortType.Name
             + " exists: " + bContains);
 
          Console.WriteLine("Total number of PortTypes after removing: "
@@ -59,7 +59,7 @@ class MyPortTypeCollectionClass
          // List the PortTypes available in the WSDL document.
          foreach(PortType myPortType in myPortTypeCollection)
            Console.WriteLine("The PortType name is: " + myPortType.Name);
-           
+
          myServiceDescription.Write("MathService_New.wsdl");
       }
       catch(Exception e)

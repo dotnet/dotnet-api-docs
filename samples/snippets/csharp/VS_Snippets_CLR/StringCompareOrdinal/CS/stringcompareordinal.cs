@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-class Test 
+class Test
 {
-	public static void Main(String[] args) 
+	public static void Main(String[] args)
 	{
 	String strLow = "abc";
 	String strCap = "ABC";

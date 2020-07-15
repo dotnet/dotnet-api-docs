@@ -41,13 +41,14 @@
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="System" FromVersion="4.0.0.0" To="System.Runtime" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
     <BaseTypeName FrameworkAlternate="netframework-1.1">System.MarshalByRefObject</BaseTypeName>
   </Base>
   <Interfaces>
-    <Interface>
+    <Interface FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
       <InterfaceName>System.Runtime.Serialization.ISerializable</InterfaceName>
     </Interface>
   </Interfaces>
@@ -187,6 +188,36 @@ Uri uri1 = new Uri("C:/test/path/file.txt") // Implicit file path.
 Uri uri2 = new Uri("file:///C:/test/path/file.txt") // Explicit file path.
 ```
  These implicit file paths are not compliant with the URI specification and so should be avoided when possible. When using .NET Core on Unix-based systems, implicit file paths can be especially problematic, because an absolute implicit file path is *indistinguishable* from a relative path. When such ambiguity is present, <xref:System.Uri> default to interpreting the path as an absolute URI.
+
+## Security Considerations
+
+Because of security concerns, your application should use caution when accepting <xref:System.Uri> instances from untrusted sources and with `dontEscape` set to `true` in the [constructor](xref:System.Uri.%23ctor(System.String,System.Boolean)). You can check a URI string for validity by calling the <xref:System.Uri.IsWellFormedOriginalString%2A> method.
+
+When dealing with untrusted user input, confirm assumptions about the newly created `Uri` instance before trusting its properties.
+This can be done in the following way:
+
+```csharp
+string userInput = ...;
+
+Uri baseUri = new Uri("https://myWebsite/files/");
+
+if (!Uri.TryCreate(baseUri, userInput, out Uri newUri))
+{
+    // Fail: invalid input.
+}
+
+if (!baseUri.IsBaseOf(newUri))
+{
+    // Fail: the Uri base has been modified - the created Uri is not rooted in the original directory.
+}
+```
+
+This validation can be used in other cases, like when dealing with UNC paths, by simply changing the `baseUri`:
+
+```csharp
+Uri baseUri = new Uri(@"\\host\share\some\directory\name\");
+```
+
   
 ## Performance Considerations  
  If you use a *Web.config *file that contains URIs to initialize your application, additional time is required to process the URIs if their scheme identifiers are nonstandard. In such a case, initialize the affected parts of your application when the URIs are needed, not at start time.  
@@ -202,9 +233,7 @@ Uri uri2 = new Uri("file:///C:/test/path/file.txt") // Explicit file path.
   
  ]]></format>
     </remarks>
-    <block subset="none" type="usage">
-      <para>Because of security concerns, your application should use caution when accepting <see cref="T:System.Uri" /> instances from untrusted sources and with <paramref name="dontEscape" /> set to <see langword="true" />.You can check a URI string for validity by calling the <see cref="M:System.Uri.IsWellFormedOriginalString" /> method.</para>
-    </block>
+    <threadsafe>All members of <see cref="T:System.Uri" /> are thread-safe and may be used concurrently from multiple threads.</threadsafe>
     <altmember cref="T:System.Configuration.IdnElement" />
     <altmember cref="T:System.Configuration.IriParsingElement" />
     <altmember cref="T:System.Configuration.UriSection" />
@@ -212,9 +241,9 @@ Uri uri2 = new Uri("file:///C:/test/path/file.txt") // Explicit file path.
     <altmember cref="M:System.Uri.MakeRelative(System.Uri)" />
     <altmember cref="M:System.Uri.IsWellFormedOriginalString" />
     <altmember cref="T:System.UriBuilder" />
-    <related type="Article" href="https://msdn.microsoft.com/library/35883fe9-2d09-4d8b-80ca-cf23a941e459">Changes to the System.Uri namespace in Version 2.0</related>
-    <related type="Article" href="https://msdn.microsoft.com/library/b5e994c3-3535-4aff-8e1b-b69be22e9a22">International Resource Identifier Support in System.UriSystem.Uri</related>
-    <related type="Article" href="~/docs/framework/network-programming/index.md">Network Programming in the .NET Framework</related>
+    <related type="Article" href="/dotnet/framework/network-programming/changes-to-the-system-uri-namespace-in-version-2-0">Changes to the System.Uri namespace in Version 2.0</related>
+    <related type="Article" href="/dotnet/framework/network-programming/international-resource-identifier-support-in-system-uri">International Resource Identifier Support in System.UriSystem.Uri</related>
+    <related type="Article" href="/dotnet/framework/network-programming/">Network Programming in the .NET Framework</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -436,7 +465,7 @@ Uri uri2 = new Uri("file:///C:/test/path/file.txt") // Explicit file path.
  -or-  
   
  The MS-DOS path specified in the URI must start with c:\\\\.</exception>
-        <related type="Article" href="~/docs/standard/serialization/xml-and-soap-serialization.md">XML and SOAP Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-and-soap-serialization">XML and SOAP Serialization</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">

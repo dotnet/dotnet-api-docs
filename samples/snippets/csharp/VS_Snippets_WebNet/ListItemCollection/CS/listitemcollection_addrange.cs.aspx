@@ -5,12 +5,12 @@
 /*    System.Web.UI.WebControls.ListItemCollection.SyncRoot;System.Web.UI.WebControls.ListItemCollection.AddRange;
     System.Web.UI.WebControls.ListItemCollection.Remove(String)
     
-    The following example demonstrates the 'Remove(String)','AddRange' methods and 'SyncRoot' 
+    The following example demonstrates the 'Remove(String)' and 'AddRange' methods and the 'SyncRoot' 
     property of 'ListItemCollection' class. 
 
     It create a 'ListBox' webcontrol with some list items in it and gives option to add two listitems at a time
-    to the user.The values  entered in the textfields are added to the 'ListBox' by using 'AddRange' method. It 
-    also provides a  textfield to take the item  name to be removed from the 'ListBox'.
+    to the user. The values  entered in the textfields are added to the 'ListBox' by using 'AddRange' method. It 
+    also provides a textfield to take the item name to be removed from the 'ListBox'.
 */
            ListItemCollection ItemCollection;
            

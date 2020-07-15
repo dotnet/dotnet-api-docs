@@ -12,9 +12,9 @@ public class Demo2
         //<snippet21>
         // Create a SoapAnyUri object.
         SoapAnyUri anyUri = new SoapAnyUri();
-        anyUri.Value = "http://localhost:8080/WebService"; 
+        anyUri.Value = "http://localhost:8080/WebService";
         Console.WriteLine(
-            "The value of the SoapAnyUri object is {0}.", 
+            "The value of the SoapAnyUri object is {0}.",
             anyUri.ToString());
         //</snippet21>
     }
@@ -23,10 +23,10 @@ public class Demo2
     {
         //<snippet22>
         // Create a SoapAnyUri object.
-        string anyUriValue = "http://localhost:8080/WebService"; 
+        string anyUriValue = "http://localhost:8080/WebService";
         SoapAnyUri anyUri = new SoapAnyUri(anyUriValue);
         Console.WriteLine(
-            "The value of the SoapAnyUri object is {0}.", 
+            "The value of the SoapAnyUri object is {0}.",
             anyUri.ToString());
         //</snippet22>
     }

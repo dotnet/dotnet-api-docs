@@ -1,10 +1,10 @@
 ﻿/*
  * The following example demonstrates the 'Item[string]' property of
-   FaultBindingCollection class 
- * The program removes a fault binding with the name 'ErrorString' 
-   from the WSDL file. It also removes a operation fault with the name 
+   FaultBindingCollection class
+ * The program removes a fault binding with the name 'ErrorString'
+   from the WSDL file. It also removes a operation fault with the name
    'ErrorString' and displays the resultant WSDL file to the console.
- * 
+ *
  */
 
 using System;

@@ -1,10 +1,10 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-   
+
 public class Sample
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
         ManagementObject m = new ManagementObject(
             "Win32_LogicalDisk.DeviceID=\"C:\"");

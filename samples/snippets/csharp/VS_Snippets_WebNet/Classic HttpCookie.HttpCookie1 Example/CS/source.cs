@@ -7,9 +7,9 @@ public class Page1: Page
  private void Page_Load(Object sender, EventArgs e)
  {
 // <Snippet1>
-HttpCookie MyCookie = new HttpCookie("LastVisit", 
+HttpCookie MyCookie = new HttpCookie("LastVisit",
     DateTime.Now.ToString());
-    
+
 // </Snippet1>
  }
 }

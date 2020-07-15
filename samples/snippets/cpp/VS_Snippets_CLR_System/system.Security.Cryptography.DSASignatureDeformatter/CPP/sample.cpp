@@ -10,14 +10,14 @@ int main()
    try
    {
       
-      //Create a new instance of DSACryptoServiceProvider.
-      DSACryptoServiceProvider^ DSA = gcnew DSACryptoServiceProvider;
+      //Create a new instance of DSA.
+      DSA^ DSA = DSA::Create();
       
       //The hash to sign.
       array<Byte>^Hash = {59,4,248,102,77,97,142,201,210,12,224,93,25,41,100,197,213,134,130,135};
       
       //Create an DSASignatureFormatter object and pass it the 
-      //DSACryptoServiceProvider to transfer the key information.
+      //DSA instance to transfer the key information.
       DSASignatureFormatter^ DSAFormatter = gcnew DSASignatureFormatter( DSA );
       
       //Set the hash algorithm to SHA1.
@@ -27,7 +27,7 @@ int main()
       array<Byte>^SignedHash = DSAFormatter->CreateSignature( Hash );
       
       //Create an DSASignatureDeformatter object and pass it the 
-      //DSACryptoServiceProvider to transfer the key information.
+      //DSA instance to transfer the key information.
       DSASignatureDeformatter^ DSADeformatter = gcnew DSASignatureDeformatter( DSA );
       
       //Verify the hash and display the results to the console.

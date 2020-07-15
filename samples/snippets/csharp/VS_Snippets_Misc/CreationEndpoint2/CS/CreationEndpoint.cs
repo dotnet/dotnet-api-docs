@@ -23,7 +23,7 @@ namespace Microsoft.Samples.WF.CreationEndpoint
         {
         }
 
-        public CreationEndpoint():this (GetDefaultBinding(), 
+        public CreationEndpoint():this (GetDefaultBinding(),
                                         new EndpointAddress(new Uri(DefaultBaseUri, new Uri(Guid.NewGuid().ToString(), UriKind.Relative))))
         {
         }
@@ -33,7 +33,7 @@ namespace Microsoft.Samples.WF.CreationEndpoint
             get
             {
                 if (defaultBaseUri == null)
-                {                    
+                {
                     defaultBaseUri = new Uri(string.Format(CultureInfo.InvariantCulture, "net.pipe://localhost/workflowCreationEndpoint/{0}/{1}",
                         Process.GetCurrentProcess().Id,
                         AppDomain.CurrentDomain.Id));

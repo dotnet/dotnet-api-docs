@@ -14,7 +14,7 @@ public class MyTypeClass
         {
             Type  myType = typeof(MyDemoClass);
             // Get and display the 'IsClass' property of the 'MyDemoClass' instance.
-            Console.WriteLine("\nIs the specified type a class? {0}.", myType.IsClass); 
+            Console.WriteLine("\nIs the specified type a class? {0}.", myType.IsClass);
         }
         catch(Exception e)
         {

@@ -1,68 +1,68 @@
 
 //<Snippet1>
-// Example of the Random::Next( ) methods.
+// Example of the Random::Next() methods.
 using namespace System;
 
 // Generate random numbers with no bounds specified.
-void NoBoundsRandoms( int seed )
+void NoBoundsRandoms(int seed)
 {
-   Console::WriteLine( "\nRandom object, seed = {0}, no bounds:", seed );
-   Random^ randObj = gcnew Random( seed );
+   Console::WriteLine("\nRandom object, seed = {0}, no bounds:", seed);
+   Random^ randObj = gcnew Random(seed);
    
    // Generate six random integers from 0 to int.MaxValue.
-   for ( int j = 0; j < 6; j++ )
-      Console::Write(  "{0,11} ", randObj->Next() );
+   for (int j = 0; j < 6; j++)
+      Console::Write("{0,11} ", randObj->Next());
    Console::WriteLine();
 }
 
 
 // Generate random numbers with an upper bound specified.
-void UpperBoundRandoms( int seed, int upper )
+void UpperBoundRandoms(int seed, int upper)
 {
-   Console::WriteLine( "\nRandom object, seed = {0}, upper bound = {1}:", seed, upper );
-   Random^ randObj = gcnew Random( seed );
+   Console::WriteLine("\nRandom object, seed = {0}, upper bound = {1}:", seed, upper);
+   Random^ randObj = gcnew Random(seed);
    
    // Generate six random integers from 0 to the upper bound.
-   for ( int j = 0; j < 6; j++ )
-      Console::Write(  "{0,11} ", randObj->Next( upper ) );
+   for (int j = 0; j < 6; j++)
+      Console::Write("{0,11} ", randObj->Next(upper));
    Console::WriteLine();
 }
 
 
 // Generate random numbers with both bounds specified.
-void BothBoundsRandoms( int seed, int lower, int upper )
+void BothBoundsRandoms(int seed, int lower, int upper)
 {
-   Console::WriteLine( "\nRandom object, seed = {0}, lower = {1}, upper = {2}:", seed, lower, upper );
-   Random^ randObj = gcnew Random( seed );
+   Console::WriteLine("\nRandom object, seed = {0}, lower = {1}, upper = {2}:", seed, lower, upper);
+   Random^ randObj = gcnew Random(seed);
    
    // Generate six random integers from the lower to 
    // upper bounds.
-   for ( int j = 0; j < 6; j++ )
-      Console::Write(  "{0,11} ", randObj->Next( lower, upper ) );
+   for (int j = 0; j < 6; j++)
+      Console::Write("{0,11} ", randObj->Next(lower, upper));
    Console::WriteLine();
 }
 
 int main()
 {
-   Console::WriteLine( "This example of the Random::Next( ) methods\n"
-   "generates the following output.\n" );
-   Console::WriteLine( "Create Random objects all with the same seed and "
+   Console::WriteLine("This example of the Random::Next() methods\n"
+   "generates the following output.\n");
+   Console::WriteLine("Create Random objects all with the same seed and "
    "generate\nsequences of numbers with different "
    "bounds. Note the effect\nthat the various "
-   "combinations of bounds have on the sequences." );
-   NoBoundsRandoms( 234 );
-   UpperBoundRandoms( 234, Int32::MaxValue );
-   UpperBoundRandoms( 234, 2000000000 );
-   UpperBoundRandoms( 234, 200000000 );
-   BothBoundsRandoms( 234, 0, Int32::MaxValue );
-   BothBoundsRandoms( 234, Int32::MinValue, Int32::MaxValue );
-   BothBoundsRandoms( 234, -2000000000, 2000000000 );
-   BothBoundsRandoms( 234, -200000000, 200000000 );
-   BothBoundsRandoms( 234, -2000, 2000 );
+   "combinations of bounds have on the sequences.");
+   NoBoundsRandoms(234);
+   UpperBoundRandoms(234, Int32::MaxValue);
+   UpperBoundRandoms(234, 2000000000);
+   UpperBoundRandoms(234, 200000000);
+   BothBoundsRandoms(234, 0, Int32::MaxValue);
+   BothBoundsRandoms(234, Int32::MinValue, Int32::MaxValue);
+   BothBoundsRandoms(234, -2000000000, 2000000000);
+   BothBoundsRandoms(234, -200000000, 200000000);
+   BothBoundsRandoms(234, -2000, 2000);
 }
 
 /*
-This example of the Random::Next( ) methods
+This example of the Random::Next() methods
 generates the following output.
 
 Create Random objects all with the same seed and generate

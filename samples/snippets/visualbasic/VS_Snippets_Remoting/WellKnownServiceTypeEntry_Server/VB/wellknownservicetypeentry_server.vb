@@ -2,7 +2,7 @@
 
 ' The following example demonstrates the 'WellKnownServiceTypeEntry' class. 
 ' It registers a 'HttpChannel' object with the channel services. Then registers the 'HelloServer'
-' type as well known type with the Remoting Infrastructure at the service end . It displays the 
+' type as well known type with the Remoting Infrastructure at the service end. It displays the 
 ' properties of the 'WellKnownServiceTypeEntry' object holding the values for the above well-known
 ' type .
 

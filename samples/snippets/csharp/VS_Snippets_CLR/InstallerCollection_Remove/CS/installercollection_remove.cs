@@ -4,7 +4,7 @@
 
 /*
    The following example demonstrates the 'Remove(Installer)',
-   'Contains(Installer)' and 'IndexOf(Installer)' methods of the 
+   'Contains(Installer)' and 'IndexOf(Installer)' methods of the
    'InstallerCollection' class. Create's 'AssemblyInstaller' instances
    for 'MyAssembly1.exe' and for 'MyAssembly2.exe'. These instances
    of 'AssemblyInstaller' are added to an instance of 'TransactedInstaller'.
@@ -35,14 +35,14 @@ public class InstallerCollection_Remove
          InstallContext myInstallContext;
 
          // Create a instance of 'AssemblyInstaller' that installs 'MyAssembly1.exe'.
-         myAssemblyInstaller1 = 
+         myAssemblyInstaller1 =
             new AssemblyInstaller("MyAssembly1.exe", null);
 
          // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.
          myTransactedInstaller.Installers.Insert(0, myAssemblyInstaller1);
 
          // Create a instance of 'AssemblyInstaller' that installs 'MyAssembly2.exe'.
-         myAssemblyInstaller2 = 
+         myAssemblyInstaller2 =
             new AssemblyInstaller("MyAssembly2.exe", null);
 
          // Add the instance of 'AssemblyInstaller' to the 'TransactedInstaller'.
@@ -65,13 +65,13 @@ public class InstallerCollection_Remove
          {
             if((myInstallers[i].GetType()).Equals(typeof(AssemblyInstaller)))
             {
-               Console.WriteLine("{0} {1}", i + 1, 
+               Console.WriteLine("{0} {1}", i + 1,
                   ((AssemblyInstaller)myInstallers[i]).Path);
             }
          }
 
          // Create a instance of 'InstallContext' with log file named 'Install.log'.
-         myInstallContext = 
+         myInstallContext =
             new InstallContext("Install.log", null);
          myTransactedInstaller.Context = myInstallContext;
 

@@ -4,8 +4,8 @@
 
 /* The following program demonstrates the property ' ServiceDescription' and
    methods 'FindPartsByName','FindPartByName' of class 'Message'. The program
-   reads a wsdl document "MathService.wsdl" and instantiates a 
-   ServiceDescription instance from WSDL document. 
+   reads a wsdl document "MathService.wsdl" and instantiates a
+   ServiceDescription instance from WSDL document.
    The program invokes 'FindPartsByName' to obtain an array of MessageParts and also invokes
    'FindPartByName' to retrieve a specific 'MessagePart'.
  */
@@ -21,7 +21,7 @@ namespace MyMessage
       public static void Main()
       {
          try
-         {  
+         {
 // <Snippet2>
             ServiceDescription myServiceDescription = ServiceDescription.Read("MathService_cs.wsdl");
 // <Snippet1>

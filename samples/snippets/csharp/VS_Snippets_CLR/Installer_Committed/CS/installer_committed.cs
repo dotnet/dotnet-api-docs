@@ -7,9 +7,9 @@
    'OnCommitted' are overridden in the derived class. Space is provided
    for the user to add the steps to be performed before committing and
    after committing.
-  
-   'Installer_Committed.exe' needs to be run using the installer process 
-   'installutil'. 
+
+   'Installer_Committed.exe' needs to be run using the installer process
+   'installutil'.
 */
 using System;
 using System.Collections;
@@ -17,7 +17,7 @@ using System.ComponentModel;
 using System.Configuration.Install;
 
 [RunInstaller(true)]
-public class MyInstaller: Installer 
+public class MyInstaller: Installer
 {
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)

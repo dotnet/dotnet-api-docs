@@ -10,7 +10,7 @@ public class Page1: Page
  {
 // <Snippet1>
 MyCookie.Path = "/asp";
- 
+
 // </Snippet1>
  }
 }

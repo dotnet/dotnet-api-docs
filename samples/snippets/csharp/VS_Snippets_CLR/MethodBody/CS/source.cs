@@ -23,11 +23,11 @@ public class Example
         MethodBody mb = mi.GetMethodBody();
         Console.WriteLine("\r\nMethod: {0}", mi);
 
-        // Display the general information included in the 
+        // Display the general information included in the
         // MethodBody object.
-        Console.WriteLine("    Local variables are initialized: {0}", 
+        Console.WriteLine("    Local variables are initialized: {0}",
             mb.InitLocals);
-        Console.WriteLine("    Maximum number of items on the operand stack: {0}", 
+        Console.WriteLine("    Maximum number of items on the operand stack: {0}",
             mb.MaxStackSize);
         //</Snippet2>
         //<Snippet3>
@@ -49,18 +49,18 @@ public class Example
             Console.WriteLine(ehc.Flags.ToString());
 
             // The FilterOffset property is meaningful only for Filter
-            // clauses. The CatchType property is not meaningful for 
-            // Filter or Finally clauses. 
+            // clauses. The CatchType property is not meaningful for
+            // Filter or Finally clauses.
             switch (ehc.Flags)
             {
                 case ExceptionHandlingClauseOptions.Filter:
-                    Console.WriteLine("        Filter Offset: {0}", 
+                    Console.WriteLine("        Filter Offset: {0}",
                         ehc.FilterOffset);
                     break;
                 case ExceptionHandlingClauseOptions.Finally:
                     break;
                 default:
-                    Console.WriteLine("    Type of exception: {0}", 
+                    Console.WriteLine("    Type of exception: {0}",
                         ehc.CatchType);
                     break;
             }
@@ -79,14 +79,14 @@ public class Example
     public void MethodBodyExample(object arg)
     {
         // Define some local variables. In addition to these variables,
-        // the local variable list includes the variables scoped to 
+        // the local variable list includes the variables scoped to
         // the catch clauses.
         int var1 = 42;
         string var2 = "Forty-two";
 
         try
         {
-            // Depending on the input value, throw an ArgumentException or 
+            // Depending on the input value, throw an ArgumentException or
             // an ArgumentNullException to test the Catch clauses.
             if (arg == null)
             {
@@ -95,12 +95,12 @@ public class Example
             if (arg.GetType() == typeof(string))
             {
                 throw new ArgumentException("The argument cannot be a string.");
-            }        
+            }
         }
 
         // This filter clause selects only exceptions that derive
-        // from the ArgumentException class. 
-        // Other exceptions, including ArgumentException itself, 
+        // from the ArgumentException class.
+        // Other exceptions, including ArgumentException itself,
         // are not handled by this filter clause.
         catch (ArgumentException ex) when (ex.GetType().IsSubclassOf(typeof(ArgumentException)))
         {
@@ -111,9 +111,9 @@ public class Example
         // any other class derived from Exception.
         catch(Exception ex)
         {
-            Console.WriteLine("Ordinary exception-handling clause caught: {0}", 
+            Console.WriteLine("Ordinary exception-handling clause caught: {0}",
                 ex.GetType());
-        }        
+        }
         finally
         {
             var1 = 3033;

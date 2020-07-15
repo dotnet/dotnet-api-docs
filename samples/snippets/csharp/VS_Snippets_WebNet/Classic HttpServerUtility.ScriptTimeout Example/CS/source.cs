@@ -8,7 +8,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Server.ScriptTimeout = 60;
-   
+
 // </Snippet1>
  }
 }

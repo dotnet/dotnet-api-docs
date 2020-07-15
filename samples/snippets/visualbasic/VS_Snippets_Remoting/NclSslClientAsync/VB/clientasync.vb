@@ -189,7 +189,7 @@ Namespace Examples.Ssl
 			' The server name must match the name on the server certificate.
 			sslStream.BeginAuthenticateAsClient(
 			    serverName, clientCertificates,
-                SslProtocols.Ssl3, True, 
+                SslProtocols.None, True, 
                 New AsyncCallback(AddressOf AuthenticateCallback), sslStream)
 
 			' User can press a key to exit application, or let the 

@@ -20,7 +20,7 @@ public class SignVerifyEnvelope
         {
 
             // Generate a signing key.
-            HMACSHA1 Key = new HMACSHA1();
+            HMACSHA256 Key = new HMACSHA256();
 
             // Create an XML file to sign.
             CreateSomeXml("Example.xml");

@@ -1,5 +1,5 @@
 ﻿//<snippet1>
-// This example demonstrates the CultureAndRegionInfoBuilder.Save and 
+// This example demonstrates the CultureAndRegionInfoBuilder.Save and
 // CreateFromLdml methods.
 // Compile this example with a reference to sysglobl.dll.
 
@@ -8,9 +8,9 @@ using System.Globalization;
 using System.IO;
 using System.Xml;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     string savedCARIB = "mySavedCARIB.xml";
     string msg1 = "The name of the original CultureAndRegionInfoBuilder" +
@@ -20,9 +20,9 @@ class Sample
     string msg3 = "The name of the reconstituted CultureAndRegionInfoBuilder" +
                   " is \"{0}\".";
 
-// Construct a new, privately used culture that extends the en-US culture 
+// Construct a new, privately used culture that extends the en-US culture
 // provided by the .NET Framework. In this sample, the CultureAndRegion-
-// Types.Specific parameter creates a minimal CultureAndRegionInfoBuilder 
+// Types.Specific parameter creates a minimal CultureAndRegionInfoBuilder
 // object that you must populate with culture and region information.
 
     CultureAndRegionInfoBuilder cib1 = null;
@@ -50,7 +50,7 @@ class Sample
     Console.WriteLine(msg1, cib1.CultureName);
 
 // Save the new CultureAndRegionInfoBuilder object in the specified file in
-// LDML format. The file is saved in the same directory as the application 
+// LDML format. The file is saved in the same directory as the application
 // that calls the Save method.
 
     Console.WriteLine("Saving the custom culture to a file...");

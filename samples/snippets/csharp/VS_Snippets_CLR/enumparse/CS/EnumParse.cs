@@ -11,13 +11,13 @@ public class ParseTest
         Console.WriteLine("The entries of the Colors enumeration are:");
         foreach (string colorName in Enum.GetNames(typeof(Colors)))
         {
-            Console.WriteLine("{0} = {1:D}", colorName, 
+            Console.WriteLine("{0} = {1:D}", colorName,
                                          Enum.Parse(typeof(Colors), colorName));
         }
         Console.WriteLine();
 
         Colors orange = (Colors) Enum.Parse(typeof(Colors), "Red, Yellow");
-        Console.WriteLine("The orange value {0:D} has the combined entries of {0}", 
+        Console.WriteLine("The orange value {0:D} has the combined entries of {0}",
                            orange);
     }
 }

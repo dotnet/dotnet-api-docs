@@ -1,11 +1,11 @@
 ﻿// <Snippet1>
 using System;
-public enum Color 
+public enum Color
 { Red, Blue, Green }
 
-class TestIsEnum 
+class TestIsEnum
 {
-    public static void Main() 
+    public static void Main()
     {
        Type colorType = typeof(Color);
        Type enumType = typeof(Enum);

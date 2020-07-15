@@ -1,8 +1,8 @@
 ﻿using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         //<snippet1>
         string str = "abcdefg";

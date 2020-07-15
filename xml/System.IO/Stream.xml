@@ -43,8 +43,8 @@
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.IO" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="System.IO" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="System.IO" FromVersion="4.0.0.0" To="mscorlib" ToVersion="4.0.0.0" FrameworkAlternate="netcore-1.0;netcore-1.1;netstandard-1.3;netstandard-1.4;netstandard-1.6" />
     <TypeForwarding From="System.IO" FromVersion="4.2.0.0" To="System.Runtime" ToVersion="4.2.0.0" FrameworkAlternate="netcore-2.0" />
     <TypeForwarding From="System.IO" FromVersion="4.2.1.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0" />
     <TypeForwarding From="System.IO" FromVersion="4.2.2.0" To="System.Runtime" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
@@ -56,6 +56,9 @@
   <Interfaces>
     <Interface>
       <InterfaceName>System.IDisposable</InterfaceName>
+    </Interface>
+    <Interface FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+      <InterfaceName>System.IAsyncDisposable</InterfaceName>
     </Interface>
   </Interfaces>
   <Attributes>
@@ -94,7 +97,7 @@
   
  Starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)], the <xref:System.IO.Stream> class includes async methods to simplify asynchronous operations. An async method contains `Async` in its name, such as <xref:System.IO.Stream.ReadAsync%2A>, <xref:System.IO.Stream.WriteAsync%2A>, <xref:System.IO.Stream.CopyToAsync%2A>, and <xref:System.IO.Stream.FlushAsync%2A>. These methods enable you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in a [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] app or [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] app where a time-consuming stream operation can block the UI thread and make your app appear as if it is not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.  
   
- When used in a [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] app, <xref:System.IO.Stream> includes two extension methods: <xref:System.IO.WindowsRuntimeStreamExtensions.AsInputStream%2A> and <xref:System.IO.WindowsRuntimeStreamExtensions.AsOutputStream%2A>. These methods convert a <xref:System.IO.Stream> object to a stream in the [!INCLUDE[wrt](~/includes/wrt-md.md)]. You can also convert a stream in the [!INCLUDE[wrt](~/includes/wrt-md.md)] to a <xref:System.IO.Stream> object by using the <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead%2A> and <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite%2A> methods. For more information, see [How to: Convert Between .NET Framework Streams and Windows Runtime Streams](~/docs/standard/io/how-to-convert-between-dotnet-streams-and-winrt-streams.md)  
+ When used in a [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] app, <xref:System.IO.Stream> includes two extension methods: <xref:System.IO.WindowsRuntimeStreamExtensions.AsInputStream%2A> and <xref:System.IO.WindowsRuntimeStreamExtensions.AsOutputStream%2A>. These methods convert a <xref:System.IO.Stream> object to a stream in the [!INCLUDE[wrt](~/includes/wrt-md.md)]. You can also convert a stream in the [!INCLUDE[wrt](~/includes/wrt-md.md)] to a <xref:System.IO.Stream> object by using the <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForRead%2A> and <xref:System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite%2A> methods. For more information, see [How to: Convert Between .NET Framework Streams and Windows Runtime Streams](/dotnet/standard/io/how-to-convert-between-dotnet-streams-and-winrt-streams)  
   
  Some stream implementations perform local buffering of the underlying data to improve performance. For such streams, you can use the <xref:System.IO.Stream.Flush%2A> or <xref:System.IO.Stream.FlushAsync%2A> method to clear any internal buffers and ensure that all data has been written to the underlying data source or repository.  
   
@@ -113,13 +116,13 @@
     <block subset="none" type="overrides">
       <para>When you implement a derived class of <see cref="T:System.IO.Stream" />, you must provide implementations for the <see cref="M:System.IO.Stream.Read(System.Byte[],System.Int32,System.Int32)" /> and <see cref="M:System.IO.Stream.Write(System.Byte[],System.Int32,System.Int32)" /> methods. The asynchronous methods <see cref="M:System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32)" />, <see cref="M:System.IO.Stream.WriteAsync(System.Byte[],System.Int32,System.Int32)" />, and <see cref="M:System.IO.Stream.CopyToAsync(System.IO.Stream)" /> use the synchronous methods <see cref="M:System.IO.Stream.Read(System.Byte[],System.Int32,System.Int32)" /> and <see cref="M:System.IO.Stream.Write(System.Byte[],System.Int32,System.Int32)" /> in their implementations. Therefore, your implementations of <see cref="M:System.IO.Stream.Read(System.Byte[],System.Int32,System.Int32)" /> and <see cref="M:System.IO.Stream.Write(System.Byte[],System.Int32,System.Int32)" /> will work correctly with the asynchronous methods. The default implementations of <see cref="M:System.IO.Stream.ReadByte" /> and <see cref="M:System.IO.Stream.WriteByte(System.Byte)" /> create a new single-element byte array, and then call your implementations of <see cref="M:System.IO.Stream.Read(System.Byte[],System.Int32,System.Int32)" /> and <see cref="M:System.IO.Stream.Write(System.Byte[],System.Int32,System.Int32)" />. When you derive from <see cref="T:System.IO.Stream" />, we recommend that you override these methods to access your internal buffer, if you have one, for substantially better performance. You must also provide implementations of <see cref="P:System.IO.Stream.CanRead" />, <see cref="P:System.IO.Stream.CanSeek" />, <see cref="P:System.IO.Stream.CanWrite" />, <see cref="M:System.IO.Stream.Flush" />, <see cref="P:System.IO.Stream.Length" />, <see cref="P:System.IO.Stream.Position" />, <see cref="M:System.IO.Stream.Seek(System.Int64,System.IO.SeekOrigin)" />, and <see cref="M:System.IO.Stream.SetLength(System.Int64)" />.  
   
- Do not override the <see cref="M:System.IO.Stream.Close" /> method, instead, put all the <see cref="T:System.IO.Stream" /> cleanup logic in the <see cref="M:System.IO.Stream.Dispose(System.Boolean)" /> method. For more information, see [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).</para>
+ Do not override the <see cref="M:System.IO.Stream.Close" /> method, instead, put all the <see cref="T:System.IO.Stream" /> cleanup logic in the <see cref="M:System.IO.Stream.Dispose(System.Boolean)" /> method. For more information, see [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).</para>
     </block>
     <altmember cref="T:System.IO.FileStream" />
     <altmember cref="T:System.IO.MemoryStream" />
     <altmember cref="T:System.IO.BufferedStream" />
-    <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-    <related type="Article" href="~/docs/standard/io/how-to-convert-between-dotnet-streams-and-winrt-streams.md">How to: Convert Between .NET Framework Streams and Windows Runtime Streams</related>
+    <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+    <related type="Article" href="/dotnet/standard/io/how-to-convert-between-dotnet-streams-and-winrt-streams">How to: Convert Between .NET Framework Streams and Windows Runtime Streams</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -241,10 +244,10 @@
         <exception cref="T:System.ArgumentException">One or more of the arguments is invalid.</exception>
         <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
         <exception cref="T:System.NotSupportedException">The current <see langword="Stream" /> implementation does not support the read operation.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
-        <related type="Article" href="~/docs/standard/io/asynchronous-file-i-o.md">Asynchronous File I/O</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/asynchronous-file-i-o">Asynchronous File I/O</related>
       </Docs>
     </Member>
     <Member MemberName="BeginWrite">
@@ -321,10 +324,10 @@
         <exception cref="T:System.NotSupportedException">The current <see langword="Stream" /> implementation does not support the write operation.</exception>
         <altmember cref="M:System.IO.Stream.EndWrite(System.IAsyncResult)" />
         <altmember cref="P:System.IO.Stream.CanWrite" />
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
-        <related type="Article" href="~/docs/standard/io/asynchronous-file-i-o.md">Asynchronous File I/O</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/asynchronous-file-i-o">Asynchronous File I/O</related>
       </Docs>
     </Member>
     <Member MemberName="CanRead">
@@ -386,9 +389,9 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="CanSeek">
@@ -441,9 +444,9 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="CanTimeout">
@@ -560,9 +563,9 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="Close">
@@ -614,11 +617,11 @@
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>In derived classes, do not override the <see cref="M:System.IO.Stream.Close" /> method, instead, put all of the <see langword="Stream" /> cleanup logic in the <see cref="M:System.IO.Stream.Dispose(System.Boolean)" /> method. For more information, see [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).</para>
+          <para>In derived classes, do not override the <see cref="M:System.IO.Stream.Close" /> method, instead, put all of the <see langword="Stream" /> cleanup logic in the <see cref="M:System.IO.Stream.Dispose(System.Boolean)" /> method. For more information, see [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).</para>
         </block>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="CopyTo">
@@ -1169,9 +1172,9 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="Dispose">
@@ -1232,7 +1235,7 @@
 ## Remarks  
  This method disposes the stream, by writing any changes to the backing store and closing the stream to release resources.  
   
- Calling `Dispose` allows the resources used by the <xref:System.IO.Stream> to be reallocated for other purposes. For more information about `Dispose`, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md).  
+ Calling `Dispose` allows the resources used by the <xref:System.IO.Stream> to be reallocated for other purposes. For more information about `Dispose`, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged).  
   
  ]]></format>
         </remarks>
@@ -1300,9 +1303,9 @@
         <block subset="none" type="overrides">
           <para>In derived classes, do not override the <see cref="M:System.IO.Stream.Close" /> method, instead, put all of the Stream cleanup logic in the <see cref="M:System.IO.Stream.Dispose(System.Boolean)" /> method.  
   
- <see cref="M:System.ComponentModel.Component.Dispose" /> can be called multiple times by other objects. When overriding <see cref="M:System.IO.Stream.Dispose(System.Boolean)" />, be careful not to reference objects that have been previously disposed of in an earlier call to <see cref="M:System.ComponentModel.Component.Dispose" />. For more information about how to implement <see cref="M:System.IO.Stream.Dispose(System.Boolean)" />, see [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).  
+ <see cref="M:System.ComponentModel.Component.Dispose" /> can be called multiple times by other objects. When overriding <see cref="M:System.IO.Stream.Dispose(System.Boolean)" />, be careful not to reference objects that have been previously disposed of in an earlier call to <see cref="M:System.ComponentModel.Component.Dispose" />. For more information about how to implement <see cref="M:System.IO.Stream.Dispose(System.Boolean)" />, see [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).  
   
- For more information about <see cref="M:System.ComponentModel.Component.Dispose" /> and <see cref="M:System.Object.Finalize" />, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md).</para>
+ For more information about <see cref="M:System.ComponentModel.Component.Dispose" /> and <see cref="M:System.Object.Finalize" />, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged).</para>
         </block>
       </Docs>
     </Member>
@@ -1348,7 +1351,7 @@
  
  This method disposes the stream by writing any changes to the backing store and closing the stream to release resources.   
   
- Calling `DisposeAsync` allows the resources used by the <xref:System.IO.Stream> to be reallocated for other purposes. For more information, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md).  
+ Calling `DisposeAsync` allows the resources used by the <xref:System.IO.Stream> to be reallocated for other purposes. For more information, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged).  
   
  ]]></format>
         </remarks>
@@ -1418,10 +1421,10 @@
         <exception cref="T:System.InvalidOperationException">
           <paramref name="asyncResult" /> did not originate from a <see cref="M:System.IO.Stream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)" /> method on the current stream.</exception>
         <exception cref="T:System.IO.IOException">The stream is closed or an internal error has occurred.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
-        <related type="Article" href="~/docs/standard/io/asynchronous-file-i-o.md">Asynchronous File I/O</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/asynchronous-file-i-o">Asynchronous File I/O</related>
       </Docs>
     </Member>
     <Member MemberName="EndWrite">
@@ -1485,10 +1488,10 @@
         <exception cref="T:System.InvalidOperationException">
           <paramref name="asyncResult" /> did not originate from a <see cref="M:System.IO.Stream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)" /> method on the current stream.</exception>
         <exception cref="T:System.IO.IOException">The stream is closed or an internal error has occurred.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
-        <related type="Article" href="~/docs/standard/io/asynchronous-file-i-o.md">Asynchronous File I/O</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/asynchronous-file-i-o">Asynchronous File I/O</related>
       </Docs>
     </Member>
     <Member MemberName="Flush">
@@ -1543,9 +1546,9 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="FlushAsync">
@@ -1670,7 +1673,7 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The stream has been disposed.</exception>
-        <related type="Article" href="~/docs/standard/threading/cancellation-in-managed-threads.md">Cancellation</related>
+        <related type="Article" href="/dotnet/standard/threading/cancellation-in-managed-threads">Cancellation</related>
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -1715,9 +1718,9 @@
         <remarks>To be added.</remarks>
         <exception cref="T:System.NotSupportedException">A class derived from <see langword="Stream" /> does not support seeking.</exception>
         <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="Null">
@@ -1766,9 +1769,9 @@
   
  ]]></format>
         </remarks>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="ObjectInvariant">
@@ -1867,9 +1870,9 @@
         <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
         <exception cref="T:System.NotSupportedException">The stream does not support seeking.</exception>
         <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="Read">
@@ -1997,9 +2000,9 @@
         <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
         <exception cref="T:System.NotSupportedException">The stream does not support reading.</exception>
         <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="ReadAsync">
@@ -2216,7 +2219,7 @@
         <exception cref="T:System.NotSupportedException">The stream does not support reading.</exception>
         <exception cref="T:System.ObjectDisposedException">The stream has been disposed.</exception>
         <exception cref="T:System.InvalidOperationException">The stream is currently in use by a previous read operation.</exception>
-        <related type="Article" href="~/docs/standard/threading/cancellation-in-managed-threads.md">Cancellation</related>
+        <related type="Article" href="/dotnet/standard/threading/cancellation-in-managed-threads">Cancellation</related>
       </Docs>
     </Member>
     <Member MemberName="ReadByte">
@@ -2279,9 +2282,9 @@
         <block subset="none" type="overrides">
           <para>The default implementation on <see langword="Stream" /> creates a new single-byte array and then calls <see cref="M:System.IO.Stream.Read(System.Byte[],System.Int32,System.Int32)" />. While this is formally correct, it is inefficient. Any stream with an internal buffer should override this method and provide a much more efficient version that reads the buffer directly, avoiding the extra array allocation on every call.</para>
         </block>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="ReadTimeout">
@@ -2396,9 +2399,9 @@
         <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
         <exception cref="T:System.NotSupportedException">The stream does not support seeking, such as if the stream is constructed from a pipe or console output.</exception>
         <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="SetLength">
@@ -2458,9 +2461,9 @@
         <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
         <exception cref="T:System.NotSupportedException">The stream does not support both writing and seeking, such as if the stream is constructed from a pipe or console output.</exception>
         <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="Synchronized">
@@ -2664,9 +2667,9 @@ This member is an explicit interface member implementation. It can be used only 
         <exception cref="T:System.NotSupportedException">The stream does not support writing.</exception>
         <exception cref="T:System.ObjectDisposedException">
           <see cref="M:System.IO.Stream.Write(System.Byte[],System.Int32,System.Int32)" /> was called after the stream was closed.</exception>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="WriteAsync">
@@ -2883,7 +2886,7 @@ This member is an explicit interface member implementation. It can be used only 
         <exception cref="T:System.NotSupportedException">The stream does not support writing.</exception>
         <exception cref="T:System.ObjectDisposedException">The stream has been disposed.</exception>
         <exception cref="T:System.InvalidOperationException">The stream is currently in use by a previous write operation.</exception>
-        <related type="Article" href="~/docs/standard/threading/cancellation-in-managed-threads.md">Cancellation</related>
+        <related type="Article" href="/dotnet/standard/threading/cancellation-in-managed-threads">Cancellation</related>
       </Docs>
     </Member>
     <Member MemberName="WriteByte">
@@ -2942,9 +2945,9 @@ This member is an explicit interface member implementation. It can be used only 
         <block subset="none" type="overrides">
           <para>The default implementation on <see langword="Stream" /> creates a new single-byte array and then calls <see cref="M:System.IO.Stream.Write(System.Byte[],System.Int32,System.Int32)" />. While this is formally correct, it is inefficient. Any stream with an internal buffer should override this method and provide a much more efficient version that writes to the buffer directly, avoiding the extra array allocation on every call.</para>
         </block>
-        <related type="Article" href="~/docs/standard/io/index.md">File and Stream I/O</related>
-        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">How to: Read Text from a File</related>
-        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
       </Docs>
     </Member>
     <Member MemberName="WriteTimeout">

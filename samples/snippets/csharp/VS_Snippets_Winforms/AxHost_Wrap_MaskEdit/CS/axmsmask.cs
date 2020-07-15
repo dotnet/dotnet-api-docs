@@ -18,7 +18,7 @@ namespace AxMSMask
 
         private System.Windows.Forms.AxHost.ConnectionPointCookie cookie;
 
-        // <snippet1> 
+        // <snippet1>
         public AxMaskEdBox()
             :
           base("c932ba85-4374-101b-a56c-00aa003668dc") // The ActiveX control's class identifier.
@@ -29,7 +29,7 @@ namespace AxMSMask
 
         public virtual void AboutBox()
         {
-            // If the instance of the ActiveX control is null when the AboutBox method 
+            // If the instance of the ActiveX control is null when the AboutBox method
             // is called, raise an InvalidActiveXStateException exception.
             if ((this.ocx == null))
             {

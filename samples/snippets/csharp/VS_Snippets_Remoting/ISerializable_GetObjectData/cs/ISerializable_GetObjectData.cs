@@ -29,7 +29,7 @@ namespace ISerializableExample
         }
 
         static void Run()
-        {            
+        {
             BinaryFormatter binaryFmt = new BinaryFormatter();
             Person p = new Person();
             p.IdNumber = 1010;

@@ -2,15 +2,15 @@
 using System;
 using System.IO;
 
-class Test 
+class Test
 {
-    public static void Main() 
+    public static void Main()
     {
-        try 
+        try
         {
             string path = @"c:\Temp\MyTest.txt";
 
-            if (!File.Exists(path)) 
+            if (!File.Exists(path))
             {
                 File.Create(path);
                 // Update the last access time.	
@@ -25,8 +25,8 @@ class Test
             File.SetLastAccessTime(path, DateTime.Now);
             dt = File.GetLastAccessTime(path);
             Console.WriteLine("The last access time for this file was {0}.", dt);
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             Console.WriteLine("The process failed: {0}", e.ToString());
         }

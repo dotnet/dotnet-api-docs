@@ -3,7 +3,7 @@
 /// 42 #ctor(String,IClientChannelSinkProvider)
 /// 21 ChannelName
 /// 23 ChannelPriority
-/// 22 CreateMessageSink(String,Object,String@) 
+/// 22 CreateMessageSink(String,Object,String@)
 /// 24 Parse(String,String@)
 
 using System;
@@ -22,18 +22,18 @@ public class Client
 
         //<snippet21>
         // Show the name of the channel.
-        Console.WriteLine("The name of the channel is {0}.", 
+        Console.WriteLine("The name of the channel is {0}.",
             clientChannel.ChannelName);
         //</snippet21>
 
         //<snippet23>
         // Show the priority of the channel.
-        Console.WriteLine("The priority of the channel is {0}.", 
+        Console.WriteLine("The priority of the channel is {0}.",
             clientChannel.ChannelPriority);
         //</snippet23>
 
         // Register as client for remote object.
-        System.Runtime.Remoting.WellKnownClientTypeEntry remoteType = 
+        System.Runtime.Remoting.WellKnownClientTypeEntry remoteType =
             new System.Runtime.Remoting.WellKnownClientTypeEntry(
                 typeof(RemoteObject),
                 "ipc://localhost:9090/RemoteObject.rem");
@@ -67,7 +67,7 @@ public class Client
         //</snippet24>
 
         // Create an instance of the remote object.
-        RemoteObject service = new RemoteObject(); 
+        RemoteObject service = new RemoteObject();
 
         // Invoke a method on the remote object.
         Console.WriteLine("The client is invoking the remote object.");

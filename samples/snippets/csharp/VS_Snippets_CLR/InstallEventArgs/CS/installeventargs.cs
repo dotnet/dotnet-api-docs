@@ -4,22 +4,22 @@
 // System.Configuration.Install.InstallEventArgs.SavedState
 
 /*
-   The following example demonstrates the 'InstallEventArgs()' and 
+   The following example demonstrates the 'InstallEventArgs()' and
    'InstallEventArgs(IDictionary)' constructors and the 'SavedState'
    property of the 'InstallEventArgs' property. There are two new
    events called 'BeforeCommit' and 'AfterCommit'. The handlers of
    these events are invoked from the protected methods named 'OnBeforeCommit'
-   and 'OnAfterCommit' respectively. These events are raised when the 
+   and 'OnAfterCommit' respectively. These events are raised when the
    'Commit' method is called.
-   
-   Note : 
-   a) The two events named 'BeforeCommit' and 'AfterCommit' are added 
+
+   Note :
+   a) The two events named 'BeforeCommit' and 'AfterCommit' are added
    only for example purposes, since there are already
    events named 'Committing' and 'Committed' which perform the same
    function. This example can be made a basis for a new stage being
    added to the already existing four stages namely 'Install', 'Commit',
    'Rollback' and 'Uninstall'.
-   
+
    b) Run the example with the help of InstallUtil.exe
       InstallUtil InstallEventArgs.exe
 */
@@ -38,7 +38,7 @@ public class MyInstaller : Installer
    // Simple events to handle before and after commit handlers.
    public event InstallEventHandler BeforeCommit;
    public event InstallEventHandler AfterCommit;
-   
+
    public MyInstaller()
    {
       // Add handlers to the events.
@@ -75,13 +75,13 @@ public class MyInstaller : Installer
       base.Uninstall(savedState);
       Console.WriteLine("UnInstall ...\n");
    }
-   
+
 // <Snippet3>
    // Protected method that invoke the handlers associated with the 'BeforeCommit' event.
    protected virtual void OnBeforeCommit(IDictionary savedState)
    {
       if(BeforeCommit != null)
-         BeforeCommit(this, new InstallEventArgs(savedState)); 
+         BeforeCommit(this, new InstallEventArgs(savedState));
    }
 // </Snippet3>
 

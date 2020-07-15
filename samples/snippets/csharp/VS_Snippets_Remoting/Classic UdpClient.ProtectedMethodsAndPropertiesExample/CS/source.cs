@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using System.Net; 
+using System.Net;
 using System.Net.Sockets;
 
 public class MyUdpClientTestClass{
@@ -17,7 +17,7 @@ public class MyUdpClientTestClass{
         Socket uSocket = uClient.Client;
 
         // use the underlying socket to enable broadcast.
-        uSocket.SetSocketOption(SocketOptionLevel.Socket, 
+        uSocket.SetSocketOption(SocketOptionLevel.Socket,
                       SocketOptionName.Broadcast, 1);
     }
 //</Snippet1>

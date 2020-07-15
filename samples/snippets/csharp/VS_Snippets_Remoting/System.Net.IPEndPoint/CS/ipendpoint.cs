@@ -2,7 +2,7 @@
 
 // <Internal>
 // This program contains snippets applicable to the following:
-// System.Net.IPEndPoint (Snippet1);  
+// System.Net.IPEndPoint (Snippet1);
 // System.Net.IPEndPoint.IPEndPoint(IPAddress, int) (Snippet2);
 // System.Net.IPEndPoint.Address (Snippet3);
 // System.Net.IPEndPoint.AddressFamily (Snippet3);
@@ -13,7 +13,7 @@
 
 //<Snippet1>
 
-// This example uses the IPEndPoint class and its members to display the home page 
+// This example uses the IPEndPoint class and its members to display the home page
 // of the server selected by the user.
 
 using System;
@@ -28,14 +28,14 @@ namespace Mssc.Services.ConnectionManagement
   public class TestIPEndPoint
   {
 
-    // The getPage method gets the server's home page content by 
+    // The getPage method gets the server's home page content by
     // recreating the server's endpoint from the original serialized endpoint.
     // Then it creates a new socket and connects it to the endpoint.
     private static string getPage(string server, SocketAddress socketAddress)
     {
       //Set up variables and string to write to the server.
       Encoding ASCII = Encoding.ASCII;
-      string Get = "GET / HTTP/1.1\r\nHost: " + server + 
+      string Get = "GET / HTTP/1.1\r\nHost: " + server +
         "\r\nConnection: Close\r\n\r\n";
       Byte[] ByteGet = ASCII.GetBytes(Get);
       Byte[] RecvBytes = new Byte[256];
@@ -56,13 +56,13 @@ namespace Mssc.Services.ConnectionManagement
       try
       {
         // Create a socket object to establish a connection with the server.
-        socket = 
+        socket =
           new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
         // Connect to the cloned end point.
         socket.Connect(clonedIPEndPoint);
       }
-      catch(SocketException e) 
+      catch(SocketException e)
       {
         Console.WriteLine("Source : " + e.Source);
         Console.WriteLine("Message : " + e.Message);
@@ -75,13 +75,13 @@ namespace Mssc.Services.ConnectionManagement
 
       if (socket == null)
         return ("Connection to cloned endpoint failed");
-      
+
       // Send request to the server.
-      socket.Send(ByteGet, ByteGet.Length, 0);  
-        
+      socket.Send(ByteGet, ByteGet.Length, 0);
+
       // Receive the server  home page content.
       Int32 bytes = socket.Receive(RecvBytes, RecvBytes.Length, 0);
-   
+
       // Read the first 256 bytes.
       strRetPage = "Default HTML page on " + server + ":\r\n";
       strRetPage = strRetPage + ASCII.GetString(RecvBytes, 0, bytes);
@@ -91,24 +91,24 @@ namespace Mssc.Services.ConnectionManagement
         bytes = socket.Receive(RecvBytes, RecvBytes.Length, 0);
         strRetPage = strRetPage + ASCII.GetString(RecvBytes, 0, bytes);
       }
-      
+
       socket.Close();
 
       return strRetPage;
     }
 
 //<Snippet4>
-    // The serializeEndpoint method serializes the endpoint and returns the 
+    // The serializeEndpoint method serializes the endpoint and returns the
     // SocketAddress containing the serialized endpoint data.
     private static SocketAddress serializeEndpoint(IPEndPoint endpoint)
     {
- 
+
       // Serialize IPEndPoint details to a SocketAddress instance.
       SocketAddress socketAddress = endpoint.Serialize();
-  
+
       // Display the serialized endpoint information.
       Console.WriteLine("Endpoint.Serialize() : " + socketAddress.ToString());
- 
+
       Console.WriteLine("Socket.Family : " + socketAddress.Family);
       Console.WriteLine("Socket.Size : " + socketAddress.Size);
 
@@ -132,18 +132,18 @@ namespace Mssc.Services.ConnectionManagement
     }
 //</Snippet3>
 
-    // The serializeEndpoint method determines the server endpoint and then 
+    // The serializeEndpoint method determines the server endpoint and then
     // serializes it to obtain the related SocketAddress object.
-    // Note that in the for loop a temporary socket is created to ensure that 
+    // Note that in the for loop a temporary socket is created to ensure that
     // the current IP address format matches the AddressFamily type.
-    // In fact, in the case of servers supporting both IPv4 and IPv6, an exception 
+    // In fact, in the case of servers supporting both IPv4 and IPv6, an exception
     // may arise if an IP address format does not match the address family type.
     private static SocketAddress getSocketAddress(string server, int port)
     {
       Socket tempSocket = null;
       IPHostEntry host = null;
       SocketAddress serializedSocketAddress = null;
-    
+
       try
       {
         // Get the object containing Internet host information.
@@ -155,7 +155,7 @@ namespace Mssc.Services.ConnectionManagement
         {
           IPEndPoint endpoint = new IPEndPoint(address, port);
 
-          tempSocket = 
+          tempSocket =
             new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
           tempSocket.Connect(endpoint);
@@ -178,8 +178,8 @@ namespace Mssc.Services.ConnectionManagement
         // Close the temporary socket.
         tempSocket.Close();
       }
-    
-      catch(SocketException e) 
+
+      catch(SocketException e)
       {
         Console.WriteLine("Source : " + e.Source);
         Console.WriteLine("Message : " + e.Message);
@@ -194,7 +194,7 @@ namespace Mssc.Services.ConnectionManagement
 
     // The requestServerHomePage method obtains the server's home page and returns
     // its content.
-    private static string requestServerHomePage(string server, int port) 
+    private static string requestServerHomePage(string server, int port)
     {
       String strRetPage = null;
 
@@ -203,23 +203,23 @@ namespace Mssc.Services.ConnectionManagement
 
       if (socketAddress == null)
         strRetPage = "Connection failed";
-      else 
+      else
         // Obtain the server's home page content.
         strRetPage = getPage(server, socketAddress);
-     
+
       return strRetPage;
     }
-    
+
     // Show to the user how to use this program when wrong input parameters are entered.
-    private static void showUsage() 
+    private static void showUsage()
     {
       Console.WriteLine("Enter the server name as follows:");
       Console.WriteLine("\tcs_ipendpoint servername");
     }
 
-    // This is the program entry point. It allows the user to enter 
+    // This is the program entry point. It allows the user to enter
     // a server name that is used to locate its current homepage.
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
       string host= null;
       int port = 80;
@@ -240,7 +240,7 @@ namespace Mssc.Services.ConnectionManagement
         {
           host = args[0];
           // Get the specified server home_page and display its content.
-          string result = requestServerHomePage(host, port); 
+          string result = requestServerHomePage(host, port);
           Console.WriteLine(result);
         }
         else

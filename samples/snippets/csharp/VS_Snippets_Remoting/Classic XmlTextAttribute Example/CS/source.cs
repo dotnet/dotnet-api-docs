@@ -4,10 +4,10 @@ using System.Xml.Serialization;
 using System.IO;
 
 public class Group1{
-   // The XmlTextAttribute with type set to string informs the 
+   // The XmlTextAttribute with type set to string informs the
    // XmlSerializer that strings should be serialized as XML text.
    [XmlText(typeof(string))]
-   [XmlElement(typeof(int))]  
+   [XmlElement(typeof(int))]
    [XmlElement(typeof(double))]
    public object [] All= new object []{321, "One", 2, 3.0, "Two" };
 }
@@ -62,6 +62,6 @@ public class Test{
 
       ser.Serialize(writer, myGroup);
       writer.Close();
-   }   
+   }
 }
 // </Snippet1>

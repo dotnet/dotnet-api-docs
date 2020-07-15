@@ -136,7 +136,7 @@ int main()
    {
       
       // Generate an RSA signing key.
-      RSACryptoServiceProvider^ RSAKey = gcnew RSACryptoServiceProvider;
+      RSA^ RSAKey = RSA::Create();
       
       // Create an XML file to sign.
       CreateSomeXml( "Example.xml" );

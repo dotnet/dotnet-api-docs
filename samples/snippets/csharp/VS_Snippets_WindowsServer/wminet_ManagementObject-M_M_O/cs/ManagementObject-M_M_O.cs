@@ -1,23 +1,23 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-   
+
 class Sample
 {
-    public static int Main(string[] args) 
+    public static int Main(string[] args)
     {
         ManagementScope s = new ManagementScope(
             "\\\\MyMachine\\root\\cimv2");
-        ManagementPath p = 
+        ManagementPath p =
             new ManagementPath(
             "Win32_Service");
 
         // Set options for no context info,
-        // but requests amended qualifiers 
+        // but requests amended qualifiers
         // to be contained in the object
-        ObjectGetOptions opt = 
+        ObjectGetOptions opt =
             new ObjectGetOptions(
-            null, TimeSpan.MaxValue, true); 
+            null, TimeSpan.MaxValue, true);
 
         ManagementObject o = new ManagementObject(s, p, opt);
 

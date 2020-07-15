@@ -45,7 +45,7 @@ namespace SequenceExamples
                     Console.WriteLine("    {0}", str);
             }
             // </Snippet5>
-                        
+
             // This code produces the following output:
             //
             // C

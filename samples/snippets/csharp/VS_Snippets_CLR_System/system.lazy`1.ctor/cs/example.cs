@@ -8,13 +8,13 @@ class Program
 
     static void Main()
     {
-        // The lazy initializer is created here. LargeObject is not created until the 
+        // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
         //<SnippetNewLazy>
         lazyLargeObject = new Lazy<LargeObject>();
 
         // The following lines show how to use other constructors to achieve exactly the
-        // same result as the previous line: 
+        // same result as the previous line:
         //lazyLargeObject = new Lazy<LargeObject>(true);
         //lazyLargeObject = new Lazy<LargeObject>(LazyThreadSafetyMode.ExecutionAndPublication);
         //</SnippetNewLazy>
@@ -57,15 +57,15 @@ class Program
         //</SnippetValueProp>
 
         // The following line introduces an artificial delay to exaggerate the race condition.
-        Thread.Sleep(5); 
+        Thread.Sleep(5);
 
-        // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the  
+        // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the
         //            object after creation. You must lock the object before accessing it,
         //            unless the type is thread safe. (LargeObject is not thread safe.)
         lock(large)
         {
             large.Data[0] = Thread.CurrentThread.ManagedThreadId;
-            Console.WriteLine("Initialized by thread {0}; last used by thread {1}.", 
+            Console.WriteLine("Initialized by thread {0}; last used by thread {1}.",
                 large.InitializedBy, large.Data[0]);
         }
     }

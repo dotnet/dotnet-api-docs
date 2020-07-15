@@ -65,7 +65,7 @@ static void Encrypt( XmlDocument^ Doc, String^ ElementToEncrypt, SymmetricAlgori
       encryptionMethod = EncryptedXml::XmlEncDESUrl;
    }
    else
-   if ( dynamic_cast<Rijndael^>(Alg) )
+   if ( dynamic_cast<Aes^>(Alg) )
    {
       switch ( Alg->KeySize )
       {

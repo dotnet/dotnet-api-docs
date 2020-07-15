@@ -1,4 +1,4 @@
-﻿// <Snippet2> 
+﻿// <Snippet2>
 using System;
 using System.Security.Permissions;
 using System.Collections;
@@ -58,7 +58,7 @@ namespace Samples.AspNet.CS
         // Override the AddParsedSubObject method.
         protected override void AddParsedSubObject(object obj)
         {
-            
+
             string _outputtext;
             if (obj is MyCustomOption)
             {
@@ -66,7 +66,7 @@ namespace Samples.AspNet.CS
                 ListItem li = new ListItem(_outputtext, ((MyCustomOption)obj).value);
                 base.Items.Add(li);
             }
-        }      
+        }
     }
 }
-// </Snippet2> 
+// </Snippet2>

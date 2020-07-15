@@ -1,7 +1,7 @@
 ﻿// System.BindingManagerBase.RemoveAt
 
 /* This program demonstrates the 'RemoveAt' method of 'BindingManagerBase' class.
- * It creates a 'DataGrid' control and a 'button' control. If Remove button is pressed it deletes 
+ * It creates a 'DataGrid' control and a 'button' control. If Remove button is pressed it deletes
  * the selected row from the 'DataGrid' control.
  */
 using System;
@@ -42,7 +42,7 @@ public class Form1 :  Form
          button1.TabIndex = 1;
          button1.Text = "Remove Row";
          button1.Click += new System.EventHandler(button1_Click);
-         
+
          ClientSize = new  Size(400, 273);
          Controls.AddRange(new  Control[]{dataGrid1,button1});
          Name = "Form1";
@@ -50,7 +50,7 @@ public class Form1 :  Form
          ((System.ComponentModel.ISupportInitialize)(dataGrid1)).EndInit();
          ResumeLayout(false);
       }
-      static void Main() 
+      static void Main()
       {
          Application.Run(new Form1());
       }
@@ -77,7 +77,7 @@ public class Form1 :  Form
       {
          // Create new DataTable.
          myDataTable = new DataTable("MyDataTable");
-   
+
          DataColumn myDataColumn;
          DataRow myDataRow;
 
@@ -87,7 +87,7 @@ public class Form1 :  Form
          myDataColumn.DataType = System.Type.GetType("System.Int32");
          // Set the 'ColumnName'.
          myDataColumn.ColumnName = "id";
-         // Add the column to the 'DataTable'.    
+         // Add the column to the 'DataTable'.
          myDataTable.Columns.Add(myDataColumn);
 
          // Create second column.
@@ -96,7 +96,7 @@ public class Form1 :  Form
          myDataColumn.ColumnName = "item";
          myDataTable.Columns.Add(myDataColumn);
 
-         // Create new DataRow objects and add to DataTable.    
+         // Create new DataRow objects and add to DataTable.
          for(int i = 0; i < 10; i++)
          {
             myDataRow = myDataTable.NewRow();

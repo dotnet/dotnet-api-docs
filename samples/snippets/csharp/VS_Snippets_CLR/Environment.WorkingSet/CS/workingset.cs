@@ -2,9 +2,9 @@
 // Sample for the Environment.WorkingSet property
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     Console.WriteLine("WorkingSet: {0}", Environment.WorkingSet);
     }

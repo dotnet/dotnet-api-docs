@@ -1,23 +1,23 @@
 ﻿// System.Net.HttpWebResponse.GetResponseHeader
 
 /* This program demonstrates the 'GetResponseHeader' method of the 'HttpWebResponse' class
-It creates a web request and queries for a response.If the site requires authentication it 
+It creates a web request and queries for a response. If the site requires authentication it
 will respond with a challenge string which is extracted using 'GetResponse()' method.*/
 
 using System;
 using System.Net;
 
-class HttpWebResponseSnippet 
+class HttpWebResponseSnippet
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
 	{
-		if (args.Length < 1) 
+		if (args.Length < 1)
 		{	
 			Console.WriteLine("\nPlease enter a protected resource url as command line parameter:");
 			Console.WriteLine("Example:");
 			Console.WriteLine("HttpWebResponse_GetResponseHeader http://www.microsoft.com/net/");
-		} 
-		else 
+		}
+		else
 		{
 			GetPage(args[0]);
 		}
@@ -26,20 +26,20 @@ class HttpWebResponseSnippet
 		return;
     }
 
-// <Snippet1>         
-   public static void GetPage(String url) 
+// <Snippet1>
+   public static void GetPage(String url)
 	{
-	try 
+	try
  			{	
 				Uri ourUri = new Uri(url);
-				// Creates an HttpWebRequest for the specified URL. 
-				HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(ourUri); 
+				// Creates an HttpWebRequest for the specified URL.
+				HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(ourUri);
 				HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 				Console.WriteLine("\nThe server did not issue any challenge.  Please try again with a protected resource URL.");
 				// Releases the resources of the response.
-				myHttpWebResponse.Close(); 
-			} 
-		catch(WebException e) 
+				myHttpWebResponse.Close();
+			}
+		catch(WebException e)
 		   {
 			    HttpWebResponse response = (HttpWebResponse)e.Response;
 				if (response != null)

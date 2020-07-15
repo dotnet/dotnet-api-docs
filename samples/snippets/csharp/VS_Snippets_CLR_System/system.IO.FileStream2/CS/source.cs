@@ -8,7 +8,7 @@ class FStream
 // <Snippet2>
     static void Main()
     {
-        // Create a synchronization object that gets 
+        // Create a synchronization object that gets
         // signaled when verification is complete.
         ManualResetEvent manualEvent = new ManualResetEvent(false);
 
@@ -16,8 +16,8 @@ class FStream
         byte[] writeArray = new byte[100000];
         new Random().NextBytes(writeArray);
 
-        FileStream fStream = 
-            new FileStream("Test#@@#.dat", FileMode.Create, 
+        FileStream fStream =
+            new FileStream("Test#@@#.dat", FileMode.Create,
             FileAccess.ReadWrite, FileShare.None, 4096, true);
 
         // Check that the FileStream was opened asynchronously.
@@ -26,18 +26,18 @@ class FStream
 
         // Asynchronously write to the file.
         IAsyncResult asyncResult = fStream.BeginWrite(
-            writeArray, 0, writeArray.Length, 
-            new AsyncCallback(EndWriteCallback), 
+            writeArray, 0, writeArray.Length,
+            new AsyncCallback(EndWriteCallback),
             new State(fStream, writeArray, manualEvent));
 
-        // Concurrently do other work and then wait 
+        // Concurrently do other work and then wait
         // for the data to be written and verified.
         manualEvent.WaitOne(5000, false);
     }
 // </Snippet2>
 
     // When BeginWrite is finished writing data to the file, the
-    // EndWriteCallback method is called to end the asynchronous 
+    // EndWriteCallback method is called to end the asynchronous
     // write operation and then read back and verify the data.
 // <Snippet3>
     static void EndWriteCallback(IAsyncResult asyncResult)
@@ -49,16 +49,16 @@ class FStream
         // Asynchronously read back the written data.
         fStream.Position = 0;
         asyncResult = fStream.BeginRead(
-            tempState.ReadArray, 0 , tempState.ReadArray.Length, 
+            tempState.ReadArray, 0 , tempState.ReadArray.Length,
             new AsyncCallback(EndReadCallback), tempState);
 
-        // Concurrently do other work, such as 
+        // Concurrently do other work, such as
         // logging the write operation.
     }
 // </Snippet3>
 
-    // When BeginRead is finished reading data from the file, the 
-    // EndReadCallback method is called to end the asynchronous 
+    // When BeginRead is finished reading data from the file, the
+    // EndReadCallback method is called to end the asynchronous
     // read operation and then verify the data.
 // <Snippet4>
     static void EndReadCallback(IAsyncResult asyncResult)
@@ -85,7 +85,7 @@ class FStream
     }
 // </Snippet4>
 
-    // Maintain state information to be passed to 
+    // Maintain state information to be passed to
     // EndWriteCallback and EndReadCallback.
     class State
     {
@@ -98,11 +98,11 @@ class FStream
         // readArray stores data that is read from the file.
         byte[] readArray;
 
-        // manualEvent signals the main thread 
+        // manualEvent signals the main thread
         // when verification is complete.
         ManualResetEvent manualEvent;
 
-        public State(FileStream fStream, byte[] writeArray, 
+        public State(FileStream fStream, byte[] writeArray,
             ManualResetEvent manualEvent)
         {
             this.fStream   = fStream;

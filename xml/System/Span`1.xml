@@ -20,13 +20,11 @@
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="System.Memory" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="System.Memory" FromVersion="4.0.1.1" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="System.Memory" FromVersion="4.1.0.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-2.1;netcore-2.2" />
     <TypeForwarding From="System.Memory" FromVersion="4.2.0.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-3.0" />
-    <TypeForwarding From="System.Memory" FromVersion="4.0.1.1" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-3.0" />
     <TypeForwarding From="System.Memory" FromVersion="4.2.1.0" To="System.Runtime" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
-    <TypeForwarding From="System.Memory" FromVersion="4.0.1.1" To="System.Runtime" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
   </TypeForwardingChain>
   <TypeParameters>
     <TypeParameter Name="T" />
@@ -49,7 +47,7 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
 
-`Span<T>` is a [ref struct](~/docs/csharp/language-reference/keywords/ref.md#ref-struct-types) that is allocated on the stack rather than on the managed heap. Ref struct types have a number of restrictions to ensure that they cannot be promoted to the managed heap, including that they can't be boxed, they can't be assigned to variables of type <xref:System.Object>, `dynamic` or to any interface type, they can't be fields in a reference type, and they can't be used across `await` and `yield` boundaries. In addition, calls to two methods, <xref:System.Span%601.Equals(System.Object)> and <xref:System.Span%601.GetHashCode%2A>, throw a <xref:System.NotSupportedException>. 
+`Span<T>` is a [ref struct](/dotnet/csharp/language-reference/builtin-types/struct#ref-struct) that is allocated on the stack rather than on the managed heap. Ref struct types have a number of restrictions to ensure that they cannot be promoted to the managed heap, including that they can't be boxed, they can't be assigned to variables of type <xref:System.Object>, `dynamic` or to any interface type, they can't be fields in a reference type, and they can't be used across `await` and `yield` boundaries. In addition, calls to two methods, <xref:System.Span%601.Equals(System.Object)> and <xref:System.Span%601.GetHashCode%2A>, throw a <xref:System.NotSupportedException>. 
 
 > [!IMPORTANT]
 > Because it is a stack-only type, `Span<T>` is unsuitable for many scenarios that require storing references to buffers on the heap. This is true, for example, of routines that make asynchronous method calls. For such scenarios, you can use the complementary <xref:System.Memory%601?displayProperty=nameWithType> and <xref:System.ReadOnlyMemory%601?displayProperty=nameWithType> types.
@@ -66,7 +64,7 @@ The following example creates a `Span<Byte>` from 100 bytes of native memory:
 
 [!code-csharp[Creating a Span\<Byte> from native memory](~/samples/snippets/csharp/api/system/span/program.cs#2)]
 
-The following example uses the C# [stackalloc](~/docs/csharp/language-reference/keywords/stackalloc.md) keyword to allocate 100 bytes of memory on the stack:
+The following example uses the C# [stackalloc](/dotnet/csharp/language-reference/keywords/stackalloc) keyword to allocate 100 bytes of memory on the stack:
 
 [!code-csharp[Creating a Span\<Byte> from stack-allocated memory](~/samples/snippets/csharp/api/system/span/program.cs#3)]
 
@@ -97,8 +95,8 @@ This allocation and copy operation can be eliminated by using either `Span<T>` o
 
       ]]></format>
     </remarks>
-    <related type="article" href="~/docs/standard/memory-and-spans/index.md">Memory- and span-related types</related>
-    <related type="article" href="~/docs/standard/memory-and-spans/memory-t-usage-guidelines.md">Memory&lt;T&gt; and Span&lt;T&gt; usage guidelines</related>
+    <related type="article" href="/dotnet/standard/memory-and-spans/">Memory- and span-related types</related>
+    <related type="article" href="/dotnet/standard/memory-and-spans/memory-t-usage-guidelines">Memory&lt;T&gt; and Span&lt;T&gt; usage guidelines</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -397,7 +395,7 @@ This method copies all of `source` to `destination` even if `source` and `destin
           <format type="text/markdown"><![CDATA[  
 Calls to the <xref:System.Span%601.Equals%2A> method are not supported. Calls to the <xref:System.Span%601.Equals%2A> methods produce either of two results:
 
-- If `obj` is a <xref:System.Span%601>, the method call generates compiler error CS1503: "cannot convert from 'System.Span' to 'object'." This is because <xref:System.Span%601> is a [ref struct](~/docs/csharp/reference-semantics-with-value-types.md#ref-struct-type) that cannot be boxed and therefore cannot be converted to an <xref:System.Object>.
+- If `obj` is a <xref:System.Span%601>, the method call generates compiler error CS1503: "cannot convert from 'System.Span' to 'object'." This is because <xref:System.Span%601> is a [ref struct](/dotnet/csharp/language-reference/builtin-types/struct#ref-struct) that cannot be boxed and therefore cannot be converted to an <xref:System.Object>.
 
 - If the type of `obj` is not a <xref:System.Span%601>, the method call throws a <xref:System.NotSupportedException>. 
 
@@ -520,24 +518,33 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
       </Docs>
     </Member>
     <Member MemberName="GetPinnableReference">
-      <MemberSignature Language="C#" Value="public T GetPinnableReference ();" />
+      <MemberSignature Language="C#" Value="public ref T GetPinnableReference ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !T GetPinnableReference() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.GetPinnableReference" />
       <MemberSignature Language="VB.NET" Value="Public Function GetPinnableReference () As T" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; T % GetPinnableReference();" />
-      <MemberSignature Language="F#" Value="member this.GetPinnableReference : unit -&gt; " Usage="span.GetPinnableReference " />
+      <MemberSignature Language="F#" Value="member this.GetPinnableReference : unit -&gt; 'T" Usage="span.GetPinnableReference " />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
           <AttributeName>System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)</AttributeName>
         </Attribute>
       </Attributes>
-      <ReturnValue>
-        <ReturnType>T@</ReturnType>
+      <ReturnValue RefType="Ref">
+        <ReturnType>T</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
@@ -546,7 +553,7 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
-The `GetPinnableReference` method returns a [ref struct](~/docs/csharp/reference-semantics-with-value-types.md#ref-struct-type). It can be used for pinning a <xref:System.Span%601> in memory. It is required to support the use of a <xref:System.Span%601> within a [fixed](~/docs/csharp/language-reference/keywords/fixed-statement.md) statement.
+The `GetPinnableReference` method returns a [ref struct](/dotnet/csharp/language-reference/builtin-types/struct#ref-struct). It can be used for pinning a <xref:System.Span%601> in memory. It is required to support the use of a <xref:System.Span%601> within a [fixed](/dotnet/csharp/language-reference/keywords/fixed-statement) statement.
 
        ]]></format>
         </remarks>

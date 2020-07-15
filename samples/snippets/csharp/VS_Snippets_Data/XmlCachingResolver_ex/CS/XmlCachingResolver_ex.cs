@@ -13,7 +13,7 @@ namespace XmlCachingResolver_ex
         ICredentials credentials;
 
         //resolve resources from cache (if possible) when enableHttpCaching is set to true
-        //resolve resources from source when enableHttpcaching is set to false 
+        //resolve resources from source when enableHttpcaching is set to false
         public XmlCachingResolver(bool enableHttpCaching)
         {
             this.enableHttpCaching = enableHttpCaching;
@@ -57,8 +57,8 @@ namespace XmlCachingResolver_ex
     class Program
     {
         static void Main(string[] args)
-        {   
-	    //<snippet2>    
+        {
+	    //<snippet2>
             XmlCachingResolver resolver = new XmlCachingResolver(true);
             Uri baseUri = new Uri("http://serverName/");
             Uri fulluri = resolver.ResolveUri(baseUri, "fileName.xml");
@@ -72,7 +72,7 @@ namespace XmlCachingResolver_ex
             {
                 Console.WriteLine(reader.ReadOuterXml());
             }
-            //</snippet2> 
+            //</snippet2>
         }
     }
 }

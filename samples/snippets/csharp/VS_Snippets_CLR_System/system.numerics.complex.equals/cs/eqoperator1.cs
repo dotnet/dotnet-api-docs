@@ -8,7 +8,7 @@ public class Example
       // <Snippet9>
       Complex c1 = new Complex(12.6, 4.3);
       Complex c2 = new Complex(11.1, 8.9);
-      if (c1 == c2) 
+      if (c1 == c2)
       // </Snippet9>
       {}
    }

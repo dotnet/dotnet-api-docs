@@ -26,11 +26,11 @@ namespace send_generics_csharp
 
             Socket mySocket = new Socket(AddressFamily.InterNetwork,
                 SocketType.Stream, ProtocolType.Tcp );
-            
+
             mySocket.Connect(EPhost);
 
             // Build the buffers to be sent.
-            List<ArraySegment<byte>> buffers = 
+            List<ArraySegment<byte>> buffers =
                                      new List<ArraySegment<byte>>(2);
 
             buffers.Add(new ArraySegment<byte>(
@@ -39,7 +39,7 @@ namespace send_generics_csharp
 
             buffers.Add(new ArraySegment<byte>(
                 System.Text.ASCIIEncoding.ASCII.GetBytes(
-                "<buffer 2>")));        
+                "<buffer 2>")));
 
             // Send the data.
             mySocket.Send(buffers);
@@ -48,12 +48,12 @@ namespace send_generics_csharp
             //<Snippet2>
 
             // Build the buffers for the receive.
-            List<ArraySegment<byte>> recvBuffers = 
+            List<ArraySegment<byte>> recvBuffers =
                                      new List<ArraySegment<byte>>(2);
 
             byte[] bigBuffer = new byte[1024];
 
-            // Specify the first buffer segment (2 bytes, starting 
+            // Specify the first buffer segment (2 bytes, starting
             // at the 4th element of bigBuffer)
             recvBuffers.Add(new ArraySegment<byte>
                                     (bigBuffer, 4, 2));
@@ -71,7 +71,7 @@ namespace send_generics_csharp
             return 1;
         }
 
-        public static ManualResetEvent allDone = 
+        public static ManualResetEvent allDone =
                                 new ManualResetEvent(false);
 
         public static void SendCallback(IAsyncResult ar)
@@ -80,14 +80,14 @@ namespace send_generics_csharp
             Socket s = (Socket) ar.AsyncState;
             s.EndSend(ar);
         }
- 
+
         public static void ReceiveCallback(IAsyncResult ar)
         {
             allDone.Set();
             Socket s = (Socket) ar.AsyncState;
             s.EndReceive(ar);
         }
-         
+
         public static int asyncSendAndReceive(string host, int port)
         {
             //<Snippet3>
@@ -101,11 +101,11 @@ namespace send_generics_csharp
 
             Socket mySocket = new Socket(AddressFamily.InterNetwork,
                 SocketType.Stream, ProtocolType.Tcp );
-            
+
             mySocket.Connect(EPhost);
 
             // Build the buffers to be sent.
-            List<ArraySegment<byte>> buffers = 
+            List<ArraySegment<byte>> buffers =
                                      new List<ArraySegment<byte>>(2);
 
             buffers.Add(new ArraySegment<byte>(
@@ -114,11 +114,11 @@ namespace send_generics_csharp
 
             buffers.Add(new ArraySegment<byte>(
                 System.Text.ASCIIEncoding.ASCII.GetBytes(
-                "<buffer 2>")));        
+                "<buffer 2>")));
 
             // Send the data.
             allDone.Reset();
-            mySocket.BeginSend(buffers, SocketFlags.None, 
+            mySocket.BeginSend(buffers, SocketFlags.None,
                                SendCallback, (object)mySocket);
             allDone.WaitOne();
 
@@ -129,12 +129,12 @@ namespace send_generics_csharp
             //<Snippet4>
 
             // Build the buffers for the receive.
-            List<ArraySegment<byte>> recvBuffers = 
+            List<ArraySegment<byte>> recvBuffers =
                                      new List<ArraySegment<byte>>(2);
 
             byte[] bigBuffer = new byte[1024];
 
-            // Specify the first buffer segment (2 bytes, starting 
+            // Specify the first buffer segment (2 bytes, starting
             // at the 6th element of bigBuffer)
             recvBuffers.Add(new ArraySegment<byte>
                                     (bigBuffer, 6, 2));
@@ -146,7 +146,7 @@ namespace send_generics_csharp
 
             // Receive the data.
             allDone.Reset();
-            mySocket.BeginReceive(recvBuffers, SocketFlags.None, 
+            mySocket.BeginReceive(recvBuffers, SocketFlags.None,
                                   SendCallback, (object)mySocket);
             allDone.WaitOne();
 
@@ -156,7 +156,7 @@ namespace send_generics_csharp
 
         return 1;
         }
-            
+
         [STAThread]
         static void Main(string[] args)
         {

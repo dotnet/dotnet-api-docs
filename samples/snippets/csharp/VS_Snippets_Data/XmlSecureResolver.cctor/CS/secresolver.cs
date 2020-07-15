@@ -4,24 +4,24 @@ using System.Xml;
 using System.Security;
 using System.Security.Policy;
 using System.Net;
- 
+
  public class Sample
  {
-  
+
    private const String filename = @"http://localhost/data/books.xml";
-    
+
    public static void Main () {
-   
+
        Stream s = (Stream) GetFile(filename, new XmlUrlResolver());
        XmlTextReader reader = new XmlTextReader(s);
    }
- 
+
    // NOTE:  To test, replace www.contoso.com w/ the local string
 
 //<snippet1>
 
    public static Object GetFile (String fileURL, XmlResolver resolver) {
-    
+
      // Generate the default PermissionSet using the file URL.
      Evidence evidence = XmlSecureResolver.CreateEvidenceForUrl(fileURL);
      PermissionSet myPermissions = SecurityManager.ResolvePolicy(evidence);
@@ -38,6 +38,6 @@ using System.Net;
      // Get the object.
      Uri fullUri = sResolver.ResolveUri(null, fileURL);
      return sResolver.GetEntity(fullUri, null, null);
-   } 
-//</snippet1> 
+   }
+//</snippet1>
  }

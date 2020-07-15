@@ -11,14 +11,14 @@ using System.Security.Permissions;
 using System.Collections;
 
 class DnsPermissionExample {
- 
+
    public static void Main(String[] Args) {
-	   try 
+	   try
 	   {
 		   DnsPermissionExample dnsPermissionExampleObj = new DnsPermissionExample();
 		   dnsPermissionExampleObj.useDns();
 	   }
-	   catch(SecurityException e) 
+	   catch(SecurityException e)
 	   {
 		   Console.WriteLine("SecurityException caught!!!");
 		   Console.WriteLine("Source : " + e.Source);

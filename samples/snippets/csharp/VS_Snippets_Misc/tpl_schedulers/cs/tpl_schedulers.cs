@@ -17,9 +17,9 @@ namespace tpl_schedulers
         {
             // TaskA is a top level task.
             Task taskA = Task.Factory.StartNew( () =>
-            {                
-                Console.WriteLine("I was enqueued on the thread pool's global queue."); 
-      
+            {
+                Console.WriteLine("I was enqueued on the thread pool's global queue.");
+
                 // TaskB is a nested task and TaskC is a child task. Both go to local queue.
                 Task taskB = new Task( ()=> Console.WriteLine("I was enqueued on the local queue."));
                 Task taskC = new Task(() => Console.WriteLine("I was enqueued on the local queue, too."),
@@ -48,7 +48,7 @@ namespace tpl_schedulers
                 LimitedConcurrencyLevelTaskScheduler lcts = new LimitedConcurrencyLevelTaskScheduler(1);
                 TaskFactory factory = new TaskFactory(lcts);
 
-                factory.StartNew(()=> 
+                factory.StartNew(()=>
                     {
                         for (int i = 0; i < 500; i++)
                         {

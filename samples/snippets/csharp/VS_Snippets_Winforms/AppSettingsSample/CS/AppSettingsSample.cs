@@ -58,43 +58,43 @@ namespace AppSettingsSample
 			this.tbStatus = new System.Windows.Forms.TextBox();
 			this.btnReload = new System.Windows.Forms.Button();
 			this.SuspendLayout();
-			// 
+			//
 			// btnBackColor
-			// 
+			//
 			this.btnBackColor.Location = new System.Drawing.Point(26, 24);
 			this.btnBackColor.Name = "btnBackColor";
 			this.btnBackColor.Size = new System.Drawing.Size(159, 23);
 			this.btnBackColor.TabIndex = 0;
 			this.btnBackColor.Text = "Change Background Color";
 			this.btnBackColor.Click += new System.EventHandler(this.btnBackColor_Click);
-			// 
+			//
 			// btnReset
-			// 
+			//
 			this.btnReset.Location = new System.Drawing.Point(26, 90);
 			this.btnReset.Name = "btnReset";
 			this.btnReset.Size = new System.Drawing.Size(159, 23);
 			this.btnReset.TabIndex = 1;
 			this.btnReset.Text = "Reset to Defaults";
 			this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-			// 
+			//
 			// tbStatus
-			// 
+			//
 			this.tbStatus.Location = new System.Drawing.Point(26, 123);
 			this.tbStatus.Name = "tbStatus";
 			this.tbStatus.Size = new System.Drawing.Size(159, 20);
 			this.tbStatus.TabIndex = 2;
-			// 
+			//
 			// btnReload
-			// 
+			//
 			this.btnReload.Location = new System.Drawing.Point(26, 57);
 			this.btnReload.Name = "btnReload";
 			this.btnReload.Size = new System.Drawing.Size(159, 23);
 			this.btnReload.TabIndex = 3;
 			this.btnReload.Text = "Reload from Storage";
 			this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
-			// 
+			//
 			// Form1
-			// 
+			//
 			this.ClientSize = new System.Drawing.Size(217, 166);
 			this.Controls.Add(this.btnReload);
 			this.Controls.Add(this.tbStatus);
@@ -144,10 +144,10 @@ namespace AppSettingsSample
 
             //<SNIPPET12>
             //Data bind settings properties with straightforward associations.
-            Binding bndBackColor = new Binding("BackColor", frmSettings1, 
+            Binding bndBackColor = new Binding("BackColor", frmSettings1,
                 "FormBackColor", true, DataSourceUpdateMode.OnPropertyChanged);
             this.DataBindings.Add(bndBackColor);
-            Binding bndLocation = new Binding("Location", frmSettings1, 
+            Binding bndLocation = new Binding("Location", frmSettings1,
                 "FormLocation", true, DataSourceUpdateMode.OnPropertyChanged);
             this.DataBindings.Add(bndLocation);
 
@@ -259,6 +259,6 @@ namespace AppSettingsSample
         }
     }
     //</SNIPPET9>
- 
+
     //</SNIPPET1>
 }

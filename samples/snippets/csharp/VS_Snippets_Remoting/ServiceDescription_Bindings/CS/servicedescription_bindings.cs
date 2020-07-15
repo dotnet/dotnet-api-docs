@@ -1,8 +1,8 @@
 ﻿// System.Web.Services.Description.ServiceDescription.Bindings
 
-/* 
-  The following example demonstrates the property 'Bindings' of 
-  'ServiceDescription' class. The input to the program is a WSDL file 
+/*
+  The following example demonstrates the property 'Bindings' of
+  'ServiceDescription' class. The input to the program is a WSDL file
   'MyWsdl_CS.wsdl'. This program removes one 'Binding' from the existing WSDL.
   A new Binding is defined and added to the ServiceDescription object.
   The program generates a new Web Service Description document.
@@ -23,18 +23,18 @@ namespace ServiceDescription1
       {
 // <Snippet1>
          // Obtain the ServiceDescription from existing WSDL.
-         ServiceDescription myDescription = 
+         ServiceDescription myDescription =
             ServiceDescription.Read("MyWsdl_CS.wsdl");
 
-         // Remove the Binding from the BindingCollection of 
+         // Remove the Binding from the BindingCollection of
          // the ServiceDescription.
          BindingCollection myBindingCollection = myDescription.Bindings;
          myBindingCollection.Remove(myBindingCollection[0]);
-         
+
          // Form a new Binding.
          Binding myBinding = new Binding();
          myBinding.Name = "Service1Soap";
-         XmlQualifiedName myXmlQualifiedName = 
+         XmlQualifiedName myXmlQualifiedName =
             new XmlQualifiedName("s0:Service1Soap");
          myBinding.Type = myXmlQualifiedName;
 
@@ -42,7 +42,7 @@ namespace ServiceDescription1
          mySoapBinding.Transport = "http://schemas.xmlsoap.org/soap/http";
          mySoapBinding.Style = SoapBindingStyle.Document;
 
-         OperationBinding addOperationBinding = 
+         OperationBinding addOperationBinding =
             CreateOperationBinding("Add",myDescription.TargetNamespace);
          myBinding.Operations.Add(addOperationBinding);
          myBinding.Extensions.Add(mySoapBinding);
@@ -50,7 +50,7 @@ namespace ServiceDescription1
          // Add the Binding to the ServiceDescription.
          myDescription.Bindings.Add(myBinding);
          myDescription.Write("MyOutWsdl.wsdl");
-         
+
 // </Snippet1>
       }
       catch(Exception e)
@@ -72,7 +72,7 @@ namespace ServiceDescription1
          // Create OutputBinding for operation.
          OutputBinding myOutputBinding = new OutputBinding();
          myOutputBinding.Extensions.Add(mySoapBodyBinding);
-         // Add 'InputBinding' and 'OutputBinding' to 'OperationBinding'. 
+         // Add 'InputBinding' and 'OutputBinding' to 'OperationBinding'.
          myOperationBinding.Input = myInputBinding;
          myOperationBinding.Output = myOutputBinding;
          // Create extensibility element for 'SoapOperationBinding'.

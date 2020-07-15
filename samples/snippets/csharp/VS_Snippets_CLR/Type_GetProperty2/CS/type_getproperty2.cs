@@ -1,4 +1,4 @@
-﻿// <Snippet1>   
+﻿// <Snippet1>
 
 using System;
 using System.Reflection;
@@ -25,7 +25,7 @@ public class MyTypeClass
         try
         {
             // Get Type object of MyClass.
-            Type myType=typeof(MyClass);       
+            Type myType=typeof(MyClass);
             // Get the PropertyInfo by passing the property name and specifying the BindingFlags.
             PropertyInfo myPropInfo = myType.GetProperty("MyProperty", BindingFlags.Public | BindingFlags.Instance);
             // Display Name propety to console.

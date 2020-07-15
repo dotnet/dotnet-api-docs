@@ -27,7 +27,7 @@ public class Sample
     }
 
     //Close the reader.
-    reader.Close();  
+    reader.Close();
   }
 }
 //</snippet1>

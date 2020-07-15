@@ -1,5 +1,5 @@
 ﻿/// Class:  System.Runtime.Remoting.Metadata.W3cXsd2001.SoapQName
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(string)
 ///    23    #ctor(string,string)
@@ -11,12 +11,12 @@
 ///    11    Parse()
 ///    12    ToString()
 ///    16    XsdType
-/// 
-///    Bugs in SoapQName: 
+///
+///    Bugs in SoapQName:
 ///    1. SoapQName.Namespace is not used anywhere. The field exists but has
 ///    no clear purpose. It cannot be parsed.
 ///    2. SoapQName.Name cannot contain a ':', however, this is not validated
-///    in the code anywhere. SoapQName.Parse("a:b:c").Name results in "b:c", 
+///    in the code anywhere. SoapQName.Parse("a:b:c").Name results in "b:c",
 ///    which is an invalid name.
 
 //<snippet10>
@@ -34,7 +34,7 @@ public class Demo
         //</snippet11>
 
         //<snippet12>
-        // Print the value of the SoapQName object in XSD format. 
+        // Print the value of the SoapQName object in XSD format.
         Console.WriteLine(
             "The SoapQName object in XSD format is {0}.",
             qName.ToString());
@@ -42,7 +42,7 @@ public class Demo
 
         //<snippet13>
         // Print the XSD type string of the SoapQName object.
-        Console.WriteLine("The XSD type of the SoapQName " + 
+        Console.WriteLine("The XSD type of the SoapQName " +
             "object is {0}.", qName.GetXsdType());
         //</snippet13>
 
@@ -54,18 +54,18 @@ public class Demo
         //</snippet16>
 
         // Create a QName object.
-        SoapQName soapQNameInstance = 
+        SoapQName soapQNameInstance =
             new SoapQName("tns", "SomeName", "http://example.org");
 
         //<snippet17>
         // Print the key the SoapQName object.
-        Console.WriteLine("The key of the SoapQName " + 
+        Console.WriteLine("The key of the SoapQName " +
             "object is {0}.", soapQNameInstance.Key);
         //</snippet17>
 
         //<snippet18>
         // Print the name of the SoapQName object.
-        Console.WriteLine("The name of the SoapQName " + 
+        Console.WriteLine("The name of the SoapQName " +
             "object is {0}.", soapQNameInstance.Name);
         //</snippet18>
 

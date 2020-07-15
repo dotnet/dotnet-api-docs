@@ -5,9 +5,9 @@
 /*
    The following program creates a dynamic assembly named 'MyAssembly', defines a
    module named 'MyModule' within the assembly. It defines a type called 'MyType'
-   within the module and also defines a static method named 'MyMethod' for the 
+   within the module and also defines a static method named 'MyMethod' for the
    type. This dynamic assembly is then queried for the type defined within it and
-   then the attributes of all the parameters of the method named 'MyMethod' is 
+   then the attributes of all the parameters of the method named 'MyMethod' is
    displayed.
  */
 
@@ -73,13 +73,13 @@ public class ParameterInfo_IsIn_IsOut_IsOptional
          MethodBase myMethodBase = myType.GetMethod("MyMethod");
          // Get the parameters associated with the method.
          ParameterInfo[] myParameters = myMethodBase.GetParameters();
-         Console.WriteLine("\nThe method {0} has the {1} parameters :", 
+         Console.WriteLine("\nThe method {0} has the {1} parameters :",
             myMethodBase, myParameters.Length);
          // Print the IN, OUT and OPTIONAL attributes associated with each of the parameters.
          for(int i = 0; i < myParameters.Length; i++)
          {
             if(myParameters[i].IsIn)
-               Console.WriteLine("\tThe {0} parameter has the In attribute", 
+               Console.WriteLine("\tThe {0} parameter has the In attribute",
                                        i + 1);
             if(myParameters[i].IsOptional)
                Console.WriteLine("\tThe {0} parameter has the Optional attribute",
