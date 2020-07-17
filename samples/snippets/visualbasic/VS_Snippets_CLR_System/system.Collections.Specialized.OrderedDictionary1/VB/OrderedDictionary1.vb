@@ -66,8 +66,6 @@ Public Class OrderedDictionarySample
 
         DisplayEnumerator(myEnumerator)
         '</Snippet03>
-
-        Console.ReadLine()
     End Sub
 
     '<Snippet04>
