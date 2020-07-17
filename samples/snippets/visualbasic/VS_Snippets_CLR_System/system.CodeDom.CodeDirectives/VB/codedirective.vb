@@ -71,6 +71,8 @@ Class CodeDirectiveDemo
 
     End Sub
 
+    ' This example uses the SHA1 and MD5 algorithms.
+    ' Due to collision problems with SHA1 and MD5, Microsoft recommends SHA256 or better.
     Private Shared HashMD5 As New Guid(&H406EA660, &H64CF, &H4C82, &HB6, &HF0, &H42, &HD4, &H81, &H72, &HA7, &H99)
     Private Shared HashSHA1 As New Guid(&HFF1816EC, &H65FF, &H4D10, &H87, &HF7, &H6F, &H49, &H63, &H83, &H34, &H60)
 

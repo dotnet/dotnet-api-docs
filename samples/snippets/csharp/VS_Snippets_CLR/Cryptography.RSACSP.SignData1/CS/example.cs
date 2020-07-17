@@ -70,7 +70,9 @@ class RSACSPSample
             RSAalg.ImportParameters(Key);
 
             // Hash and sign the data. Pass a new instance of SHA1CryptoServiceProvider
-            // to specify the use of SHA1 for hashing.
+            // to specify the hashing algorithm.
+            // This example uses the SHA1 algorithm.
+            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
             return RSAalg.SignData(DataToSign,Index,Length, new SHA1CryptoServiceProvider());
         }
         catch(CryptographicException e)
@@ -92,7 +94,9 @@ class RSACSPSample
             RSAalg.ImportParameters(Key);
 
             // Verify the data using the signature.  Pass a new instance of SHA1CryptoServiceProvider
-            // to specify the use of SHA1 for hashing.
+            // to specify the hashing algorithm.
+            // This example uses the SHA1 algorithm.
+            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
             return RSAalg.VerifyData(DataToVerify, new SHA1CryptoServiceProvider(), SignedData);
         }
         catch(CryptographicException e)
