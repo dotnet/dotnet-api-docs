@@ -78,8 +78,8 @@ int main()
    // Set the culture information of the assembly to 'English-American'.
    myAssemblyName->CultureInfo = gcnew CultureInfo( "en-US" );
 
-   // Set the hash algoritm to 'SHA1'.
-   myAssemblyName->HashAlgorithm = AssemblyHashAlgorithm::SHA1;
+   // Set the hash algoritm to 'SHA256'.
+   myAssemblyName->HashAlgorithm = AssemblyHashAlgorithm::SHA256;
    myAssemblyName->VersionCompatibility = AssemblyVersionCompatibility::SameProcess;
    myAssemblyName->Flags = AssemblyNameFlags::PublicKey;
 

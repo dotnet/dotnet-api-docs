@@ -17,8 +17,8 @@ Public Class TestClass
    Overloads Public Shared Function Main(args() As [String]) As Integer
 ' <Snippet1>  
    ' Create a secure group name.
-   Dim Sha1 As New SHA1Managed()
-   Dim updHash As [Byte]() = Sha1.ComputeHash(Encoding.UTF8.GetBytes(("username" + "password" + "domain")))
+   Dim Sha256 As SHA256 = SHA256.Create()
+   Dim updHash As [Byte]() = Sha256.ComputeHash(Encoding.UTF8.GetBytes(("username" + "password" + "domain")))
    Dim secureGroupName As [String] = Encoding.Default.GetString(updHash)
       
    ' Create a request for a specific URL.

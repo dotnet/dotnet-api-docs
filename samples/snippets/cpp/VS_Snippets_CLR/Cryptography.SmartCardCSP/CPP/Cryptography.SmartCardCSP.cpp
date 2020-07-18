@@ -27,11 +27,12 @@ int main()
    Console::WriteLine( L"Data			: {0}", BitConverter::ToString( data ) );
    
    // Sign the data using the Smart Card CryptoGraphic Provider.
-   array<Byte>^sig = rsa->SignData( data, L"SHA1" );
+
+   array<Byte>^sig = rsa->SignData( data, L"SHA256" );
    Console::WriteLine( L"Signature	: {0}", BitConverter::ToString( sig ) );
    
    // Verify the data using the Smart Card CryptoGraphic Provider.
-   bool verified = rsa->VerifyData( data, L"SHA1", sig );
+   bool verified = rsa->VerifyData( data, L"SHA256", sig );
    Console::WriteLine( L"Verified		: {0}", verified );
 }
 
