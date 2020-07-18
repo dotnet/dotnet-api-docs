@@ -27,7 +27,6 @@ int main()
    Console::WriteLine( L"Data			: {0}", BitConverter::ToString( data ) );
    
    // Sign the data using the Smart Card CryptoGraphic Provider.
-
    array<Byte>^sig = rsa->SignData( data, L"SHA256" );
    Console::WriteLine( L"Signature	: {0}", BitConverter::ToString( sig ) );
    
