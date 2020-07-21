@@ -31,7 +31,7 @@ namespace Expr
             Console.WriteLine("deleg2(4) = {0}", deleg2(4));
 
             /*  This code produces the following output:
-            
+
                 deleg(4) = True
                 deleg2(4) = True
             */
@@ -51,7 +51,7 @@ namespace Expr
             Console.WriteLine("deleg(4) = {0}", deleg(4));
 
             /*  This code produces the following output:
-            
+
                 deleg(4) = True
             */
 

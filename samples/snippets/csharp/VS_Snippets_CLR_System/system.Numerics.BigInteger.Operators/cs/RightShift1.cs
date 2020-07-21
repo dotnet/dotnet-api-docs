@@ -40,9 +40,9 @@ public class Example
       //     16 bits:           -138051173072049198150625           E2C43B1D0D6F07D2CC1F
       // </Snippet47>
    }
-   
+
    private static void RightShiftManually()
-   {   
+   {
       // <Snippet48>
       var number = BigInteger.Parse("-9047321678449816249999312055");
       Console.WriteLine("Shifting {0} right by:", number);
@@ -50,8 +50,8 @@ public class Example
          BigInteger newNumber = BigInteger.Divide(number, BigInteger.Pow(2, ctr));
          if (newNumber * ctr < 0)
             newNumber--;
-         
-         Console.WriteLine(" {0,2} bits: {1,35} {2,30}", 
+
+         Console.WriteLine(" {0,2} bits: {1,35} {2,30}",
                            ctr, newNumber, newNumber.ToString("X"));
       }
       // The example displays the following output:

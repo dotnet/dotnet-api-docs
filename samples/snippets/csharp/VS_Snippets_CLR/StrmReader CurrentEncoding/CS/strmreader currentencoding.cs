@@ -3,22 +3,22 @@ using System;
 using System.IO;
 using System.Text;
 
-class Test 
+class Test
 {
 	
-    public static void Main() 
+    public static void Main()
     {
         string path = @"c:\temp\MyTest.txt";
 
-        try 
+        try
         {
-            if (File.Exists(path)) 
+            if (File.Exists(path))
             {
                 File.Delete(path);
             }
 
             //Use an encoding other than the default (UTF8).
-            using (StreamWriter sw = new StreamWriter(path, false, new UnicodeEncoding())) 
+            using (StreamWriter sw = new StreamWriter(path, false, new UnicodeEncoding()))
             {
                 sw.WriteLine("This");
                 sw.WriteLine("is some text");
@@ -26,9 +26,9 @@ class Test
                 sw.WriteLine("Reading");
             }
 
-            using (StreamReader sr = new StreamReader(path, true)) 
+            using (StreamReader sr = new StreamReader(path, true))
             {
-                while (sr.Peek() >= 0) 
+                while (sr.Peek() >= 0)
                 {
                     Console.Write((char)sr.Read());
                 }
@@ -38,8 +38,8 @@ class Test
                 Console.WriteLine("The encoding used was {0}.", sr.CurrentEncoding);
                 Console.WriteLine();
             }
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             Console.WriteLine("The process failed: {0}", e.ToString());
         }

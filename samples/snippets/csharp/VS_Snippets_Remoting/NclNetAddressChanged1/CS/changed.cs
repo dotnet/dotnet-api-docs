@@ -9,14 +9,14 @@ namespace Examples.Net.AddressChanges
     {
         public static void Main()
         {
-            NetworkChange.NetworkAddressChanged += new 
+            NetworkChange.NetworkAddressChanged += new
             NetworkAddressChangedEventHandler(AddressChangedCallback);
             Console.WriteLine("Listening for address changes. Press any key to exit.");
             Console.ReadLine();
         }
         static void AddressChangedCallback(object sender, EventArgs e)
         {
-            
+
             NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
             foreach(NetworkInterface n in adapters)
             {

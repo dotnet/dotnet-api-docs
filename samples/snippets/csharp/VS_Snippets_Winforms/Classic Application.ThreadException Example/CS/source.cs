@@ -44,7 +44,7 @@ namespace Samples.Microsoft.WindowsThreadException
         //<SNIPPET1>
         Thread newThread = null;
 
-        // Starts the application. 
+        // Starts the application.
         [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
         public static void Main(string[] args)
         {
@@ -55,7 +55,7 @@ namespace Samples.Microsoft.WindowsThreadException
             // our handler.
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
-            // Add the event handler for handling non-UI thread exceptions to the event. 
+            // Add the event handler for handling non-UI thread exceptions to the event.
             AppDomain.CurrentDomain.UnhandledException +=
                 new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
@@ -77,7 +77,7 @@ namespace Samples.Microsoft.WindowsThreadException
             newThread.Start();
         }
 
-        // The thread we start up to demonstrate non-UI exception handling. 
+        // The thread we start up to demonstrate non-UI exception handling.
         void newThread_Execute()
         {
             throw new Exception("The method or operation is not implemented.");
@@ -112,8 +112,8 @@ namespace Samples.Microsoft.WindowsThreadException
 
         // Handle the UI exceptions by showing a dialog box, and asking the user whether
         // or not they wish to abort execution.
-        // NOTE: This exception cannot be kept from terminating the application - it can only 
-        // log the event, and inform the user about it. 
+        // NOTE: This exception cannot be kept from terminating the application - it can only
+        // log the event, and inform the user about it.
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             try

@@ -6,7 +6,7 @@ using System.Threading;
 public class Example
 {
    static Random rnd = new Random();
-   
+
    public static void Main()
    {
       if (Thread.CurrentThread.CurrentCulture.Name != "fr-FR") {
@@ -20,29 +20,29 @@ public class Example
          Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("en-US");
       }
       ThreadProc();
-          
+
       Thread worker = new Thread(ThreadProc);
       worker.Name = "WorkerThread";
       worker.Start();
    }
-   
+
    private static void DisplayThreadInfo()
    {
-      Console.WriteLine("\nCurrent Thread Name: '{0}'", 
+      Console.WriteLine("\nCurrent Thread Name: '{0}'",
                         Thread.CurrentThread.Name);
-      Console.WriteLine("Current Thread Culture/UI Culture: {0}/{1}", 
+      Console.WriteLine("Current Thread Culture/UI Culture: {0}/{1}",
                         Thread.CurrentThread.CurrentCulture.Name,
-                        Thread.CurrentThread.CurrentUICulture.Name);                        
+                        Thread.CurrentThread.CurrentUICulture.Name);
    }
-   
+
    private static void DisplayValues()
    {
       // Create new thread and display three random numbers.
       Console.WriteLine("Some currency values:");
       for (int ctr = 0; ctr <= 3; ctr++)
-         Console.WriteLine("   {0:C2}", rnd.NextDouble() * 10);                        
+         Console.WriteLine("   {0:C2}", rnd.NextDouble() * 10);
    }
-   
+
    private static void ThreadProc()
    {
       DisplayThreadInfo();
@@ -57,7 +57,7 @@ public class Example
 //          1,48 €
 //          8,99 €
 //          9,04 €
-//       
+//
 //       Current Thread Name: 'WorkerThread'
 //       Current Thread Culture/UI Culture: en-US/en-US
 //       Some currency values:

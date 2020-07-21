@@ -17,7 +17,7 @@ class BinaryRW
             dataArray[i] = 100.1 * randomGenerator.NextDouble();
         }
 
-        using(BinaryWriter binWriter = 
+        using(BinaryWriter binWriter =
             new BinaryWriter(new MemoryStream()))
         {
             // Write the data to the stream.
@@ -28,7 +28,7 @@ class BinaryRW
             }
 
             // Create a reader using the stream from the writer.
-            using(BinaryReader binReader = 
+            using(BinaryReader binReader =
                 new BinaryReader(binWriter.BaseStream))
             {
                 try

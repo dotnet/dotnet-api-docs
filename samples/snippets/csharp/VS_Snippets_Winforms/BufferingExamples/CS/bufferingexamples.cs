@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace BufferingExample 
+namespace BufferingExample
 {
 [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
 
@@ -15,9 +15,9 @@ namespace BufferingExample
         public BufferingExamples() : base()
         {
             //<Snippet1>
-            // Retrieves the BufferedGraphicsContext for the 
+            // Retrieves the BufferedGraphicsContext for the
             // current application domain.
-            BufferedGraphicsContext appDomainGraphicsContext = 
+            BufferedGraphicsContext appDomainGraphicsContext =
                  BufferedGraphicsManager.Current;
             //</Snippet1>
 
@@ -25,26 +25,26 @@ namespace BufferingExample
             appDomainBufferedGraphicsContext = BufferedGraphicsManager.Current;
 
             //<Snippet2>
-            // Sets the maximum size for the graphics buffer 
-            // of the buffered graphics context. Any allocation 
-            // requests for a buffer larger than this will create 
-            // a temporary buffered graphics context to host 
+            // Sets the maximum size for the graphics buffer
+            // of the buffered graphics context. Any allocation
+            // requests for a buffer larger than this will create
+            // a temporary buffered graphics context to host
             // the graphics buffer.
             appDomainBufferedGraphicsContext.MaximumBuffer = new Size(400, 400);
             //</Snippet2>
 
             //<Snippet3>
-            // Allocates a graphics buffer using the pixel format 
+            // Allocates a graphics buffer using the pixel format
             // of the specified Graphics object.
-            grafx = appDomainBufferedGraphicsContext.Allocate(this.CreateGraphics(), 
+            grafx = appDomainBufferedGraphicsContext.Allocate(this.CreateGraphics(),
                  new Rectangle( 0, 0, 400, 400 ));
             //</Snippet3>
 
             //<Snippet4>
-            // Allocates a graphics buffer using the pixel format 
+            // Allocates a graphics buffer using the pixel format
             // of the specified handle to a device context.
-            grafx = appDomainBufferedGraphicsContext.Allocate(this.Handle, 
-                 new Rectangle( 0, 0, 400, 400 ));            
+            grafx = appDomainBufferedGraphicsContext.Allocate(this.Handle,
+                 new Rectangle( 0, 0, 400, 400 ));
             //</Snippet4>
         }
 

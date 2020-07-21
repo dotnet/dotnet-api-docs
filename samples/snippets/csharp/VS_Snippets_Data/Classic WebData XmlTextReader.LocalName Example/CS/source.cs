@@ -6,15 +6,15 @@ using System.Xml;
 public class Sample {
 
   public static void Main() {
-  
+
     XmlTextReader reader = null;
 
     try {
 
        // Load the reader with the XML file.
        reader = new XmlTextReader("book2.xml");
-  
-       // Parse the file.  If they exist, display the prefix and 
+
+       // Parse the file.  If they exist, display the prefix and
        // namespace URI of each node.
        while (reader.Read()) {
          if (reader.IsStartElement()) {
@@ -27,12 +27,12 @@ public class Sample {
                Console.WriteLine(" The namespace URI is " + reader.NamespaceURI);
            }
          }
-       }       
-     } 
+       }
+     }
      finally {
         if (reader != null)
           reader.Close();
       }
-  }  
+  }
 } // End class
    // </Snippet1>

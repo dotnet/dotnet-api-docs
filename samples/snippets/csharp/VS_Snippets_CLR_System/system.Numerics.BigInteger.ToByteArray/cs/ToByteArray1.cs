@@ -5,12 +5,12 @@ using System.Numerics;
 public class Example
 {
    static byte[] bytes;
-   
+
    public static void Main()
    {
-      BigInteger[] numbers = { BigInteger.MinusOne, BigInteger.One, 
-                               BigInteger.Zero, 120, 128, 255, 1024, 
-                               Int64.MinValue, Int64.MaxValue, 
+      BigInteger[] numbers = { BigInteger.MinusOne, BigInteger.One,
+                               BigInteger.Zero, 120, 128, 255, 1024,
+                               Int64.MinValue, Int64.MaxValue,
                                BigInteger.Parse("90123123981293054321") };
       foreach (BigInteger number in numbers)
       {
@@ -21,7 +21,7 @@ public class Example
             Console.Write("{0:X2} ", byteValue);
 
          Console.WriteLine();
-      }   
+      }
    }
 
    private static string GetSpecifier()

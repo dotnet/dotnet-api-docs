@@ -13,20 +13,20 @@ public class Server
     {
         //<snippet1>
         // Specify the properties for the server channel.
-        System.Collections.IDictionary dict = 
+        System.Collections.IDictionary dict =
             new System.Collections.Hashtable();
         dict["port"] = 9090;
         dict["authenticationMode"] = "IdentifyCallers";
- 
+
         // Set up the server channel.
         TcpChannel serverChannel = new TcpChannel(dict, null, null);
-        ChannelServices.RegisterChannel(serverChannel);    
+        ChannelServices.RegisterChannel(serverChannel);
         //</snippet1>
 
         // Show the name and priority of the channel.
-        Console.WriteLine("The name of the channel is {0}.", 
+        Console.WriteLine("The name of the channel is {0}.",
             serverChannel.ChannelName);
-        Console.WriteLine("The priority of the channel is {0}.", 
+        Console.WriteLine("The priority of the channel is {0}.",
             serverChannel.ChannelPriority);
 
         // Show the URIs associated with the channel.
@@ -38,7 +38,7 @@ public class Server
 
         // Expose an object for remote calls.
         RemotingConfiguration.RegisterWellKnownServiceType(
-            typeof(RemoteObject), "RemoteObject.rem", 
+            typeof(RemoteObject), "RemoteObject.rem",
             WellKnownObjectMode.Singleton);
 
         // Parse the channel's URI.
@@ -52,7 +52,7 @@ public class Server
             Console.WriteLine("The object URI is {0}.", objectUri);
             Console.WriteLine("The channel URI is {0}.", channelUri);
         }
-        
+
         // Wait for the user prompt.
         Console.WriteLine("Press ENTER to exit the server.");
         Console.ReadLine();

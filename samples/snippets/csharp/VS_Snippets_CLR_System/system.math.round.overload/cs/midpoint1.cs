@@ -5,11 +5,11 @@ public class Example
    public static void Main()
    {
       // <Snippet5>
-      Console.WriteLine("{0,-10} {1,-10} {2,-10} {3,-15}", "Value", "Default", 
+      Console.WriteLine("{0,-10} {1,-10} {2,-10} {3,-15}", "Value", "Default",
                         "ToEven", "AwayFromZero");
       for (decimal value = 12.0m; value <= 13.0m; value += 0.1m)
          Console.WriteLine("{0,-10} {1,-10} {2,-10} {3,-15}",
-                           value, Math.Round(value), 
+                           value, Math.Round(value),
                            Math.Round(value, MidpointRounding.ToEven),
                            Math.Round(value, MidpointRounding.AwayFromZero));
       // The example displays the following output:
@@ -24,7 +24,7 @@ public class Example
       //       12.7       13         13         13
       //       12.8       13         13         13
       //       12.9       13         13         13
-      //       13.0       13         13         13
+      //       13         13         13         13
       // </Snippet5>
    }
 }

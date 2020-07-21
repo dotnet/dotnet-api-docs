@@ -4,7 +4,7 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 
 public class Sample : SoapExtension {
-    
+
 // <Snippet1>
 public override void ProcessMessage(SoapMessage message) {
         switch (message.Stage) {

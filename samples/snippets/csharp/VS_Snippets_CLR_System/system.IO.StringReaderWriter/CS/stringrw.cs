@@ -21,7 +21,7 @@ class StringRW
         Console.WriteLine("Original text:\n\n{0}", textReaderText);
 
         // <Snippet2>
-        // From textReaderText, create a continuous paragraph 
+        // From textReaderText, create a continuous paragraph
         // with two spaces between each sentence.
         string aLine, aParagraph = null;
         StringReader strReader = new StringReader(textReaderText);
@@ -50,7 +50,7 @@ class StringRW
         {
             intCharacter = strReader.Read();
 
-            // Check for the end of the string 
+            // Check for the end of the string
             // before converting to a character.
             if(intCharacter == -1) break;
 
@@ -70,7 +70,7 @@ class StringRW
                 strWriter.Write(convertedCharacter);
             }
         }
-        Console.WriteLine("\nOriginal text:\n\n{0}", 
+        Console.WriteLine("\nOriginal text:\n\n{0}",
             strWriter.ToString());
     }
 }

@@ -9,7 +9,7 @@ public class Form1: Form
  {
 // <Snippet1>
 Console.WriteLine(Uri.CheckHostName("www.contoso.com"));
-   
+
 // </Snippet1>
  }
 }

@@ -5,9 +5,9 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     CultureInfo currentCI = Thread.CurrentThread.CurrentCulture;
     NumberFormatInfo nfi = currentCI.NumberFormat;

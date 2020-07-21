@@ -1,10 +1,10 @@
 ﻿// <Snippet1>
-/* Create a custom WebControl class, named AttribRender, that overrides 
+/* Create a custom WebControl class, named AttribRender, that overrides
    the Render method to write two introductory strings. Then call the
    AttributeCollection.Render method, which allows the control to write the
    attribute values that are added to it when it is included in a page.
 */
-   
+
 using System;
 using System.Web;
 using System.Web.UI;
@@ -16,7 +16,7 @@ using System.Security.Permissions;
 namespace AC_Render
 {
    // This is the custom WebControl class.
-   [AspNetHostingPermission(SecurityAction.Demand, 
+   [AspNetHostingPermission(SecurityAction.Demand,
       Level=AspNetHostingPermissionLevel.Minimal)]
    public class AttribRender : WebControl
    {

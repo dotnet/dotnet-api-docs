@@ -2,8 +2,8 @@
 //
 // Requires .NET Framework version 1.2 or higher.
 
-// The following example uses the net view command to list the 
-// available network resources available on a remote computer, 
+// The following example uses the net view command to list the
+// available network resources available on a remote computer,
 // and displays the results to the console. Specifying the optional
 // error log file redirects error output to that file.
 
@@ -42,7 +42,7 @@ namespace ProcessAsyncStreamSamples
                 // Default to the help command if there is not an input argument.
                 netArguments = "/?";
             }
-               
+
             // Check if errors should be redirected to a file.
             errorsWritten = false;
             Console.WriteLine("Enter a fully qualified path to an error log file");
@@ -56,41 +56,41 @@ namespace ProcessAsyncStreamSamples
             // Note that at this point, netArguments and netErrorFile
             // are set with user input.  If the user did not specify
             // an error file, then errorRedirect is set to false.
-      
+
             // Initialize the process and its StartInfo properties.
             netProcess = new Process();
             netProcess.StartInfo.FileName = "Net.exe";
-            
+
             // Build the net command argument list.
-            netProcess.StartInfo.Arguments = String.Format("view {0}", 
+            netProcess.StartInfo.Arguments = String.Format("view {0}",
                 netArguments);
 
             // Set UseShellExecute to false for redirection.
             netProcess.StartInfo.UseShellExecute = false;
 
-            // Redirect the standard output of the net command.  
+            // Redirect the standard output of the net command.
             // This stream is read asynchronously using an event handler.
             netProcess.StartInfo.RedirectStandardOutput = true;
             netProcess.OutputDataReceived += new DataReceivedEventHandler(NetOutputDataHandler);
             netOutput = new StringBuilder();
-   
+
             if (errorRedirect)
             {
-                // Redirect the error output of the net command. 
+                // Redirect the error output of the net command.
                 netProcess.StartInfo.RedirectStandardError = true;
                 netProcess.ErrorDataReceived += new DataReceivedEventHandler(NetErrorDataHandler);
             }
-            else 
+            else
             {
                 // Do not redirect the error output.
                 netProcess.StartInfo.RedirectStandardError = false;
             }
 
-            Console.WriteLine("\nStarting process: net {0}", 
+            Console.WriteLine("\nStarting process: net {0}",
                 netProcess.StartInfo.Arguments);
             if (errorRedirect)
             {
-                Console.WriteLine("Errors will be written to the file {0}", 
+                Console.WriteLine("Errors will be written to the file {0}",
                     netErrorFile);
             }
 
@@ -115,7 +115,7 @@ namespace ProcessAsyncStreamSamples
                 // Close the error file.
                 streamError.Close();
             }
-            else 
+            else
             {
                 // Set errorsWritten to false if the stream is not
                 // open.   Either there are no errors, or the error
@@ -127,13 +127,13 @@ namespace ProcessAsyncStreamSamples
             {
                 // If the process wrote more than just
                 // white space, write the output to the console.
-                Console.WriteLine("\nPublic network shares from net view:\n{0}\n", 
+                Console.WriteLine("\nPublic network shares from net view:\n{0}\n",
                     netOutput);
             }
 
             if (errorsWritten)
             {
-                // Signal that the error file had something 
+                // Signal that the error file had something
                 // written to it.
                 String [] errorOutput = File.ReadAllLines(netErrorFile);
                 if (errorOutput.Length > 0)
@@ -151,7 +151,7 @@ namespace ProcessAsyncStreamSamples
             netProcess.Close();
         }
 
-        private static void NetOutputDataHandler(object sendingProcess, 
+        private static void NetOutputDataHandler(object sendingProcess,
             DataReceivedEventArgs outLine)
         {
             // Collect the net view command output.
@@ -162,7 +162,7 @@ namespace ProcessAsyncStreamSamples
             }
         }
 
-        private static void NetErrorDataHandler(object sendingProcess, 
+        private static void NetErrorDataHandler(object sendingProcess,
             DataReceivedEventArgs errLine)
         {
             // Write the error text to the file if there is something
@@ -175,7 +175,7 @@ namespace ProcessAsyncStreamSamples
                     if (streamError == null)
                     {
                         // Open the file.
-                        try 
+                        try
                         {
                             streamError = new StreamWriter(netErrorFile, true);
                         }
@@ -206,7 +206,7 @@ namespace ProcessAsyncStreamSamples
             }
         }
     }
-} 
+}
 // </Snippet2>
 
 namespace ProcessAsyncStreamSamples
@@ -217,7 +217,7 @@ namespace ProcessAsyncStreamSamples
         /// The main entry point for the application.
         static void Main()
         {
-            try 
+            try
             {
                 ProcessNetStreamRedirection.RedirectNetCommandStreams();
             }

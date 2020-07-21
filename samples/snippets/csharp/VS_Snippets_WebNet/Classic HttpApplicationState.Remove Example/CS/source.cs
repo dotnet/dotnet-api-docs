@@ -8,7 +8,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Application.Remove("MyAppVar1");
-   
+
 // </Snippet1>
  }
 }

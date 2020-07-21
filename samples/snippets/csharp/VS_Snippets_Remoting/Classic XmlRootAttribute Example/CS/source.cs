@@ -5,9 +5,9 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-[XmlRoot(Namespace = "www.contoso.com", 
-     ElementName = "MyGroupName", 
-     DataType = "string", 
+[XmlRoot(Namespace = "www.contoso.com",
+     ElementName = "MyGroupName",
+     DataType = "string",
      IsNullable=true)]
 public class Group
 {
@@ -16,12 +16,12 @@ public class Group
     public Group()
     {
     }
- 
+
     public Group(string groupNameVal)
     {
         groupNameValue = groupNameVal;
     }
- 
+
     public string GroupName
     {
         get{return groupNameValue;}
@@ -35,7 +35,7 @@ public class Test
         Test t = new Test();
         t.SerializeGroup();
     }
- 
+
     private void SerializeGroup()
     {
         // Create an instance of the Group class, and an

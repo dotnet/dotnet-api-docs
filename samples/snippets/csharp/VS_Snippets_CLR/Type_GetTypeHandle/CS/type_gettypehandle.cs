@@ -25,16 +25,16 @@ public class MyClass2
         Console.WriteLine("\nmyRTHFromObject.Value:  {0}", myRTHFromObject.Value);
         Console.WriteLine("myRTHFromObject.GetType():  {0}", myRTHFromObject.GetType());
         Console.WriteLine("Get the type back from the handle...");
-        Console.WriteLine("Type.GetTypeFromHandle(myRTHFromObject):  {0}", 
+        Console.WriteLine("Type.GetTypeFromHandle(myRTHFromObject):  {0}",
             Type.GetTypeFromHandle(myRTHFromObject));
 
-        Console.WriteLine("\nmyRTHFromObject.Equals(myRTHFromType):  {0}", 
+        Console.WriteLine("\nmyRTHFromObject.Equals(myRTHFromType):  {0}",
             myRTHFromObject.Equals(myRTHFromType));
 
         Console.WriteLine("\nmyRTHFromType.Value:  {0}", myRTHFromType.Value);
         Console.WriteLine("myRTHFromType.GetType():  {0}", myRTHFromType.GetType());
         Console.WriteLine("Get the type back from the handle...");
-        Console.WriteLine("Type.GetTypeFromHandle(myRTHFromType):  {0}", 
+        Console.WriteLine("Type.GetTypeFromHandle(myRTHFromType):  {0}",
             Type.GetTypeFromHandle(myRTHFromType));
     }
 }

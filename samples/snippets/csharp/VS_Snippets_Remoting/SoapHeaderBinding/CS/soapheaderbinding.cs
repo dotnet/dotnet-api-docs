@@ -1,12 +1,12 @@
 ﻿// System.Web.Services.Description.SoapHeaderBinding
 
-/* 
+/*
 The following example demonstrates the class 'SoapHeaderBinding'.
-It takes as input a wsdl file. By using the 'Read' method 
-of 'ServiceDescription' class it gets a 'ServiceDescription' object. 
+It takes as input a wsdl file. By using the 'Read' method
+of 'ServiceDescription' class it gets a 'ServiceDescription' object.
 It uses the SOAP protocol related classes  and  creates 'Binding' element
 of 'SOAP' protocol which are then added to the 'ServiceDescription' object.
-An output wsdl file is generated from 'ServiceDescription' object which 
+An output wsdl file is generated from 'ServiceDescription' object which
 could be used for generating a proxy.
 */
 
@@ -20,7 +20,7 @@ could be used for generating a proxy.
    {
    public static void Main()
    {
-      ServiceDescription myServiceDescription = 
+      ServiceDescription myServiceDescription =
          ServiceDescription.Read("SoapHeaderBindingInput_cs.wsdl");
       Binding myBinding = new Binding();
       myBinding.Name = "MyWebServiceSoap";
@@ -34,7 +34,7 @@ could be used for generating a proxy.
       OperationBinding myOperationBinding = new OperationBinding();
       myOperationBinding.Name = "Hello";
 
-      SoapOperationBinding mySoapOperationBinding = 
+      SoapOperationBinding mySoapOperationBinding =
          new SoapOperationBinding();
       mySoapOperationBinding.SoapAction = "http://tempuri.org/Hello";
       mySoapOperationBinding.Style=SoapBindingStyle.Document;
@@ -49,13 +49,13 @@ could be used for generating a proxy.
       mySoapHeaderBinding.Message=new XmlQualifiedName("s0:HelloMyHeader");
       mySoapHeaderBinding.Part="MyHeader";
       mySoapHeaderBinding.Use=SoapBindingUse.Literal;
-      // Add mySoapHeaderBinding to 'myInputBinding' object. 
+      // Add mySoapHeaderBinding to 'myInputBinding' object.
       myInputBinding.Extensions.Add(mySoapHeaderBinding);
       // Create OutputBinding for operation for the 'SOAP' protocol.
       OutputBinding myOutputBinding = new OutputBinding();
       myOutputBinding.Extensions.Add(mySoapBodyBinding);
 
-      // Add 'InputBinding' and 'OutputBinding' to 'OperationBinding'. 
+      // Add 'InputBinding' and 'OutputBinding' to 'OperationBinding'.
       myOperationBinding.Input = myInputBinding;
       myOperationBinding.Output = myOutputBinding;
       myBinding.Operations.Add(myOperationBinding);

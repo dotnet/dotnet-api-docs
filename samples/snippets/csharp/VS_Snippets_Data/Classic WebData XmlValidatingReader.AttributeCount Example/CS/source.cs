@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-public class Sample 
+public class Sample
 {
   public static void Main()
   {
@@ -23,7 +23,7 @@ public class Sample
 
        //Create the XmlValidatingReader .
        reader = new XmlValidatingReader(xmlFrag, XmlNodeType.Element, context);
-  
+
        //Read the attributes on the root element.
        reader.MoveToContent();
        if (reader.HasAttributes){
@@ -34,9 +34,9 @@ public class Sample
          //Move the reader back to the node that owns the attribute.
          reader.MoveToElement();
        }
-     } 
+     }
 
-     finally 
+     finally
      {
         if (reader != null)
           reader.Close();

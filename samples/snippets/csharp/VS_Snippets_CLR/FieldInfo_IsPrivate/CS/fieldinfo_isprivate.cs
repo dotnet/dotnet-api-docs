@@ -32,11 +32,11 @@ class FieldInfo_IsPrivate
             FieldInfo[] myFields = myType.GetFields(BindingFlags.NonPublic
                 |BindingFlags.Public
                 |BindingFlags.Instance);
-      
+
             Console.WriteLine("\nDisplaying whether the fields of {0} are private or not:\n", myType);
             for(int i = 0; i < myFields.Length; i++)
             {
-                // Check whether the field is private or not. 
+                // Check whether the field is private or not.
                 if(myFields[i].IsPrivate)
                     Console.WriteLine("{0} is a private field.", myFields[i].Name);
                 else

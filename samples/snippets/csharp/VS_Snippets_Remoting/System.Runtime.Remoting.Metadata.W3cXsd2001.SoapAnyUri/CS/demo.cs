@@ -1,5 +1,5 @@
 ﻿/// Class:  System.Runtime.Remoting.Metadata.W3cXsd2001.SoapAnyUri
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(string)
 ///    13    GetXsdType()
@@ -7,7 +7,7 @@
 ///    12    ToString()
 ///    14    Value
 ///    16    XsdType
-/// 
+///
 ///    Bugs in SoapAnyUri: None found.
 
 //<snippet10>
@@ -25,7 +25,7 @@ public class Demo
         //</snippet11>
 
         //<snippet12>
-        // Print the value of the SoapAnyUri object in XSD format. 
+        // Print the value of the SoapAnyUri object in XSD format.
         Console.WriteLine(
             "The SoapAnyUri object in XSD format is {0}.",
             anyUri.ToString());
@@ -33,14 +33,14 @@ public class Demo
 
         //<snippet13>
         // Print the XSD type string of the SoapAnyUri object.
-        Console.WriteLine("The XSD type of the SoapAnyUri " + 
+        Console.WriteLine("The XSD type of the SoapAnyUri " +
             "object is {0}.", anyUri.GetXsdType());
         //</snippet13>
 
         //<snippet14>
         // Print the value of the SoapAnyUri object.
         Console.WriteLine(
-            "The value of the SoapAnyUri object is {0}.", 
+            "The value of the SoapAnyUri object is {0}.",
             anyUri.Value);
         //</snippet14>
 

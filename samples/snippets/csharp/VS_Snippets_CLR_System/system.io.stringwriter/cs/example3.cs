@@ -23,7 +23,7 @@ namespace ConsoleApplication
                 char[] charsToAdd = ue.GetChars(ue.GetBytes("and chars to add"));
 
                 await writer.WriteLineAsync(charsToAdd, 0, charsToAdd.Length);
-                
+
                 Console.WriteLine(stringToWrite.ToString());
             }
         }

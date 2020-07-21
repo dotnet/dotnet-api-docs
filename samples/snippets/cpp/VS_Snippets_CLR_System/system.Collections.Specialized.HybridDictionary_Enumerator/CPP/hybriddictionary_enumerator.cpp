@@ -78,7 +78,7 @@ void PrintKeysAndValues3( HybridDictionary^ myCol )
 }
 
 /*
-This code produces the following output.
+This code produces output similar to the following:
 
 Displays the elements using for each:
    KEY                       VALUE

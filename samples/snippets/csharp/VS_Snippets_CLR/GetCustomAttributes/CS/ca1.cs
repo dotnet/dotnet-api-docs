@@ -19,7 +19,7 @@ class Example {
                     ((AssemblyTitleAttribute)attr).Title);
 
             // Check for the AssemblyDescription attribute.
-            else if (attr.GetType() == 
+            else if (attr.GetType() ==
                 typeof(AssemblyDescriptionAttribute))
                 Console.WriteLine("Assembly description is \"{0}\".",
                     ((AssemblyDescriptionAttribute)attr).Description);

@@ -5,59 +5,59 @@ using System.Reflection.Emit;
 
 class DemoMethodBuilder
 {
-   
+
     public static void Main()
     {
         // Creating a dynamic assembly requires an AssemblyName
         // object, and the current application domain.
         //
-        AssemblyName asmName = 
+        AssemblyName asmName =
             new AssemblyName("DemoMethodBuilder1");
         AppDomain domain = AppDomain.CurrentDomain;
-        AssemblyBuilder demoAssembly = 
+        AssemblyBuilder demoAssembly =
             domain.DefineDynamicAssembly(
-                asmName, 
+                asmName,
                 AssemblyBuilderAccess.RunAndSave
             );
 
-        // Define the module that contains the code. For an 
-        // assembly with one module, the module name is the 
+        // Define the module that contains the code. For an
+        // assembly with one module, the module name is the
         // assembly name plus a file extension.
-        ModuleBuilder demoModule = 
+        ModuleBuilder demoModule =
             demoAssembly.DefineDynamicModule(
-                asmName.Name, 
+                asmName.Name,
                 asmName.Name + ".dll"
             );
-      
+
         TypeBuilder demoType = demoModule.DefineType(
-            "DemoType", 
+            "DemoType",
             TypeAttributes.Public | TypeAttributes.Abstract
         );
 
         //<Snippet4>
         // Define a Shared, Public method with standard calling
         // conventions. Do not specify the parameter types or the
-        // return type, because type parameters will be used for 
+        // return type, because type parameters will be used for
         // those types, and the type parameters have not been
         // defined yet.
         MethodBuilder demoMethod = demoType.DefineMethod(
-            "DemoMethod", 
+            "DemoMethod",
             MethodAttributes.Public | MethodAttributes.Static
         );
         //</Snippet4>
 
         //<Snippet3>
         // Defining generic parameters for the method makes it a
-        // generic method. By convention, type parameters are 
+        // generic method. By convention, type parameters are
         // single alphabetic characters. T and U are used here.
         //
         string[] typeParamNames = {"T", "U"};
-        GenericTypeParameterBuilder[] typeParameters = 
+        GenericTypeParameterBuilder[] typeParameters =
             demoMethod.DefineGenericParameters(typeParamNames);
 
-        // The second type parameter is constrained to be a 
+        // The second type parameter is constrained to be a
         // reference type.
-        typeParameters[1].SetGenericParameterAttributes( 
+        typeParameters[1].SetGenericParameterAttributes(
             GenericParameterAttributes.ReferenceTypeConstraint);
         //</Snippet3>
 
@@ -65,9 +65,9 @@ class DemoMethodBuilder
         // Use the IsGenericMethod property to find out if a
         // dynamic method is generic, and IsGenericMethodDefinition
         // to find out if it defines a generic method.
-        Console.WriteLine("Is DemoMethod generic? {0}", 
+        Console.WriteLine("Is DemoMethod generic? {0}",
             demoMethod.IsGenericMethod);
-        Console.WriteLine("Is DemoMethod a generic method definition? {0}", 
+        Console.WriteLine("Is DemoMethod a generic method definition? {0}",
             demoMethod.IsGenericMethodDefinition);
         //</Snippet7>
 
@@ -94,7 +94,7 @@ class DemoMethodBuilder
         // Complete the type.
         Type dt = demoType.CreateType();
 
-        // To bind types to a dynamic generic method, you must 
+        // To bind types to a dynamic generic method, you must
         // first call the GetMethod method on the completed type.
         // You can then define an array of types, and bind them
         // to the method.

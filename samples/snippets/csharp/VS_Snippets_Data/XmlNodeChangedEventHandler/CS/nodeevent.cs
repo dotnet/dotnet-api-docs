@@ -66,6 +66,6 @@ namespace Microsoft.Samples.Xml
                 Console.WriteLine("");
             }
         }
-    } // End class 
+    } // End class
     //</snippet1>
 }

@@ -2,11 +2,11 @@
 // System.Runtime.Remoting.Messaging.IMethodMessage.Uri
 
 /*
-   The program demonstrates the 'LogicalCallContext' and 'Uri' properties of 
+   The program demonstrates the 'LogicalCallContext' and 'Uri' properties of
    the IMethodMessage interface.
    In the program a remote object is created with a method by extending 'MarshalByRefObject'.
-   A custom proxy is created by extending 'RealProxy' and overriding 'Invoke' 
-   method of 'RealProxy'. In this example custom proxy is accessed by passing message 
+   A custom proxy is created by extending 'RealProxy' and overriding 'Invoke'
+   method of 'RealProxy'. In this example custom proxy is accessed by passing message
    to the Invoke method. Then the values of 'Uri' and 'LogicalCallContext' properties
    are displayed to the console.
 */
@@ -31,13 +31,13 @@ public class MyProxyAttribute : ProxyAttribute
    {
       if (serverType.IsMarshalByRef)
       {
-         MarshalByRefObject targetObject = 
+         MarshalByRefObject targetObject =
             (MarshalByRefObject)Activator.CreateInstance(serverType);
          MyProxy proxy = new MyProxy(serverType, targetObject);
          return(MarshalByRefObject)proxy.GetTransparentProxy();
       }
       else
-         throw new Exception("Proxies only work on MarshalByRefObject objects" + 
+         throw new Exception("Proxies only work on MarshalByRefObject objects" +
             " and their children");
    }
 }
@@ -70,7 +70,7 @@ public MyProxy(Type type) : base(type)
    public override IMessage Invoke(IMessage message)
    {
       message.Properties["__Uri"] = stringUri;
-      IMethodMessage myMethodMessage = 
+      IMethodMessage myMethodMessage =
          (IMethodMessage)ChannelServices.SyncDispatchMessage(message);
 
       Console.WriteLine("---------IMethodMessage example-------");

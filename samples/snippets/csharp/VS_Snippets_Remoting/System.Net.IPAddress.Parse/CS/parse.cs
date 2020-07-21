@@ -1,7 +1,7 @@
 ﻿/*
-   This program converts a string containing an IP address, in dotted-quad notation for 
+   This program converts a string containing an IP address, in dotted-quad notation for
    IPv4 or in colon-hexadecimal for IPv6, into an instance of the IPAddress class.
-   Then it uses the overloaded IPAddress ToString method to display the address in 
+   Then it uses the overloaded IPAddress ToString method to display the address in
    its standard notation.
 */
 
@@ -13,7 +13,7 @@ using System.Net;
 class ParseAddress
 {
 
-  private static void Main(string[] args) 
+  private static void Main(string[] args)
   {
     string IPaddress;
 
@@ -34,16 +34,16 @@ class ParseAddress
         Parse(IPaddress);
   }
 
-  // This method calls the IPAddress.Parse method to check the ipAddress 
+  // This method calls the IPAddress.Parse method to check the ipAddress
   // input string. If the ipAddress argument represents a syntatically correct IPv4 or
   // IPv6 address, the method displays the Parse output into quad-notation or
-  // colon-hexadecimal notation, respectively. Otherwise, it displays an 
+  // colon-hexadecimal notation, respectively. Otherwise, it displays an
   // error message.
   private static void Parse(string ipAddress)
   {
     try
     {
-      // Create an instance of IPAddress for the specified address string (in 
+      // Create an instance of IPAddress for the specified address string (in
       // dotted-quad, or colon-hexadecimal notation).
       IPAddress address = IPAddress.Parse(ipAddress);
 
@@ -64,7 +64,7 @@ class ParseAddress
       Console.WriteLine("Source : " + e.Source);
       Console.WriteLine("Message : " + e.Message);
     }
-    
+
     catch(Exception e)
     {
       Console.WriteLine("Exception caught!!!");

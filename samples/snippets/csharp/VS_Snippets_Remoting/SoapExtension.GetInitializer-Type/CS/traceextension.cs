@@ -13,18 +13,18 @@
     string filename;
 
     // When the SOAP extension is accessed for the first time the XML Web service method it is applied
-    // is accessed store the file name passed in using the corresponding SoapExtensionAttribute.    
+    // is accessed store the file name passed in using the corresponding SoapExtensionAttribute.
     public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute attribute) {
         return ((TraceExtensionAttribute) attribute).Filename;
     }
 
 //<Snippet1>
-    // The extension was configured to run using a configuration file instead of an attribute applied to a 
+    // The extension was configured to run using a configuration file instead of an attribute applied to a
     // specific XML Web service method. Return a file name based on the class implementing the XML Web service's type.
-    public override object GetInitializer(Type WebServiceType) 
+    public override object GetInitializer(Type WebServiceType)
 	{
 	   // Return a file name to log the trace information to based on the passed in type.
-	   return "C:\\" + WebServiceType.FullName + ".log";    
+	   return "C:\\" + WebServiceType.FullName + ".log";
     }
 //</Snippet1>
     // Receive the filename stored by GetInitializer and store it in a member variable
@@ -33,7 +33,7 @@
         filename = (string) initializer;
     }
 
-    //  If the SoapMessageStage is such that the SoapRequest or SoapResponse is still in the SOAP 
+    //  If the SoapMessageStage is such that the SoapRequest or SoapResponse is still in the SOAP
     //  format to be sent or received over the wire, save it out to filename passed in using the SoapExtensionAttribute
     public override void ProcessMessage(SoapMessage message) {
         switch (message.Stage) {

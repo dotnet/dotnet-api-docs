@@ -1,4 +1,4 @@
-﻿/* This file is a support file for demonstrating IClientChannelSinkProvider 
+﻿/* This file is a support file for demonstrating IClientChannelSinkProvider
 and ServerProcessing. */
 
 using System;
@@ -9,24 +9,24 @@ using System.Security.Permissions;
 using System.Collections;
 using MyLogging;
 
-public class MyServerClass 
+public class MyServerClass
 {
    [SecurityPermission(SecurityAction.LinkDemand)]
-   public static void Main()  
+   public static void Main()
    {
-      IDictionary prop = new Hashtable();      
+      IDictionary prop = new Hashtable();
       prop.Add("port", 8082);
 
       IServerChannelSinkProvider myServerFormatterProvider = new SoapServerFormatterSinkProvider();
-      IServerChannelSinkProvider myServerLoggingProvider = 
+      IServerChannelSinkProvider myServerLoggingProvider =
             new MyServerProcessingLogServerChannelSinkProviderData();
       myServerLoggingProvider.Next = myServerFormatterProvider;
 
       IClientChannelSinkProvider myClientFormatterProvider = new SoapClientFormatterSinkProvider();
-      IClientChannelSinkProvider myClientLoggingProvider = 
+      IClientChannelSinkProvider myClientLoggingProvider =
             new MyServerProcessingLogClientChannelSinkProviderData();
       myClientLoggingProvider.Next = myClientFormatterProvider;
-      
+
       TcpChannel channel = new TcpChannel(prop, myClientLoggingProvider, myServerLoggingProvider);
 
       ChannelServices.RegisterChannel(channel);

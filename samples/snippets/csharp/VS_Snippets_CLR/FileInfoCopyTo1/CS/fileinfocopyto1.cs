@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-public class CopyToTest 
+public class CopyToTest
 {
-    public static void Main() 
+    public static void Main()
     {
         try
         {
@@ -36,7 +36,7 @@ public class CopyToTest
         }
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //This is the information in the first file:

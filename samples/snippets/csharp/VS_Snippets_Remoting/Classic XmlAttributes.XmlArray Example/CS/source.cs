@@ -24,14 +24,14 @@ public class Run
       test.SerializeObject("OverrideArray.xml");
       test.DeserializeObject("OverrideArray.xml");
    }
-   // Return an XmlSerializer used for overriding. 
+   // Return an XmlSerializer used for overriding.
    public XmlSerializer CreateOverrider()
    {
       // Creating XmlAttributeOverrides and XmlAttributes objects.
       XmlAttributeOverrides xOver = new XmlAttributeOverrides();
       XmlAttributes xAttrs = new XmlAttributes();
 
-      // Add an override for the XmlArray.    
+      // Add an override for the XmlArray.
       XmlArrayAttribute xArray = new XmlArrayAttribute("Staff");
       xArray.Namespace = "http://www.cpandl.com";
       xAttrs.XmlArray = xArray;
@@ -55,7 +55,7 @@ public class Run
       Member m = new Member();
       m.MemberName = "Paul";
       myGroup.Members = new Member[1] {m};
-      
+
       // Serialize the class, and close the TextWriter.
       mySerializer.Serialize(writer, myGroup);
       writer.Close();
@@ -65,7 +65,7 @@ public class Run
    {
       XmlSerializer mySerializer = CreateOverrider();
       FileStream fs = new FileStream(filename, FileMode.Open);
-      Group myGroup = (Group) 
+      Group myGroup = (Group)
       mySerializer.Deserialize(fs);
       foreach(Member m in myGroup.Members)
       {
@@ -73,5 +73,5 @@ public class Run
       }
    }
 }
-   
+
 // </Snippet1>

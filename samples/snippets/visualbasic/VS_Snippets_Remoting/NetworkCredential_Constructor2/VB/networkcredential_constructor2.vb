@@ -51,7 +51,7 @@ Class NetworkCredentialSnippet
             myWebResponse.Close()
 ' </Snippet1>
         Catch e As WebException
-            Console.WriteLine(ControlChars.Lf + ControlChars.Cr + "WebException is raised.The Reason for failure is : {0}", e.Status)
+            Console.WriteLine(ControlChars.Lf + ControlChars.Cr + "WebException is raised. The Reason for failure is : {0}", e.Status)
         Catch e As Exception
             Console.WriteLine(ControlChars.Cr + "The following exception was raised : {0}", e.Message)
         End Try

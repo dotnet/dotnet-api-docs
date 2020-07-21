@@ -9,7 +9,7 @@ class PropertyBuilderDemo
 
 {
 
-   public static Type BuildDynamicTypeWithProperties() 
+   public static Type BuildDynamicTypeWithProperties()
    {
         AppDomain myDomain = Thread.GetDomain();
         AssemblyName myAsmName = new AssemblyName();
@@ -19,10 +19,10 @@ class PropertyBuilderDemo
         AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(myAsmName,
                                                         AssemblyBuilderAccess.RunAndSave);
         // Generate a persistable single-module assembly.
-        ModuleBuilder myModBuilder = 
+        ModuleBuilder myModBuilder =
             myAsmBuilder.DefineDynamicModule(myAsmName.Name, myAsmName.Name + ".dll");
 
-        TypeBuilder myTypeBuilder = myModBuilder.DefineType("CustomerData", 
+        TypeBuilder myTypeBuilder = myModBuilder.DefineType("CustomerData",
                                                         TypeAttributes.Public);
 
         FieldBuilder customerNameBldr = myTypeBuilder.DefineField("customerName",
@@ -40,14 +40,14 @@ class PropertyBuilderDemo
 
         // The property set and property get methods require a special
         // set of attributes.
-        MethodAttributes getSetAttr = 
+        MethodAttributes getSetAttr =
             MethodAttributes.Public | MethodAttributes.SpecialName |
                 MethodAttributes.HideBySig;
 
         // Define the "get" accessor method for CustomerName.
-        MethodBuilder custNameGetPropMthdBldr = 
+        MethodBuilder custNameGetPropMthdBldr =
             myTypeBuilder.DefineMethod("get_CustomerName",
-                                       getSetAttr,        
+                                       getSetAttr,
                                        typeof(string),
                                        Type.EmptyTypes);
 
@@ -58,9 +58,9 @@ class PropertyBuilderDemo
         custNameGetIL.Emit(OpCodes.Ret);
 
         // Define the "set" accessor method for CustomerName.
-        MethodBuilder custNameSetPropMthdBldr = 
+        MethodBuilder custNameSetPropMthdBldr =
             myTypeBuilder.DefineMethod("set_CustomerName",
-                                       getSetAttr,     
+                                       getSetAttr,
                                        null,
                                        new Type[] { typeof(string) });
 
@@ -71,8 +71,8 @@ class PropertyBuilderDemo
         custNameSetIL.Emit(OpCodes.Stfld, customerNameBldr);
         custNameSetIL.Emit(OpCodes.Ret);
 
-        // Last, we must map the two methods created above to our PropertyBuilder to 
-        // their corresponding behaviors, "get" and "set" respectively. 
+        // Last, we must map the two methods created above to our PropertyBuilder to
+        // their corresponding behaviors, "get" and "set" respectively.
         custNamePropBldr.SetGetMethod(custNameGetPropMthdBldr);
         custNamePropBldr.SetSetMethod(custNameSetPropMthdBldr);
 
@@ -84,10 +84,10 @@ class PropertyBuilderDemo
         return retval;
    }
 
-   public static void Main() 
+   public static void Main()
    {
         Type custDataType = BuildDynamicTypeWithProperties();
-        
+
         PropertyInfo[] custDataPropInfo = custDataType.GetProperties();
         foreach (PropertyInfo pInfo in custDataPropInfo) {
            Console.WriteLine("Property '{0}' created!", pInfo.ToString());
@@ -95,7 +95,7 @@ class PropertyBuilderDemo
 
         Console.WriteLine("---");
         // Note that when invoking a property, you need to use the proper BindingFlags -
-        // BindingFlags.SetProperty when you invoke the "set" behavior, and 
+        // BindingFlags.SetProperty when you invoke the "set" behavior, and
         // BindingFlags.GetProperty when you invoke the "get" behavior. Also note that
         // we invoke them based on the name we gave the property, as expected, and not
         // the name of the methods we bound to the specific property behaviors.

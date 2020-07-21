@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 String str;
  str = Request.ContentType;
-   
+
 // </Snippet1>
  }
 }

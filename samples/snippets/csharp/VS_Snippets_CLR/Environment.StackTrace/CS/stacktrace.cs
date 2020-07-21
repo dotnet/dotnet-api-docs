@@ -2,9 +2,9 @@
 // Sample for the Environment.StackTrace property
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     Console.WriteLine();
     Console.WriteLine("StackTrace: '{0}'", Environment.StackTrace);

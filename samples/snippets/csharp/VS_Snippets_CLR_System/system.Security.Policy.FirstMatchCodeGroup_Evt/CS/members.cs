@@ -352,7 +352,7 @@ class Members
 // A FirstMatchCodeGroup named with first-match merge logic has been created
 // with hash code(113151525).
 // This code group contains a Zone - Intranet membership condition with the 
-// permission set.The code group contains the following policy: 
+// permission set. The code group contains the following policy: 
 // It also contains the following attributes:
 // There are 1 child elements in the code group.
 // Removing the Read-only code group.

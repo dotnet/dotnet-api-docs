@@ -13,9 +13,9 @@ public class Sample
      XmlTextWriter writer = new XmlTextWriter (filename, null);
      //Use indenting for readability.
      writer.Formatting = Formatting.Indented;
-        
+
      writer.WriteComment("sample XML fragment");
-    
+
      //Write an element (this one is the root).
      writer.WriteStartElement("bookstore");
 
@@ -28,16 +28,16 @@ public class Sample
      string prefix = writer.LookupPrefix("urn:samples");
      writer.WriteStartAttribute(prefix, "ISBN", "urn:samples");
      writer.WriteString("1-861003-78");
-     writer.WriteEndAttribute();     
+     writer.WriteEndAttribute();
 
      //Write the title.
      writer.WriteStartElement("title");
      writer.WriteString("The Handmaid's Tale");
      writer.WriteEndElement();
-              
+
      //Write the price.
      writer.WriteElementString("price", "19.95");
-     
+
      //Write the style element.
      writer.WriteStartElement(prefix, "style", "urn:samples");
      writer.WriteString("hardcover");
@@ -48,7 +48,7 @@ public class Sample
 
      //Write the close tag for the root element.
      writer.WriteEndElement();
-             
+
      //Write the XML to file and close the writer.
      writer.Flush();
      writer.Close();
@@ -59,9 +59,9 @@ public class Sample
      doc.PreserveWhitespace = true;
      //Load the file
      doc.Load(filename);
-    
+
      //Write the XML content to the console.
-     Console.Write(doc.InnerXml);  
+     Console.Write(doc.InnerXml);
   }
 }
    // </Snippet1>

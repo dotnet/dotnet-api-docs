@@ -1,11 +1,11 @@
 ﻿// System.Web.Services.Description.ServiceDescriptionCollection.GetMessage()
 
-/* The following program demonstrates the 'GetMessage' method 
-   of 'ServiceDescriptionCollection' class. It searches for a 
+/* The following program demonstrates the 'GetMessage' method
+   of 'ServiceDescriptionCollection' class. It searches for a
    'Message' in the collection and returns the Message instance. On success,
    a message is displayed on the console.
-   
-   Note: This program requires 'DataTypes_CS.wsdl' and 'MathService_CS.wsdl' 
+
+   Note: This program requires 'DataTypes_CS.wsdl' and 'MathService_CS.wsdl'
    files to be placed in same directory as that of .exe for running.
 */
 using System;
@@ -17,22 +17,22 @@ class MyServiceDescriptionCollection
    public static void Main()
    {
       try
-      { 
-         ServiceDescription myServiceDescription1 = 
+      {
+         ServiceDescription myServiceDescription1 =
             ServiceDescription.Read("DataTypes_CS.wsdl");
-         ServiceDescription myServiceDescription2 = 
+         ServiceDescription myServiceDescription2 =
             ServiceDescription.Read("MathService_CS.wsdl");
-         
+
          // Create the object of 'ServiceDescriptionCollection' class.
-         ServiceDescriptionCollection myCollection = 
+         ServiceDescriptionCollection myCollection =
             new ServiceDescriptionCollection();
 
-         // Add 'ServiceDescription' objects. 
+         // Add 'ServiceDescription' objects.
          myCollection.Add(myServiceDescription1);
          myCollection.Add(myServiceDescription2);
-// <Snippet1> 
+// <Snippet1>
          // Construct an XML qualified name.
-         XmlQualifiedName myXmlQualifiedName = 
+         XmlQualifiedName myXmlQualifiedName =
             new XmlQualifiedName("AddSoapIn", "http://tempuri2.org/");
 
          // Get the Message from the collection.

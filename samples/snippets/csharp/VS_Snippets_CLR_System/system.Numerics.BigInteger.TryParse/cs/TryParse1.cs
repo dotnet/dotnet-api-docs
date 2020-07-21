@@ -9,28 +9,28 @@ public class Example
       // <Snippet2>
       string numericString;
       BigInteger number = BigInteger.Zero;
-      
+
       // Call TryParse with default values of style and provider.
       numericString = "  -300   ";
-      if (BigInteger.TryParse(numericString, NumberStyles.Integer, 
+      if (BigInteger.TryParse(numericString, NumberStyles.Integer,
                              null, out number))
-         Console.WriteLine("'{0}' was converted to {1}.", 
-                           numericString, number);                    
+         Console.WriteLine("'{0}' was converted to {1}.",
+                           numericString, number);
       else
-         Console.WriteLine("Conversion of '{0}' to a BigInteger failed.", 
+         Console.WriteLine("Conversion of '{0}' to a BigInteger failed.",
                            numericString);
-      
-      // Call TryParse with the default value of style and 
+
+      // Call TryParse with the default value of style and
       // a provider supporting the tilde as negative sign.
       numericString = "  -300   ";
       if (BigInteger.TryParse(numericString, NumberStyles.Integer,
                              new BigIntegerFormatProvider(), out number))
          Console.WriteLine("'{0}' was converted to {1}.",
-                           numericString, number);                             
+                           numericString, number);
       else
          Console.WriteLine("Conversion of '{0}' to a BigInteger failed.",
                            numericString);
-      
+
       // Call TryParse with only AllowLeadingWhite and AllowTrailingWhite.
       // Method returns false because of presence of negative sign.
       numericString = "  -500   ";
@@ -38,63 +38,63 @@ public class Example
                               NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
                               new BigIntegerFormatProvider(), out number))
          Console.WriteLine("'{0}' was converted to {1}.",
-                           numericString, number);                             
+                           numericString, number);
       else
          Console.WriteLine("Conversion of '{0}' to a BigInteger failed.",
                            numericString);
-      
+
       // Call TryParse with AllowHexSpecifier and a hex value.
       numericString = "F14237FFAAC086455192";
       if (BigInteger.TryParse(numericString,
                               NumberStyles.AllowHexSpecifier,
                               null, out number))
          Console.WriteLine("'{0}' was converted to {1} (0x{1:x}).",
-                           numericString, number);                             
+                           numericString, number);
       else
          Console.WriteLine("Conversion of '{0}' to a BigInteger failed.",
                            numericString);
-      
+
       // Call TryParse with AllowHexSpecifier and a negative hex value.
       // Conversion fails because of presence of negative sign.
       numericString = "-3af";
       if (BigInteger.TryParse(numericString, NumberStyles.AllowHexSpecifier,
                              new BigIntegerFormatProvider(), out number))
          Console.WriteLine("'{0}' was converted to {1}.",
-                           numericString, number);       
+                           numericString, number);
       else
          Console.WriteLine("Conversion of '{0}' to a BigInteger failed.",
                            numericString);
-      
+
       // Call TryParse with only NumberStyles.None.
       // Conversion fails because of presence of white space and sign.
       numericString = " -300 ";
       if (BigInteger.TryParse(numericString, NumberStyles.None,
                              new BigIntegerFormatProvider(), out number))
          Console.WriteLine("'{0}' was converted to {1}.",
-                           numericString, number);         
+                           numericString, number);
       else
          Console.WriteLine("Conversion of '{0}' to a BigInteger failed.",
                            numericString);
-                                                  
+
       // Call TryParse with NumberStyles.Any and a provider for the fr-FR culture.
       // Conversion fails because the string is formatted for the en-US culture.
       numericString = "9,031,425,666,123,546.00";
       if (BigInteger.TryParse(numericString, NumberStyles.Any,
                              new CultureInfo("fr-FR"), out number))
          Console.WriteLine("'{0}' was converted to {1}.",
-                           numericString, number);                     
+                           numericString, number);
       else
          Console.WriteLine("Conversion of '{0}' to a BigInteger failed.",
                            numericString);
-      
+
       // Call TryParse with NumberStyles.Any and a provider for the fr-FR culture.
-      // Conversion succeeds because the string is properly formatted 
+      // Conversion succeeds because the string is properly formatted
       // For the fr-FR culture.
       numericString = "9 031 425 666 123 546,00";
       if (BigInteger.TryParse(numericString, NumberStyles.Any,
                              new CultureInfo("fr-FR"), out number))
          Console.WriteLine("'{0}' was converted to {1}.",
-                           numericString, number);                 
+                           numericString, number);
       else
          Console.WriteLine("Conversion of '{0}' to a BigInteger failed.",
                            numericString);
@@ -106,7 +106,7 @@ public class Example
       //    Conversion of '-3af' to a BigInteger failed.
       //    Conversion of ' -300 ' to a BigInteger failed.
       //    Conversion of '9,031,425,666,123,546.00' to a BigInteger failed.
-      //    '9 031 425 666 123 546,00' was converted to 9031425666123546.      
+      //    '9 031 425 666 123 546,00' was converted to 9031425666123546.
       // </Snippet2>
    }
 }
@@ -114,9 +114,9 @@ public class Example
 // <Snippet3>
 public class BigIntegerFormatProvider : IFormatProvider
 {
-   public object GetFormat(Type formatType) 
+   public object GetFormat(Type formatType)
    {
-      if (formatType == typeof(NumberFormatInfo)) 
+      if (formatType == typeof(NumberFormatInfo))
       {
          NumberFormatInfo numberFormat = new NumberFormatInfo();
          numberFormat.NegativeSign = "~";
@@ -125,7 +125,7 @@ public class BigIntegerFormatProvider : IFormatProvider
       else
       {
          return null;
-      }      
+      }
    }
 }
 // </Snippet3>

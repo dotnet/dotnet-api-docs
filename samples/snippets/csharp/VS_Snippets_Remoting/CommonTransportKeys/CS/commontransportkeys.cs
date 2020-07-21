@@ -3,7 +3,7 @@
 // System.Runtime.Remoting.Channels.CommonTransportKeys.ConnectionId
 // System.Runtime.Remoting.Channels.CommonTransportKeys.RequestUri
 
-/* 
+/*
    This program demonstrates 'CommonTransportKeys' class and the static members 'IPAddress', 'ConnectionId',
    'RequestUri'. 'LoggingClientChannelSinkProvider' and 'LoggingServerChannelSinkProvider' classes are
    created which inherits'IClientChannelSinkProvider' and 'IServerChannelSinkProvider' respectively.
@@ -21,12 +21,12 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Permissions;
 
 namespace Logging
-{ 
+{
    [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class LoggingClientChannelSinkProvider : IClientChannelSinkProvider
    {
       private IClientChannelSinkProvider next1 = null;
-      public IClientChannelSink CreateSink(IChannelSender channel1, String url1, 
+      public IClientChannelSink CreateSink(IChannelSender channel1, String url1,
          Object remoteChannelData)
       {
          IClientChannelSink localNextSink = null;

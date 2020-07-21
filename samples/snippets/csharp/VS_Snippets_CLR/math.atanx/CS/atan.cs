@@ -4,9 +4,9 @@
 //                           Math.Tan()
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     double x = 1.0;
     double y = 2.0;

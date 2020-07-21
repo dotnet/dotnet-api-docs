@@ -24,14 +24,14 @@ Class XMLDSIGDetached
       Try
          
          ' Generate a DSA signing key.
-         Dim DSAKey As New DSACryptoServiceProvider()
+         Dim DSAKey As DSA = DSA.Create()
          
          Console.WriteLine("Signing: {0}", resourceToSign)
          
          ' Sign the detached resourceand save the signature in an XML file.
          SignDetachedResource(resourceToSign, XmlFileName, DSAKey)
          
-         Console.WriteLine("XML signature was succesfully computed and saved to {0}.", XmlFileName)
+         Console.WriteLine("XML signature was successfully computed and saved to {0}.", XmlFileName)
          
          ' Verify the signature of the signed XML.
          Console.WriteLine("Verifying signature...")

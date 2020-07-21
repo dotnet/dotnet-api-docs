@@ -16,7 +16,7 @@ public class ServerClass {
 
         RemotingConfiguration.RegisterWellKnownServiceType( typeof(HelloService),
                                                             "MyUri",
-                                                            WellKnownObjectMode.SingleCall 
+                                                            WellKnownObjectMode.SingleCall
                                                           );
 // </Snippet2>
 // <Snippet3>

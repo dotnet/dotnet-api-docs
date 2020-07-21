@@ -8,7 +8,7 @@ public class Page1: Page
  {
 // <Snippet1>
 Response.Redirect("http://www.microsoft.com/gohere/look.htm");
-   
+
 // </Snippet1>
  }
 }

@@ -1,17 +1,17 @@
 ﻿/*
-  This program demonstrates the 'SocketPermission(PermissionState)', 
+  This program demonstrates the 'SocketPermission(PermissionState)',
   'SocketPermission(NetworkAccess, TransportType, string, int) constructors,
   'FromXml', 'Intersect', 'AddPermission' methods and 'AllPorts' field
   of 'SocketPermission' class.
-  
+
   This program provides a class called 'DateClient' that functions as a client
   for a 'DateServer'. A 'DateServer' is a server that provides the current date on
-  the server in response to a request from a client. The 'DateClient' class 
+  the server in response to a request from a client. The 'DateClient' class
   provides a method called 'GetDate' which returns the current date on the server.
   The 'GetDate' is the method that shows the use of 'SocketPermission' class. An
   instance of 'SocketPermission' is obtained using the 'FromXml' method. Another
   instance of 'SocketPermission' is created with the 'SocketPermission(NetworkAccess,
-   TransportType, string, int)' constructor. A third 'SocketPermission' object is 
+   TransportType, string, int)' constructor. A third 'SocketPermission' object is
   formed from the intersection of the above two 'SocketPermission' objects with the
   use of the 'Intersect' method of 'SocketPermission' class. This 'SocketPermission'
   object is used by the 'GetDate' method to verify the permissions of the calling
@@ -19,7 +19,7 @@
   connects to the 'DateServer' and returns the current date that the 'DateServer'
   sends. If any exception occurs the 'GetDate' method returns an empty string.
 
-  Note: This program requires 'DateServer_SocketPermission' program executing. 
+  Note: This program requires 'DateServer_SocketPermission' program executing.
 */
 
 using System;
@@ -33,7 +33,7 @@ using System.Security.Permissions;
 public class DateClient {
 
 	private Socket serverSocket;
-	private Encoding asciiEncoding; 
+	private Encoding asciiEncoding;
 	private IPAddress serverAddress;
 
 	private int serverPort;
@@ -61,10 +61,10 @@ public class DateClient {
 		// 'SocketPermission' object for 'Connect' permission
 		SecurityElement securityElement2 = new SecurityElement("ConnectAccess");
 		// Format to specify ip address are <ip-address>#<port>#<transport-type>
-		// First 'SocketPermission' ip-address is '192.168.144.238' for 'All' transport types and 
+		// First 'SocketPermission' ip-address is '192.168.144.238' for 'All' transport types and
       // for 'All'ports for the ip-address.
 		SecurityElement securityElement3 = new SecurityElement("URI", "192.168.144.238#-1#3");
-		// Second 'SocketPermission' ip-address is '192.168.144.240' for 'All' transport types and 
+		// Second 'SocketPermission' ip-address is '192.168.144.240' for 'All' transport types and
       // for 'All' ports for the ip-address.
 		SecurityElement securityElement4 = new SecurityElement("URI", "192.168.144.240#-1#3");
 		securityElement2.AddChild(securityElement3);
@@ -79,7 +79,7 @@ public class DateClient {
 
 		// Create another 'SocketPermission' object with two ip addresses.
 		// First 'SocketPermission' ip-address is '192.168.144.238' for 'All' transport types and for 'All' ports for the ip-address.
-		SocketPermission socketPermission3 = 
+		SocketPermission socketPermission3 =
 						new SocketPermission(NetworkAccess.Connect,
 											 TransportType.All,
 											 "192.168.144.238",
@@ -128,7 +128,7 @@ public class DateClient {
 public class UserDateClient {
 
 	public static void Main(String[] args) {
-		if(args.Length != 2) 
+		if(args.Length != 2)
 		{
 			PrintUsage();
 			return;

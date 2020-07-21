@@ -1,7 +1,7 @@
 ﻿//<SNIPPET1>
 //
 // This example signs a URL using an
-// envelope signature. It then verifies the 
+// envelope signature. It then verifies the
 // signed XML.
 //
 using System;
@@ -16,7 +16,7 @@ public class SignVerifyEnvelope
     public static void Main(String[] args)
     {
         // Generate a signing key.
-       RSACryptoServiceProvider Key = new RSACryptoServiceProvider();
+       RSA Key = RSA.Create();
 
        try
        {
@@ -48,8 +48,8 @@ public class SignVerifyEnvelope
        }
        finally
        {
-           // Clear resources associated with the 
-           // RSACryptoServiceProvider.
+           // Clear resources associated with the
+           // RSA instance.
            Key.Clear();
        }
    }
@@ -57,7 +57,7 @@ public class SignVerifyEnvelope
     // Sign an XML file and save the signature in a new file.
     public static void SignDetachedResource(string URIString, string XmlSigFileName, RSA Key)
     {
-        // Check the arguments.  
+        // Check the arguments.
         if (URIString == null)
             throw new ArgumentNullException("URIString");
         if (XmlSigFileName == null)
@@ -107,7 +107,7 @@ public class SignVerifyEnvelope
     // Verify the signature of an XML file and return the result.
     public static Boolean VerifyXmlFile(String Name)
     {
-        // Check the arguments.  
+        // Check the arguments.
         if (Name == null)
             throw new ArgumentNullException("Name");
 
@@ -117,7 +117,7 @@ public class SignVerifyEnvelope
         // Format using white spaces.
         xmlDocument.PreserveWhitespace = true;
 
-        // Load the passed XML file into the document. 
+        // Load the passed XML file into the document.
         xmlDocument.Load(Name);
 
         // Create a new SignedXml object and pass it

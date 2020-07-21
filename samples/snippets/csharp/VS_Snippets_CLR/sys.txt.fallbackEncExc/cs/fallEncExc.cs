@@ -4,27 +4,27 @@
 using System;
 using System.Text;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
 
-// Create an encoding, which is equivalent to calling the 
-// ASCIIEncoding class constructor. 
+// Create an encoding, which is equivalent to calling the
+// ASCIIEncoding class constructor.
 // The EncoderExceptionFallback parameter causes an exception to
-// be thrown when a character cannot be encoded. 
-// A decoder exception fallback is also specified, but it is not 
-// used because this example terminates during the encoding operation.  
+// be thrown when a character cannot be encoded.
+// A decoder exception fallback is also specified, but it is not
+// used because this example terminates during the encoding operation.
 
     Encoding ae = Encoding.GetEncoding(
                   "us-ascii",
-                  new EncoderExceptionFallback(), 
+                  new EncoderExceptionFallback(),
                   new DecoderExceptionFallback());
 
-// The input string consists of the Unicode characters LEFT POINTING 
-// DOUBLE ANGLE QUOTATION MARK (U+00AB), 'X' (U+0058), and RIGHT POINTING 
-// DOUBLE ANGLE QUOTATION MARK (U+00BB). 
-// The encoding can only encode characters in the US-ASCII range of U+0000 
+// The input string consists of the Unicode characters LEFT POINTING
+// DOUBLE ANGLE QUOTATION MARK (U+00AB), 'X' (U+0058), and RIGHT POINTING
+// DOUBLE ANGLE QUOTATION MARK (U+00BB).
+// The encoding can only encode characters in the US-ASCII range of U+0000
 // through U+007F. Consequently, the characters bracketing the 'X' character
 // cause an exception.
     string inputString = "\u00abX\u00bb";
@@ -40,7 +40,7 @@ class Sample
     Console.WriteLine("The name of the encoding is \"{0}\".\n", ae.WebName);
 
 // Display the input string in text.
-    Console.WriteLine("Input string ({0} characters): \"{1}\"", 
+    Console.WriteLine("Input string ({0} characters): \"{1}\"",
                        inputString.Length, inputString);
 
 // Display the input string in hexadecimal.
@@ -57,7 +57,7 @@ class Sample
 
 // The code example terminates during the call to the GetBytes() method.
     try {
-        numberOfEncodedBytes = ae.GetBytes(inputString, 0, inputString.Length, 
+        numberOfEncodedBytes = ae.GetBytes(inputString, 0, inputString.Length,
                                            encodedBytes, 0);
         }
     catch (EncoderFallbackException e)

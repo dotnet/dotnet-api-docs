@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 class Example
 {
    static CancellationTokenSource cts = new CancellationTokenSource();
-   
+
    static TaskFactory factory = new TaskFactory(
       cts.Token,
       TaskCreationOptions.PreferFairness,

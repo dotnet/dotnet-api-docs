@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example retrieves specific groups of Message
 		// properties.
 		//**************************************************
@@ -78,7 +78,7 @@ namespace MyProject
 			Message myMessage = myQueue.Receive();
 
 			// Display selected properties.
-			Console.WriteLine("Encryption algorithm: " + 
+			Console.WriteLine("Encryption algorithm: " +
 				myMessage.EncryptionAlgorithm.ToString());
 			Console.WriteLine("Body: " + (String)myMessage.Body);
 	
@@ -96,7 +96,7 @@ namespace MyProject
 			MessageQueue myQueue = new MessageQueue(".\\myQueue");
 
 			// Specify to retrieve selected properties.
-			MessagePropertyFilter myFilter = new 
+			MessagePropertyFilter myFilter = new
 				MessagePropertyFilter();
 			myFilter.ClearAll();
 			// The following list is a random subset of available properties.
@@ -114,9 +114,9 @@ namespace MyProject
 			Message myMessage = myQueue.Receive();
 
 			// Display selected properties.
-			Console.WriteLine("Message type: " + 
+			Console.WriteLine("Message type: " +
 				myMessage.MessageType.ToString());
-			Console.WriteLine("Priority: " + 
+			Console.WriteLine("Priority: " +
 				myMessage.Priority.ToString());
 	
 			return;

@@ -1,15 +1,15 @@
 ﻿// <Internal>
 // This program contains examples for the following types and methods:
-// System.Net.FileWebRequest (Snippet1); System.Net.FileWebRequest.Method (Snippet2); 
-// System.Net.FileWebRequest.Timeout (Snippet3); 
+// System.Net.FileWebRequest (Snippet1); System.Net.FileWebRequest.Method (Snippet2);
+// System.Net.FileWebRequest.Timeout (Snippet3);
 // System.Net.FileWebRequest.ContentLength (Snippet4).
 // System.Net.FileWebRequest.GetRequestStream (Snippet5);
 // </Internal>
 // <Snippet1>
-// This example creates or opens a text file and stores a string in it. 
+// This example creates or opens a text file and stores a string in it.
 // Both the file and the string are passed by the user.
 // Note. For this program to work, the folder containing the test file
-// must be shared, with its permissions set to allow write access. 
+// must be shared, with its permissions set to allow write access.
 using System.Net;
 using System;
 using System.IO;
@@ -35,7 +35,7 @@ namespace Mssc.PluggableProtocols.File
             {
 // <Snippet2>
 // <Snippet3>
-                // Create a Uri object. 
+                // Create a Uri object.
                 Uri myUrl = new Uri ("file://" + fileName);
 
                 // Create a FileWebRequest object.
@@ -45,7 +45,7 @@ namespace Mssc.PluggableProtocols.File
                 myFileWebRequest.Timeout = timeout;
 
 // </Snippet3>
-                // Set the Method property to POST  
+                // Set the Method property to POST
                 myFileWebRequest.Method = "POST";
 // </Snippet2>
             }
@@ -85,10 +85,10 @@ namespace Mssc.PluggableProtocols.File
                 // Get the file stream handler to write to the file.
                 Stream readStream = myFileWebRequest.GetRequestStream ();
 
-                // Write to the file stream. 
+                // Write to the file stream.
                 // Note.  For this to work, the file must be accessible
                 // on the network. This can be accomplished by setting the property
-                // sharing of the folder containg the file. 
+                // sharing of the folder containg the file.
                 // FileWebRequest.Credentials property cannot be used for this purpose.
                 readStream.Write (byteArray, 0, userInput.Length);
                 Console.WriteLine ("\nThe String you entered was successfully written to the file.");
@@ -120,4 +120,4 @@ namespace Mssc.PluggableProtocols.File
         }
     }
 }
-// </Snippet1>  
+// </Snippet1>

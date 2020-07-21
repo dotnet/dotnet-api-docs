@@ -8,12 +8,12 @@ public class Page1: Page
  {
 // <Snippet1>
 HttpStaticObjectsCollection PageObjects;
- 
+
 PageObjects = Application.StaticObjects;
 if (PageObjects.Count > 0)
 {
    //...
-}   
+}
 // </Snippet1>
  }
 }

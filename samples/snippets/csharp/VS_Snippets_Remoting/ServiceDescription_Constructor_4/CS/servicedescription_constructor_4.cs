@@ -3,10 +3,10 @@
 // System.Web.Services.Description.ServiceDescription.Messages
 // System.Web.Services.Description.ServiceDescription.Name
 
-/* 
-   The following example demonstrates the constructor 'ServiceDescription()', 
+/*
+   The following example demonstrates the constructor 'ServiceDescription()',
    properties 'Messages', 'Name' and 'Read'  method of 'ServiceDescription'
-   class.The input to the program is a WSDL file 'MyWsdl.wsdl'.
+   class. The input to the program is a WSDL file 'MyWsdl.wsdl'.
    This program removes one message from the existing WSDL.
    A new Message is defined and added to the ServiceDescription.
    A new wsdl with modified ServiceDescription is written in 'MyOutWsdl.wsdl'.
@@ -32,20 +32,20 @@ namespace ServiceDescription1
          myDescription.Name = "MyServiceDescription";
          Console.WriteLine("Name: " + myDescription.Name);
          MessageCollection myMessageCollection = myDescription.Messages;
-         
+
          // Remove the message at index 0 from the message collection.
          myMessageCollection.Remove(myDescription.Messages[0]);
-         
+
          // Build a new message.
          Message myMessage = new Message();
          myMessage.Name = "AddSoapIn";
-         
+
          // Build a new MessagePart.
          MessagePart myMessagePart = new MessagePart();
          myMessagePart.Name = "parameters";
          XmlQualifiedName myXmlQualifiedName = new XmlQualifiedName("s0:Add");
          myMessagePart.Element = myXmlQualifiedName;
-         
+
          // Add MessageParts to the message.
          myMessage.Parts.Add(myMessagePart);
 

@@ -8,19 +8,20 @@ public class Example
     internal void m_internal() {}
     protected void m_protected() {}
     protected internal void m_protected_public() {}
+    private protected void m_private_protected() {}
 
     public static void Main()
     {
-        Console.WriteLine("\n{0,-30}{1,-18}{2}", "", "IsAssembly", "IsFamilyOrAssembly"); 
-        Console.WriteLine("{0,-21}{1,-18}{2,-18}{3}\n", 
+        Console.WriteLine("\n{0,-30}{1,-18}{2}", "", "IsAssembly", "IsFamilyOrAssembly");
+        Console.WriteLine("{0,-21}{1,-18}{2,-18}{3}\n",
             "", "IsPublic", "IsFamily", "IsFamilyAndAssembly");
-   
+
         foreach (MethodBase m in typeof(Example).GetMethods(
             BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
         {
             if (m.Name.Substring(0, 1) == "m")
             {
-                Console.WriteLine("{0,-21}{1,-9}{2,-9}{3,-9}{4,-9}{5,-9}", 
+                Console.WriteLine("{0,-21}{1,-9}{2,-9}{3,-9}{4,-9}{5,-9}",
                     m.Name,
                     m.IsPublic,
                     m.IsAssembly,
@@ -42,5 +43,6 @@ m_public             True     False    False    False    False
 m_internal           False    True     False    False    False
 m_protected          False    False    True     False    False
 m_protected_public   False    False    False    True     False
+m_private_protected  False    False    False    False    True
  */
 // </Snippet1>

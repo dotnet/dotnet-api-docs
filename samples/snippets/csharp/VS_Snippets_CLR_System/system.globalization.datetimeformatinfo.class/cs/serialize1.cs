@@ -12,9 +12,9 @@ public class Example
       DateTime originalDate = new DateTime(2014, 08, 18, 08, 16, 35);
       // Display information on the date and time.
       Console.WriteLine("Date to serialize: {0:F}", originalDate);
-      Console.WriteLine("Current Culture:   {0}", 
+      Console.WriteLine("Current Culture:   {0}",
                         CultureInfo.CurrentCulture.Name);
-      Console.WriteLine("Time Zone:         {0}", 
+      Console.WriteLine("Time Zone:         {0}",
                         TimeZoneInfo.Local.DisplayName);
       // Convert the date value to UTC.
       DateTime utcDate = originalDate.ToUniversalTime();

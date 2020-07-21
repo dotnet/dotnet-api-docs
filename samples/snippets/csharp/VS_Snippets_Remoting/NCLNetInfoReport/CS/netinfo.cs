@@ -31,53 +31,53 @@ namespace Examples
                 //    break;
             }
            //</Snippet20>
-            Console.WriteLine("  Forwarding enabled ...................... : {0}", 
+            Console.WriteLine("  Forwarding enabled ...................... : {0}",
                 ipstat.ForwardingEnabled);
-            Console.WriteLine("  Interfaces .............................. : {0}", 
+            Console.WriteLine("  Interfaces .............................. : {0}",
                 ipstat.NumberOfInterfaces);
-            Console.WriteLine("  IP addresses ............................ : {0}", 
+            Console.WriteLine("  IP addresses ............................ : {0}",
                 ipstat.NumberOfIPAddresses);
-            Console.WriteLine("  Routes .................................. : {0}", 
+            Console.WriteLine("  Routes .................................. : {0}",
                 ipstat.NumberOfRoutes);
-            Console.WriteLine("  Default TTL ............................. : {0}", 
+            Console.WriteLine("  Default TTL ............................. : {0}",
                 ipstat.DefaultTtl);
-            Console.WriteLine("");    
+            Console.WriteLine("");
             Console.WriteLine("  Inbound Packet Data:");
-            Console.WriteLine("      Received ............................ : {0}", 
+            Console.WriteLine("      Received ............................ : {0}",
                 ipstat.ReceivedPackets);
-            Console.WriteLine("      Forwarded ........................... : {0}", 
+            Console.WriteLine("      Forwarded ........................... : {0}",
                 ipstat.ReceivedPacketsForwarded);
-            Console.WriteLine("      Delivered ........................... : {0}", 
+            Console.WriteLine("      Delivered ........................... : {0}",
                 ipstat.ReceivedPacketsDelivered);
-            Console.WriteLine("      Discarded ........................... : {0}", 
+            Console.WriteLine("      Discarded ........................... : {0}",
                 ipstat.ReceivedPacketsDiscarded);
-            Console.WriteLine("      Header Errors ....................... : {0}", 
+            Console.WriteLine("      Header Errors ....................... : {0}",
                 ipstat.ReceivedPacketsWithHeadersErrors);
-            Console.WriteLine("      Address Errors ...................... : {0}", 
+            Console.WriteLine("      Address Errors ...................... : {0}",
                 ipstat.ReceivedPacketsWithAddressErrors);
-            Console.WriteLine("      Unknown Protocol Errors ............. : {0}", 
+            Console.WriteLine("      Unknown Protocol Errors ............. : {0}",
                 ipstat.ReceivedPacketsWithUnknownProtocol);
-            Console.WriteLine("");    
+            Console.WriteLine("");
             Console.WriteLine("  Outbound Packet Data:");
-            Console.WriteLine("      Requested ........................... : {0}", 
+            Console.WriteLine("      Requested ........................... : {0}",
                  ipstat.OutputPacketRequests);
-            Console.WriteLine("      Discarded ........................... : {0}", 
+            Console.WriteLine("      Discarded ........................... : {0}",
                 ipstat.OutputPacketsDiscarded);
-            Console.WriteLine("      No Routing Discards ................. : {0}", 
+            Console.WriteLine("      No Routing Discards ................. : {0}",
                 ipstat.OutputPacketsWithNoRoute);
-            Console.WriteLine("      Routing Entry Discards .............. : {0}", 
+            Console.WriteLine("      Routing Entry Discards .............. : {0}",
                 ipstat.OutputPacketRoutingDiscards);
-            Console.WriteLine("");    
+            Console.WriteLine("");
             Console.WriteLine("  Reassembly Data:");
-            Console.WriteLine("      Reassembly Timeout .................. : {0}", 
+            Console.WriteLine("      Reassembly Timeout .................. : {0}",
                 ipstat.PacketReassemblyTimeout);
-            Console.WriteLine("      Reassemblies Required ............... : {0}", 
+            Console.WriteLine("      Reassemblies Required ............... : {0}",
                 ipstat.PacketReassembliesRequired);
-            Console.WriteLine("      Packets Reassembled ................. : {0}", 
+            Console.WriteLine("      Packets Reassembled ................. : {0}",
                 ipstat.PacketsReassembled);
-            Console.WriteLine("      Packets Fragmented .................. : {0}", 
+            Console.WriteLine("      Packets Fragmented .................. : {0}",
                 ipstat.PacketsFragmented);
-            Console.WriteLine("      Fragment Failures ................... : {0}", 
+            Console.WriteLine("      Fragment Failures ................... : {0}",
                 ipstat.PacketFragmentFailures);
             Console.WriteLine("");
         }
@@ -105,34 +105,34 @@ namespace Examples
                 //    break;
             }
              //</Snippet21>
-            Console.WriteLine("  Minimum Transmission Timeout............. : {0}", 
+            Console.WriteLine("  Minimum Transmission Timeout............. : {0}",
                 tcpstat.MinimumTransmissionTimeout);
-            Console.WriteLine("  Maximum Transmission Timeout............. : {0}", 
+            Console.WriteLine("  Maximum Transmission Timeout............. : {0}",
                 tcpstat.MaximumTransmissionTimeout);
-                
+
             Console.WriteLine("  Connection Data:");
-            Console.WriteLine("      Current  ............................ : {0}", 
+            Console.WriteLine("      Current  ............................ : {0}",
             tcpstat.CurrentConnections);
-            Console.WriteLine("      Cumulative .......................... : {0}", 
+            Console.WriteLine("      Cumulative .......................... : {0}",
                 tcpstat.CumulativeConnections);
-            Console.WriteLine("      Initiated ........................... : {0}", 
+            Console.WriteLine("      Initiated ........................... : {0}",
                 tcpstat.ConnectionsInitiated);
-            Console.WriteLine("      Accepted ............................ : {0}", 
+            Console.WriteLine("      Accepted ............................ : {0}",
                 tcpstat.ConnectionsAccepted);
-            Console.WriteLine("      Failed Attempts ..................... : {0}", 
+            Console.WriteLine("      Failed Attempts ..................... : {0}",
                 tcpstat.FailedConnectionAttempts);
-            Console.WriteLine("      Reset ............................... : {0}", 
+            Console.WriteLine("      Reset ............................... : {0}",
                 tcpstat.ResetConnections);
-                
+
             Console.WriteLine("");
             Console.WriteLine("  Segment Data:");
-            Console.WriteLine("      Received  ........................... : {0}", 
+            Console.WriteLine("      Received  ........................... : {0}",
                 tcpstat.SegmentsReceived);
-            Console.WriteLine("      Sent ................................ : {0}", 
+            Console.WriteLine("      Sent ................................ : {0}",
                 tcpstat.SegmentsSent);
-            Console.WriteLine("      Retransmitted ....................... : {0}", 
+            Console.WriteLine("      Retransmitted ....................... : {0}",
                 tcpstat.SegmentsResent);
-            
+
             Console.WriteLine("");
         }
           //</Snippet2>
@@ -142,7 +142,7 @@ namespace Examples
         {
             IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
             UdpStatistics udpStat = null;
-            
+
             switch (version)
             {
                 case NetworkInterfaceComponent.IPv4:
@@ -157,15 +157,15 @@ namespace Examples
                     throw new ArgumentException("version");
                 //    break;
             }
-            Console.WriteLine("  Datagrams Received ...................... : {0}", 
+            Console.WriteLine("  Datagrams Received ...................... : {0}",
                 udpStat.DatagramsReceived);
-            Console.WriteLine("  Datagrams Sent .......................... : {0}", 
+            Console.WriteLine("  Datagrams Sent .......................... : {0}",
                 udpStat.DatagramsSent);
-            Console.WriteLine("  Incoming Datagrams Discarded ............ : {0}", 
+            Console.WriteLine("  Incoming Datagrams Discarded ............ : {0}",
                 udpStat.IncomingDatagramsDiscarded);
-            Console.WriteLine("  Incoming Datagrams With Errors .......... : {0}", 
+            Console.WriteLine("  Incoming Datagrams With Errors .......... : {0}",
                 udpStat.IncomingDatagramsWithErrors);
-            Console.WriteLine("  UDP Listeners ........................... : {0}", 
+            Console.WriteLine("  UDP Listeners ........................... : {0}",
                 udpStat.UdpListeners);
             Console.WriteLine("");
         }
@@ -190,7 +190,7 @@ namespace Examples
                 Console.WriteLine("ICMP v6 Echo Requests.................. Sent: {0,-10}   Received: {1,-10}",
                     stat6.EchoRequestsSent, stat6.EchoRequestsReceived);
                 Console.WriteLine("ICMP v6 Echo Replies .................. Sent: {0,-10}   Received: {1,-10}",
-                    stat6.EchoRepliesSent, stat6.EchoRepliesReceived);    
+                    stat6.EchoRepliesSent, stat6.EchoRepliesReceived);
             }
         }
          //</Snippet4>
@@ -222,41 +222,41 @@ namespace Examples
             IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
             IcmpV4Statistics stat = properties.GetIcmpV4Statistics();
             Console.WriteLine("ICMP V4 Statistics:");
-           
+
             Console.WriteLine("  Messages ............................ Sent: {0,-10}   Received: {1,-10}",
                 stat.MessagesSent, stat.MessagesReceived);
             Console.WriteLine("  Errors .............................. Sent: {0,-10}   Received: {1,-10}",
                 stat.ErrorsSent, stat.ErrorsReceived);
-                
+
             Console.WriteLine("  Echo Requests ....................... Sent: {0,-10}   Received: {1,-10}",
                 stat.EchoRequestsSent, stat.EchoRequestsReceived);
             Console.WriteLine("  Echo Replies ........................ Sent: {0,-10}   Received: {1,-10}",
                 stat.EchoRepliesSent, stat.EchoRepliesReceived);
-            
+
             Console.WriteLine("  Destination Unreachables ............ Sent: {0,-10}   Received: {1,-10}",
                 stat.DestinationUnreachableMessagesSent, stat.DestinationUnreachableMessagesReceived);
-                
+
             Console.WriteLine("  Source Quenches ..................... Sent: {0,-10}   Received: {1,-10}",
                 stat.SourceQuenchesSent, stat.SourceQuenchesReceived);
-                
+
             Console.WriteLine("  Redirects ........................... Sent: {0,-10}   Received: {1,-10}",
-                stat.RedirectsSent, stat.RedirectsReceived);  
-                
+                stat.RedirectsSent, stat.RedirectsReceived);
+
             Console.WriteLine("  TimeExceeded ........................ Sent: {0,-10}   Received: {1,-10}",
                 stat.TimeExceededMessagesSent, stat.TimeExceededMessagesReceived);
-                                        
+
             Console.WriteLine("  Parameter Problems .................. Sent: {0,-10}   Received: {1,-10}",
-                stat.ParameterProblemsSent, stat.ParameterProblemsReceived);        
-                
+                stat.ParameterProblemsSent, stat.ParameterProblemsReceived);
+
             Console.WriteLine("  Timestamp Requests .................. Sent: {0,-10}   Received: {1,-10}",
-                stat.TimestampRequestsSent, stat.TimestampRequestsReceived);    
+                stat.TimestampRequestsSent, stat.TimestampRequestsReceived);
             Console.WriteLine("  Timestamp Replies ................... Sent: {0,-10}   Received: {1,-10}",
-                stat.TimestampRepliesSent, stat.TimestampRepliesReceived);    
-                
+                stat.TimestampRepliesSent, stat.TimestampRepliesReceived);
+
             Console.WriteLine("  Address Mask Requests ............... Sent: {0,-10}   Received: {1,-10}",
-                stat.AddressMaskRequestsSent, stat.AddressMaskRequestsReceived);    
+                stat.AddressMaskRequestsSent, stat.AddressMaskRequestsReceived);
             Console.WriteLine("  Address Mask Replies ................ Sent: {0,-10}   Received: {1,-10}",
-                stat.AddressMaskRepliesSent, stat.AddressMaskRepliesReceived);                    
+                stat.AddressMaskRepliesSent, stat.AddressMaskRepliesReceived);
             Console.WriteLine("");
         }
          //</Snippet6>
@@ -270,44 +270,44 @@ namespace Examples
                 stat.MessagesSent, stat.MessagesReceived);
             Console.WriteLine("  Errors .............................. Sent: {0,-10}   Received: {1,-10}",
                 stat.ErrorsSent, stat.ErrorsReceived);
-                
+
             Console.WriteLine("  Echo Requests ....................... Sent: {0,-10}   Received: {1,-10}",
                 stat.EchoRequestsSent, stat.EchoRequestsReceived);
             Console.WriteLine("  Echo Replies ........................ Sent: {0,-10}   Received: {1,-10}",
                 stat.EchoRepliesSent, stat.EchoRepliesReceived);
-            
+
             Console.WriteLine("  Destination Unreachables ............ Sent: {0,-10}   Received: {1,-10}",
                 stat.DestinationUnreachableMessagesSent, stat.DestinationUnreachableMessagesReceived);
-                
+
             Console.WriteLine("  Parameter Problems .................. Sent: {0,-10}   Received: {1,-10}",
-                stat.ParameterProblemsSent, stat.ParameterProblemsReceived);        
-                
+                stat.ParameterProblemsSent, stat.ParameterProblemsReceived);
+
             Console.WriteLine("  Packets Too Big ..................... Sent: {0,-10}   Received: {1,-10}",
                 stat.PacketTooBigMessagesSent, stat.PacketTooBigMessagesReceived);
-                
+
             Console.WriteLine("  Redirects ........................... Sent: {0,-10}   Received: {1,-10}",
                 stat.RedirectsSent, stat.RedirectsReceived);
-                
+
             Console.WriteLine("  Router Advertisements ............... Sent: {0,-10}   Received: {1,-10}",
-                stat.RouterAdvertisementsSent, stat.RouterAdvertisementsReceived);                    
+                stat.RouterAdvertisementsSent, stat.RouterAdvertisementsReceived);
             Console.WriteLine("  Router Solicitations ................ Sent: {0,-10}   Received: {1,-10}",
-                stat.RouterSolicitsSent, stat.RouterSolicitsReceived);        
-                
+                stat.RouterSolicitsSent, stat.RouterSolicitsReceived);
+
             Console.WriteLine("  Time Exceeded ....................... Sent: {0,-10}   Received: {1,-10}",
                 stat.TimeExceededMessagesSent, stat.TimeExceededMessagesReceived);
-                                        
+
             Console.WriteLine("  Neighbor Advertisements ............. Sent: {0,-10}   Received: {1,-10}",
-                stat.NeighborAdvertisementsSent, stat.NeighborAdvertisementsReceived);        
+                stat.NeighborAdvertisementsSent, stat.NeighborAdvertisementsReceived);
             Console.WriteLine("  Neighbor Solicitations .............. Sent: {0,-10}   Received: {1,-10}",
-                stat.NeighborSolicitsSent, stat.NeighborSolicitsReceived);        
-            
+                stat.NeighborSolicitsSent, stat.NeighborSolicitsReceived);
+
             Console.WriteLine("  Membership Queries .................. Sent: {0,-10}   Received: {1,-10}",
-                stat.MembershipQueriesSent, stat.MembershipQueriesReceived);    
+                stat.MembershipQueriesSent, stat.MembershipQueriesReceived);
             Console.WriteLine("  Membership Reports .................. Sent: {0,-10}   Received: {1,-10}",
-                stat.MembershipReportsSent, stat.MembershipReportsReceived);    
+                stat.MembershipReportsSent, stat.MembershipReportsReceived);
             Console.WriteLine("  Membership Reductions ............... Sent: {0,-10}   Received: {1,-10}",
-                stat.MembershipReductionsSent, stat.MembershipReductionsReceived);    
-                
+                stat.MembershipReductionsSent, stat.MembershipReductionsReceived);
+
             Console.WriteLine("");
         }
          //</Snippet7>
@@ -335,7 +335,7 @@ namespace Examples
             {
                 foreach (IPAddress dns in dnsServers)
                 {
-                    Console.WriteLine("  DNS Servers ............................. : {0}", 
+                    Console.WriteLine("  DNS Servers ............................. : {0}",
                         dns.ToString()
                    );
                 }
@@ -346,23 +346,23 @@ namespace Examples
             {
                 foreach (IPAddressInformation any in anyCast)
                 {
-                    Console.WriteLine("  Anycast Address .......................... : {0} {1} {2}", 
+                    Console.WriteLine("  Anycast Address .......................... : {0} {1} {2}",
                         any.Address,
-                        any.IsTransient ? "Transient" : "", 
+                        any.IsTransient ? "Transient" : "",
                         any.IsDnsEligible ? "DNS Eligible" : ""
                     );
                 }
                 Console.WriteLine();
             }
-                
+
             MulticastIPAddressInformationCollection multiCast = adapterProperties.MulticastAddresses;
             if (multiCast != null)
             {
                 foreach (IPAddressInformation multi in multiCast)
                 {
-                    Console.WriteLine("  Multicast Address ....................... : {0} {1} {2}", 
+                    Console.WriteLine("  Multicast Address ....................... : {0} {1} {2}",
                         multi.Address,
-                        multi.IsTransient ? "Transient" : "", 
+                        multi.IsTransient ? "Transient" : "",
                         multi.IsDnsEligible ? "DNS Eligible" : ""
                     );
                 }
@@ -376,31 +376,31 @@ namespace Examples
                 foreach (UnicastIPAddressInformation uni in uniCast)
                 {
                     DateTime when;
-                    
+
                     Console.WriteLine("  Unicast Address ......................... : {0}", uni.Address);
                     Console.WriteLine("     Prefix Origin ........................ : {0}", uni.PrefixOrigin);
                     Console.WriteLine("     Suffix Origin ........................ : {0}", uni.SuffixOrigin);
-                    Console.WriteLine("     Duplicate Address Detection .......... : {0}", 
+                    Console.WriteLine("     Duplicate Address Detection .......... : {0}",
                         uni.DuplicateAddressDetectionState);
-                        
+
                     // Format the lifetimes as Sunday, February 16, 2003 11:33:44 PM
                     // if en-us is the current culture.
-                    
-                    // Calculate the date and time at the end of the lifetimes.    
+
+                    // Calculate the date and time at the end of the lifetimes.
                     when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.AddressValidLifetime);
-                    when = when.ToLocalTime();    
-                    Console.WriteLine("     Valid Life Time ...................... : {0}", 
+                    when = when.ToLocalTime();
+                    Console.WriteLine("     Valid Life Time ...................... : {0}",
                         when.ToString(lifeTimeFormat,System.Globalization.CultureInfo.CurrentCulture)
                     );
-                    when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.AddressPreferredLifetime);   
-                    when = when.ToLocalTime();      
-                    Console.WriteLine("     Preferred life time .................. : {0}", 
+                    when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.AddressPreferredLifetime);
+                    when = when.ToLocalTime();
+                    Console.WriteLine("     Preferred life time .................. : {0}",
                         when.ToString(lifeTimeFormat,System.Globalization.CultureInfo.CurrentCulture)
-                    ); 
-                    
+                    );
+
                     when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.DhcpLeaseLifetime);
-                    when = when.ToLocalTime(); 
-                    Console.WriteLine("     DHCP Leased Life Time ................ : {0}", 
+                    when = when.ToLocalTime();
+                    Console.WriteLine("     DHCP Leased Life Time ................ : {0}",
                         when.ToString(lifeTimeFormat,System.Globalization.CultureInfo.CurrentCulture)
                     );
                 }
@@ -417,27 +417,27 @@ namespace Examples
             Console.WriteLine("{0}  Interface Statistics:", Environment.NewLine);
             Console.WriteLine("     Bytes sent ........................... : {0}", stats.BytesSent);
             Console.WriteLine("     Bytes received ....................... : {0}", stats.BytesReceived);
-            Console.WriteLine("     Unicast Packets Sent ................. : {0}", 
+            Console.WriteLine("     Unicast Packets Sent ................. : {0}",
                 stats.UnicastPacketsSent);
-            Console.WriteLine("     Unicast Packets Received ............. : {0}", 
+            Console.WriteLine("     Unicast Packets Received ............. : {0}",
                 stats.UnicastPacketsReceived);
-            Console.WriteLine("     Non Unicast Packets Sent ............. : {0}", 
+            Console.WriteLine("     Non Unicast Packets Sent ............. : {0}",
                 stats.NonUnicastPacketsSent);
-            Console.WriteLine("     Non Unicast Packets Received ......... : {0}", 
+            Console.WriteLine("     Non Unicast Packets Received ......... : {0}",
                 stats.NonUnicastPacketsReceived);
-            Console.WriteLine("     Incoming Packets Discarded ........... : {0}", 
+            Console.WriteLine("     Incoming Packets Discarded ........... : {0}",
                 stats.IncomingPacketsDiscarded);
-            Console.WriteLine("     Outgoing Packets Discarded ........... : {0}", 
+            Console.WriteLine("     Outgoing Packets Discarded ........... : {0}",
                 stats.OutgoingPacketsDiscarded);
-            Console.WriteLine("     Incoming Packets Errors .............. : {0}", 
+            Console.WriteLine("     Incoming Packets Errors .............. : {0}",
                 stats.IncomingPacketsWithErrors);
-            Console.WriteLine("     Outgoing packets Errors .............. : {0}", 
+            Console.WriteLine("     Outgoing packets Errors .............. : {0}",
                 stats.OutgoingPacketsWithErrors);
-            Console.WriteLine("     Incoming Unknown Protocol Errors ..... : {0}", 
+            Console.WriteLine("     Incoming Unknown Protocol Errors ..... : {0}",
                 stats.IncomingUnknownProtocolPackets);
-            Console.WriteLine("     Speed ................................ : {0}", 
+            Console.WriteLine("     Speed ................................ : {0}",
                 adapter.Speed);
-            Console.WriteLine("     Output queue length................... : {0}", 
+            Console.WriteLine("     Output queue length................... : {0}",
                 stats.OutputQueueLength);
             Console.WriteLine();
         }
@@ -454,7 +454,7 @@ namespace Examples
                 Console.WriteLine("  No network interfaces found.");
                 return;
             }
-                             
+
             Console.WriteLine("  Number of interfaces .................... : {0}", nics.Length);
             foreach (NetworkInterface adapter in nics)
             {
@@ -463,9 +463,9 @@ namespace Examples
                 Console.WriteLine(adapter.Description);
                 Console.WriteLine(String.Empty.PadLeft(adapter.Description.Length,'='));
                 Console.WriteLine("  Interface type .......................... : {0}", adapter.NetworkInterfaceType);
-                Console.WriteLine("  Physical Address ........................ : {0}", 
+                Console.WriteLine("  Physical Address ........................ : {0}",
                            adapter.GetPhysicalAddress().ToString());
-                Console.WriteLine("  Operational status ...................... : {0}", 
+                Console.WriteLine("  Operational status ...................... : {0}",
                     adapter.OperationalStatus);
                 string versions ="";
 
@@ -484,15 +484,15 @@ namespace Examples
                 }
                 Console.WriteLine("  IP version .............................. : {0}", versions);
                 ShowIPAddresses(properties);
-                
+
                 // The following information is not useful for loopback adapters.
                 if (adapter.NetworkInterfaceType == NetworkInterfaceType.Loopback)
                 {
                     continue;
                 }
-                Console.WriteLine("  DNS suffix .............................. : {0}", 
+                Console.WriteLine("  DNS suffix .............................. : {0}",
                     properties.DnsSuffix);
-                
+
                 string label;
                 //<Snippet13>
                 if (adapter.Supports(NetworkInterfaceComponent.IPv4))
@@ -501,7 +501,7 @@ namespace Examples
                     Console.WriteLine("  MTU...................................... : {0}", ipv4.Mtu);
                     if (ipv4.UsesWins)
                     {
-                        
+
                         IPAddressCollection winsServers = properties.WinsServersAddresses;
                         if (winsServers.Count > 0)
                         {
@@ -511,17 +511,17 @@ namespace Examples
                     }
                 }
                 //</Snippet13>
-                         
-                Console.WriteLine("  DNS enabled ............................. : {0}", 
+
+                Console.WriteLine("  DNS enabled ............................. : {0}",
                     properties.IsDnsEnabled);
-                Console.WriteLine("  Dynamically configured DNS .............. : {0}", 
+                Console.WriteLine("  Dynamically configured DNS .............. : {0}",
                     properties.IsDynamicDnsEnabled);
-                Console.WriteLine("  Receive Only ............................ : {0}", 
+                Console.WriteLine("  Receive Only ............................ : {0}",
                     adapter.IsReceiveOnly);
-                Console.WriteLine("  Multicast ............................... : {0}", 
+                Console.WriteLine("  Multicast ............................... : {0}",
                     adapter.SupportsMulticast);
                 ShowInterfaceStatistics(adapter);
-                
+
                 Console.WriteLine();
             }
             //</Snippet12>
@@ -529,15 +529,15 @@ namespace Examples
         //<Snippet16>
         public static void ShowInterfaceSummary()
         {
-            
+
             NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in interfaces)
-            {                
+            {
                 Console.WriteLine ("Name: {0}", adapter.Name);
                 Console.WriteLine(adapter.Description);
                 Console.WriteLine(String.Empty.PadLeft(adapter.Description.Length,'='));
                 Console.WriteLine("  Interface type .......................... : {0}", adapter.NetworkInterfaceType);
-                Console.WriteLine("  Operational status ...................... : {0}", 
+                Console.WriteLine("  Operational status ...................... : {0}",
                     adapter.OperationalStatus);
                 string versions ="";
 
@@ -566,11 +566,11 @@ namespace Examples
          {
                     Console.WriteLine("Active TCP Connections");
                     IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
-                    TcpConnectionInformation[] connections = properties.GetActiveTcpConnections(); 
+                    TcpConnectionInformation[] connections = properties.GetActiveTcpConnections();
                     foreach (TcpConnectionInformation c in connections)
                     {
-                        Console.WriteLine("{0} <==> {1}", 
-                            c.LocalEndPoint.ToString(), 
+                        Console.WriteLine("{0} <==> {1}",
+                            c.LocalEndPoint.ToString(),
                             c.RemoteEndPoint.ToString());
                     }
          }
@@ -602,7 +602,7 @@ namespace Examples
          }
         //</Snippet19>
         public static void Main()
-        {   
+        {
             //<Snippet15>
             IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
             Console.WriteLine("Computer name: {0}", properties.HostName);
@@ -617,24 +617,24 @@ namespace Examples
             if (Socket.SupportsIPv4)
             {
                 ShowIcmpV4Statistics();
-            }    
+            }
             if (Socket.OSSupportsIPv6)
             {
                 ShowIcmpV6Statistics();
-            }    
+            }
             ShowIPStatistics(NetworkInterfaceComponent.IPv4);
             ShowTcpStatistics(NetworkInterfaceComponent.IPv4);
             ShowUdpStatistics(NetworkInterfaceComponent.IPv4);
 
             ShowEchoIcmpv4(properties.GetIcmpV4Statistics());
             ShowIcmpv4MessagesAndErrors(properties.GetIcmpV4Statistics());
-            
+
             if (Socket.OSSupportsIPv6)
             {
                 ShowEchoIcmpv6(properties.GetIcmpV6Statistics());
                 ShowIcmpv6MessagesAndErrors(properties.GetIcmpV6Statistics());
-            }    
-            
+            }
+
             ShowNetworkInterfaces();
             ShowInterfaceSummary();
         }

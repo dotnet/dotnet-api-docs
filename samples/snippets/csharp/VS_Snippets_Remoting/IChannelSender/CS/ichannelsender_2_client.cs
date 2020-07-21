@@ -1,7 +1,7 @@
 ﻿// System.Runtime.Remoting.Channels.IChannelSender
 // System.Runtime.Remoting.Channels.IChannelSender.CreateMessageSink()
 
-/* The following program demonstrates the usage of IChannelSender 
+/* The following program demonstrates the usage of IChannelSender
    interface and its 'CreateMessageSink' method in the namespace
    'System.Runtime.Remoting.Channels'. This program creates and
    registers an IChannelSender of type 'HttpClientChannel'.
@@ -45,15 +45,15 @@ public class MyClient
             // Get the name of the channel.
             Console.WriteLine("Channel Name :" + myIChannelSender.ChannelName);
             // Get the channel priority.
-            Console.WriteLine("ChannelPriority :" + 
+            Console.WriteLine("ChannelPriority :" +
                         myIChannelSender.ChannelPriority.ToString());
             string myString,myObjectURI1;
-            Console.WriteLine("Parse :" + 
+            Console.WriteLine("Parse :" +
                 myIChannelSender.Parse("http://localhost:8085/SayHello",out myString)
                 + myString);
 // <Snippet2>
             // Get the channel message sink that delivers message to specified url.
-            IMessageSink myIMessageSink = 
+            IMessageSink myIMessageSink =
                   myIChannelSender.CreateMessageSink(
                   "http://localhost:8085/NewEndPoint", null,out myObjectURI1);
             Console.WriteLine("Channel message sink used :" + myIMessageSink.ToString());

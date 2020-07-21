@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-[assembly: ObfuscateAssemblyAttribute(true, 
+[assembly: ObfuscateAssemblyAttribute(true,
     StripAfterObfuscation=false)]
 //</Snippet1>
 

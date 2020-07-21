@@ -18,7 +18,7 @@ public class OrderedItem
       LineTotal = UnitPrice * Quantity;
    }
 }
- 
+
 public class Test{
    public static void Main(string[] args)
    {
@@ -26,12 +26,12 @@ public class Test{
       // Write a purchase order.
       t.SerializeObject("simple.xml");
    }
- 
+
    private void SerializeObject(string filename)
    {
       Console.WriteLine("Writing With Stream");
- 
-      XmlSerializer serializer = 
+
+      XmlSerializer serializer =
       new XmlSerializer(typeof(OrderedItem));
       OrderedItem i = new OrderedItem();
       i.ItemName = "Widget";
@@ -39,7 +39,7 @@ public class Test{
       i.Quantity = 10;
       i.UnitPrice = (decimal) 2.30;
       i.Calculate();
- 
+
       // Create a FileStream to write with.
       Stream writer = new FileStream(filename, FileMode.Create);
       // Serialize the object, and close the TextWriter

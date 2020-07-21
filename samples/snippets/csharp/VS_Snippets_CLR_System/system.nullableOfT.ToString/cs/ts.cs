@@ -1,12 +1,12 @@
 ﻿//<snippet1>
-// This code example demonstrates the 
+// This code example demonstrates the
 // Nullable<T>.ToString method.
 
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     DateTime? nullableDate;
 
@@ -14,7 +14,7 @@ class Sample
     nullableDate = DateTime.Now;
     Display("1)", nullableDate);
 
-// Assign null (Nothing in Visual Basic) to nullableDate, then 
+// Assign null (Nothing in Visual Basic) to nullableDate, then
 // display its value.
     nullableDate = null;
     Display("2)", nullableDate);

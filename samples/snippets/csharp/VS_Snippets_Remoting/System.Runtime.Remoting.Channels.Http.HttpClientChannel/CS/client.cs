@@ -28,24 +28,24 @@ public class Client
         ChannelServices.RegisterChannel(clientChannel);
 
         // Register as client for remote object.
-        WellKnownClientTypeEntry remoteType = 
-            new WellKnownClientTypeEntry(typeof(RemoteObject), 
+        WellKnownClientTypeEntry remoteType =
+            new WellKnownClientTypeEntry(typeof(RemoteObject),
             "http://localhost:9090/RemoteObject.rem");
         RemotingConfiguration.RegisterWellKnownClientType(remoteType);
 
         //<snippet11>
         // Create a message sink.
         string objectUri;
-        System.Runtime.Remoting.Messaging.IMessageSink messageSink = 
+        System.Runtime.Remoting.Messaging.IMessageSink messageSink =
             clientChannel.CreateMessageSink(
-            "http://localhost:9090/RemoteObject.rem", 
+            "http://localhost:9090/RemoteObject.rem",
             null, out objectUri);
         Console.WriteLine(
-            "The URI of the message sink is {0}.", 
+            "The URI of the message sink is {0}.",
             objectUri);
         if (messageSink != null)
         {
-            Console.WriteLine("The type of the message sink is {0}.", 
+            Console.WriteLine("The type of the message sink is {0}.",
                 messageSink.GetType().ToString());
         }
         //</snippet11>
@@ -55,7 +55,7 @@ public class Client
         foreach(string key in clientChannel.Keys)
         {
             Console.WriteLine(
-                "clientChannel[{0}] = <{1}>", 
+                "clientChannel[{0}] = <{1}>",
                 key, clientChannel[key]);
         }
         //</snippet12>
@@ -70,11 +70,11 @@ public class Client
         //</snippet13>
 
         // Create an instance of the remote object.
-        RemoteObject service = new RemoteObject(); 
+        RemoteObject service = new RemoteObject();
 
         // Invoke a method on the remote object.
         Console.WriteLine("The client is invoking the remote object.");
-        Console.WriteLine("The remote object has been called {0} times.", 
+        Console.WriteLine("The remote object has been called {0} times.",
             service.GetCount());
     }
 }

@@ -11,14 +11,14 @@ public class Example
       DateTime date2;
       int total = 0;
       int noRoundTrip = 0;
-      
+
       foreach (var fmt in culture.DateTimeFormat.GetAllDateTimePatterns()) {
          total += 1;
          if (! DateTime.TryParse(date1.ToString(fmt), out date2)) {
             noRoundTrip++;
-            Console.WriteLine("Unable to parse {0:" + fmt + "} (format '{1}')", 
+            Console.WriteLine("Unable to parse {0:" + fmt + "} (format '{1}')",
                               date1, fmt);
-         }             
+         }
       }
       Console.WriteLine("\nUnable to round-trip {0} of {1} format strings.",
                         noRoundTrip, total);
@@ -67,6 +67,6 @@ public class Example
 //    Unable to parse 1-Feb-11 07.30.45 (format 'd-MMM-yy HH.mm.ss')
 //    Unable to parse 1 February 2011 7.30.45 (format 'd MMMM yyyy H.mm.ss')
 //    Unable to parse 1 February 2011 07.30.45 (format 'd MMMM yyyy HH.mm.ss')
-//    
+//
 //    Unable to round-trip 42 of 98 format strings.
 // </Snippet1>

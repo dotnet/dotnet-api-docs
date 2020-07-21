@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 TimeSpan ts = new TimeSpan(0,30,0);
  Response.Cache.SetProxyMaxAge(ts);
- 
+
 // </Snippet1>
  }
 }

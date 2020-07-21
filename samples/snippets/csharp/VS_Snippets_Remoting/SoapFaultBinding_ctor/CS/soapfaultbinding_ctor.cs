@@ -8,9 +8,9 @@
  The following example demonstrates the 'PartsString' property of 'SoapBodyBinding' class
  and constructor, 'Encoding', 'NameSpace' and 'Use'properties of 'SoapFaultBinding' class.
 
- It creates an instance of 'ServiceDescription' class by reading  an existing 
- wsdl file. Then it creates an instance of 'SoapFaultBinding' and adds it to 
- the collection object of 'Binding' class. It generates a new wsdl file where 
+ It creates an instance of 'ServiceDescription' class by reading  an existing
+ wsdl file. Then it creates an instance of 'SoapFaultBinding' and adds it to
+ the collection object of 'Binding' class. It generates a new wsdl file where
  the properties of 'SoapFaultBinding' objects are reflected and which could be
  used for generating a proxy.
 */
@@ -30,7 +30,7 @@
             // Initialize an instance of a 'ServiceDescription' object.
             ServiceDescription myServiceDescription =
                ServiceDescription.Read(myInputWsdlFile);
-            // Get a SOAP binding object with binding name "MyService1Soap". 
+            // Get a SOAP binding object with binding name "MyService1Soap".
             Binding myBinding=myServiceDescription.Bindings["MyService1Soap"];
            // Create the 'OperationBinding' object for the 'SOAP' protocol.
             OperationBinding myOperationBinding = new OperationBinding();
@@ -56,7 +56,7 @@
             OutputBinding myOutput = new OutputBinding();
             myOutput.Extensions.Add(mySoapBinding1);
              // Assign the 'OutPutBinding' to 'OperationBinding'.
-            myOperationBinding.Output = myOutput; 
+            myOperationBinding.Output = myOutput;
 // </Snippet1>
 
 // <Snippet2>
@@ -70,7 +70,7 @@
             mySoapFaultBinding.Use=SoapBindingUse.Encoded;
             // Set the URI representing the encoding style.
             mySoapFaultBinding.Encoding="http://tempuri.org/stockquote";
-            // Set the URI representing the location of the specification 
+            // Set the URI representing the location of the specification
             // for encoding of content not defined by 'Encoding' property'.
             mySoapFaultBinding.Namespace="http://tempuri.org/stockquote";
             // Create a new instance of 'FaultBinding'.

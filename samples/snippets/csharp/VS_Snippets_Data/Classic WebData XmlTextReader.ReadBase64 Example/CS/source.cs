@@ -12,7 +12,7 @@ public class Sample {
      XmlTextReader reader = null;
 
      try {
-     
+
         reader = new XmlTextReader(filename);
         reader.WhitespaceHandling = WhitespaceHandling.None;
 
@@ -21,23 +21,23 @@ public class Sample {
            if ("Base64" == reader.Name) break;
         }
         	
-        // Read the Base64 data. Write the decoded 
+        // Read the Base64 data. Write the decoded
         // bytes to the console.
         Console.WriteLine("Reading Base64... ");
         int base64len = 0;
         byte[] base64 = new byte[1000];
         do {
-           base64len = reader.ReadBase64(base64, 0, 50);            
+           base64len = reader.ReadBase64(base64, 0, 50);
            for (int i=0; i < base64len; i++) Console.Write(base64[i]);
         } while (reader.Name == "Base64");
 	
-        // Read the BinHex data. Write the decoded 
+        // Read the BinHex data. Write the decoded
         // bytes to the console.
         Console.WriteLine("\r\nReading BinHex...");
         int binhexlen = 0;
         byte[] binhex = new byte[1000];
         do {
-           binhexlen = reader.ReadBinHex(binhex, 0, 50);            
+           binhexlen = reader.ReadBinHex(binhex, 0, 50);
            for (int i=0; i < binhexlen; i++) Console.Write(binhex[i]);
         }  while (reader.Name == "BinHex");
      }

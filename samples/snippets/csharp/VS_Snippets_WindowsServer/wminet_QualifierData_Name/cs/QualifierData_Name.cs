@@ -2,12 +2,12 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
         // Get the WMI class
-        ManagementClass mClass = 
+        ManagementClass mClass =
             new ManagementClass("Win32_Service");
 
         mClass.Options.UseAmendedQualifiers = true;
@@ -24,7 +24,7 @@ public class Sample
             Console.WriteLine(q.Name);
         }
         Console.WriteLine();
-        
+
         Console.WriteLine("Class Description: ");
         Console.WriteLine(
             mClass.Qualifiers["Description"].Value);

@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-public class Sample 
+public class Sample
 {
   public static void Main()
   {
@@ -13,13 +13,13 @@ public class Sample
     {
        //Load the reader with the XML file.
        reader = new XmlTextReader("attrs.xml");
-  
+
        //Read the ISBN attribute.
        reader.MoveToContent();
        string isbn = reader.GetAttribute("ISBN");
        Console.WriteLine("The ISBN value: " + isbn);
-     } 
-     finally 
+     }
+     finally
      {
         if (reader != null)
           reader.Close();

@@ -14,8 +14,8 @@ public class Example
 
       RegionInfo[] regions = { BE, frBE, nlBE };
       PropertyInfo[] props = typeof(RegionInfo).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-      
-      Console.WriteLine("{0,-30}{1,18}{2,18}{3,18}\n", 
+
+      Console.WriteLine("{0,-30}{1,18}{2,18}{3,18}\n",
                         "RegionInfo Property", "BE", "fr-BE", "nl-BE");
       foreach (var prop in props) {
          Console.Write("{0,-30}", prop.Name);
@@ -28,7 +28,7 @@ public class Example
 }
 // The example displays the following output:
 //    RegionInfo Property                           BE             fr-BE             nl-BE
-//    
+//
 //    Name                                          BE             fr-BE             nl-BE
 //    EnglishName                              Belgium           Belgium           Belgium
 //    DisplayName                              Belgium           Belgium           Belgium

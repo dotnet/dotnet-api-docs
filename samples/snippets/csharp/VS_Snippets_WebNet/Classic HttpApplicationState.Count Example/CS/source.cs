@@ -10,7 +10,7 @@ public class Page1: Page
 if (Application.Count > 5)
 {
     //...
-}   
+}
 // </Snippet1>
  }
 }

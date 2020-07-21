@@ -1,17 +1,17 @@
 ﻿//<snippet1>
-// Example for the trigonometric Math.Sin( double ) 
+// Example for the trigonometric Math.Sin( double )
 // and Math.Cos( double ) methods.
 using System;
 
-class SinCos 
+class SinCos
 {
-    public static void Main() 
+    public static void Main()
     {
-        Console.WriteLine( 
+        Console.WriteLine(
             "This example of trigonometric " +
             "Math.Sin( double ) and Math.Cos( double )\n" +
             "generates the following output.\n" );
-        Console.WriteLine( 
+        Console.WriteLine(
             "Convert selected values for X to radians \n" +
             "and evaluate these trigonometric identities:" );
         Console.WriteLine( "   sin^2(X) + cos^2(X) == 1\n" +
@@ -22,7 +22,7 @@ class SinCos
         UseSineCosine(30.0);
         UseSineCosine(45.0);
 
-        Console.WriteLine( 
+        Console.WriteLine(
             "\nConvert selected values for X and Y to radians \n" +
             "and evaluate these trigonometric identities:" );
         Console.WriteLine( "   sin(X + Y) == sin(X) * cos(Y) + cos(X) * sin(Y)" );
@@ -40,28 +40,28 @@ class SinCos
         double cosAngle = Math.Cos(angle);
 
         // Evaluate sin^2(X) + cos^2(X) == 1.
-        Console.WriteLine( 
+        Console.WriteLine(
             "\n                           Math.Sin({0} deg) == {1:E16}\n" +
             "                           Math.Cos({0} deg) == {2:E16}",
             degrees, Math.Sin(angle), Math.Cos(angle) );
-        Console.WriteLine( 
-            "(Math.Sin({0} deg))^2 + (Math.Cos({0} deg))^2 == {1:E16}", 
+        Console.WriteLine(
+            "(Math.Sin({0} deg))^2 + (Math.Cos({0} deg))^2 == {1:E16}",
             degrees, sinAngle * sinAngle + cosAngle * cosAngle );
 
         // Evaluate sin(2 * X) == 2 * sin(X) * cos(X).
-        Console.WriteLine( 
-            "                           Math.Sin({0} deg) == {1:E16}", 
+        Console.WriteLine(
+            "                           Math.Sin({0} deg) == {1:E16}",
             2.0 * degrees, Math.Sin(2.0 * angle) );
-        Console.WriteLine( 
-            "    2 * Math.Sin({0} deg) * Math.Cos({0} deg) == {1:E16}", 
+        Console.WriteLine(
+            "    2 * Math.Sin({0} deg) * Math.Cos({0} deg) == {1:E16}",
             degrees, 2.0 * sinAngle * cosAngle );
 
         // Evaluate cos(2 * X) == cos^2(X) - sin^2(X).
-        Console.WriteLine( 
-            "                           Math.Cos({0} deg) == {1:E16}", 
+        Console.WriteLine(
+            "                           Math.Cos({0} deg) == {1:E16}",
             2.0 * degrees, Math.Cos(2.0 * angle) );
-        Console.WriteLine( 
-            "(Math.Cos({0} deg))^2 - (Math.Sin({0} deg))^2 == {1:E16}", 
+        Console.WriteLine(
+            "(Math.Cos({0} deg))^2 - (Math.Sin({0} deg))^2 == {1:E16}",
             degrees, cosAngle * cosAngle - sinAngle * sinAngle );
     }
 
@@ -72,22 +72,22 @@ class SinCos
         double  angleY  = Math.PI * degreesY / 180.0;
 
         // Evaluate sin(X + Y) == sin(X) * cos(Y) + cos(X) * sin(Y).
-        Console.WriteLine( 
-            "\n        Math.Sin({0} deg) * Math.Cos({1} deg) +\n" + 
-            "        Math.Cos({0} deg) * Math.Sin({1} deg) == {2:E16}", 
+        Console.WriteLine(
+            "\n        Math.Sin({0} deg) * Math.Cos({1} deg) +\n" +
+            "        Math.Cos({0} deg) * Math.Sin({1} deg) == {2:E16}",
             degreesX, degreesY, Math.Sin(angleX) * Math.Cos(angleY) +
             Math.Cos(angleX) * Math.Sin(angleY));
-        Console.WriteLine( 
+        Console.WriteLine(
             "                           Math.Sin({0} deg) == {1:E16}",
             degreesX + degreesY, Math.Sin(angleX + angleY));
 
         // Evaluate cos(X + Y) == cos(X) * cos(Y) - sin(X) * sin(Y).
-        Console.WriteLine( 
-            "        Math.Cos({0} deg) * Math.Cos({1} deg) -\n" + 
-            "        Math.Sin({0} deg) * Math.Sin({1} deg) == {2:E16}", 
+        Console.WriteLine(
+            "        Math.Cos({0} deg) * Math.Cos({1} deg) -\n" +
+            "        Math.Sin({0} deg) * Math.Sin({1} deg) == {2:E16}",
             degreesX, degreesY, Math.Cos(angleX) * Math.Cos(angleY) -
             Math.Sin(angleX) * Math.Sin(angleY));
-        Console.WriteLine( 
+        Console.WriteLine(
             "                           Math.Cos({0} deg) == {1:E16}",
             degreesX + degreesY, Math.Cos(angleX + angleY));
     }

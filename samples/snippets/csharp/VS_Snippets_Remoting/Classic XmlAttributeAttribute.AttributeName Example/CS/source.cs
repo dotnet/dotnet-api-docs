@@ -18,7 +18,7 @@ public class Run
    {
       Run test = new Run();
       /* To use the AttributeName to collect all the
-      XML attributes. Call SerializeObject to generate 
+      XML attributes. Call SerializeObject to generate
       an XML document and alter the document by adding
       new XML attributes to it. Then comment out the SerializeObject
       method, and call DeserializeObject. */
@@ -53,5 +53,5 @@ public void SerializeObject(string filename)
       Console.WriteLine(myGroup.Name);
    }
 }
-   
+
 // </Snippet1>

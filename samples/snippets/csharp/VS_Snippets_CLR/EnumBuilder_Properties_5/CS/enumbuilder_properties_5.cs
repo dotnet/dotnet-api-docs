@@ -29,7 +29,7 @@ public class MyEnumBuilderSample
    static AssemblyBuilder myAssemblyBuilder;
    static ModuleBuilder myModuleBuilder;
    static EnumBuilder myEnumBuilder;
-   
+
    public static void Main()
    {
       try
@@ -38,13 +38,13 @@ public class MyEnumBuilderSample
          Type[] myTypeArray = myModuleBuilder.GetTypes();
          foreach(Type myType in myTypeArray)
          {
-            Console.WriteLine("Enum Builder defined in the module builder is: " 
+            Console.WriteLine("Enum Builder defined in the module builder is: "
                + myType.Name);
          }
 
          Console.WriteLine("Properties of EnumBuilder : ");
          Console.WriteLine("Enum Assembly is :" +  myEnumBuilder.Assembly.ToString());
-         Console.WriteLine("Enum AssemblyQualifiedName is :" +  
+         Console.WriteLine("Enum AssemblyQualifiedName is :" +
                                  myEnumBuilder.AssemblyQualifiedName.ToString());
          Console.WriteLine("Enum Module is :" +  myEnumBuilder.Module.ToString());
          Console.WriteLine("Enum Name is :" +  myEnumBuilder.Name.ToString());
@@ -68,15 +68,15 @@ public class MyEnumBuilderSample
       myAssemblyName.Name = "EmittedAssembly";
 
       // Create the dynamic assembly.
-      myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(myAssemblyName, 
+      myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(myAssemblyName,
                                              AssemblyBuilderAccess.Save);
 
       // Create a dynamic module.
-      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule", 
+      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule",
                                                          "EmittedModule.mod");
 
       // Create a dynamic Enum.
-      myEnumBuilder = myModuleBuilder.DefineEnum("MyNamespace.MyEnum", 
+      myEnumBuilder = myModuleBuilder.DefineEnum("MyNamespace.MyEnum",
                                  TypeAttributes.Public, typeof(Int32));
 
       FieldBuilder myFieldBuilder1 = myEnumBuilder.DefineLiteral("FieldOne", 1);

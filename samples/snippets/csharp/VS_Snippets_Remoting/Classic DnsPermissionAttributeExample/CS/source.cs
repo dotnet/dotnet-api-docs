@@ -18,7 +18,7 @@ public class MyClass
         try
         {
             //Grants Access.
-            Console.WriteLine(" Access granted\n The local host IP Address is :" + 
+            Console.WriteLine(" Access granted\n The local host IP Address is :" +
                                   MyClass.GetIPAddress().ToString());
         }
         // Denies Access.

@@ -2,8 +2,8 @@
 // System.Web.Services.Description.ServiceDescriptionImportStyle.Client
 
 /* The following program demonstrates the 'ServiceDescriptionImportStyle'
-   enumeration and 'Client' member of 'ServiceDescriptionImportStyle' in 
-   'System.Web.Services.Description' namespace. It creates a 
+   enumeration and 'Client' member of 'ServiceDescriptionImportStyle' in
+   'System.Web.Services.Description' namespace. It creates a
    ServiceDescriptionImporter object from a .wsdl file and demonstrates
    the usage of Client. */
 
@@ -19,12 +19,12 @@ namespace MyServiceDescription
       {
          try
          {
-            ServiceDescription myServiceDescription = 
+            ServiceDescription myServiceDescription =
                ServiceDescription.Read("Sample_CS.wsdl");
 
-            ServiceDescriptionImporter myImporter = 
+            ServiceDescriptionImporter myImporter =
                new ServiceDescriptionImporter();
-            
+
             myImporter.ProtocolName = "Soap";
             myImporter.AddServiceDescription(myServiceDescription, "", "");
 // <Snippet2>
@@ -34,7 +34,7 @@ namespace MyServiceDescription
          }
          catch (Exception e)
          {
-            Console.WriteLine("Following exception was thrown: " 
+            Console.WriteLine("Following exception was thrown: "
                + e.ToString());
          }
       }

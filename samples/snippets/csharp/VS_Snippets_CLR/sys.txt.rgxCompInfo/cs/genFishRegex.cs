@@ -12,16 +12,16 @@ namespace MyApp
     {
         public static void Main()
         {
-// Pattern = Group matches one or more word characters, 
-//           one or more white space characters, 
+// Pattern = Group matches one or more word characters,
+//           one or more white space characters,
 //           group matches the string "fish".
         string pat = @"(\w+)\s+(fish)";
 
 // Create the compilation information.
-// Case-insensitive matching; type name = "FishRegex"; 
+// Case-insensitive matching; type name = "FishRegex";
 // namespace = "MyApp"; type is public.
         RegexCompilationInfo rci = new RegexCompilationInfo(
-                    pat, RegexOptions.IgnoreCase, 
+                    pat, RegexOptions.IgnoreCase,
                     "FishRegex", "MyApp", true);
 
 // Setup to compile.

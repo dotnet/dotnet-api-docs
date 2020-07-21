@@ -11,14 +11,14 @@ public class Example
    static CancellationTokenSource source;
    double totalValue = 0.0;
    int totalCount = 0;
-   
+
    public Example()
-   { 
+   {
       rand = new Random();
       randLock = new Object();
       numericLock = new Object();
       source = new CancellationTokenSource();
-   } 
+   }
 
    public static async Task Main()
    {
@@ -28,20 +28,20 @@ public class Example
    }
 
    private Task Execute()
-   {   
+   {
       List<Task> tasks = new List<Task>();
-      
+
       for (int ctr = 0; ctr <= 10; ctr++)
       {
-         CancellationToken token = source.Token; 
+         CancellationToken token = source.Token;
          int taskNo = ctr;
          tasks.Add(Task.Run( () =>
             {
                double previous = 0.0;
                int taskCtr = 0;
-               double taskTotal = 0.0;  
+               double taskTotal = 0.0;
                double result = 0.0;
-                               
+
                for (int n = 0; n < 2000000; n++)
                {
                   // Make sure there's no corruption of Random.
@@ -66,13 +66,13 @@ public class Example
                Console.WriteLine("Random numbers generated: {0:N0}", taskCtr);
                Console.WriteLine("Sum of random numbers: {0:N2}", taskTotal);
                Console.WriteLine("Random number mean: {0:N4}\n", taskTotal/taskCtr);
-         
+
                // Update overall totals.
                lock (numericLock) {
                   totalCount += taskCtr;
-                  totalValue += taskTotal;  
+                  totalValue += taskTotal;
                }
-            }, 
+            },
          token));
       }
       try {
@@ -88,7 +88,7 @@ public class Example
                Console.WriteLine("Task #{0} cancelled.", canc.Task.Id);
             else
                Console.WriteLine("Exception: {0}", inner.GetType().Name);
-         }         
+         }
       }
       finally {
          source.Dispose();
@@ -100,58 +100,58 @@ public class Example
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 1,000,502.47
 //       Random number mean: 0.5003
-//       
+//
 //       Task 0 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 1,000,445.63
 //       Random number mean: 0.5002
-//       
+//
 //       Task 2 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 1,000,556.04
 //       Random number mean: 0.5003
-//       
+//
 //       Task 3 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 1,000,178.87
 //       Random number mean: 0.5001
-//       
+//
 //       Task 4 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 999,819.17
 //       Random number mean: 0.4999
-//       
+//
 //       Task 5 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 1,000,190.58
 //       Random number mean: 0.5001
-//       
+//
 //       Task 6 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 999,720.21
 //       Random number mean: 0.4999
-//       
+//
 //       Task 7 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 999,000.96
 //       Random number mean: 0.4995
-//       
+//
 //       Task 8 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 999,499.33
 //       Random number mean: 0.4997
-//       
+//
 //       Task 9 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 1,000,193.25
 //       Random number mean: 0.5001
-//       
+//
 //       Task 10 finished execution.
 //       Random numbers generated: 2,000,000
 //       Sum of random numbers: 999,960.82
 //       Random number mean: 0.5000
-//       
-//       
+//
+//
 //       Total random numbers generated: 22,000,000
 //       Total sum of all random numbers: 11,000,067.33
 //       Random number mean: 0.5000

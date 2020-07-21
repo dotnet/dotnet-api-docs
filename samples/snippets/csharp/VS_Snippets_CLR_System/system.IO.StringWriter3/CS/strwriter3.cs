@@ -7,7 +7,7 @@ class StrWriter
 {
     static void Main()
     {
-        StringBuilder strBuilder = 
+        StringBuilder strBuilder =
             new StringBuilder("file path characters are: ");
         StringWriter strWriter = new StringWriter(strBuilder);
 
@@ -17,8 +17,8 @@ class StrWriter
         // <Snippet2>
         strWriter.Close();
 
-        // Since the StringWriter is closed, an exception will 
-        // be thrown if the Write method is called. However, 
+        // Since the StringWriter is closed, an exception will
+        // be thrown if the Write method is called. However,
         // the StringBuilder can still manipulate the string.
         strBuilder.Insert(0, "Invalid ");
         Console.WriteLine(strWriter.ToString());

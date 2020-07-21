@@ -38,7 +38,7 @@ namespace CancelEdit
         {
             if( disposing )
             {
-                if (components != null) 
+                if (components != null)
                 {
                     components.Dispose();
                 }
@@ -55,17 +55,17 @@ namespace CancelEdit
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
+            //
             // textBox1
-            // 
+            //
             this.textBox1.Location = new System.Drawing.Point(24, 16);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(216, 20);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "textBox1";
-            // 
+            //
             // Form1
-            // 
+            //
             this.ClientSize = new System.Drawing.Size(292, 266);
             this.Controls.AddRange(new System.Windows.Forms.Control[] {
                                                                           this.textBox1});
@@ -80,7 +80,7 @@ namespace CancelEdit
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() 
+        static void Main()
         {
             Application.Run(new Form1());
         }
@@ -94,45 +94,45 @@ namespace CancelEdit
         //<snippet1>
         private void CancelEdit()
         {
-            // Gets the CurrencyManager which is returned when the 
+            // Gets the CurrencyManager which is returned when the
             // data source is a DataView.
-            BindingManagerBase myMgr = 
-                (CurrencyManager) BindingContext[myDataView]; 
+            BindingManagerBase myMgr =
+                (CurrencyManager) BindingContext[myDataView];
 
-            // Gets the current row and changes a value. Then cancels the 
+            // Gets the current row and changes a value. Then cancels the
             // edit and thereby discards the changes.
             DataRowView tempRowView = (DataRowView) myMgr.Current;
             Console.WriteLine("Original: {0}", tempRowView["myCol"]);
             tempRowView["myCol"] = "These changes will be discarded";
             Console.WriteLine("Edit: {0}", tempRowView["myCol"]);
             myMgr.CancelCurrentEdit();
-            Console.WriteLine("After CanceCurrentlEdit: {0}", 
+            Console.WriteLine("After CanceCurrentlEdit: {0}",
                 tempRowView["myCol"]);
         }
 
         private void EndEdit()
         {
-            // Gets the CurrencyManager which is returned when the 
+            // Gets the CurrencyManager which is returned when the
             // data source is a DataView.
-            BindingManagerBase myMgr = 
+            BindingManagerBase myMgr =
                 (CurrencyManager) BindingContext[myDataView];
 
-            // Gets the current row and changes a value. Then ends the 
+            // Gets the current row and changes a value. Then ends the
             // edit and thereby keeps the changes.
             DataRowView tempRowView = (DataRowView) myMgr.Current;
             Console.WriteLine("Original: {0}", tempRowView["myCol"]);
             tempRowView["myCol"] = "These changes will be kept";
             Console.WriteLine("Edit: {0}", tempRowView["myCol"]);
             myMgr.EndCurrentEdit();
-            Console.WriteLine("After EndCurrentEdit: {0}", 
+            Console.WriteLine("After EndCurrentEdit: {0}",
                 tempRowView["myCol"]);
         }
 
         // </snippet1>
         private void SetBinding()
         {
-            // Creates a DataView to be used as a data source. Sets the 
-            // myDataView variable, defined in the form, to the DataView. 
+            // Creates a DataView to be used as a data source. Sets the
+            // myDataView variable, defined in the form, to the DataView.
             // Then binds the TextBox control to the DataView.
             DataTable myTable = new DataTable("myTable");
             DataColumn myCol = new DataColumn("myCol");

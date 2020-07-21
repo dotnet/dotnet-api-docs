@@ -2,10 +2,10 @@
 // System.Runtime.Remoting.RemotingConfiguration.GetRegisteredWellKnownServiceTypes
 
 /*
-  The following example demonstrates the 'Configure' and 
+  The following example demonstrates the 'Configure' and
   'GetRegisteredWellKnownServiceTypes' methods of 'RemotingConfiguration' class.
   It configures the remoting infrastructure using the 'Configure' method.Then gets
-  the registered well-known objects at the service end and displays it's properties 
+  the registered well-known objects at the service end and displays it's properties
   on the console.
 */
 
@@ -15,9 +15,9 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels.Http;
 
-  public class Sample 
+  public class Sample
   {
-    public static void Main() 
+    public static void Main()
     {
 // <Snippet1>
 

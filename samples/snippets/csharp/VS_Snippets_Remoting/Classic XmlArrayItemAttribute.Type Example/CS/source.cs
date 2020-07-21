@@ -22,7 +22,7 @@ public class Manager:Person
    public int Rank;
 }
 
-public class Run 
+public class Run
 {
    public static void Main()
    {
@@ -33,7 +33,7 @@ public class Run
    public void SerializeOrder(string filename)
    {
       // Creates an XmlSerializer.
-      XmlSerializer xSer = 
+      XmlSerializer xSer =
       new XmlSerializer(typeof(Group));
 
       // Creates the Group object, and two array items.

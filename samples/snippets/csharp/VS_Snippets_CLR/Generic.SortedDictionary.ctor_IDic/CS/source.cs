@@ -8,25 +8,25 @@ public class Example
     {
         // Create a new Dictionary of strings, with string keys.
         //
-        Dictionary<string, string> openWith = 
+        Dictionary<string, string> openWith =
                                   new Dictionary<string, string>();
-        
-        // Add some elements to the dictionary. 
+
+        // Add some elements to the dictionary.
         openWith.Add("txt", "notepad.exe");
         openWith.Add("bmp", "paint.exe");
         openWith.Add("dib", "paint.exe");
         openWith.Add("rtf", "wordpad.exe");
-        
-        // Create a SortedDictionary of strings with string keys, 
+
+        // Create a SortedDictionary of strings with string keys,
         // and initialize it with the contents of the Dictionary.
-        SortedDictionary<string, string> copy = 
+        SortedDictionary<string, string> copy =
                   new SortedDictionary<string, string>(openWith);
 
         // List the contents of the copy.
         Console.WriteLine();
         foreach( KeyValuePair<string, string> kvp in copy )
         {
-            Console.WriteLine("Key = {0}, Value = {1}", 
+            Console.WriteLine("Key = {0}, Value = {1}",
                kvp.Key, kvp.Value);
         }
     }

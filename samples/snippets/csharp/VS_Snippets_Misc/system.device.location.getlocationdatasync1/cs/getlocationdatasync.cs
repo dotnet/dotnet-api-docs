@@ -15,7 +15,7 @@ namespace GetLocationProperty
         static void GetLocationProperty()
         {
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
-            
+
             // Do not suppress prompt, and wait 1000 milliseconds to start.
             watcher.TryStart(false, TimeSpan.FromMilliseconds(1000));
 

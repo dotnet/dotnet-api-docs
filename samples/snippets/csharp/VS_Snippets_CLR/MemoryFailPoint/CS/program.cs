@@ -75,10 +75,10 @@ class MemoryFailPointExample
             }
             catch (InsufficientMemoryException e)
             {
-                // MemoryFailPoint threw an exception, handle by sleeping for a while,  then 
+                // MemoryFailPoint threw an exception, handle by sleeping for a while,  then
                 // continue processing the queue.
                 Console.WriteLine("Expected InsufficientMemoryException thrown.  Message: " + e.Message);
-                // We could optionally sleep until a running worker thread 
+                // We could optionally sleep until a running worker thread
                 // has finished, like this:  threads[joinCount++].Join();
                 Thread.Sleep(1000);
             }
@@ -138,7 +138,7 @@ class MemoryFailPointExample
             Console.WriteLine("Unexpected OutOfMemory exception thrown: " + oom);
         }
 
-        // Do work here, possibly taking a lock if this app needs 
+        // Do work here, possibly taking a lock if this app needs
         // synchronization between worker threads and/or the main thread.
 
         // Keep the thread alive for awhile to simulate a running thread.

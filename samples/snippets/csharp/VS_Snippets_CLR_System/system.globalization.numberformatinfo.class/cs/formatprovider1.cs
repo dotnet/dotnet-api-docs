@@ -4,9 +4,9 @@ using System.Globalization;
 
 public class CurrentCultureFormatProvider : IFormatProvider
 {
-   public Object GetFormat(Type formatType) 
+   public Object GetFormat(Type formatType)
    {
-      Console.WriteLine("Requesting an object of type {0}", 
+      Console.WriteLine("Requesting an object of type {0}",
                         formatType.Name);
       if (formatType == typeof(NumberFormatInfo))
          return NumberFormatInfo.CurrentInfo;
@@ -25,7 +25,7 @@ public class Example
       string value = amount.ToString("C2", new CurrentCultureFormatProvider());
       Console.WriteLine(value);
       Console.WriteLine();
-      string composite = String.Format(new CurrentCultureFormatProvider(), 
+      string composite = String.Format(new CurrentCultureFormatProvider(),
                                        "Date: {0}   Amount: {1}   Description: {2}",
                                        DateTime.Now, 1264.03m, "Service Charge");
       Console.WriteLine(composite);
@@ -35,7 +35,7 @@ public class Example
 // The example displays output like the following:
 //    Requesting an object of type NumberFormatInfo
 //    $1,203.54
-//    
+//
 //    Requesting an object of type ICustomFormatter
 //    Requesting an object of type DateTimeFormatInfo
 //    Requesting an object of type NumberFormatInfo

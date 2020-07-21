@@ -364,7 +364,7 @@ public class QueueExample
 
         // Receive the message from the queue.  Because the Id of the message
         // , it might not be the message just sent.
-        msg = queue.Receive(MessageQueueTransactionType.Single); 
+        msg = queue.Receive(MessageQueueTransactionType.Single);
 
         // </snippet9>
     }

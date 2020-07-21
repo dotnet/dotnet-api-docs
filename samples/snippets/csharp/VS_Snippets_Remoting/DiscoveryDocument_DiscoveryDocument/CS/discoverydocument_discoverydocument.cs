@@ -35,7 +35,7 @@ public class DiscoveryDocument_Example
 // </Snippet2>
 
          // Create an XmlTextReader with the sample file.
-         XmlTextReader myXmlTextReader = new 
+         XmlTextReader myXmlTextReader = new
                            XmlTextReader( "http://localhost/example.vsdisco" );
 
 // <Snippet3>

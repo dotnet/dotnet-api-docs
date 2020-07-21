@@ -8,11 +8,11 @@ using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
 
 // This class is not serializable.
-class Employee 
+class Employee
     {
     public String name, address;
 
-    public Employee(String name, String address) 
+    public Employee(String name, String address)
     {
         this.name = name;
         this.address = address;
@@ -20,12 +20,12 @@ class Employee
 }
 
 // This class can manually serialize an Employee object.
-sealed class EmployeeSerializationSurrogate : ISerializationSurrogate 
+sealed class EmployeeSerializationSurrogate : ISerializationSurrogate
 {
 
     // Serialize the Employee object to save the object's name and address fields.
-    public void GetObjectData(Object obj, 
-        SerializationInfo info, StreamingContext context) 
+    public void GetObjectData(Object obj,
+        SerializationInfo info, StreamingContext context)
     {
 
         var emp = (Employee) obj;
@@ -36,7 +36,7 @@ sealed class EmployeeSerializationSurrogate : ISerializationSurrogate
     // Deserialize the Employee object to set the object's name and address fields.
     public Object SetObjectData(Object obj,
         SerializationInfo info, StreamingContext context,
-        ISurrogateSelector selector) 
+        ISurrogateSelector selector)
     {
 
         var emp = (Employee) obj;
@@ -46,21 +46,21 @@ sealed class EmployeeSerializationSurrogate : ISerializationSurrogate
     }
 }
 
-public sealed class App 
+public sealed class App
 {
-    static void Main() 
+    static void Main()
     {
         // This sample uses the BinaryFormatter.
         IFormatter formatter = new BinaryFormatter();
 
         // Create a MemoryStream that the object will be serialized into and deserialized from.
-        using (Stream stream = new MemoryStream()) 
+        using (Stream stream = new MemoryStream())
         {
             //<snippet2>
             // Create a SurrogateSelector.
             var ss = new SurrogateSelector();
 
-            // Tell the SurrogateSelector that Employee objects are serialized and deserialized 
+            // Tell the SurrogateSelector that Employee objects are serialized and deserialized
             // using the EmployeeSerializationSurrogate object.
             ss.AddSurrogate(typeof(Employee),
             new StreamingContext(StreamingContextStates.All),
@@ -70,13 +70,13 @@ public sealed class App
             // Associate the SurrogateSelector with the BinaryFormatter.
             formatter.SurrogateSelector = ss;
 
-            //<snippet3>            
-            try 
+            //<snippet3>
+            try
             {
                 // Serialize an Employee object into the memory stream.
                 formatter.Serialize(stream, new Employee("Jeff", "1 Microsoft Way"));
             }
-            catch (SerializationException e) 
+            catch (SerializationException e)
             {
                 Console.WriteLine("Serialization failed: {0}", e.Message);
                 throw;
@@ -86,7 +86,7 @@ public sealed class App
             // Rewind the MemoryStream.
             stream.Position = 0;
 
-            try 
+            try
             {
                 // Deserialize the Employee object from the memory stream.
                 var emp = (Employee) formatter.Deserialize(stream);
@@ -94,7 +94,7 @@ public sealed class App
                 // Verify that it all worked.
                 Console.WriteLine("Name = {0}, Address = {1}", emp.name, emp.address);
             }
-            catch (SerializationException e) 
+            catch (SerializationException e)
             {
                 Console.WriteLine("Deserialization failed: {0}", e.Message);
                 throw;

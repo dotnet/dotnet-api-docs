@@ -8,11 +8,11 @@ using System.Net.Sockets;
 public class Sample
 {
 
-  public static string DoSocketGet(string server) 
+  public static string DoSocketGet(string server)
   {
     //Set up variables and String to write to the server.
     Encoding ASCII = Encoding.ASCII;
-    string Get = "GET / HTTP/1.1\r\nHost: " + server + 
+    string Get = "GET / HTTP/1.1\r\nHost: " + server +
                  "\r\nConnection: Close\r\n\r\n";
     Byte[] ByteGet = ASCII.GetBytes(Get);
     Byte[] RecvBytes = new Byte[256];
@@ -25,7 +25,7 @@ public class Sample
     try
     {
 
-      // Define those variables to be evaluated in the next for loop and 
+      // Define those variables to be evaluated in the next for loop and
       // then used to connect to the server. These variables are defined
       // outside the for loop to make them accessible there after.
       Socket s = null;
@@ -38,7 +38,7 @@ public class Sample
       // Get the DNS IP addresses associated with the host.
       IPAddress[] IPaddresses = hostInfo.AddressList;
 
-      // Evaluate the socket and receiving host IPAddress and IPEndPoint. 
+      // Evaluate the socket and receiving host IPAddress and IPEndPoint.
       for (int index=0; index<IPaddresses.Length; index++)
       {
         hostAddress = IPaddresses[index];
@@ -67,15 +67,15 @@ public class Sample
         s.Send(ByteGet, ByteGet.Length, 0);
 
 //</Snippet3>
-      } // End of the for loop.      
+      } // End of the for loop.
 
 //<Snippet4>
- 
+
       // Receive the host home page content and loop until all the data is received.
       Int32 bytes = s.Receive(RecvBytes, RecvBytes.Length, 0);
       strRetPage = "Default HTML page on " + server + ":\r\n";
       strRetPage = strRetPage + ASCII.GetString(RecvBytes, 0, bytes);
- 
+
       while (bytes > 0)
       {
         bytes = s.Receive(RecvBytes, RecvBytes.Length, 0);
@@ -84,8 +84,8 @@ public class Sample
 
 //</Snippet4>
     } // End of the try block.
-    
-    catch(SocketException e) 
+
+    catch(SocketException e)
     {
       Console.WriteLine("SocketException caught!!!");
       Console.WriteLine("Source : " + e.Source);
@@ -109,7 +109,7 @@ public class Sample
       Console.WriteLine("Source : " + e.Source);
       Console.WriteLine("Message : " + e.Message);
     }
-    
+
     return strRetPage;
 }
    public static void Main()

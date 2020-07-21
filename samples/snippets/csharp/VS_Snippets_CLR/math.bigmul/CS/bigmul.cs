@@ -2,9 +2,9 @@
 // This example demonstrates Math.BigMul()
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     int int1 = Int32.MaxValue;
     int int2 = Int32.MaxValue;

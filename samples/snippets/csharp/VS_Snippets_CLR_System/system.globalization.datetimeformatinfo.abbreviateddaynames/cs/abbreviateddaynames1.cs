@@ -8,14 +8,14 @@ public class Example
    {
       CultureInfo ci = CultureInfo.CreateSpecificCulture("en-US");
       DateTimeFormatInfo dtfi = ci.DateTimeFormat;
-      dtfi.AbbreviatedDayNames = new String[] { "Su", "M", "Tu", "W", 
-                                                "Th", "F", "Sa" };  
+      dtfi.AbbreviatedDayNames = new String[] { "Su", "M", "Tu", "W",
+                                                "Th", "F", "Sa" };
       DateTime dat = new DateTime(2014, 5, 28);
 
       for (int ctr = 0; ctr <= 6; ctr++) {
          String output = String.Format(ci, "{0:ddd MMM dd, yyyy}", dat.AddDays(ctr));
          Console.WriteLine(output);
-      } 
+      }
    }
 }
 // The example displays the following output:

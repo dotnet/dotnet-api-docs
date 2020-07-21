@@ -6,7 +6,7 @@ using System.Security;
 class MyEventExample
 {
     public static void Main()
-    {  
+    {
         try
         {
 

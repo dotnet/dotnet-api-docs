@@ -8,12 +8,12 @@ public class Example
    {
       Calendar cal = new UmAlQuraCalendar();
       int currentYear = cal.GetYear(DateTime.Now);
-      
+
       for (int year = currentYear; year <= currentYear + 9; year++)
-         Console.WriteLine("{0:d4}: {1} days {2}", year, 
-                           cal.GetDaysInYear(year, UmAlQuraCalendar.UmAlQuraEra), 
+         Console.WriteLine("{0:d4}: {1} days {2}", year,
+                           cal.GetDaysInYear(year, UmAlQuraCalendar.UmAlQuraEra),
                            cal.IsLeapYear(year, UmAlQuraCalendar.UmAlQuraEra) ?
-                              "(Leap Year)" : "");        
+                              "(Leap Year)" : "");
    }
 }
 // The example displays the following output:

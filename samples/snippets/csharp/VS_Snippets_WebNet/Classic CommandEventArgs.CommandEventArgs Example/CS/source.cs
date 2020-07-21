@@ -6,10 +6,10 @@ using System.Windows.Forms;
 public class Form1: Form
 {
 // <Snippet1>
-void Command_Button_Click(Object sender, CommandEventArgs e) 
+void Command_Button_Click(Object sender, CommandEventArgs e)
 {
-    CommandEventArgs args = new CommandEventArgs(e);    
+    CommandEventArgs args = new CommandEventArgs(e);
 }
-   
+
 // </Snippet1>
 }

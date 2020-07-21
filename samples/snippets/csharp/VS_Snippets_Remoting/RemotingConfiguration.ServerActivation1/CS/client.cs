@@ -6,7 +6,7 @@ using System.Runtime.Remoting.Channels;
 
 public class ClientClass {
 
-    public static void Main() { 
+    public static void Main() {
 
 // </Snippet5>
 // <Snippet6>

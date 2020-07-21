@@ -38,10 +38,10 @@ Public Class Form1
 
         ' Instantiate the RSA provider instance accessing the key container
         '  TestContainer.
-        Dim rsaProvider As New RSACryptoServiceProvider
-        rsaProvider = CType(cryptoConfig.CreateFromName( _
+        Dim rsa As RSA = RSA.Create()
+        rsa = CType(cryptoConfig.CreateFromName( _
             "RSA", argsArray), _
-            RSACryptoServiceProvider)
+            RSA)
         '</Snippet5>
 
         ' Use the MapNameToOID method to get an object identifier.

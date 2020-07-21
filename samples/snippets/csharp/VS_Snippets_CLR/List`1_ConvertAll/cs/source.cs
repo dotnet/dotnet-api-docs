@@ -19,7 +19,7 @@ public class Example
             Console.WriteLine(p);
         }
 
-        List<Point> lp = lpf.ConvertAll( 
+        List<Point> lp = lpf.ConvertAll(
             new Converter<PointF, Point>(PointFToPoint));
 
         Console.WriteLine();

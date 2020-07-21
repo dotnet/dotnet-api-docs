@@ -40,25 +40,25 @@ namespace GroupCoffeeTimer {
 
             WellKnownClientTypeEntry remoteType = new WellKnownClientTypeEntry(typeof(TimerService), "http://localhost:9000/MyService/TimerService.soap");
             RemotingConfiguration.RegisterWellKnownClientType(remoteType);
-            
+
             TimerService groupTimer = new TimerService();
-            groupTimer.MinutesToTime = 4.0; 
+            groupTimer.MinutesToTime = 4.0;
 
             // Registers this client as a lease sponsor so that it can
             // prevent the expiration of the TimerService.
             ILease leaseObject = (ILease)RemotingServices.GetLifetimeService(groupTimer);
             leaseObject.Register(this);
-            
+
             // Subscribes to the event so that the client can receive notifications from the server.
             groupTimer.TimerExpired += new TimerExpiredEventHandler(OnTimerExpired);
             Console.WriteLine("Connected to TimerExpired event");
-            
+
             groupTimer.Start();
             Console.WriteLine("Timer started for {0} minutes.", groupTimer.MinutesToTime);
             Console.WriteLine("Press enter to end the client process.");
             Console.ReadLine();
         }
-        
+
         private void OnTimerExpired (object source, TimerServiceEventArgs e) {
             Console.WriteLine("TimerHelper.OnTimerExpired: {0}", e.Message);
         }

@@ -11,9 +11,9 @@ public class Page1: Page
 // <Snippet1>
 DateTime dt = DateTime.Now;
  TimeSpan ts = new TimeSpan(0,0,10,0);
- 
+
  MyCookie.Expires = dt.Add(ts);
-    
+
 // </Snippet1>
  }
 }

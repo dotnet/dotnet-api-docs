@@ -10,7 +10,7 @@ public class Sample
      // Create a writer that outputs to the console.
      XmlTextWriter writer = new XmlTextWriter (Console.Out);
      writer.Formatting = Formatting.Indented;
-    
+
      // Write the root element.
      writer.WriteStartElement("Items");
 
@@ -21,7 +21,7 @@ public class Sample
      writer.WriteRaw("this & that");
      writer.WriteEndElement();
 
-     // Write the same string using WriteString. Note that the 
+     // Write the same string using WriteString. Note that the
      // special characters are escaped.
      writer.WriteStartElement("Item");
      writer.WriteString("Write the same string using WriteString:  ");
@@ -30,9 +30,9 @@ public class Sample
 
      // Write the close tag for the root element.
      writer.WriteEndElement();
-           
+
      // Write the XML to file and close the writer.
-     writer.Close();  
+     writer.Close();
   }
 }
    // </Snippet1>

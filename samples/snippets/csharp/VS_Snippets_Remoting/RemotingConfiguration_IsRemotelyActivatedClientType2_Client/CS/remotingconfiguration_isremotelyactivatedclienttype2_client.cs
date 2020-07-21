@@ -2,9 +2,9 @@
 
 /*
 The following example demonstrates the 'IsRemotelyActivatedClientType(String,String)' method
-of 'RemotingConfiguration' class. 
+of 'RemotingConfiguration' class.
 It registers a 'TcpChannel' object with the channel services. Then registers the 'MyServerImpl'
-object as activated client type which can be activated at the server and displays it's 
+object as activated client type which can be activated at the server and displays it's
 properties to the console.
 */
 
@@ -41,7 +41,7 @@ using System.Runtime.Remoting.Channels.Tcp;
                    +myActivatedClientEntry.ApplicationUrl);
 	    if (myActivatedClientEntry != null)
 		Console.WriteLine("Object is client activated");
-	    else 
+	    else
 		Console.WriteLine("Object is not client activated");
 // </Snippet1>
          }

@@ -23,10 +23,10 @@ class DynamicJumpTableDemo
 
 	TypeBuilder myTypeBuilder = myModBuilder.DefineType("JumpTableDemo",
 							TypeAttributes.Public);
-	MethodBuilder myMthdBuilder = myTypeBuilder.DefineMethod("SwitchMe", 
+	MethodBuilder myMthdBuilder = myTypeBuilder.DefineMethod("SwitchMe",
 				             MethodAttributes.Public |
 				             MethodAttributes.Static,
-                                             typeof(string), 
+                                             typeof(string),
                                              new Type[] {typeof(int)});
 
 	ILGenerator myIL = myMthdBuilder.GetILGenerator();
@@ -35,7 +35,7 @@ class DynamicJumpTableDemo
 	Label endOfMethod = myIL.DefineLabel();	
 
 	// We are initializing our jump table. Note that the labels
-	// will be placed later using the MarkLabel method. 
+	// will be placed later using the MarkLabel method.
 
 	Label[] jumpTable = new Label[] { myIL.DefineLabel(),
 					  myIL.DefineLabel(),
@@ -60,27 +60,27 @@ class DynamicJumpTableDemo
 	myIL.Emit(OpCodes.Br_S, defaultCase);
 
 	// Case arg0 = 0
-	myIL.MarkLabel(jumpTable[0]); 
+	myIL.MarkLabel(jumpTable[0]);
 	myIL.Emit(OpCodes.Ldstr, "are no bananas");
 	myIL.Emit(OpCodes.Br_S, endOfMethod);
 
 	// Case arg0 = 1
-	myIL.MarkLabel(jumpTable[1]); 
+	myIL.MarkLabel(jumpTable[1]);
 	myIL.Emit(OpCodes.Ldstr, "is one banana");
 	myIL.Emit(OpCodes.Br_S, endOfMethod);
 
 	// Case arg0 = 2
-	myIL.MarkLabel(jumpTable[2]); 
+	myIL.MarkLabel(jumpTable[2]);
 	myIL.Emit(OpCodes.Ldstr, "are two bananas");
 	myIL.Emit(OpCodes.Br_S, endOfMethod);
 
 	// Case arg0 = 3
-	myIL.MarkLabel(jumpTable[3]); 
+	myIL.MarkLabel(jumpTable[3]);
 	myIL.Emit(OpCodes.Ldstr, "are three bananas");
 	myIL.Emit(OpCodes.Br_S, endOfMethod);
 
 	// Case arg0 = 4
-	myIL.MarkLabel(jumpTable[4]); 
+	myIL.MarkLabel(jumpTable[4]);
 	myIL.Emit(OpCodes.Ldstr, "are four bananas");
 	myIL.Emit(OpCodes.Br_S, endOfMethod);
 
@@ -107,7 +107,7 @@ class DynamicJumpTableDemo
 			  		           BindingFlags.InvokeMethod,
 			  		           null,
 			  		           myInstance,
-			  		           new object[] {theValue}));  
+			  		           new object[] {theValue}));
    }
 }
 

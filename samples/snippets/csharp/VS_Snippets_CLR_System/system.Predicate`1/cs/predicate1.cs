@@ -6,7 +6,7 @@ public class HockeyTeam
 {
    private string _name;
    private int _founded;
-   
+
    public HockeyTeam(string name, int year)
    {
       _name = name;
@@ -28,7 +28,7 @@ public class Example
    {
       Random rnd = new Random();
       List<HockeyTeam> teams = new List<HockeyTeam>();
-      teams.AddRange( new HockeyTeam[] { new HockeyTeam("Detroit Red Wings", 1926), 
+      teams.AddRange( new HockeyTeam[] { new HockeyTeam("Detroit Red Wings", 1926),
                                          new HockeyTeam("Chicago Blackhawks", 1926),
                                          new HockeyTeam("San Jose Sharks", 1991),
                                          new HockeyTeam("Montreal Canadiens", 1909),

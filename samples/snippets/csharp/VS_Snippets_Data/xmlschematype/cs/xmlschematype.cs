@@ -13,9 +13,9 @@ namespace GetBuiltInSimpleType
             XmlSchemaSimpleType stringType = new XmlSchemaSimpleType();
             stringType.Name = "myString";
             schema.Items.Add(stringType);
-            XmlSchemaSimpleTypeRestriction stringRestriction = 
+            XmlSchemaSimpleTypeRestriction stringRestriction =
                                  new XmlSchemaSimpleTypeRestriction();
-            stringRestriction.BaseTypeName = 
+            stringRestriction.BaseTypeName =
                                  new XmlQualifiedName("string",
                          "http://www.w3.org/2001/XMLSchema");
             stringType.Content = stringRestriction;
