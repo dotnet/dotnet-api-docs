@@ -22,14 +22,14 @@ Module modMain
       number = Decimal.Parse(value)
       Console.WriteLine("'{0}' converted to {1}.", value, number)
       ' Displays: 
-      '    16,523,421' converted to 16523421.
+      '    '16,523,421' converted to 16523421.
       
       ' Parse a floating point value with thousands separators
       value = "25,162.1378"
       number = Decimal.Parse(value)
       Console.WriteLine("'{0}' converted to {1}.", value, number)
       ' Displays:
-      '    25,162.1378' converted to 25162.1378.
+      '    '25,162.1378' converted to 25162.1378.
       
       ' Parse a floating point number with US currency symbol.
       value = "$16,321,421.75"
@@ -106,8 +106,8 @@ Module modMain
       Dim style As NumberStyles
       Dim provider As CultureInfo
       
-      ' Parse string using "." as the thousands separator 
-      ' and " " as the decimal separator. 
+      ' Parse string using " " as the thousands separator 
+      ' and "." as the decimal separator. 
       value = "892 694,12"
       style = NumberStyles.AllowDecimalPoint Or NumberStyles.AllowThousands
       provider = New CultureInfo("fr-FR")
@@ -115,7 +115,7 @@ Module modMain
       number = Decimal.Parse(value, style, provider)  
       Console.WriteLine("'{0}' converted to {1}.", value, number)
       ' Displays: 
-      '    892 694,12' converted to 892694.12.
+      '    '892 694,12' converted to 892694.12.
 
       Try
          number = Decimal.Parse(value, style, CultureInfo.InvariantCulture)  
