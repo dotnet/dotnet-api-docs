@@ -15,12 +15,17 @@
     <AssemblyVersion>4.1.3.0</AssemblyVersion>
     <AssemblyVersion>4.1.4.0</AssemblyVersion>
     <AssemblyVersion>4.1.5.0</AssemblyVersion>
+    <AssemblyVersion>4.1.6.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Numerics.Vectors" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <TypeParameters>
     <TypeParameter Name="T">
       <Constraints>
@@ -48,11 +53,11 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- <xref:System.Numerics.Vector%601> is an immutable structure that represents a single vector of a specified numeric type. The count of a <xref:System.Numerics.Vector%601> instance is fixed, but its upper limit is CPU-register dependent. It is intended to be used as a building block for vectorizing large algorithms.  
+ <xref:System.Numerics.Vector%601> is an immutable structure that represents a single vector of a specified numeric type. The count of <xref:System.Numerics.Vector%601> instances is fixed, but its upper limit is CPU-register dependent. It is intended to be used as a building block for vectorizing large algorithms, and therefore cannot be used directly as an arbitrary length vector or tensor.
   
- The <xref:System.Numerics.Vector%601> structure provides support for hardware acceleration.  
+ The <xref:System.Numerics.Vector%601> structure provides support for hardware acceleration.
  
- The following table shows which primitive numeric data type and operation combination uses intrinsic instructions for faster executions:
+ The term 'primitive numeric data type' in this document refers to numeric data types that are directly supported by the CPU and have instructions that can manipulate those data types. The following table shows which primitive numeric data type and operation combination uses intrinsic instructions for faster executions:
  
 | Primitive type | `+` | `-` | `*` | `/` |
 | --- | :---: | :---: | :---: | :---: |
@@ -71,6 +76,47 @@
     </remarks>
   </Docs>
   <Members>
+    <MemberGroup MemberName=".ctor">
+      <AssemblyInfo>
+        <AssemblyName>System.Numerics.Vectors</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.1.2.0</AssemblyVersion>
+        <AssemblyVersion>4.1.3.0</AssemblyVersion>
+        <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>Creates an instance of <see cref="T:System.Numerics.Vector`1" />.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The type `T` can be any of the following numeric types:
+
+| C# keywords | Framework Type       |
+| ----------- | -------------------- |
+| `sbyte`     | <xref:System.SByte>  |
+| `byte`      | <xref:System.Byte>   |
+| `short`     | <xref:System.Int16>  |
+| `ushort`    | <xref:System.UInt16> |
+| `int`       | <xref:System.Int32>  |
+| `uint`      | <xref:System.UInt32> |
+| `long`      | <xref:System.Int64>  |
+| `ulong`     | <xref:System.UInt64> |
+| `float`     | <xref:System.Single> |
+| `double`    | <xref:System.Double> |
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Vector (ReadOnlySpan&lt;byte&gt; values);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; values) cil managed" />
@@ -82,17 +128,29 @@
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="values" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="values" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="values">A read-only span of bytes that contains the values to add to the vector. The span must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements.</param>
+        <param name="values">A read-only span of bytes that contains the values to add to the vector. The span must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements and only the first <see cref="P:System.Numerics.Vector`1.Count" /> elements are used.</param>
         <summary>Constructs a vector from the given read-only span of bytes.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+
+ Only the first <xref:System.Numerics.Vector%601.Count%2A> elements are added to the vector. The remainders are ignored.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IndexOutOfRangeException">
+          <paramref name="values" /> did not contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -106,17 +164,29 @@
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="values" Type="System.ReadOnlySpan&lt;T&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="values" Type="System.ReadOnlySpan&lt;T&gt;" Index="0" FrameworkAlternate="netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="values">The values to add to the vector, as a read-only span of objects of type T. The span must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements.</param>
+        <param name="values">The values to add to the vector, as a read-only span of objects of type T. The span must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements and only the first <see cref="P:System.Numerics.Vector`1.Count" /> elements are used.</param>
         <summary>Constructs a vector from the given <see cref="T:System.ReadOnlySpan`1" />.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+
+ Only the first <xref:System.Numerics.Vector%601.Count%2A> elements are added to the vector. The remainders are ignored.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IndexOutOfRangeException">
+          <paramref name="values" /> did not contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -132,18 +202,30 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="values" Type="System.Span&lt;T&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
+        <Parameter Name="values" Type="System.Span&lt;T&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="values">The values to add to the vector, as a span of objects of type T. The span must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements.</param>
+        <param name="values">The values to add to the vector, as a span of objects of type T. The span must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements and only the first <see cref="P:System.Numerics.Vector`1.Count" /> elements are used.</param>
         <summary>Constructs a vector from the given <see cref="T:System.Span`1" />.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+
+ Only the first <xref:System.Numerics.Vector%601.Count%2A> elements are added to the vector. The remainders are ignored.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IndexOutOfRangeException">
+          <paramref name="values" /> did not contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -164,6 +246,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -176,23 +260,17 @@
       <Docs>
         <param name="value">The numeric type that defines the type of the components in the vector.</param>
         <summary>Creates a vector whose components are of a specified type.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- `value` can be any primitive numeric type (that is, a numeric type whose <xref:System.Type.IsPrimitive%2A?displayProperty=nameWithType> property returns `true`.  
-  
- ]]></format>
-        </remarks>
+        <remarks>To be added. </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Vector (T[] values);" />
+      <MemberSignature Language="C#" Value="public Vector (T[] values);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] values) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.Vector`1.#ctor(`0[])" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (values As T())" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Vector(cli::array &lt;T&gt; ^ values);" />
       <MemberSignature Language="F#" Value="new System.Numerics.Vector&lt;'T (requires 'T : struct)&gt; : 'T[] -&gt; System.Numerics.Vector&lt;'T (requires 'T : struct)&gt;" Usage="new System.Numerics.Vector&lt;'T (requires 'T : struct)&gt; values" />
+      <MemberSignature Language="C#" Value="public Vector (T[]? values);" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
@@ -204,6 +282,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -214,13 +294,14 @@
         <Parameter Name="values" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="values">A numeric array.</param>
+        <param name="values">The values to add to the vector, as an array of objects of type T. The array must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements and only the first <see cref="P:System.Numerics.Vector`1.Count" /> elements are used.</param>
         <summary>Creates a vector from a specified array.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- `values` must contain at least <xref:System.Numerics.Vector%601.Count%2A> elements.  
+
+ Only the first <xref:System.Numerics.Vector%601.Count%2A> elements are added to the vector. The remainders are ignored.
   
  ]]></format>
         </remarks>
@@ -229,12 +310,13 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Vector (T[] values, int index);" />
+      <MemberSignature Language="C#" Value="public Vector (T[] values, int index);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] values, int32 index) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.Vector`1.#ctor(`0[],System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (values As T(), index As Integer)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Vector(cli::array &lt;T&gt; ^ values, int index);" />
       <MemberSignature Language="F#" Value="new System.Numerics.Vector&lt;'T (requires 'T : struct)&gt; : 'T[] * int -&gt; System.Numerics.Vector&lt;'T (requires 'T : struct)&gt;" Usage="new System.Numerics.Vector&lt;'T (requires 'T : struct)&gt; (values, index)" />
+      <MemberSignature Language="C#" Value="public Vector (T[]? values, int index);" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
@@ -246,6 +328,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -257,16 +341,17 @@
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="values">A numeric array.</param>
+        <param name="values">The values to add to the vector, as an array of objects of type T. The array must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements from the specified index and only the first <see cref="P:System.Numerics.Vector`1.Count" /> elements are used.</param>
         <param name="index">The starting index position from which to create the vector.</param>
         <summary>Creates a vector from a specified array starting at a specified index position.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks  
- The array must contain at least <xref:System.Numerics.Vector%601.Count%2A?displayProperty=nameWithType> elements from the specified index.  
-  
- ]]></format>
+
+ Only the first <xref:System.Numerics.Vector%601.Count%2A> elements are added to the vector. The remainders are ignored.
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="values" /> is <see langword="null" />.</exception>
@@ -289,20 +374,23 @@
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="netcore-3.0;netcore-3.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
         <param name="destination">The destination span to which the values are copied. The destination span must be at least size <see cref="P:System.Numerics.Vector`1.Count" />.</param>
@@ -322,20 +410,23 @@
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="netcore-3.0;netcore-3.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="destination" Type="System.Span&lt;T&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="destination" Type="System.Span&lt;T&gt;" Index="0" FrameworkAlternate="netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
         <param name="destination">The destination span to which the values are copied. The destination span must be at least size <see cref="P:System.Numerics.Vector`1.Count" />.</param>
@@ -345,12 +436,13 @@
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
-      <MemberSignature Language="C#" Value="public void CopyTo (T[] destination);" />
+      <MemberSignature Language="C#" Value="public void CopyTo (T[] destination);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CopyTo(!T[] destination) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.Vector`1.CopyTo(`0[])" />
       <MemberSignature Language="VB.NET" Value="Public Sub CopyTo (destination As T())" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void CopyTo(cli::array &lt;T&gt; ^ destination);" />
       <MemberSignature Language="F#" Value="member this.CopyTo : 'T[] -&gt; unit" Usage="vector.CopyTo destination" />
+      <MemberSignature Language="C#" Value="public void CopyTo (T[]? destination);" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
@@ -362,6 +454,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -369,8 +463,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -396,12 +491,13 @@
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
-      <MemberSignature Language="C#" Value="public void CopyTo (T[] destination, int startIndex);" />
+      <MemberSignature Language="C#" Value="public void CopyTo (T[] destination, int startIndex);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CopyTo(!T[] destination, int32 startIndex) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.Vector`1.CopyTo(`0[],System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Sub CopyTo (destination As T(), startIndex As Integer)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void CopyTo(cli::array &lt;T&gt; ^ destination, int startIndex);" />
       <MemberSignature Language="F#" Value="member this.CopyTo : 'T[] * int -&gt; unit" Usage="vector.CopyTo (destination, startIndex)" />
+      <MemberSignature Language="C#" Value="public void CopyTo (T[]? destination, int startIndex);" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
@@ -413,6 +509,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -420,8 +518,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -468,6 +567,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -505,6 +606,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -512,8 +615,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -555,6 +659,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -562,8 +668,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -605,6 +712,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -612,8 +721,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -644,6 +754,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -651,8 +763,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>get: System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -692,6 +805,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -725,6 +840,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -771,6 +888,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -817,6 +936,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -863,6 +984,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -909,6 +1032,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -956,6 +1081,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1002,6 +1129,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1046,6 +1175,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1090,6 +1221,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1134,6 +1267,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1178,6 +1313,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1222,6 +1359,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1229,8 +1368,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netcore-2.2;dotnet-uwp-10.0;netcore-3.0;netstandard-2.1">
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1271,6 +1411,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1315,6 +1457,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1322,8 +1466,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netcore-2.2;dotnet-uwp-10.0;netcore-3.0;netstandard-2.1">
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1364,6 +1509,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1371,8 +1518,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netcore-2.2;dotnet-uwp-10.0;netcore-3.0;netstandard-2.1">
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1413,6 +1561,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1420,8 +1570,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netcore-2.2;dotnet-uwp-10.0;netcore-3.0;netstandard-2.1">
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1462,6 +1613,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1502,6 +1655,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1548,6 +1703,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1594,6 +1751,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1640,6 +1799,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1677,6 +1838,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1723,6 +1886,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1767,6 +1932,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1774,8 +1941,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1796,12 +1964,13 @@
       </Docs>
     </Member>
     <Member MemberName="ToString">
-      <MemberSignature Language="C#" Value="public string ToString (string format);" />
+      <MemberSignature Language="C#" Value="public string ToString (string format);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance string ToString(string format) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.Vector`1.ToString(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function ToString (format As String) As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::String ^ ToString(System::String ^ format);" />
       <MemberSignature Language="F#" Value="override this.ToString : string -&gt; string" Usage="vector.ToString format" />
+      <MemberSignature Language="C#" Value="public string ToString (string? format);" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
@@ -1813,6 +1982,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1820,8 +1991,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1845,12 +2017,13 @@
       </Docs>
     </Member>
     <Member MemberName="ToString">
-      <MemberSignature Language="C#" Value="public string ToString (string format, IFormatProvider formatProvider);" />
+      <MemberSignature Language="C#" Value="public string ToString (string format, IFormatProvider formatProvider);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance string ToString(string format, class System.IFormatProvider formatProvider) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.Vector`1.ToString(System.String,System.IFormatProvider)" />
       <MemberSignature Language="VB.NET" Value="Public Function ToString (format As String, formatProvider As IFormatProvider) As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::String ^ ToString(System::String ^ format, IFormatProvider ^ formatProvider);" />
       <MemberSignature Language="F#" Value="override this.ToString : string * IFormatProvider -&gt; string" Usage="vector.ToString (format, formatProvider)" />
+      <MemberSignature Language="C#" Value="public string? ToString (string format, IFormatProvider formatProvider);" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.IFormattable.ToString(System.String,System.IFormatProvider)</InterfaceMember>
@@ -1865,6 +2038,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1872,8 +2047,9 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0;netstandard-2.1">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netstandard-2.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1909,20 +2085,23 @@
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="netcore-3.0;netcore-3.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
         <param name="destination">The destination span to which the values are copied. The destination span must be at least size <see cref="P:System.Numerics.Vector`1.Count" />.</param>
@@ -1943,20 +2122,23 @@
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Vectors</AssemblyName>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-3.0">
-          <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+        <Attribute FrameworkAlternate="netcore-3.0;netcore-3.1">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="destination" Type="System.Span&lt;T&gt;" Index="0" FrameworkAlternate="netcore-3.0" />
+        <Parameter Name="destination" Type="System.Span&lt;T&gt;" Index="0" FrameworkAlternate="netcore-3.0;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
         <param name="destination">The destination span to which the values are copied. The destination span must be at least size <see cref="P:System.Numerics.Vector`1.Count" />.</param>
@@ -1984,6 +2166,8 @@
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
         <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>4.1.6.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>

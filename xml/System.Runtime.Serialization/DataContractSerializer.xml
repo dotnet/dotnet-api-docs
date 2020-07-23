@@ -11,6 +11,8 @@
     <AssemblyVersion>4.1.1.0</AssemblyVersion>
     <AssemblyVersion>4.1.3.0</AssemblyVersion>
     <AssemblyVersion>4.1.4.0</AssemblyVersion>
+    <AssemblyVersion>4.1.5.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -23,6 +25,10 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="System.Runtime.Serialization" FromVersion="4.0.0.0" To="System.Runtime.Serialization.Xml" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime.Serialization.Xml" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Runtime.Serialization.XmlObjectSerializer</BaseTypeName>
   </Base>
@@ -35,13 +41,13 @@
 ## Remarks  
  Use the <xref:System.Runtime.Serialization.DataContractSerializer> class to serialize and deserialize instances of a type into an XML stream or document. For example, you can create a type named `Person` with properties that contain essential data, such as a name and address. You can then create and manipulate an instance of the `Person` class and write all of its property values in an XML document for later retrieval, or in an XML stream for immediate transport. Most important, the <xref:System.Runtime.Serialization.DataContractSerializer> is used to serialize and deserialize data sent in Windows Communication Foundation (WCF) messages. Apply the <xref:System.Runtime.Serialization.DataContractAttribute> attribute to classes, and the <xref:System.Runtime.Serialization.DataMemberAttribute> attribute to class members to specify properties and fields that are serialized.  
   
- For a list of types that can be serialized, see [Types Supported by the Data Contract Serializer](~/docs/framework/wcf/feature-details/types-supported-by-the-data-contract-serializer.md).  
+ For a list of types that can be serialized, see [Types Supported by the Data Contract Serializer](/dotnet/framework/wcf/feature-details/types-supported-by-the-data-contract-serializer).  
   
  To use the <xref:System.Runtime.Serialization.DataContractSerializer>, first create an instance of a class and an object appropriate to writing or reading the format; for example, an instance of the <xref:System.Xml.XmlDictionaryWriter>. Then call the <xref:System.Runtime.Serialization.XmlObjectSerializer.WriteObject%2A> method to persist the data. To retrieve data, create an object appropriate to reading the data format (such as an <xref:System.Xml.XmlDictionaryReader> for an XML document) and call the <xref:System.Runtime.Serialization.DataContractSerializer.ReadObject%2A> method.  
   
- For more information about using the <xref:System.Runtime.Serialization.DataContractSerializer>, see [Serialization and Deserialization](~/docs/framework/wcf/feature-details/serialization-and-deserialization.md).  
+ For more information about using the <xref:System.Runtime.Serialization.DataContractSerializer>, see [Serialization and Deserialization](/dotnet/framework/wcf/feature-details/serialization-and-deserialization).  
   
- You can set the type of a data contract serializer using the [&lt;dataContractSerializer&gt;](~/docs/framework/configure-apps/file-schema/wcf/datacontractserializer-element.md) element in a client application configuration file.  
+ You can set the type of a data contract serializer using the [&lt;dataContractSerializer&gt;](/dotnet/framework/configure-apps/file-schema/wcf/datacontractserializer-element) element in a client application configuration file.  
   
 ## Preparing Classes for Serialization or Deserialization  
  The <xref:System.Runtime.Serialization.DataContractSerializer> is used in combination with the <xref:System.Runtime.Serialization.DataContractAttribute> and <xref:System.Runtime.Serialization.DataMemberAttribute> classes. To prepare a class for serialization, apply the <xref:System.Runtime.Serialization.DataContractAttribute> to the class.  For each member of the class that returns data that you want to serialize, apply the <xref:System.Runtime.Serialization.DataMemberAttribute>. You can serialize fields and properties, regardless of accessibility: private, protected, internal, protected internal, or public.  
@@ -53,16 +59,16 @@
   
  The final format of the XML need not be text. Instead, the <xref:System.Runtime.Serialization.DataContractSerializer> writes the data as an XML infoset, which allows you to write the data to any format recognized by the <xref:System.Xml.XmlReader> and <xref:System.Xml.XmlWriter>. It is recommended that you use the <xref:System.Xml.XmlDictionaryReader> and <xref:System.Xml.XmlDictionaryWriter> classes to read and write, because both are optimized to work with the <xref:System.Runtime.Serialization.DataContractSerializer>.  
   
- If you are creating a class that has fields or properties that must be populated before the serialization or deserialization occurs, use callback attributes, as described in [Version-Tolerant Serialization Callbacks](~/docs/framework/wcf/feature-details/version-tolerant-serialization-callbacks.md).  
+ If you are creating a class that has fields or properties that must be populated before the serialization or deserialization occurs, use callback attributes, as described in [Version-Tolerant Serialization Callbacks](/dotnet/framework/wcf/feature-details/version-tolerant-serialization-callbacks).  
   
 ## Adding to the Collection of Known Types  
  When serializing or deserializing an object, it is required that the type is "known" to the <xref:System.Runtime.Serialization.DataContractSerializer>. Begin by creating an instance of a class that implements <xref:System.Collections.Generic.IEnumerable%601> (such as <xref:System.Collections.Generic.List%601>) and adding the known types to the collection. Then create an instance of the <xref:System.Runtime.Serialization.DataContractSerializer> using one of the overloads that takes the <xref:System.Collections.Generic.IEnumerable%601> (for example, <xref:System.Runtime.Serialization.DataContractSerializer.%23ctor%28System.Type%2CSystem.Collections.Generic.IEnumerable%7BSystem.Type%7D%29>.  
   
 > [!NOTE]
->  Unlike other primitive types, the <xref:System.DateTimeOffset> structure is not a known type by default, so it must be manually added to the list of known types (see [Data Contract Known Types](~/docs/framework/wcf/feature-details/data-contract-known-types.md)).  
+>  Unlike other primitive types, the <xref:System.DateTimeOffset> structure is not a known type by default, so it must be manually added to the list of known types (see [Data Contract Known Types](/dotnet/framework/wcf/feature-details/data-contract-known-types)).  
   
 ## Forward Compatibility  
- The <xref:System.Runtime.Serialization.DataContractSerializer> understands data contracts that have been designed to be compatible with future versions of the contract. Such types implement the <xref:System.Runtime.Serialization.IExtensibleDataObject> interface. The interface features the <xref:System.Runtime.Serialization.IExtensibleDataObject.ExtensionData%2A> property that returns an <xref:System.Runtime.Serialization.ExtensionDataObject> object. For more information, see [Forward-Compatible Data Contracts](~/docs/framework/wcf/feature-details/forward-compatible-data-contracts.md).  
+ The <xref:System.Runtime.Serialization.DataContractSerializer> understands data contracts that have been designed to be compatible with future versions of the contract. Such types implement the <xref:System.Runtime.Serialization.IExtensibleDataObject> interface. The interface features the <xref:System.Runtime.Serialization.IExtensibleDataObject.ExtensionData%2A> property that returns an <xref:System.Runtime.Serialization.ExtensionDataObject> object. For more information, see [Forward-Compatible Data Contracts](/dotnet/framework/wcf/feature-details/forward-compatible-data-contracts).  
   
 ## Running under Partial Trust  
  When instantiating the target object during deserialization, the <xref:System.Runtime.Serialization.DataContractSerializer> does not call the constructor of the target object. If you author a *[DataContract]* type that is accessible from partial trust (that is, it is public and in an assembly that has the `AllowPartiallyTrustedCallers` attribute applied) and that performs some security-related actions, you must be aware that the constructor is not called. In particular, the following techniques do not work:  
@@ -86,8 +92,8 @@
     <altmember cref="T:System.Runtime.Serialization.DataContractAttribute" />
     <altmember cref="T:System.Runtime.Serialization.IExtensibleDataObject" />
     <altmember cref="T:System.Runtime.Serialization.ExtensionDataObject" />
-    <related type="Article" href="~/docs/framework/wcf/feature-details/using-data-contracts.md">Using Data Contracts</related>
-    <related type="Article" href="~/docs/framework/wcf/feature-details/serialization-and-deserialization.md">Serialization and Deserialization</related>
+    <related type="Article" href="/dotnet/framework/wcf/feature-details/using-data-contracts">Using Data Contracts</related>
+    <related type="Article" href="/dotnet/framework/wcf/feature-details/serialization-and-deserialization">Serialization and Deserialization</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -105,6 +111,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer type" />
       <MemberType>Constructor</MemberType>
@@ -114,6 +121,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -149,6 +158,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.Collections.Generic.IEnumerable{System.Type})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, knownTypes As IEnumerable(Of Type))" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * seq&lt;Type&gt; -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, knownTypes)" />
       <MemberType>Constructor</MemberType>
@@ -158,6 +168,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -197,6 +209,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, System.Runtime.Serialization.DataContractSerializerSettings settings);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, class System.Runtime.Serialization.DataContractSerializerSettings settings) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.Runtime.Serialization.DataContractSerializerSettings)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, settings As DataContractSerializerSettings)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::Runtime::Serialization::DataContractSerializerSettings ^ settings);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * System.Runtime.Serialization.DataContractSerializerSettings -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, settings)" />
       <MemberType>Constructor</MemberType>
@@ -206,6 +219,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -218,8 +233,8 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="type" Type="System.Type" Index="0" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="settings" Type="System.Runtime.Serialization.DataContractSerializerSettings" Index="1" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="type" Type="System.Type" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="settings" Type="System.Runtime.Serialization.DataContractSerializerSettings" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="type">The type of the instance to serialize or deserialize.</param>
@@ -232,6 +247,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, string rootName, string rootNamespace);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, string rootName, string rootNamespace) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.String,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, rootName As String, rootNamespace As String)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::String ^ rootName, System::String ^ rootNamespace);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * string * string -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, rootName, rootNamespace)" />
       <MemberType>Constructor</MemberType>
@@ -241,6 +257,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -280,6 +298,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, System.Xml.XmlDictionaryString rootName, System.Xml.XmlDictionaryString rootNamespace);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, class System.Xml.XmlDictionaryString rootName, class System.Xml.XmlDictionaryString rootNamespace) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.Xml.XmlDictionaryString,System.Xml.XmlDictionaryString)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, rootName As XmlDictionaryString, rootNamespace As XmlDictionaryString)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::Xml::XmlDictionaryString ^ rootName, System::Xml::XmlDictionaryString ^ rootNamespace);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * System.Xml.XmlDictionaryString * System.Xml.XmlDictionaryString -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, rootName, rootNamespace)" />
       <MemberType>Constructor</MemberType>
@@ -289,6 +308,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -328,6 +349,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, string rootName, string rootNamespace, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, string rootName, string rootNamespace, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.String,System.String,System.Collections.Generic.IEnumerable{System.Type})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, rootName As String, rootNamespace As String, knownTypes As IEnumerable(Of Type))" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::String ^ rootName, System::String ^ rootNamespace, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * string * string * seq&lt;Type&gt; -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, rootName, rootNamespace, knownTypes)" />
       <MemberType>Constructor</MemberType>
@@ -337,6 +359,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -380,6 +404,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, System.Xml.XmlDictionaryString rootName, System.Xml.XmlDictionaryString rootNamespace, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, class System.Xml.XmlDictionaryString rootName, class System.Xml.XmlDictionaryString rootNamespace, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.Xml.XmlDictionaryString,System.Xml.XmlDictionaryString,System.Collections.Generic.IEnumerable{System.Type})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, rootName As XmlDictionaryString, rootNamespace As XmlDictionaryString, knownTypes As IEnumerable(Of Type))" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::Xml::XmlDictionaryString ^ rootName, System::Xml::XmlDictionaryString ^ rootNamespace, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * System.Xml.XmlDictionaryString * System.Xml.XmlDictionaryString * seq&lt;Type&gt; -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, rootName, rootNamespace, knownTypes)" />
       <MemberType>Constructor</MemberType>
@@ -389,6 +414,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -432,6 +459,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes, int32 maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, class System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.Collections.Generic.IEnumerable{System.Type},System.Int32,System.Boolean,System.Boolean,System.Runtime.Serialization.IDataContractSurrogate)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, knownTypes As IEnumerable(Of Type), maxItemsInObjectGraph As Integer, ignoreExtensionDataObject As Boolean, preserveObjectReferences As Boolean, dataContractSurrogate As IDataContractSurrogate)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System::Runtime::Serialization::IDataContractSurrogate ^ dataContractSurrogate);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * seq&lt;Type&gt; * int * bool * bool * System.Runtime.Serialization.IDataContractSurrogate -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, knownTypes, maxItemsInObjectGraph, ignoreExtensionDataObject, preserveObjectReferences, dataContractSurrogate)" />
       <MemberType>Constructor</MemberType>
@@ -490,6 +518,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate, System.Runtime.Serialization.DataContractResolver dataContractResolver);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes, int32 maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, class System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate, class System.Runtime.Serialization.DataContractResolver dataContractResolver) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.Collections.Generic.IEnumerable{System.Type},System.Int32,System.Boolean,System.Boolean,System.Runtime.Serialization.IDataContractSurrogate,System.Runtime.Serialization.DataContractResolver)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, knownTypes As IEnumerable(Of Type), maxItemsInObjectGraph As Integer, ignoreExtensionDataObject As Boolean, preserveObjectReferences As Boolean, dataContractSurrogate As IDataContractSurrogate, dataContractResolver As DataContractResolver)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System::Runtime::Serialization::IDataContractSurrogate ^ dataContractSurrogate, System::Runtime::Serialization::DataContractResolver ^ dataContractResolver);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * seq&lt;Type&gt; * int * bool * bool * System.Runtime.Serialization.IDataContractSurrogate * System.Runtime.Serialization.DataContractResolver -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, knownTypes, maxItemsInObjectGraph, ignoreExtensionDataObject, preserveObjectReferences, dataContractSurrogate, dataContractResolver)" />
       <MemberType>Constructor</MemberType>
@@ -540,6 +569,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, string rootName, string rootNamespace, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, string rootName, string rootNamespace, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes, int32 maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, class System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.String,System.String,System.Collections.Generic.IEnumerable{System.Type},System.Int32,System.Boolean,System.Boolean,System.Runtime.Serialization.IDataContractSurrogate)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, rootName As String, rootNamespace As String, knownTypes As IEnumerable(Of Type), maxItemsInObjectGraph As Integer, ignoreExtensionDataObject As Boolean, preserveObjectReferences As Boolean, dataContractSurrogate As IDataContractSurrogate)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::String ^ rootName, System::String ^ rootNamespace, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System::Runtime::Serialization::IDataContractSurrogate ^ dataContractSurrogate);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * string * string * seq&lt;Type&gt; * int * bool * bool * System.Runtime.Serialization.IDataContractSurrogate -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, rootName, rootNamespace, knownTypes, maxItemsInObjectGraph, ignoreExtensionDataObject, preserveObjectReferences, dataContractSurrogate)" />
       <MemberType>Constructor</MemberType>
@@ -602,6 +632,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, System.Xml.XmlDictionaryString rootName, System.Xml.XmlDictionaryString rootNamespace, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, class System.Xml.XmlDictionaryString rootName, class System.Xml.XmlDictionaryString rootNamespace, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes, int32 maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, class System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.Xml.XmlDictionaryString,System.Xml.XmlDictionaryString,System.Collections.Generic.IEnumerable{System.Type},System.Int32,System.Boolean,System.Boolean,System.Runtime.Serialization.IDataContractSurrogate)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, rootName As XmlDictionaryString, rootNamespace As XmlDictionaryString, knownTypes As IEnumerable(Of Type), maxItemsInObjectGraph As Integer, ignoreExtensionDataObject As Boolean, preserveObjectReferences As Boolean, dataContractSurrogate As IDataContractSurrogate)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::Xml::XmlDictionaryString ^ rootName, System::Xml::XmlDictionaryString ^ rootNamespace, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System::Runtime::Serialization::IDataContractSurrogate ^ dataContractSurrogate);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * System.Xml.XmlDictionaryString * System.Xml.XmlDictionaryString * seq&lt;Type&gt; * int * bool * bool * System.Runtime.Serialization.IDataContractSurrogate -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, rootName, rootNamespace, knownTypes, maxItemsInObjectGraph, ignoreExtensionDataObject, preserveObjectReferences, dataContractSurrogate)" />
       <MemberType>Constructor</MemberType>
@@ -663,6 +694,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, string rootName, string rootNamespace, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate, System.Runtime.Serialization.DataContractResolver dataContractResolver);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, string rootName, string rootNamespace, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes, int32 maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, class System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate, class System.Runtime.Serialization.DataContractResolver dataContractResolver) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.String,System.String,System.Collections.Generic.IEnumerable{System.Type},System.Int32,System.Boolean,System.Boolean,System.Runtime.Serialization.IDataContractSurrogate,System.Runtime.Serialization.DataContractResolver)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, rootName As String, rootNamespace As String, knownTypes As IEnumerable(Of Type), maxItemsInObjectGraph As Integer, ignoreExtensionDataObject As Boolean, preserveObjectReferences As Boolean, dataContractSurrogate As IDataContractSurrogate, dataContractResolver As DataContractResolver)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::String ^ rootName, System::String ^ rootNamespace, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System::Runtime::Serialization::IDataContractSurrogate ^ dataContractSurrogate, System::Runtime::Serialization::DataContractResolver ^ dataContractResolver);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * string * string * seq&lt;Type&gt; * int * bool * bool * System.Runtime.Serialization.IDataContractSurrogate * System.Runtime.Serialization.DataContractResolver -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, rootName, rootNamespace, knownTypes, maxItemsInObjectGraph, ignoreExtensionDataObject, preserveObjectReferences, dataContractSurrogate, dataContractResolver)" />
       <MemberType>Constructor</MemberType>
@@ -708,6 +740,7 @@
       <MemberSignature Language="C#" Value="public DataContractSerializer (Type type, System.Xml.XmlDictionaryString rootName, System.Xml.XmlDictionaryString rootNamespace, System.Collections.Generic.IEnumerable&lt;Type&gt; knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate, System.Runtime.Serialization.DataContractResolver dataContractResolver);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, class System.Xml.XmlDictionaryString rootName, class System.Xml.XmlDictionaryString rootNamespace, class System.Collections.Generic.IEnumerable`1&lt;class System.Type&gt; knownTypes, int32 maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, class System.Runtime.Serialization.IDataContractSurrogate dataContractSurrogate, class System.Runtime.Serialization.DataContractResolver dataContractResolver) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.#ctor(System.Type,System.Xml.XmlDictionaryString,System.Xml.XmlDictionaryString,System.Collections.Generic.IEnumerable{System.Type},System.Int32,System.Boolean,System.Boolean,System.Runtime.Serialization.IDataContractSurrogate,System.Runtime.Serialization.DataContractResolver)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (type As Type, rootName As XmlDictionaryString, rootNamespace As XmlDictionaryString, knownTypes As IEnumerable(Of Type), maxItemsInObjectGraph As Integer, ignoreExtensionDataObject As Boolean, preserveObjectReferences As Boolean, dataContractSurrogate As IDataContractSurrogate, dataContractResolver As DataContractResolver)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContractSerializer(Type ^ type, System::Xml::XmlDictionaryString ^ rootName, System::Xml::XmlDictionaryString ^ rootNamespace, System::Collections::Generic::IEnumerable&lt;Type ^&gt; ^ knownTypes, int maxItemsInObjectGraph, bool ignoreExtensionDataObject, bool preserveObjectReferences, System::Runtime::Serialization::IDataContractSurrogate ^ dataContractSurrogate, System::Runtime::Serialization::DataContractResolver ^ dataContractResolver);" />
       <MemberSignature Language="F#" Value="new System.Runtime.Serialization.DataContractSerializer : Type * System.Xml.XmlDictionaryString * System.Xml.XmlDictionaryString * seq&lt;Type&gt; * int * bool * bool * System.Runtime.Serialization.IDataContractSurrogate * System.Runtime.Serialization.DataContractResolver -&gt; System.Runtime.Serialization.DataContractSerializer" Usage="new System.Runtime.Serialization.DataContractSerializer (type, rootName, rootNamespace, knownTypes, maxItemsInObjectGraph, ignoreExtensionDataObject, preserveObjectReferences, dataContractSurrogate, dataContractResolver)" />
       <MemberType>Constructor</MemberType>
@@ -771,6 +804,8 @@
         <AssemblyName>System.Runtime.Serialization.Xml</AssemblyName>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Runtime.Serialization.DataContractResolver</ReturnType>
@@ -839,6 +874,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -862,7 +899,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Runtime.Serialization.DataContractSerializer.IgnoreExtensionDataObject%2A> property is used when the class to which a <xref:System.Runtime.Serialization.DataContractAttribute> has been applied also implements the <xref:System.Runtime.Serialization.IExtensibleDataObject> interface. In this case, the data added in a future version of the contract is ignored on read and write. For more information, see [Forward-Compatible Data Contracts](~/docs/framework/wcf/feature-details/forward-compatible-data-contracts.md).  
+ The <xref:System.Runtime.Serialization.DataContractSerializer.IgnoreExtensionDataObject%2A> property is used when the class to which a <xref:System.Runtime.Serialization.DataContractAttribute> has been applied also implements the <xref:System.Runtime.Serialization.IExtensibleDataObject> interface. In this case, the data added in a future version of the contract is ignored on read and write. For more information, see [Forward-Compatible Data Contracts](/dotnet/framework/wcf/feature-details/forward-compatible-data-contracts).  
   
  ]]></format>
         </remarks>
@@ -870,7 +907,7 @@
         <altmember cref="T:System.Runtime.Serialization.DataContractAttribute" />
         <altmember cref="T:System.Runtime.Serialization.IExtensibleDataObject" />
         <altmember cref="T:System.Runtime.Serialization.ExtensionDataObject" />
-        <related type="Article" href="https://msdn.microsoft.com/library/413c9044-26f8-4ecb-968c-18495ea52cd9">Forward Compatible Data Contracts</related>
+        <related type="Article" href="/dotnet/framework/wcf/feature-details/forward-compatible-data-contracts">Forward Compatible Data Contracts</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="IsStartObject">
@@ -897,6 +934,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -952,6 +991,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -992,6 +1033,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1035,6 +1078,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1069,7 +1114,7 @@
 OperationDescription operation = host.Description.Endpoints[0].Contract.Operations.Find("MyOperationName");operation.Behaviors.Find<DataContractSerializerOperationBehavior>().MaxItemsInObjectGraph = 3;  
 ```  
   
- The <xref:System.Runtime.Serialization.DataContractSerializer.MaxItemsInObjectGraph%2A> property specifies the maximum number of objects that the serializer serializes or deserializes in a single <xref:System.Runtime.Serialization.DataContractSerializer.ReadObject%2A> method call. (The method always reads one root object, but this object may have other objects in its data members. Those objects may have other objects, and so on.) The default is <xref:System.Int32.MaxValue>. Note that when serializing or deserializing arrays, every array entry counts as a separate object. Also, note that some objects may have a large memory representation and so this quota alone may not be sufficient to prevent Denial of Service attacks. For more information, see [Security Considerations for Data](~/docs/framework/wcf/feature-details/security-considerations-for-data.md). If you need to increase this quota beyond its default value, it is important to do so both on the sending (serializing) and receiving (deserializing) sides. It applies both when reading and writing data.  
+ The <xref:System.Runtime.Serialization.DataContractSerializer.MaxItemsInObjectGraph%2A> property specifies the maximum number of objects that the serializer serializes or deserializes in a single <xref:System.Runtime.Serialization.DataContractSerializer.ReadObject%2A> method call. (The method always reads one root object, but this object may have other objects in its data members. Those objects may have other objects, and so on.) The default is <xref:System.Int32.MaxValue>. Note that when serializing or deserializing arrays, every array entry counts as a separate object. Also, note that some objects may have a large memory representation and so this quota alone may not be sufficient to prevent Denial of Service attacks. For more information, see [Security Considerations for Data](/dotnet/framework/wcf/feature-details/security-considerations-for-data). If you need to increase this quota beyond its default value, it is important to do so both on the sending (serializing) and receiving (deserializing) sides. It applies both when reading and writing data.  
   
  ]]></format>
         </remarks>
@@ -1090,6 +1135,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1136,6 +1183,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1175,6 +1224,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1228,6 +1279,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1261,6 +1314,7 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
       <MemberSignature Language="C#" Value="public object ReadObject (System.Xml.XmlDictionaryReader reader, bool verifyObjectName, System.Runtime.Serialization.DataContractResolver dataContractResolver);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object ReadObject(class System.Xml.XmlDictionaryReader reader, bool verifyObjectName, class System.Runtime.Serialization.DataContractResolver dataContractResolver) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.ReadObject(System.Xml.XmlDictionaryReader,System.Boolean,System.Runtime.Serialization.DataContractResolver)" />
+      <MemberSignature Language="VB.NET" Value="Public Function ReadObject (reader As XmlDictionaryReader, verifyObjectName As Boolean, dataContractResolver As DataContractResolver) As Object" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ ReadObject(System::Xml::XmlDictionaryReader ^ reader, bool verifyObjectName, System::Runtime::Serialization::DataContractResolver ^ dataContractResolver);" />
       <MemberSignature Language="F#" Value="override this.ReadObject : System.Xml.XmlDictionaryReader * bool * System.Runtime.Serialization.DataContractResolver -&gt; obj" Usage="dataContractSerializer.ReadObject (reader, verifyObjectName, dataContractResolver)" />
       <MemberType>Method</MemberType>
@@ -1278,14 +1332,16 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyName>System.Runtime.Serialization.Xml</AssemblyName>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="reader" Type="System.Xml.XmlDictionaryReader" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
-        <Parameter Name="verifyObjectName" Type="System.Boolean" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
-        <Parameter Name="dataContractResolver" Type="System.Runtime.Serialization.DataContractResolver" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
+        <Parameter Name="reader" Type="System.Xml.XmlDictionaryReader" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
+        <Parameter Name="verifyObjectName" Type="System.Boolean" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
+        <Parameter Name="dataContractResolver" Type="System.Runtime.Serialization.DataContractResolver" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
         <param name="reader">The XML reader used to read the content.</param>
@@ -1311,6 +1367,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1356,6 +1414,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1406,6 +1466,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1456,6 +1518,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1488,6 +1552,7 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
       <MemberSignature Language="C#" Value="public void WriteObject (System.Xml.XmlDictionaryWriter writer, object graph, System.Runtime.Serialization.DataContractResolver dataContractResolver);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void WriteObject(class System.Xml.XmlDictionaryWriter writer, object graph, class System.Runtime.Serialization.DataContractResolver dataContractResolver) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.DataContractSerializer.WriteObject(System.Xml.XmlDictionaryWriter,System.Object,System.Runtime.Serialization.DataContractResolver)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub WriteObject (writer As XmlDictionaryWriter, graph As Object, dataContractResolver As DataContractResolver)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void WriteObject(System::Xml::XmlDictionaryWriter ^ writer, System::Object ^ graph, System::Runtime::Serialization::DataContractResolver ^ dataContractResolver);" />
       <MemberSignature Language="F#" Value="override this.WriteObject : System.Xml.XmlDictionaryWriter * obj * System.Runtime.Serialization.DataContractResolver -&gt; unit" Usage="dataContractSerializer.WriteObject (writer, graph, dataContractResolver)" />
       <MemberType>Method</MemberType>
@@ -1505,14 +1570,16 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyName>System.Runtime.Serialization.Xml</AssemblyName>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="writer" Type="System.Xml.XmlDictionaryWriter" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
-        <Parameter Name="graph" Type="System.Object" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
-        <Parameter Name="dataContractResolver" Type="System.Runtime.Serialization.DataContractResolver" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
+        <Parameter Name="writer" Type="System.Xml.XmlDictionaryWriter" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
+        <Parameter Name="graph" Type="System.Object" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
+        <Parameter Name="dataContractResolver" Type="System.Runtime.Serialization.DataContractResolver" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
         <param name="writer">An XmlDictionaryWriter used to write the content to the XML document or stream.</param>
@@ -1546,6 +1613,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1598,6 +1667,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1650,6 +1721,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
@@ -1700,6 +1773,8 @@ OperationDescription operation = host.Description.Endpoints[0].Contract.Operatio
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.3.0</AssemblyVersion>
         <AssemblyVersion>4.1.4.0</AssemblyVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.Serialization</AssemblyName>
