@@ -252,12 +252,12 @@ In the preceding sample, the `Adult` type subclasses the `Person` type. A custom
 This sample is safe because it uses an `allow-list` mechanism to control deserialization. The code:
 
 * Initializes the `CustomTypeResolver` with an explicit list of allowed types.
-* Restricted the deserialization process to only that approved list of types. This prevents [deserialization attacks](https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data), where the remote client specifies a malicious `__type` in the JSON payload and tricks the server into deserializing a dangerous type.
+* Restricts the deserialization process to only approved list of types. The restriction prevents [deserialization attacks](https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data), where the remote client specifies a malicious `__type` in the JSON payload and tricks the server into deserializing a dangerous type.
 
 Even though the app only expects `Person` and `Adult` instances to be deserialized as part of the top-level array, it's still necessary to add `Address` to the allow-list because:
 
 * Serializing a `Person` or `Adult` also serializes an `Address` as part of the object graph.
-* All types that might be present in the object graph need to be accounted for in the allow list.Primitives like `int` and `string` do not need to be specified.)
+* All types that might be present in the object graph need to be accounted for in the allow list. Primitives like `int` and `string` do not need to be specified.
 
 > [!WARNING]
 >  Do not call `Type.GetType(id)` within the `ResolveType` method. This could introduce a security vunerability into the app. Instead, iterate through the list of allowed types, comparing their `Type.FullName` property against the incoming `id`, as shown in the preceding sample:
