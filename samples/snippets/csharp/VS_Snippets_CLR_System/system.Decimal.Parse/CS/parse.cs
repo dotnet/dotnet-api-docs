@@ -118,7 +118,7 @@ public class Class1
       CultureInfo provider;
 
       // Parse string using " " as the thousands separator
-      // and "," as the decimal separator.
+      // and "," as the decimal separator for fr-FR culture.
       value = "892 694,12";
       style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
       provider = new CultureInfo("fr-FR");

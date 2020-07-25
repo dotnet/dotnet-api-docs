@@ -107,7 +107,7 @@ Module modMain
       Dim provider As CultureInfo
       
       ' Parse string using " " as the thousands separator 
-      ' and "," as the decimal separator. 
+      ' and "," as the decimal separator for fr-FR culture.
       value = "892 694,12"
       style = NumberStyles.AllowDecimalPoint Or NumberStyles.AllowThousands
       provider = New CultureInfo("fr-FR")
