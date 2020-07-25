@@ -14,10 +14,15 @@ public struct Point
 
     public override bool Equals(Object obj)
     {
-       if (!(obj is Point)) return false;
-
-       Point p = (Point) obj;
-       return x == p.x & y == p.y;
+        if(obj is Point)
+        {
+            Point p = (Point) obj;
+            return x == p.x & y == p.y;
+        }
+        else
+        {
+            return false;
+        }      
     }
 
     public override int GetHashCode()
