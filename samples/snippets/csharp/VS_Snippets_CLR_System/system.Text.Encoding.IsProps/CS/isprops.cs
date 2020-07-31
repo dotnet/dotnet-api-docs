@@ -169,7 +169,6 @@ CodePage identifier and name     BrDisp   BrSave   MNDisp   MNSave   1-Byte   Re
 57009  x-iscii-ma                False    False    False    False    False    True     
 57010  x-iscii-gu                False    False    False    False    False    True     
 57011  x-iscii-pa                False    False    False    False    False    True     
-65000  utf-7                     False    False    True     True     False    True     
 65001  utf-8                     True     True     True     True     False    True     
 
 */
