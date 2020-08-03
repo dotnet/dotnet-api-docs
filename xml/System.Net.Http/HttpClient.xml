@@ -30,7 +30,11 @@
 ## Remarks  
 
  > [!WARNING]
- > <xref:System.Net.Http.HttpClient> is intended to be instantiated once and re-used throughout the life of an application. Instantiating an HttpClient class for every request will exhaust the number of sockets available under heavy loads. This will result in a <xref:System.Net.Sockets.SocketException>.
+ > - <xref:System.Net.Http.HttpClient> is intended to be instantiated once and re-used throughout the life of an application. Instantiating an <xref:System.Net.Http.HttpClient> class for every request will exhaust the number of sockets available under heavy loads and result in a <xref:System.Net.Sockets.SocketException>. However, having long-lived <xref:System.Net.Http.HttpClient> instances can lead to stale DNS usage and non-functional connections. Use one of the following options to avoid these problems:
+>
+> - Use static <xref:System.Net.Http.HttpClient> instances, which are recycled on a regular basis.
+> - Use <xref:System.Net.Http.HttpClientFactoryExtensions.CreateClient(IHttpClientFactory)> to create the <xref:System.Net.Http.HttpClient>.
+> - On .NET Core and .NET 5.0 and later, use static instances and set <xref:System.Net.Http.SocketsHttpHandler.PooledConnectionLifetime>.
 
  The <xref:System.Net.Http.HttpClient> class instance acts as a session to send HTTP requests. An <xref:System.Net.Http.HttpClient> instance is a collection of settings applied to all requests executed by that instance. In addition, every <xref:System.Net.Http.HttpClient> instance uses its own connection pool, isolating its requests from requests executed by other <xref:System.Net.Http.HttpClient> instances.  
   
@@ -60,7 +64,7 @@
   
 9. <xref:System.Net.Http.HttpClient.SendAsync%2A>  
   
-Below is an example using HttpClient correctly:
+The following code snippet shows how to use <xref:System.Net.Http.HttpClient>:
   
 ```csharp
 public class GoodController : ApiController
