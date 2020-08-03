@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 // <Snippet1>
  [StructLayout(LayoutKind.Explicit)]
- public class SYSTEM_INFO
+ public struct SYSTEM_INFO
  {
  [FieldOffset(0)] public ulong OemId;
  [FieldOffset(8)] public ulong PageSize;

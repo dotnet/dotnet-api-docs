@@ -76,7 +76,7 @@ Module SignVerifyEnvelope
         Dim signedXml As New SignedXml(doc)
 
         ' Add the key to the SignedXml document. 
-        signedXml.SigningKey = cert.PrivateKey
+        signedXml.SigningKey = cert.GetRSAPrivateKey()
 
         ' Create a reference to be signed.
         Dim reference As New Reference()

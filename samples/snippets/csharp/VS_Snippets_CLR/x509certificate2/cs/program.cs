@@ -39,10 +39,10 @@ namespace X509CertEncrypt
             }
 
             // Encrypt the file using the public key from the certificate.
-            EncryptFile(originalFile, (RSACryptoServiceProvider)cert.PublicKey.Key);
+            EncryptFile(originalFile, (RSA)cert.PublicKey.Key);
 
             // Decrypt the file using the private key from the certificate.
-            DecryptFile(encryptedFile, (RSACryptoServiceProvider)cert.PrivateKey);
+            DecryptFile(encryptedFile, cert.GetRSAPrivateKey());
 
             //Display the original data and the decrypted data.
             Console.WriteLine("Original:   {0}", File.ReadAllText(originalFile));
@@ -80,19 +80,18 @@ namespace X509CertEncrypt
 
         // <Snippet3>
         // Encrypt a file using a public key.
-        private static void EncryptFile(string inFile, RSACryptoServiceProvider rsaPublicKey)
+        private static void EncryptFile(string inFile, RSA rsaPublicKey)
         {
-            using (AesManaged aesManaged = new AesManaged())
+            using (Aes aes = Aes.Create())
             {
-                // Create instance of AesManaged for
+                // Create instance of Aes for
                 // symetric encryption of the data.
-                aesManaged.KeySize = 256;
-                aesManaged.BlockSize = 128;
-                aesManaged.Mode = CipherMode.CBC;
-                using (ICryptoTransform transform = aesManaged.CreateEncryptor())
+                aes.KeySize = 256;
+                aes.Mode = CipherMode.CBC;
+                using (ICryptoTransform transform = aes.CreateEncryptor())
                 {
                     RSAPKCS1KeyExchangeFormatter keyFormatter = new RSAPKCS1KeyExchangeFormatter(rsaPublicKey);
-                    byte[] keyEncrypted = keyFormatter.CreateKeyExchange(aesManaged.Key, aesManaged.GetType());
+                    byte[] keyEncrypted = keyFormatter.CreateKeyExchange(aes.Key, aes.GetType());
 
                     // Create byte arrays to contain
                     // the length values of the key and IV.
@@ -101,7 +100,7 @@ namespace X509CertEncrypt
 
                     int lKey = keyEncrypted.Length;
                     LenK = BitConverter.GetBytes(lKey);
-                    int lIV = aesManaged.IV.Length;
+                    int lIV = aes.IV.Length;
                     LenIV = BitConverter.GetBytes(lIV);
 
                     // Write the following to the FileStream
@@ -123,7 +122,7 @@ namespace X509CertEncrypt
                         outFs.Write(LenK, 0, 4);
                         outFs.Write(LenIV, 0, 4);
                         outFs.Write(keyEncrypted, 0, lKey);
-                        outFs.Write(aesManaged.IV, 0, lIV);
+                        outFs.Write(aes.IV, 0, lIV);
 
                         // Now write the cipher text using
                         // a CryptoStream for encrypting.
@@ -134,10 +133,9 @@ namespace X509CertEncrypt
                             // a time, you can save memory
                             // and accommodate large files.
                             int count = 0;
-                            int offset = 0;
 
                             // blockSizeBytes can be any arbitrary size.
-                            int blockSizeBytes = aesManaged.BlockSize / 8;
+                            int blockSizeBytes = aes.BlockSize / 8;
                             byte[] data = new byte[blockSizeBytes];
                             int bytesRead = 0;
 
@@ -145,8 +143,7 @@ namespace X509CertEncrypt
                             {
                                 do
                                 {
-                                    count = inFs.Read(data, offset, blockSizeBytes);
-                                    offset += count;
+                                    count = inFs.Read(data, 0, blockSizeBytes);
                                     outStreamEncrypted.Write(data, 0, count);
                                     bytesRead += count;
                                 }
@@ -166,16 +163,15 @@ namespace X509CertEncrypt
 
         // <Snippet4>
         // Decrypt a file using a private key.
-        private static void DecryptFile(string inFile, RSACryptoServiceProvider rsaPrivateKey)
+        private static void DecryptFile(string inFile, RSA rsaPrivateKey)
         {
 
-            // Create instance of AesManaged for
+            // Create instance of Aes for
             // symetric decryption of the data.
-            using (AesManaged aesManaged = new AesManaged())
+            using (Aes aes = Aes.Create())
             {
-                aesManaged.KeySize = 256;
-                aesManaged.BlockSize = 128;
-                aesManaged.Mode = CipherMode.CBC;
+                aes.KeySize = 256;
+                aes.Mode = CipherMode.CBC;
 
                 // Create byte arrays to get the length of
                 // the encrypted key and IV.
@@ -202,14 +198,14 @@ namespace X509CertEncrypt
                     int lenK = BitConverter.ToInt32(LenK, 0);
                     int lenIV = BitConverter.ToInt32(LenIV, 0);
 
-                    // Determine the start postition of
-                    // the ciphter text (startC)
+                    // Determine the start position of
+                    // the cipher text (startC)
                     // and its length(lenC).
                     int startC = lenK + lenIV + 8;
                     int lenC = (int)inFs.Length - startC;
 
                     // Create the byte arrays for
-                    // the encrypted AesManaged key,
+                    // the encrypted Aes key,
                     // the IV, and the cipher text.
                     byte[] KeyEncrypted = new byte[lenK];
                     byte[] IV = new byte[lenIV];
@@ -223,12 +219,12 @@ namespace X509CertEncrypt
                     inFs.Read(IV, 0, lenIV);
                     Directory.CreateDirectory(decrFolder);
                     //<Snippet10>
-                    // Use RSACryptoServiceProvider
-                    // to decrypt the AesManaged key.
-                    byte[] KeyDecrypted = rsaPrivateKey.Decrypt(KeyEncrypted, false);
+                    // Use RSA
+                    // to decrypt the Aes key.
+                    byte[] KeyDecrypted = rsaPrivateKey.Decrypt(KeyEncrypted, RSAEncryptionPadding.Pkcs1);
 
                     // Decrypt the key.
-                    using (ICryptoTransform transform = aesManaged.CreateDecryptor(KeyDecrypted, IV))
+                    using (ICryptoTransform transform = aes.CreateDecryptor(KeyDecrypted, IV))
                     {
                         //</Snippet10>
 
@@ -240,9 +236,8 @@ namespace X509CertEncrypt
                         {
 
                             int count = 0;
-                            int offset = 0;
 
-                            int blockSizeBytes = aesManaged.BlockSize / 8;
+                            int blockSizeBytes = aes.BlockSize / 8;
                             byte[] data = new byte[blockSizeBytes];
 
                             // By decrypting a chunk a time,
@@ -256,8 +251,7 @@ namespace X509CertEncrypt
                             {
                                 do
                                 {
-                                    count = inFs.Read(data, offset, blockSizeBytes);
-                                    offset += count;
+                                    count = inFs.Read(data, 0, blockSizeBytes);
                                     outStreamDecrypted.Write(data, 0, count);
                                 }
                                 while (count > 0);

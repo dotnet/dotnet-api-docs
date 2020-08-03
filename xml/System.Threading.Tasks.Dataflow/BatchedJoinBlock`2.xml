@@ -39,11 +39,13 @@
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;dotnet-uwp-10.0">
-      <AttributeName>System.Diagnostics.DebuggerDisplay("{DebuggerDisplayContent,nq}")</AttributeName>
+    <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1">
+      <AttributeName Language="C#">[System.Diagnostics.DebuggerDisplay("{DebuggerDisplayContent,nq}")]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerDisplay("{DebuggerDisplayContent,nq}")&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;dotnet-uwp-10.0">
-      <AttributeName>System.Diagnostics.DebuggerTypeProxy(typeof(System.Threading.Tasks.Dataflow.BatchedJoinBlock`2/DebugView))</AttributeName>
+    <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1">
+      <AttributeName Language="C#">[System.Diagnostics.DebuggerTypeProxy(typeof(System.Threading.Tasks.Dataflow.BatchedJoinBlock`2/DebugView))]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerTypeProxy(typeof(System.Threading.Tasks.Dataflow.BatchedJoinBlock`2/DebugView))&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -372,13 +374,13 @@ After `Fault` has been called on a dataflow block, that block will complete, suc
         <param name="messageConsumed">
           <see langword="true" /> if the message was successfully consumed. <see langword="false" /> otherwise.</param>
         <summary>Passes the ownership of the message identified by the <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> from this  <see cref="T:System.Threading.Tasks.Dataflow.ISourceBlock`1" /> instance to the <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" />.</summary>
-        <returns>The value of the consumed message. This may correspond to a different <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> instance than was previously reserved and passed as the <paramref name="messageHeader" /> to <see cref="M:ConsumeMessage" />. The consuming <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" /> must use the returned value instead of the value passed as messageValue through <c>OfferMessage</c>. If the message requested is not available, the return value will be <see langword="null" /> (Nothing in Visual Basic).</returns>
+        <returns>The value of the consumed message. This may correspond to a different <see cref="T:System.Threading.Tasks.Dataflow.DataflowMessageHeader" /> instance than was previously reserved and passed as the <paramref name="messageHeader" /> to this method. The consuming <see cref="T:System.Threading.Tasks.Dataflow.ITargetBlock`1" /> must use the returned value instead of the value passed as <paramref name="messageValue" /> to <see cref="M:System.Threading.Tasks.Dataflow.ITargetBlock`1.OfferMessage(System.Threading.Tasks.Dataflow.DataflowMessageHeader,`0,System.Threading.Tasks.Dataflow.ISourceBlock{`0},System.Boolean)" />. If the message requested is not available, the return value is <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
- The <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1> for which the message is to be consumed need not be linked from this  <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance. Moreover, this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1>  instance may have never offered the message directly to the <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.  
+ The <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1> for which the message is to be consumed need not be linked from this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance. Moreover, this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance may have never offered the message directly to the <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.  
 
           ]]></format>
         </remarks>
@@ -475,16 +477,16 @@ After `Fault` has been called on a dataflow block, that block will complete, suc
 
 ## Remarks
 
- The <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1> for which the message is to be reserved need not be linked from this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance. Moreover, this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance may have never offered the message directly to the <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.
-  If `true` is returned, either <xref:ConsumeMessage> or <xref:ReleaseReservation> for this message must be subsequently called  with the same <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> and <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.
- Failure to do so may result in the source being unable to propagate any further messages to any target.
-  <xref:ReserveMessage> must not be called while the target is holding any internal locks.  Doing so will violate the lock hierarchy necessary to avoid deadlocks in a dataflow network.
- 
+The <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1> for which the message is to be reserved need not be linked from this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance. Moreover, this <xref:System.Threading.Tasks.Dataflow.ISourceBlock`1> instance may have never offered the message directly to the <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>.
+
+If `true` is returned, you must subsequently call either <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ConsumeMessage%2A> or <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ReleaseReservation%2A> for this message with the same <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> and <xref:System.Threading.Tasks.Dataflow.ITargetBlock`1>. If you don't, the source may be unable to propagate any further messages to any target.
+
+Don't call <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ReserveMessage%2A> while the target is holding any internal locks. Doing so will violate the lock hierarchy necessary to avoid deadlocks in a dataflow network.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The <paramref name="messageHeader" /> is not valid.</exception>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="target" /> is <see langword="null" /> (Nothing in Visual Basic).</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="target" /> is <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).</exception>
       </Docs>
     </Member>
     <Member MemberName="Target1">
@@ -580,12 +582,13 @@ After `Fault` has been called on a dataflow block, that block will complete, suc
       </Docs>
     </Member>
     <Member MemberName="TryReceive">
-      <MemberSignature Language="C#" Value="public bool TryReceive (Predicate&lt;Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;&gt; filter, out Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt; item);" />
+      <MemberSignature Language="C#" Value="public bool TryReceive (Predicate&lt;Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;&gt; filter, out Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt; item);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool TryReceive(class System.Predicate`1&lt;class System.Tuple`2&lt;class System.Collections.Generic.IList`1&lt;!T1&gt;, class System.Collections.Generic.IList`1&lt;!T2&gt;&gt;&gt; filter, [out] class System.Tuple`2&lt;class System.Collections.Generic.IList`1&lt;!T1&gt;, class System.Collections.Generic.IList`1&lt;!T2&gt;&gt;&amp; item) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.Tasks.Dataflow.BatchedJoinBlock`2.TryReceive(System.Predicate{System.Tuple{System.Collections.Generic.IList{`0},System.Collections.Generic.IList{`1}}},System.Tuple{System.Collections.Generic.IList{`0},System.Collections.Generic.IList{`1}}@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryReceive (filter As Predicate(Of Tuple(Of IList(Of T1), IList(Of T2))), ByRef item As Tuple(Of IList(Of T1), IList(Of T2))) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool TryReceive(Predicate&lt;Tuple&lt;System::Collections::Generic::IList&lt;T1&gt; ^, System::Collections::Generic::IList&lt;T2&gt; ^&gt; ^&gt; ^ filter, [Runtime::InteropServices::Out] Tuple&lt;System::Collections::Generic::IList&lt;T1&gt; ^, System::Collections::Generic::IList&lt;T2&gt; ^&gt; ^ % item);" />
       <MemberSignature Language="F#" Value="abstract member TryReceive : Predicate&lt;System.Collections.Generic.IList&lt;'T1&gt; * System.Collections.Generic.IList&lt;'T2&gt;&gt; * Tuple -&gt; bool&#xA;override this.TryReceive : Predicate&lt;System.Collections.Generic.IList&lt;'T1&gt; * System.Collections.Generic.IList&lt;'T2&gt;&gt; * Tuple -&gt; bool" Usage="batchedJoinBlock.TryReceive (filter, item)" />
+      <MemberSignature Language="C#" Value="public bool TryReceive (Predicate&lt;Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;&gt;? filter, out Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;? item);" FrameworkAlternate="net-5.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading.Tasks.Dataflow</AssemblyName>
@@ -624,12 +627,13 @@ After `Fault` has been called on a dataflow block, that block will complete, suc
       </Docs>
     </Member>
     <Member MemberName="TryReceiveAll">
-      <MemberSignature Language="C#" Value="public bool TryReceiveAll (out System.Collections.Generic.IList&lt;Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;&gt; items);" />
+      <MemberSignature Language="C#" Value="public bool TryReceiveAll (out System.Collections.Generic.IList&lt;Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;&gt; items);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool TryReceiveAll([out] class System.Collections.Generic.IList`1&lt;class System.Tuple`2&lt;class System.Collections.Generic.IList`1&lt;!T1&gt;, class System.Collections.Generic.IList`1&lt;!T2&gt;&gt;&gt;&amp; items) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.Tasks.Dataflow.BatchedJoinBlock`2.TryReceiveAll(System.Collections.Generic.IList{System.Tuple{System.Collections.Generic.IList{`0},System.Collections.Generic.IList{`1}}}@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryReceiveAll (ByRef items As IList(Of Tuple(Of IList(Of T1), IList(Of T2)))) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool TryReceiveAll([Runtime::InteropServices::Out] System::Collections::Generic::IList&lt;Tuple&lt;System::Collections::Generic::IList&lt;T1&gt; ^, System::Collections::Generic::IList&lt;T2&gt; ^&gt; ^&gt; ^ % items);" />
       <MemberSignature Language="F#" Value="abstract member TryReceiveAll : IList -&gt; bool&#xA;override this.TryReceiveAll : IList -&gt; bool" Usage="batchedJoinBlock.TryReceiveAll items" />
+      <MemberSignature Language="C#" Value="public bool TryReceiveAll (out System.Collections.Generic.IList&lt;Tuple&lt;System.Collections.Generic.IList&lt;T1&gt;,System.Collections.Generic.IList&lt;T2&gt;&gt;&gt;? items);" FrameworkAlternate="net-5.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading.Tasks.Dataflow</AssemblyName>

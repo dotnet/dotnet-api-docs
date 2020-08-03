@@ -76,9 +76,9 @@ namespace Example
     }
     public class CertificateSecurityStateEncoder : SecurityStateEncoder
     {
-        RSACryptoServiceProvider rsaCryptoServiceProvider;
+        RSA rsa;
         CookieContainerSerializer serializer;
-        RijndaelManaged aesAlg;
+        Aes aesAlg;
 
         public CertificateSecurityStateEncoder(X509Certificate2 protectionCertificate)
         {
@@ -92,16 +92,16 @@ namespace Example
                 throw new ArgumentException("protectionCertificate does not contain the private key which is required for performing encypt / decrypt operations.");
             }
 
-            rsaCryptoServiceProvider = protectionCertificate.PrivateKey as RSACryptoServiceProvider;
-            if (rsaCryptoServiceProvider == null)
+            rsa = protectionCertificate.GetRSAPrivateKey();
+            if (rsa == null)
             {
-                throw new NotSupportedException("protectionCertificate must have a private key of type RSACryptoServiceProvider.");
+                throw new NotSupportedException("protectionCertificate must have a private key of type RSA.");
             }
 
             serializer = new CookieContainerSerializer();
 
             // The symmetric key algorithm used to protect the cookie.
-            aesAlg = new RijndaelManaged();
+            aesAlg = Aes.Create();
         }
 
         protected override byte[] EncodeSecurityState(byte[] data)
@@ -109,7 +109,7 @@ namespace Example
             // Create a new cookie container that will protect the WCF cookie.
             // Possible improvement: use a caching scheme so that a new cookie container
             // need not be created each time to improve performance.
-            CookieContainer cookieContainer = new CookieContainer(rsaCryptoServiceProvider, aesAlg);
+            CookieContainer cookieContainer = new CookieContainer(rsa, aesAlg);
 
             // Encrypt the cookie from WCF with our own scheme so that any of the backend services
             // can decrypt it.
@@ -123,7 +123,7 @@ namespace Example
         {
             // Possible improvement: use a caching scheme so that a new cookie container
             // need not be created each time to improve performance.
-            CookieContainer cookieContainer = serializer.Deserialize(rsaCryptoServiceProvider, aesAlg, data);
+            CookieContainer cookieContainer = serializer.Deserialize(rsa, aesAlg, data);
 
             // Decrypt the cookie and return it to WCF so that WCF can use the cookie to
             // perform its own cryptographic operations.
@@ -139,7 +139,7 @@ namespace Example
         /// <param name="aesAlg">The symmetric key algorithm to use to decrypt the cookie block.</param>
         /// <param name="data">The byte array to deserialize.</param>
         /// <returns>The deserialized cookie container instance.</returns>
-        public CookieContainer Deserialize(RSACryptoServiceProvider rsaKey, RijndaelManaged aesAlg, byte[] data)
+        public CookieContainer Deserialize(RSA rsaKey, Aes aesAlg, byte[] data)
         {
             CookieContainer cookieContainer = new CookieContainer(rsaKey, aesAlg);
             // Length of the IV according to the AES algorithm (in bytes).
@@ -221,8 +221,8 @@ namespace Example
         byte[] encryptedCookie;
         ICryptoTransform encryptor;
         ICryptoTransform decryptor;
-        RijndaelManaged aesAlg;
-        RSACryptoServiceProvider protectionRsaKey;
+        Aes aesAlg;
+        RSA protectionRsaKey;
 
         /// <summary>
         /// Creates a new cookie container and auto-generate a symmetric key protected
@@ -230,14 +230,14 @@ namespace Example
         /// </summary>
         /// <param name="rsaKey">The RSA key to protect the generated symmetric key.</param>
         /// <param name="aesAlg">The symmetric key algorithm to use.</param>
-        public CookieContainer(RSACryptoServiceProvider rsaKey, RijndaelManaged aesAlg)
+        public CookieContainer(RSA rsaKey, Aes aesAlg)
         {
             this.aesAlg = aesAlg;
             this.iv = aesAlg.IV;
 
             // Use the RSA key in the X509Certificate to protect the symmetric key.
             this.protectionRsaKey = rsaKey;
-            this.encryptedSymmetricKey = protectionRsaKey.Encrypt(aesAlg.Key, true);
+            this.encryptedSymmetricKey = protectionRsaKey.Encrypt(aesAlg.Key, RSAEncryptionPadding.OaepSHA1);
 
             // Create the enryptor and decryptor that will perform the actual
             // cryptographic operations.
@@ -266,7 +266,7 @@ namespace Example
         {
             // Only a service configured with the right X509 certificate
             // can decrypt the symmetric key.
-            byte[] symmetricKey = protectionRsaKey.Decrypt(encryptedSymmetricKey, true);
+            byte[] symmetricKey = protectionRsaKey.Decrypt(encryptedSymmetricKey, RSAEncryptionPadding.OaepSHA1);
 
             // Create an encryptor based on the symmetric key which can be used to encrypt SCT cookie blob.
             this.encryptor = aesAlg.CreateEncryptor(symmetricKey, iv);

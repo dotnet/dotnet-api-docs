@@ -32,7 +32,7 @@ Class XMLDSIGDetached
          
          ' Generate a signing key. This key should match the 
          ' certificate.
-         Dim Key As New RSACryptoServiceProvider()
+         Dim Key As RSA = RSA.Create()
          
          Console.WriteLine("Signing: {0}", resourceToSign)
          

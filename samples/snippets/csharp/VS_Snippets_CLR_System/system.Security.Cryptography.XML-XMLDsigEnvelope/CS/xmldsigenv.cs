@@ -19,7 +19,7 @@ public class SignVerifyEnvelope
         try
         {
             // Generate a signing key.
-            RSACryptoServiceProvider Key = new RSACryptoServiceProvider();
+            RSA Key = RSA.Create();
 
             // Create an XML file to sign.
             CreateSomeXml("Example.xml");

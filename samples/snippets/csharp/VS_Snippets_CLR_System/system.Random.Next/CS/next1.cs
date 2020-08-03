@@ -22,7 +22,7 @@ public class Example
       Console.WriteLine("   For a male:     {0}", malePetNames[mIndex]);
       Console.WriteLine("   For a female:   {0}", femalePetNames[fIndex]);
 
-      // The example displays the following output:
+      // The example displays output similar to the following:
       //       Suggested pet name of the day:
       //          For a male:     Koani
       //          For a female:   Maggie

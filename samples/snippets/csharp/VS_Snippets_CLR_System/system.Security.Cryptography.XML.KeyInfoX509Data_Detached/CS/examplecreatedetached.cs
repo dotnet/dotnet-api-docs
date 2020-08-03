@@ -31,7 +31,7 @@ class XMLDSIGDetached
         {
 
             // Generate a signing key. This key should match the certificate.
-            RSACryptoServiceProvider Key = new RSACryptoServiceProvider();
+            RSA Key = RSA.Create();
 
             Console.WriteLine("Signing: {0}", resourceToSign);
 

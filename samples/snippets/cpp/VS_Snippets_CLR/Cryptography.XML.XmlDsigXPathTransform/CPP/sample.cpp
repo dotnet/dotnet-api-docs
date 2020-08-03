@@ -159,7 +159,7 @@ int main()
 {
    
    // Generate a signing key.
-   RSACryptoServiceProvider^ Key = gcnew RSACryptoServiceProvider;
+   RSA^ Key = RSA::Create();
    try
    {
       

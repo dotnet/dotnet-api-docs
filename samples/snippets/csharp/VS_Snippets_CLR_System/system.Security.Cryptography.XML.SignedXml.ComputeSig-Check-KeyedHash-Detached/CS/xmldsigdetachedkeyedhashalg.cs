@@ -26,7 +26,7 @@ class XMLDSIGDetached
             string XmlFileName = "xmlsig.xml";
 
             // Generate a signing key.
-            HMACSHA1 Key = new HMACSHA1();
+            HMACSHA256 Key = new HMACSHA256();
 
             Console.WriteLine("Signing: {0}", resourceToSign);
 

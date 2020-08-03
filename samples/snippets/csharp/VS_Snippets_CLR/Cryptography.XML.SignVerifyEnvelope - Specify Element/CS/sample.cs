@@ -16,7 +16,7 @@ public class SignVerifyEnvelope
     public static void Main(String[] args)
     {
         // Generate a signing key.
-       RSACryptoServiceProvider Key = new RSACryptoServiceProvider();
+       RSA Key = RSA.Create();
 
        try
        {
@@ -51,7 +51,7 @@ public class SignVerifyEnvelope
        finally
        {
            // Clear resources associated with the
-           // RSACryptoServiceProvider.
+           // RSA instance.
            Key.Clear();
        }
    }

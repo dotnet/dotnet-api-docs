@@ -21,7 +21,7 @@ Module Program
 
         ' Create a new RSA key.  This key will encrypt a symmetric key,
         ' which will then be imbedded in the XML document.  
-        Dim rsaKey As New RSACryptoServiceProvider
+        Dim rsaKey As RSA = RSA.Create()
 
 
         Try
@@ -96,8 +96,8 @@ Module XMLEncryptionSubs
         ' a new random symmetric key.
         ''''''''''''''''''''''''''''''''''''''''''''''''
 
-        ' Create a 256 bit Rijndael key.
-        Dim sessionKey As New RijndaelManaged()
+        ' Create a 256 bit Aes key.
+        Dim sessionKey As Aes = Aes.Create()
         sessionKey.KeySize = 256
 
         Dim eXml As New EncryptedXml()
