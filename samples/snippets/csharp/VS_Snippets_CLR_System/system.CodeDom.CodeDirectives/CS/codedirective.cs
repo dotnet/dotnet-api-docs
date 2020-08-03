@@ -84,6 +84,8 @@ namespace System.CodeDom
             File.Delete(sourceFileName);
         }
 
+        // This example uses the SHA1 and MD5 algorithms.
+        // Due to collision problems with SHA1 and MD5, Microsoft recommends SHA256 or better.
         private static Guid HashMD5 = new Guid(0x406ea660, 0x64cf, 0x4c82, 0xb6, 0xf0, 0x42, 0xd4, 0x81, 0x72, 0xa7, 0x99);
         private static Guid HashSHA1 = new Guid(0xff1816ec, 0xaa5e, 0x4d10, 0x87, 0xf7, 0x6f, 0x49, 0x63, 0x83, 0x34, 0x60);
 

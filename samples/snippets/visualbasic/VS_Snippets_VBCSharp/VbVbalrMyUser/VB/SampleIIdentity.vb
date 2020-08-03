@@ -70,9 +70,9 @@ Public Class SampleIIdentity
         Dim rawSalted As String = salt & Trim(password)
         Dim saltedPwBytes() As Byte = 
             System.Text.Encoding.Unicode.GetBytes(rawSalted)
-        Dim sha1 As New System.Security.Cryptography.
-            SHA1CryptoServiceProvider
-        Dim hashedPwBytes() As Byte = sha1.ComputeHash(saltedPwBytes)
+        Dim sha256 As System.Security.Cryptography.SHA256 =
+            System.Security.Cryptography.SHA256.Create()
+        Dim hashedPwBytes() As Byte = sha256.ComputeHash(saltedPwBytes)
         Dim hashedPw As String = Convert.ToBase64String(hashedPwBytes)
 
         ' Compare the hashed password with the stored password.

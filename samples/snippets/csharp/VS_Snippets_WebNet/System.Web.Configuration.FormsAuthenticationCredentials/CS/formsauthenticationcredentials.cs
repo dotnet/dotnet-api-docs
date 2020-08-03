@@ -46,6 +46,8 @@ namespace Samples.AspNet
             formsAuthenticationCredentials.PasswordFormat;
 
             // Set the PasswordFormat property value.
+            // This example uses the SHA1 algorithm.
+            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
             formsAuthenticationCredentials.PasswordFormat = 
                 FormsAuthPasswordFormat.SHA1;
 
@@ -78,6 +80,8 @@ namespace Samples.AspNet
             // Using method Add.
 
             // Define the SHA1 encrypted password.
+            // This example uses the SHA1 algorithm.
+            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
             string password = 
                 "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8";
             // Define the user name.
