@@ -14,7 +14,8 @@ public struct Point
 
     public override bool Equals(Object obj)
     {
-        if(obj is Point)
+        if (obj is Point)
+
         {
             Point p = (Point) obj;
             return x == p.x & y == p.y;
