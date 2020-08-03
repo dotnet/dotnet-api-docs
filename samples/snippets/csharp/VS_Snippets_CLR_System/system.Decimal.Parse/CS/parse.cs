@@ -118,7 +118,7 @@ public class Class1
       CultureInfo provider;
 
       // Parse string using " " as the thousands separator
-      // and "." as the decimal separator.
+      // and "," as the decimal separator for fr-FR culture.
       value = "892 694,12";
       style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
       provider = new CultureInfo("fr-FR");
@@ -141,7 +141,7 @@ public class Class1
       //    Unable to parse '892 694,12'.
 
       // Parse string using "$" as the currency symbol for en-GB and
-      // en-us cultures.
+      // en-US cultures.
       value = "$6,032.51";
       style = NumberStyles.Number | NumberStyles.AllowCurrencySymbol;
       provider = new CultureInfo("en-GB");
