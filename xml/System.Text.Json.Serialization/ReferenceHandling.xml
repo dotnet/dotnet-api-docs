@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>This class defines how the <see cref="T:System.Text.Json.JsonSerializer" /> deals with references on serialization and deserialization.</summary>
+    <summary>Defines how the <see cref="T:System.Text.Json.JsonSerializer" /> deals with references during serialization and deserialization.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -45,8 +45,8 @@
  Treats duplicate object references as if they were unique and writes all their properties.
  The serializer throws a <xref:System.Text.Json.JsonException> if an object contains a cycle.
  * On Deserialize:
- Metadata properties (`$id`, `$values`, and `$ref`) will not be consumed and therefore will be treated as regular JSON properties.
- The metadata properties can map to a real property on the returned object if the property names match, or will be added to the <xref:System.Text.Json.Serialization.JsonExtensionDataAttribute> overflow dictionary, if one exists; otherwise, they are ignored.
+ Metadata properties (`$id`, `$values`, and `$ref`) are not consumed and, therefore, are treated as regular JSON properties.
+ The metadata properties can map to a real property on the returned object if the property names match. Or, if the <xref:System.Text.Json.Serialization.JsonExtensionDataAttribute> overflow dictionary exists, the metadata properties are added to it. Otherwise, the metadata properties are ignored.
 
           ]]></format>
         </remarks>
@@ -77,12 +77,12 @@
 
 * On Serialize:
  When writing complex reference types, the serializer also writes metadata properties (`$id`, `$values`, and `$ref`) within them.
- The output JSON will contain an extra `$id` property for every object, and for every enumerable type the JSON array emitted will be nested within a JSON object containing an `$id` and `$values` property.
+ The output JSON will contain an extra `$id` property for every object. For every enumerable type, the JSON array emitted will be nested within a JSON object containing an `$id` and `$values` property.
  <xref:System.Object.ReferenceEquals(System.Object,System.Object)> is used to determine whether objects are identical.
  When an object is identical to a previously serialized one, a pointer (`$ref`) to the identifier (`$id`) of such object is written instead.
  No metadata properties are written for value types.
  * On Deserialize:
- The metadata properties within the JSON that are used to preserve duplicated references and cycles will be honored as long as they are well-formed**.
+ The metadata properties within the JSON that are used to preserve duplicated references, and cycles will be honored as long as they are well-formed**.
  For JSON objects that don't contain any metadata properties, the deserialization behavior is identical to <xref:System.Text.Json.Serialization.ReferenceHandling.Default>.
  
    For value types:
@@ -92,18 +92,18 @@
    * For enumerable value types, the `$values` metadata property is ignored.
    
  For the metadata properties within the JSON to be considered well-formed, they must follow these rules:
- 1) The `$id` metadata property must be the first property in the JSON object.
- 2) A JSON object that contains a `$ref` metadata property must not contain any other properties.
- 3) The value of the `$ref` metadata property must refer to an `$id` that has appeared earlier in the JSON.
- 4) The value of the `$id` and `$ref` metadata properties must be a JSON string.
- 5) For enumerable types, such as <xref:System.Collections.Generic.List`1>, the JSON array must be nested within a JSON object containing an `$id` and `$values` metadata property, in that order.
- 6) For enumerable types, the `$values` metadata property must be a JSON array.
- 7) The `$values` metadata property is only valid when referring to enumerable types.
+ - The `$id` metadata property must be the first property in the JSON object.
+ - A JSON object that contains a `$ref` metadata property must not contain any other properties.
+ - The value of the `$ref` metadata property must refer to an `$id` that has appeared earlier in the JSON.
+ - The value of the `$id` and `$ref` metadata properties must be a JSON string.
+ - For enumerable types, such as <xref:System.Collections.Generic.List`1>, the JSON array must be nested within a JSON object containing an `$id` and `$values` metadata property, in that order.
+ - For enumerable types, the `$values` metadata property must be a JSON array.
+ - The `$values` metadata property is only valid when referring to enumerable types.
 
-  If the JSON is not well-formed, a <xref:System.Text.Json.JsonException> is thrown.
 
           ]]></format>
         </remarks>
+        <exception cref="T:System.Text.Json.JsonException">The JSON is not well formed.</exception>
       </Docs>
     </Member>
   </Members>
