@@ -72,8 +72,8 @@ public class AssemblyName_CodeBase
       myAssemblyName.CodeBase = Directory.GetCurrentDirectory();
       // Set the culture information of the assembly to 'English-American'.
       myAssemblyName.CultureInfo = new CultureInfo("en-US");
-      // Set the hash algoritm to 'SHA1'.
-      myAssemblyName.HashAlgorithm = AssemblyHashAlgorithm.SHA1;
+      // Set the hash algorithm to 'SHA256'.
+      myAssemblyName.HashAlgorithm = AssemblyHashAlgorithm.SHA256;
       myAssemblyName.VersionCompatibility = AssemblyVersionCompatibility.SameProcess;
       myAssemblyName.Flags = AssemblyNameFlags.PublicKey;
       // Provide this assembly with a strong name.

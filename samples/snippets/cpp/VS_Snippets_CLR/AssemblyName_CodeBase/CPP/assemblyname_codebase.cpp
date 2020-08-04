@@ -71,8 +71,8 @@ int main()
    // Set the culture information of the assembly to 'English-American'.
    myAssemblyName->CultureInfo = gcnew CultureInfo( "en-US" );
 
-   // Set the hash algoritm to 'SHA1'.
-   myAssemblyName->HashAlgorithm = AssemblyHashAlgorithm::SHA1;
+   // Set the hash algorithm to 'SHA256'.
+   myAssemblyName->HashAlgorithm = AssemblyHashAlgorithm::SHA256;
    myAssemblyName->Name = "MyAssembly";
    myAssemblyName->Version = gcnew Version( "1.0.0.2001" );
    MakeAssembly( myAssemblyName, "MyAssembly.exe" );

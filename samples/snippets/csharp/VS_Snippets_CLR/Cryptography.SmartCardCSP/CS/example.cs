@@ -30,12 +30,12 @@ namespace SmartCardSign
             Console.WriteLine("Data			: " + BitConverter.ToString(data));
 
             // Sign the data using the Smart Card CryptoGraphic Provider.
-            byte[] sig = rsa.SignData(data, "SHA1");
+            byte[] sig = rsa.SignData(data, "SHA256");
 
             Console.WriteLine("Signature	: " + BitConverter.ToString(sig));
 
             // Verify the data using the Smart Card CryptoGraphic Provider.
-            bool verified = rsa.VerifyData(data, "SHA1", sig);
+            bool verified = rsa.VerifyData(data, "SHA256", sig);
 
             Console.WriteLine("Verified		: " + verified);
         }

@@ -17,6 +17,8 @@ Public Class TestClass
    Overloads Public Shared Function Main(args() As [String]) As Integer
 ' <Snippet1>  
    ' Create a secure group name.
+   ' This example uses the SHA1 algorithm.
+   ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
    Dim Sha1 As New SHA1Managed()
    Dim updHash As [Byte]() = Sha1.ComputeHash(Encoding.UTF8.GetBytes(("username" + "password" + "domain")))
    Dim secureGroupName As [String] = Encoding.Default.GetString(updHash)

@@ -8,9 +8,9 @@ Public Class MaskGenerator
 
     Private HashNameValue As String
 
-    ' Initialize a mask to encrypt using the SHA1 algorithm.
+    ' Initialize a mask to encrypt using the SHA256 algorithm.
     Public Sub New()
-        HashNameValue = "SHA1"
+        HashNameValue = "SHA256"
     End Sub
     '</Snippet2>
 
