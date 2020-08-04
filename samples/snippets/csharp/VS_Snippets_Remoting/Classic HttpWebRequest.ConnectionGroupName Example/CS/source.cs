@@ -12,6 +12,8 @@ public class TestClass: Page
  {
 // <Snippet1>
   // Create a secure group name.
+  // This example uses the SHA1 algorithm.
+  // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
   SHA1Managed Sha1 = new SHA1Managed();
   Byte[] updHash = Sha1.ComputeHash(Encoding.UTF8.GetBytes("username" + "password" +  "domain"));
   String secureGroupName = Encoding.Default.GetString(updHash);

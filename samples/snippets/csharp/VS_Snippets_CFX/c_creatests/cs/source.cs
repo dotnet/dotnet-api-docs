@@ -21,7 +21,7 @@ namespace CreateSts
         void AddSigningCredentials(SamlAssertion assertion, SecurityKey signingKey)
         {
             SigningCredentials sc = new SigningCredentials(signingKey,
-                SecurityAlgorithms.RsaSha1Signature, SecurityAlgorithms.Sha1Digest);
+                SecurityAlgorithms.RsaSha256Signature, SecurityAlgorithms.Sha256Digest);
             assertion.SigningCredentials = sc;
         }
         //</snippet1>

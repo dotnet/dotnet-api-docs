@@ -19,6 +19,8 @@ class Members
 
         // Create a new SHA1 provider.
         //<Snippet4>
+        // This example uses the SHA1 algorithm.
+        // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
         SHA1CryptoServiceProvider SHA1alg = 
             (SHA1CryptoServiceProvider)CryptoConfig.CreateFromName("SHA1");
         //</Snippet4>
@@ -38,11 +40,15 @@ class Members
         // Use the MapNameToOID method to get an object identifier  
         // (OID) from the string name of the SHA1 algorithm.
         //<Snippet3>
+        // This example uses the SHA1 algorithm.
+        // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
         string sha1Oid = CryptoConfig.MapNameToOID("SHA1");
         //</Snippet3>
 
         // Encode the specified object identifier.
         //<Snippet6>
+        // This example uses the SHA1 algorithm.
+        // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
         byte[] encodedMessage = CryptoConfig.EncodeOID(sha1Oid);
         //</Snippet6>
 

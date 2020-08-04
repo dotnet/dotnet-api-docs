@@ -10,7 +10,7 @@ public class Form1: Form
  protected void Method()
  {
 // <Snippet1>
- HashAlgorithm sha = new SHA1CryptoServiceProvider();
+ HashAlgorithm sha = SHA256.Create();
  byte[] result = sha.ComputeHash(dataArray);
 // </Snippet1>
  }
