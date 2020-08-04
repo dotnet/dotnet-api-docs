@@ -81,8 +81,8 @@ namespace TestNotifyPropertyChangedCS
     {
         // These fields hold the values for the public properties.
         private Guid idValue = Guid.NewGuid();
-        private string customerNameValue = String.Empty;
-        private string phoneNumberValue = String.Empty;
+        private string customerNameValue = string.Empty;
+        private string phoneNumberValue = string.Empty;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
