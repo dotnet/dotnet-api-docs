@@ -552,7 +552,27 @@ For more information, see [How to serialize and deserialize JSON](/dotnet/standa
       <Docs>
         <summary>Configures how object references are handled when reading and writing JSON.</summary>
         <value>To be added.</value>
-        <remarks>This option provides a convenient way to deal with circularity in object graphs.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+By default, serialization does not support objects with cycles and does not preserve duplicate references. Metadata properties will not be written when serializing reference types and will be treated as regular properties on deserialize.
+ 
+* On Serialize:
+
+  * Treats duplicate object references as if they were unique and writes all their properties.
+  * The serializer throws a <xref:System.Text.Json.JsonException> if an object contains a cycle.
+
+* On Deserialize:
+
+  * Metadata properties (`$id`, `$values`, and `$ref`) will not be consumed and therefore will be treated as regular JSON properties.
+  * The metadata properties can map to a real property on the returned object if the property names match, or will be added to the <xref:System.Text.Json.Serialization.JsonExtensionDataAttribute> overflow dictionary, if one exists; otherwise, they are ignored.
+
+Use <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve> to enable unique object reference preservation on serialization and metadata consumption to read preserved references on deserialization.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="WriteIndented">
