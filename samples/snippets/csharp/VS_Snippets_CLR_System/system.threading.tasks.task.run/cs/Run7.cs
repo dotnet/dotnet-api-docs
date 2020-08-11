@@ -50,7 +50,7 @@ public class Example
             iterations++;
         }
 
-        completedIterations++;
+        Interlocked.Increment(ref completedIterations);
         if (completedIterations >= 10)
         {
             Console.WriteLine($"[{Task.CurrentId}] Calling cancel on the rest and returning...");
