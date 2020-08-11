@@ -1,4 +1,4 @@
-<Type Name="JsonSerializerOptions" FullName="System.Text.Json.JsonSerializerOptions">
+﻿<Type Name="JsonSerializerOptions" FullName="System.Text.Json.JsonSerializerOptions">
   <TypeSignature Language="C#" Value="public sealed class JsonSerializerOptions" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit JsonSerializerOptions extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Text.Json.JsonSerializerOptions" />
@@ -63,8 +63,8 @@ For more information, see [How to serialize and deserialize JSON](/dotnet/standa
         <Parameter Name="defaults" Type="System.Text.Json.JsonSerializerDefaults" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="defaults">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="defaults">The <see cref="T:System.Text.Json.JsonSerializerDefaults" /> to reason about.</param>
+        <summary>Constructs a new <see cref="T:System.Text.Json.JsonSerializerOptions" /> instance with a predefined set of options determined by the specified <see cref="T:System.Text.Json.JsonSerializerDefaults" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -214,7 +214,8 @@ We recommend that you leave this value unchanged unless changing it makes an obs
         <ReturnType>System.Text.Json.Serialization.JsonIgnoreCondition</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Specifies a condition to determine when properties with default values are ignored during serialization or deserialization.
+ The default value is <see cref="F:System.Text.Json.Serialization.JsonIgnoreCondition.Never" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -551,7 +552,27 @@ For more information, see [How to serialize and deserialize JSON](/dotnet/standa
       <Docs>
         <summary>Configures how object references are handled when reading and writing JSON.</summary>
         <value>To be added.</value>
-        <remarks>This option provides a convenient way to deal with circularity in object graphs.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+By default, serialization does not support objects with cycles and does not preserve duplicate references. Metadata properties will not be written when serializing reference types and will be treated as regular properties on deserialize.
+ 
+* On Serialize:
+
+  * Treats duplicate object references as if they were unique and writes all their properties.
+  * The serializer throws a <xref:System.Text.Json.JsonException> if an object contains a cycle.
+
+* On Deserialize:
+
+  * Metadata properties (`$id`, `$values`, and `$ref`) will not be consumed and therefore will be treated as regular JSON properties.
+  * The metadata properties can map to a real property on the returned object if the property names match, or will be added to the <xref:System.Text.Json.Serialization.JsonExtensionDataAttribute> overflow dictionary, if one exists; otherwise, they are ignored.
+
+Use <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve> to enable unique object reference preservation on serialization and metadata consumption to read preserved references on deserialization.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="WriteIndented">
