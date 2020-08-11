@@ -42,7 +42,7 @@ public class Example
             {
                 token.ThrowIfCancellationRequested();
             }
-            catch (Exception)
+            catch (OperationCanceledException)
             {
                 Console.WriteLine($"[{Task.CurrentId}] Cancelled after computing {ctr}...");
                 throw;
