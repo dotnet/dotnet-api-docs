@@ -1,12 +1,12 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-   
+
 class Sample
 {
-    public static int Main(string[] args) 
+    public static int Main(string[] args)
     {
-        ManagementObject o = 
+        ManagementObject o =
             new ManagementObject("MyClass.Name='abc'");
 
         //this causes an implicit Get().
@@ -16,9 +16,9 @@ class Sample
 
         //or :
 
-        ManagementObject mObj = 
+        ManagementObject mObj =
             new ManagementObject("MyClass.Name= 'abc'");
-        mObj.Get(); //explicitly 
+        mObj.Get(); //explicitly
         // Now it is faster because the object
         // has already been retrieved.
         string property = mObj["Name"].ToString();

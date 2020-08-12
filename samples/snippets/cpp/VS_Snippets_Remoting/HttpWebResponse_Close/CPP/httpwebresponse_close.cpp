@@ -1,6 +1,6 @@
 // System::Net::HttpWebResponse::Close
 /* This program demonstrates the 'Close' method of the 'HttpWebResponse' class.
-It creates a web request and queries for a response.The response Object* can be processed as desired.
+It creates a web request and queries for a response. The response Object* can be processed as desired.
 The program then closes the response Object* and releases resources associated with it.
 */
 

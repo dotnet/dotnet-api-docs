@@ -1,8 +1,8 @@
 ﻿// System.Web.Services.Discovery.ContractReference.WriteDocument
 
  /*
-The following example demonstrates the 'WriteDocument' method of 
-'ContractReference' class. It creates a 'ContactReference' and a 'FileStream' object. 
+The following example demonstrates the 'WriteDocument' method of
+'ContractReference' class. It creates a 'ContactReference' and a 'FileStream' object.
 Then it gets the 'ServiceDescription' object corresponding to the 'test.wsdl' file.
 Using the 'WriteDocument' method, the 'ServiceDescription' object is written into the
 file stream.
@@ -22,7 +22,7 @@ public class DiscoveryDocument_Example
         {
 // <Snippet1>
         ContractReference myContractReference = new ContractReference();
-        FileStream myFileStream = new FileStream( "TestOutput_cs.wsdl", 
+        FileStream myFileStream = new FileStream( "TestOutput_cs.wsdl",
             FileMode.OpenOrCreate, FileAccess.Write );
 
         // Get the ServiceDescription for the test .wsdl file.

@@ -11,7 +11,7 @@ class RemoteKey
         RegistryKey environmentKey;
         string remoteName;
 
-        // Check that an argument was specified when the 
+        // Check that an argument was specified when the
         // program was invoked.
         if(args.Length == 0)
         {
@@ -27,7 +27,7 @@ class RemoteKey
 
         try
         {
-            // Open HKEY_CURRENT_USER\Environment 
+            // Open HKEY_CURRENT_USER\Environment
             // on a remote computer.
             environmentKey = RegistryKey.OpenRemoteBaseKey(
                 RegistryHive.CurrentUser, remoteName).OpenSubKey(
@@ -35,18 +35,18 @@ class RemoteKey
         }
         catch(IOException e)
         {
-            Console.WriteLine("{0}: {1}", 
+            Console.WriteLine("{0}: {1}",
                 e.GetType().Name, e.Message);
             return;
         }
 
         // Print the values.
-        Console.WriteLine("\nThere are {0} values for {1}.", 
-            environmentKey.ValueCount.ToString(), 
+        Console.WriteLine("\nThere are {0} values for {1}.",
+            environmentKey.ValueCount.ToString(),
             environmentKey.Name);
         foreach(string valueName in environmentKey.GetValueNames())
         {
-            Console.WriteLine("{0,-20}: {1}", valueName, 
+            Console.WriteLine("{0,-20}: {1}", valueName,
                 environmentKey.GetValue(valueName).ToString());
         }
 

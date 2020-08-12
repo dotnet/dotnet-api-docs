@@ -7,10 +7,10 @@ public class Page1: Page
 {
 
 // <Snippet2>
-void Page_Load(Object sender, EventArgs e) 
+void Page_Load(Object sender, EventArgs e)
 {
       HtmlInputCheckBox CheckBox = new HtmlInputCheckBox();
 }
-   
+
 // </Snippet2>
 }

@@ -13,7 +13,7 @@
 /// 19 Parse()
 /// !  StartListening()
 /// !  StopListening()
-    
+
 //<snippet10>
 using System;
 using System.Runtime.Remoting.Channels.Ipc;
@@ -26,8 +26,8 @@ public class Server
     {
         //<snippet11>
         // Create the server channel.
-        IpcChannel serverChannel = 
-            new IpcChannel("localhost:9090"); 
+        IpcChannel serverChannel =
+            new IpcChannel("localhost:9090");
         //</snippet11>
 
         // Register the server channel.
@@ -36,20 +36,20 @@ public class Server
 
         //<snippet12>
         // Show the name of the channel.
-        Console.WriteLine("The name of the channel is {0}.", 
+        Console.WriteLine("The name of the channel is {0}.",
             serverChannel.ChannelName);
         //</snippet12>
 
         //<snippet13>
         // Show the priority of the channel.
-        Console.WriteLine("The priority of the channel is {0}.", 
+        Console.WriteLine("The priority of the channel is {0}.",
             serverChannel.ChannelPriority);
         //</snippet13>
 
         //<snippet15>
         // Show the URIs associated with the channel.
-        System.Runtime.Remoting.Channels.ChannelDataStore channelData = 
-            (System.Runtime.Remoting.Channels.ChannelDataStore) 
+        System.Runtime.Remoting.Channels.ChannelDataStore channelData =
+            (System.Runtime.Remoting.Channels.ChannelDataStore)
             serverChannel.ChannelData;
         foreach (string uri in channelData.ChannelUris)
         {
@@ -60,9 +60,9 @@ public class Server
         // Expose an object for remote calls.
         System.Runtime.Remoting.RemotingConfiguration.
             RegisterWellKnownServiceType(
-                typeof(RemoteObject), "RemoteObject.rem", 
+                typeof(RemoteObject), "RemoteObject.rem",
                 System.Runtime.Remoting.WellKnownObjectMode.Singleton);
-    
+
         //<snippet19>
         // Parse the channel's URI.
         string[] urls = serverChannel.GetUrlsForUri("RemoteObject.rem");

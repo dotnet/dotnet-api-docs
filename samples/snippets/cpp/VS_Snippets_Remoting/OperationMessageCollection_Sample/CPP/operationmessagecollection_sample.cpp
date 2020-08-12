@@ -17,9 +17,9 @@ The following example demonstrates the usage of the
 'OperationMessageCollection' class and various methods and properties of it.
 The input to the program is a WSDL file 'MathService_input_vb.wsdl' without
 the input message of 'Add' operation for the SOAP
-protocol. In a way it tries to simulate a scenario
+protocol. In a way, it tries to simulate a scenario
 wherein the operation flow was 'Notification', however later operation
-flow changed to 'Request-Response'.The WSDL file is
+flow changed to 'Request-Response'. The WSDL file is
 modified by inserting a new input message for the 'Add' operation. The
 input message in the ServiceDescription instance is loaded with values for
 'Input Message'. The instance is then written to 'MathService_new_vb.wsdl'.

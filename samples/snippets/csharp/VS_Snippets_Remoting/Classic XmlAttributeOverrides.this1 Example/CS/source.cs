@@ -19,12 +19,12 @@ public XmlSerializer CreateOverrider()
    // Create an XmlSerializer with overriding attributes.
    XmlAttributeOverrides xOver = new XmlAttributeOverrides();
 
-   /* Create an XmlAttributeAttribute object and set the 
+   /* Create an XmlAttributeAttribute object and set the
    AttributeName property. */
    XmlAttributeAttribute xAtt = new XmlAttributeAttribute();
    xAtt.AttributeName = "Code";
 
-   /* Create a new XmlAttributes object and set the 
+   /* Create a new XmlAttributes object and set the
    XmlAttributeAttribute object to the XmlAttribute property. */
    XmlAttributes attrs = new XmlAttributes();
    attrs.XmlAttribute = xAtt;

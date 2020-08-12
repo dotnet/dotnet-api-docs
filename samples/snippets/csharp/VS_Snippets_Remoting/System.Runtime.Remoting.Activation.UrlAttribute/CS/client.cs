@@ -21,7 +21,7 @@ public class Client
 
         //<snippet1>
         // Create a url attribute object.
-        UrlAttribute attribute = 
+        UrlAttribute attribute =
             new UrlAttribute("tcp://localhost:1234/RemoteApp");
         Console.WriteLine("UrlAttribute value: {0}", attribute.UrlValue);
         //</snippet1>
@@ -29,7 +29,7 @@ public class Client
 
         // Register the client for the remote object.
         RemotingConfiguration.RegisterActivatedClientType(
-            typeof(RemoteObject), 
+            typeof(RemoteObject),
             "tcp://localhost:1234/RemoteApp");
 
         // Activate the remote object.

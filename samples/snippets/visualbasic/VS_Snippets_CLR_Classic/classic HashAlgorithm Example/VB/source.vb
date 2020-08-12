@@ -8,7 +8,7 @@ Public Class Form1
     
     Protected Sub Method()
 ' <Snippet1>
- Dim sha As New SHA1CryptoServiceProvider()
+ Dim sha As SHA256 = SHA256.Create()
  Dim result As Byte() = sha.ComputeHash(dataArray)
 ' </Snippet1>
     End Sub

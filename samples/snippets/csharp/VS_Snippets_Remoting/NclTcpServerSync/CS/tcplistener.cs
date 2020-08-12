@@ -10,7 +10,7 @@ namespace Examples.System.Net
     {
         public static void Main()
         {
-            // Create the server side connection and 
+            // Create the server side connection and
             // start listening for clients.
             TcpListener tcpListener = new TcpListener(IPAddress.Any,11000);
             tcpListener.Start();
@@ -19,7 +19,7 @@ namespace Examples.System.Net
             // Accept the pending client connection.
             TcpClient tcpClient = tcpListener.AcceptTcpClient();
             Console.WriteLine("Connection accepted.");
-            // Get the stream to write the message 
+            // Get the stream to write the message
             // that will be sent to the client.
             NetworkStream networkStream = tcpClient.GetStream();
             string responseString = "Hello.";

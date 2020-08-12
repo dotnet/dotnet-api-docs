@@ -42,7 +42,7 @@ namespace ConsoleApplication3
         public MyExport2 importedMember { get; set; }
     }
 
-    //Specifying a contract name should only be 
+    //Specifying a contract name should only be
     //needed in rare caes. Usually, using metadata
     //is a better approach.
     [Export("MyContractName", typeof(MyInterface))]
@@ -59,7 +59,7 @@ namespace ConsoleApplication3
     }
 
     class Program
-    {      
+    {
 
         static void Main(string[] args)
         {

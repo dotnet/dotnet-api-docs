@@ -12,23 +12,23 @@ public class MyMath : System.Web.Services.Protocols.HttpPostClientProtocol
     {
         this.Url = "http://www.contoso.com/math.asmx";
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Web.Services.Protocols.HttpMethodAttribute(typeof(System.Web.Services.Protocols.XmlReturnReader), typeof(System.Web.Services.Protocols.HtmlFormParameterWriter))]
     [return: System.Xml.Serialization.XmlRootAttribute("int", Namespace = "http://www.contoso.com/", IsNullable = false)]
     public int Add(string num1, string num2)
     {
-        return ((int)(this.Invoke("Add", (this.Url + "/Add"), 
+        return ((int)(this.Invoke("Add", (this.Url + "/Add"),
             new object[] { num1, num2 })));
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     public System.IAsyncResult BeginAdd(string num1, string num2, System.AsyncCallback callback, object asyncState)
     {
-        return this.BeginInvoke("Add", (this.Url + "/Add"), 
+        return this.BeginInvoke("Add", (this.Url + "/Add"),
             new object[] { num1, num2 }, callback, asyncState);
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     public int EndAdd(System.IAsyncResult asyncResult)
     {

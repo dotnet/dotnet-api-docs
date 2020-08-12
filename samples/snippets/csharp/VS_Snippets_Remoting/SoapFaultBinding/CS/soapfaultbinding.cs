@@ -1,10 +1,10 @@
 ﻿// System.Web.Services.Description.SoapFaultBinding
 
 /*
- The following example demonstrates 'SoapFaultBinding' class. 
- It creates an instance of 'ServiceDescription' class by reading  an existing 
- wsdl file. Then it creates an instance of 'SoapFaultBinding' and adds it to 
- the collection object of 'Binding' class. It generates a new wsdl file where 
+ The following example demonstrates 'SoapFaultBinding' class.
+ It creates an instance of 'ServiceDescription' class by reading  an existing
+ wsdl file. Then it creates an instance of 'SoapFaultBinding' and adds it to
+ the collection object of 'Binding' class. It generates a new wsdl file where
  the properties of 'SoapFaultBinding' objects are reflected and which could be
  used for generating a proxy.
 */
@@ -25,7 +25,7 @@
             // Initialize an instance of a 'ServiceDescription' object.
             ServiceDescription myServiceDescription =
                ServiceDescription.Read(myInputWsdlFile);
-            // Get a SOAP binding object with binding name "MyService1Soap". 
+            // Get a SOAP binding object with binding name "MyService1Soap".
             Binding myBinding=myServiceDescription.Bindings["MyService1Soap"];
             // Create a new instance of 'SoapFaultBinding' class.
             SoapFaultBinding mySoapFaultBinding=new SoapFaultBinding();

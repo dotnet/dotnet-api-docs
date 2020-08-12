@@ -1,13 +1,13 @@
 ﻿//<Snippet1>
 using System;
-class TestFullName 
+class TestFullName
 {
-public static void Main() 
+public static void Main()
     {
     Type t = typeof(Array);
     Console.WriteLine("The full name of the Array type is {0}.", t.FullName);
     }
-} 
+}
 
 /* This example produces the following output:
 

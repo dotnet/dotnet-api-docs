@@ -7,9 +7,9 @@ public class Example
    {
       String[] values = { "one", null, "two" };
       for (int ctr = 0; ctr <= values.GetUpperBound(0); ctr++)
-         Console.Write("{0}{1}", 
-                       values[ctr] != null ? values[ctr].Trim() : "", 
-                       ctr == values.GetUpperBound(0) ? "" : ", "); 
+         Console.Write("{0}{1}",
+                       values[ctr] != null ? values[ctr].Trim() : "",
+                       ctr == values.GetUpperBound(0) ? "" : ", ");
       Console.WriteLine();
    }
 }

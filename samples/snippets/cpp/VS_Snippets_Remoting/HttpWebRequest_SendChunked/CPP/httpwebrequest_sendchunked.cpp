@@ -1,14 +1,14 @@
 /*
 System::Net::HttpWebRequest::SendChunked
 System::Net::HttpWebRequest::TransferEncoding
-This program demonstrates 'TransferEncoding' and 'SendChunked' properties of 'HttpWebRequestClass'.
-A new 'HttpWebRequest' Object* is created.The 'SendChunked' property value is set to 'true' and
-'TransferEncoding' property is set to S"gzip".If 'TransferEncoding' property is set with 'SendChunked'
+This program demonstrates the 'TransferEncoding' and 'SendChunked' properties of the 'HttpWebRequest' class.
+A new 'HttpWebRequest' Object* is created. The 'SendChunked' property value is set to 'true' and the
+'TransferEncoding' property is set to S"gzip". If the 'TransferEncoding' property is set with 'SendChunked'
 property set to 'false' then 'InvalidOperationException' is raised. Data to be posted to the Uri is
-requested from the user.The HTML contents of the page are displayed to the console after the posted
+requested from the user. The HTML contents of the page are displayed to the console after the posted
 data is accepted by the URL
 
-Note:This program requires http://localhost/CodeSnippetTest::asp as Command line parameter.
+Note: This program requires http://localhost/CodeSnippetTest::asp as command-line parameter.
 If the 'TransferEncoding' of type 'gzip' is not implemented by the server an error of status
 '(501) Not implemented' is returned.
 */

@@ -9,17 +9,17 @@ using System.Security.Permissions;
 public class Client {
 [SecurityPermission(SecurityAction.Demand)]
    public static void Main() {
-   
+
       ChannelServices.RegisterChannel(new HttpChannel(0));
       RemotingConfiguration.RegisterActivatedClientType(typeof(ClientActivatedType), "http://localhost:8080");
-       
+
       ClientActivatedType CAObject = new ClientActivatedType();
 
       ILease serverLease = (ILease)RemotingServices.GetLifetimeService(CAObject);
       MyClientSponsor sponsor = new MyClientSponsor();
 
       serverLease.Register(sponsor);
-    
+
       // Call same method on the object
       Console.WriteLine("Client-activated object: " + CAObject.RemoteMethod("Bob"));
 
@@ -42,7 +42,7 @@ public class MyClientSponsor : MarshalByRefObject, ISponsor {
       Console.WriteLine("Renewing a lease for 4 seconds.");
       Console.WriteLine("Time since last renewal:" + (DateTime.Now - lastRenewal).ToString());
       lastRenewal = DateTime.Now;
-      
+
       return TimeSpan.FromSeconds(4);
    }
 }

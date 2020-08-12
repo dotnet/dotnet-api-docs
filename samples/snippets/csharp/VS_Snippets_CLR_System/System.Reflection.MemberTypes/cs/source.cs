@@ -1,10 +1,10 @@
 ﻿// <Snippet1>
 using System;
 using System.Reflection;
- 
+
 class Example
 {
-    public static void Main() 
+    public static void Main()
     {
         // Get the type of a chosen class.
         Type t = typeof(ReflectionTypeLoadException);

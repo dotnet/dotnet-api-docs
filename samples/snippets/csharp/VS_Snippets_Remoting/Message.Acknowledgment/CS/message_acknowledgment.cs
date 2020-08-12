@@ -13,7 +13,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example sends and receives a message from
 		// a queue.
 		//**************************************************
@@ -31,7 +31,7 @@ namespace MyProject
 			myNewQueue.SendMessage();
 
 			// Receive messages from a queue.
-			string messageId = myNewQueue.ReceiveMessage(); 
+			string messageId = myNewQueue.ReceiveMessage();
 
 			// Receive acknowledgment message.
 			if(messageId != null)
@@ -76,7 +76,7 @@ namespace MyProject
 			MessageQueue myQueue = new MessageQueue(".\\myQueue");
 
 			// Create a new message.
-			Message myMessage = new Message("Original Message"); 
+			Message myMessage = new Message("Original Message");
 
 			myMessage.AdministrationQueue = new MessageQueue(".\\myAdministrationQueue");
 			myMessage.AcknowledgeType = AcknowledgeTypes.PositiveReceive | AcknowledgeTypes.PositiveArrival;
@@ -106,8 +106,8 @@ namespace MyProject
 			
 			try
 			{
-				// Receive and format the message. 
-				Message myMessage =	myQueue.Receive(); 
+				// Receive and format the message.
+				Message myMessage =	myQueue.Receive();
 
 				// Display message information.
 				Console.WriteLine("____________________________________________");
@@ -164,7 +164,7 @@ namespace MyProject
 				}
 			}
 			catch (InvalidOperationException e)
-			{ 
+			{
 				// This exception would be thrown if there is no (further) acknowledgment message
 				// with the specified correlation Id. Only output a message if there are no messages;
 				// not if the loop has found at least one.

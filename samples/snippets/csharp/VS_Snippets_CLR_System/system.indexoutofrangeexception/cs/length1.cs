@@ -14,8 +14,8 @@ public class Example
 }
 // The example displays the following output:
 //    'a'    'b'    'c'    'd'    'e'    'f'
-//    Unhandled Exception: 
-//    System.ArgumentOutOfRangeException: 
+//    Unhandled Exception:
+//    System.ArgumentOutOfRangeException:
 //    Index was out of range. Must be non-negative and less than the size of the collection.
 //    Parameter name: index
 //       at Example.Main()

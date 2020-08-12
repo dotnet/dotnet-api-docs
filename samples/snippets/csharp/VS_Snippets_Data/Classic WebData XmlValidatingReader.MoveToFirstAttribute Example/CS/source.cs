@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-public class Sample 
+public class Sample
 {
   public static void Main()
   {
@@ -20,6 +20,6 @@ public class Sample
 
     //Close the reader.
     reader.Close();
-  } 
+  }
 } // End class
 // </Snippet1>

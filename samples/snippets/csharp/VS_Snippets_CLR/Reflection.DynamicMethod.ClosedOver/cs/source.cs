@@ -17,13 +17,13 @@ public class Example
 
 public class DerivedFromExample : Example
 {
-    public DerivedFromExample(int id) : base(id) {} 
+    public DerivedFromExample(int id) : base(id) {}
 }
 
 // Two delegates are declared: UseLikeInstance treats the dynamic
 // method as if it were an instance method, and UseLikeStatic
 // treats the dynamic method in the ordinary fashion.
-// 
+//
 public delegate int UseLikeInstance(int newID);
 public delegate int UseLikeStatic(Example ex, int newID);
 
@@ -33,9 +33,9 @@ public class Demo
     {
         // This dynamic method changes the private id field. It has
         // no name; it returns the old id value (return type int);
-        // it takes two parameters, an instance of Example and 
-        // an int that is the new value of id; and it is declared 
-        // with Example as the owner type, so it can access all 
+        // it takes two parameters, an instance of Example and
+        // an int that is the new value of id; and it is declared
+        // with Example as the owner type, so it can access all
         // members, public and private.
         //
         DynamicMethod changeID = new DynamicMethod(
@@ -50,22 +50,22 @@ public class Demo
             "id",
             BindingFlags.NonPublic | BindingFlags.Instance
         );
-    
+
         ILGenerator ilg = changeID.GetILGenerator();
 
-        // Push the current value of the id field onto the 
+        // Push the current value of the id field onto the
         // evaluation stack. It's an instance field, so load the
         // instance of Example before accessing the field.
         ilg.Emit(OpCodes.Ldarg_0);
         ilg.Emit(OpCodes.Ldfld, fid);
 
-        // Load the instance of Example again, load the new value 
-        // of id, and store the new field value. 
+        // Load the instance of Example again, load the new value
+        // of id, and store the new field value.
         ilg.Emit(OpCodes.Ldarg_0);
         ilg.Emit(OpCodes.Ldarg_1);
         ilg.Emit(OpCodes.Stfld, fid);
 
-        // The original value of the id field is now the only 
+        // The original value of the id field is now the only
         // thing on the stack, so return from the call.
         ilg.Emit(OpCodes.Ret);
 
@@ -73,7 +73,7 @@ public class Demo
         // way, as a static method that takes an instance of
         // Example and an int.
         //
-        UseLikeStatic uls = 
+        UseLikeStatic uls =
             (UseLikeStatic) changeID.CreateDelegate(
                 typeof(UseLikeStatic)
             );
@@ -82,12 +82,12 @@ public class Demo
         //
         Example ex = new Example(42);
 
-        // Create a delegate that is bound to the instance of 
-        // of Example. This is possible because the first 
-        // parameter of changeID is of type Example. The 
+        // Create a delegate that is bound to the instance of
+        // of Example. This is possible because the first
+        // parameter of changeID is of type Example. The
         // delegate has all the parameters of changeID except
         // the first.
-        UseLikeInstance uli = 
+        UseLikeInstance uli =
             (UseLikeInstance) changeID.CreateDelegate(
                 typeof(UseLikeInstance),
                 ex

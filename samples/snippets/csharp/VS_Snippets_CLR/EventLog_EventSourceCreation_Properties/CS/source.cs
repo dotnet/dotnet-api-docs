@@ -35,7 +35,7 @@ namespace EventLogSamples
                     mySourceData.MessageResourceFile = args[3];
                 }
             }
-            else 
+            else
             {
                 // Display a syntax help message.
                 Console.WriteLine("Input:");
@@ -58,10 +58,10 @@ namespace EventLogSamples
             //</Snippet2>
 
             // Determine if the source exists on the specified computer.
-            if (!EventLog.SourceExists(mySourceData.Source, 
+            if (!EventLog.SourceExists(mySourceData.Source,
                                        mySourceData.MachineName))
             {
-                // The source does not exist.  
+                // The source does not exist.
 
                 // Verify that the message file exists
                 // and the event log is local.
@@ -69,7 +69,7 @@ namespace EventLogSamples
                 if ((mySourceData.MessageResourceFile != null) &&
                     (mySourceData.MessageResourceFile.Length > 0))
                 {
-                    if (mySourceData.MachineName == ".") 
+                    if (mySourceData.MachineName == ".")
                     {
                         if (!System.IO.File.Exists(mySourceData.MessageResourceFile))
                         {
@@ -78,7 +78,7 @@ namespace EventLogSamples
                             registerSource = false;
                         }
                     }
-                    else 
+                    else
                     {
                         // For simplicity, do not allow setting the message
                         // file for a remote event log.  To set the message
@@ -103,19 +103,19 @@ namespace EventLogSamples
                 sourceLog = EventLog.LogNameFromSourceName(mySourceData.Source,
                                 mySourceData.MachineName);
 
-                // Determine if the event source is registered for the 
+                // Determine if the event source is registered for the
                 // specified log.
 
-                if (sourceLog.ToUpper(CultureInfo.InvariantCulture) != mySourceData.LogName.ToUpper(CultureInfo.InvariantCulture)) 
+                if (sourceLog.ToUpper(CultureInfo.InvariantCulture) != mySourceData.LogName.ToUpper(CultureInfo.InvariantCulture))
                 {
-                    // An existing source is registered 
+                    // An existing source is registered
                     // to write to a different event log.
                     Console.WriteLine("Warning: source {0} is already registered to write to event log {1}",
                         mySourceData.Source, sourceLog);
                 }
-                else 
+                else
                 {
-                    // The source is already registered 
+                    // The source is already registered
                     // to write to the specified event log.
 
                     Console.WriteLine("Source {0} already registered to write to event log {1}",

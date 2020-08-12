@@ -1,13 +1,13 @@
 ﻿// System.Web.Services.Description.ServiceDescription.PortTypes
 // System.Web.Services.Description.ServiceDescription.CanRead
 
-/* 
+/*
    The following example demonstrates the 'PortTypes' property
    and 'CanRead' method of 'ServiceDescription' class.
    The input to the program is a WSDL file 'MyWsdl_CS.wsdl'.
-   This program checks the validity of WSDL file.One of the existing 
-   port types is removed.A new PortType is defined and added to the 
-   port types collection of the service description. A modified WSDL 
+   This program checks the validity of WSDL file.One of the existing
+   port types is removed.A new PortType is defined and added to the
+   port types collection of the service description. A modified WSDL
    is the output of the program.
 */
 
@@ -28,22 +28,22 @@ namespace ServiceDescription1
          XmlTextReader myReader = new XmlTextReader(myWsdlFileName);
          if (ServiceDescription.CanRead(myReader))
          {
-            ServiceDescription myDescription = 
+            ServiceDescription myDescription =
                ServiceDescription.Read(myWsdlFileName);
 
             // Remove the PortType at index 0 of the collection.
-            PortTypeCollection myPortTypeCollection = 
+            PortTypeCollection myPortTypeCollection =
                myDescription.PortTypes;
             myPortTypeCollection.Remove(myDescription.PortTypes[0]);
-            
+
             // Build a new PortType.
             PortType myPortType = new PortType();
             myPortType.Name = "Service1Soap";
-            Operation myOperation = 
+            Operation myOperation =
                CreateOperation("Add","s0:AddSoapIn","s0:AddSoapOut","");
             myPortType.Operations.Add(myOperation);
 
-            // Add a new PortType to the PortType collection of 
+            // Add a new PortType to the PortType collection of
             // the ServiceDescription.
             myDescription.PortTypes.Add(myPortType);
 
@@ -56,7 +56,7 @@ namespace ServiceDescription1
          }
       }
       // Creates an Operation for a PortType.
-      public static Operation CreateOperation(string operationName, 
+      public static Operation CreateOperation(string operationName,
          string inputMessage, string outputMessage, string targetNamespace)
       {
          Operation myOperation = new Operation();

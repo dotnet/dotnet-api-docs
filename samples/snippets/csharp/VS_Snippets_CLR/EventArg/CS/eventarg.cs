@@ -1,20 +1,20 @@
 ﻿// <Snippet1>
-// The following example uses instances of classes in 
+// The following example uses instances of classes in
 // the System.Reflection namespace to discover an event argument type.
 using System;
 using System.Reflection;
 
 public delegate void MyDelegate(int i);
-public class MainClass 
+public class MainClass
 {
     public event MyDelegate ev;
 
-    public static void Main() 
+    public static void Main()
     {
         Type delegateType = typeof(MainClass).GetEvent("ev").EventHandlerType;
         MethodInfo invoke = delegateType.GetMethod("Invoke");
         ParameterInfo[] pars = invoke.GetParameters();
-        foreach (ParameterInfo p in pars) 
+        foreach (ParameterInfo p in pars)
         {
             Console.WriteLine(p.ParameterType);
         }

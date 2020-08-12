@@ -17,14 +17,14 @@ public class Example
       int[] values = new int[items];
       Random rnd = new Random();
       for (int ctr = 0; ctr < items; ctr++)
-         values[ctr] = rnd.Next(0, maxValue + 1);   
+         values[ctr] = rnd.Next(0, maxValue + 1);
 
-      return values;                                                      
+      return values;
    }
 }
 // The example displays output like the following:
 //    6   4   4
-//    Unhandled Exception: System.IndexOutOfRangeException: 
+//    Unhandled Exception: System.IndexOutOfRangeException:
 //    Index was outside the bounds of the array.
 //       at Example.Main()
 // </Snippet7>

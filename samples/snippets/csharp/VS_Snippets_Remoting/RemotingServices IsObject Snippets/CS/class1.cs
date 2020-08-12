@@ -25,11 +25,11 @@ namespace RemoteClient
 
 			// Returns true, converter1 is remote and in a different appdomain.
 			System.Runtime.Remoting.RemotingServices.IsObjectOutOfAppDomain(
-									converter1); 
+									converter1);
 
 			// Returns false, converter2 is local and running in this appdomain.
 			System.Runtime.Remoting.RemotingServices.IsObjectOutOfAppDomain(
-									converter2); 
+									converter2);
 
 			// Returns true, converter1 is remote and in a different context.
 			System.Runtime.Remoting.RemotingServices.IsObjectOutOfContext(
@@ -42,14 +42,14 @@ namespace RemoteClient
 	
 			// Print those function calls.
 			System.Console.WriteLine("{0}", System.Runtime.Remoting.RemotingServices.
-				IsObjectOutOfAppDomain(converter1)); 
+				IsObjectOutOfAppDomain(converter1));
 			System.Console.WriteLine("{0}", System.Runtime.Remoting.RemotingServices.
-				IsObjectOutOfAppDomain(converter2)); 
+				IsObjectOutOfAppDomain(converter2));
 
 			System.Console.WriteLine("{0}", System.Runtime.Remoting.RemotingServices.
-				IsObjectOutOfContext(converter1)); 
+				IsObjectOutOfContext(converter1));
 			System.Console.WriteLine("{0}", System.Runtime.Remoting.RemotingServices.
-				IsObjectOutOfContext(converter2)); 
+				IsObjectOutOfContext(converter2));
 		}
 	}
 }

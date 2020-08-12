@@ -1,9 +1,9 @@
 ﻿// System.Web.Services.Discovery.ContractReference.ReadDocument
-/* 
- * The following example demonstrates the 'ReadDocument' method of the 
+/*
+ * The following example demonstrates the 'ReadDocument' method of the
  * 'ContractReference' class.
- * It creates an instance of 'ContractReference' class and calls the 
- * 'ReadDocument' method passing a service description stream and get a 
+ * It creates an instance of 'ContractReference' class and calls the
+ * 'ReadDocument' method passing a service description stream and get a
  * 'ServiceDescription' instance.
  */
 

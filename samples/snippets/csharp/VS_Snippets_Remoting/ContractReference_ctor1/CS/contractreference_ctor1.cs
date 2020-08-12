@@ -1,9 +1,9 @@
 ﻿// System.Web.Services.Discovery.ContractReference.ContractReference(string)
 /*
-The following example demonstrates the constructor 'ContractReference(string)' 
-of 'ContractReference' class. A 'DiscoveryDocument' object is created .The 
-constructor initializes a new instance of 'ContractReference' using the supplied 
-reference to a Service Description.The Contract reference object is added to the list 
+The following example demonstrates the 'ContractReference(string)' constructor
+of the 'ContractReference' class. A 'DiscoveryDocument' object is created . The
+constructor initializes a new instance of 'ContractReference' using the supplied
+reference to a Service Description. The Contract reference object is added to the list
 of references contained within the discovery document. A '.disco' file is generated
 for the webservice, where the reference tags of ContractReference are reflected.
 */
@@ -31,9 +31,9 @@ public class ContractReference_ctor
          myBinding.Binding = new XmlQualifiedName("q1:Service1Soap");
          myBinding.Address = "http://localhost/service1.asmx";
 
-         // Add myContractReference to the list of references contained 
+         // Add myContractReference to the list of references contained
          // in the discovery document.
-         myDiscoveryDocument.References.Add(myContractReference); 
+         myDiscoveryDocument.References.Add(myContractReference);
          myDiscoveryDocument.References.Add(myBinding);
 
          // Open or create a file for writing.

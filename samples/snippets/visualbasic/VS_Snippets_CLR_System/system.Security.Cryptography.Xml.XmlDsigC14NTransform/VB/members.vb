@@ -157,7 +157,7 @@ Public Class Form1
     ' Create a signature and add it to the specified document.
     Private Sub SignDocument(ByRef xmlDoc As XmlDocument)
         ' Generate a signing key.
-        Dim Key As New RSACryptoServiceProvider
+        Dim Key As RSA = RSA.Create()
 
         ' Create a SignedXml object.
         Dim signedXml As New SignedXml(xmlDoc)

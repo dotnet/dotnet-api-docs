@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example determines whether a queue is empty.
 		//**************************************************
 
@@ -30,7 +30,7 @@ namespace MyProject
 		//**************************************************
 		// Determines whether a queue is empty. The Peek()
 		// method throws an exception if there is no message
-		// in the queue. This method handles that exception 
+		// in the queue. This method handles that exception
 		// by returning true to the calling method.
 		//**************************************************
 		
@@ -46,14 +46,14 @@ namespace MyProject
 				// Set Peek to return immediately.
 				myQueue.Peek(new TimeSpan(0));
 
-				// If an IOTimeout was not thrown, there is a message 
+				// If an IOTimeout was not thrown, there is a message
 				// in the queue.
 				isQueueEmpty = false;
 			}
 
 			catch(MessageQueueException e)
 			{
-				if (e.MessageQueueErrorCode == 
+				if (e.MessageQueueErrorCode ==
 					MessageQueueErrorCode.IOTimeout)
 				{
 					// No message was in the queue.

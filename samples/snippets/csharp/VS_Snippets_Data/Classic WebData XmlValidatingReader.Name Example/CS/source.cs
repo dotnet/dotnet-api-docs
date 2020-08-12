@@ -13,12 +13,12 @@ public class Sample
      XmlValidatingReader reader = null;
 
      try
-     {  
-        //Load the reader with the data file and ignore all white space nodes.         
+     {
+        //Load the reader with the data file and ignore all white space nodes.
         txtreader = new XmlTextReader(filename);
         txtreader.WhitespaceHandling = WhitespaceHandling.None;
 
-        //Implement the validating reader over the text reader. 
+        //Implement the validating reader over the text reader.
         reader = new XmlValidatingReader(txtreader);
         reader.ValidationType = ValidationType.None;
 
@@ -56,8 +56,8 @@ public class Sample
              case XmlNodeType.EndElement:
                Console.Write("</{0}>", reader.Name);
                break;
-           }       
-        }           
+           }
+        }
      }
 
      finally

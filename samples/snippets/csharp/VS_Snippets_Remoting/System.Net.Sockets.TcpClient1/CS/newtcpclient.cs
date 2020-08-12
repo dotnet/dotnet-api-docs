@@ -8,7 +8,7 @@ namespace newTcpClient
     class Tester
     {
         // Define the TCP client.
-        static TcpClient t; 
+        static TcpClient t;
 
          // <Snippet1>
         static void GetAvailable()
@@ -21,7 +21,7 @@ namespace newTcpClient
        // <Snippet2>
         static void GetConnected()
         {
-            // Find out whether the socket is connected to the remote 
+            // Find out whether the socket is connected to the remote
             // host.
             Console.WriteLine("Connected value is {0}", t.Connected);
         }
@@ -42,7 +42,7 @@ namespace newTcpClient
         {
             // Connect to the specified host.
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);
-              
+
             IPAddress[] IPAddresses = Dns.GetHostAddresses(host);
 
             Console.WriteLine("Establishing connection to {0}", host);
@@ -53,7 +53,7 @@ namespace newTcpClient
         // </Snippet8>
 
         // <Snippet7>
-        public static ManualResetEvent connectDone = 
+        public static ManualResetEvent connectDone =
             new ManualResetEvent(false);
 
         public static void ConnectCallback(IAsyncResult ar)
@@ -74,9 +74,9 @@ namespace newTcpClient
 
             connectDone.Reset();
 
-            Console.WriteLine("Establishing Connection to {0}", 
+            Console.WriteLine("Establishing Connection to {0}",
                 remoteHost[0]);
-            t.BeginConnect(remoteHost[0], port, 
+            t.BeginConnect(remoteHost[0], port,
                 new AsyncCallback(ConnectCallback), t);
 
             // Wait here until the callback processes the connection.
@@ -96,7 +96,7 @@ namespace newTcpClient
             connectDone.Reset();
 
             Console.WriteLine("Establishing Connection to {0}", host);
-            t.BeginConnect(remoteHost, port, 
+            t.BeginConnect(remoteHost, port,
                 new AsyncCallback(ConnectCallback), t);
 
             // Wait here until the callback processes the connection.
@@ -114,9 +114,9 @@ namespace newTcpClient
 
             connectDone.Reset();
 
-            Console.WriteLine("Establishing Connection to {0}", 
+            Console.WriteLine("Establishing Connection to {0}",
                 host);
-            t.BeginConnect(host, port, 
+            t.BeginConnect(host, port,
                 new AsyncCallback(ConnectCallback), t);
 
             // Wait here until the callback processes the connection.

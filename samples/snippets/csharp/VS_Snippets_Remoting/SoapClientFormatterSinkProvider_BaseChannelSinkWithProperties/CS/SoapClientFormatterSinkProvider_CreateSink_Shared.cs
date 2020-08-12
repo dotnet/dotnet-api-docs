@@ -4,7 +4,7 @@ using System;
 
 public class HelloService : MarshalByRefObject
 {
-   public HelloService() 
+   public HelloService()
    {
       Console.WriteLine("Server Started ");
    }

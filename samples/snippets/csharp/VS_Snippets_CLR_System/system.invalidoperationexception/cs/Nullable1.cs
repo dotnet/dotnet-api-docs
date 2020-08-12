@@ -8,11 +8,11 @@ public class Example
    {
       var queryResult = new int?[] { 1, 2, null, 4 };
       var map = queryResult.Select(nullableInt => (int)nullableInt);
-      
+
       // Display list.
       foreach (var num in map)
          Console.Write("{0} ", num);
-      Console.WriteLine();   
+      Console.WriteLine();
    }
 }
 // The example displays the following output:

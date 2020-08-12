@@ -175,7 +175,7 @@ private:
    static void SignDocument( XmlDocument^ xmlDoc )
    {
       // Generate a signing key.
-      RSACryptoServiceProvider^ Key = gcnew RSACryptoServiceProvider;
+      RSA^ Key = RSA::Create();
       
       // Create a SignedXml object.
       SignedXml^ signedXml = gcnew SignedXml( xmlDoc );

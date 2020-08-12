@@ -2,9 +2,9 @@
 // Sample for the Environment.GetLogicalDrives method
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     Console.WriteLine();
     String[] drives = Environment.GetLogicalDrives();

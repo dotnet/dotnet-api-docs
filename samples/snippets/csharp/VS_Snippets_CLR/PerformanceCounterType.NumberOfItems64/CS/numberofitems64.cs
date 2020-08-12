@@ -27,7 +27,7 @@ public class NumberOfItems64
 
 	private static bool SetupCategory()
 	{		
-		if ( !PerformanceCounterCategory.Exists("NumberOfItems64SampleCategory") ) 
+		if ( !PerformanceCounterCategory.Exists("NumberOfItems64SampleCategory") )
 		{
 
 			CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
@@ -54,8 +54,8 @@ public class NumberOfItems64
     private static void CreateCounters()
     {
         // Create the counters.
-        PC = new PerformanceCounter("NumberOfItems64SampleCategory", 
-            "NumberOfItems64Sample", 
+        PC = new PerformanceCounter("NumberOfItems64SampleCategory",
+            "NumberOfItems64Sample",
             false);
 
         PC.RawValue=0;
@@ -67,15 +67,15 @@ public class NumberOfItems64
         Random r = new Random( DateTime.Now.Millisecond );
 
         // Loop for the samples.
-        for (int j = 0; j < 100; j++) 
+        for (int j = 0; j < 100; j++)
         {
-	        
+	
             int value = r.Next(1, 10);
             Console.Write(j + " = " + value);
 
             PC.IncrementBy(value);
 
-            if ((j % 10) == 9) 
+            if ((j % 10) == 9)
             {
                 OutputSample(PC.NextSample());
                 samplesList.Add( PC.NextSample() );
@@ -98,12 +98,12 @@ public class NumberOfItems64
 			OutputSample( (CounterSample)samplesList[i+1] );
 
             // Use .NET to calculate the counter value.
-			Console.WriteLine(".NET computed counter value = " + 
+			Console.WriteLine(".NET computed counter value = " +
 				CounterSampleCalculator.ComputeCounterValue((CounterSample)samplesList[i],
 				(CounterSample)samplesList[i+1]) );
 
             // Calculate the counter value manually.
-			Console.WriteLine("My computed counter value = " + 
+			Console.WriteLine("My computed counter value = " +
 				MyComputeCounterValue((CounterSample)samplesList[i],
 				(CounterSample)samplesList[i+1]) );
 		}

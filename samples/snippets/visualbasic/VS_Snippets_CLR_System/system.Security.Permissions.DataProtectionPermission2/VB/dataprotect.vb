@@ -9,7 +9,7 @@ Imports System.IO
 Public Class DataProtect
     ' Create a byte array for additional entropy when using the
     ' Protect and Unprotect methods.
-    Private Shared s_aditionalEntropy As Byte() = {9, 8, 7, 6, 5}
+    Private Shared s_additionalEntropy As Byte() = {9, 8, 7, 6, 5}
 
     Private Shared encryptedSecret() As Byte
     Private Shared originalData() As Byte
@@ -126,7 +126,7 @@ Public Class DataProtect
             ' Encrypt the data using DataProtectionScope.CurrentUser.
             ' The result can be decrypted only by the user who encrypted
             ' the data.
-            Return ProtectedData.Protect(data, s_aditionalEntropy, DataProtectionScope.CurrentUser)
+            Return ProtectedData.Protect(data, s_additionalEntropy, DataProtectionScope.CurrentUser)
         Catch e As CryptographicException
             Console.WriteLine("Data was not encrypted. " + "An error has occurred.")
             Console.WriteLine(e.ToString())
@@ -144,7 +144,7 @@ Public Class DataProtect
     Public Shared Function Unprotect(ByVal data() As Byte) As Byte()
         Try
             'Decrypt the data using DataProtectionScope.CurrentUser.
-            Return ProtectedData.Unprotect(data, s_aditionalEntropy, DataProtectionScope.CurrentUser)
+            Return ProtectedData.Unprotect(data, s_additionalEntropy, DataProtectionScope.CurrentUser)
         Catch e As CryptographicException
             Console.WriteLine("Data was not decrypted. " + "An error has occurred.")
             Console.WriteLine(e.ToString())

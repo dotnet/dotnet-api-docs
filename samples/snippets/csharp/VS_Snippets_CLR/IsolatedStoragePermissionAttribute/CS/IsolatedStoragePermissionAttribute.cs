@@ -1,14 +1,14 @@
-﻿//Types:System.Security.Permissions.IsolatedStorageContainment (enum) 
-//Types:System.Security.Permissions.IsolatedStoragePermissionAttribute 
-//Types:System.Security.Permissions.SecurityAction 
+﻿//Types:System.Security.Permissions.IsolatedStorageContainment (enum)
+//Types:System.Security.Permissions.IsolatedStoragePermissionAttribute
+//Types:System.Security.Permissions.SecurityAction
 //<snippet1>
 using System;
 using System.Security.Permissions;
 using System.IO.IsolatedStorage;
 using System.IO;
 
-// Notify the CLR to only grant IsolatedStorageFilePermission to called methods. 
-// This restricts the called methods to working only with storage files that are isolated 
+// Notify the CLR to only grant IsolatedStorageFilePermission to called methods.
+// This restricts the called methods to working only with storage files that are isolated
 // by user and assembly.
 [IsolatedStorageFilePermission(SecurityAction.PermitOnly, UsageAllowed = IsolatedStorageContainment.AssemblyIsolationByUser)]
 public sealed class App
@@ -20,7 +20,7 @@ public sealed class App
     private static void WriteIsolatedStorage()
     {
         // Attempt to create a storage file that is isolated by user and assembly.
-        // IsolatedStorageFilePermission granted to the attribute at the top of this file 
+        // IsolatedStorageFilePermission granted to the attribute at the top of this file
         // allows CLR to load this assembly and execution of this statement.
         using (Stream s = new IsolatedStorageFileStream("AssemblyData", FileMode.Create, IsolatedStorageFile.GetUserStoreForAssembly()))
         {

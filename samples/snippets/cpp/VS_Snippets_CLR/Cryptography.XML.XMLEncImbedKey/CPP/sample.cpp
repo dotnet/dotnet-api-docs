@@ -40,8 +40,8 @@ static void Encrypt( XmlDocument^ Doc, String^ ElementToEncrypt, RSA^ Alg, Strin
    // and use it to encrypt the XmlElement with the
    // a new random symmetric key.
    //////////////////////////////////////////////////
-   // Create a 256 bit Rijndael key.
-   RijndaelManaged^ sessionKey = gcnew RijndaelManaged;
+   // Create a 256 bit Aes key.
+   Aes^ sessionKey = Aes::Create();
    sessionKey->KeySize = 256;
    EncryptedXml^ eXml = gcnew EncryptedXml;
    array<Byte>^encryptedElement = eXml->EncryptData( elementToEncrypt, sessionKey, false );
@@ -140,7 +140,7 @@ int main()
 
    // Create a new RSA key.  This key will encrypt a symmetric key,
    // which will then be imbedded in the XML document.
-   RSA^ rsaKey = gcnew RSACryptoServiceProvider;
+   RSA^ rsaKey = RSA::Create();
    try
    {
 

@@ -1,6 +1,6 @@
 ﻿//<Snippet1>
 using System;
-using System.Management; 
+using System.Management;
 using System.CodeDom;
 using System.IO;
 using System.CodeDom.Compiler;

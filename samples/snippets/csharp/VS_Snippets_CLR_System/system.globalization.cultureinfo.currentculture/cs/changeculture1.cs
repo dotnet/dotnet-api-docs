@@ -23,11 +23,11 @@ public class Example
       Thread.CurrentThread.Name = "MainThread";
       Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("nl-NL");
       inf.ShowCurrentCulture();
-      
+
       // Create a new application domain.
        AppDomain ad = AppDomain.CreateDomain("Domain2");
        Info inf2 = (Info) ad.CreateInstanceAndUnwrap(typeof(Info).Assembly.FullName, "Info");
-       inf2.ShowCurrentCulture();                       
+       inf2.ShowCurrentCulture();
    }
 }
 // The example displays the following output:

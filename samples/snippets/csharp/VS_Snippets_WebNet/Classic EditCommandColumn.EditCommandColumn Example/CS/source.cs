@@ -7,10 +7,10 @@ public class Page1: Page
 {
 
 // <Snippet1>
-void Page_Load(Object sender, EventArgs e) 
+void Page_Load(Object sender, EventArgs e)
 {
 
-   EditCommandColumn editcolumn = new EditCommandColumn(); 
-}   
+   EditCommandColumn editcolumn = new EditCommandColumn();
+}
 // </Snippet1>
 }

@@ -7,10 +7,10 @@ public class Example
       // <Snippet3>
       byte value1 = 12;
       int value2 = 12;
-      
+
       object object1 = value1;
       object object2 = value2;
-      
+
       Console.WriteLine("{0} ({1}) = {2} ({3}): {4}",
                         object1, object1.GetType().Name,
                         object2, object2.GetType().Name,

@@ -45,7 +45,7 @@ namespace SequenceExamples
                 foreach (string str in packageGroup)
                     Console.WriteLine("    {0}", str);
             }
-                        
+
             // This code produces the following output:
             //
             // C

@@ -50,10 +50,10 @@ class MyUdpClientF
         {
             switch (sendMethodIndex)
             {
-                case 1: 
+                case 1:
                     SendMessage1(server, message);
                     break;
-                case 2: 
+                case 2:
                     SendMessage2(server, message);
                     break;
                 case 3:

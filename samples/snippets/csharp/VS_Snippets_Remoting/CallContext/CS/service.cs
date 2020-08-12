@@ -17,16 +17,16 @@ public class HelloServiceClass : MarshalByRefObject {
    }
 
    ~HelloServiceClass() {
-      Console.WriteLine("Destroyed instance {0} of HelloServiceClass.", instanceNum);      
+      Console.WriteLine("Destroyed instance {0} of HelloServiceClass.", instanceNum);
    }
 
    [PermissionSet(SecurityAction.LinkDemand)]
    public String HelloMethod(String name) {
 
       //Extract the call context data
-      LogicalCallContextData data = (LogicalCallContextData)CallContext.GetData("test data");      
+      LogicalCallContextData data = (LogicalCallContextData)CallContext.GetData("test data");
       IPrincipal myPrincipal = data.Principal;
-      
+
       //Check the user identity
       if(myPrincipal.Identity.Name == "Bob") {
          Console.WriteLine("\nHello {0}, you are identified!", myPrincipal.Identity.Name);
@@ -52,19 +52,19 @@ public class LogicalCallContextData : ILogicalThreadAffinative
 
    public string numOfAccesses {
       get {
-         return String.Format("The identity of {0} has been accessed {1} times.", 
-                              _principal.Identity.Name, 
+         return String.Format("The identity of {0} has been accessed {1} times.",
+                              _principal.Identity.Name,
                               _nAccesses);
       }
    }
 
    public IPrincipal Principal {
-      get { 
+      get {
          _nAccesses ++;
          return _principal;
       }
    }
-   
+
    public LogicalCallContextData(IPrincipal p) {
       _nAccesses = 0;
       _principal = p;

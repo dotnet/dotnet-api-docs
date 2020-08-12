@@ -4,7 +4,7 @@
 This program demonstrates the 'WebException(String, WebExceptionStatus)' constructor of 'WebException' class.
 It creates a 'HttpConnect' Object* and calls the 'ConnectHttpServer' method with invalid 'URL'.
 When the method tries to establish a socket connection to that address an exception is thrown and
-in the 'catch' block  a new 'WebException' Object* is created  and  thrown.That exception is caught
+in the 'catch' block  a new 'WebException' Object* is created  and  thrown. That exception is caught
 in the calling method and the error message is displayed on the console.
 */
 

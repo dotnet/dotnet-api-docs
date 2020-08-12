@@ -25,7 +25,7 @@ public class Example
         // On the default setting, security is checked every time
         // a key/value pair is read.
         rk = cu.OpenSubKey(testKey, RegistryKeyPermissionCheck.Default);
-        
+
         s.Start();
         for (int i = 0; i < LIMIT; i++)
         {
@@ -37,10 +37,10 @@ public class Example
 
         s.Reset();
 
-        // When the key is opened with ReadSubTree, security is 
+        // When the key is opened with ReadSubTree, security is
         // not checked when the values are read.
         rk = cu.OpenSubKey(testKey, RegistryKeyPermissionCheck.ReadSubTree);
-        
+
         s.Start();
         for (int i = 0; i < LIMIT; i++)
         {

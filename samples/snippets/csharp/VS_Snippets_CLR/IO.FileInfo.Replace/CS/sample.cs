@@ -10,7 +10,7 @@ namespace FileSystemExample
         {
             try
             {
-                // originalFile and fileToReplace must contain the path to files that already exist in the  
+                // originalFile and fileToReplace must contain the path to files that already exist in the
                 // file system. backUpOfFileToReplace is created during the execution of the Replace method.
 
                 string originalFile  = "test.txt";
@@ -51,7 +51,7 @@ namespace FileSystemExample
         }
     }
 }
-//Move the contents of test.txt into test2.txt, delete test.txt, and 
+//Move the contents of test.txt into test2.txt, delete test.txt, and
 //create a backup of test2.txt.
 //Done
 

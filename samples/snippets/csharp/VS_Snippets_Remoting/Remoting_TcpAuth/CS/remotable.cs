@@ -14,7 +14,7 @@ public class Remotable : MarshalByRefObject
     {
         // Create a message.
         StringBuilder message = new StringBuilder("call");
-        
+
         // Identity the calling principal.
         IIdentity remoteIdentity =
             System.Runtime.Remoting.Messaging.CallContext.GetData("__remotePrincipal") as IIdentity;
@@ -24,7 +24,7 @@ public class Remotable : MarshalByRefObject
         }
         else
         {
-            message.AppendFormat(" by {0}", remoteIdentity.Name); 
+            message.AppendFormat(" by {0}", remoteIdentity.Name);
         }
 
         // Identify the executing principal.

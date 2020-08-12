@@ -9,7 +9,7 @@ public class Example
    {
       OpCode op = OpCodes.Add;
       foreach (var prp in op.GetType().GetProperties())
-         Console.WriteLine("{0} ({1}): {2}", prp.Name, 
+         Console.WriteLine("{0} ({1}): {2}", prp.Name,
                            prp.PropertyType.Name, prp.GetValue(op));
    }
 }

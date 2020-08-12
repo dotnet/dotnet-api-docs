@@ -7,23 +7,23 @@ public class Example
 {
    public static void Main()
    {
-      GuidAttribute guidAttr = (GuidAttribute) Attribute.GetCustomAttribute(typeof(Example), 
+      GuidAttribute guidAttr = (GuidAttribute) Attribute.GetCustomAttribute(typeof(Example),
                                                       typeof(GuidAttribute));
       Guid guidValue = Guid.Parse(guidAttr.Value);
-      Object[] values = { null , 16, 
+      Object[] values = { null , 16,
                           Guid.Parse("01e75c83-c6f5-4192-b57e-7427cec5560d"),
                           guidValue };
       foreach (var value in values) {
          try {
-            Console.WriteLine("{0} and {1}: {2}", guidValue, 
+            Console.WriteLine("{0} and {1}: {2}", guidValue,
                               value == null ? "null" : value,
                               guidValue.CompareTo(value));
          }
          catch (ArgumentException) {
             Console.WriteLine("Cannot compare {0} and {1}", guidValue,
                               value == null ? "null" : value);
-         }                     
-      }                         
+         }
+      }
    }
 }
 // The example displays the following output:

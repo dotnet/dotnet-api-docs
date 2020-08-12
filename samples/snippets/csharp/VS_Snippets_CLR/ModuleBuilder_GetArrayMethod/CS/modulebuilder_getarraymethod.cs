@@ -3,10 +3,10 @@
 /*
 The following example demonstrates 'GetArrayMethod' and 'GetArrayMethodToken'
 methods of 'ModuleBuilder' class.
-A dynamic assembly with a module having a runtime class, 'TempClass' is created. 
-This class defines a method, 'SortArray', which sorts the elements of the array 
-passed to it.The 'GetArrayMethod' method is used to obtain the 'MethodInfo' object 
-corresponding to the 'Sort' method of the 'Array' .The token used to identify the 'Sort' 
+A dynamic assembly with a module having a runtime class, 'TempClass' is created.
+This class defines a method, 'SortArray', which sorts the elements of the array
+passed to it. The 'GetArrayMethod' method is used to obtain the 'MethodInfo' object
+corresponding to the 'Sort' method of the 'Array'. The token used to identify the 'Sort'
 method in dynamic module is displayed using 'GetArrayMethodToken' method.
 */
 using System;
@@ -18,7 +18,7 @@ using System.Security.Permissions;
    {
       AssemblyBuilder myAssemblyBuilder;
       internal CodeGenerator()
-      {     
+      {
          AppDomain myCurrentDomain = AppDomain.CurrentDomain;
          AssemblyName myAssemblyName = new AssemblyName();
          myAssemblyName.Name = "TempAssembly";
@@ -35,7 +35,7 @@ using System.Security.Permissions;
                                     ("TempClass",TypeAttributes.Public);
          Type[] paramArray = {typeof(Array)};
          // Add 'SortArray' method to the class, with the given signature.
-         MethodBuilder myMethod = myTypeBuilder.DefineMethod("SortArray", 
+         MethodBuilder myMethod = myTypeBuilder.DefineMethod("SortArray",
                                    MethodAttributes.Public,typeof(Array),paramArray);
 
          Type[] myArrayClass = new Type[1];
@@ -92,7 +92,7 @@ using System.Security.Permissions;
                Console.WriteLine("Array element {0} : {1} ",i,arrayToSort[i]);
             }
             object[] arguments = {arrayToSort};
-            Console.WriteLine("Invoking our dynamically " 
+            Console.WriteLine("Invoking our dynamically "
                                      + "created SortArray method...");
             object myOutput=sortArray.Invoke(myObject, arguments);
             String[] mySortedArray=(String[])myOutput;

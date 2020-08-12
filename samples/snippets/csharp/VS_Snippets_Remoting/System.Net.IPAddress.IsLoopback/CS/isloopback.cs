@@ -1,9 +1,9 @@
 ﻿/*
-   This program checks whether the specified address is a loopback address.  
-   It invokes the IPAddress Parse method to translate the address 
+   This program checks whether the specified address is a loopback address.
+   It invokes the IPAddress Parse method to translate the address
    input string into the correct internal format.
-   The IP address string must be in dotted-quad notation for IPv4 or in 
-   colon-hexadecimal notation for IPv6. 
+   The IP address string must be in dotted-quad notation for IPv4 or in
+   colon-hexadecimal notation for IPv6.
 */
 
 // <Snippet1>
@@ -15,9 +15,9 @@ using System.Net.Sockets;
 class IsLoopbackTest
 {
 
-  private static void Main(string[] args) 
+  private static void Main(string[] args)
   {
-    
+
     if (args.Length == 0)
     {
       // No parameters entered. Display program usage.
@@ -34,7 +34,7 @@ class IsLoopbackTest
         }
     }
 
-  // This method calls the IPAddress.Parse method to check if the 
+  // This method calls the IPAddress.Parse method to check if the
   // passed ipAddress parameter is in the correct format.
   // Then it checks whether it represents a loopback address.
   // Finally, it displays the results.
@@ -47,8 +47,8 @@ class IsLoopbackTest
       // Perform syntax check by parsing the address string entered by the user.
       IPAddress address = IPAddress.Parse(ipAddress);
 
-      // Perform semantic check by verifying that the address is a valid IPv4 
-      // or IPv6 loopback address. 
+      // Perform semantic check by verifying that the address is a valid IPv4
+      // or IPv6 loopback address.
       if(IPAddress.IsLoopback(address)&& address.AddressFamily == AddressFamily.InterNetworkV6)
         loopBack =  " is an IPv6 loopback address " +
                     "whose internal format is: " + address.ToString() + ".";
@@ -67,7 +67,7 @@ class IsLoopbackTest
       Console.WriteLine("Source : " + e.Source);
       Console.WriteLine("Message : " + e.Message);
     }
-    
+
     catch(Exception e)
     {
       Console.WriteLine("Exception caught!!!");

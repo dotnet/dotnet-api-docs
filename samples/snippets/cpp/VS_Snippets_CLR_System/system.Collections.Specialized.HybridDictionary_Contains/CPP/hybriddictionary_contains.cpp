@@ -58,7 +58,7 @@ int main()
 }
 
 /*
-This code produces the following output.
+This code produces output similar to the following:
 
 Initial contents of the HybridDictionary:
    KEY                       VALUE

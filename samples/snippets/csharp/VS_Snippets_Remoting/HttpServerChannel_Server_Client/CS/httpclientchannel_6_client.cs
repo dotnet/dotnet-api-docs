@@ -4,9 +4,9 @@
 /*
 The following program demonstrates the 'HttpClientChannel' class and
 'ChannelName','ChannelPriority' , 'Keys', properties, and 'Parse',
-CreateMessageSink methods of 'HttpClientChannel' class. This program 
+CreateMessageSink methods of 'HttpClientChannel' class. This program
 create and registers 'HttpClientChannel'. This will change the priority
-of the 'HttpClientChannel' channel and it displays the property values 
+of the 'HttpClientChannel' channel and it displays the property values
 of 'HttpClientChannel'.
 */
 // <Snippet4>
@@ -18,10 +18,10 @@ using System.Collections;
 using  System.Runtime.Remoting.Messaging;
 using System.Security.Permissions;
 
-public class MyHttpClientChannel 
+public class MyHttpClientChannel
 {
    [PermissionSet(SecurityAction.LinkDemand)]
-   public static void Main() 
+   public static void Main()
    {
       try
       {
@@ -31,7 +31,7 @@ public class MyHttpClientChannel
          myDictionary["name"]="HttpClientChannel";
          myDictionary["priority"]=2;
          // Set the properties along with the constructor.
-         HttpClientChannel myHttpClientChannel = 
+         HttpClientChannel myHttpClientChannel =
                new HttpClientChannel(myDictionary,new BinaryClientFormatterSinkProvider());
          // Register the server channel.
          ChannelServices.RegisterChannel(myHttpClientChannel);
@@ -49,13 +49,13 @@ public class MyHttpClientChannel
             // Get the channel priority.
             Console.WriteLine("ChannelPriority :"+myHttpClientChannel.ChannelPriority.ToString());
             string myString,myObjectURI1;
-            Console.WriteLine("Parse :" + 
+            Console.WriteLine("Parse :" +
                 myHttpClientChannel.Parse("http://localhost:8085/SayHello",out myString)+myString);
             // Get the key count.
             System.Console.WriteLine("Keys.Count : " + myHttpClientChannel.Keys.Count);
             // Get the channel message sink that delivers message to the specified url.
-            IMessageSink myIMessageSink = 
-            myHttpClientChannel.CreateMessageSink("http://localhost:8085/NewEndPoint", 
+            IMessageSink myIMessageSink =
+            myHttpClientChannel.CreateMessageSink("http://localhost:8085/NewEndPoint",
                                                                             null,out myObjectURI1);
             Console.WriteLine("The channel message sink that delivers the messages to the URL is : "
                                     +myIMessageSink.ToString());
@@ -66,7 +66,7 @@ public class MyHttpClientChannel
       catch(Exception ex)
       {
          Console.WriteLine("The following exception is raised on client side :"+ex.Message);
-      }     
+      }
    }
 }
 // </Snippet4>

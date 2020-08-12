@@ -9,8 +9,8 @@
    the class 'DiscoveryClientReferenceCollection'. The 'Add(DiscoveryReference)'
    method adds a DocumentReference object to the DiscoveryClientDocumentCollection
    collection. The Add(url, DiscoveryReference) method adds a DiscoveryReference
-   with the specified Url. The 'Remove' method removes a DiscoveryReference with 
-   the specified Url from the 'DiscoveryClientReferenceCollection' collection. 
+   with the specified Url. The 'Remove' method removes a DiscoveryReference with
+   the specified Url from the 'DiscoveryClientReferenceCollection' collection.
    The 'Item' property gets or sets a DiscoveryReference object from the
    'DiscoveryClientReferenceCollection' with the specified Url.
 */
@@ -26,9 +26,9 @@ public class DiscoveryClientReferenceCollection_Keys
 // <Snippet5>
 // <Snippet2>
 // <Snippet1>
-      DiscoveryClientReferenceCollection myDiscoveryClientReferenceCollection = 
+      DiscoveryClientReferenceCollection myDiscoveryClientReferenceCollection =
           new DiscoveryClientReferenceCollection();
-      
+
       ContractReference myContractReference = new ContractReference();
       string myStringUrl1 = "http://www.contoso.com/service1.disco";
       myContractReference.Ref = myStringUrl1;
@@ -46,7 +46,7 @@ public class DiscoveryClientReferenceCollection_Keys
       DiscoveryDocumentReference myDiscoveryDocumentReference =
           new DiscoveryDocumentReference();
       string myStringUrl = "http://www.contoso.com/service.disco";
-      myDiscoveryClientReferenceCollection.Add(myStringUrl, 
+      myDiscoveryClientReferenceCollection.Add(myStringUrl,
           myDiscoveryDocumentReference);
 // </Snippet3>
       myDiscoveryClientReferenceCollection.Remove(myStringUrl);
@@ -54,10 +54,10 @@ public class DiscoveryClientReferenceCollection_Keys
 
       // Retrieve the keys in the collection.
       ICollection myCollection = myDiscoveryClientReferenceCollection.Keys;
-      object[] myObjectCollection = 
+      object[] myObjectCollection =
           new object[myDiscoveryClientReferenceCollection.Count];
       myCollection.CopyTo(myObjectCollection, 0);
-      
+
       Console.WriteLine("The discovery documents, service descriptions, and");
       Console.WriteLine("XML schema definitions in the collection are:");
       for (int iIndex=0; iIndex < myObjectCollection.Length; iIndex++)
@@ -69,14 +69,14 @@ public class DiscoveryClientReferenceCollection_Keys
 
       // Retrieve the values in the collection.
       ICollection myCollection1 = myDiscoveryClientReferenceCollection.Values;
-      object[] myObjectCollection1 = 
+      object[] myObjectCollection1 =
           new object[myDiscoveryClientReferenceCollection.Count];
       myCollection1.CopyTo(myObjectCollection1, 0);
-      
+
       Console.WriteLine("The objects in the collection are:");
       for (int iIndex=0; iIndex < myObjectCollection1.Length; iIndex++)
       {
           Console.WriteLine(myObjectCollection1[iIndex]);
       }
    }
-} 
+}

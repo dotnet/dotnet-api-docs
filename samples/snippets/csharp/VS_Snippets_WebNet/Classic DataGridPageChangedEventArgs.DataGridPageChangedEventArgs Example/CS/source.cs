@@ -8,10 +8,10 @@ public class Form1: Page
 {
  protected TextBox textBox1;
 // <Snippet1>
-void Grid_Change(Object sender, DataGridPageChangedEventArgs e) 
+void Grid_Change(Object sender, DataGridPageChangedEventArgs e)
 {
    DataGridPageChangedEventArgs page_change_args = new DataGridPageChangedEventArgs(e.CommandSource, e.NewPageIndex);
 }
-   
+
 // </Snippet1>
 }

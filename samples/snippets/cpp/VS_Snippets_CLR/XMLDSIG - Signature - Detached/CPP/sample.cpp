@@ -23,8 +23,7 @@ namespace Sample
         static void Work()
         {
             // Generate a signing key.
-            RSACryptoServiceProvider^ key = 
-                gcnew RSACryptoServiceProvider();
+            RSA^ key = RSA::Create();
 
             try
             {
@@ -63,7 +62,7 @@ namespace Sample
             finally
             {
                 // Clear resources associated with the 
-                // RSACryptoServiceProvider.
+                // RSA instance.
                 key->Clear();
             }
         }

@@ -14,7 +14,7 @@ namespace BitmapEditorExample
 		private System.ComponentModel.Container components = null;
 
         //<Snippet1>
-        [EditorAttribute(typeof(System.Drawing.Design.BitmapEditor), 
+        [EditorAttribute(typeof(System.Drawing.Design.BitmapEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
         public Bitmap testBitmap
         {
@@ -37,7 +37,7 @@ namespace BitmapEditorExample
 
 		#region Component Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify 
+		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()

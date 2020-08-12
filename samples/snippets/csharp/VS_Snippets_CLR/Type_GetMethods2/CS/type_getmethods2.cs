@@ -10,7 +10,7 @@ public class MyTypeClass
     public void MyMethods()
     {
     }
-    public int MyMethods1() 
+    public int MyMethods1()
     {
         return 3;
     }
@@ -21,7 +21,7 @@ public class MyTypeClass
 }
 public class TypeMain
 {
-    public static void Main() 
+    public static void Main()
     {
         Type myType =(typeof(MyTypeClass));
         // Get the public methods.

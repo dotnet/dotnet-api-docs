@@ -5,7 +5,7 @@ public class Example
    public static void Main()
    {
       // <Snippet2>
-      double[] doubles = { Double.MaxValue, 16.354e-17, 15.098123, 0, 
+      double[] doubles = { Double.MaxValue, 16.354e-17, 15.098123, 0,
                            -19.069713, -15.058e18, Double.MinValue };
       foreach (double value in doubles)
          Console.WriteLine($"Abs({value}) = {Math.Abs(value)}");

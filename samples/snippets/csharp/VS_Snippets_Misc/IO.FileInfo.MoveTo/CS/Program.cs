@@ -10,24 +10,24 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace Microsoft.Samples.MoveTo.CS 
+namespace Microsoft.Samples.MoveTo.CS
 {
 
-	class Program 
+	class Program
 	{
 		private static string sourcePath = Environment.GetFolderPath
-			(Environment.SpecialFolder.MyDocuments) + 
+			(Environment.SpecialFolder.MyDocuments) +
 			@"\FileInfoTestDirectory\MoveFrom\FromFile.xml";
 		
 		private static string destPath = Environment.GetFolderPath
-			(Environment.SpecialFolder.MyDocuments) + 
+			(Environment.SpecialFolder.MyDocuments) +
 			@"\FileInfoTestDirectory\DestFile.xml";
 		//
 		// The main entry point for the application.
 		//
-		[STAThread()] static void Main () 
+		[STAThread()] static void Main ()
 		{
-			// Change Console properties to make it obvious that 
+			// Change Console properties to make it obvious that
 			// the application is starting.
 			Console.Clear();
 			// Move it to the upper left corner of the screen.
@@ -58,9 +58,9 @@ namespace Microsoft.Samples.MoveTo.CS
 		//
 		// Moves the supplied FileInfo instance to destPath.
 		//
-		private static void MoveFile(FileInfo fInfo) 
+		private static void MoveFile(FileInfo fInfo)
 		{
-			try 
+			try
 			{
 				fInfo.MoveTo(destPath);
 				Console.WriteLine("File moved to ");
@@ -70,38 +70,38 @@ namespace Microsoft.Samples.MoveTo.CS
 			}
 		}
 		//
-		// Ensures that the test directories 
+		// Ensures that the test directories
 		// and the file FromFile.xml all exist.
-		// 
-		private static void EnsureSourceFileExists() 
+		//
+		private static void EnsureSourceFileExists()
 		{
 			FileInfo fInfo = new FileInfo(sourcePath);
 			string dirPath = fInfo.Directory.FullName;
-			if (!Directory.Exists(dirPath)) 
+			if (!Directory.Exists(dirPath))
 			{
 				Directory.CreateDirectory(dirPath);
 			}
-			if (File.Exists(destPath)) 
+			if (File.Exists(destPath))
 			{
 				File.Delete(destPath);
 			}
 			Console.Write("Creating file ");
 			Console.Write(fInfo.FullName);
 			Console.WriteLine(".");
-			try 
+			try
 			{
-				if (!fInfo.Exists) 
+				if (!fInfo.Exists)
 				{
 					Console.WriteLine("Adding data to the file.");
 					WriteFileContent(10);
 					Console.WriteLine("Successfully created the file.");
 				}
-			} 
-			catch (Exception ex) 
+			}
+			catch (Exception ex)
 			{
 				DisplayException(ex);
-			} 
-			finally 
+			}
+			finally
 			{
 				dirPath = null;
 			}
@@ -109,7 +109,7 @@ namespace Microsoft.Samples.MoveTo.CS
 		//
 		// Creates and saves an Xml file to sourcePath.
 		//
-		private static void WriteFileContent(int totalElements) 
+		private static void WriteFileContent(int totalElements)
 		{
 			XmlDocument doc = new XmlDocument();
 			doc.PreserveWhitespace = true;
@@ -119,7 +119,7 @@ namespace Microsoft.Samples.MoveTo.CS
 			root.AppendChild(doc.CreateWhitespace("\r\n"));
 			int index = 0;
 			XmlElement elem;
-			while (index < totalElements) 
+			while (index < totalElements)
 			{
 				
 				elem = doc.CreateElement("MyElement");
@@ -143,11 +143,11 @@ namespace Microsoft.Samples.MoveTo.CS
 		// Displays FullName, CreationTime, and LastWriteTime of the supplied
 		// FileInfo instance, then displays the text of the file.
 		//
-		private static void DisplayFileProperties(FileInfo fInfo) 
+		private static void DisplayFileProperties(FileInfo fInfo)
 		{
 			Console.WriteLine("The FileInfo instance shows these property values.");
 			StreamReader reader = null;
-			try 
+			try
 			{
 				Console.Write("FullName: ");
 				Console.WriteLine(fInfo.FullName);
@@ -159,19 +159,19 @@ namespace Microsoft.Samples.MoveTo.CS
 				Console.WriteLine("File contents:");
 				Console.WriteLine();
 				reader = new StreamReader(fInfo.FullName);
-				while (!reader.EndOfStream) 
+				while (!reader.EndOfStream)
 				{
 					Console.WriteLine(reader.ReadLine());
 				}
 				Console.WriteLine();
-			} 
-			catch (Exception ex) 
+			}
+			catch (Exception ex)
 			{
 				DisplayException(ex);
-			} 
-			finally 
+			}
+			finally
 			{
-				if (reader != null) 
+				if (reader != null)
 				{
 					reader.Close();
 				}
@@ -181,20 +181,20 @@ namespace Microsoft.Samples.MoveTo.CS
 		//
 		// Deletes the test directory and all its files and subdirectories.
 		//
-		private static void DeleteFiles() 
+		private static void DeleteFiles()
 		{
-			try 
+			try
 			{
 				DirectoryInfo dInfo = new DirectoryInfo(Environment.GetFolderPath
 					(Environment.SpecialFolder.MyDocuments) + "\\FileInfoTestDirectory");
-				if (dInfo.Exists) 
+				if (dInfo.Exists)
 				{
 					dInfo.Delete(true);
 					Console.WriteLine("Successfully deleted directories and files.");
 				}
 				dInfo = null;
-			} 
-			catch (Exception ex) 
+			}
+			catch (Exception ex)
 			{
 				DisplayException(ex);
 			}
@@ -203,7 +203,7 @@ namespace Microsoft.Samples.MoveTo.CS
 		// Displays information about the supplied Exception. This
 		// code is not suitable for production applications.
 		//
-		private static void DisplayException(Exception ex) 
+		private static void DisplayException(Exception ex)
 		{
 			StringBuilder sb = new StringBuilder();
 			sb.Append("An exception of type \"");
@@ -217,13 +217,13 @@ namespace Microsoft.Samples.MoveTo.CS
 			string[] argList;
 			Match matchObj;
 			int y, K;
-			for(int x = 0; x < L; x++) 
+			for(int x = 0; x < L; x++)
 			{
 				matchObj = matchCol[x];
 				sb.Append(matchObj.Result("\r\n\r\n$1 $2$3$4$5"));
 				argList = matchObj.Groups[6].Value.Split(new char[] { ',' });
 				K = argList.Length;
-				for (y = 0; y < K; y++) 
+				for (y = 0; y < K; y++)
 				{
 					sb.Append("\r\n    ");
 					sb.Append(argList[y].Trim().Replace(" ", "        "));
@@ -231,7 +231,7 @@ namespace Microsoft.Samples.MoveTo.CS
 				}
 				sb.Remove(sb.Length - 1, 1);
 				sb.Append("\r\n)");
-				if (0 < matchObj.Groups[8].Length) 
+				if (0 < matchObj.Groups[8].Length)
 				{
 					sb.Append(matchObj.Result("\r\n$10\r\nline $12"));
 				}
@@ -244,7 +244,7 @@ namespace Microsoft.Samples.MoveTo.CS
 		}
 	}
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 // Welcome.
@@ -304,9 +304,9 @@ namespace Microsoft.Samples.MoveTo.CS
 // FullName: C:\Documents and Settings\MYComputer\My Documents\FileInfoTestDirectory\DestFile.xml
 // CreationTime: 4/18/2006 1:24:19 PM
 // LastWriteTime: 4/18/2006 1:24:19 PM
-// 
+//
 // File contents:
-// 
+//
 // <?xml version="1.0" standalone="yes"?>
 // <FileInfo.MoveTo>
 // <MyElement Index="0">
@@ -340,7 +340,7 @@ namespace Microsoft.Samples.MoveTo.CS
 // MyElement at position 9.
 // </MyElement>
 // </FileInfo.MoveTo>
-// 
+//
 // Preparing to delete directories.
 // Successfully deleted directories and files.
 // Press the ENTER key to close this application.

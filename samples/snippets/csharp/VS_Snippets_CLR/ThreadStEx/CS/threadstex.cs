@@ -2,11 +2,11 @@
 using System;
 using System.Threading;
 
-public class ThreadWork 
+public class ThreadWork
 {
    public static void DoWork()
    {
-      Console.WriteLine("Working thread..."); 
+      Console.WriteLine("Working thread...");
    }
 }
 
@@ -19,7 +19,7 @@ class ThreadStateTest
       myThread.Start();
       Thread.Sleep(0);
       Console.WriteLine("In main. Attempting to restart myThread.");
-      try 
+      try
       {
          myThread.Start();
       }

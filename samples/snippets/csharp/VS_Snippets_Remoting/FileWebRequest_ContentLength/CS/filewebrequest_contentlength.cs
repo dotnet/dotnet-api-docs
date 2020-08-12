@@ -1,6 +1,6 @@
 ﻿// System.Net.FileWebRequest.ContentLength;System.Net.FileWebRequest.RequestUri;
 
-/* 
+/*
   This program demonstrates 'ContentLength'and 'RequestUri' property of 'FileWebRequest' class.
   The path of a file where user would like to write something is obtained from command line argument.
   Then a 'WebRequest' object is created. The 'ContentLength' property of 'FileWebRequest' is used to
@@ -16,18 +16,18 @@ using System.Text;
      {
         public static void Main(String[] args)
         {
-           
+
           if (args.Length < 1)
           {
             Console.WriteLine("\nPlease enter the file name as command line parameter where you want to write:");
           Console.WriteLine("Usage:FileWebRequest_ContentLen <systemname>/<sharedfoldername>/<filename>\nExample:FileWebRequest_ContentLen shafeeque/shaf/hello.txt");
-          } 
+          }
           else
           {
              try
            {
 
-                     // Create an 'Uri' object. 
+                     // Create an 'Uri' object.
                   Uri myUrl=new Uri("file://"+args[0]);
                   String fileName = "file://"+args[0];
                   FileWebRequest myFileWebRequest =null;
@@ -35,7 +35,7 @@ using System.Text;
 // <Snippet1>
 
                   myFileWebRequest = (FileWebRequest)WebRequest.Create(myUrl);
-            
+
                   Console.WriteLine("Enter the string you want to write into the file:");
                   String userInput = Console.ReadLine();
                   ASCIIEncoding encoder = new ASCIIEncoding();
@@ -43,7 +43,7 @@ using System.Text;
 
                   // Set the 'Method' property of 'FileWebRequest' object to 'POST' method.
                   myFileWebRequest.Method="POST";
-            
+
                   // The 'ContentLength' property is used to set the content length of the file.
                   myFileWebRequest.ContentLength = byteArray.Length;
 // </Snippet1>
@@ -58,9 +58,9 @@ using System.Text;
                      readStream.Close();
                   }
 
-                  Console.WriteLine("\nThe String you entered was successfully written into the file.");    
-                  Console.WriteLine("The content length sent to the server is "+myFileWebRequest.ContentLength+".");    
-                  
+                  Console.WriteLine("\nThe String you entered was successfully written into the file.");
+                  Console.WriteLine("The content length sent to the server is "+myFileWebRequest.ContentLength+".");
+
 // </Snippet2>
             }
             catch(ArgumentException e)
@@ -71,6 +71,6 @@ using System.Text;
             {
                   Console.WriteLine("The UriFormatException is :"+e.Message);
               }
-           }            
+           }
         }
     }

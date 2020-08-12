@@ -22,12 +22,12 @@ namespace PInvoke
          AssemblyName myAssemblyName = new AssemblyName("TempAssembly");
 
          // Define a dynamic assembly in the current application domain.
-         AssemblyBuilder myAssemblyBuilder = 
+         AssemblyBuilder myAssemblyBuilder =
             AppDomain.CurrentDomain.DefineDynamicAssembly(
                         myAssemblyName, AssemblyBuilderAccess.Run);
 
          // Define a dynamic module in "TempAssembly" assembly.
-         ModuleBuilder myModuleBuilder = 
+         ModuleBuilder myModuleBuilder =
             myAssemblyBuilder.DefineDynamicModule("TempModule");
 
          Type[] paramTypes = { typeof(int), typeof(string), typeof(string), typeof(int) };
@@ -42,7 +42,7 @@ namespace PInvoke
             paramTypes,
             CallingConvention.Winapi,
             CharSet.Ansi);
-         
+
          // Add PreserveSig to the method implementation flags. NOTE: If this line
          // is commented out, the return value will be zero when the method is
          // invoked.
@@ -57,7 +57,7 @@ namespace PInvoke
 
          MethodInfo pinvokeMethod = myModuleBuilder.GetMethod("MessageBoxA");
          Console.WriteLine("Testing module-level PInvoke method created with DefinePInvokeMethod...");
-         Console.WriteLine("Message box returned: {0}", 
+         Console.WriteLine("Message box returned: {0}",
             pinvokeMethod.Invoke(null, arguments));
       }
    }

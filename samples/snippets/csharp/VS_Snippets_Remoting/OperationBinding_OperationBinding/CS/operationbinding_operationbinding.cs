@@ -9,11 +9,11 @@
 
 /*
    The following example demonstrates the usage of the 'OperationBinding'
-   class, constructor 'OperationBinding()' and various properties of the class. The
+   class, the 'OperationBinding()' constructor, and various properties of the class. The
    input to the program is a WSDL file 'MathService_input_cs.wsdl' without the
-   add operation binding for SOAP protocol. In the example the WSDL file is modified to insert 
-   a new 'OperationBinding' instance for SOAP. The 'OperationBinding' instance 
-   is populated based on WSDL document structure defined in WSDL specification.The updated 
+   add operation binding for SOAP protocol. In the example, the WSDL file is modified to insert
+   a new 'OperationBinding' instance for SOAP. The 'OperationBinding' instance
+   is populated based on the WSDL document structure defined in the WSDL specification. The updated
    instance is then written to 'MathService_new_cs.wsdl'.
 */
 
@@ -55,18 +55,18 @@ class MyOperationBindingSample
          OutputBinding myOutputBinding = new OutputBinding();
          myOutputBinding.Extensions.Add(mySoapBodyBinding);
 
-         // Add the OutputBinding to the OperationBinding. 
+         // Add the OutputBinding to the OperationBinding.
          addOperationBinding.Output = myOutputBinding;
 // </Snippet5>
 
 // <Snippet6>
          // Create an extensibility element for a SoapOperationBinding.
-         SoapOperationBinding mySoapOperationBinding = 
+         SoapOperationBinding mySoapOperationBinding =
             new SoapOperationBinding();
          mySoapOperationBinding.Style = SoapBindingStyle.Document;
          mySoapOperationBinding.SoapAction = myTargetNamespace + addOperation;
 
-         // Add the extensibility element SoapOperationBinding to 
+         // Add the extensibility element SoapOperationBinding to
          // the OperationBinding.
          addOperationBinding.Extensions.Add(mySoapOperationBinding);
 // </Snippet6>
@@ -91,18 +91,18 @@ class MyOperationBindingSample
 // </Snippet7>
 
          // Get the BindingCollection from the ServiceDescription.
-         BindingCollection myBindingCollection = 
+         BindingCollection myBindingCollection =
             myServiceDescription.Bindings;
 
-         // Get the OperationBindingCollection of SOAP binding 
+         // Get the OperationBindingCollection of SOAP binding
          // from the BindingCollection.
-         OperationBindingCollection myOperationBindingCollection = 
+         OperationBindingCollection myOperationBindingCollection =
             myBindingCollection[0].Operations;
          myOperationBindingCollection.Add(addOperationBinding);
 
          Console.WriteLine(
             "The operations supported by this service are:");
-         foreach(OperationBinding myOperationBinding in 
+         foreach(OperationBinding myOperationBinding in
             myOperationBindingCollection)
          {
 // <Snippet8>
@@ -110,15 +110,15 @@ class MyOperationBindingSample
             Console.WriteLine(" Binding : " + myBinding.Name +
                " :: Name of operation : " + myOperationBinding.Name);
 // </Snippet8>
-            FaultBindingCollection myFaultBindingCollection1 = 
+            FaultBindingCollection myFaultBindingCollection1 =
                myOperationBinding.Faults;
-            foreach(FaultBinding myFaultBinding1 in 
+            foreach(FaultBinding myFaultBinding1 in
                myFaultBindingCollection1)
             {
                  Console.WriteLine("    Fault : " + myFaultBinding1.Name);
             }
          }
-         // Save the ServiceDescripition to an external file.
+         // Save the ServiceDescription to an external file.
          myServiceDescription.Write("MathService_new_cs.wsdl");
       }
       catch(Exception e)

@@ -13,7 +13,6 @@ public class Example
 
    const int numThreads = 26;
    static bool running = true;
-   static Random rnd = new Random();
 
    // Statistics.
    static int readerTimeouts = 0;
@@ -48,6 +47,8 @@ public class Example
 
    static void ThreadProc()
    {
+      Random rnd = new Random();
+
       // Randomly select a way for the thread to read and write from the shared
       // resource.
       while (running) {
@@ -55,11 +56,11 @@ public class Example
          if (action < .8)
             ReadFromResource(10);
          else if (action < .81)
-            ReleaseRestore(50);
+            ReleaseRestore(rnd, 50);
          else if (action < .90)
-            UpgradeDowngrade(100);
+            UpgradeDowngrade(rnd, 100);
          else
-            WriteToResource(100);
+            WriteToResource(rnd, 100);
       }
    }
 
@@ -88,7 +89,7 @@ public class Example
 
    //<Snippet4>
    // Request and release the writer lock, and handle time-outs.
-   static void WriteToResource(int timeOut)
+   static void WriteToResource(Random rnd, int timeOut)
    {
       try {
          rwl.AcquireWriterLock(timeOut);
@@ -113,7 +114,7 @@ public class Example
    //<Snippet5>
    // Requests a reader lock, upgrades the reader lock to the writer
    // lock, and downgrades it to a reader lock again.
-   static void UpgradeDowngrade(int timeOut)
+   static void UpgradeDowngrade(Random rnd, int timeOut)
    {
       try {
          rwl.AcquireReaderLock(timeOut);
@@ -164,7 +165,7 @@ public class Example
    // Release all locks and later restores the lock state.
    // Uses sequence numbers to determine whether another thread has
    // obtained a writer lock since this thread last accessed the resource.
-   static void ReleaseRestore(int timeOut)
+   static void ReleaseRestore(Random rnd, int timeOut)
    {
       int lastWriter;
 

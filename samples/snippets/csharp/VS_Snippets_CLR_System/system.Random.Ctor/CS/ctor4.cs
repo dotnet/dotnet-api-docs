@@ -23,13 +23,13 @@ public class Example
       foreach (var value in values)
          Console.Write("{0, 5}", value);
 
-      Console.WriteLine(); 
+      Console.WriteLine();
    }
 }
 // The example displays output similar to the following:
 //   145  214  177  134  173
-// 
+//
 //   145  214  177  134  173
-// 
+//
 //   126  185  175  249  157
 // </Snippet4>

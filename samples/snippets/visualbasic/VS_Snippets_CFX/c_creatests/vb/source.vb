@@ -18,7 +18,7 @@ Namespace CreateSts
         Sub AddSigningCredentials(ByVal assertion As SamlAssertion, _
             ByVal signingKey As SecurityKey)
             Dim sc As New SigningCredentials(signingKey, _
-            SecurityAlgorithms.RsaSha1Signature, SecurityAlgorithms.Sha1Digest)
+            SecurityAlgorithms.RsaSha256Signature, SecurityAlgorithms.Sha256Digest)
             assertion.SigningCredentials = sc
 
         End Sub

@@ -34,7 +34,7 @@ public sealed class SoundPermission : CodeAccessPermission, IPermission,
         m_specifiedAsUnrestricted = (state == PermissionState.Unrestricted);
     }
 
-    // This constructor creates and initializes a permission with specific access.        
+    // This constructor creates and initializes a permission with specific access.
     public SoundPermission(SoundPermissionState flags)
     {
         if (!Enum.IsDefined(typeof(SoundPermissionState), flags))
@@ -56,7 +56,7 @@ public sealed class SoundPermission : CodeAccessPermission, IPermission,
         return (SoundPermission)target;
     }
 
-    // This is the Private Clone helper method. 
+    // This is the Private Clone helper method.
     private SoundPermission Clone(Boolean specifiedAsUnrestricted, SoundPermissionState flags)
     {
         SoundPermission soundPerm = (SoundPermission)Clone();

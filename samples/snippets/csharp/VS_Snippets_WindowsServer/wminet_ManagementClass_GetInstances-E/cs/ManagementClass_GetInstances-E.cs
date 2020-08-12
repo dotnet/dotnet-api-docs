@@ -2,9 +2,9 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
         EnumerationOptions opt = new EnumerationOptions();
         // Will enumerate instances of the given class and any subclasses.

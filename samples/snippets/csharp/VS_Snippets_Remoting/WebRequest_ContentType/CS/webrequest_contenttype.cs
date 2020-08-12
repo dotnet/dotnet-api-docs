@@ -2,10 +2,10 @@
   This program demonstrates 'GetRequestStream' method , 'ContentLength' and 'ContentType' properties of 
 	'WebRequestClass'.
   A new 'WebRequest' object is created and the method used for sending data is set to 'POST' method by setting 
-  The 'Method' property to 'POST'.The 'ContentType' property is set to 'application/x-www-form-urlencoded'.
+  The 'Method' property to 'POST'. The 'ContentType' property is set to 'application/x-www-form-urlencoded'.
   The 'ContentLength' property is set to the length of the Byte stream to be posted. A new 'Stream' object is
   obtained from the 'GetRequestStream' method of the 'WebRequest' class.Data to be posted is requested from 
-  the user and is posted using the stream object.The HTML contents of the page are then displayed to the 
+  the user and is posted using the stream object. The HTML contents of the page are then displayed to the 
   console after the Posted data is accepted by the URL.
 
   Note: This program POSTs data to the Uri: http://www20.Brinkster.com/codesnippets/next.asp 
@@ -63,7 +63,7 @@ class WebRequest_ContentLength
 // </Snippet2>			
 // </Snippet1>
 			Console.WriteLine("\nThe value of ContentLength property after sending the data is {0}",myWebRequest.ContentLength);
-			Console.WriteLine("\nThe string entered has been succesfully posted to the Uri.");
+			Console.WriteLine("\nThe string entered has been successfully posted to the Uri.");
 			Console.WriteLine("\nPlease wait for the response.......");
 			Stream streamResponse=myWebResponse.GetResponseStream();
 			StreamReader streamRead = new StreamReader( streamResponse );

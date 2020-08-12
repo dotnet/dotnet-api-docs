@@ -31,19 +31,19 @@ public class TraceExtension {}
 	  }
 
 	  // User can set priority of the 'SoapExtension'.
-	  public override int Priority 
+	  public override int Priority
 	  {
-		  get 
+		  get
 		  {
 			  return myPriority;
 		  }
-		  set 
-		  { 
+		  set
+		  {
 			  myPriority = value;
 		  }
 	  }
 
-	  public string Filename 
+	  public string Filename
 	  {
 		  get
 		  {

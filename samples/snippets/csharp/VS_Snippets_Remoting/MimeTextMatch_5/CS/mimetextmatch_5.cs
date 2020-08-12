@@ -4,13 +4,13 @@
 // System.Web.Services.Description.MimeTextMatch.Repeats
 // System.Web.Services.Description.MimeTextMatch.RepeatsString
 
-/* The following program demostrates constructor, 'Capture', 'Group', 
+/* The following program demostrates constructor, 'Capture', 'Group',
    'Repeats' and 'RepeatsString' properties of 'MimeTextMatch'class.
    It takes 'MimeTextMatch_5_Input_CS.wsdl' as input which does not
-   contain 'Binding' object supporting 'HttpPost'. A text pattern 
+   contain 'Binding' object supporting 'HttpPost'. A text pattern
    ''TITLE&gt;(.*?)&lt;' with text name as 'Title' and type
    name set which is to be searched in a HTTP transmission is added to the ServiceDescription.
-   The modified ServiceDescription is written into 'MimeTextMatch_5_Output_CS.wsdl'.  
+   The modified ServiceDescription is written into 'MimeTextMatch_5_Output_CS.wsdl'.
 */
 
 // <Snippet1>
@@ -26,13 +26,13 @@ class MyMimeTextMatchClass
       try
       {
          int myInt = 0;
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MimeTextMatch_5_Input_CS.wsdl");
          // Create the 'Binding' object.
          Binding myBinding = new Binding();
          // Initialize 'Name' property of 'Binding' class.
          myBinding.Name = "MimeTextMatchServiceHttpPost";
-         XmlQualifiedName myXmlQualifiedName = 
+         XmlQualifiedName myXmlQualifiedName =
             new XmlQualifiedName("s0:MimeTextMatchServiceHttpPost");
          myBinding.Type = myXmlQualifiedName;
          // Create the 'HttpBinding' object.
@@ -49,17 +49,17 @@ class MyMimeTextMatchClass
          myOperationBinding.Extensions.Add(myHttpOperationBinding);
 // <Snippet5>
 // <Snippet4>
-// <Snippet3>  
+// <Snippet3>
 // <Snippet2>
          // Create an InputBinding.
          InputBinding myInputBinding = new InputBinding();
          MimeTextBinding myMimeTextBinding = new MimeTextBinding();
-         MimeTextMatchCollection myMimeTextMatchCollection1 = 
+         MimeTextMatchCollection myMimeTextMatchCollection1 =
             new MimeTextMatchCollection();
-         MimeTextMatch[] myMimeTextMatch = new MimeTextMatch[3];        
+         MimeTextMatch[] myMimeTextMatch = new MimeTextMatch[3];
          myMimeTextMatchCollection1 = myMimeTextBinding.Matches;
 
-         // Intialize the MimeTextMatch. 
+         // Intialize the MimeTextMatch.
          for( myInt = 0 ; myInt < 3 ; myInt++ )
          {
             // Get a new MimeTextMatch.
@@ -71,7 +71,7 @@ class MyMimeTextMatchClass
             myMimeTextMatch[ myInt ].Pattern = "TITLE&gt;(.*?)&lt;";
             myMimeTextMatch[ myInt ].IgnoreCase = true;
             myMimeTextMatch[ myInt ].Capture = 2;
-            myMimeTextMatch[ myInt ].Group = 2;     
+            myMimeTextMatch[ myInt ].Group = 2;
             if( myInt != 0 )
             {
                // Assign the Repeats property if the index is not 0.
@@ -95,14 +95,14 @@ class MyMimeTextMatchClass
          // Create the 'OutputBinding' instance.
          OutputBinding myOutput = new OutputBinding();
          MimeXmlBinding postMimeXmlbinding = new MimeXmlBinding();
-         // Initialize 'Part' property of 'MimeXmlBinding' class. 
+         // Initialize 'Part' property of 'MimeXmlBinding' class.
          postMimeXmlbinding.Part="Body";
          // Add 'MimeXmlBinding' instance to 'OutputBinding' instance.
          myOutput.Extensions.Add( postMimeXmlbinding );
          // Add the 'OutPutBinding' to 'OperationBinding'.
-         myOperationBinding.Output = myOutput; 
+         myOperationBinding.Output = myOutput;
          // Add the 'OutPutBinding' to 'OperationBinding'.
-         myOperationBinding.Output = myOutput; 
+         myOperationBinding.Output = myOutput;
          // Add the 'OperationBinding' to 'Binding'.
          myBinding.Operations.Add(myOperationBinding);
          // Add the 'Binding' to 'BindingCollection' of 'ServiceDescription'.

@@ -17,7 +17,7 @@ Public Class SignVerifyEnvelope
    Overloads Public Shared Sub Main(args() As [String])
       Try
          ' Generate a signing key.
-         Dim Key As New RSACryptoServiceProvider()
+         Dim Key As RSA = RSA.Create()
          
          ' Create an XML file to sign.
          CreateSomeXml("Example.xml")
@@ -95,7 +95,7 @@ Public Class SignVerifyEnvelope
    End Sub
    
    
-   ' Verify the signature of an XML file against an asymetric 
+   ' Verify the signature of an XML file against an asymmetric 
    ' algorithm and return the result.
    Public Shared Function VerifyXmlFile(Name As [String], Key As RSA) As [Boolean]
       ' Create a new XML document.

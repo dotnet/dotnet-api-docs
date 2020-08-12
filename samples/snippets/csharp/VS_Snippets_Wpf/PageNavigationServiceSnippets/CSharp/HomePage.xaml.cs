@@ -18,7 +18,7 @@ namespace CSharp
             InitializeComponent();
 
             // Don't allow back navigation if no navigation service
-            if (this.NavigationService != null)
+            if (this.NavigationService == null)
             {
                 this.goBackButton.IsEnabled = false;
             }

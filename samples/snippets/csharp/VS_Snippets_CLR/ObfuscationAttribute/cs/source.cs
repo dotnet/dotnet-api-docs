@@ -23,9 +23,9 @@ public class Type1
 }
 
 // Exclude this type from obfuscation, but do not apply that
-// exclusion to members. The default value of the Exclude 
-// property is true, so it is not necessary to specify 
-// Exclude=true, although spelling it out makes your intent 
+// exclusion to members. The default value of the Exclude
+// property is true, so it is not necessary to specify
+// Exclude=true, although spelling it out makes your intent
 // clearer.
 //<Snippet4>
 //<Snippet2>
@@ -35,17 +35,17 @@ public class Type2
 //</Snippet2>
 
     // The exclusion of the type is not applied to its members,
-    // however in order to mark the member with the "default" 
+    // however in order to mark the member with the "default"
     // feature it is necessary to specify Exclude=false,
     // because the default value of Exclude is true. The tool
     // should not strip this attribute after obfuscation.
 //<Snippet3>
-    [ObfuscationAttribute(Exclude=false, Feature="default", 
+    [ObfuscationAttribute(Exclude=false, Feature="default",
         StripAfterObfuscation=false)]
     public void MethodA() {}
 //</Snippet3>
 
-    // This member is marked for obfuscation, because the 
+    // This member is marked for obfuscation, because the
     // exclusion of the type is not applied to its members.
     public void MethodB() {}
 }
@@ -60,7 +60,7 @@ internal class Test
     {
 
         // Display the ObfuscateAssemblyAttribute properties
-        // for the assembly.        
+        // for the assembly.
         Assembly assem = typeof(Test).Assembly;
         object[] assemAttrs = assem.GetCustomAttributes(
             typeof(ObfuscateAssemblyAttribute), false);
@@ -94,7 +94,7 @@ internal class Test
 
                     foreach( Attribute a in mAttrs )
                     {
-                        ShowObfuscation(((ObfuscationAttribute) a), 
+                        ShowObfuscation(((ObfuscationAttribute) a),
                             t.Name + "." + m.Name);
                     }
                 }
@@ -106,7 +106,7 @@ internal class Test
         ObfuscateAssemblyAttribute ob)
     {
         Console.WriteLine("\r\nObfuscateAssemblyAttribute properties:");
-        Console.WriteLine("   AssemblyIsPrivate: {0}", 
+        Console.WriteLine("   AssemblyIsPrivate: {0}",
             ob.AssemblyIsPrivate);
         Console.WriteLine("   StripAfterObfuscation: {0}",
             ob.StripAfterObfuscation);

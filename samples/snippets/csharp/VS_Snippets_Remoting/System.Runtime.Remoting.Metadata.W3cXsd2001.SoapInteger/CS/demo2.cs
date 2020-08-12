@@ -12,9 +12,9 @@ public class Demo2
         //<snippet21>
         // Create a SoapInteger object.
         SoapInteger xsdInteger = new SoapInteger();
-        xsdInteger.Value = -14; 
+        xsdInteger.Value = -14;
         Console.WriteLine(
-            "The value of the SoapInteger object is {0}.", 
+            "The value of the SoapInteger object is {0}.",
             xsdInteger.ToString());
         //</snippet21>
     }
@@ -23,10 +23,10 @@ public class Demo2
     {
         //<snippet22>
         // Create a SoapInteger object.
-        decimal decimalValue = -14; 
+        decimal decimalValue = -14;
         SoapInteger xsdInteger = new SoapInteger(decimalValue);
         Console.WriteLine(
-            "The value of the SoapInteger object is {0}.", 
+            "The value of the SoapInteger object is {0}.",
             xsdInteger.ToString());
         //</snippet22>
     }

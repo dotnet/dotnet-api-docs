@@ -13,7 +13,7 @@ class BinaryRW
         new Random().NextBytes(writeArray);
 
         BinaryWriter binWriter = new BinaryWriter(new MemoryStream());
-        BinaryReader binReader = 
+        BinaryReader binReader =
             new BinaryReader(binWriter.BaseStream);
 
         try

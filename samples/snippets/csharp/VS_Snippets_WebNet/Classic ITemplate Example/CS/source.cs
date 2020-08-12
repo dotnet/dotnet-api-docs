@@ -70,5 +70,5 @@ namespace TemplateControlSamples {
         }
     }
 }
-   
+
 // </Snippet1>

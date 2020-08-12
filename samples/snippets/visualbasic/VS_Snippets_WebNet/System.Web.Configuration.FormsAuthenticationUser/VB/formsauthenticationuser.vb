@@ -51,6 +51,8 @@ Class UsingFormsAuthenticationUser
         formsAuthenticationUsers(0).Password
       
       ' Set a SHA1 encrypted password.
+      ' This example uses the SHA1 algorithm.
+      ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
         formsAuthenticationUsers(0).Password = _
         "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8"
       

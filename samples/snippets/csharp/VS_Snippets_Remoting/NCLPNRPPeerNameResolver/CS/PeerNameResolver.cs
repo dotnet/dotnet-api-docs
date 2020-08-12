@@ -3,19 +3,19 @@
 // Description:
 //
 //    This sample illustrates how to resolve a Peer Name published in any Cloud.  The application accepts a Peer Name
-//    in the forum Authority.Classifier as the only command line arugment to the application and attempts to 
-//    synchronously resolve the Peer Name.  If the PeerName is successfully resolved, the data associated with the 
-//    Peer Name is printed out. 
+//    in the forum Authority.Classifier as the only command line arugment to the application and attempts to
+//    synchronously resolve the Peer Name.  If the PeerName is successfully resolved, the data associated with the
+//    Peer Name is printed out.
 //
 // Compile:
 //
 //    csc /reference:c:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Net.dll
-//        /out:PeerNameResolver.exe PeerNameResolver.cs 
+//        /out:PeerNameResolver.exe PeerNameResolver.cs
 //
 // Command Line Options:
 //
 //    All command line arguments are required:
-//    Usage: PeerNameResolver.exe <PeerName:Authority.Classifier> 
+//    Usage: PeerNameResolver.exe <PeerName:Authority.Classifier>
 
 using System;
 using System.Collections.Generic;
@@ -38,13 +38,13 @@ namespace PNRPSample
                     Console.WriteLine("Usage: PeerNameResolver.exe <PeerNameToResolve>");
                     return;
                 }
-                
+
                 // create a resolver object to resolve a Peer Name that was previously published
                 PeerNameResolver resolver = new PeerNameResolver();
-                // The Peer Name to resolve must be passed as the first 
+                // The Peer Name to resolve must be passed as the first
                 // command line argument to the application
                 PeerName peerName = new PeerName(args[0]);
-                // Resolve the Peer Name 
+                // Resolve the Peer Name
                 // This is a network operation and will block until the resolve completes
                 PeerNameRecordCollection results = resolver.Resolve(peerName);
 
@@ -52,12 +52,12 @@ namespace PNRPSample
                 Console.WriteLine("Resolve operation complete.\n", peerName);
                 Console.WriteLine("Results for PeerName: {0}", peerName);
                 Console.WriteLine();
-                
+
                 int count = 1;
                 foreach (PeerNameRecord record in results)
                 {
                     Console.WriteLine("Record #{0} results...", count);
-                    
+
                     Console.Write("Comment:");
                     if (record.Comment != null)
                     {
@@ -68,7 +68,7 @@ namespace PNRPSample
                     Console.Write("Data:");
                     if (record.Data != null)
                     {
-                        // Assumes the data blob associated with the PeerName 
+                        // Assumes the data blob associated with the PeerName
                         // is made up of ASCII characters
                         Console.Write(System.Text.Encoding.ASCII.GetString(record.Data));
                     }
@@ -93,9 +93,9 @@ namespace PNRPSample
 
                 // P2P is not supported on Windows Server 2003
                 if (e.InnerException != null)
-                { 
+                {
                     Console.WriteLine("Inner Exception is {0}", e.InnerException);
-                }    
+                }
             }
         }
         //</Snippet1>

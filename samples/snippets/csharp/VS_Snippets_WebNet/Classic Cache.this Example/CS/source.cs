@@ -11,7 +11,7 @@ public class Page1: Page
     protected TextBox txtName;
     protected TextBox txtValue;
 // <Snippet1>
-[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")] 
+[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
 void ShowCachedItems()
 {
     // Declare variables.
@@ -41,6 +41,6 @@ private void cmdAdd_Click(Object objSender, EventArgs objArgs)
         Cache[txtName.Text] = txtValue.Text;
     }
 }
-        
+
 // </Snippet2>
 }

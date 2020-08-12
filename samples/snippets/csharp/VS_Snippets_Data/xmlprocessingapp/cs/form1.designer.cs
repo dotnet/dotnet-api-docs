@@ -121,9 +121,9 @@
             this.condition1Panel.SuspendLayout();
             this.filterBox.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // TreeViewGroupBox
-            // 
+            //
             this.TreeViewGroupBox.Controls.Add(this.xmlTreeView);
             this.TreeViewGroupBox.ForeColor = System.Drawing.Color.White;
             this.TreeViewGroupBox.Location = new System.Drawing.Point(373, 12);
@@ -132,9 +132,9 @@
             this.TreeViewGroupBox.TabIndex = 4;
             this.TreeViewGroupBox.TabStop = false;
             this.TreeViewGroupBox.Text = "Book List";
-            // 
+            //
             // xmlTreeView
-            // 
+            //
             this.xmlTreeView.BackColor = System.Drawing.Color.Black;
             this.xmlTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.xmlTreeView.ForeColor = System.Drawing.Color.White;
@@ -143,9 +143,9 @@
             this.xmlTreeView.Size = new System.Drawing.Size(258, 656);
             this.xmlTreeView.TabIndex = 3;
             this.xmlTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.xmlTreeView_AfterSelect);
-            // 
+            //
             // TextGroupBox
-            // 
+            //
             this.TextGroupBox.Controls.Add(this.saveButton);
             this.TextGroupBox.Controls.Add(this.refreshTreeButton);
             this.TextGroupBox.Controls.Add(this.positionDownButton);
@@ -158,9 +158,9 @@
             this.TextGroupBox.TabIndex = 5;
             this.TextGroupBox.TabStop = false;
             this.TextGroupBox.Text = "Xml View";
-            // 
+            //
             // saveButton
-            // 
+            //
             this.saveButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveButton.Image = ((System.Drawing.Image)(resources.GetObject("saveButton.Image")));
@@ -171,9 +171,9 @@
             this.toolTip1.SetToolTip(this.saveButton, "Save XML with new element positions");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
+            //
             // refreshTreeButton
-            // 
+            //
             this.refreshTreeButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.refreshTreeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.refreshTreeButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshTreeButton.Image")));
@@ -183,9 +183,9 @@
             this.refreshTreeButton.TabIndex = 37;
             this.toolTip1.SetToolTip(this.refreshTreeButton, "Refresh tree view to reflect new order of elements");
             this.refreshTreeButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // positionDownButton
-            // 
+            //
             this.positionDownButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.positionDownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.positionDownButton.Image = ((System.Drawing.Image)(resources.GetObject("positionDownButton.Image")));
@@ -196,9 +196,9 @@
             this.toolTip1.SetToolTip(this.positionDownButton, "Move selected item down in the list");
             this.positionDownButton.UseVisualStyleBackColor = true;
             this.positionDownButton.Click += new System.EventHandler(this.positionDownButton_Click);
-            // 
+            //
             // positionUpButton
-            // 
+            //
             this.positionUpButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.positionUpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.positionUpButton.Image = ((System.Drawing.Image)(resources.GetObject("positionUpButton.Image")));
@@ -209,9 +209,9 @@
             this.toolTip1.SetToolTip(this.positionUpButton, "Move selected item up in the list");
             this.positionUpButton.UseVisualStyleBackColor = true;
             this.positionUpButton.Click += new System.EventHandler(this.positionUpButton_Click);
-            // 
+            //
             // XmlTextBox
-            // 
+            //
             this.XmlTextBox.BackColor = System.Drawing.Color.Black;
             this.XmlTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.XmlTextBox.ForeColor = System.Drawing.Color.White;
@@ -220,9 +220,9 @@
             this.XmlTextBox.Size = new System.Drawing.Size(477, 656);
             this.XmlTextBox.TabIndex = 6;
             this.XmlTextBox.Text = "";
-            // 
+            //
             // tabControl1
-            // 
+            //
             this.tabControl1.Controls.Add(this.loadTab);
             this.tabControl1.Controls.Add(this.addTab);
             this.tabControl1.Controls.Add(this.editTab);
@@ -235,9 +235,9 @@
             this.tabControl1.Size = new System.Drawing.Size(354, 247);
             this.tabControl1.TabIndex = 7;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
-            // 
+            //
             // loadTab
-            // 
+            //
             this.loadTab.BackColor = System.Drawing.Color.Black;
             this.loadTab.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.loadTab.Controls.Add(this.optionsGroupBox);
@@ -250,9 +250,9 @@
             this.loadTab.Size = new System.Drawing.Size(346, 218);
             this.loadTab.TabIndex = 1;
             this.loadTab.Text = "Load XML";
-            // 
+            //
             // optionsGroupBox
-            // 
+            //
             this.optionsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.optionsGroupBox.Controls.Add(this.generateSchemaCheckBox);
             this.optionsGroupBox.Controls.Add(this.generateCheckBox);
@@ -264,9 +264,9 @@
             this.optionsGroupBox.TabIndex = 8;
             this.optionsGroupBox.TabStop = false;
             this.optionsGroupBox.Text = "Options";
-            // 
+            //
             // generateSchemaCheckBox
-            // 
+            //
             this.generateSchemaCheckBox.AutoSize = true;
             this.generateSchemaCheckBox.Enabled = false;
             this.generateSchemaCheckBox.Location = new System.Drawing.Point(14, 77);
@@ -276,9 +276,9 @@
             this.generateSchemaCheckBox.Text = "If the schema file is not found, then generate it.";
             this.generateSchemaCheckBox.UseVisualStyleBackColor = true;
             this.generateSchemaCheckBox.Visible = false;
-            // 
+            //
             // generateCheckBox
-            // 
+            //
             this.generateCheckBox.AutoSize = true;
             this.generateCheckBox.ForeColor = System.Drawing.Color.White;
             this.generateCheckBox.Location = new System.Drawing.Point(13, 24);
@@ -287,9 +287,9 @@
             this.generateCheckBox.TabIndex = 9;
             this.generateCheckBox.Text = "If the file is not found, generate the XML.";
             this.generateCheckBox.UseVisualStyleBackColor = true;
-            // 
+            //
             // validateCheckBox
-            // 
+            //
             this.validateCheckBox.AutoSize = true;
             this.validateCheckBox.ForeColor = System.Drawing.Color.White;
             this.validateCheckBox.Location = new System.Drawing.Point(13, 51);
@@ -299,9 +299,9 @@
             this.validateCheckBox.Text = "Validate the XML against a schema.";
             this.validateCheckBox.UseVisualStyleBackColor = true;
             this.validateCheckBox.CheckedChanged += new System.EventHandler(this.validateCheckBox_CheckedChanged);
-            // 
+            //
             // loadButton
-            // 
+            //
             this.loadButton.BackColor = System.Drawing.Color.Black;
             this.loadButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.loadButton.Location = new System.Drawing.Point(16, 16);
@@ -311,9 +311,9 @@
             this.loadButton.Text = "Load XML from file";
             this.loadButton.UseVisualStyleBackColor = false;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
-            // 
+            //
             // addTab
-            // 
+            //
             this.addTab.BackColor = System.Drawing.Color.Black;
             this.addTab.Controls.Add(this.addElementGroupBox);
             this.addTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -324,9 +324,9 @@
             this.addTab.Size = new System.Drawing.Size(346, 218);
             this.addTab.TabIndex = 0;
             this.addTab.Text = "Add Book";
-            // 
+            //
             // addElementGroupBox
-            // 
+            //
             this.addElementGroupBox.Controls.Add(this.newPositionLabel);
             this.addElementGroupBox.Controls.Add(this.positionComboBox);
             this.addElementGroupBox.Controls.Add(this.newTitleTextBox);
@@ -345,18 +345,18 @@
             this.addElementGroupBox.Size = new System.Drawing.Size(334, 201);
             this.addElementGroupBox.TabIndex = 0;
             this.addElementGroupBox.TabStop = false;
-            // 
+            //
             // newPositionLabel
-            // 
+            //
             this.newPositionLabel.AutoSize = true;
             this.newPositionLabel.Location = new System.Drawing.Point(18, 164);
             this.newPositionLabel.Name = "newPositionLabel";
             this.newPositionLabel.Size = new System.Drawing.Size(59, 16);
             this.newPositionLabel.TabIndex = 28;
             this.newPositionLabel.Text = "Position:";
-            // 
+            //
             // positionComboBox
-            // 
+            //
             this.positionComboBox.BackColor = System.Drawing.Color.Black;
             this.positionComboBox.ForeColor = System.Drawing.Color.White;
             this.positionComboBox.FormattingEnabled = true;
@@ -370,90 +370,90 @@
             this.positionComboBox.Size = new System.Drawing.Size(128, 24);
             this.positionComboBox.TabIndex = 27;
             this.positionComboBox.Text = "Top";
-            // 
+            //
             // newTitleTextBox
-            // 
+            //
             this.newTitleTextBox.BackColor = System.Drawing.Color.Black;
             this.newTitleTextBox.ForeColor = System.Drawing.Color.White;
             this.newTitleTextBox.Location = new System.Drawing.Point(111, 21);
             this.newTitleTextBox.Name = "newTitleTextBox";
             this.newTitleTextBox.Size = new System.Drawing.Size(192, 22);
             this.newTitleTextBox.TabIndex = 16;
-            // 
+            //
             // newTitleLabel
-            // 
+            //
             this.newTitleLabel.AutoSize = true;
             this.newTitleLabel.Location = new System.Drawing.Point(18, 21);
             this.newTitleLabel.Name = "newTitleLabel";
             this.newTitleLabel.Size = new System.Drawing.Size(37, 16);
             this.newTitleLabel.TabIndex = 18;
             this.newTitleLabel.Text = "Title:";
-            // 
+            //
             // newISBNLabel
-            // 
+            //
             this.newISBNLabel.AutoSize = true;
             this.newISBNLabel.Location = new System.Drawing.Point(18, 48);
             this.newISBNLabel.Name = "newISBNLabel";
             this.newISBNLabel.Size = new System.Drawing.Size(42, 16);
             this.newISBNLabel.TabIndex = 19;
             this.newISBNLabel.Text = "ISBN:";
-            // 
+            //
             // newPriceLabel
-            // 
+            //
             this.newPriceLabel.AutoSize = true;
             this.newPriceLabel.Location = new System.Drawing.Point(18, 107);
             this.newPriceLabel.Name = "newPriceLabel";
             this.newPriceLabel.Size = new System.Drawing.Size(42, 16);
             this.newPriceLabel.TabIndex = 26;
             this.newPriceLabel.Text = "Price:";
-            // 
+            //
             // newISBNTextBox
-            // 
+            //
             this.newISBNTextBox.BackColor = System.Drawing.Color.Black;
             this.newISBNTextBox.ForeColor = System.Drawing.Color.White;
             this.newISBNTextBox.Location = new System.Drawing.Point(111, 48);
             this.newISBNTextBox.Name = "newISBNTextBox";
             this.newISBNTextBox.Size = new System.Drawing.Size(192, 22);
             this.newISBNTextBox.TabIndex = 20;
-            // 
+            //
             // newPriceTextBox
-            // 
+            //
             this.newPriceTextBox.BackColor = System.Drawing.Color.Black;
             this.newPriceTextBox.ForeColor = System.Drawing.Color.White;
             this.newPriceTextBox.Location = new System.Drawing.Point(111, 100);
             this.newPriceTextBox.Name = "newPriceTextBox";
             this.newPriceTextBox.Size = new System.Drawing.Size(75, 22);
             this.newPriceTextBox.TabIndex = 25;
-            // 
+            //
             // newPubDateLabel
-            // 
+            //
             this.newPubDateLabel.AutoSize = true;
             this.newPubDateLabel.Location = new System.Drawing.Point(18, 74);
             this.newPubDateLabel.Name = "newPubDateLabel";
             this.newPubDateLabel.Size = new System.Drawing.Size(87, 16);
             this.newPubDateLabel.TabIndex = 21;
             this.newPubDateLabel.Text = "Publish Date:";
-            // 
+            //
             // newGenreLabel
-            // 
+            //
             this.newGenreLabel.AutoSize = true;
             this.newGenreLabel.Location = new System.Drawing.Point(18, 135);
             this.newGenreLabel.Name = "newGenreLabel";
             this.newGenreLabel.Size = new System.Drawing.Size(48, 16);
             this.newGenreLabel.TabIndex = 24;
             this.newGenreLabel.Text = "Genre:";
-            // 
+            //
             // newPubDateTextBox
-            // 
+            //
             this.newPubDateTextBox.BackColor = System.Drawing.Color.Black;
             this.newPubDateTextBox.ForeColor = System.Drawing.Color.White;
             this.newPubDateTextBox.Location = new System.Drawing.Point(111, 74);
             this.newPubDateTextBox.Name = "newPubDateTextBox";
             this.newPubDateTextBox.Size = new System.Drawing.Size(125, 22);
             this.newPubDateTextBox.TabIndex = 22;
-            // 
+            //
             // addNewBookButton
-            // 
+            //
             this.addNewBookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addNewBookButton.Location = new System.Drawing.Point(245, 157);
             this.addNewBookButton.Name = "addNewBookButton";
@@ -462,18 +462,18 @@
             this.addNewBookButton.Text = "Add";
             this.addNewBookButton.UseVisualStyleBackColor = true;
             this.addNewBookButton.Click += new System.EventHandler(this.addNewBookButton_Click);
-            // 
+            //
             // newGenreTextBox
-            // 
+            //
             this.newGenreTextBox.BackColor = System.Drawing.Color.Black;
             this.newGenreTextBox.ForeColor = System.Drawing.Color.White;
             this.newGenreTextBox.Location = new System.Drawing.Point(111, 128);
             this.newGenreTextBox.Name = "newGenreTextBox";
             this.newGenreTextBox.Size = new System.Drawing.Size(125, 22);
             this.newGenreTextBox.TabIndex = 23;
-            // 
+            //
             // editTab
-            // 
+            //
             this.editTab.BackColor = System.Drawing.Color.Black;
             this.editTab.Controls.Add(this.EditElementGroupBox);
             this.editTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -484,9 +484,9 @@
             this.editTab.Size = new System.Drawing.Size(346, 218);
             this.editTab.TabIndex = 2;
             this.editTab.Text = "Edit Books";
-            // 
+            //
             // EditElementGroupBox
-            // 
+            //
             this.EditElementGroupBox.Controls.Add(this.deleteButton);
             this.EditElementGroupBox.Controls.Add(this.editTitleTextBox);
             this.EditElementGroupBox.Controls.Add(this.editTitleLabel);
@@ -504,9 +504,9 @@
             this.EditElementGroupBox.Size = new System.Drawing.Size(334, 201);
             this.EditElementGroupBox.TabIndex = 1;
             this.EditElementGroupBox.TabStop = false;
-            // 
+            //
             // deleteButton
-            // 
+            //
             this.deleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.deleteButton.Location = new System.Drawing.Point(21, 163);
             this.deleteButton.Name = "deleteButton";
@@ -515,90 +515,90 @@
             this.deleteButton.Text = "Delete Book";
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
-            // 
+            //
             // editTitleTextBox
-            // 
+            //
             this.editTitleTextBox.BackColor = System.Drawing.Color.Black;
             this.editTitleTextBox.ForeColor = System.Drawing.Color.White;
             this.editTitleTextBox.Location = new System.Drawing.Point(111, 21);
             this.editTitleTextBox.Name = "editTitleTextBox";
             this.editTitleTextBox.Size = new System.Drawing.Size(192, 22);
             this.editTitleTextBox.TabIndex = 16;
-            // 
+            //
             // editTitleLabel
-            // 
+            //
             this.editTitleLabel.AutoSize = true;
             this.editTitleLabel.Location = new System.Drawing.Point(18, 21);
             this.editTitleLabel.Name = "editTitleLabel";
             this.editTitleLabel.Size = new System.Drawing.Size(37, 16);
             this.editTitleLabel.TabIndex = 18;
             this.editTitleLabel.Text = "Title:";
-            // 
+            //
             // editISBNLabel
-            // 
+            //
             this.editISBNLabel.AutoSize = true;
             this.editISBNLabel.Location = new System.Drawing.Point(18, 48);
             this.editISBNLabel.Name = "editISBNLabel";
             this.editISBNLabel.Size = new System.Drawing.Size(42, 16);
             this.editISBNLabel.TabIndex = 19;
             this.editISBNLabel.Text = "ISBN:";
-            // 
+            //
             // editPriceLabel
-            // 
+            //
             this.editPriceLabel.AutoSize = true;
             this.editPriceLabel.Location = new System.Drawing.Point(18, 107);
             this.editPriceLabel.Name = "editPriceLabel";
             this.editPriceLabel.Size = new System.Drawing.Size(42, 16);
             this.editPriceLabel.TabIndex = 26;
             this.editPriceLabel.Text = "Price:";
-            // 
+            //
             // editISBNTextBox
-            // 
+            //
             this.editISBNTextBox.BackColor = System.Drawing.Color.Black;
             this.editISBNTextBox.ForeColor = System.Drawing.Color.White;
             this.editISBNTextBox.Location = new System.Drawing.Point(111, 48);
             this.editISBNTextBox.Name = "editISBNTextBox";
             this.editISBNTextBox.Size = new System.Drawing.Size(192, 22);
             this.editISBNTextBox.TabIndex = 20;
-            // 
+            //
             // editPriceTextBox
-            // 
+            //
             this.editPriceTextBox.BackColor = System.Drawing.Color.Black;
             this.editPriceTextBox.ForeColor = System.Drawing.Color.White;
             this.editPriceTextBox.Location = new System.Drawing.Point(111, 100);
             this.editPriceTextBox.Name = "editPriceTextBox";
             this.editPriceTextBox.Size = new System.Drawing.Size(75, 22);
             this.editPriceTextBox.TabIndex = 25;
-            // 
+            //
             // editPubDateLabel
-            // 
+            //
             this.editPubDateLabel.AutoSize = true;
             this.editPubDateLabel.Location = new System.Drawing.Point(18, 74);
             this.editPubDateLabel.Name = "editPubDateLabel";
             this.editPubDateLabel.Size = new System.Drawing.Size(87, 16);
             this.editPubDateLabel.TabIndex = 21;
             this.editPubDateLabel.Text = "Publish Date:";
-            // 
+            //
             // editGenreLabel
-            // 
+            //
             this.editGenreLabel.AutoSize = true;
             this.editGenreLabel.Location = new System.Drawing.Point(18, 135);
             this.editGenreLabel.Name = "editGenreLabel";
             this.editGenreLabel.Size = new System.Drawing.Size(48, 16);
             this.editGenreLabel.TabIndex = 24;
             this.editGenreLabel.Text = "Genre:";
-            // 
+            //
             // editPubDateTextBox
-            // 
+            //
             this.editPubDateTextBox.BackColor = System.Drawing.Color.Black;
             this.editPubDateTextBox.ForeColor = System.Drawing.Color.White;
             this.editPubDateTextBox.Location = new System.Drawing.Point(111, 74);
             this.editPubDateTextBox.Name = "editPubDateTextBox";
             this.editPubDateTextBox.Size = new System.Drawing.Size(125, 22);
             this.editPubDateTextBox.TabIndex = 22;
-            // 
+            //
             // submitButton
-            // 
+            //
             this.submitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.submitButton.Location = new System.Drawing.Point(184, 163);
             this.submitButton.Name = "submitButton";
@@ -607,18 +607,18 @@
             this.submitButton.Text = "Submit Updates";
             this.submitButton.UseVisualStyleBackColor = true;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
-            // 
+            //
             // editGenreTextBox
-            // 
+            //
             this.editGenreTextBox.BackColor = System.Drawing.Color.Black;
             this.editGenreTextBox.ForeColor = System.Drawing.Color.White;
             this.editGenreTextBox.Location = new System.Drawing.Point(111, 128);
             this.editGenreTextBox.Name = "editGenreTextBox";
             this.editGenreTextBox.Size = new System.Drawing.Size(125, 22);
             this.editGenreTextBox.TabIndex = 23;
-            // 
+            //
             // filterTab
-            // 
+            //
             this.filterTab.BackColor = System.Drawing.Color.Black;
             this.filterTab.Controls.Add(this.groupBox1);
             this.filterTab.ForeColor = System.Drawing.Color.White;
@@ -627,9 +627,9 @@
             this.filterTab.Size = new System.Drawing.Size(346, 218);
             this.filterTab.TabIndex = 3;
             this.filterTab.Text = "Filter";
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.matchesComboBox);
             this.groupBox1.Controls.Add(this.matchesLabel);
             this.groupBox1.Controls.Add(this.applyLabel);
@@ -644,9 +644,9 @@
             this.groupBox1.Size = new System.Drawing.Size(334, 201);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            // 
+            //
             // matchesComboBox
-            // 
+            //
             this.matchesComboBox.BackColor = System.Drawing.Color.Black;
             this.matchesComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.matchesComboBox.ForeColor = System.Drawing.Color.White;
@@ -661,9 +661,9 @@
             this.matchesComboBox.Text = "Any";
             this.matchesComboBox.Visible = false;
             this.matchesComboBox.SelectedValueChanged += new System.EventHandler(this.matchesComboBox_SelectedValueChanged);
-            // 
+            //
             // matchesLabel
-            // 
+            //
             this.matchesLabel.AutoSize = true;
             this.matchesLabel.Location = new System.Drawing.Point(187, 33);
             this.matchesLabel.Name = "matchesLabel";
@@ -671,9 +671,9 @@
             this.matchesLabel.TabIndex = 58;
             this.matchesLabel.Text = "Matches:";
             this.matchesLabel.Visible = false;
-            // 
+            //
             // applyLabel
-            // 
+            //
             this.applyLabel.AutoSize = true;
             this.applyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.applyLabel.Location = new System.Drawing.Point(7, 53);
@@ -682,9 +682,9 @@
             this.applyLabel.TabIndex = 57;
             this.applyLabel.Text = "Apply";
             this.applyLabel.Visible = false;
-            // 
+            //
             // condition4Panel
-            // 
+            //
             this.condition4Panel.Controls.Add(this.condition4CheckBox);
             this.condition4Panel.Controls.Add(this.operator4ComboBox);
             this.condition4Panel.Controls.Add(this.condition4ComboBox);
@@ -694,9 +694,9 @@
             this.condition4Panel.Size = new System.Drawing.Size(324, 36);
             this.condition4Panel.TabIndex = 56;
             this.condition4Panel.Visible = false;
-            // 
+            //
             // condition4CheckBox
-            // 
+            //
             this.condition4CheckBox.AutoSize = true;
             this.condition4CheckBox.Location = new System.Drawing.Point(7, 11);
             this.condition4CheckBox.Name = "condition4CheckBox";
@@ -704,9 +704,9 @@
             this.condition4CheckBox.TabIndex = 54;
             this.condition4CheckBox.UseVisualStyleBackColor = true;
             this.condition4CheckBox.CheckedChanged += new System.EventHandler(this.condition4CheckBox_CheckedChanged);
-            // 
+            //
             // operator4ComboBox
-            // 
+            //
             this.operator4ComboBox.BackColor = System.Drawing.Color.Black;
             this.operator4ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.operator4ComboBox.ForeColor = System.Drawing.Color.White;
@@ -722,9 +722,9 @@
             this.operator4ComboBox.Size = new System.Drawing.Size(78, 24);
             this.operator4ComboBox.TabIndex = 53;
             this.operator4ComboBox.Text = "=";
-            // 
+            //
             // condition4ComboBox
-            // 
+            //
             this.condition4ComboBox.BackColor = System.Drawing.Color.Black;
             this.condition4ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.condition4ComboBox.ForeColor = System.Drawing.Color.White;
@@ -741,18 +741,18 @@
             this.condition4ComboBox.TabIndex = 52;
             this.condition4ComboBox.Text = "Condition";
             this.condition4ComboBox.SelectedIndexChanged += new System.EventHandler(this.condition4ComboBox_SelectedIndexChanged);
-            // 
+            //
             // condition4TextBox
-            // 
+            //
             this.condition4TextBox.BackColor = System.Drawing.Color.Black;
             this.condition4TextBox.ForeColor = System.Drawing.Color.White;
             this.condition4TextBox.Location = new System.Drawing.Point(215, 6);
             this.condition4TextBox.Name = "condition4TextBox";
             this.condition4TextBox.Size = new System.Drawing.Size(102, 22);
             this.condition4TextBox.TabIndex = 51;
-            // 
+            //
             // condition3Panel
-            // 
+            //
             this.condition3Panel.Controls.Add(this.condition3CheckBox);
             this.condition3Panel.Controls.Add(this.operator3ComboBox);
             this.condition3Panel.Controls.Add(this.condition3ComboBox);
@@ -762,9 +762,9 @@
             this.condition3Panel.Size = new System.Drawing.Size(324, 36);
             this.condition3Panel.TabIndex = 55;
             this.condition3Panel.Visible = false;
-            // 
+            //
             // condition3CheckBox
-            // 
+            //
             this.condition3CheckBox.AutoSize = true;
             this.condition3CheckBox.Location = new System.Drawing.Point(7, 11);
             this.condition3CheckBox.Name = "condition3CheckBox";
@@ -772,9 +772,9 @@
             this.condition3CheckBox.TabIndex = 54;
             this.condition3CheckBox.UseVisualStyleBackColor = true;
             this.condition3CheckBox.CheckedChanged += new System.EventHandler(this.condition3CheckBox_CheckedChanged);
-            // 
+            //
             // operator3ComboBox
-            // 
+            //
             this.operator3ComboBox.BackColor = System.Drawing.Color.Black;
             this.operator3ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.operator3ComboBox.ForeColor = System.Drawing.Color.White;
@@ -790,9 +790,9 @@
             this.operator3ComboBox.Size = new System.Drawing.Size(78, 24);
             this.operator3ComboBox.TabIndex = 53;
             this.operator3ComboBox.Text = "=";
-            // 
+            //
             // condition3ComboBox
-            // 
+            //
             this.condition3ComboBox.BackColor = System.Drawing.Color.Black;
             this.condition3ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.condition3ComboBox.ForeColor = System.Drawing.Color.White;
@@ -809,18 +809,18 @@
             this.condition3ComboBox.TabIndex = 52;
             this.condition3ComboBox.Text = "Condition";
             this.condition3ComboBox.SelectedIndexChanged += new System.EventHandler(this.condition3ComboBox_SelectedIndexChanged);
-            // 
+            //
             // condition3TextBox
-            // 
+            //
             this.condition3TextBox.BackColor = System.Drawing.Color.Black;
             this.condition3TextBox.ForeColor = System.Drawing.Color.White;
             this.condition3TextBox.Location = new System.Drawing.Point(215, 6);
             this.condition3TextBox.Name = "condition3TextBox";
             this.condition3TextBox.Size = new System.Drawing.Size(102, 22);
             this.condition3TextBox.TabIndex = 51;
-            // 
+            //
             // condition2Panel
-            // 
+            //
             this.condition2Panel.Controls.Add(this.condition2CheckBox);
             this.condition2Panel.Controls.Add(this.operator2ComboBox);
             this.condition2Panel.Controls.Add(this.condition2ComboBox);
@@ -830,9 +830,9 @@
             this.condition2Panel.Size = new System.Drawing.Size(324, 36);
             this.condition2Panel.TabIndex = 50;
             this.condition2Panel.Visible = false;
-            // 
+            //
             // condition2CheckBox
-            // 
+            //
             this.condition2CheckBox.AutoSize = true;
             this.condition2CheckBox.Location = new System.Drawing.Point(7, 11);
             this.condition2CheckBox.Name = "condition2CheckBox";
@@ -840,9 +840,9 @@
             this.condition2CheckBox.TabIndex = 54;
             this.condition2CheckBox.UseVisualStyleBackColor = true;
             this.condition2CheckBox.CheckedChanged += new System.EventHandler(this.condition2CheckBox_CheckedChanged);
-            // 
+            //
             // operator2ComboBox
-            // 
+            //
             this.operator2ComboBox.BackColor = System.Drawing.Color.Black;
             this.operator2ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.operator2ComboBox.ForeColor = System.Drawing.Color.White;
@@ -858,9 +858,9 @@
             this.operator2ComboBox.Size = new System.Drawing.Size(78, 24);
             this.operator2ComboBox.TabIndex = 53;
             this.operator2ComboBox.Text = "=";
-            // 
+            //
             // condition2ComboBox
-            // 
+            //
             this.condition2ComboBox.BackColor = System.Drawing.Color.Black;
             this.condition2ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.condition2ComboBox.ForeColor = System.Drawing.Color.White;
@@ -877,18 +877,18 @@
             this.condition2ComboBox.TabIndex = 52;
             this.condition2ComboBox.Text = "Condition";
             this.condition2ComboBox.SelectedIndexChanged += new System.EventHandler(this.condition2ComboBox_SelectedIndexChanged);
-            // 
+            //
             // condition2TextBox
-            // 
+            //
             this.condition2TextBox.BackColor = System.Drawing.Color.Black;
             this.condition2TextBox.ForeColor = System.Drawing.Color.White;
             this.condition2TextBox.Location = new System.Drawing.Point(215, 6);
             this.condition2TextBox.Name = "condition2TextBox";
             this.condition2TextBox.Size = new System.Drawing.Size(102, 22);
             this.condition2TextBox.TabIndex = 51;
-            // 
+            //
             // condition1Panel
-            // 
+            //
             this.condition1Panel.Controls.Add(this.condition1CheckBox);
             this.condition1Panel.Controls.Add(this.operator1ComboBox);
             this.condition1Panel.Controls.Add(this.condition1ComboBox);
@@ -898,9 +898,9 @@
             this.condition1Panel.Size = new System.Drawing.Size(324, 36);
             this.condition1Panel.TabIndex = 49;
             this.condition1Panel.Visible = false;
-            // 
+            //
             // condition1CheckBox
-            // 
+            //
             this.condition1CheckBox.AutoSize = true;
             this.condition1CheckBox.Location = new System.Drawing.Point(7, 11);
             this.condition1CheckBox.Name = "condition1CheckBox";
@@ -908,9 +908,9 @@
             this.condition1CheckBox.TabIndex = 54;
             this.condition1CheckBox.UseVisualStyleBackColor = true;
             this.condition1CheckBox.CheckedChanged += new System.EventHandler(this.condition1CheckBox_CheckedChanged);
-            // 
+            //
             // operator1ComboBox
-            // 
+            //
             this.operator1ComboBox.BackColor = System.Drawing.Color.Black;
             this.operator1ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.operator1ComboBox.ForeColor = System.Drawing.Color.White;
@@ -926,9 +926,9 @@
             this.operator1ComboBox.Size = new System.Drawing.Size(78, 24);
             this.operator1ComboBox.TabIndex = 53;
             this.operator1ComboBox.Text = "=";
-            // 
+            //
             // condition1ComboBox
-            // 
+            //
             this.condition1ComboBox.BackColor = System.Drawing.Color.Black;
             this.condition1ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.condition1ComboBox.ForeColor = System.Drawing.Color.White;
@@ -945,18 +945,18 @@
             this.condition1ComboBox.TabIndex = 52;
             this.condition1ComboBox.Text = "Condition";
             this.condition1ComboBox.SelectedIndexChanged += new System.EventHandler(this.condition1ComboBox_SelectedIndexChanged);
-            // 
+            //
             // condition1TextBox
-            // 
+            //
             this.condition1TextBox.BackColor = System.Drawing.Color.Black;
             this.condition1TextBox.ForeColor = System.Drawing.Color.White;
             this.condition1TextBox.Location = new System.Drawing.Point(215, 6);
             this.condition1TextBox.Name = "condition1TextBox";
             this.condition1TextBox.Size = new System.Drawing.Size(102, 22);
             this.condition1TextBox.TabIndex = 51;
-            // 
+            //
             // clearButton
-            // 
+            //
             this.clearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clearButton.Location = new System.Drawing.Point(94, 19);
             this.clearButton.Name = "clearButton";
@@ -965,9 +965,9 @@
             this.clearButton.Text = "Clear last";
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
-            // 
+            //
             // addFilterButton
-            // 
+            //
             this.addFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFilterButton.Location = new System.Drawing.Point(11, 19);
             this.addFilterButton.Name = "addFilterButton";
@@ -976,9 +976,9 @@
             this.addFilterButton.Text = "Add Filter";
             this.addFilterButton.UseVisualStyleBackColor = true;
             this.addFilterButton.Click += new System.EventHandler(this.addFilterButton_Click);
-            // 
+            //
             // filterBox
-            // 
+            //
             this.filterBox.Controls.Add(this.filterTreeView);
             this.filterBox.ForeColor = System.Drawing.Color.White;
             this.filterBox.Location = new System.Drawing.Point(34, 278);
@@ -988,9 +988,9 @@
             this.filterBox.TabStop = false;
             this.filterBox.Text = "Filtered Book List";
             this.filterBox.Visible = false;
-            // 
+            //
             // filterTreeView
-            // 
+            //
             this.filterTreeView.BackColor = System.Drawing.Color.Black;
             this.filterTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.filterTreeView.ForeColor = System.Drawing.Color.White;
@@ -999,9 +999,9 @@
             this.filterTreeView.Size = new System.Drawing.Size(258, 366);
             this.filterTreeView.TabIndex = 3;
             this.filterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.filterTreeView_AfterSelect);
-            // 
+            //
             // Form1
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;

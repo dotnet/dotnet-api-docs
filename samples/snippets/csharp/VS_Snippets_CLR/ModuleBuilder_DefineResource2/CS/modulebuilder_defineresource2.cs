@@ -1,6 +1,6 @@
 ﻿// System.Reflection.Emit.ModuleBuilder.DefineResource(String,String,ResourceAttributes)
 /*
-The following example demonstrates the 'DefineResource(String,String,ResourceAttributes)' 
+The following example demonstrates the 'DefineResource(String,String,ResourceAttributes)'
 method of 'ModuleBuilder' class.
 A dynamic assembly with a module in it is created in 'CodeGenerator' class.
 Then a managed resource is defined in the module using the 'DefineResource' method.
@@ -22,16 +22,16 @@ using System.Resources;
          myAssemblyName.Name = "TempAssembly";
 
          // Define 'TempAssembly' assembly in the current application domain.
-         AssemblyBuilder myAssemblyBuilder = 
+         AssemblyBuilder myAssemblyBuilder =
             currentDomain.DefineDynamicAssembly
                         (myAssemblyName, AssemblyBuilderAccess.RunAndSave);
          // Define 'TempModule' module in 'TempAssembly' assembly.
-         ModuleBuilder myModuleBuilder = 
+         ModuleBuilder myModuleBuilder =
             myAssemblyBuilder.DefineDynamicModule("TempModule",
                                               "TempModule.netmodule",true);
          // Define the managed embedded resource, 'MyResource' in 'TempModule'
          // with the specified attribute.
-         IResourceWriter writer = 
+         IResourceWriter writer =
                myModuleBuilder.DefineResource("MyResource.resource",
                             "Description",ResourceAttributes.Public);
          // Add resources to the resource writer.

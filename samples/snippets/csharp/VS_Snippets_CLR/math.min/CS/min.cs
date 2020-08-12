@@ -1,9 +1,9 @@
 ﻿// This example demonstrates Math.Min()
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         //<snippet1>
         string str = "{0}: The lesser of {1,3} and {2,3} is {3}.";
@@ -30,7 +30,7 @@ class Sample
         Console.WriteLine(str, "Single ", xSingle1, xSingle2, Math.Min(xSingle1, xSingle2));
         Console.WriteLine(str, "Double ", xDouble1, xDouble2, Math.Min(xDouble1, xDouble2));
         Console.WriteLine(str, "Decimal", xDecimal1, xDecimal2, Math.Min(xDecimal1, xDecimal2));
-     
+
         Console.WriteLine("\nThe following types are not CLS-compliant:\n");
         Console.WriteLine(str, "SByte  ", xSbyte1, xSbyte2, Math.Min(xSbyte1, xSbyte2));
         Console.WriteLine(str, "UInt16 ", xUshort1, xUshort2, Math.Min(xUshort1, xUshort2));
@@ -57,6 +57,6 @@ class Sample
         UInt32 : The lesser of 103 and 113 is 103.
         UInt64 : The lesser of 104 and 114 is 104.
         */
-        //</snippet1>    
+        //</snippet1>
     }
 }

@@ -26,19 +26,19 @@ public class FieldInfo_SetValue
     {
         Example myObject = new Example();
         Type myType = typeof(Example);
-        FieldInfo myFieldInfo = myType.GetField("myString", 
-            BindingFlags.NonPublic | BindingFlags.Instance); 
+        FieldInfo myFieldInfo = myType.GetField("myString",
+            BindingFlags.NonPublic | BindingFlags.Instance);
 
         // Display the string before applying SetValue to the field.
-        Console.WriteLine( "\nThe field value of myString is \"{0}\".", 
-        myFieldInfo.GetValue(myObject)); 
+        Console.WriteLine( "\nThe field value of myString is \"{0}\".",
+        myFieldInfo.GetValue(myObject));
         // Display the SetValue signature used to set the value of a field.
-        Console.WriteLine( "Applying SetValue(Object, Object)."); 
-   
-        // Change the field value using the SetValue method. 
-        myFieldInfo.SetValue(myObject, "New value"); 
+        Console.WriteLine( "Applying SetValue(Object, Object).");
+
+        // Change the field value using the SetValue method.
+        myFieldInfo.SetValue(myObject, "New value");
         // Display the string after applying SetValue to the field.
-        Console.WriteLine( "The field value of mystring is \"{0}\".", 
+        Console.WriteLine( "The field value of mystring is \"{0}\".",
             myFieldInfo.GetValue(myObject));
     }
 }

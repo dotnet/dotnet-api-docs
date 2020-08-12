@@ -22,20 +22,20 @@ public class OrderedItem {
         LineTotal = UnitPrice * Quantity;
     }
 }
- 
+
 public class Test {
-    
+
    public static void Main() {
         Test t = new Test();
         // Write a purchase order.
         t.SerializeObject("simple.xml");
         t.DeserializeObject("simple.xml");
    }
- 
+
    private void SerializeObject(string filename) {
         Console.WriteLine("Writing With Stream");
- 
-        XmlSerializer serializer = 
+
+        XmlSerializer serializer =
             new XmlSerializer(typeof(OrderedItem));
 
         OrderedItem i = new OrderedItem();
@@ -44,7 +44,7 @@ public class Test {
         i.Quantity = 10;
         i.UnitPrice = (decimal) 2.30;
         i.Calculate();
- 
+
         // Create an XmlSerializerNamespaces object.
         XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
 
@@ -59,7 +59,7 @@ public class Test {
         serializer.Serialize(writer, i, ns);
         writer.Close();
     }
- 
+
     private void DeserializeObject(string filename) {
         Console.WriteLine("Reading with Stream");
         // Create an instance of the XmlSerializer.
@@ -67,11 +67,11 @@ public class Test {
 
         // Writing the file requires a Stream.
         Stream reader= new FileStream(filename,FileMode.Open);
-          
+
         // Declare an object variable of the type to be deserialized.
         OrderedItem i;
 
-        /* Use the Deserialize method to restore the object's state 
+        /* Use the Deserialize method to restore the object's state
            using data from the XML document. */
         i = (OrderedItem) serializer.Deserialize(reader);
 

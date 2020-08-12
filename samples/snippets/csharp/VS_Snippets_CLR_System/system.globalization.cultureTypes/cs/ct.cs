@@ -17,7 +17,7 @@ class Sample
                Console.Write(" NeutralCulture");
             if (ci.CultureTypes.HasFlag(CultureTypes.SpecificCultures))
                Console.Write(" SpecificCulture");
-            Console.WriteLine();         
+            Console.WriteLine();
         }
     }
 }

@@ -20,6 +20,6 @@ namespace ConsoleApplication1
 
  Random file name is w143kxnu.idj
  Press any key to continue . . .
- 
+
  */
 // </snippet20>

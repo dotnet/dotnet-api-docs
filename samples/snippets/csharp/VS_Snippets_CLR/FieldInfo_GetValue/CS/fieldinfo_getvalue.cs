@@ -6,7 +6,7 @@ public class FieldsClass
 {
     public string fieldA;
     public string fieldB;
-     
+
     public FieldsClass()
     {
         fieldA = "A public field";
@@ -23,7 +23,7 @@ public class Example
         Type fieldsType = typeof(FieldsClass);
 
         // Get an array of FieldInfo objects.
-        FieldInfo[] fields = fieldsType.GetFields(BindingFlags.Public 
+        FieldInfo[] fields = fieldsType.GetFields(BindingFlags.Public
             | BindingFlags.Instance);
         // Display the values of the fields.
         Console.WriteLine("Displaying the values of the fields of {0}:",

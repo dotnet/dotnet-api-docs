@@ -2,18 +2,18 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class
-        ManagementPath p = 
+        ManagementPath p =
             new ManagementPath("Win32_Process");
         // Options specify that amended qualifiers
         // are to be retrieved along with the class
         ObjectGetOptions o = new ObjectGetOptions(
-            null, System.TimeSpan.MaxValue, true);    
+            null, System.TimeSpan.MaxValue, true);
         ManagementClass c = new ManagementClass(p,o);
 
         // Get the methods in the class

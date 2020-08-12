@@ -8,20 +8,20 @@ public class Example
     {
         // Create a new dictionary of strings, with string keys and
         // an initial capacity of 4.
-        Dictionary<string, string> openWith = 
+        Dictionary<string, string> openWith =
                                new Dictionary<string, string>(4);
-        
-        // Add 4 elements to the dictionary. 
+
+        // Add 4 elements to the dictionary.
         openWith.Add("txt", "notepad.exe");
         openWith.Add("bmp", "paint.exe");
         openWith.Add("dib", "paint.exe");
         openWith.Add("rtf", "wordpad.exe");
-        
+
         // List the contents of the dictionary.
         Console.WriteLine();
         foreach( KeyValuePair<string, string> kvp in openWith )
         {
-            Console.WriteLine("Key = {0}, Value = {1}", 
+            Console.WriteLine("Key = {0}, Value = {1}",
                kvp.Key, kvp.Value);
         }
     }

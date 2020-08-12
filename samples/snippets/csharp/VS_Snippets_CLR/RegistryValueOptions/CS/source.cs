@@ -9,16 +9,16 @@ public class Example
     {
         // Delete and recreate the test key.
         Registry.CurrentUser.DeleteSubKey("RegistryValueOptionsExample", false);
-        RegistryKey rk = 
+        RegistryKey rk =
             Registry.CurrentUser.CreateSubKey("RegistryValueOptionsExample");
 
         // Add a value that contains an environment variable.
         rk.SetValue("ExpandValue", "The path is %PATH%", RegistryValueKind.ExpandString);
 
-        // Retrieve the value, first without expanding the environment 
+        // Retrieve the value, first without expanding the environment
         // variable and then expanding it.
-        Console.WriteLine("Unexpanded: \"{0}\"", 
-            rk.GetValue("ExpandValue", "No Value", 
+        Console.WriteLine("Unexpanded: \"{0}\"",
+            rk.GetValue("ExpandValue", "No Value",
             RegistryValueOptions.DoNotExpandEnvironmentNames));
         Console.WriteLine("Expanded: \"{0}\"", rk.GetValue("ExpandValue"));
     } //Main

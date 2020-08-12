@@ -21,7 +21,7 @@ HttpCookieCollection MyCookieCollection = Request.Cookies;
       String[] MyKeyNames = MyCookieValues.AllKeys;
       foreach(string KeyName in MyKeyNames)
           {
-              String[] MyValues = 
+              String[] MyValues =
                   MyCookieValues.GetValues(KeyName);
           }
     }

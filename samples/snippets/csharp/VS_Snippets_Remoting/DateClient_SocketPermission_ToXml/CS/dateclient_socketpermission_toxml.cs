@@ -1,18 +1,18 @@
 ﻿/*
-  This program demonstrates the 'ToXml' and 'IsUnrestricted' method and 'ConnectList' property of 
+  This program demonstrates the 'ToXml' and 'IsUnrestricted' method and 'ConnectList' property of
   'SocketPermission' class.
-  
+
   This program provides a class called 'DateClient' that functions as a client
   for a 'DateServer'. A 'DateServer' is a server that provides the current date on
-  the server in response to a request from a client. The 'DateClient' class 
+  the server in response to a request from a client. The 'DateClient' class
   provides a method called 'GetDate' which returns the current date on the server.
   The 'GetDate' is the method that shows the use of 'SocketPermission' class. An
   instance of 'SocketPermission' is obtained using the 'FromXml' method. Another
   instance of 'SocketPermission' is created with the 'SocketPermission(NetworkAccess,
-   TransportType, string, int)' constructor. A third 'SocketPermission' object is 
+   TransportType, string, int)' constructor. A third 'SocketPermission' object is
   formed from the union of the above two 'SocketPermission' objects with the use of the
-  'Union' method of 'SocketPermission' class . This 'SocketPermission' object is used by
-  the 'GetDate' method to verify the permissions of the calling method. If the calling 
+  'Union' method of the 'SocketPermission' class. This 'SocketPermission' object is used by
+  the 'GetDate' method to verify the permissions of the calling method. If the calling
   method has the requisite permissions the 'GetDate' method connects to the 'DateServer'
   and returns the current date that the 'DateServer' sends. If any exception occurs
   the 'GetDate' method returns an empty string.
@@ -34,7 +34,7 @@ using System.Security.Permissions;
 public class DateClient {
 
 	private Socket serverSocket;
-	private Encoding asciiEncoding; 
+	private Encoding asciiEncoding;
 	private IPAddress serverAddress;
 
 	private int serverPort;
@@ -59,20 +59,20 @@ public class DateClient {
 		if(securityElementObj.Attributes != null) {
 			IEnumerator attributeEnumerator = securityElementObj.Attributes.GetEnumerator();
 			while(attributeEnumerator.MoveNext())
-			Console.WriteLine("Attribute - \"{0}\" , Value - \"{1}\"", ((IDictionaryEnumerator)attributeEnumerator).Key, 
-																	((IDictionaryEnumerator)attributeEnumerator).Value); 
+			Console.WriteLine("Attribute - \"{0}\" , Value - \"{1}\"", ((IDictionaryEnumerator)attributeEnumerator).Key,
+																	((IDictionaryEnumerator)attributeEnumerator).Value);
 		}
 
 		Console.WriteLine("");
 
 		if(securityElementObj.Children != null) {
 			depth += 1;
-			for(int i = 0; i < securityElementObj.Children.Count; i++) 
+			for(int i = 0; i < securityElementObj.Children.Count; i++)
 				PrintSecurityElement((SecurityElement)(securityElementObj.Children[i]), depth);
 		}
 	}
 
-	public String GetDate() 
+	public String GetDate()
 	{
 
 		SocketPermission socketPermission1 = new SocketPermission(PermissionState.Unrestricted);
@@ -96,7 +96,7 @@ public class DateClient {
 
 		// Create another 'SocketPermission' object with two ip addresses.
       // First 'SocketPermission' ip-address is '192.168.144.238' for 'All' transport types and for 'All' ports for the ip-address.
-		SocketPermission socketPermission3 = 
+		SocketPermission socketPermission3 =
 						new SocketPermission(NetworkAccess.Connect,
 											 TransportType.All,
 											 "192.168.144.238",
@@ -157,7 +157,7 @@ public class DateClient {
 public class UserDateClient {
 
 	public static void Main(String[] args) {
-		if(args.Length != 2) 
+		if(args.Length != 2)
 		{
 			PrintUsage();
 			return;
@@ -166,7 +166,7 @@ public class UserDateClient {
 			DateClient myDateClient = new DateClient(IPAddress.Parse(args[0]), Int32.Parse(args[1]));
 			String currentDate = myDateClient.GetDate();
 			Console.WriteLine("The current date and time is : ");
-			Console.WriteLine("{0}", currentDate); 
+			Console.WriteLine("{0}", currentDate);
 		}
 		// This exception is thrown by the called method in the context of improper permissions.
 		catch(SecurityException e) {

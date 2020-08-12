@@ -4,36 +4,36 @@ using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
- 
+
 public class Enterprises
 {
    private Winery[] wineries;
    private VacationCompany[] companies;
-   // Sets the Form property to qualified, and specifies the namespace. 
-   [XmlArray(Form = XmlSchemaForm.Qualified, ElementName="Company", 
+   // Sets the Form property to qualified, and specifies the namespace.
+   [XmlArray(Form = XmlSchemaForm.Qualified, ElementName="Company",
    Namespace="http://www.cohowinery.com")]
    public Winery[] Wineries{
       get{return wineries;}
       set{wineries = value;}
    }
 
-   [XmlArray(Form = XmlSchemaForm.Qualified, ElementName = "Company", 
+   [XmlArray(Form = XmlSchemaForm.Qualified, ElementName = "Company",
    Namespace = "http://www.treyresearch.com")]
    public VacationCompany [] Companies{
       get{return companies;}
       set{companies = value;}
    }
 }
- 
+
 public class Winery
 {
    public string Name;
 }
- 
+
 public class VacationCompany{
    public string Name;
 }
- 
+
 public class Run
 {
    public static void Main()
@@ -41,11 +41,11 @@ public class Run
       Run test = new Run();
       test.WriteEnterprises("MyEnterprises.xml");
     }
- 
+
    public void WriteEnterprises(string filename)
    {
       // Creates an instance of the XmlSerializer class.
-      XmlSerializer mySerializer = 
+      XmlSerializer mySerializer =
       new XmlSerializer(typeof(Enterprises));
       // Writing file requires a TextWriter.
       TextWriter writer = new StreamWriter(filename);
@@ -59,13 +59,13 @@ public class Run
 
       // Creates an instance of the class that will be serialized.
       Enterprises myEnterprises = new Enterprises();
-      
-      // Creates objects and adds to the array. 
+
+      // Creates objects and adds to the array.
       Winery w1= new Winery();
       w1.Name = "cohowinery";
       Winery[]myWinery = {w1};
       myEnterprises.Wineries = myWinery;
- 
+
       VacationCompany com1 = new VacationCompany();
       com1.Name = "adventure-works";
       VacationCompany[] myCompany = {com1};
@@ -78,16 +78,16 @@ public class Run
 
    public void ReadEnterprises(string filename)
    {
-      XmlSerializer mySerializer = 
+      XmlSerializer mySerializer =
       new XmlSerializer(typeof(Enterprises));
       FileStream fs = new FileStream(filename, FileMode.Open);
-      Enterprises myEnterprises = (Enterprises) 
+      Enterprises myEnterprises = (Enterprises)
       mySerializer.Deserialize(fs);
-      
+
       for(int i = 0; i < myEnterprises.Wineries.Length;i++)
       {
          Console.WriteLine(myEnterprises.Wineries[i].Name);
-      }   
+      }
       for(int i = 0; i < myEnterprises.Companies.Length;i++)
       {
          Console.WriteLine(myEnterprises.Companies[i].Name);
