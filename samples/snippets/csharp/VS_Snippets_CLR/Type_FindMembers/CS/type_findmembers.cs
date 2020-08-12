@@ -34,4 +34,8 @@ class MyFindMembersClass
             return false;
     }
 }
+/* The example produces the following output:
+
+Result of FindMembers - Boolean ReferenceEquals(System.Object, System.Object)
+*/
 // </Snippet1>
