@@ -911,6 +911,8 @@ namespace Microsoft.ServiceModel.Samples.Federation
 
             public class ComputedKeyAlgorithms
             {
+                // This example uses the SHA1 algorithm.
+                // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
                 public const string PSHA1 = "http://schemas.xmlsoap.org/ws/2005/02/trust/CK/PSHA1";
             }
         }
@@ -1054,6 +1056,8 @@ namespace Microsoft.ServiceModel.Samples.Federation
         /// <returns>Array of bytes that contain key material.</returns>
         public static byte[] ComputeCombinedKey(byte[] requestorEntropy, byte[] issuerEntropy, int keySize)
         {
+            // This example uses the SHA1 algorithm.
+            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
             KeyedHashAlgorithm kha = new HMACSHA1(requestorEntropy, true);
 
             byte[] key = new byte[keySize / 8]; // Final key
@@ -1164,7 +1168,8 @@ namespace Microsoft.ServiceModel.Samples.Federation
                 writer.WriteStartElement(Constants.Trust.Elements.RequestedProofToken, Constants.Trust.NamespaceUri);
                 // Write the wst:ComputeKey start tag.
                 writer.WriteStartElement(Constants.Trust.Elements.ComputedKey, Constants.Trust.NamespaceUri);
-                // Write the PSHA1 algorithm value.
+                // This example uses the SHA1 algorithm.
+                // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
                 writer.WriteValue(Constants.Trust.ComputedKeyAlgorithms.PSHA1);
                 writer.WriteEndElement(); // wst:ComputedKey
                 writer.WriteEndElement(); // wst:RequestedSecurityToken
@@ -1295,6 +1300,8 @@ namespace Microsoft.ServiceModel.Samples.Federation
             samlSubjectStatements.Add(samlAttributeStatement);
 
             // Create a SigningCredentials instance from the key associated with the issuerToken.
+            // This example uses the SHA1 algorithm.
+            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
             SigningCredentials signingCredentials = new SigningCredentials(issuerToken.SecurityKeys[0],
                                                                            SecurityAlgorithms.RsaSha1Signature,
                                                                            SecurityAlgorithms.Sha1Digest,

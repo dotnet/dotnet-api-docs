@@ -49,7 +49,7 @@ Namespace Samples.Aspnet.SystemWebConfiguration
 
         ' Set HashAlgorithmType value.
         configSection.HashAlgorithmType = _
-         MachineKeyValidation.SHA1.ToString()
+         MachineKeyValidation.HMACSHA256.ToString()
 
         ' <Snippet4>
         ' Display UserIsOnlineTimeWindow value.

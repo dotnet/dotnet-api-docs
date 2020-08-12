@@ -1,20 +1,22 @@
 ﻿' <Snippet1>
 ' Declare an interface.
-Interface IInterface
+Interface myIFace
 End Interface
 
-Class Example : Implements IInterface
-   Public Shared Sub Main()
-      ' Determine whether IInterface is an interface.
-       Dim isInterface1 As Boolean = GetType(IInterface).IsInterface
-       Console.WriteLine("Is IInterface an interface? {0}", isInterface1)
+Class MyIsInterface
+    Public Shared Sub Main()
+        ' Get the IsInterface attribute for myIFace.
+        Dim myBool1 As Boolean = GetType(myIFace).IsInterface
+        Console.WriteLine("Is the specified type an interface? {0}.", myBool1)
 
-       ' Determine whether Example is an interface.
-       Dim isInterface2 As Boolean = GetType(Example).IsInterface
-       Console.WriteLine("Is Example an interface? {0}", isInterface2)
-   End Sub 
-End Class 
+        ' Determine whether Example is an interface.
+        Dim myBool2 As Boolean = GetType(MyIsInterface).IsInterface
+        Console.WriteLine("Is the specified type an interface? {0}.", myBool2)
+        Console.ReadLine()
+
+    End Sub
+End Class
 ' The example displays the following output:
-'       Is IInterface an interface? True
-'       Is Example an interface? False
+'       Is the specified type an interface? True.
+'       Is the specified type an interface? False.
 ' </Snippet1>
