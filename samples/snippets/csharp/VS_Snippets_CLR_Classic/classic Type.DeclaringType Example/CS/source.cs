@@ -20,4 +20,8 @@ public abstract class dtype
             typeof(MyClassB).GetMethod("m").DeclaringType);
     }
 }
+/* The example produces the following output:
+
+The declaring type of m is dtype+MyClassA.
+*/
 // </Snippet1>
