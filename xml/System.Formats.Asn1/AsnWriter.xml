@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>A writer for BER-, CER-, and DER-encoded ASN.1 data.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -34,9 +34,11 @@
         <Parameter Name="ruleSet" Type="System.Formats.Asn1.AsnEncodingRules" />
       </Parameters>
       <Docs>
-        <param name="ruleSet">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="ruleSet">The encoding constraints for the writer.</param>
+        <summary>Create a new <see cref="T:System.Formats.Asn1.AsnWriter" /> with a given set of encoding rules.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="ruleSet" /> is not defined.</exception>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -58,9 +60,18 @@
         <Parameter Name="destination" Type="System.Formats.Asn1.AsnWriter" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The writer to receive the value.</param>
+        <summary>Copy the value of this writer into another.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="destination" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">A <see cref="M:System.Formats.Asn1.AsnWriter.PushSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PushSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> has not been closed via <see cref="M:System.Formats.Asn1.AsnWriter.PopSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PopSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.
+             -or- 
+               This writer is empty.
+             -or- 
+               This writer represents more than one top-level value.
+             -or- 
+               This writer's value is encoded in a manner that is not compatible with the ruleset for the destination writer.</exception>
       </Docs>
     </Member>
     <Member MemberName="Encode">
@@ -80,9 +91,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Return a new array containing the encoded value.</summary>
+        <returns>A precisely-sized array containing the encoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">A <see cref="M:System.Formats.Asn1.AsnWriter.PushSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PushSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> has not been closed via <see cref="M:System.Formats.Asn1.AsnWriter.PopSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PopSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Encode">
@@ -104,10 +116,11 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The buffer in which to write.</param>
+        <summary>Writes the encoded representation of the data to <paramref name="destination" />.</summary>
+        <returns>The number of bytes written to <paramref name="destination" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">A <see cref="M:System.Formats.Asn1.AsnWriter.PushSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PushSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> has not been closed via <see cref="M:System.Formats.Asn1.AsnWriter.PopSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PopSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="EncodedValueEquals">
@@ -130,9 +143,13 @@
       </Parameters>
       <Docs>
         <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Determines if <see cref="M:System.Formats.Asn1.AsnWriter.Encode" /> would produce an output identical to <paramref name="other" />.</summary>
+        <returns>
+          <see langword="true" /> if the pending encoded data is identical to <paramref name="other" />, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="other" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">A <see cref="M:System.Formats.Asn1.AsnWriter.PushSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PushSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> has not been closed via <see cref="M:System.Formats.Asn1.AsnWriter.PopSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PopSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="EncodedValueEquals">
@@ -155,9 +172,11 @@
       </Parameters>
       <Docs>
         <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Determines if <see cref="M:System.Formats.Asn1.AsnWriter.Encode" /> would produce an output identical to <paramref name="other" />.</summary>
+        <returns>
+          <see langword="true" /> if the pending encoded data is identical to <paramref name="other" />, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">A <see cref="M:System.Formats.Asn1.AsnWriter.PushSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PushSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> has not been closed via <see cref="M:System.Formats.Asn1.AsnWriter.PopSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PopSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetEncodedLength">
@@ -177,9 +196,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets the number of bytes that would be written by <see cref="M:System.Formats.Asn1.AsnWriter.TryEncode(System.Span{System.Byte},System.Int32@)" />.</summary>
+        <returns>The number of bytes that would be written by <see cref="M:System.Formats.Asn1.AsnWriter.TryEncode(System.Span{System.Byte},System.Int32@)" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <see cref="M:System.Formats.Asn1.AsnWriter.PushSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" />, <see cref="M:System.Formats.Asn1.AsnWriter.PushSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />, or <see cref="M:System.Formats.Asn1.AsnWriter.PushOctetString(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> was called without the corresponding Pop method.</exception>
       </Docs>
     </Member>
     <Member MemberName="PopOctetString">
@@ -200,9 +221,21 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 4).</param>
+        <summary>Indicate that the open Octet String with the tag UNIVERSAL 4 is closed, returning the writer to the parent context.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+In <xref:System.Formats.Asn1.AsnEncodingRules.BER> and <xref:System.Formats.Asn1.AsnEncodingRules.DER> modes the encoded contents will remain in a single primitive Octet String.
+              In <xref:System.Formats.Asn1.AsnEncodingRules.CER> mode the contents will be broken up into multiple segments, when required.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
+        <exception cref="T:System.InvalidOperationException">the writer is not currently positioned within an Octet String with the specified tag.</exception>
       </Docs>
     </Member>
     <Member MemberName="PopSequence">
@@ -223,9 +256,12 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 16).</param>
+        <summary>Indicate that the open Sequence with the specified tag is closed, returning the writer to the parent context.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
+        <exception cref="T:System.InvalidOperationException">the writer is not currently positioned within a Sequence with the specified tag.</exception>
       </Docs>
     </Member>
     <Member MemberName="PopSetOf">
@@ -246,9 +282,20 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 17).</param>
+        <summary>Indicate that the open Set-Of with the specified tag is closed, returning the writer to the parent context.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+In <xref:System.Formats.Asn1.AsnEncodingRules.CER> and <xref:System.Formats.Asn1.AsnEncodingRules.DER> modes the writer will sort the Set-Of elements when the tag is closed.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
+        <exception cref="T:System.InvalidOperationException">the writer is not currently positioned within a Set-Of with the specified tag.</exception>
       </Docs>
     </Member>
     <Member MemberName="PushOctetString">
@@ -269,10 +316,20 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 4).</param>
+        <summary>Begin writing an Octet String value with a specified tag.</summary>
+        <returns>A disposable value which will automatically call <see cref="M:System.Formats.Asn1.AsnWriter.PopOctetString(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is just an accelerator for writing an Octet String value where the contents are also ASN.1 data encoded under the same encoding system.
+              When <xref:System.Formats.Asn1.AsnWriter.PopOctetString(System.Nullable{System.Formats.Asn1.Asn1Tag})> is called the entire nested contents are normalized as a single Octet String value, encoded correctly for the current encoding rules.
+              This method does not necessarily create a Constructed encoding, and it is not invalid to write values other than Octet String inside this Push/Pop.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PushSequence">
@@ -293,10 +350,12 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 16).</param>
+        <summary>Begin writing a Sequence with a specified tag.</summary>
+        <returns>A disposable value which will automatically call <see cref="M:System.Formats.Asn1.AsnWriter.PopSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="PushSetOf">
@@ -317,10 +376,20 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 17).</param>
+        <summary>Begin writing a Set-Of with a specified tag.</summary>
+        <returns>A disposable value which will automatically call <see cref="M:System.Formats.Asn1.AsnWriter.PopSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+In <xref:System.Formats.Asn1.AsnEncodingRules.CER> and <xref:System.Formats.Asn1.AsnEncodingRules.DER> modes the writer will sort the Set-Of elements when the tag is closed.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="Reset">
@@ -340,7 +409,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reset the writer to have no data, without releasing resources.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -360,8 +429,8 @@
         <ReturnType>System.Formats.Asn1.AsnEncodingRules</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the encoding rules in use by this writer.</summary>
+        <value>The encoding rules in use by this writer.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -385,11 +454,13 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The buffer in which to write.</param>
+        <param name="bytesWritten">On success, receives the number of bytes written to <paramref name="destination" />.</param>
+        <summary>Attempts to write the encoded representation of the data to <paramref name="destination" />.</summary>
+        <returns>
+          <see langword="true" /> if the encode succeeded, <see langword="false" /> if <paramref name="destination" /> is too small.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">A <see cref="M:System.Formats.Asn1.AsnWriter.PushSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PushSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> has not been closed via <see cref="M:System.Formats.Asn1.AsnWriter.PopSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" /> or <see cref="M:System.Formats.Asn1.AsnWriter.PopSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBitString">
@@ -412,11 +483,19 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="unusedBitCount">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="unusedBitCount">The number of trailing bits which are not semantic.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 3).</param>
+        <summary>Write a Bit String value with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.
+             -or- 
+               <paramref name="value" /> has length 0 and <paramref name="unusedBitCount" /> is not 0 
+               -or- 
+               <paramref name="value" /> is not empty and any of the bits identified by <paramref name="unusedBitCount" /> is set.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="unusedBitCount" /> is not in the range [0,7].</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteBoolean">
@@ -438,10 +517,12 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 1).</param>
+        <summary>Write a Boolean value with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCharacterString">
@@ -464,11 +545,17 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="encodingType">To be added.</param>
-        <param name="str">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="encodingType">One of the enumeration values representing the encoding to use.</param>
+        <param name="str">The string to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the universal tag that is appropriate to the requested encoding type.</param>
+        <summary>Write the provided string using the specified encoding type using the specified tag corresponding to the encoding type.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="encodingType" /> is not a restricted character string encoding type.
+             -or- 
+               <paramref name="encodingType" /> is a restricted character string encoding type that is not currently supported by this method.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCharacterString">
@@ -491,11 +578,19 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="encodingType">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="encodingType">One of the enumeration values representing the encoding to use.</param>
+        <param name="value">The string to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the universal tag that is appropriate to the requested encoding type.</param>
+        <summary>Write the provided string using the specified encoding type using the specified tag corresponding to the encoding type.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <see langword="null" /></exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="encodingType" /> is not a restricted character string encoding type.
+             -or- 
+               <paramref name="encodingType" /> is a restricted character string encoding type that is not currently supported by this method.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteEncodedValue">
@@ -517,9 +612,21 @@
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">The value to write.</param>
+        <summary>Write a single value which has already been encoded.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method only checks that the tag and length are encoded according to the current ruleset, and that the end of the value is the end of the input. The contents are not evaluated for semantic meaning.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="value" /> could not be read under the current encoding rules.
+             -or- 
+               <paramref name="value" /> has data beyond the end of the first value.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteEnumeratedValue">
@@ -541,10 +648,18 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The boxed enumeration value to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 10).</param>
+        <summary>Write a non-[<see cref="T:System.FlagsAttribute" />] enum value as an Enumerated with tag UNIVERSAL 10.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.
+             -or- 
+               <paramref name="value" /> is not a boxed enum value.
+             -or- 
+               the unboxed type of <paramref name="value" /> is declared [<see cref="T:System.FlagsAttribute" />].</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteEnumeratedValue&lt;TEnum&gt;">
@@ -574,10 +689,18 @@
       </Parameters>
       <Docs>
         <typeparam name="TEnum">To be added.</typeparam>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The boxed enumeration value to write.</param>
+        <param name="tag">The tag to write.</param>
+        <summary>Write a non-[<see cref="T:System.FlagsAttribute" />] enum value as an Enumerated with tag UNIVERSAL 10.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.
+             -or- 
+               <typeparamref name="TEnum" /> is not an enum.
+             -or- 
+               <typeparamref name="TEnum" /> is declared [<see cref="T:System.FlagsAttribute" />].</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteGeneralizedTime">
@@ -600,11 +723,14 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="omitFractionalSeconds">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="omitFractionalSeconds">
+          <see langword="true" /> to treat the fractional seconds in <paramref name="value" /> as 0 even if a non-zero value is present.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 24).</param>
+        <summary>Write the provided <see cref="T:System.DateTimeOffset" /> as a GeneralizedTime with a specified UNIVERSAL 24, optionally excluding the fractional seconds.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteInteger">
@@ -626,10 +752,12 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 2).</param>
+        <summary>Write an Integer value with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteInteger">
@@ -651,10 +779,12 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 2).</param>
+        <summary>Write an Integer value with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteInteger">
@@ -676,10 +806,15 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The integer value to write, in signed big-endian byte order.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 2).</param>
+        <summary>Write an Integer value with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
+        <exception cref="T:System.ArgumentException">the 9 most significant bits are all set.
+             -or- 
+               the 9 most significant bits are all unset.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteInteger">
@@ -707,10 +842,12 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 2).</param>
+        <summary>Write an Integer value with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteIntegerUnsigned">
@@ -732,10 +869,13 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The integer value to write, in unsigned big-endian byte order.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 2).</param>
+        <summary>Write an Integer value with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
+        <exception cref="T:System.ArgumentException">the 9 most significant bits are all unset.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNamedBitList">
@@ -757,10 +897,23 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">The bits to write</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 3).</param>
+        <summary>Write a bit array value as a NamedBitList with a specified tag.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The index of the bit array corresponds to the bit number in the encoded format, which is different than the value produced by <xref:System.Collections.BitArray.CopyTo(System.Array,System.Int32)> with a byte array.
+              For example, the bit array `{ `false`, `true`, `true` }` encodes as `0b0110_0000` with 5 unused bits.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNamedBitList">
@@ -782,10 +935,18 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The boxed enumeration value to write</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 3).</param>
+        <summary>Write a [<see cref="T:System.FlagsAttribute" />] enum value as a NamedBitList with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.
+             -or- 
+               <paramref name="value" /> is not a boxed enum value.
+             -or- 
+               the unboxed type of <paramref name="value" /> is not declared [<see cref="T:System.FlagsAttribute" />].</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNamedBitList&lt;TEnum&gt;">
@@ -815,10 +976,16 @@
       </Parameters>
       <Docs>
         <typeparam name="TEnum">To be added.</typeparam>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The enumeration value to write</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 3).</param>
+        <summary>Write a [<see cref="T:System.FlagsAttribute" />] enum value as a NamedBitList with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.
+             -or- 
+               <typeparamref name="TEnum" /> is not an enum value.
+             -or- 
+               <typeparamref name="TEnum" /> is not declared [<see cref="T:System.FlagsAttribute" />].</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteNull">
@@ -839,9 +1006,11 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 5).</param>
+        <summary>Write NULL with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteObjectIdentifier">
@@ -863,10 +1032,14 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="oidValue">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="oidValue">The object identifier to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 6).</param>
+        <summary>Write an Object Identifier with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.
+             -or- 
+               <paramref name="oidValue" /> is not a valid dotted decimal object identifier.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteObjectIdentifier">
@@ -888,10 +1061,16 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="oidValue">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="oidValue">The object identifier to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 6).</param>
+        <summary>Write an Object Identifier with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.
+             -or- 
+               <paramref name="oidValue" /> is not a valid dotted decimal object identifier.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="oidValue" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteOctetString">
@@ -913,10 +1092,12 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 4).</param>
+        <summary>Write an Octet String value with a specified tag.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteUtcTime">
@@ -938,10 +1119,12 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 23).</param>
+        <summary>Write the provided value as a UTCTime with a specified tag, accepting the two-digit year as valid in context.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteUtcTime">
@@ -964,11 +1147,16 @@
         <Parameter Name="tag" Type="System.Nullable&lt;System.Formats.Asn1.Asn1Tag&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="twoDigitYearMax">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The value to write.</param>
+        <param name="twoDigitYearMax">The maximum valid year for <paramref name="value" />, after conversion to UTC.
+              For the X.509 Time.utcTime range of 1950-2049, pass <c>2049</c>.</param>
+        <param name="tag">The tag to write, or <see langword="null" /> for the default tag (Universal 23).</param>
+        <summary>Write the provided value as a UTCTime with a specified tag, provided the year is in the allowed range.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> is <see cref="F:System.Formats.Asn1.TagClass.Universal" />, but <paramref name="tag" />.<see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> is not correct for the method.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="value" />.<see cref="P:System.DateTimeOffset.Year" /> (after conversion to UTC) is not in the range (<paramref name="twoDigitYearMax" /> - 100, <paramref name="twoDigitYearMax" />].</exception>
       </Docs>
     </Member>
   </Members>
