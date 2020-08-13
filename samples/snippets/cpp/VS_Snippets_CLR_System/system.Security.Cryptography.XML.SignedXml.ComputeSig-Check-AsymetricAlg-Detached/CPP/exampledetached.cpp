@@ -52,7 +52,7 @@ void SignDetachedResource( String^ URIString, String^ XmlSigFileName, RSA^ Key )
 }
 
 
-// Verify the signature of an XML file against an asymetric 
+// Verify the signature of an XML file against an asymmetric 
 // algorithm and return the result.
 static Boolean VerifyDetachedSignature( String^ XmlSigFileName, RSA^ Key )
 {
@@ -73,7 +73,7 @@ static Boolean VerifyDetachedSignature( String^ XmlSigFileName, RSA^ Key )
    // Load the signature node.
    signedXml->LoadXml( dynamic_cast<XmlElement^>(nodeList[ 0 ]) );
    
-   // Check the signature against the passed asymetric key
+   // Check the signature against the passed asymmetric key
    // and return the result.
    return signedXml->CheckSignature( Key );
 }
@@ -90,12 +90,12 @@ int main()
    {
       
       // Generate a signing key.
-      RSACryptoServiceProvider^ Key = gcnew RSACryptoServiceProvider;
+      RSA^ Key = RSA::Create();
       Console::WriteLine( "Signing: {0}", resourceToSign );
       
       // Sign the detached resourceand save the signature in an XML file.
       SignDetachedResource( resourceToSign, XmlFileName, Key );
-      Console::WriteLine( "XML Signature was succesfully computed and saved to {0}.", XmlFileName );
+      Console::WriteLine( "XML Signature was successfully computed and saved to {0}.", XmlFileName );
       
       // Verify the signature of the signed XML.
       Console::WriteLine( "Verifying signature..." );

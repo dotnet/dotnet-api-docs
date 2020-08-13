@@ -98,7 +98,7 @@ namespace CustAttrs4CS
 
 This code example produces the following results.
 
-First, the compilation yields the warning, "...This method is
+First, the compilation yields the warning, "... This method is
 obsolete. Use managed MsgBox instead."
 Second, execution yields a message box with a title of "Caution!"
 and message text of "This is an unmanaged call."

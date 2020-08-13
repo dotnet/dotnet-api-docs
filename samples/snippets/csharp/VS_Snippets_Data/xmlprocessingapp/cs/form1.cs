@@ -50,7 +50,7 @@ namespace XMLProcessingApp
             else
             {
                 XmlTextBox.Text = _doc.InnerXml;
-                populateTreeView(_doc); 
+                populateTreeView(_doc);
             }
         }
 
@@ -63,7 +63,7 @@ namespace XMLProcessingApp
         {
             xmlTreeView.Nodes.Clear();
             addTreeNodes(doc.DocumentElement.ChildNodes, xmlTreeView);
-            xmlTreeView.ExpandAll();  
+            xmlTreeView.ExpandAll();
         }
 
         //************************************************************************************
@@ -160,7 +160,7 @@ namespace XMLProcessingApp
             if (selectedBookNode != null)
             {
                 _currentlySelectedNode = selectedBookNode;
-                
+
                 // Use node to get search string.
                 string stringToHighlight = selectedBookNode.OuterXml;
 
@@ -168,7 +168,7 @@ namespace XMLProcessingApp
                 int numberOfCharactersBefore = stringToHighlight.Substring(0, stringToHighlight.IndexOf(_ISBNOfSelectedBookNode)).Length;
                 int lengthOfSelection = stringToHighlight.Length - Constants.lengthOfNamespaceDeclaration;
 
-                // Highlight the new selected text.          
+                // Highlight the new selected text.
                 XmlTextBox.SelectionLength = _ISBNOfSelectedBookNode.Length;
                 int tempSelectionIndex = XmlTextBox.Find(_ISBNOfSelectedBookNode);
 
@@ -249,14 +249,14 @@ namespace XMLProcessingApp
                             selectedBookNode = _xmlHelperMethods.GetBook(_ISBNOfSelectedBookNode, _doc);
                         }
 
-                        //Insert book element at the beginning, end, before a specific element 
+                        //Insert book element at the beginning, end, before a specific element
                         // or after one depending on what option the user selects.
                         _xmlHelperMethods.InsertBookElement(bookElement, positionComboBox.Text, selectedBookNode, validateCheckBox.Checked, generateSchemaCheckBox.Checked);
 
                         // Populate the RichTextBox again.
-  
+
                         XmlTextBox.Text = _doc.InnerXml;
-                        populateTreeView(_doc); 
+                        populateTreeView(_doc);
 
                         // Highlight the newly added item.
                         _ISBNOfSelectedBookNode = newISBNTextBox.Text;
@@ -314,7 +314,7 @@ namespace XMLProcessingApp
         //************************************************************************************
         private void loadButton_Click(object sender, EventArgs e)
         {
-            loadXML(generateCheckBox.Checked, 
+            loadXML(generateCheckBox.Checked,
                 validateCheckBox.Checked, generateSchemaCheckBox.Checked);
 
             // Clear the text box controls.
@@ -357,7 +357,7 @@ namespace XMLProcessingApp
 
                 // Populate the RichTextBox again.
                 XmlTextBox.Text = _doc.InnerXml;
-                populateTreeView(_doc); 
+                populateTreeView(_doc);
 
                 highlightXML();
             }
@@ -746,7 +746,7 @@ namespace XMLProcessingApp
             if (conditionCheckBox.Checked == true)
             {
                 XmlNodeList nodes = null;
-                
+
                 bool failure = false;
                 foreach (string _condition in conditions)
                 {

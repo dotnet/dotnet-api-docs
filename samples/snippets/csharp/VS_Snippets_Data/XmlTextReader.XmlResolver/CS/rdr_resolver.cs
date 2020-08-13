@@ -10,7 +10,7 @@ public class Sample {
 
     // Create the reader.
     XmlTextReader reader = new XmlTextReader("http://myServer/data/books.xml");
-   
+
     // Supply the credentials necessary to access the Web server.
     XmlUrlResolver resolver = new XmlUrlResolver();
     resolver.Credentials = CredentialCache.DefaultCredentials;
@@ -19,10 +19,10 @@ public class Sample {
     // Parse the file.
     while (reader.Read()) {
        // Do any additional processing here.
-    }           
-  
+    }
+
     // Close the reader.
-    reader.Close();     
+    reader.Close();
   }
-} 
+}
 //</snippet1>

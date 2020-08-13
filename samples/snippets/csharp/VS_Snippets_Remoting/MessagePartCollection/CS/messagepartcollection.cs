@@ -26,12 +26,12 @@ class MyClass1
       Console.WriteLine("============================");
       Console.WriteLine("");
 
-      ServiceDescription myServiceDescription = 
+      ServiceDescription myServiceDescription =
          ServiceDescription.Read("MathService.wsdl");
 
       // Get the message collection.
       MessageCollection myMessageCollection = myServiceDescription.Messages;
-      Console.WriteLine("Total Messages in the document = " + 
+      Console.WriteLine("Total Messages in the document = " +
          myServiceDescription.Messages.Count);
       Console.WriteLine("");
       Console.WriteLine("Enumerating PartCollection for each message...");
@@ -44,15 +44,15 @@ class MyClass1
          Console.WriteLine("Message      : " + myMessageCollection[i].Name);
 
          // Get the message part collection.
-         MessagePartCollection myMessagePartCollection = 
+         MessagePartCollection myMessagePartCollection =
             myMessageCollection[i].Parts;
 
          // Display the part collection.
          for(int k = 0; k < myMessagePartCollection.Count;k++)
          {
-            Console.WriteLine("\t       Part Name     : " + 
+            Console.WriteLine("\t       Part Name     : " +
                myMessagePartCollection[k].Name);
-            Console.WriteLine("\t       Message Name  : " + 
+            Console.WriteLine("\t       Message Name  : " +
                myMessagePartCollection[k].Message.Name);
          }
          Console.WriteLine("");
@@ -70,14 +70,14 @@ class MyClass1
 
          // Get the message part collection.
          MessagePartCollection myMessagePartCollection = myLocalMessage.Parts;
-         MessagePart[] myMessagePart  = 
+         MessagePart[] myMessagePart  =
             new MessagePart[myMessagePartCollection.Count];
 
          // Copy the MessagePartCollection to an array.
          myMessagePartCollection.CopyTo(myMessagePart,0);
          for(int k = 0; k < myMessagePart.Length; k++)
          {
-            Console.WriteLine("\t       Part Name : " + 
+            Console.WriteLine("\t       Part Name : " +
                myMessagePartCollection[k].Name);
          }
          Console.WriteLine("");
@@ -100,7 +100,7 @@ class MyClass1
          if (myMessagePartCollection.Contains(myMessagePart))
          {
             // Get the index of the part named Body.
-            Console.WriteLine("Index of Body in MessagePart collection = " + 
+            Console.WriteLine("Index of Body in MessagePart collection = " +
                myMessagePartCollection.IndexOf(myMessagePart));
             Console.WriteLine("Deleting Body from MessagePart collection...");
             myMessagePartCollection.Remove(myMessagePart);

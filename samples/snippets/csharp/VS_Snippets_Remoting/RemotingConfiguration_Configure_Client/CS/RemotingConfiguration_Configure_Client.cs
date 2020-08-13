@@ -11,9 +11,9 @@ using System.Security.Permissions;
     {
       TcpChannel myChannel = new TcpChannel();
       ChannelServices.RegisterChannel(myChannel);
-      MyServerImpl myObject = 
+      MyServerImpl myObject =
          (MyServerImpl)Activator.GetObject(typeof(MyServerImpl),
                     "tcp://localhost:8085/SayHello");
       Console.WriteLine(myObject.MyMethod("ClientString"));
-    } 
+    }
   }

@@ -22,10 +22,10 @@ namespace TimerSample {
             HttpChannel channel = new HttpChannel(props, clientProv, serverProv);
             ChannelServices.RegisterChannel(channel);
             RemotingConfiguration.RegisterWellKnownServiceType(
-    									typeof(TimerService), 
+    									typeof(TimerService),
     									"MyService/TimerService.soap",
     									WellKnownObjectMode.Singleton);
-            
+
             Console.WriteLine("Press enter to end the server process.");
             Console.ReadLine();
         }

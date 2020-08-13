@@ -15,5 +15,5 @@ public class XClass
    instead of the default ClassName. */
    [XmlElement(ElementName = "XName")]
    public string ClassName;
-} 
+}
 // </Snippet1>

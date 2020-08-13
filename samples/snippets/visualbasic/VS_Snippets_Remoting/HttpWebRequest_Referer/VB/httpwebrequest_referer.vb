@@ -1,11 +1,11 @@
 ﻿ 'System.Net.HttpWebRequest.Referer
 'This program demonstrates 'Referer' property of the 'HttpWebRequest' class.
-'A new 'HttpWebRequest' object is created.The 'Referer' property is displayed to the console.
-'HTTP Request  and  Response Headers are displayed to the console.The contents of the page of the 
+'A new 'HttpWebRequest' object is created. The 'Referer' property is displayed to the console.
+'HTTP Request and Response Headers are displayed to the console. The contents of the page of the 
 'requested URI are displayed to the console.
 '
 'Note:The 'Referer' property is used by the server to store the address of the Uri that has referred 
-'     the request to that server.Please refer to RFC 2616 for more information on HTTP Headers.
+'     the request to that server. Please refer to RFC 2616 for more information on HTTP Headers.
 '
 
 Imports System.IO
@@ -20,7 +20,7 @@ Class HttpWebRequest_Referer
     Overloads Shared Sub Main(args() As String)
         Try
             If args.Length < 2 Then
-                Console.WriteLine(ControlChars.Cr + "Please enter the Uri address as a command line parameter")
+                Console.WriteLine(ControlChars.Cr + "Please enter the Uri address as a command-line parameter")
                 Console.WriteLine("[ Usage:HttpWebRequest_Referer http://www.microsoft.com ]")
             Else
                 GetPage(args(1))

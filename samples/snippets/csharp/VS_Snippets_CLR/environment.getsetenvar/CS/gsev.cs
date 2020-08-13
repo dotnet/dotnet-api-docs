@@ -2,9 +2,9 @@
 using System.Collections;
 using Microsoft.Win32;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         // Environment variable names for default, process, user, and machine targets.
         string defaultEnvVar = nameof(defaultEnvVar);
@@ -22,18 +22,18 @@ class Sample
         // The default target (the current process).
         Environment.SetEnvironmentVariable(defaultEnvVar, dft);
         // The current process.
-        Environment.SetEnvironmentVariable(processEnvVar, process, 
+        Environment.SetEnvironmentVariable(processEnvVar, process,
                                            EnvironmentVariableTarget.Process);
         // The current user.
-        Environment.SetEnvironmentVariable(userEnvVar, user, 
+        Environment.SetEnvironmentVariable(userEnvVar, user,
                                            EnvironmentVariableTarget.User);
         // The local machine.
-        Environment.SetEnvironmentVariable(machineEnvVar, machine, 
+        Environment.SetEnvironmentVariable(machineEnvVar, machine,
                                            EnvironmentVariableTarget.Machine);
 
         // Define an array of environment variables.
         string[] envVars = { defaultEnvVar,processEnvVar, userEnvVar, machineEnvVar };
-        
+
         // Try to get the environment variables from each target.
         // The default (no specified target).
         Console.WriteLine("Retrieving environment variables from the default target:");
@@ -69,13 +69,13 @@ class Sample
         // The default target (the current process).
         Environment.SetEnvironmentVariable(defaultEnvVar, null);
         // The current process.
-        Environment.SetEnvironmentVariable(processEnvVar, null, 
+        Environment.SetEnvironmentVariable(processEnvVar, null,
                                            EnvironmentVariableTarget.Process);
         // The current user.
-        Environment.SetEnvironmentVariable(userEnvVar, null, 
+        Environment.SetEnvironmentVariable(userEnvVar, null,
                                            EnvironmentVariableTarget.User);
         // The local machine.
-        Environment.SetEnvironmentVariable(machineEnvVar, null, 
+        Environment.SetEnvironmentVariable(machineEnvVar, null,
                                            EnvironmentVariableTarget.Machine);
     }
 }

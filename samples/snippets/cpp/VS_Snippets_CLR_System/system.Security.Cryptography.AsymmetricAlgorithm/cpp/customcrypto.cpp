@@ -231,6 +231,9 @@ namespace Contoso
 
             // Retrieves the name of the signature alogrithm.
             //<Snippet7>
+            // This example uses the SHA1 algorithm.
+            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+
         public:
             property String^ SignatureAlgorithm
             {

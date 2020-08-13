@@ -9,8 +9,8 @@ class snkX
 
     public static void Main()
     {
-        // Open a file that contains a public key value. The line below  
-        // assumes that the Strong Name tool (SN.exe) was executed from 
+        // Open a file that contains a public key value. The line below
+        // assumes that the Strong Name tool (SN.exe) was executed from
         // a command prompt as follows:
         //       SN.exe -k C:\Company.keys
         FileStream fs = File.Open("C:\\Company.keys", FileMode.Open);
@@ -32,7 +32,7 @@ class snkX
 }
 
 // Output will vary by user.
-// 
+//
 //  00-24-00-00-04-80-00-00-94-69-89-78-BB-F1-F2-71-00-00-00-34-26-
 //  69-89-78-BB-F1-F2-71-00-F1-FA-F2-F9-4A-A8-5E-82-55-AB-49-4D-A6-
 //  ED-AB-5F-CE-DE-59-49-8D-63-01-B0-E1-BF-43-07-FA-55-D4-36-75-EE-

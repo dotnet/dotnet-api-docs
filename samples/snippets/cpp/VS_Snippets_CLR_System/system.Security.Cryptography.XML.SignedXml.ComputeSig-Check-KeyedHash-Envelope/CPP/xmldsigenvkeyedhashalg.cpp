@@ -123,7 +123,7 @@ int main()
    {
       
       // Generate a signing key.
-      HMACSHA1^ Key = gcnew HMACSHA1;
+      HMACSHA256^ Key = gcnew HMACSHA256;
       
       // Create an XML file to sign.
       CreateSomeXml( "Example.xml" );

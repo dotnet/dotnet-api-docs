@@ -27,7 +27,7 @@ public static void Connect(){
        	                           SocketType.Stream,
                                          ProtocolType.Tcp);
        try{
-          
+
                  while(true){
                  allDone.Reset();
 
@@ -79,12 +79,12 @@ public static void SendTo(){
        	                           SocketType.Stream,
                                          ProtocolType.Tcp);
        try{
-          
+
                  while(true){
                  allDone.Reset();
 
                  byte[] buff = Encoding.ASCII.GetBytes("This is a test");
-                 
+
                  Console.WriteLine("Sending Message Now..");
                  s.BeginSendTo(buff, 0, buff.Length, 0, lep, new AsyncCallback(Async_Send_Receive.SendTo_Callback), s);
 
@@ -106,18 +106,18 @@ public static void ReceiveFrom(){
        Socket s = new Socket(lep.Address.AddressFamily,
        	                           SocketType.Stream,
                                          ProtocolType.Tcp);
-       
+
        IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
        EndPoint tempRemoteEP = (EndPoint)sender;
        s.Connect(sender);
-       
+
        try{
             while(true){
                  allDone.Reset();
                  StateObject so2 = new StateObject();
                  so2.workSocket = s;
                  Console.WriteLine("Attempting to Receive data from host.contoso.com");
-             
+
                  s.BeginReceiveFrom(so2.buffer, 0, StateObject.BUFFER_SIZE,0, ref tempRemoteEP,
 	                                   new AsyncCallback(Async_Send_Receive.ReceiveFrom_Callback), so2);	
                  allDone.WaitOne();
@@ -137,18 +137,18 @@ public static void ReceiveFrom1(){
        Socket s = new Socket(lep.Address.AddressFamily,
        	                           SocketType.Dgram,
                                          ProtocolType.Udp);
-       
+
        IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
        EndPoint tempRemoteEP = (EndPoint)sender;
        s.Connect(sender);
-       
+
        try{
             while(true){
                  allDone.Reset();
                  StateObject so2 = new StateObject();
                  so2.workSocket = s;
                  Console.WriteLine("Attempting to Receive data from host.contoso.com");
-             
+
                  s.BeginReceiveFrom(so2.buffer, 0, StateObject.BUFFER_SIZE,0, ref tempRemoteEP,
 	                                   new AsyncCallback(Async_Send_Receive.ReceiveFrom_Callback), so2);	
                  allDone.WaitOne();
@@ -170,7 +170,7 @@ public static void Connect_Callback(IAsyncResult ar){
      so2.workSocket = s;
      byte[] buff = Encoding.ASCII.GetBytes("This is a test");
      s.BeginSend(buff, 0, buff.Length,0,
-	                       new AsyncCallback(Async_Send_Receive.Send_Callback), so2);    
+	                       new AsyncCallback(Async_Send_Receive.Send_Callback), so2);
 //</Snippet5>
 }
 
@@ -209,7 +209,7 @@ public static void Read_Callback(IAsyncResult ar){
 
 	if (read > 0) {
             so.sb.Append(Encoding.ASCII.GetString(so.buffer, 0, read));
-            s.BeginReceive(so.buffer, 0, StateObject.BUFFER_SIZE, 0, 
+            s.BeginReceive(so.buffer, 0, StateObject.BUFFER_SIZE, 0,
             	                     new AsyncCallback(Async_Send_Receive.Read_Callback), so);
 	}
 	else{
@@ -217,7 +217,7 @@ public static void Read_Callback(IAsyncResult ar){
 	          //All of the data has been read, so displays it to the console
 	          string strContent;
 	          strContent = so.sb.ToString();
-	          Console.WriteLine(String.Format("Read {0} byte from socket" + 
+	          Console.WriteLine(String.Format("Read {0} byte from socket" +
 	          	               "data = {1} ", strContent.Length, strContent));
 	     }
 	     s.Close();
@@ -248,7 +248,7 @@ public static void ReceiveFrom_Callback(IAsyncResult ar){
        IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
 	EndPoint tempRemoteEP = (EndPoint)sender;
 
-       int read = s.EndReceiveFrom(ar, ref tempRemoteEP); 
+       int read = s.EndReceiveFrom(ar, ref tempRemoteEP);
 
 	if (read > 0) {
             so.sb.Append(Encoding.ASCII.GetString(so.buffer, 0, read));
@@ -260,7 +260,7 @@ public static void ReceiveFrom_Callback(IAsyncResult ar){
 	          //All the data has been read, so displays it to the console.
 	          string strContent;
 	          strContent = so.sb.ToString();
-	          Console.WriteLine(String.Format("Read {0} byte from socket" + 
+	          Console.WriteLine(String.Format("Read {0} byte from socket" +
 	          	               "data = {1} ", strContent.Length, strContent));
 	     }
 	     s.Close();

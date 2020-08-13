@@ -15,7 +15,7 @@ namespace RijndaelManaged_Example
                 string original = "Here is some data to encrypt!";
 
                 // Create a new instance of the RijndaelManaged
-                // class.  This generates a new key and initialization 
+                // class.  This generates a new key and initialization
                 // vector (IV).
                 using (RijndaelManaged myRijndael = new RijndaelManaged())
                 {

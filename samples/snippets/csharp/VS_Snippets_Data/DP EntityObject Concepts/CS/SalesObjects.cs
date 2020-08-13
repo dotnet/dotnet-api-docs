@@ -13,15 +13,15 @@ using Microsoft.Samples.Edm;
 //<snippetCustomObjectAssemblyAttributes>
 [assembly: EdmSchemaAttribute()]
 [assembly: EdmRelationshipAttribute("Microsoft.Samples.Edm",
-    "FK_LineItem_Order_OrderId", "Order", 
+    "FK_LineItem_Order_OrderId", "Order",
     RelationshipMultiplicity.One, typeof(Order),"LineItem",
     RelationshipMultiplicity.Many, typeof(LineItem))]
 //</snippetCustomObjectAssemblyAttributes>
 namespace Microsoft.Samples.Edm
-{   
+{
     //<snippetEntityObjectDeclaration>
     [EdmEntityTypeAttribute(NamespaceName="Microsoft.Samples.Edm",Name="Order")]
-    public class Order : EntityObject 
+    public class Order : EntityObject
     //</snippetEntityObjectDeclaration>
     {
         // Define private property variables.
@@ -36,12 +36,12 @@ namespace Microsoft.Samples.Edm
         private decimal _freight;
         private decimal _totalDue;
         private OrderInfo _ExtendedInfo;
-        
+
         // Public properties of the Order object.
         [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         public int OrderId
         {
-            get 
+            get
             {
                 return _orderId;
             }
@@ -66,9 +66,9 @@ namespace Microsoft.Samples.Edm
             }
         }
         [EdmScalarPropertyAttribute(IsNullable = false)]
-        public DateTime OrderDate 
+        public DateTime OrderDate
         {
-           get 
+           get
             {
                 return _orderDate;
             }
@@ -80,9 +80,9 @@ namespace Microsoft.Samples.Edm
             }
         }
         [EdmScalarPropertyAttribute(IsNullable = false)]
-        public DateTime DueDate 
+        public DateTime DueDate
         {
-            get 
+            get
             {
                 return _dueDate;
             }
@@ -111,7 +111,7 @@ namespace Microsoft.Samples.Edm
         [EdmScalarPropertyAttribute(IsNullable = false)]
         public byte Status
         {
-            get 
+            get
             {
                 return _status;
             }
@@ -147,7 +147,7 @@ namespace Microsoft.Samples.Edm
             {
                 return _subTotal;
             }
-            set 
+            set
             {
                 if (_subTotal != value)
                 {
@@ -240,7 +240,7 @@ namespace Microsoft.Samples.Edm
             {
                 this.ReportPropertyChanging("ExtendedInfo");
                 _ExtendedInfo = value;
-                this.ReportPropertyChanged("ExtendedInfo");                
+                this.ReportPropertyChanged("ExtendedInfo");
             }
         }
         private void CalculateOrderTotal()
@@ -250,7 +250,7 @@ namespace Microsoft.Samples.Edm
         }
 }
     //<snippetComplexObjectDeclaration>
-    [EdmComplexTypeAttribute(NamespaceName = 
+    [EdmComplexTypeAttribute(NamespaceName =
         "Microsoft.Samples.Edm", Name = "OrderInfo")]
     public partial class OrderInfo : ComplexObject
     //</snippetComplexObjectDeclaration>
@@ -356,10 +356,10 @@ namespace Microsoft.Samples.Edm
     }
 
     [EdmEntityTypeAttribute(NamespaceName = "Microsoft.Samples.Edm", Name = "LineItem")]
-    public class LineItem : EntityObject  
+    public class LineItem : EntityObject
     {
         // Define private property variables.
-        int _lineItemId; 
+        int _lineItemId;
         string _trackingNumber;
         short _quantity;
         int _product;
@@ -370,7 +370,7 @@ namespace Microsoft.Samples.Edm
         // Default constructor.
         public LineItem()
         {
-        }   
+        }
 
         // Defines a navigation property to the Order class.
         [EdmRelationshipNavigationPropertyAttribute("Microsoft.Samples.Edm", "FK_LineItem_Order_OrderId", "Order")]
@@ -446,7 +446,7 @@ namespace Microsoft.Samples.Edm
                     ReportPropertyChanging("Quantity");
                     _quantity = value;
                     ReportPropertyChanged("Quantity");
- 
+
                     // Update the line total.
                     CalculateLineTotal();
                 }
@@ -465,7 +465,7 @@ namespace Microsoft.Samples.Edm
                 if (value < 1)
                 {
                     throw new ApplicationException(string.Format(
-                              Properties.Resources.propertyNotValidNegative, 
+                              Properties.Resources.propertyNotValidNegative,
                               new string[2] { value.ToString(), "Product" }));
                 }
                 ReportPropertyChanging("Product");
@@ -473,7 +473,7 @@ namespace Microsoft.Samples.Edm
                 ReportPropertyChanged("Product");
             }
         }
-        [EdmScalarPropertyAttribute(IsNullable = false)] 
+        [EdmScalarPropertyAttribute(IsNullable = false)]
         public decimal Price
         {
             get
@@ -522,7 +522,7 @@ namespace Microsoft.Samples.Edm
                 ReportPropertyChanged("Discount");
             }
         }
- 
+
         public decimal Total
         {
             get
@@ -533,7 +533,7 @@ namespace Microsoft.Samples.Edm
 
         private void CalculateLineTotal()
         {
-            _total = (_quantity * (_price - _discount)); 
+            _total = (_quantity * (_price - _discount));
         }
     }
 }

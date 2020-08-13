@@ -9,8 +9,8 @@ class RSASample
     {
         try
         {
-            //Create a new instance of RSACryptoServiceProvider.
-            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+            //Create a new instance of RSA.
+            using (RSA rsa = RSA.Create())
             {
                 //The hash to sign.
                 byte[] hash;
@@ -21,7 +21,7 @@ class RSASample
                 }
 
                 //Create an RSASignatureFormatter object and pass it the 
-                //RSACryptoServiceProvider to transfer the key information.
+                //RSA instance to transfer the key information.
                 RSAPKCS1SignatureFormatter RSAFormatter = new RSAPKCS1SignatureFormatter(rsa);
 
                 //Set the hash algorithm to SHA256.
@@ -30,7 +30,7 @@ class RSASample
                 //Create a signature for HashValue and return it.
                 byte[] signedHash = RSAFormatter.CreateSignature(hash);
                 //Create an RSAPKCS1SignatureDeformatter object and pass it the  
-                //RSACryptoServiceProvider to transfer the key information.
+                //RSA instance to transfer the key information.
                 RSAPKCS1SignatureDeformatter RSADeformatter = new RSAPKCS1SignatureDeformatter(rsa);
                 RSADeformatter.SetHashAlgorithm("SHA256");
                 //Verify the hash and display the results to the console. 

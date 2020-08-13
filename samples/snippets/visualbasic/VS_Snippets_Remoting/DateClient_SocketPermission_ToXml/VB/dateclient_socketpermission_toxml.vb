@@ -11,7 +11,7 @@
 '  instance of 'SocketPermission' is created with the 'SocketPermission(NetworkAccess,
 '   TransportType, string, int)' constructor. A third 'SocketPermission' object is 
 '  formed from the union of the above two 'SocketPermission' objects with the use of the
-'  'Union' method of 'SocketPermission' class . This 'SocketPermission' object is used by
+'  'Union' method of 'SocketPermission' class. This 'SocketPermission' object is used by
 '  the 'GetDate' method to verify the permissions of the calling method. If the calling 
 '  method has the requisite permissions the 'GetDate' method connects to the 'DateServer'
 '  and returns the current date that the 'DateServer' sends. If any exception occurs

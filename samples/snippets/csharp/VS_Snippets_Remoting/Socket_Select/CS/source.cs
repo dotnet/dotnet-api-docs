@@ -12,11 +12,11 @@ class Test
     IPAddress ipAddress = ipHostEntry.AddressList[0];
 
     Socket socket0 = null;
-    Socket socket1 = null; 
-    Socket socket2 = null; 
-    Socket socket3 = null; 
-    Socket socket4 = null; 
-    Socket socket5 = null; 
+    Socket socket1 = null;
+    Socket socket2 = null;
+    Socket socket3 = null;
+    Socket socket4 = null;
+    Socket socket5 = null;
 
     ArrayList listenList = new ArrayList();
     listenList.Add(socket0);

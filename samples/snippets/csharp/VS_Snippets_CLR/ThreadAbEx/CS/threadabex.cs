@@ -7,7 +7,7 @@ public class ThreadWork {
     public static void DoWork() {
         try {
             for(int i=0; i<100; i++) {
-                Console.WriteLine("Thread - working."); 
+                Console.WriteLine("Thread - working.");
                 Thread.Sleep(100);
             }
         }
@@ -16,7 +16,7 @@ public class ThreadWork {
             Console.WriteLine("Exception message: {0}", e.Message);
             Thread.ResetAbort();
         }
-        Console.WriteLine("Thread - still alive and working."); 
+        Console.WriteLine("Thread - still alive and working.");
         Thread.Sleep(1000);
         Console.WriteLine("Thread - finished working.");
     }
@@ -31,7 +31,7 @@ class ThreadAbortTest {
         Console.WriteLine("Main - aborting my thread.");
         myThread.Abort();
         myThread.Join();
-        Console.WriteLine("Main ending."); 
+        Console.WriteLine("Main ending.");
     }
 }
 //</Snippet1>

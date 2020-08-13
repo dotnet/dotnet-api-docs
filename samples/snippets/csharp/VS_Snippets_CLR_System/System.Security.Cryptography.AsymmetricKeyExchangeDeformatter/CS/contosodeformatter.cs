@@ -46,7 +46,7 @@ namespace Contoso
 
         //<Snippet4>
         // Create the encrypted key exchange data from the specified input
-        // data. This method uses the RSACryptoServiceProvider only. To
+        // data. This method uses the RSA class only. To
         // support additional providers or provide custom decryption logic,
         // add logic to this member.
         public override byte[] DecryptKeyExchange(byte[] rgbData) {
@@ -54,12 +54,11 @@ namespace Contoso
 
             if (rsaKey != null)
             {
-                if (rsaKey is RSACryptoServiceProvider)
+                if (rsaKey is RSA)
                 {
-                    RSACryptoServiceProvider serviceProvder =
-                        (RSACryptoServiceProvider)rsaKey;
+                    RSA rsa = (RSA)rsaKey;
 
-                    decryptedBytes = serviceProvder.Decrypt(rgbData, true);
+                    decryptedBytes = rsa.Decrypt(rgbData, RSAEncryptionPadding.OaepSHA1);
                 }
                 // Add custom decryption logic here.
             }

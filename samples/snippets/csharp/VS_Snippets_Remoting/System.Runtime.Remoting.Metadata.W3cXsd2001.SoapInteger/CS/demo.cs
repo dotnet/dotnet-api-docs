@@ -1,5 +1,5 @@
 ﻿/// Class:  System.Runtime.Remoting.Metadata.W3cXsd2001.SoapInteger
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(decimal)
 ///    13    GetXsdType()
@@ -26,21 +26,21 @@ public class Demo
         //</snippet11>
 
         //<snippet12>
-        // Print the value of the SoapInteger object in XSD format. 
+        // Print the value of the SoapInteger object in XSD format.
         Console.WriteLine("The SoapInteger object in XSD format is {0}.",
             xsdInteger.ToString());
         //</snippet12>
 
         //<snippet13>
         // Print the XSD type string of the SoapInteger object.
-        Console.WriteLine("The XSD type of the SoapInteger " + 
+        Console.WriteLine("The XSD type of the SoapInteger " +
             "object is {0}.", xsdInteger.GetXsdType());
         //</snippet13>
 
         //<snippet14>
         // Print the value of the SoapInteger object.
         Console.WriteLine(
-            "The value of the SoapInteger object is {0}.", 
+            "The value of the SoapInteger object is {0}.",
             xsdInteger.Value);
         //</snippet14>
 

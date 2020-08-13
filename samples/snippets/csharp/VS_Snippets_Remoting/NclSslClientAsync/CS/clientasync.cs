@@ -12,16 +12,16 @@ using System.IO;
 
 namespace Examples.Ssl
 {
-    // The following example demonstrates the client side of a 
+    // The following example demonstrates the client side of a
     // client-server application that communicates using the
     // SslStream and TcpClient classes.
-    // After connecting to the server and authenticating, 
+    // After connecting to the server and authenticating,
     // the client sends the server a message, receives a message from the server,
     // and then terminates. Messages sent to and from the server are terminated
     // with '<EOF>'.
-    public class SslTcpClient 
-    {   
-       // complete is used to terminate the application when all 
+    public class SslTcpClient
+    {
+       // complete is used to terminate the application when all
         // asynchronous calls have completed or any call has thrown an exception.
         // complete might be used by any of the callback methods.
         static bool complete = false;
@@ -36,7 +36,7 @@ namespace Examples.Ssl
         static byte [] buffer = new byte[2048];
         // </snippet8>
         //<snippet1>
-       
+
         // The following method is invoked by the CertificateValidationDelegate.
         public static bool ValidateServerCertificate(
               object sender,
@@ -57,13 +57,13 @@ namespace Examples.Ssl
         //<snippet2>
         public static X509Certificate SelectLocalCertificate(
             object sender,
-            string targetHost, 
-            X509CertificateCollection localCertificates, 
-            X509Certificate remoteCertificate, 
+            string targetHost,
+            X509CertificateCollection localCertificates,
+            X509Certificate remoteCertificate,
             string[] acceptableIssuers)
         {	
             Console.WriteLine("Client is selecting a local certificate.");
-            if (acceptableIssuers != null && 
+            if (acceptableIssuers != null &&
                 acceptableIssuers.Length > 0 &&
                 localCertificates != null &&
                 localCertificates.Count > 0)
@@ -79,7 +79,7 @@ namespace Examples.Ssl
             if (localCertificates != null &&
                 localCertificates.Count > 0)
                 return localCertificates[0];
-                
+
             return null;
         }
         //</snippet2>
@@ -87,22 +87,22 @@ namespace Examples.Ssl
         static void AuthenticateCallback(IAsyncResult ar)
         {
             SslStream stream = (SslStream) ar.AsyncState;
-            try 
+            try
             {
                 stream.EndAuthenticateAsClient(ar);
                 Console.WriteLine("Authentication succeeded.");
-                Console.WriteLine("Cipher: {0} strength {1}", stream.CipherAlgorithm, 
+                Console.WriteLine("Cipher: {0} strength {1}", stream.CipherAlgorithm,
                     stream.CipherStrength);
-                Console.WriteLine("Hash: {0} strength {1}", 
+                Console.WriteLine("Hash: {0} strength {1}",
                     stream.HashAlgorithm, stream.HashStrength);
-                Console.WriteLine("Key exchange: {0} strength {1}", 
+                Console.WriteLine("Key exchange: {0} strength {1}",
                     stream.KeyExchangeAlgorithm, stream.KeyExchangeStrength);
                 Console.WriteLine("Protocol: {0}", stream.SslProtocol);
                 // Encode a test message into a byte array.
                 // Signal the end of the message using the "<EOF>".
                 byte[] message = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
                 // Asynchronously send a message to the server.
-                stream.BeginWrite(message, 0, message.Length, 
+                stream.BeginWrite(message, 0, message.Length,
                     new AsyncCallback(WriteCallback),
                     stream);
             }
@@ -118,12 +118,12 @@ namespace Examples.Ssl
         static void WriteCallback(IAsyncResult ar)
         {
             SslStream stream = (SslStream) ar.AsyncState;
-            try 
+            try
             {
                 Console.WriteLine("Writing data to the server.");
                 stream.EndWrite(ar);
                 // Asynchronously read a message from the server.
-                stream.BeginRead(buffer, 0, buffer.Length, 
+                stream.BeginRead(buffer, 0, buffer.Length,
                     new AsyncCallback(ReadCallback),
                     stream);
             }
@@ -144,7 +144,7 @@ namespace Examples.Ssl
             // "<EOF>" marker.
             SslStream stream = (SslStream) ar.AsyncState;
             int byteCount = -1;
-            try 
+            try
             {
                 Console.WriteLine("Reading data from the server.");
                 byteCount = stream.EndRead(ar);
@@ -159,10 +159,10 @@ namespace Examples.Ssl
                 {
                     // We are not finished reading.
                     // Asynchronously read more message data from  the server.
-                    stream.BeginRead(buffer, 0, buffer.Length, 
+                    stream.BeginRead(buffer, 0, buffer.Length,
                         new AsyncCallback(ReadCallback),
                         stream);
-                } 
+                }
                 else
                 {
                     Console.WriteLine("Message from the server: {0}", readData.ToString());
@@ -189,16 +189,16 @@ namespace Examples.Ssl
                 return 1;
             }
             //<snippet6>
-            // Server name must match the host name and the name on the host's certificate. 
+            // Server name must match the host name and the name on the host's certificate.
             serverName = args[0];
             // Create a TCP/IP client socket.
             TcpClient client = new TcpClient(serverName,80);
             Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
             SslStream sslStream = new SslStream(
-                client.GetStream(), 
-                false, 
-                new RemoteCertificateValidationCallback (ValidateServerCertificate), 
+                client.GetStream(),
+                false,
+                new RemoteCertificateValidationCallback (ValidateServerCertificate),
                 new LocalCertificateSelectionCallback(SelectLocalCertificate)
                 );
                    //</snippet6>
@@ -211,24 +211,24 @@ namespace Examples.Ssl
             }
             // Begin authentication.
             // The server name must match the name on the server certificate.
-           
+
             sslStream.BeginAuthenticateAsClient(
                 serverName,
                 clientCertificates,
-                SslProtocols.Ssl3,
+                SslProtocols.None,
                 true,
                 new AsyncCallback(AuthenticateCallback),
                 sslStream);
-            // User can press a key to exit application, or let the 
+            // User can press a key to exit application, or let the
             // asynchronous calls continue until they complete.
             Console.WriteLine("To quit, press the enter key.");
-            do 
+            do
             {
                 // Real world applications would do work here
                 // while waiting for the asynchronous calls to complete.
                 System.Threading.Thread.Sleep(100);
             } while (complete != true && Console.KeyAvailable == false);
-            
+
             if (Console.KeyAvailable)
             {
                 Console.ReadLine();
@@ -249,5 +249,5 @@ namespace Examples.Ssl
          //</snippet7>
     }
 }
-    
+
 //</snippet0>

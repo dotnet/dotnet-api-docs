@@ -32,6 +32,7 @@
   <TypeForwardingChain>
     <TypeForwarding From="System.Xml" FromVersion="4.0.0.0" To="System.Xml.XmlSerializer" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
     <TypeForwarding From="System.Xml.Serialization" FromVersion="4.0.0.0" To="System.Xml.XmlSerializer" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.XmlSerializer" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="System.Xml.Serialization" FromVersion="4.0.0.0" To="System.Xml" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinmac-3.0" />
     <TypeForwarding From="System.Xml.Serialization" FromVersion="2.0.5.0" To="System.Xml" ToVersion="2.0.5.0" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8" />
   </TypeForwardingChain>
@@ -47,14 +48,14 @@
 ## Remarks  
  XML serialization is the process of converting an object's public properties and fields to a serial format (in this case, XML) for storage or transport. Deserialization re-creates the object in its original state from the XML output. You can think of serialization as a way of saving the state of an object into a stream or buffer. For example, ASP.NET uses the <xref:System.Xml.Serialization.XmlSerializer> class to encode XML Web service messages.  
   
- The data in your objects is described using programming language constructs like classes, fields, properties, primitive types, arrays, and even embedded XML in the form of <xref:System.Xml.XmlElement> or <xref:System.Xml.XmlAttribute> objects. You have the option of creating your own classes, annotated with attributes, or using the [XML Schema Definition Tool (Xsd.exe)](~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md) to generate the classes based on an existing XML Schema definition (XSD) document. If you have an XML Schema, you can run the Xsd.exe to produce a set of classes that are strongly typed to the schema and annotated with attributes to adhere to the schema when serialized.  
+ The data in your objects is described using programming language constructs like classes, fields, properties, primitive types, arrays, and even embedded XML in the form of <xref:System.Xml.XmlElement> or <xref:System.Xml.XmlAttribute> objects. You have the option of creating your own classes, annotated with attributes, or using the [XML Schema Definition Tool (Xsd.exe)](/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe) to generate the classes based on an existing XML Schema definition (XSD) document. If you have an XML Schema, you can run the Xsd.exe to produce a set of classes that are strongly typed to the schema and annotated with attributes to adhere to the schema when serialized.  
   
  To transfer data between objects and XML requires a mapping from the programming language constructs to XML schema and from the XML schema to the programming language constructs. The <xref:System.Xml.Serialization.XmlSerializer> and related tools like Xsd.exe provide the bridge between these two technologies at both design time and runtime. At design time, use the Xsd.exe to produce an XML schema document (.xsd) from your custom classes or to produce classes from a given schema. In either case, the classes are annotated with custom attributes to instruct the <xref:System.Xml.Serialization.XmlSerializer> how to map between the XML schema system and the common language runtime. At runtime, instances of the classes can be serialized into XML documents that follow the given schema. Likewise, these XML documents can be deserialized into runtime objects. Note that the XML schema is optional, and not required at design time or runtime.  
   
 ## Controlling Generated XML  
- To control the generated XML, you can apply special attributes to classes and members. For example, to specify a different XML element name, apply an <xref:System.Xml.Serialization.XmlElementAttribute> to a public field or property, and set the <xref:System.Xml.Serialization.XmlElementAttribute.ElementName%2A> property. For a complete list of similar attributes, see [Attributes That Control XML Serialization](~/docs/standard/serialization/attributes-that-control-xml-serialization.md). You can also implement the <xref:System.Xml.Serialization.IXmlSerializable> interface to control the XML output.  
+ To control the generated XML, you can apply special attributes to classes and members. For example, to specify a different XML element name, apply an <xref:System.Xml.Serialization.XmlElementAttribute> to a public field or property, and set the <xref:System.Xml.Serialization.XmlElementAttribute.ElementName%2A> property. For a complete list of similar attributes, see [Attributes That Control XML Serialization](/dotnet/standard/serialization/attributes-that-control-xml-serialization). You can also implement the <xref:System.Xml.Serialization.IXmlSerializable> interface to control the XML output.  
   
- If the XML generated must conform to section 5 of the World Wide Consortium document, [Simple Object Access Protocol (SOAP) 1.1](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/), you must construct the <xref:System.Xml.Serialization.XmlSerializer> with an <xref:System.Xml.Serialization.XmlTypeMapping>. To further control the encoded SOAP XML, use the attributes listed in [Attributes That Control Encoded SOAP Serialization](~/docs/standard/serialization/attributes-that-control-encoded-soap-serialization.md).  
+ If the XML generated must conform to section 5 of the World Wide Consortium document, [Simple Object Access Protocol (SOAP) 1.1](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/), you must construct the <xref:System.Xml.Serialization.XmlSerializer> with an <xref:System.Xml.Serialization.XmlTypeMapping>. To further control the encoded SOAP XML, use the attributes listed in [Attributes That Control Encoded SOAP Serialization](/dotnet/standard/serialization/attributes-that-control-encoded-soap-serialization).  
   
  With the <xref:System.Xml.Serialization.XmlSerializer> you can take advantage of working with strongly typed classes and still have the flexibility of XML. Using fields or properties of type <xref:System.Xml.XmlElement>, <xref:System.Xml.XmlAttribute> or <xref:System.Xml.XmlNode> in your strongly typed classes, you can read parts of the XML document directly into XML objects.  
   
@@ -140,7 +141,7 @@ public class OptionalOrder
 ```  
   
 ## Overriding Default Serialization  
- You can also override the serialization of any set of objects and their fields and properties by creating one of the appropriate attributes, and adding it to an instance of the <xref:System.Xml.Serialization.XmlAttributes> class. Overriding serialization in this way has two uses: first, you can control and augment the serialization of objects found in a DLL, even if you do not have access to the source; second, you can create one set of serializable classes, but serialize the objects in multiple ways. For more details, see the <xref:System.Xml.Serialization.XmlAttributeOverrides> class and [How to: Control Serialization of Derived Classes](~/docs/standard/serialization/how-to-control-serialization-of-derived-classes.md).  
+ You can also override the serialization of any set of objects and their fields and properties by creating one of the appropriate attributes, and adding it to an instance of the <xref:System.Xml.Serialization.XmlAttributes> class. Overriding serialization in this way has two uses: first, you can control and augment the serialization of objects found in a DLL, even if you do not have access to the source; second, you can create one set of serializable classes, but serialize the objects in multiple ways. For more details, see the <xref:System.Xml.Serialization.XmlAttributeOverrides> class and [How to: Control Serialization of Derived Classes](/dotnet/standard/serialization/how-to-control-serialization-of-derived-classes).  
   
  To serialize an object, call the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method. To deserialize an object, call the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method.  
   
@@ -246,14 +247,14 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
     <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
     <altmember cref="T:System.Xml.Serialization.XmlSerializer" />
     <altmember cref="P:System.Xml.Serialization.XmlAttributes.XmlText" />
-    <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-    <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-    <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-    <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-    <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
-    <related type="Article" href="~/docs/standard/serialization/how-to-control-serialization-of-derived-classes.md">How to: Control Serialization of Derived Classes</related>
-    <related type="Article" href="~/docs/standard/serialization/datetimeserialization-element.md">&lt;dateTimeSerialization&gt;Element</related>
-    <related type="Article" href="~/docs/standard/serialization/xmlserializer-element.md">&lt;xmlSerializer&gt; Element</related>
+    <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+    <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+    <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+    <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+    <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
+    <related type="Article" href="/dotnet/standard/serialization/how-to-control-serialization-of-derived-classes">How to: Control Serialization of Derived Classes</related>
+    <related type="Article" href="/dotnet/standard/serialization/datetimeserialization-element">&lt;dateTimeSerialization&gt;Element</related>
+    <related type="Article" href="/dotnet/standard/serialization/xmlserializer-element">&lt;xmlSerializer&gt; Element</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -335,7 +336,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
@@ -364,11 +366,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Serialize(System.IO.TextWriter,System.Object)" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -425,11 +427,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -484,11 +486,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -524,7 +526,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
@@ -555,11 +558,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -620,11 +623,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributeOverrides" />
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -684,11 +687,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -724,7 +727,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
@@ -745,15 +749,13 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The `overrides` parameter allows for the creation of an [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Xml.Serialization.XmlSerializer> that serializes a class that extends or overrides the behavior of a base class. For example, given a DLL, it is possible to create a class that inherits or extends a class contained in the DLL. To serialize such a class, you must use an instance of the [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Xml.Serialization.XmlAttributeOverrides> class when constructing the [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Xml.Serialization.XmlSerializer>. For more details, see [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Xml.Serialization.XmlAttributeOverrides>.  
+ The `overrides` parameter allows for the creation of an <xref:System.Xml.Serialization.XmlSerializer> that serializes a class that extends or overrides the behavior of a base class. For example, given a DLL, it is possible to create a class that inherits or extends a class contained in the DLL. To serialize such a class, you must use an instance of the <xref:System.Xml.Serialization.XmlAttributeOverrides> class when constructing the <xref:System.Xml.Serialization.XmlSerializer>. For more details, see <xref:System.Xml.Serialization.XmlAttributeOverrides>.  
   
- By default, if a public property or field returns an object, or array of objects, the object types are automatically serialized. However, if a class contains a field or property that returns an array of type [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Object>, any object can be inserted into that array. In that case, the [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Xml.Serialization.XmlSerializer> must be instructed to expect all the possible object types that are inserted into the [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Object> array. To do this, use the `extraTypes` parameter to specify the extra object types to serialize or deserialize.  
+ By default, if a public property or field returns an object, or array of objects, the object types are automatically serialized. However, if a class contains a field or property that returns an array of type <xref:System.Object>, any object can be inserted into that array. In that case, the <xref:System.Xml.Serialization.XmlSerializer> must be instructed to expect all the possible object types that are inserted into the <xref:System.Object> array. To do this, use the `extraTypes` parameter to specify the extra object types to serialize or deserialize.  
   
- The root element of an XML document encloses all the other elements. By default, the object specified by the `type` parameter is serialized as the root element. Properties, such as the XML element name of the root element are taken from the `type` object. However, the `root` parameter allows you to replace the default object's information by specifying an [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Xml.Serialization.XmlRootAttribute>; the object allows you to set a different namespace, element name, and so on.  
+ The root element of an XML document encloses all the other elements. By default, the object specified by the `type` parameter is serialized as the root element. Properties, such as the XML element name of the root element are taken from the `type` object. However, the `root` parameter allows you to replace the default object's information by specifying an <xref:System.Xml.Serialization.XmlRootAttribute>; the object allows you to set a different namespace, element name, and so on.  
   
- Use the `defaultName` parameter to specify the default namespace of all XML elements generated by the [XmlSerializer Constructor (Type, XmlAttributeOverrides, Type\<xref:System.Xml.Serialization.XmlSerializer>.  
-  
-   
+ Use the `defaultName` parameter to specify the default namespace of all XML elements generated by the <xref:System.Xml.Serialization.XmlSerializer>.
   
 ## Examples  
  The following example serializes an instance of a class that is defined in a DLL and to do so, overrides the public members found in the class. The example also specifies an array of extra types, the default namespace for all XML elements, and the class to use that provides the XML root element information. The example assumes that the code at the beginning has been compiled into a DLL named `HighSchool`.  
@@ -767,11 +769,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="T:System.Xml.Serialization.XmlAttributeOverrides" />
         <altmember cref="T:System.Xml.Serialization.XmlRootAttribute" />
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -804,7 +806,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
@@ -851,7 +854,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinmac-3.0">
-          <AttributeName>System.Obsolete("This method is obsolete and will be removed in a future release of the .NET Framework. Please use a XmlSerializer constructor overload which does not take an Evidence parameter. See http://go2.microsoft.com/fwlink/?LinkId=131738 for more information.")</AttributeName>
+          <AttributeName Language="C#">[System.Obsolete("This method is obsolete and will be removed in a future release of the .NET Framework. Please use a XmlSerializer constructor overload which does not take an Evidence parameter. See http://go2.microsoft.com/fwlink/?LinkId=131738 for more information.")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Obsolete("This method is obsolete and will be removed in a future release of the .NET Framework. Please use a XmlSerializer constructor overload which does not take an Evidence parameter. See http://go2.microsoft.com/fwlink/?LinkId=131738 for more information.")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
@@ -1110,11 +1114,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.CanDeserialize(System.Xml.XmlReader)" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Serialize(System.IO.TextWriter,System.Object)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Deserialize">
@@ -1189,11 +1193,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.CanDeserialize(System.Xml.XmlReader)" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Serialize(System.IO.TextWriter,System.Object)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Deserialize">
@@ -1273,7 +1277,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1315,11 +1320,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.CanDeserialize(System.Xml.XmlReader)" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Serialize(System.IO.TextWriter,System.Object)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Deserialize">
@@ -1381,11 +1386,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.CanDeserialize(System.Xml.XmlReader)" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Serialize(System.IO.TextWriter,System.Object)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Deserialize">
@@ -1420,7 +1425,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1475,7 +1481,7 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <AssemblyName>System.Xml.Serialization</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Object</ReturnType>
+        <ReturnType FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="xmlReader" Type="System.Xml.XmlReader" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
@@ -1540,7 +1546,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1581,7 +1588,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinmac-3.0">
-          <AttributeName>System.Obsolete("This method is obsolete and will be removed in a future release of the .NET Framework. Please use an overload of FromMappings which does not take an Evidence parameter. See http://go2.microsoft.com/fwlink/?LinkId=131738 for more information.")</AttributeName>
+          <AttributeName Language="C#">[System.Obsolete("This method is obsolete and will be removed in a future release of the .NET Framework. Please use an overload of FromMappings which does not take an Evidence parameter. See http://go2.microsoft.com/fwlink/?LinkId=131738 for more information.")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Obsolete("This method is obsolete and will be removed in a future release of the .NET Framework. Please use an overload of FromMappings which does not take an Evidence parameter. See http://go2.microsoft.com/fwlink/?LinkId=131738 for more information.")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1702,11 +1710,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="GenerateSerializer">
@@ -1720,7 +1728,7 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The [XML Serializer Generator Tool (Sgen.exe)](~/docs/standard/serialization/xml-serializer-generator-tool-sgen-exe.md) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
+ The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
   
  If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.  
   
@@ -1816,7 +1824,7 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The [XML Serializer Generator Tool (Sgen.exe)](~/docs/standard/serialization/xml-serializer-generator-tool-sgen-exe.md) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
+ The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
   
  If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.  
   
@@ -1855,7 +1863,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1872,7 +1881,7 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The [XML Serializer Generator Tool (Sgen.exe)](~/docs/standard/serialization/xml-serializer-generator-tool-sgen-exe.md) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
+ The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
   
  If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.  
   
@@ -1925,7 +1934,7 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The [XML Serializer Generator Tool (Sgen.exe)](~/docs/standard/serialization/xml-serializer-generator-tool-sgen-exe.md) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
+ The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
   
  If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.  
   
@@ -1976,7 +1985,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -2026,11 +2036,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Serialize">
@@ -2066,7 +2076,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -2110,11 +2121,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Serialize">
@@ -2195,7 +2206,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -2235,11 +2247,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Serialize">
@@ -2321,11 +2333,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Serialize">
@@ -2403,11 +2415,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Serialize">
@@ -2443,7 +2455,8 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -2485,11 +2498,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Serialize">
@@ -2523,11 +2536,12 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
+        <ReturnType FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="xmlWriter" Type="System.Xml.XmlWriter" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
@@ -2559,11 +2573,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="Serialize">
@@ -2681,11 +2695,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
         <altmember cref="E:System.Xml.Serialization.XmlSerializer.UnknownNode" />
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="UnknownElement">
@@ -2757,11 +2771,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="E:System.Xml.Serialization.XmlSerializer.UnknownNode" />
         <altmember cref="E:System.Xml.Serialization.XmlSerializer.UnknownAttribute" />
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="UnknownNode">
@@ -2822,11 +2836,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
         <altmember cref="E:System.Xml.Serialization.XmlSerializer.UnknownAttribute" />
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
     <Member MemberName="UnreferencedObject">
@@ -2911,11 +2925,11 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-        <related type="Article" href="~/docs/standard/serialization/introducing-xml-serialization.md">Introducing XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream.md">How to: Specify an Alternate Element Name for an XML Stream</related>
-        <related type="Article" href="~/docs/standard/serialization/controlling-xml-serialization-using-attributes.md">Controlling XML Serialization Using Attributes</related>
-        <related type="Article" href="~/docs/standard/serialization/examples-of-xml-serialization.md">Examples of XML Serialization</related>
-        <related type="Article" href="~/docs/standard/serialization/xml-schema-definition-tool-xsd-exe.md">XML Schema Definition Tool (Xsd.exe)</related>
+        <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
+        <related type="Article" href="/dotnet/standard/serialization/controlling-xml-serialization-using-attributes">Controlling XML Serialization Using Attributes</related>
+        <related type="Article" href="/dotnet/standard/serialization/examples-of-xml-serialization">Examples of XML Serialization</related>
+        <related type="Article" href="/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe">XML Schema Definition Tool (Xsd.exe)</related>
       </Docs>
     </Member>
   </Members>

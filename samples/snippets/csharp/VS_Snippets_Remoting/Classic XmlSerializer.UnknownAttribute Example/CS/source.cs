@@ -20,7 +20,7 @@ public class Test{
       Console.WriteLine("\t" + e.Attr.Name + " " + e.Attr.InnerXml);
       Console.WriteLine("\t LineNumber: " + e.LineNumber);
       Console.WriteLine("\t LinePosition: " + e.LinePosition);
-      
+
       Group x  = (Group) e.ObjectBeingDeserialized;
       Console.WriteLine (x.GroupName);
       Console.WriteLine (sender.ToString());
@@ -35,4 +35,4 @@ public class Test{
      fs.Close();
    	}
 }
- //</Snippet1>  
+ //</Snippet1>

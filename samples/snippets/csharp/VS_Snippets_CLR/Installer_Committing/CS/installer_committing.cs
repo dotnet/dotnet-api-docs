@@ -1,7 +1,7 @@
 ﻿// System.Configuration.Install.Installer.Committing
 
-/* The following program demonstrates the 'Committing' event of the 
-   'Installer' class.  When the 'Commit' is about to complete, 
+/* The following program demonstrates the 'Committing' event of the
+   'Installer' class.  When the 'Commit' is about to complete,
    'Committing' event is fired and a message is displayed.
 */
 
@@ -29,7 +29,7 @@ public class MyInstallerClass: Installer
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)
    {
-      base.Install(savedState);     
+      base.Install(savedState);
    }
    // Override the 'Commit' method.
    public override void Commit(IDictionary savedState)
@@ -43,6 +43,6 @@ public class MyInstallerClass: Installer
    }
    public static void Main()
    {
-      Console.WriteLine("Usage : installutil.exe Installer_Committing.exe ");            
+      Console.WriteLine("Usage : installutil.exe Installer_Committing.exe ");
    }
 }

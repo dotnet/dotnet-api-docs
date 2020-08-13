@@ -20,12 +20,12 @@ public class TestHMACMD5
     {
         // Create a key.
         byte[] key1 = { 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b };
-        // Pass the key to the constructor of the HMACMD5 class.  
+        // Pass the key to the constructor of the HMACMD5 class.
         HMACMD5 hmac1 = new HMACMD5(key1);
 
         // Create another key.
         byte[] key2 = System.Text.Encoding.ASCII.GetBytes("KeyString");
-        // Pass the key to the constructor of the HMACMD5 class.  
+        // Pass the key to the constructor of the HMACMD5 class.
         HMACMD5 hmac2 = new HMACMD5(key2);
 
         // Encode a string into a byte array, create a hash of the array,

@@ -69,8 +69,6 @@ public:
 
         DisplayEnumerator(myEnumerator);
         //</Snippet03>
-
-        Console::ReadLine();
     }
 
     //<Snippet04>

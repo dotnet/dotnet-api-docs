@@ -19,7 +19,7 @@ public class Sample {
     // Create a resolver with default credentials.
     XmlUrlResolver resolver = new XmlUrlResolver();
     resolver.Credentials = System.Net.CredentialCache.DefaultCredentials;
-  
+
     // Set the reader settings object to use the resolver.
     settings.XmlResolver = resolver;
 
@@ -27,7 +27,7 @@ public class Sample {
     XmlReader reader = XmlReader.Create("http://ServerName/data/books.xml", settings);
    // </snippet2>
 
-    // Parse the file. 
+    // Parse the file.
     while (reader.Read());
   }
 }

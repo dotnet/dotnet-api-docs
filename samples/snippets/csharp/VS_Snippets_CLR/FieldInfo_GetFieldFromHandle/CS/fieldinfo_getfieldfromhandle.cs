@@ -22,7 +22,7 @@ public class FieldInfo_GetFieldFromHandle
         {
             // Get the RuntimeFieldHandle of myFieldInfoArray.
             myRuntimeFieldHandle = myFieldInfoArray[i].FieldHandle;
-            // Call the GetFieldFromHandle method. 
+            // Call the GetFieldFromHandle method.
             FieldInfo myFieldInfo = FieldInfo.GetFieldFromHandle(myRuntimeFieldHandle);
             // Display the FieldInfo of myFieldInfo.
             Console.WriteLine("{0}", myFieldInfo);

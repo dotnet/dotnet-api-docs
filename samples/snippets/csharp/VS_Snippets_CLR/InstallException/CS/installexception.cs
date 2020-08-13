@@ -9,19 +9,19 @@
    This example shows an assembly having its own installer named 'MyInstaller'
    which has an attribute 'RunInstallerAttribute', indicating that this installer
    will be invoked by InstallUtil.exe. InstallUtil.exe calls the 'Install', 'Commit',
-   'Rollback' and 'Uninstall' methods. The code in 'Commit' method presumes that 
-   a file named 'FileDoesNotExist.txt' exists before the installation of the 
+   'Rollback' and 'Uninstall' methods. The code in 'Commit' method presumes that
+   a file named 'FileDoesNotExist.txt' exists before the installation of the
    assembly can be committed. If the file 'FileDoesNotExist.txt' does not exist
-   'Commit' raises a 'InstallException'. Same is the case with 'Uninstall', 
-   uninstalltion will only progress if the file named 'FileDoesNotExist.txt' 
+   'Commit' raises a 'InstallException'. Same is the case with 'Uninstall',
+   uninstalltion will only progress if the file named 'FileDoesNotExist.txt'
    exists else it raises an 'InstallException'. In 'Rollback' some piece of
    code is executed which may raise an exception. If the exception is raised then
    it is caught and an 'InstallException' is raised with that exception being passed
    to it.
-   
+
    Note : Run this example with the help of 'InstallUtil.exe'
          InstallUtil InstallException.exe
-         InstallUtil /u InstallException.exe 
+         InstallUtil /u InstallException.exe
  */
 
 // <Snippet1>
@@ -100,4 +100,4 @@ public class MyAssembly1
       Console.WriteLine("This assembly is just an example for the Installer");
    }
 }
-// </Snippet1> 
+// </Snippet1>

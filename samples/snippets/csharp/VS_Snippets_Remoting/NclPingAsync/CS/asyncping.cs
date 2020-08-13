@@ -65,8 +65,8 @@ namespace Examples.System.Net.NetworkInformation.PingTest
             {
                 Console.WriteLine ("Ping canceled.");
 
-                // Let the main thread resume. 
-                // UserToken is the AutoResetEvent object that the main thread 
+                // Let the main thread resume.
+                // UserToken is the AutoResetEvent object that the main thread
                 // is waiting for.
                 ((AutoResetEvent)e.UserState).Set ();
             }
@@ -77,7 +77,7 @@ namespace Examples.System.Net.NetworkInformation.PingTest
                 Console.WriteLine ("Ping failed:");
                 Console.WriteLine (e.Error.ToString ());
 
-                // Let the main thread resume. 
+                // Let the main thread resume.
                 ((AutoResetEvent)e.UserState).Set();
             }
 

@@ -7,7 +7,7 @@
   and properties 'Extensions' and 'Name'.
   'MessageBinding' is an abstract class from which 'InputBinding' , 'OutputBinding' are derived.
   The program contains a utility function which could be used to create either an InputBinding or OutputBinding.
-  This generic nature is achieved by returning an instance of 'MessageBinding'. 
+  This generic nature is achieved by returning an instance of 'MessageBinding'.
  */
 // <Snippet1>
 using System;
@@ -16,16 +16,16 @@ class MyClass
 {
    public static void Main()
    {
-   OperationBinding addOperationBinding = 
+   OperationBinding addOperationBinding =
       CreateOperationBinding("Add","http://tempuri.org/");
    }
 
    public static MessageBinding CreateInputOutputBinding(string myBindName,
       bool isInputBinding)
    {
-// <Snippet2>     
-     
-     // Value isInputBinding = true ---> return type = InputBinding.  
+// <Snippet2>
+
+     // Value isInputBinding = true ---> return type = InputBinding.
      // Value isInputBinding = false --> return type = OutputBinding.
 // <Snippet3>
 // <Snippet4>
@@ -46,7 +46,7 @@ class MyClass
       SoapBodyBinding mySoapBodyBinding = new SoapBodyBinding();
       mySoapBodyBinding.Use = SoapBindingUse.Literal;
       myMessageBinding.Extensions.Add(mySoapBodyBinding);
-      Console.WriteLine("Added extensibility element of type : " + 
+      Console.WriteLine("Added extensibility element of type : " +
          mySoapBodyBinding.GetType());
 // </Snippet3>
 // </Snippet4>
@@ -62,17 +62,17 @@ class MyClass
       myOperationBinding.Name = myOperation;
 
       // Create InputBinding for operation.
-      InputBinding myInputBinding = 
+      InputBinding myInputBinding =
         (InputBinding)CreateInputOutputBinding(null,true);
 
       // Create OutputBinding for operation.
-      OutputBinding myOutputBinding = 
+      OutputBinding myOutputBinding =
          (OutputBinding)CreateInputOutputBinding(null,false);
-      
-      // Add InputBinding and OutputBinding to OperationBinding. 
+
+      // Add InputBinding and OutputBinding to OperationBinding.
       myOperationBinding.Input = myInputBinding;
       myOperationBinding.Output = myOutputBinding;
-      
+
       // Create an extensibility element for SoapOperationBinding.
       SoapOperationBinding mySoapOperationBinding = new SoapOperationBinding();
       mySoapOperationBinding.Style = SoapBindingStyle.Document;

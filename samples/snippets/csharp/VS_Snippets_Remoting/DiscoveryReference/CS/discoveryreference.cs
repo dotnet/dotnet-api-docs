@@ -24,9 +24,9 @@ class MyDiscoveryDocumentClass
    static void Main()
    {
       DiscoveryDocument myDiscoveryDocument;
-      StreamReader myStreamReader = 
+      StreamReader myStreamReader =
          new StreamReader("c:\\Inetpub\\wwwroot\\dataservice.disco");
-      FileStream myStream = 
+      FileStream myStream =
          new FileStream("C:\\MyDiscovery.disco",FileMode.OpenOrCreate);
       Console.WriteLine("Demonstrating Discovery Reference class.");
 
@@ -37,14 +37,14 @@ class MyDiscoveryDocumentClass
       MyDiscoveryReferenceClass myDiscoveryReference;
       myDiscoveryReference =  new MyDiscoveryReferenceClass();
 
-      DiscoveryClientProtocol myDiscoveryClientProtocol = 
+      DiscoveryClientProtocol myDiscoveryClientProtocol =
          new DiscoveryClientProtocol();
-      myDiscoveryClientProtocol.Credentials = 
+      myDiscoveryClientProtocol.Credentials =
          CredentialCache.DefaultCredentials;
 
       // Set client protocol.
       myDiscoveryReference.ClientProtocol = myDiscoveryClientProtocol;
-      
+
       // Read the default file name.
       Console.WriteLine("Default file name is: " + myDiscoveryReference.DefaultFilename);
 

@@ -2,9 +2,9 @@
 // This example demonstrates the VersionString property.
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     OperatingSystem os = Environment.OSVersion;
 // Display the value of OperatingSystem.VersionString. By default, this is

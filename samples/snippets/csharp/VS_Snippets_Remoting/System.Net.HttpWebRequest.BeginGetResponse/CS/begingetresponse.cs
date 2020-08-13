@@ -1,12 +1,12 @@
-﻿ /** 
+﻿ /**
   * File name: Begingetresponse.cs
-  * This program shows how to use BeginGetResponse and EndGetResponse methods of the 
+  * This program shows how to use BeginGetResponse and EndGetResponse methods of the
   * HttpWebRequest class. It also shows how to create a customized timeout.
-  * This is important in case od asynchronous request, because the NCL classes do 
+  * This is important in case od asynchronous request, because the NCL classes do
   * not provide any off-the-shelf asynchronous timeout.
   * It uses an asynchronous approach to get the response for the HTTP Web Request.
   * The RequestState class is defined to chekc the state of the request.
-  * After a HttpWebRequest object is created, its BeginGetResponse method is used to start 
+  * After a HttpWebRequest object is created, its BeginGetResponse method is used to start
   * the asynchronous response phase.
   * Finally, the EndGetResponse method is used to end the asynchronous response phase .*/
 // <Snippet1>
@@ -39,9 +39,9 @@ class HttpWebRequest_BeginGetResponse
   public static ManualResetEvent allDone= new ManualResetEvent(false);
   const int BUFFER_SIZE = 1024;
   const int DefaultTimeout = 2 * 60 * 1000; // 2 minutes timeout
- 
+
   // Abort the request if the timer fires.
-  private static void TimeoutCallback(object state, bool timedOut) { 
+  private static void TimeoutCallback(object state, bool timedOut) {
       if (timedOut) {
           HttpWebRequest request = state as HttpWebRequest;
           if (request != null) {
@@ -51,11 +51,11 @@ class HttpWebRequest_BeginGetResponse
   }
 
   static void Main()
-  {  
-   
+  {
+
     try
     {
-      // Create a HttpWebrequest object to the desired URL. 
+      // Create a HttpWebrequest object to the desired URL.
       HttpWebRequest myHttpWebRequest= (HttpWebRequest)WebRequest.Create("http://www.contoso.com");
 
   /**
@@ -68,15 +68,15 @@ class HttpWebRequest_BeginGetResponse
       // Associate a new Uri object to the _wProxy object, using the proxy address
       // selected by the user.
       myProxy.Address = new Uri("http://myproxy");
-       
-        
+
+
       // Finally, initialize the Web request object proxy property with the _wProxy
       // object.
       myHttpWebRequest.Proxy=myProxy;
     ***/
       // Create an instance of the RequestState and assign the previous myHttpWebRequest
-      // object to its request field.  
-      RequestState myRequestState = new RequestState();  
+      // object to its request field.
+      RequestState myRequestState = new RequestState();
       myRequestState.request = myHttpWebRequest;
 
       // Start the asynchronous request.
@@ -86,10 +86,10 @@ class HttpWebRequest_BeginGetResponse
       // this line implements the timeout, if there is a timeout, the callback fires and the request becomes aborted
       ThreadPool.RegisterWaitForSingleObject (result.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), myHttpWebRequest, DefaultTimeout, true);
 
-      // The response came in the allowed time. The work processing will happen in the 
+      // The response came in the allowed time. The work processing will happen in the
       // callback function.
       allDone.WaitOne();
-      
+
       // Release the HttpWebResponse resource.
       myRequestState.response.Close();
     }
@@ -110,18 +110,18 @@ class HttpWebRequest_BeginGetResponse
     }
   }
   private static void RespCallback(IAsyncResult asynchronousResult)
-  {  
+  {
     try
     {
       // State of request is asynchronous.
       RequestState myRequestState=(RequestState) asynchronousResult.AsyncState;
       HttpWebRequest  myHttpWebRequest=myRequestState.request;
       myRequestState.response = (HttpWebResponse) myHttpWebRequest.EndGetResponse(asynchronousResult);
-      
+
       // Read the response into a Stream object.
       Stream responseStream = myRequestState.response.GetResponseStream();
       myRequestState.streamResponse=responseStream;
-      
+
       // Begin the Reading of the contents of the HTML page and print it to the console.
       IAsyncResult asynchronousInputRead = responseStream.BeginRead(myRequestState.BufferRead, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), myRequestState);
       return;
@@ -160,7 +160,7 @@ class HttpWebRequest_BeginGetResponse
       }
       Console.WriteLine("Press any key to continue..........");
       Console.ReadLine();
-      
+
       responseStream.Close();
     }
     }

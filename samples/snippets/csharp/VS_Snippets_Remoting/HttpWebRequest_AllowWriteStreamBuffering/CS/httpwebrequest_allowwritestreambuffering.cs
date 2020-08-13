@@ -3,7 +3,7 @@
  A new 'HttpWebRequest' object is created.
  The 'AllowWriteStreamBuffering' property value is set to false.
  If the 'AllowWriteStreamBuffering' is set to false,
- then 'ContentLength' property should be set to the length of data to be posted before posting the data 
+ then 'ContentLength' property should be set to the length of data to be posted before posting the data
  else the Http Status(411) Length required is returned.
  Data to be posted to the Uri is requested from the user.
  The 'Method' property is set to POST to be able to post data to the Uri.
@@ -14,7 +14,7 @@
 
  Note:This program posts data to the Uri : http://www20.brinkster.com/codesnippets/next.asp.
 */
- 
+
 using System;
 using System.IO;
 using System.Net;
@@ -30,7 +30,7 @@ class HttpWebRequest_AllowWriteStreamBuffering
 
 			// Create a new 'HttpWebRequest' object to the mentioned Uri.				
 			HttpWebRequest myHttpWebRequest=(HttpWebRequest)WebRequest.Create("http://www.contoso.com/codesnippets/next.asp");
-			// Set AllowWriteStreamBuffering to 'false'. 
+			// Set AllowWriteStreamBuffering to 'false'.
 			myHttpWebRequest.AllowWriteStreamBuffering=false;
 			Console.WriteLine("\nPlease Enter the data to be posted to the (http://www.contoso.com/codesnippets/next.asp) uri:");
 			string inputData =Console.ReadLine();
@@ -55,7 +55,7 @@ class HttpWebRequest_AllowWriteStreamBuffering
 			Char[] readBuff = new Char[256];
 			int count = streamRead.Read( readBuff, 0, 256 );
 			Console.WriteLine("\nThe contents of the Html page are :  ");						
-			while (count > 0) 
+			while (count > 0)
 			{
 
 				String outputData = new String(readBuff, 0, count);

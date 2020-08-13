@@ -9,7 +9,7 @@ public ref class DataProtectionSample
 private:
 
    // Create byte array for additional entropy when using Protect method.
-   static array<Byte>^s_aditionalEntropy = {9,8,7,6,5};
+   static array<Byte>^s_additionalEntropy = {9,8,7,6,5};
 
 public:
    static void Main()
@@ -36,7 +36,7 @@ public:
          
          // Encrypt the data using DataProtectionScope.CurrentUser. The result can be decrypted
          //  only by the same current user.
-         return ProtectedData::Protect( data, s_aditionalEntropy, DataProtectionScope::CurrentUser );
+         return ProtectedData::Protect( data, s_additionalEntropy, DataProtectionScope::CurrentUser );
       }
       catch ( CryptographicException^ e ) 
       {
@@ -52,7 +52,7 @@ public:
       {
          
          //Decrypt the data using DataProtectionScope.CurrentUser.
-         return ProtectedData::Unprotect( data, s_aditionalEntropy, DataProtectionScope::CurrentUser );
+         return ProtectedData::Unprotect( data, s_additionalEntropy, DataProtectionScope::CurrentUser );
       }
       catch ( CryptographicException^ e ) 
       {

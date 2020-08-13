@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using System.Net; 
+using System.Net;
 using System.Net.Sockets;
 
 public class MyUdpClientExample{
@@ -15,7 +15,7 @@ UdpClient udpClient = new UdpClient(11000);
 
          // Sends a message to the host to which you have connected.
          Byte[] sendBytes = Encoding.ASCII.GetBytes("Is anybody there?");
-      
+
          udpClient.Send(sendBytes, sendBytes.Length);
 
          // Sends a message to a different host using optional hostname and port parameters.
@@ -26,9 +26,9 @@ UdpClient udpClient = new UdpClient(11000);
          IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
          // Blocks until a message returns on this socket from a remote host.
-         Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint); 
+         Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
          string returnData = Encoding.ASCII.GetString(receiveBytes);
-   
+
          // Uses the IPEndPoint object to determine which of these two hosts responded.
          Console.WriteLine("This is the message you received " +
     	                              returnData.ToString());
@@ -39,7 +39,7 @@ UdpClient udpClient = new UdpClient(11000);
 
           udpClient.Close();
           udpClientB.Close();
-          }  
+          }
        catch (Exception e ) {
                   Console.WriteLine(e.ToString());
         }

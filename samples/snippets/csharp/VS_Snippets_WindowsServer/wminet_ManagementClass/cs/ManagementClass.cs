@@ -2,15 +2,15 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class
-        ManagementClass processClass = 
+        ManagementClass processClass =
             new ManagementClass();
-        processClass.Path = new 
+        processClass.Path = new
             ManagementPath("Win32_Process");
 
         // Get the methods in the class

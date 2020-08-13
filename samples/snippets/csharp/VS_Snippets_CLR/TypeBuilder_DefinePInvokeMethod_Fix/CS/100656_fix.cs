@@ -10,23 +10,23 @@ public class Example
     public static void Main()
     {
         // Create the AssemblyBuilder.
-        AssemblyName asmName = new AssemblyName("PInvokeTest");           
+        AssemblyName asmName = new AssemblyName("PInvokeTest");
         AssemblyBuilder dynamicAsm = AppDomain.CurrentDomain.DefineDynamicAssembly(
-            asmName, 
+            asmName,
             AssemblyBuilderAccess.RunAndSave
         );
 
         // Create the module.
-        ModuleBuilder dynamicMod = 
+        ModuleBuilder dynamicMod =
             dynamicAsm.DefineDynamicModule(asmName.Name, asmName.Name + ".dll");
 
-        // Create the TypeBuilder for the class that will contain the 
+        // Create the TypeBuilder for the class that will contain the
         // signature for the PInvoke call.
         TypeBuilder tb = dynamicMod.DefineType(
-            "MyType", 
+            "MyType",
             TypeAttributes.Public | TypeAttributes.UnicodeClass
         );
-    
+
         MethodBuilder mb = tb.DefinePInvokeMethod(
             "GetTickCount",
             "Kernel32.dll",
@@ -43,7 +43,7 @@ public class Example
         mb.SetImplementationFlags(
             mb.GetMethodImplementationFlags() | MethodImplAttributes.PreserveSig);
 
-        // The PInvoke method does not have a method body. 
+        // The PInvoke method does not have a method body.
 
         // Create the class and test the method.
         Type t = tb.CreateType();

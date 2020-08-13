@@ -1,11 +1,11 @@
 ﻿// <Snippet1>
 // This example shows how to use the ServicePoint and ServicePointManager classes.
 // The ServicePointManager class uses the ServicePoint class to manage connections
-// to a remote host. The networking classes reuse service points for all 
-// requests to a given URI. In fact, the same ServicePoint object 
+// to a remote host. The networking classes reuse service points for all
+// requests to a given URI. In fact, the same ServicePoint object
 // is used to issue requests to Internet resources identified by the same
-// scheme identifier (for example,  HTTP) and host fragment (for example,  www.contoso.com).  
-// This should improve your application performance. 
+// scheme identifier (for example,  HTTP) and host fragment (for example,  www.contoso.com).
+// This should improve your application performance.
 // Reusing service points in this way can help improve application performance.
 using System;
 using System.Net;
@@ -26,12 +26,12 @@ namespace Mssc.Services.ConnectionManagement
 // </Snippet2>
 
 // <Snippet3>
-            // Display the date and time that the ServicePoint was last 
+            // Display the date and time that the ServicePoint was last
             // connected to a host.
             Console.WriteLine("IdleSince = " + sp.IdleSince.ToString());
 
-            // Display the maximum length of time that the ServicePoint instance  
-            // is allowed to maintain an idle connection to an Internet  
+            // Display the maximum length of time that the ServicePoint instance
+            // is allowed to maintain an idle connection to an Internet
             // resource before it is recycled for use in another connection.
             Console.WriteLine("MaxIdleTime = " + sp.MaxIdleTime);
 // </Snippet3>
@@ -39,11 +39,11 @@ namespace Mssc.Services.ConnectionManagement
 // <Snippet4>
             Console.WriteLine("ConnectionName = " + sp.ConnectionName);
 
-            // Display the maximum number of connections allowed on this 
+            // Display the maximum number of connections allowed on this
             // ServicePoint instance.
             Console.WriteLine("ConnectionLimit = " + sp.ConnectionLimit);
 
-            // Display the number of connections associated with this 
+            // Display the number of connections associated with this
             // ServicePoint instance.
             Console.WriteLine("CurrentConnections = " + sp.CurrentConnections);
 // </Snippet4>
@@ -74,7 +74,7 @@ namespace Mssc.Services.ConnectionManagement
         {
             HttpWebResponse res = null;
 
-            // Make sure that the idle time has elapsed, so that a new 
+            // Make sure that the idle time has elapsed, so that a new
             // ServicePoint instance is created.
             Console.WriteLine("Sleeping for 2 sec.");
             Thread.Sleep(2000);
@@ -148,22 +148,22 @@ namespace Mssc.Services.ConnectionManagement
             }
             string proxyAdd = "http://" + proxy + ":" + port;
 
-            // Create a proxy object.  
+            // Create a proxy object.
             WebProxy DefaultProxy = new WebProxy(proxyAdd, true);
 
             // Set the proxy that all HttpWebRequest instances use.
             WebRequest.DefaultWebProxy = DefaultProxy;
 
-            // Get the base interface for proxy access for the 
+            // Get the base interface for proxy access for the
             // WebRequest-based classes.
             IWebProxy Iproxy = WebRequest.DefaultWebProxy;
 
 // <Snippet8>
-            // Set the maximum number of ServicePoint instances to 
-            // maintain. If a ServicePoint instance for that host already 
+            // Set the maximum number of ServicePoint instances to
+            // maintain. If a ServicePoint instance for that host already
             // exists when your application requests a connection to
             // an Internet resource, the ServicePointManager object
-            // returns this existing ServicePoint instance. If none exists 
+            // returns this existing ServicePoint instance. If none exists
             // for that host, it creates a new ServicePoint instance.
             ServicePointManager.MaxServicePoints = 4;
 
@@ -182,8 +182,8 @@ namespace Mssc.Services.ConnectionManagement
             // Create the Uri object for the resource you want to access.
             Uri MS = new Uri("http://msdn.microsoft.com/");
 
-            // Use the FindServicePoint method to find an existing 
-            // ServicePoint object or to create a new one.  
+            // Use the FindServicePoint method to find an existing
+            // ServicePoint object or to create a new one.
             ServicePoint servicePoint = ServicePointManager.FindServicePoint(MS, Iproxy);
 
             ShowProperties(servicePoint);

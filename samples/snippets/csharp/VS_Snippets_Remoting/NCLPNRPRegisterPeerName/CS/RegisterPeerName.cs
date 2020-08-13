@@ -3,13 +3,13 @@
 // Description:
 //
 //    This sample illustrates how to create a Peer Name, associate metadata with the PeerName
-//    via a PeerNameRegistration object and register a PeerName in a cloud.  Once the PeerName is registered, 
-//    it can be resolved by remote peers, thereby retreiving the data associated with the PeerName. 
+//    via a PeerNameRegistration object and register a PeerName in a cloud.  Once the PeerName is registered,
+//    it can be resolved by remote peers, thereby retreiving the data associated with the PeerName.
 //
 // Command Line Options:
 //
 //    All command line arguments are required:
-//    Usage: RegisterPeerName.exe <Peer Name Classifier> <PeerNameType:Secured|UnSecured> <Port #> <Comment> <Cloud Name:Available|AllLinkLocal|Global> 
+//    Usage: RegisterPeerName.exe <Peer Name Classifier> <PeerNameType:Secured|UnSecured> <Port #> <Comment> <Cloud Name:Available|AllLinkLocal|Global>
 //
 //    Example: RegisterPeerName.exe MyComputer Secured 8000 MyComment Available
 
@@ -27,7 +27,7 @@ namespace PNRPSample
         static int portNumber = -1;                             // command line argument: args[2]
         static string comment = string.Empty;                   // command line argument: args[3]
         static Cloud cloudName = null;                          // command line argument: args[4]
-        
+
         static void Main(string[] args)
         {
             // parse the command line arguments
@@ -39,38 +39,38 @@ namespace PNRPSample
         }
 
         //<Snippet1>
-        // Creates a PeerName and registers it along with the metadata specified 
-        // The parameters used to register the name are static types that are set 
+        // Creates a PeerName and registers it along with the metadata specified
+        // The parameters used to register the name are static types that are set
         // from user input (command-line or user dialog).
         // These parameters include the following:
         //   static String peerName
         //   static PeerNameType peerNameType
         //   static int portNumber
         //   static String comment
-        //   static Cloud cloudName 
+        //   static Cloud cloudName
 
         public static void CreateAndPublishPeerName()
         {
             try{
-                // Creates a the PeerName to register using the classifier and type provided 
+                // Creates a the PeerName to register using the classifier and type provided
                 PeerName peerName = new PeerName(peerNameClassifier, peerNameType);
 
-                // Create a registration object which represents the registration 
+                // Create a registration object which represents the registration
                 // of the PeerName in a Cloud
                 PeerNameRegistration peerNameRegistration = new PeerNameRegistration();
                 peerNameRegistration.PeerName = peerName;
                 peerNameRegistration.Port = portNumber;
                 peerNameRegistration.Comment = comment;
                 peerNameRegistration.Cloud = cloudName;
-                // Since the peerNameRegistration.EndPointCollection is not specified, 
-                // all (IPv4&IPv6) addresses assigned to the local host will 
-                // automatically be associated with the peerNameRegistration instance. 
+                // Since the peerNameRegistration.EndPointCollection is not specified,
+                // all (IPv4&IPv6) addresses assigned to the local host will
+                // automatically be associated with the peerNameRegistration instance.
                 // This behavior can be control using peerNameRegistration.UseAutoEndPointSelection
-                
-                //Note: Additional information may be specified on the PeerNameRegistration 
+
+                //Note: Additional information may be specified on the PeerNameRegistration
                 // object, which is not shown in this example.
 
-                // Starting the registration means the name is published for 
+                // Starting the registration means the name is published for
                 // other peers to resolve
                 peerNameRegistration.Start();
                 Console.WriteLine("Registration of Peer Name: {0} complete.", peerName.ToString(), cloudName);
@@ -125,7 +125,7 @@ namespace PNRPSample
 
                 // read the port number
                 portNumber = int.Parse(args[2]);
-                
+
                 // read the commment to assign to the peername
                 comment = args[3];
 
@@ -154,20 +154,20 @@ namespace PNRPSample
             {
                 // P2P is not supported on Windows Server 2003
                 if (e.InnerException != null)
-                { 
+                {
                     Console.WriteLine("Error occurred while attempting to register the PeerName: {0}", e.Message);
                     Console.WriteLine(e.StackTrace);
 
                     Console.WriteLine("Inner Exception is {0}", e.InnerException);
-                }    
-                else 
+                }
+                else
                 {
                     Console.WriteLine("Error occurred while attempting to register the PeerName: {0}", e.Message);
                     Console.WriteLine(usage);
 
                     Console.WriteLine("Exception is {0}", e);
                     Console.WriteLine(e.StackTrace);
-                }    
+                }
                 return false;
             }
             return true;

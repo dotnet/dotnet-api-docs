@@ -1,10 +1,10 @@
 ﻿//<Snippet1>
-// Example of the Random class constructors and Random.NextDouble( ) 
+// Example of the Random class constructors and Random.NextDouble( )
 // method.
 using System;
 using System.Threading;
 
-public class RandomObjectDemo  
+public class RandomObjectDemo
 {
     // Generate random numbers from the specified Random object.
     static void RunIntNDoubleRandoms( Random randObj )
@@ -23,7 +23,7 @@ public class RandomObjectDemo
     // Create a Random object with the specified seed.
     static void FixedSeedRandoms( int seed )
     {
-        Console.WriteLine( 
+        Console.WriteLine(
             "\nRandom numbers from a Random object with " +
             "seed = {0}:", seed );
         Random fixRand = new Random( seed );
@@ -37,7 +37,7 @@ public class RandomObjectDemo
         // Wait to allow the timer to advance.
         Thread.Sleep( 1 );
 
-        Console.WriteLine( 
+        Console.WriteLine(
             "\nRandom numbers from a Random object " +
             "with an auto-generated seed:" );
         Random autoRand = new Random( );
@@ -110,14 +110,14 @@ public class FixTimerResolution
 {
    public static void CreateEnginesWithSameTimer()
    {
-// <Snippet3>   
+// <Snippet3>
       int randomInstancesToCreate = 4;
       Random[] randomEngines = new Random[randomInstancesToCreate];
       for (int ctr = 0; ctr < randomInstancesToCreate; ctr++)
       {
          randomEngines[ctr] = new Random(unchecked((int) (DateTime.Now.Ticks >> ctr)));
       }
-// </Snippet3>      
+// </Snippet3>
       for (int ctr = 0; ctr < randomInstancesToCreate; ctr++)
       {
          Console.WriteLine(randomEngines[ctr].Next());

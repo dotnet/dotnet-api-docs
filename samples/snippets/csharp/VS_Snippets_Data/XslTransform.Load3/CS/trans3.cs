@@ -12,7 +12,7 @@ public class Sample
 
   public static void Main()
   {
-    //Create the reader to load the stylesheet. 
+    //Create the reader to load the stylesheet.
     //Move the reader to the xsl:stylesheet node.
     XmlTextReader reader = new XmlTextReader(stylesheet);
     reader.Read();
@@ -24,13 +24,13 @@ public class Sample
 
     //Load the file to transform.
     XPathDocument doc = new XPathDocument(filename);
-             
+
     //Create an XmlTextWriter which outputs to the console.
     XmlTextWriter writer = new XmlTextWriter(Console.Out);
 
     //Transform the file and send the output to the console.
     xslt.Transform(doc, null, writer);
-    writer.Close();  
+    writer.Close();
   }
 }
 //</snippet1>

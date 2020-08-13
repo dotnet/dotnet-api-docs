@@ -11,41 +11,41 @@ public class Example
         AppDomain myDomain = AppDomain.CurrentDomain;
         AssemblyName myAsmName = new AssemblyName("EmitMarshalAs");
 
-        AssemblyBuilder myAssembly = 
-            myDomain.DefineDynamicAssembly(myAsmName, 
+        AssemblyBuilder myAssembly =
+            myDomain.DefineDynamicAssembly(myAsmName,
                 AssemblyBuilderAccess.RunAndSave);
 
-        ModuleBuilder myModule = 
-            myAssembly.DefineDynamicModule(myAsmName.Name, 
+        ModuleBuilder myModule =
+            myAssembly.DefineDynamicModule(myAsmName.Name,
                myAsmName.Name + ".dll");
 
-        TypeBuilder myType = 
+        TypeBuilder myType =
             myModule.DefineType("Sample", TypeAttributes.Public);
 
-        MethodBuilder myMethod = 
+        MethodBuilder myMethod =
             myType.DefineMethod("Test", MethodAttributes.Public,
                 null, new Type[] { typeof(string) });
 
-        // Get a parameter builder for the parameter that needs the 
+        // Get a parameter builder for the parameter that needs the
         // attribute, using the HasFieldMarshal attribute. In this
         // example, the parameter is at position 0 and has the name
         // "arg".
-        ParameterBuilder pb = 
-            myMethod.DefineParameter(0, 
+        ParameterBuilder pb =
+            myMethod.DefineParameter(0,
                ParameterAttributes.HasFieldMarshal, "arg");
 
         // Get the MarshalAsAttribute constructor that takes an
         // argument of type UnmanagedType.
         //
-        ConstructorInfo ci = 
+        ConstructorInfo ci =
             typeof(MarshalAsAttribute).GetConstructor(
                 new Type[] { typeof(UnmanagedType) });
 
         // Create a CustomAttributeBuilder representing the attribute,
-        // specifying the necessary unmanaged type. In this case, 
+        // specifying the necessary unmanaged type. In this case,
         // UnmanagedType.BStr is specified.
         //
-        CustomAttributeBuilder cabuilder = 
+        CustomAttributeBuilder cabuilder =
             new CustomAttributeBuilder(
                 ci, new object[] { UnmanagedType.BStr });
 

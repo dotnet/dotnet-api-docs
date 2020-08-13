@@ -8,10 +8,10 @@ public class Sample{
   public static void Main(){
 
     // Create the XML fragment to be parsed.
-    string xmlFrag  = 
+    string xmlFrag  =
     @"<item attr1='  test A B C
         1 2 3'/>
-      <item attr2='&#01;'/>";                         
+      <item attr2='&#01;'/>";
 
     // Create the XmlNamespaceManager.
     XmlNamespaceManager nsmgr = new XmlNamespaceManager(new NameTable());
@@ -36,9 +36,9 @@ public class Sample{
     reader.Read();
     reader.MoveToContent();
     Console.WriteLine("Attribute value:{0}", reader.GetAttribute("attr2"));
-  
+
     // Close the reader.
-    reader.Close();     
+    reader.Close();
   }
 }
 //</snippet1>

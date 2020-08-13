@@ -17,7 +17,7 @@ Module SignVerifyEnvelope
 
     Sub Main(ByVal args() As String)
         ' Generate a signing key.
-        Dim Key As New RSACryptoServiceProvider()
+        Dim Key As RSA = RSA.Create()
 
         Try
             ' Create an XML file to sign.

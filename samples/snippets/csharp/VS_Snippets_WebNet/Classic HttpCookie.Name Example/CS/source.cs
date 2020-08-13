@@ -10,9 +10,9 @@ public class Page1: Page
 int loop1;
  HttpCookie MyCookie;
  HttpCookieCollection MyCookieCollection;
- 
+
  MyCookieCollection = Request.Cookies;
- 
+
  for (loop1 = 0; loop1 < MyCookieCollection.Count; loop1++)
  {
     MyCookie = MyCookieCollection[loop1];
@@ -21,7 +21,7 @@ int loop1;
        //...
     }
  }
-    
+
 // </Snippet1>
  }
 }

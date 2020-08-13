@@ -14,7 +14,7 @@ namespace Find
         public static void Main(string[] args)
         {
             FillList();
-            
+
             // Find a book by its ID.
             Book result = Books.Find(
             delegate(Book bk)
@@ -24,7 +24,7 @@ namespace Find
             );
             if (result != null)
             {
-                DisplayResult(result, "Find by ID: " + IDtoFind);   
+                DisplayResult(result, "Find by ID: " + IDtoFind);
             }
             else
             {
@@ -84,7 +84,7 @@ namespace Find
             int mid = Books.Count / 2;
             ndx = Books.FindIndex(mid, mid, FindComputer);
             Console.WriteLine("Index of first computer book in the second half of the collection: {0}", ndx);
-            
+
             ndx = Books.FindLastIndex(Books.Count - 1, mid, FindComputer);
             Console.WriteLine("Index of last computer book in the second half of the collection: {0}", ndx);
         }
@@ -92,7 +92,7 @@ namespace Find
         // Populates the list with sample data.
         private static void FillList()
         {
-            
+
             // Create XML elements from a source file.
             XElement xTree = XElement.Load(@"c:\temp\books.xml");
 

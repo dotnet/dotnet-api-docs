@@ -12,5 +12,5 @@ public class MyClass
    [XmlArray (IsNullable = false)]
    public string [] IsNullableIsFalseArray;
 }
-   
+
 // </Snippet1>

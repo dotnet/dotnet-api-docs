@@ -15,9 +15,9 @@ public class Example
    public static void Main()
    {
       AppDomain domain = AppDomain.CurrentDomain;
-      rm = new ResourceManager("GreetingStrings", 
+      rm = new ResourceManager("GreetingStrings",
                                typeof(Example).Assembly);
-                  
+
       CultureInfo culture = null;
       if (Thread.CurrentThread.CurrentUICulture.Name == "ru-RU")
          culture = CultureInfo.CreateSpecificCulture("en-US");
@@ -42,7 +42,7 @@ public class Example
       string greeting = nGreetings == 0 ? rm.GetString("newGreeting") :
                                           rm.GetString("greeting");
       nGreetings++;
-      Console.WriteLine("{0}", greeting);   
+      Console.WriteLine("{0}", greeting);
    }
 }
 // The example displays the following output:

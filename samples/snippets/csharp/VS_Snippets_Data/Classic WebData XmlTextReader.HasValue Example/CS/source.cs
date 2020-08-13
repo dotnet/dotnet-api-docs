@@ -11,7 +11,7 @@ public class Sample
     XmlTextReader reader = null;
 
     try
-    {           
+    {
         //Load the reader with the XML file.
         reader = new XmlTextReader("book1.xml");
         reader.WhitespaceHandling = WhitespaceHandling.None;
@@ -23,7 +23,7 @@ public class Sample
              Console.WriteLine("({0})  {1}={2}", reader.NodeType, reader.Name, reader.Value);
            else
              Console.WriteLine("({0}) {1}", reader.NodeType, reader.Name);
-         }           
+         }
      }
 
      finally

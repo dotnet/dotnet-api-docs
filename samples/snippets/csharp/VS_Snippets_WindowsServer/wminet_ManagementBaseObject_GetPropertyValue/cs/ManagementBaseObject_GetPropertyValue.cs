@@ -2,13 +2,13 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class
-        ManagementClass processClass = 
+        ManagementClass processClass =
             new ManagementClass("Win32_Process");
 
         ManagementObjectCollection classObjects;

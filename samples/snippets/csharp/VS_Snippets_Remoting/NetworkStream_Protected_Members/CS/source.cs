@@ -16,9 +16,9 @@ public class MyNetworkStream_Sub_Class : NetworkStream
         get
         {
             return this.Socket.Connected;
-        } 
+        }
     }
- 
+
     public bool CanCommunicate
     {
         get

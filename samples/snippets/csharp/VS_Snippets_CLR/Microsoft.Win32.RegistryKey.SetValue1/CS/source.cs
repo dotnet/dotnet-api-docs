@@ -43,7 +43,7 @@ public class Example
                     }
                     Console.WriteLine();
                     break;
-                
+
                 case RegistryValueKind.Binary :
                     byte[] bytes = (byte[]) rk.GetValue(s);
                     Console.Write("\r\n {0} ({1}) = {2:X2}", s, rvk, bytes[0]);
@@ -54,7 +54,7 @@ public class Example
                     }
                     Console.WriteLine();
                     break;
-                
+
                 default :
                     Console.WriteLine("\r\n {0} ({1}) = {2}", s, rvk, rk.GetValue(s));
                     break;

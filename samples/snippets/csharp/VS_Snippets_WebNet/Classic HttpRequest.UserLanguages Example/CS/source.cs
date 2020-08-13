@@ -8,13 +8,13 @@ public class Page1: Page
  {
 // <Snippet1>
 int count;
-String[] userLang = Request.UserLanguages;    
- 
-for (count = 0; count < userLang.Length; count++) 
+String[] userLang = Request.UserLanguages;
+
+for (count = 0; count < userLang.Length; count++)
 {
    Response.Write("User Language " + count +": " + userLang[count] + "<br>");
 }
-   
+
 // </Snippet1>
  }
 }

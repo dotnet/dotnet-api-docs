@@ -3,7 +3,7 @@ using System;
 
 public class Example
 {
-   public static void Main() 
+   public static void Main()
    {
       string delimStr = " ,.:";
       char [] delimiter = delimStr.ToCharArray();

@@ -64,7 +64,7 @@ namespace Samples.Aspnet.SystemWebConfiguration
 
 // <Snippet5>
         // Set Validation property.
-        configSection.Validation = MachineKeyValidation.SHA1;
+        configSection.Validation = MachineKeyValidation.HMACSHA256;
 // </Snippet5>
 
         // Update if not locked.

@@ -48,13 +48,13 @@ namespace eSQLExamplesCS
             using (EntityConnection conn = new EntityConnection("name=SchoolEntities"))
             {
                 conn.Open();
-                // Create a query that specifies to 
+                // Create a query that specifies to
                 // get a collection of only Students
-                // with enrollment dates from 
+                // with enrollment dates from
                 // a collection of People.
-                string esqlQuery = @"SELECT Student.LastName, 
-                    Student.EnrollmentDate FROM 
-                    OFTYPE(SchoolEntities.Person, 
+                string esqlQuery = @"SELECT Student.LastName,
+                    Student.EnrollmentDate FROM
+                    OFTYPE(SchoolEntities.Person,
                     SchoolModel.Student) AS Student";
 
                 using (EntityCommand cmd = new EntityCommand(esqlQuery, conn))
@@ -84,7 +84,7 @@ namespace eSQLExamplesCS
                 EntityTransaction transaction = con.BeginTransaction();
                 DbCommand cmd = con.CreateCommand();
                 cmd.Transaction = transaction;
-                cmd.CommandText = @"SELECT VALUE Contact FROM AdventureWorksEntities.Contact 
+                cmd.CommandText = @"SELECT VALUE Contact FROM AdventureWorksEntities.Contact
                     AS Contact WHERE Contact.LastName = 'Adams'";
 
                 using (DbDataReader rdr = cmd.ExecuteReader(CommandBehavior.SequentialAccess))
@@ -96,7 +96,7 @@ namespace eSQLExamplesCS
                         Console.WriteLine("\tLast Name: " + rdr["LastName"]);
                     }
                 }
-                transaction.Commit(); 
+                transaction.Commit();
             }
             //</snippetTransactionsWithEntityClient>
         }
@@ -124,7 +124,7 @@ namespace eSQLExamplesCS
                         using (EntityDataReader rdr =
                             cmd.ExecuteReader(CommandBehavior.SequentialAccess))
                         {
-                            // The result returned by this query contains 
+                            // The result returned by this query contains
                             // Address complex Types.
                             while (rdr.Read())
                             {
@@ -252,7 +252,7 @@ namespace eSQLExamplesCS
                 conn.Open();
                 // Create a query that takes two parameters.
                 string esqlQuery =
-                    @"SELECT VALUE Contact FROM AdventureWorksEntities.Contact 
+                    @"SELECT VALUE Contact FROM AdventureWorksEntities.Contact
                                 AS Contact WHERE Contact.LastName = @ln AND
                                 Contact.FirstName = @fn";
 
@@ -260,8 +260,8 @@ namespace eSQLExamplesCS
                 {
                     using (EntityCommand cmd = new EntityCommand(esqlQuery, conn))
                     {
-                        // Create two parameters and add them to 
-                        // the EntityCommand's Parameters collection 
+                        // Create two parameters and add them to
+                        // the EntityCommand's Parameters collection
                         EntityParameter param1 = new EntityParameter();
                         param1.ParameterName = "ln";
                         param1.Value = "Adams";
@@ -306,8 +306,8 @@ namespace eSQLExamplesCS
                     {
                         // Create an Entity SQL query.
                         string esqlQuery =
-                            @"SELECT address.AddressID, (SELECT VALUE DEREF(soh) FROM 
-                          NAVIGATE(address, AdventureWorksModel.FK_SalesOrderHeader_Address_BillToAddressID) 
+                            @"SELECT address.AddressID, (SELECT VALUE DEREF(soh) FROM
+                          NAVIGATE(address, AdventureWorksModel.FK_SalesOrderHeader_Address_BillToAddressID)
                           AS soh) FROM AdventureWorksEntities.Address AS address";
 
                         cmd.CommandText = esqlQuery;
@@ -354,7 +354,7 @@ namespace eSQLExamplesCS
                         using (EntityDataReader rdr =
                             cmd.ExecuteReader(CommandBehavior.SequentialAccess))
                         {
-                            // The result returned by this query contains 
+                            // The result returned by this query contains
                             // ContactID and a nested collection of SalesOrderHeader items.
                             // associated with this Contact.
                             while (rdr.Read())
@@ -362,7 +362,7 @@ namespace eSQLExamplesCS
                                 // the first column contains Contact ID.
                                 Console.WriteLine("Contact ID: {0}", rdr["ContactID"]);
 
-                                // The second column contains a collection of SalesOrderHeader 
+                                // The second column contains a collection of SalesOrderHeader
                                 // items associated with the Contact.
                                 DbDataReader nestedReader = rdr.GetDataReader(1);
                                 while (nestedReader.Read())
@@ -424,7 +424,7 @@ namespace eSQLExamplesCS
                 {
                     // Create a query that takes two parameters.
                     string queryString =
-                        @"SELECT VALUE Contact FROM AdventureWorksEntities.Contact 
+                        @"SELECT VALUE Contact FROM AdventureWorksEntities.Contact
                                 AS Contact WHERE Contact.LastName = @ln AND
                                 Contact.FirstName = @fn";
 
@@ -459,7 +459,7 @@ namespace eSQLExamplesCS
             using (AdventureWorksEntities advWorksContext =
                 new AdventureWorksEntities())
             {
-                string esqlQuery = @"SELECT c.FirstName, c.SalesOrderHeader 
+                string esqlQuery = @"SELECT c.FirstName, c.SalesOrderHeader
                     FROM AdventureWorksEntities.Contact AS c where c.LastName = 'Zhou'";
 
                 try
@@ -471,7 +471,7 @@ namespace eSQLExamplesCS
                         // Display contact's first name.
                         Console.WriteLine("First Name {0}: ", rec[0]);
                         List<SalesOrderHeader> list = rec[1] as List<SalesOrderHeader>;
-                        // Display SalesOrderHeader information 
+                        // Display SalesOrderHeader information
                         // associated with the contact.
                         foreach (SalesOrderHeader soh in list)
                         {
@@ -498,7 +498,7 @@ namespace eSQLExamplesCS
             using (AdventureWorksEntities advWorksContext =
                 new AdventureWorksEntities())
             {
-                string myQuery = @"SELECT p.ProductID, p.Name FROM 
+                string myQuery = @"SELECT p.ProductID, p.Name FROM
                     AdventureWorksEntities.Product as p";
                 try
                 {
@@ -526,7 +526,7 @@ namespace eSQLExamplesCS
             using (AdventureWorksEntities advWorksContext =
                 new AdventureWorksEntities())
             {
-                string queryString = @"SELECT VALUE Length(p.Name)FROM 
+                string queryString = @"SELECT VALUE Length(p.Name)FROM
                 AdventureWorksEntities.Product AS p";
 
                 try
@@ -553,10 +553,10 @@ namespace eSQLExamplesCS
             using (AdventureWorksEntities advWorksContext =
                 new AdventureWorksEntities())
             {
-                string esqlQuery = @"SELECT ln, 
-                    (SELECT c1.LastName FROM AdventureWorksEntities.Contact 
-                        AS c1 WHERE SUBSTRING(c1.LastName ,1,1) = ln) 
-                    AS CONTACT 
+                string esqlQuery = @"SELECT ln,
+                    (SELECT c1.LastName FROM AdventureWorksEntities.Contact
+                        AS c1 WHERE SUBSTRING(c1.LastName ,1,1) = ln)
+                    AS CONTACT
                     FROM AdventureWorksEntities.CONTACT AS c2 GROUP BY SUBSTRING(c2.LastName ,1,1) AS ln
                     ORDER BY ln";
                 try
@@ -595,8 +595,8 @@ namespace eSQLExamplesCS
             using (AdventureWorksEntities advWorksContext =
                 new AdventureWorksEntities())
             {
-                string esqlQuery = @"SELECT contactID, AVG(order.TotalDue) 
-                                        FROM AdventureWorksEntities.SalesOrderHeader 
+                string esqlQuery = @"SELECT contactID, AVG(order.TotalDue)
+                                        FROM AdventureWorksEntities.SalesOrderHeader
                                         AS order GROUP BY order.Contact.ContactID as contactID";
 
                 try
@@ -627,11 +627,11 @@ namespace eSQLExamplesCS
                 new AdventureWorksEntities())
             {
                 String esqlQuery = @"SELECT P2.Name, P2.ListPrice
-                    FROM ((SELECT P1.Name, P1.ProductID as Pid, P1.ListPrice 
+                    FROM ((SELECT P1.Name, P1.ProductID as Pid, P1.ListPrice
                         FROM AdventureWorksEntities.Product as P1
                         where P1.Name like 'A%')
                     union all
-                        (SELECT P1.Name, P1.ProductID as Pid, P1.ListPrice 
+                        (SELECT P1.Name, P1.ProductID as Pid, P1.ListPrice
                         FROM AdventureWorksEntities.Product as P1
                         WHERE P1.Name like 'B%')
                     ) as P2
@@ -666,8 +666,8 @@ namespace eSQLExamplesCS
                 {
                     // Create a query that takes two parameters.
                     string queryString =
-                        @"SELECT VALUE product FROM 
-                          AdventureWorksEntities.Product AS product 
+                        @"SELECT VALUE product FROM
+                          AdventureWorksEntities.Product AS product
                           order by product.ListPrice SKIP @skip LIMIT @limit";
 
                     ObjectQuery<Product> productQuery =
@@ -749,7 +749,7 @@ namespace eSQLExamplesCS
                     BuiltInTypeKind fieldTypeKind = record.DataRecordInfo.FieldMetadata[fieldIndex].
                         FieldType.TypeUsage.EdmType.BuiltInTypeKind;
                     // The EntityType, ComplexType and RowType are structural types
-                    // that have members. 
+                    // that have members.
                     // Read only the PrimitiveType members of this structural type.
                     if (fieldTypeKind == BuiltInTypeKind.PrimitiveType)
                     {
@@ -816,7 +816,7 @@ namespace eSQLExamplesCS
                         //read only fields that contain PrimitiveType
                         if (fieldTypeKind == BuiltInTypeKind.RefType)
                         {
-                            // Ref types are surfaced as EntityKey instances. 
+                            // Ref types are surfaced as EntityKey instances.
                             // The containing record sees them as atomic.
                             EntityKey key = record.GetValue(fieldIndex) as EntityKey;
                             // Get the EntitySet name.
@@ -861,7 +861,7 @@ namespace eSQLExamplesCS
                                     while (rdr.Read())
                                     {
                                         IExtendedDataRecord record = rdr as IExtendedDataRecord;
-                                        // For PrimitiveType 
+                                        // For PrimitiveType
                                         // the record contains exactly one field.
                                         int fieldIndex = 0;
                                         Console.WriteLine("Value: " + record.GetValue(fieldIndex));

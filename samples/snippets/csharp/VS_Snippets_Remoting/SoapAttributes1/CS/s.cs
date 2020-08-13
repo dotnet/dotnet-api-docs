@@ -21,7 +21,7 @@ public class Test {
 
 // A test object that needs to be serialized
 // <Snippet1>
-[Serializable()] 
+[Serializable()]
 [SoapTypeAttribute(XmlNamespace="MyXmlNamespace")]
 public class TestSimpleObject  {
 
@@ -33,8 +33,8 @@ public class TestSimpleObject  {
     public double member4;
 
     // A field that is not serialized.
-    [NonSerialized()] public string member5; 
-    
+    [NonSerialized()] public string member5;
+
     public TestSimpleObject() {
 
         member1 = 11;

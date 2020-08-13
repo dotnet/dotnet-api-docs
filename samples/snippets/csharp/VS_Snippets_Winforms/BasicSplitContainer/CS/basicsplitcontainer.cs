@@ -94,7 +94,7 @@ public class Form1 : System.Windows.Forms.Form
         // splitContainer2 is the third control in the tab order.
         splitContainer2.TabIndex = 2;
         splitContainer2.Text = "splitContainer2";
-        // </snippet3> 
+        // </snippet3>
 
         // This splitter panel contains the top ListView control.
         splitContainer2.Panel1.Controls.Add(listView1);
@@ -131,7 +131,7 @@ public class Form1 : System.Windows.Forms.Form
     }
 
     [STAThread]
-    static void Main() 
+    static void Main()
     {
         Application.Run(new Form1());
     }

@@ -11,7 +11,7 @@ namespace Examples.System.Net
         public static void Main()
         {
 //<Snippet2>
-			// Create a client that will connect to a 
+			// Create a client that will connect to a
             // server listening on the contosoServer computer
             // at port 11000.
             TcpClient tcpClient = new TcpClient();

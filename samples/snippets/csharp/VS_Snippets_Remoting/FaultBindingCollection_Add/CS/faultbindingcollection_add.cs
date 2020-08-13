@@ -1,12 +1,12 @@
 ﻿/* The following example demonstrates the 'Add' method of the 'FaultBindingCollection' class
- * and constructor and 'Extensions' property of 'FaultBinding'class and 'Documentation' 
+ * and constructor and 'Extensions' property of 'FaultBinding'class and 'Documentation'
  * property of 'DocumentableItem' class.
- * 
+ *
  * This program generates a WSDL file for a service called StockQuote. The StockQuote service
- * provides one method called 'GetTradePrice'. The 'GetTradePrice' method takes two arguments, 
- * a 'tickerSymbol' and 'time' strings. The 'tickerSymbol' is a unique representation of a 
- * stock and 'time' is the time for which the trading price is to be returned for the stock 
- * specified. The WSDL file generated for the service supports the SOAP protocol only. 
+ * provides one method called 'GetTradePrice'. The 'GetTradePrice' method takes two arguments,
+ * a 'tickerSymbol' and 'time' strings. The 'tickerSymbol' is a unique representation of a
+ * stock and 'time' is the time for which the trading price is to be returned for the stock
+ * specified. The WSDL file generated for the service supports the SOAP protocol only.
  */
 
 using System;
@@ -17,26 +17,26 @@ using System.Xml.Serialization;
 
 public class FaultBindingCollection_Add
 {
-     
+
    public static void Main()
    {
       ServiceDescription myServiceDescription = new ServiceDescription();
       myServiceDescription.Name = "StockQuote";
       myServiceDescription.TargetNamespace = "http://www.contoso.com/stockquote.wsdl";
-    
-      // Generate the 'Types' element. 
+
+      // Generate the 'Types' element.
       XmlSchema myXmlSchema = new XmlSchema();
       myXmlSchema.AttributeFormDefault = XmlSchemaForm.Qualified;
       myXmlSchema.ElementFormDefault = XmlSchemaForm.Qualified;
       myXmlSchema.TargetNamespace = "http://www.contoso.com/stockquote.wsdl";
-      
+
       //XmlSchemaElement myXmlSchemaElement;
       XmlSchemaComplexType myXmlSchemaComplexType = new XmlSchemaComplexType();
       myXmlSchemaComplexType.Name = "GetTradePriceInputType";
       XmlSchemaSequence myXmlSchemaSequence = new XmlSchemaSequence();
       myXmlSchemaSequence.Items.Add(CreateComplexTypeXmlElement("1","1","tickerSymbol",true,new XmlQualifiedName("s:string")));
       myXmlSchemaSequence.Items.Add(CreateComplexTypeXmlElement("1","1","time",true,new XmlQualifiedName("s:string")));
-      myXmlSchemaComplexType.Particle = myXmlSchemaSequence;      
+      myXmlSchemaComplexType.Particle = myXmlSchemaSequence;
       myXmlSchema.Items.Add(myXmlSchemaComplexType);
 
       myXmlSchemaComplexType = new XmlSchemaComplexType();
@@ -157,7 +157,7 @@ public class FaultBindingCollection_Add
       myFaultBindingCollection.Add(myFaultBinding);
       myOperationBindingCollection.Add(myOperationBinding);
       myBindingCollection.Add(myBinding);
-   
+
       // Generate the 'Service' element.
       ServiceCollection myServiceCollection = myServiceDescription.Services;
 // <Snippet4>
@@ -183,7 +183,7 @@ public class FaultBindingCollection_Add
 
     public static XmlSchemaElement CreateComplexTypeXmlElement(string minoccurs,string maxoccurs,string name,bool isNillable,XmlQualifiedName schemaTypeName)
    {
-      XmlSchemaElement myXmlSchemaElement = new XmlSchemaElement(); 
+      XmlSchemaElement myXmlSchemaElement = new XmlSchemaElement();
       myXmlSchemaElement.MinOccursString = minoccurs;
       myXmlSchemaElement.MaxOccursString = maxoccurs;
       myXmlSchemaElement.Name = name;

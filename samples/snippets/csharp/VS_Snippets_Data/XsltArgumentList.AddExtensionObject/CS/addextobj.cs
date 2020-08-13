@@ -15,7 +15,7 @@ public class Sample {
 
     // Create an XsltArgumentList.
     XsltArgumentList xslArg = new XsltArgumentList();
-         
+
     // Add an object to calculate the new book price.
     BookPrice obj = new BookPrice();
     xslArg.AddExtensionObject("urn:price-conv", obj);

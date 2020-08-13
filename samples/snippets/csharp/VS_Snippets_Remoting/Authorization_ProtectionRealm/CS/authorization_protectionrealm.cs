@@ -1,6 +1,6 @@
 ﻿// System.Net.Authorization.Authorization(string,bool);System.Net.Authorization.ProtectionRealm
 
-/* This program demonstrates the 'ProtectionRealm' property and 'Authorization(string,bool)' constructor of 
+/* This program demonstrates the 'ProtectionRealm' property and 'Authorization(string,bool)' constructor of
    the "Authorization" class. The "IAuthenticationModule" interface is implemented in 'CloneBasic' to make
    it a custom authentication module. The custom authentication module encodes username and password as
    base64 strings and then returns back an 'Authorization' instance. The 'Authorization' instance encapsulates
@@ -44,7 +44,7 @@ namespace CloneBasicAuthentication
                 string message;
                 // Check if Challenge string was raised by a site which requires 'CloneBasic' authentication.
                 if ((challenge == null) || (!challenge.StartsWith("CloneBasic")))
-                    return null; 
+                    return null;
                 NetworkCredential myCredentials;
                 if (credentials is CredentialCache)
                 {
@@ -56,7 +56,7 @@ namespace CloneBasicAuthentication
                 {
                     myCredentials = (NetworkCredential)credentials;
                 }
-                // Message encryption scheme : 
+                // Message encryption scheme :
                 //   a)Concatenate username and password seperated by space;
                 //   b)Apply ASCII encoding to obtain a stream of bytes;
                 //   c)Apply Base64 Encoding to this array of bytes to obtain our encoded authorization message.
@@ -97,47 +97,47 @@ namespace CloneBasicAuthentication
     public static void Main(string[] args)
     {
         string url,userName,passwd;
-        if (args.Length < 3)     
+        if (args.Length < 3)
         {
             Client.PrintUsage();
             return;
-        } 
+        }
         else
-        {    
+        {
             url = args[0];
             userName = args[1];
-            passwd = args[2];                    
+            passwd = args[2];
         }
         Console.WriteLine();
         CloneBasic authenticationModule = new CloneBasic();
        AuthenticationManager.Register(authenticationModule);
        AuthenticationManager.Unregister("Basic");
-       // Get response from Uri. 
-       GetPage(url,userName,passwd);       
+       // Get response from Uri.
+       GetPage(url,userName,passwd);
     }
-    
-    public static void GetPage(String url,string username,string passwd) 
+
+    public static void GetPage(String url,string username,string passwd)
     {
         try
         {
             string challenge = null;
             HttpWebRequest myHttpWebRequest = null;
-            try 
+            try
             {
                 // Create a 'HttpWebRequest' object for the above 'url'.
-                myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url); 
+                myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 // The following method call throws the 'WebException'.
                 HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
                 // Release resources of response object.
                 myHttpWebResponse.Close();
-            } 
-            catch(WebException e) 
+            }
+            catch(WebException e)
             {
-                for(int i=0; i < e.Response.Headers.Count; ++i) 
+                for(int i=0; i < e.Response.Headers.Count; ++i)
                 {
                     // Retrieve the challenge string from the header "WWW-Authenticate".
                     if((String.Compare(e.Response.Headers.Keys[i],"WWW-Authenticate",true) == 0))
-                        challenge = e.Response.Headers[i]; 
+                        challenge = e.Response.Headers[i];
                 }
             }
 
@@ -147,7 +147,7 @@ namespace CloneBasicAuthentication
                 NetworkCredential myCredentials = new NetworkCredential(username,passwd);
                // Pass the challenge , 'NetworkCredential' object and the 'HttpWebRequest' object to the
                //    'Authenticate' method of the  "AuthenticationManager" to retrieve an "Authorization" ;
-               //    instance. 
+               //    instance.
                 Authorization urlAuthorization = AuthenticationManager.Authenticate(challenge,myHttpWebRequest,myCredentials);
                 if (urlAuthorization != null)
                 {
@@ -172,12 +172,12 @@ namespace CloneBasicAuthentication
         }
         }
 
-        public static void PrintUsage() 
-        {            
+        public static void PrintUsage()
+        {
             Console.WriteLine("\r\nUsage: Try a site which requires CloneBasic(custom made) authentication as below");
             Console.WriteLine("   Authorization_ProtectionRealm URLname username password");
             Console.WriteLine("\nExample:");
             Console.WriteLine("\n   Authorization_ProtectionRealm http://www.microsoft.com/net/ george george123");
         }
-    } 
+    }
 }

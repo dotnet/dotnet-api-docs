@@ -1,11 +1,11 @@
 ﻿// System.Web.Services.Protocols.SoapHeaderCollection.Contains(SoapHeader); System.Web.Services.Protocols.SoapHeaderCollection.IndexOf(); System.Web.Services.Protocols.SoapHeaderCollection.Item; System.Web.Services.Protocols.SoapHeaderCollection.Remove(SoapHeader)
 
 /*
-   The following example demonstrates the methods 'Contains','IndexOf' and 
-   'Remove' and the property 'Item' of the 'SoapHeaderCollection' class. The 
-   program extends the 'SoapExtension' class to create a class that is 
-   used to log the SOAP messages transferred for a web service method 
-   invocation. Whenever this method is invoked on the client side 
+   The following example demonstrates the methods 'Contains','IndexOf' and
+   'Remove' and the property 'Item' of the 'SoapHeaderCollection' class. The
+   program extends the 'SoapExtension' class to create a class that is
+   used to log the SOAP messages transferred for a web service method
+   invocation. Whenever this method is invoked on the client side
    all the SOAP message that get transfered both from the client
    and the server are written into a log file.
 */
@@ -16,34 +16,34 @@ using System.Web.Services.Protocols;
 using System.Web.Services;
 using System.Xml;
 
-public class MySoapExtension : SoapExtension 
+public class MySoapExtension : SoapExtension
 {
    Stream oldStream;
    Stream newStream;
    string myFilename;
 
    // Return the filename that is to log the SOAP messages.
-   public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute myAttribute) 
+   public override object GetInitializer(LogicalMethodInfo methodInfo, SoapExtensionAttribute myAttribute)
    {
       return ((MySoapExtensionAttribute)myAttribute).Filename;
    }
 
    // Return the filename that is to log the SOAP messages.
-   public override object GetInitializer(Type myFilename) 
+   public override object GetInitializer(Type myFilename)
    {
       return (Type) myFilename;
    }
 
    // Save the name of the log file that shall save the SOAP messages.
-   public override void Initialize(object initializer) 
+   public override void Initialize(object initializer)
    {
       myFilename = (string) initializer;
    }
 
    // Process the SOAP message received and write to log file.
-   public override void ProcessMessage(SoapMessage message) 
+   public override void ProcessMessage(SoapMessage message)
    {
-      switch (message.Stage) 
+      switch (message.Stage)
       {
          case SoapMessageStage.BeforeSerialize:
             break;
@@ -82,7 +82,7 @@ public class MySoapExtension : SoapExtension
       Copy(oldStream, newStream);
       FileStream myFileStream = new FileStream(myFilename, FileMode.Append, FileAccess.Write);
       StreamWriter myStreamWriter = new StreamWriter(myFileStream);
-      myStreamWriter.WriteLine("---------------------------------- Response at " 
+      myStreamWriter.WriteLine("---------------------------------- Response at "
          + DateTime.Now);
       myStreamWriter.Flush();
       newStream.Position = 0;
@@ -100,8 +100,8 @@ public class MySoapExtension : SoapExtension
       return newStream;
    }
 
-   // Utility method to copy the contents of one stream to another. 
-   void Copy(Stream fromStream, Stream toStream) 
+   // Utility method to copy the contents of one stream to another.
+   void Copy(Stream fromStream, Stream toStream)
    {
       TextReader myTextReader = new StreamReader(fromStream);
       TextWriter myTextWriter = new StreamWriter(toStream);
@@ -133,19 +133,19 @@ public class MySoapExtensionAttribute : SoapExtensionAttribute
    }
 
    // User can set priority of the 'SoapExtension'.
-   public override int Priority 
+   public override int Priority
    {
-      get 
+      get
       {
          return myPriority;
       }
-      set 
-      { 
+      set
+      {
          myPriority = value;
       }
    }
 
-   public string Filename 
+   public string Filename
    {
       get
       {
@@ -164,15 +164,15 @@ public class MySoapHeader : SoapHeader
 }
 
 [System.Web.Services.WebServiceBindingAttribute(Name="MathSvcSoap", Namespace="http://tempuri.org/")]
-public class MathService : System.Web.Services.Protocols.SoapHttpClientProtocol 
-{ 
+public class MathService : System.Web.Services.Protocols.SoapHttpClientProtocol
+{
    public SoapHeader[] mySoapHeaders;
    [SoapHeaderAttribute("mySoapHeaders", Direction=SoapHeaderDirection.In, Required=false)]
    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/Add",
-            Use=System.Web.Services.Description.SoapBindingUse.Literal, 
+            Use=System.Web.Services.Description.SoapBindingUse.Literal,
             ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
    [MySoapExtensionAttribute()]
-   public System.Single Add(System.Single xValue, System.Single yValue) 
+   public System.Single Add(System.Single xValue, System.Single yValue)
    {
       SoapHeaderCollection mySoapHeaderCollection = new SoapHeaderCollection();
       MySoapHeader myFirstSoapHeader;
@@ -188,24 +188,24 @@ public class MathService : System.Web.Services.Protocols.SoapHttpClientProtocol
         if(mySoapHeaderCollection.Contains(mySecondSoapHeader))
         {
             // Get the index of mySecondSoapHeader from the collection.
-            Console.WriteLine("Index of mySecondSoapHeader: " + 
+            Console.WriteLine("Index of mySecondSoapHeader: " +
                 mySoapHeaderCollection.IndexOf(mySecondSoapHeader));
 
             // Get the SoapHeader from the collection.
             MySoapHeader mySoapHeader1 = (MySoapHeader)mySoapHeaderCollection
                 [mySoapHeaderCollection.IndexOf(mySecondSoapHeader)];
-            Console.WriteLine("SoapHeader retrieved from the collection: " 
+            Console.WriteLine("SoapHeader retrieved from the collection: "
                 + mySoapHeader1);
 
             // Remove a SoapHeader from the collection.
             mySoapHeaderCollection.Remove(mySoapHeader1);
-            Console.WriteLine("Number of items after removal: {0}", 
+            Console.WriteLine("Number of items after removal: {0}",
                 mySoapHeaderCollection.Count);
         }
         else
             Console.WriteLine(
                 "mySoapHeaderCollection does not contain mySecondSoapHeader.");
-// </Snippet1> 
+// </Snippet1>
 
       mySoapHeaders = new MySoapHeader[mySoapHeaderCollection.Count];
       mySoapHeaderCollection.CopyTo(mySoapHeaders, 0);
@@ -215,7 +215,7 @@ public class MathService : System.Web.Services.Protocols.SoapHttpClientProtocol
       return ((System.Single)(results[0]));
    }
    [System.Diagnostics.DebuggerStepThroughAttribute()]
-   public MathService() 
+   public MathService()
    {
       this.Url = "http://localhost/MathService_SoapHeaderCollection.cs.asmx";
    }
@@ -223,14 +223,14 @@ public class MathService : System.Web.Services.Protocols.SoapHttpClientProtocol
    public System.IAsyncResult BeginAdd(System.Single xValue,
                                        System.Single yValue,
                                        System.AsyncCallback callback,
-                                       object asyncState) 
+                                       object asyncState)
    {
       return this.BeginInvoke("Add", new object[] {
                                        xValue,
                                        yValue}, callback, asyncState);
    }
 
-   public System.Single EndAdd(System.IAsyncResult asyncResult) 
+   public System.Single EndAdd(System.IAsyncResult asyncResult)
    {
       object[] results = this.EndInvoke(asyncResult);
       return ((System.Single)(results[0]));

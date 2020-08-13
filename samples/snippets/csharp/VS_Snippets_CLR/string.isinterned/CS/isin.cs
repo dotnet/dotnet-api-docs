@@ -4,8 +4,8 @@ using System;
 using System.Text;
 using System.Runtime.CompilerServices;
 
-// In the .NET Framework 2.0 the following attribute declaration allows you to 
-// avoid the use of the interning when you use NGEN.exe to compile an assembly 
+// In the .NET Framework 2.0 the following attribute declaration allows you to
+// avoid the use of the interning when you use NGEN.exe to compile an assembly
 // to the native image cache.
 [assembly: CompilationRelaxations(CompilationRelaxations.NoStringInterning)]
 class Sample

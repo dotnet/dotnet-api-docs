@@ -1,13 +1,13 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-public class RemoteConnect 
+public class RemoteConnect
 {
-    public static void Main() 
+    public static void Main()
     {
         EnumerationOptions opt = new EnumerationOptions(
             null, System.TimeSpan.MaxValue,
-            1, true, true, false, 
+            1, true, true, false,
             true, false, false, true);
 
         ManagementClass c = new ManagementClass("CIM_Service");

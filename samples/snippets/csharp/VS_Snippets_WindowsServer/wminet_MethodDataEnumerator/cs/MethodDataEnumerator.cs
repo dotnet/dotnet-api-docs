@@ -6,19 +6,19 @@ using System.Management;
 // enumerate all methods in
 // Win32_LogicalDisk class using the
 // MethodDataEnumerator object.
-class Sample_MethodDataEnumerator 
+class Sample_MethodDataEnumerator
 {
-    public static int Main(string[] args) 
+    public static int Main(string[] args)
     {
-        ManagementClass diskClass = 
+        ManagementClass diskClass =
             new ManagementClass("win32_logicaldisk");
-        MethodDataCollection.MethodDataEnumerator diskEnumerator = 
+        MethodDataCollection.MethodDataEnumerator diskEnumerator =
             diskClass.Methods.GetEnumerator();
-        while(diskEnumerator.MoveNext()) 
+        while(diskEnumerator.MoveNext())
         {
             MethodData method = diskEnumerator.Current;
             Console.WriteLine("Method = " + method.Name);
-        }   
+        }
         return 0;
     }
 }

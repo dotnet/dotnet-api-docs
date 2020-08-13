@@ -12,12 +12,12 @@
 /*
    This following example demonstrates the 'MethodInfo',
    'ReturnTypeCustomAttributeProvider', 'CustomAttributeProvider',
-   properties and 'GetCustomAttribute(Type)', 
+   properties and 'GetCustomAttribute(Type)',
    'GetCustomAttributes(Type)' methods of the 'LogicalMethodInfo' class
-   and 'Sync' enum member of 'LogicalMethodTypes' enumeration. 
+   and 'Sync' enum member of 'LogicalMethodTypes' enumeration.
    This example demonstrates custom attributes and return attributes of the
    'Add' method.
-   
+
    Note : The 'LogicalMethodInfo' class should only be used with
    'SoapMessage'. 'SoapClientMessage' and 'SoapServerMessage' contain
    a property named 'MethodInfo' which provides for an instance of
@@ -41,16 +41,16 @@ public class MyAttribute : Attribute
    {
       myName = name;
    }
-   public string Name 
+   public string Name
    {
-      get 
+      get
       {
          return myName;
       }
    }
 }
 
-public class MyService 
+public class MyService
 {
    [MyAttribute("This is the first sample attribute")]
    [MyAttribute("This is the second sample attribute")]
@@ -65,14 +65,14 @@ public class LogicalMethodInfo_GetCustomAttribute
 {
    public static void Main()
    {
-// <Snippet3>      
+// <Snippet3>
       Type myType = typeof(MyService);
       MethodInfo myMethodInfo = myType.GetMethod("Add");
 // <Snippet1>
 // <Snippet2>
       // Create a synchronous 'LogicalMethodInfo' instance.
-      LogicalMethodInfo myLogicalMethodInfo = 
-         (LogicalMethodInfo.Create(new MethodInfo[] {myMethodInfo}, 
+      LogicalMethodInfo myLogicalMethodInfo =
+         (LogicalMethodInfo.Create(new MethodInfo[] {myMethodInfo},
                                    LogicalMethodTypes.Sync))[0];
 // </Snippet2>
 // </Snippet1>
@@ -94,7 +94,7 @@ public class LogicalMethodInfo_GetCustomAttribute
 
       // Display all return attributes of type 'MyAttribute'.
       Console.WriteLine("\nDisplaying all return attributes of type 'MyAttribute'\n");
-      ICustomAttributeProvider myCustomAttributeProvider = 
+      ICustomAttributeProvider myCustomAttributeProvider =
                   myLogicalMethodInfo.ReturnTypeCustomAttributeProvider;
       if(myCustomAttributeProvider.IsDefined(typeof(MyAttribute), true))
       {

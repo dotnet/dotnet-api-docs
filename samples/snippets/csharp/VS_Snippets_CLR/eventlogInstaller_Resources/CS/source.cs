@@ -10,7 +10,7 @@
 // to be run during an installation.
 //
 // Note:
-//     1) Run this program using the following command: 
+//     1) Run this program using the following command:
 //          InstallUtil.exe  <filename.exe>
 //     2) Uninstall the event log created in step 1 using the
 //        following command:
@@ -27,7 +27,7 @@ public class SampleEventLogInstaller : Installer
 {
     private EventLogInstaller myEventLogInstaller;
 
-    public SampleEventLogInstaller() 
+    public SampleEventLogInstaller()
     {
         // Create an instance of an EventLogInstaller.
         myEventLogInstaller = new EventLogInstaller();
@@ -40,12 +40,12 @@ public class SampleEventLogInstaller : Installer
         myEventLogInstaller.Log = "myNewLog";
 
         // Set the resource file for the event log.
-        // The message strings are defined in EventLogMsgs.mc; the message 
+        // The message strings are defined in EventLogMsgs.mc; the message
         // identifiers used in the application must match those defined in the
         // corresponding message resource file. The messages must be built
         // into a Win32 resource library and copied to the target path on the
-        // system.  
-            
+        // system.
+
         myEventLogInstaller.CategoryResourceFile =
              Environment.SystemDirectory + "\\eventlogmsgs.dll";
         myEventLogInstaller.CategoryCount = 3;
@@ -55,7 +55,7 @@ public class SampleEventLogInstaller : Installer
              Environment.SystemDirectory + "\\eventlogmsgs.dll";
 
         // Add myEventLogInstaller to the installer collection.
-        Installers.Add(myEventLogInstaller); 
+        Installers.Add(myEventLogInstaller);
     }
 
     public static void Main()
@@ -63,4 +63,4 @@ public class SampleEventLogInstaller : Installer
         Console.WriteLine("Usage: InstallUtil.exe [<install>.exe | <install>.dll]");
     }
 }
-//</Snippet1> 
+//</Snippet1>

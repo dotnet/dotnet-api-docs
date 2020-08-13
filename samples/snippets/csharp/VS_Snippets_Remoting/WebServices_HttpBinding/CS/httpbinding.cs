@@ -6,8 +6,8 @@
   and 'Verb' property of class 'HttpBinding' and 'HttpAddressBinding()
   'constructor and 'Location' property of class 'HttpAddressBinding'.
   It creates a 'ServiceDescription' instance by using the
-  static read method of 'ServiceDescription' by passing the  
-  'AddNumbers1.wsdl' name as an argument.It creates  a 'Binding' 
+  static read method of 'ServiceDescription' by passing the
+  'AddNumbers1.wsdl' name as an argument. It creates a 'Binding' 
   object and adds that binding object to 'ServiceDescription'. 
   It adds the 'PortType',Messages to the 'ServiceDescription' object. 
   Finally it writes the 'ServiceDescrption' as a WSDL file with name 
@@ -55,8 +55,8 @@ class MyClass
                // Create the 'InputBinding' object.
                InputBinding myInput = new InputBinding();
                MimeContentBinding postMimeContentbinding = new MimeContentBinding();
-               postMimeContentbinding.Type="application/x-www-form-urlencoded";  
-               myInput.Extensions.Add(postMimeContentbinding);    
+               postMimeContentbinding.Type="application/x-www-form-urlencoded";
+               myInput.Extensions.Add(postMimeContentbinding);
                // Add the 'InputBinding' to 'OperationBinding'.
                myOperationBinding.Input = myInput;
                // Create the 'OutputBinding' object.
@@ -103,12 +103,12 @@ class MyClass
                postOperation.Name = "AddNumbers";
    
                OperationMessage postInput = (OperationMessage)new OperationInput();
-               postInput.Message =  new XmlQualifiedName("s0:AddNumbersHttpPostIn");
+               postInput.Message = new XmlQualifiedName("s0:AddNumbersHttpPostIn");
                OperationMessage postOutput = (OperationMessage)new OperationOutput();
                postOutput.Message = new XmlQualifiedName("s0:AddNumbersHttpPostOut");
 
                postOperation.Messages.Add(postInput);
-               postOperation.Messages.Add(postOutput);   
+               postOperation.Messages.Add(postOutput);
 
                // Add the 'Operation' to 'PortType'.
                postPortType.Operations.Add(postOperation);
@@ -116,10 +116,10 @@ class MyClass
                // Adds the 'PortType' to 'PortTypeCollection' of 'ServiceDescription'.
                myDescription.PortTypes.Add(postPortType);
 
-               // Create  the 'Message' object.
+               // Create the 'Message' object.
                Message postMessage1 = new Message();
                postMessage1.Name="AddNumbersHttpPostIn";
-               // Create the 'MessageParts'.         
+               // Create the 'MessageParts'.
                MessagePart postMessagePart1 = new MessagePart();
                postMessagePart1.Name = "firstnumber";
                postMessagePart1.Type = new XmlQualifiedName("s:string");
@@ -127,7 +127,7 @@ class MyClass
                MessagePart postMessagePart2 = new MessagePart();
                postMessagePart2.Name = "secondnumber";
                postMessagePart2.Type = new XmlQualifiedName("s:string");
-               // Add the 'MessagePart' objects to 'Messages'.  
+               // Add the 'MessagePart' objects to 'Messages'.
                postMessage1.Parts.Add(postMessagePart1);
                postMessage1.Parts.Add(postMessagePart2);
 

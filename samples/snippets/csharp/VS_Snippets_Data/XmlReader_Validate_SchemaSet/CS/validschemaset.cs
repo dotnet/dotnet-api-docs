@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.IO;
 
-public class Sample 
+public class Sample
 {
   public static void Main() {
 
@@ -19,11 +19,11 @@ public class Sample
     settings.ValidationType = ValidationType.Schema;
     settings.Schemas = sc;
     settings.ValidationEventHandler += ValidationCallBack;
- 
+
     // Create the XmlReader object.
     XmlReader reader = XmlReader.Create("booksSchemaFail.xml", settings);
 
-    // Parse the file. 
+    // Parse the file.
     while (reader.Read());
   }
 
@@ -33,13 +33,13 @@ public class Sample
   }
 }
 // The example displays output like the following:
-//   Validation Error: 
-//        The element 'book' in namespace 'urn:bookstore-schema' has invalid child element 'author' 
-//        in namespace 'urn:bookstore-schema'. List of possible elements expected: 'title' in 
+//   Validation Error:
+//        The element 'book' in namespace 'urn:bookstore-schema' has invalid child element 'author'
+//        in namespace 'urn:bookstore-schema'. List of possible elements expected: 'title' in
 //        namespace 'urn:bookstore-schema'.
 //
-//    Validation Error: 
-//       The element 'author' in namespace 'urn:bookstore-schema' has invalid child element 'name' 
-//       in namespace 'urn:bookstore-schema'. List of possible elements expected: 'first-name' in 
+//    Validation Error:
+//       The element 'author' in namespace 'urn:bookstore-schema' has invalid child element 'name'
+//       in namespace 'urn:bookstore-schema'. List of possible elements expected: 'first-name' in
 //       namespace 'urn:bookstore-schema'.
 // </Snippet1>

@@ -87,7 +87,7 @@ namespace WPF_CS1
 
         byte[] LoadImage(string filename)
         {
-            // Use the WPF BitmapImage class to load and 
+            // Use the WPF BitmapImage class to load and
             // resize the bitmap. NOTE: Only 32bpp formats are supported correctly.
             // Support for additional color formats is left as an exercise
             // for the reader. For more information, see documentation for ColorConvertedBitmap.
@@ -116,7 +116,7 @@ namespace WPF_CS1
 
         // Map the individual image tiles to the large image
         // in parallel. Any kind of raw image manipulation can be
-        // done here because we are not attempting to access any 
+        // done here because we are not attempting to access any
         // WPF controls from multiple threads.
         byte[] TileImages(Task<byte[]>[] sourceImages)
         {

@@ -6,12 +6,12 @@ using System.Xml.Serialization;
 
 // <Snippet1>
 public class Transportation
-{  
+{
    [XmlArray("Vehicles")]
    // Specifies the Form property value.
-   [XmlArrayItem(typeof(Vehicle), 
-   Form = XmlSchemaForm.Unqualified), 
-   XmlArrayItem(typeof(Car), 
+   [XmlArrayItem(typeof(Vehicle),
+   Form = XmlSchemaForm.Unqualified),
+   XmlArrayItem(typeof(Car),
    Form = XmlSchemaForm.Qualified)]
    public Vehicle[] MyVehicles;
 }

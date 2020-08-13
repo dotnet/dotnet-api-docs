@@ -10,11 +10,11 @@ public class Server
     [SecurityPermission(SecurityAction.LinkDemand)]
     public static void Main()
     {
- 
+
 // <snippet31>
         // Set up a server channel.
         TcpServerChannel serverChannel = new TcpServerChannel(9090);
-        ChannelServices.RegisterChannel(serverChannel);    
+        ChannelServices.RegisterChannel(serverChannel);
 // </snippet31>
 
         // Expose an object for remote calls.
@@ -35,7 +35,7 @@ public class Server
         {
             Console.WriteLine(uri);
         }
-// </snippet33> 
+// </snippet33>
 
         // Wait for method calls.
         Console.WriteLine("Listening...");

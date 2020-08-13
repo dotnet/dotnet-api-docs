@@ -11,7 +11,7 @@ public class Group
 {
    [SoapAttribute (Namespace = "http://www.cpandl.com")]
    public string GroupName;
-   
+
    [SoapAttribute(DataType = "base64Binary")]
    public Byte [] GroupNumber;
 
@@ -22,7 +22,7 @@ public class Group
 
    public Vehicle GroupVehicle;
 }
-  
+
 public class Vehicle
 {
    public string licenseNumber;
@@ -44,7 +44,7 @@ public class Run
 
       Group myGroup=MakeGroup();
       // Writing the file requires a TextWriter.
-      XmlTextWriter writer = 
+      XmlTextWriter writer =
       new XmlTextWriter(filename, Encoding.UTF8);
       writer.Formatting = Formatting.Indented;
       writer.WriteStartElement("wrapper");
@@ -80,20 +80,20 @@ public class Run
       XmlSerializer mySerializer =  ReturnSOAPSerializer();
 
       // Reading the file requires an  XmlTextReader.
-      XmlTextReader reader= 
+      XmlTextReader reader=
       new XmlTextReader(filename);
       reader.ReadStartElement("wrapper");
 
       // Deserialize and cast the object.
-      Group myGroup; 
+      Group myGroup;
       myGroup = (Group) mySerializer.Deserialize(reader);
       reader.ReadEndElement();
       reader.Close();
    }
-   
+
    private XmlSerializer ReturnSOAPSerializer(){
       // Create an instance of the XmlSerializer class.
-      XmlTypeMapping myMapping = 
+      XmlTypeMapping myMapping =
       (new SoapReflectionImporter().ImportTypeMapping
       (typeof(Group)));
        return new XmlSerializer(myMapping);

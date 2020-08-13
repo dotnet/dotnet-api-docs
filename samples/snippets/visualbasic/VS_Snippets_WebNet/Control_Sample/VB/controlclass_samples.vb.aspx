@@ -6,7 +6,7 @@
 ' System.Web.UI.Control.ID
 
 ' The following VB code example demonstrates the event 'Init' of class
-' 'Control Class'.The program explains the init event handler.
+' 'Control Class'. The program explains the init event handler.
 
 ' <Snippet2>
 ' <Snippet3>

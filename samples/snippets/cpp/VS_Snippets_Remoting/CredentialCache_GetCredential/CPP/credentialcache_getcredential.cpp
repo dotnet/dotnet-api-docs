@@ -1,7 +1,7 @@
 
 
 // System::Net::CredentialCache::GetCredential
-/*This program demontrates the 'GetCredential' method of the CredentialCache class.It takes an URL
+/*This program demontrates the 'GetCredential' method of the CredentialCache class. It takes an URL
 creates a 'WebRequest' Object* for the Url. The program stores a known set of credentials in a credential cache.
 'GetCredential' will then retrieve the credentials for the requested Uri.
 */

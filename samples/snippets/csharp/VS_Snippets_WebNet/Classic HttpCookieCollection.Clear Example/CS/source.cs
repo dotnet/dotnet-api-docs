@@ -9,7 +9,7 @@ public class Page1: Page
 HttpCookieCollection MyCookieCollection = new HttpCookieCollection();
 // <Snippet1>
 MyCookieCollection.Clear();
-    
+
 // </Snippet1>
  }
 }
