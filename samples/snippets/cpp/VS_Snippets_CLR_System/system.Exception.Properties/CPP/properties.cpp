@@ -18,7 +18,7 @@ namespace NDP_UE_CPP
       LogTableOverflowException( String^ auxMessage, Exception^ inner )
          : Exception( String::Format( "{0} - {1}", overflowMessage, auxMessage ), inner )
       {
-         this->HelpLink = "http://msdn.microsoft.com";
+         this->HelpLink = "https://docs.microsoft.com";
          this->Source = "Exception_Class_Samples";
       }
 
@@ -106,7 +106,7 @@ Message ---
 The log table has overflowed. - Record "Log record number 5" was not logged.
 
 HelpLink ---
-http://msdn.microsoft.com
+https://docs.microsoft.com
 
 Source ---
 Exception_Class_Samples
