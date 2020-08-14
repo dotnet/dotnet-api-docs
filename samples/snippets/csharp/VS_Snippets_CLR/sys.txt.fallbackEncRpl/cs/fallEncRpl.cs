@@ -36,8 +36,6 @@ class Sample
     int ix = 0;
 
 // --------------------------------------------------------------------------
-    Console.Clear();
-
 // Display the name of the encoding.
     Console.WriteLine("The name of the encoding is \"{0}\".\n", ae.WebName);
 

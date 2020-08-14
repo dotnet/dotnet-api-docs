@@ -33,9 +33,7 @@ int main()
     int numberOfEncodedBytes = 0;
 
     // ---------------------------------------------------------------------
-    Console::Clear();
-
-    // Display the name of the encoding.
+        // Display the name of the encoding.
     Console::WriteLine("The name of the encoding is \"{0}\".{1}", 
         ascii->WebName, Environment::NewLine);
 
