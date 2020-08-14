@@ -54,8 +54,6 @@ namespace NDP_UE_CPP
 
 int main()
 {
-   Console::WriteLine( "This example of Exception::HResult "
-   "generates the following output.\n" );
    NDP_UE_CPP::DivideBy0();
 }
 
