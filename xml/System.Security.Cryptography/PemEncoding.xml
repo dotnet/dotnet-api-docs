@@ -1,4 +1,4 @@
-<Type Name="PemEncoding" FullName="System.Security.Cryptography.PemEncoding">
+﻿<Type Name="PemEncoding" FullName="System.Security.Cryptography.PemEncoding">
   <TypeSignature Language="C#" Value="public static class PemEncoding" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit PemEncoding extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.PemEncoding" />
@@ -14,7 +14,8 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides methods for reading and writing the IETF RFC 7468 subset of PEM (Privacy-Enhanced Mail) textual encodings.
+ This class cannot be inherited.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -37,10 +38,20 @@
         <Parameter Name="pemData" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="pemData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pemData">The text containing the PEM-encoded data.</param>
+        <summary>Finds the first PEM-encoded data.</summary>
+        <returns>A value that specifies the location, label, and data location of the encoded data.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+IETF RFC 7468 permits different decoding rules. This method always uses lax rules.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="pemData" /> does not contain a well-formed PEM-encoded value.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetEncodedSize">
@@ -63,11 +74,26 @@
         <Parameter Name="dataLength" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="labelLength">To be added.</param>
-        <param name="dataLength">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="labelLength">The length of the label, in characters.</param>
+        <param name="dataLength">The length of the data, in bytes.</param>
+        <summary>Determines the length of a PEM-encoded value, in characters, given the length of a label and binary data.</summary>
+        <returns>The number of characters in the encoded PEM.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+<paramref name="labelLength" /> is a negative value.
+
+-or-
+
+<paramref name="dataLength" /> is a negative value.
+
+-or-
+
+<paramref name="labelLength" /> exceeds the maximum possible label length.
+
+-or-
+
+<paramref name="dataLength" /> exceeds the maximum possible encoded data length.</exception>
+        <exception cref="T:System.ArgumentException">The length of the PEM-encoded value is larger than <see cref="F:System.Int32.MaxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryFind">
@@ -90,11 +116,22 @@
         <Parameter Name="fields" Type="System.Security.Cryptography.PemFields" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="pemData">To be added.</param>
-        <param name="fields">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pemData">The text containing the PEM-encoded data.</param>
+        <param name="fields">When this method returns, contains a value that specifies the location, label, and data location of the encoded data; or, if no PEM-encoded data is found, a value that specifies those locations as empty.
+
+          This parameter is treated as uninitialized.</param>
+        <summary>Attempts to find the first PEM-encoded data.</summary>
+        <returns>
+          <see langword="true" /> if PEM-encoded data was found; otherwise <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+IETF RFC 7468 permits different decoding rules. This method always uses lax rules.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryWrite">
@@ -119,13 +156,33 @@
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="label">To be added.</param>
-        <param name="data">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="label">The label to write.</param>
+        <param name="data">The data to write.</param>
+        <param name="destination">The buffer to receive the PEM-encoded text.</param>
+        <param name="charsWritten">When this method returns, this parameter contains the number of characters written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Tries to write the provided data and label as PEM-encoded data into a provided buffer.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is large enough to contain the PEM-encoded text, otherwise <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method always wraps the base-64 encoded text to 64 characters, per the recommended wrapping of IETF RFC 7468. Unix-style line endings are used for line breaks.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+<paramref name="label" /> exceeds the maximum possible label length.
+
+-or-
+
+<paramref name="data" /> exceeds the maximum possible encoded data length.</exception>
+        <exception cref="T:System.ArgumentException">The resulting PEM-encoded text is larger than <see cref="F:System.Int32.MaxValue" />.
+
+-or-
+
+<paramref name="label" /> contains invalid characters.</exception>
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -148,11 +205,30 @@
         <Parameter Name="data" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="label">To be added.</param>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="label">The label to encode.</param>
+        <param name="data">The data to encode.</param>
+        <summary>Creates an encoded PEM with the given label and data.</summary>
+        <returns>A character array of the encoded PEM.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method always wraps the base-64 encoded text to 64 characters, per the recommended wrapping of RFC-7468. Unix-style line endings are used for line breaks.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="label" /> exceeds the maximum possible label length.
+
+-or-
+
+<paramref name="data" /> exceeds the maximum possible encoded data length.</exception>
+        <exception cref="T:System.ArgumentException">The resulting PEM-encoded text is larger than <see cref="F:System.Int32.MaxValue" />.
+
+-or-
+
+<paramref name="label" /> contains invalid characters.</exception>
       </Docs>
     </Member>
   </Members>
