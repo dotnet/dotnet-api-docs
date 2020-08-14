@@ -40,27 +40,27 @@ Public Class DinoDiscoverySet
                 dinoType = AddressOf EndsWithSaurus
         End Select
 
-        Console.WriteLine(vbNewLine + _
+        Console.WriteLine(Environment.NewLine + _
             "Array.Exists(dinosaurs, ""{0}""): {1}", _
             Ending, _
             Array.Exists(dinosaurs, dinoType))
 
-        Console.WriteLine(vbNewLine + _
+        Console.WriteLine(Environment.NewLine + _
             "Array.TrueForAll(dinosaurs, ""{0}""): {1}", _
             Ending, _
             Array.TrueForAll(dinosaurs, dinoType))
 
-        Console.WriteLine(vbNewLine + _
+        Console.WriteLine(Environment.NewLine + _
             "Array.Find(dinosaurs, ""{0}""): {1}", _
             Ending, _
             Array.Find(dinosaurs, dinoType))
 
-        Console.WriteLine(vbNewLine + _
+        Console.WriteLine(Environment.NewLine + _
             "Array.FindLast(dinosaurs, ""{0}""): {1}", _
             Ending, _
             Array.FindLast(dinosaurs, dinoType))
 
-        Console.WriteLine(vbNewLine + _
+        Console.WriteLine(Environment.NewLine + _
             "Array.FindAll(dinosaurs, ""{0}""):", Ending)
 
         Dim subArray() As String = _
