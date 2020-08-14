@@ -18,7 +18,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>This type represents an ASN.1 tag, as described in ITU-T Recommendation X.680.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -38,10 +38,13 @@
         <Parameter Name="isConstructed" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="universalTagNumber">To be added.</param>
-        <param name="isConstructed">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="universalTagNumber">One of the enumeration values that specifies the semantic type for this tag.</param>
+        <param name="isConstructed">
+          <see langword="true" /> for a constructed tag, <see langword="false" /> for a primitive tag.</param>
+        <summary>Create an <see cref="T:System.Formats.Asn1.Asn1Tag" /> for a tag from the UNIVERSAL class.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="universalTagNumber" /> is not a known value.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -61,11 +64,24 @@
         <Parameter Name="isConstructed" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tagClass">To be added.</param>
-        <param name="tagValue">To be added.</param>
-        <param name="isConstructed">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="tagClass">The tag class for this tag.</param>
+        <param name="tagValue">The numeric value for this tag.</param>
+        <param name="isConstructed">
+          <see langword="true" /> for a constructed tag, <see langword="false" /> for a primitive tag.</param>
+        <summary>Create an <see cref="T:System.Formats.Asn1.Asn1Tag" /> for a specified value within a specified tag class.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This constructor allows for the creation undefined UNIVERSAL class tags.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="tagClass" /> is not a known value.
+             -or- 
+               <paramref name="tagValue" /> is negative.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsConstructed">
@@ -85,8 +101,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Produces a tag with the same <see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> and <see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> values, but whose <see cref="P:System.Formats.Asn1.Asn1Tag.IsConstructed" /> is <see langword="true" />.</summary>
+        <returns>A tag with the same <see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> and <see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> values, but whose <see cref="P:System.Formats.Asn1.Asn1Tag.IsConstructed" /> is <see langword="true" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -107,8 +123,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Produces a tag with the same <see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> and <see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> values, but whose <see cref="P:System.Formats.Asn1.Asn1Tag.IsConstructed" /> is <see langword="false" />.</summary>
+        <returns>A tag with the same <see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> and <see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> values, but whose <see cref="P:System.Formats.Asn1.Asn1Tag.IsConstructed" /> is <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -128,7 +144,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a Boolean value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -149,8 +165,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reports the number of bytes required for the BER-encoding of this tag.</summary>
+        <returns>The number of bytes required for the BER-encoding of this tag.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -170,7 +186,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a Bit String value under a constructed encoding.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -190,7 +206,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a Octet String value under a constructed encoding.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -214,11 +230,12 @@
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The read only byte sequence whose beginning is a BER-encoded tag.</param>
+        <param name="bytesConsumed">When this method returns, contains the number of bytes that contributed to the encoded tag. This parameter is treated as uninitialized.</param>
+        <summary>Reads a BER-encoded tag which starts at <paramref name="source" />.</summary>
+        <returns>The decoded tag.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Formats.Asn1.AsnContentException">The provided data does not decode to a tag.</exception>
       </Docs>
     </Member>
     <Member MemberName="Encode">
@@ -240,10 +257,12 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The start of where the encoded tag should be written.</param>
+        <summary>Writes the BER-encoded form of this tag to <paramref name="destination" />.</summary>
+        <returns>The number of bytes written to <paramref name="destination" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destination" />.<see cref="P:System.Span`1.Length" /> &lt; <see cref="M:System.Formats.Asn1.Asn1Tag.CalculateEncodedSize" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Enumerated">
@@ -262,7 +281,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for an Enumerated value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -288,9 +307,10 @@
         <Parameter Name="other" Type="System.Formats.Asn1.Asn1Tag" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="other">Tag to test for equality.</param>
+        <summary>Tests if <paramref name="other" /> has the same encoding as this tag.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="other" /> has the same values for <see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" />, <see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" />, and <see cref="P:System.Formats.Asn1.Asn1Tag.IsConstructed" />; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -313,9 +333,10 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="obj">Object to test for value equality</param>
+        <summary>Tests if <paramref name="obj" /> is an <see cref="T:System.Formats.Asn1.Asn1Tag" /> with the same encoding as this tag.</summary>
+        <returns>
+          <see langword="false" /> if <paramref name="obj" /> is not an <see cref="T:System.Formats.Asn1.Asn1Tag" />, <see cref="M:System.Formats.Asn1.Asn1Tag.Equals(System.Formats.Asn1.Asn1Tag)" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -335,7 +356,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a GeneralizedTime value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -356,8 +377,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the hash code for this instance.</summary>
+        <returns>A 32-bit signed integer hash code.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -380,9 +401,10 @@
         <Parameter Name="other" Type="System.Formats.Asn1.Asn1Tag" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="other">Tag to test for concept equality.</param>
+        <summary>Tests if <paramref name="other" /> has the same <see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> and <see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> values as this tag, and does not compare <see cref="P:System.Formats.Asn1.Asn1Tag.IsConstructed" />.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="other" /> has the same <see cref="P:System.Formats.Asn1.Asn1Tag.TagClass" /> and <see cref="P:System.Formats.Asn1.Asn1Tag.TagValue" /> as this tag, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -402,7 +424,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for an Integer value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -422,7 +444,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Indicates if the tag represents a constructed encoding (<see langword="true" />), or a primitive encoding (<see langword="false" />).</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -443,7 +465,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a <see langword="null" /> value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -463,7 +485,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for an Object Identifier value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -487,10 +509,11 @@
         <Parameter Name="right" Type="System.Formats.Asn1.Asn1Tag" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Tests if two <see cref="T:System.Formats.Asn1.Asn1Tag" /> values have the same BER encoding.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> have the same BER encoding, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -514,10 +537,11 @@
         <Parameter Name="right" Type="System.Formats.Asn1.Asn1Tag" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Tests if two <see cref="T:System.Formats.Asn1.Asn1Tag" /> values have a different BER encoding.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> have a different BER encoding, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -537,7 +561,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a Bit String value under a primitive encoding.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -557,7 +581,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for an Octet String value under a primitive encoding.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -577,7 +601,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a Sequence value (always a constructed encoding).</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -597,7 +621,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a SetOf value (always a constructed encoding).</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -617,7 +641,7 @@
         <ReturnType>System.Formats.Asn1.TagClass</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The tag class to which this tag belongs.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -638,9 +662,17 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The numeric value for this tag.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If <xref:System.Formats.Asn1.Asn1Tag.TagClass> is <xref:System.Formats.Asn1.TagClass.Universal>, this value can be interpreted as a <xref:System.Formats.Asn1.UniversalTagNumber>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -660,8 +692,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Provides a text representation of this tag suitable for debugging.</summary>
+        <returns>A text representation of this tag suitable for debugging.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -686,11 +718,12 @@
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The read only byte sequence whose beginning is a BER-encoded tag.</param>
+        <param name="tag">The decoded tag.</param>
+        <param name="bytesConsumed">When this method returns, contains the number of bytes that contributed to the encoded tag, 0 on failure. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to read a BER-encoded tag which starts at <paramref name="source" />.</summary>
+        <returns>
+          <see langword="true" /> if a tag was correctly decoded; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -714,10 +747,11 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The start of where the encoded tag should be written.</param>
+        <param name="bytesWritten">Receives the value from <see cref="M:System.Formats.Asn1.Asn1Tag.CalculateEncodedSize" /> on success, 0 on failure.</param>
+        <summary>Attempts to write the BER-encoded form of this tag to <paramref name="destination" />.</summary>
+        <returns>
+          <see langword="false" /> if <paramref name="destination" />.<see cref="P:System.Span`1.Length" /> &lt; <see cref="M:System.Formats.Asn1.Asn1Tag.CalculateEncodedSize" />(), <see langword="true" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -737,7 +771,7 @@
         <ReturnType>System.Formats.Asn1.Asn1Tag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the universal class tag for a UtcTime value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
