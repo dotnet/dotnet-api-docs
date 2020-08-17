@@ -68,7 +68,7 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- A URI is a compact representation of a resource available to your application on the intranet or Internet. The <xref:System.Uri> class defines the properties and methods for handling URIs, including parsing, comparing, and combining. The <xref:System.Uri> class properties are read-only; to create a modifiable object, use the <xref:System.UriBuilder> class.  
+ A URI is a compact representation of a resource available to your application on the intranet or internet. The <xref:System.Uri> class defines the properties and methods for handling URIs, including parsing, comparing, and combining. The <xref:System.Uri> class properties are read-only; to create a modifiable object, use the <xref:System.UriBuilder> class.  
   
  Relative URIs (for example, "/new/index.htm") must be expanded with respect to a base URI so that they are absolute. The <xref:System.Uri.MakeRelative%2A> method is provided to convert absolute URIs to relative URIs when necessary.  
   
@@ -120,10 +120,10 @@ http://myUrl/
   
  Some URIs include a fragment identifier or a query or both. A fragment identifier is any text that follows a number sign (#), not including the number sign; the fragment text is stored in the <xref:System.Uri.Fragment%2A> property. Query information is any text that follows a question mark (?) in the URI; the query text is stored in the <xref:System.Uri.Query%2A> property.  
   
- In the .NET Framework version 1.1, if the string specified to a constructor contains an unknown scheme and "c:\\", the Uri class inserts "//" after the colon. For example, the URI `xyz:c:\abc` is converted to `xyz://c:/abc`. In the .NET Framework version 2.0, this behavior has been removed, and the example string is converted to `xyz:c:/abc`.  
+ In .NET Framework version 1.1, if the string specified to a constructor contains an unknown scheme and "c:\\", the Uri class inserts "//" after the colon. For example, the URI `xyz:c:\abc` is converted to `xyz://c:/abc`. In the .NET Framework version 2.0, this behavior has been removed, and the example string is converted to `xyz:c:/abc`.  
   
 > [!NOTE]
->  The URI class supports the use of IP addresses in both quad-notation for IPv4 protocol and colon-hexadecimal for IPv6 protocol. Remember to enclose the IPv6 address in square brackets, as in http://[::1].  
+> The URI class supports the use of IP addresses in both quad-notation for IPv4 protocol and colon-hexadecimal for IPv6 protocol. Remember to enclose the IPv6 address in square brackets, as in http://[::1].  
   
 ## International Resource Identifier Support  
  Web addresses are typically expressed using uniform resource identifiers that consist of a very restricted set of characters:  
@@ -142,9 +142,7 @@ http://myUrl/
   
  To enable support for IRI, the following change is required:  
   
--   Specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name and whether IRI parsing rules should be applied. This can be done in the *machine.config* or in the *app.config* file. For example, add the following:  
-  
-    ```xml  
+-   Specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name and whether IRI parsing rules should be applied. This can be done in the *machine.config* or in the *app.config* file. For example, add the following: ```xml  
     <configuration>  
       <uri>  
       <idn enabled="All" />  
@@ -161,17 +159,11 @@ http://myUrl/
   
  There are three possible values for IDN depending on the DNS servers that are used:  
   
--   idn enabled = All  
+-   idn enabled = All  This value will convert any Unicode domain names to their Punycode equivalents (IDN names).  
   
-     This value will convert any Unicode domain names to their Punycode equivalents (IDN names).  
+-   idn enabled = AllExceptIntranet  This value will convert all Unicode domain names not on the local Intranet to use the Punycode equivalents (IDN names). In this case to handle international names on the local Intranet, the DNS servers that are used for the Intranet should support Unicode name resolution.  
   
--   idn enabled = AllExceptIntranet  
-  
-     This value will convert all Unicode domain names not on the local Intranet to use the Punycode equivalents (IDN names). In this case to handle international names on the local Intranet, the DNS servers that are used for the Intranet should support Unicode name resolution.  
-  
--   idn enabled = None  
-  
-     This value will not convert any Unicode domain names to use Punycode. This is the default value which is consistent with the .NET Framework 2.0 behaviour.  
+-   idn enabled = None  This value will not convert any Unicode domain names to use Punycode. This is the default value which is consistent with the .NET Framework 2.0 behaviour.  
   
  When IRI parsing is enabled (iriParsing enabled = `true`) normalization and character checking are done according to the latest IRI rules in RFC 3986 and RFC 3987. When IRI parsing is disabled, normalization and character checking are performed according to RFC 2396 and RFC 2732 (for IPv6 literals).  In versions of the .NET Framework before version 4.5, the default value is `false`. In .NET Framework version 4.5 and newer, the default value is `true`, and the enabled state of IRI parsing cannot be modified by settings in a *.config* file.  
   
@@ -184,7 +176,9 @@ http://myUrl/
  The <xref:System.GenericUriParserOptions.Idn?displayProperty=nameWithType> type indicates the parser supports Internationalized Domain Name (IDN) parsing (IDN) of host names. Whether IDN is used is dictated by the configuration values previously discussed.  
   
 ## Implicit File Path Support
+
  <xref:System.Uri> can also be used to represent local file system paths. These paths can be represented *explicitly* in URIs that begin with the file:// scheme, and *implicitly* in URIs that do not have the file:// scheme. As a concrete example, the following two URIs are both valid, and represent the same file path:
+ 
 ```csharp
 Uri uri1 = new Uri("C:/test/path/file.txt") // Implicit file path.
 Uri uri2 = new Uri("file:///C:/test/path/file.txt") // Explicit file path.
@@ -220,11 +214,8 @@ This validation can be used in other cases, like when dealing with UNC paths, by
 Uri baseUri = new Uri(@"\\host\share\some\directory\name\");
 ```
 
-  
 ## Performance Considerations  
- If you use a *Web.config *file that contains URIs to initialize your application, additional time is required to process the URIs if their scheme identifiers are nonstandard. In such a case, initialize the affected parts of your application when the URIs are needed, not at start time.  
-  
-   
+ If you use a *Web.config *file that contains URIs to initialize your application, additional time is required to process the URIs if their scheme identifiers are nonstandard. In such a case, initialize the affected parts of your application when the URIs are needed, not at start time.
   
 ## Examples  
  The following example creates an instance of the <xref:System.Uri> class and uses it to create a <xref:System.Net.WebRequest> instance.  
@@ -306,9 +297,7 @@ Uri baseUri = new Uri(@"\\host\share\some\directory\name\");
   
  This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.  
   
- This constructor assumes that the `string` parameter references an absolute URI and is equivalent to calling the <xref:System.Uri.%23ctor%2A> constructor with <xref:System.UriKind> set to <xref:System.UriKind.Absolute>. If the `string` parameter passed to the constructor is a relative URI, this constructor will throw a <xref:System.UriFormatException>.  
-  
-   
+ This constructor assumes that the `string` parameter references an absolute URI and is equivalent to calling the <xref:System.Uri.%23ctor%2A> constructor with <xref:System.UriKind> set to <xref:System.UriKind.Absolute>. If the `string` parameter passed to the constructor is a relative URI, this constructor will throw a <xref:System.UriFormatException>.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance with the URI `http://www.contoso.com/`.  
@@ -526,9 +515,7 @@ Uri baseUri = new Uri(@"\\host\share\some\directory\name\");
   
  If `dontEscape` is set to `false`, the constructor escapes any reserved characters by checking that all occurrences of percent (%) are followed by a valid escape sequence. If the character sequence following a percent is not valid, the percent is replaced by %25.  
   
- This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.  
-  
-   
+ This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance for the URI `http://www.contoso.com/Hello%20World.htm`. Because the contained URI is completely escaped and is in canonical form, the `dontEscape` parameter can be set to `true`.  
@@ -754,9 +741,7 @@ Uri baseUri = new Uri(@"\\host\share\some\directory\name\");
 
  Additionally, if the `relativeUri` begins with a slash, then it will replace any relative part of the `baseUri`
 
- This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.  
-  
-   
+ This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
   
 ## Examples  
  The following example creates a new instance of the <xref:System.Uri> class by combining the relative URIs `http://www.contoso.com` and `catalog/shownew.htm` to form the absolute URI `http://www.contoso.com/catalog/shownew.htm`.  
@@ -872,9 +857,7 @@ Uri baseUri = new Uri(@"\\host\share\some\directory\name\");
 
  Additionally, if the `relativeUri` begins with a slash, then it will replace any relative part of the `baseUri`
  
- This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.  
-  
-   
+ This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
   
 ## Examples  
  This example creates an absolute <xref:System.Uri> instance, `absoluteUri`, and a relative <xref:System.Uri> instance, `relativeUri`. A new <xref:System.Uri> instance, `combinedUri`, is then created from these two instances.  
@@ -1001,9 +984,7 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
   
  The `dontEscape` parameter controls whether reserved characters are translated into escape sequences. This parameter should be set to `true` only if you are certain that all reserved characters in the URI have been escaped. Setting the value to `true` for a URI that has not been completely escaped can cause unexpected behavior. It is strongly recommended that you always set this parameter to `false`. If `dontEscape` is set to `false`, the constructor escapes any reserved characters by checking that all occurrences of percent (%) are followed by a valid escape sequence. If the character sequence following a percent is not valid, the percent is replaced by %25.  
   
- This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.  
-  
-   
+ This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
   
 ## Examples  
  The following example creates a new instance of the <xref:System.Uri> class by combining the relative URIs `http://www.contoso.com` and `Hello%20World.htm` to form an absolute URI.  
@@ -1108,16 +1089,14 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
       </ReturnValue>
       <Docs>
         <summary>Gets the absolute path of the URI.</summary>
-        <value>A <see cref="T:System.String" /> containing the absolute path to the resource.</value>
+        <value>The absolute path to the resource.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  The <xref:System.Uri.AbsolutePath%2A> property contains the path information that the server uses to resolve requests for information. Typically this is the path to the desired information on the server's file system, although it also can indicate the application or script the server must run to provide the information.  
   
- The path information does not include the scheme, host name, or query portion of the URI.  
-  
-   
+ The path information does not include the scheme, host name, or query portion of the URI.
   
 ## Examples  
  The following example writes the path /catalog/shownew.htm to the console.  
@@ -1167,14 +1146,12 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
       </ReturnValue>
       <Docs>
         <summary>Gets the absolute URI.</summary>
-        <value>A <see cref="T:System.String" /> containing the entire URI.</value>
+        <value>The entire URI.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Uri.AbsoluteUri%2A> property includes the entire URI stored in the <xref:System.Uri> instance, including all fragments and query strings.  
-  
-   
+ The <xref:System.Uri.AbsoluteUri%2A> property includes the entire URI stored in the <xref:System.Uri> instance, including all fragments and query strings.
   
 ## Examples  
  The following example writes the complete contents of the <xref:System.Uri> instance to the console. In the example shown, `http://www.contoso.com/catalog/shownew.htm?date=today` is written to the console.  
@@ -1224,14 +1201,12 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
       </ReturnValue>
       <Docs>
         <summary>Gets the Domain Name System (DNS) host name or IP address and the port number for a server.</summary>
-        <value>A <see cref="T:System.String" /> containing the authority component of the URI represented by this instance.</value>
+        <value>The authority component of the URI represented by this instance.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Uri.Authority%2A> property is typically a server DNS host name or IP address. This property might include the service port number if it differs from the default port for the URI. If the <xref:System.Uri.Authority%2A> component contains reserved characters, these are escaped in the string value returned by this property.  
-  
-   
+ The <xref:System.Uri.Authority%2A> property is typically a server DNS host name or IP address. This property might include the service port number if it differs from the default port for the URI. If the <xref:System.Uri.Authority%2A> component contains reserved characters, these are escaped in the string value returned by this property.
   
 ## Examples  
  The following example writes the host name (`www.contoso.com`) and port number (8080) of the server to the console.  
@@ -1340,14 +1315,12 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
       <Docs>
         <param name="name">The host name to validate. This can be an IPv4 or IPv6 address or an Internet host name.</param>
         <summary>Determines whether the specified host name is a valid DNS name.</summary>
-        <returns>A <see cref="T:System.UriHostNameType" /> that indicates the type of the host name. If the type of the host name cannot be determined or if the host name is <see langword="null" /> or a zero-length string, this method returns <see cref="F:System.UriHostNameType.Unknown" />.</returns>
+        <returns>The type of the host name. If the type of the host name cannot be determined or if the host name is <see langword="null" /> or a zero-length string, this method returns <see cref="F:System.UriHostNameType.Unknown" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Uri.CheckHostName%2A> method checks that the host name provided meets the requirements for a valid Internet host name. It does not, however, perform a host-name lookup to verify the existence of the host.  
-  
-   
+ The <xref:System.Uri.CheckHostName%2A> method checks that the host name provided meets the requirements for a valid Internet host name. It does not, however, perform a host-name lookup to verify the existence of the host.
   
 ## Examples  
  The following example checks whether the host name is valid.  
@@ -1400,16 +1373,14 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
       <Docs>
         <param name="schemeName">The scheme name to validate.</param>
         <summary>Determines whether the specified scheme name is valid.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the scheme name is valid; otherwise, <see langword="false" />.</returns>
+        <returns><see langword="true" /> if the scheme name is valid; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  This method checks the scheme name for validity according to RFC 2396 by default. If International Resource Identifiers (IRIs) or Internationalized Domain Name (IDN) parsing is enabled, this method checks the scheme name for validity according to RFC 3986. The scheme name must begin with a letter and must contain only letters, digits, and the characters ".", "+", or "-".  
   
- For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.  
-  
-   
+ For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and checks whether the scheme name is valid.  
@@ -1509,13 +1480,13 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
         <Parameter Name="comparisonType" Type="System.StringComparison" Index="4" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="uri1">The first <see cref="T:System.Uri" />.</param>
-        <param name="uri2">The second <see cref="T:System.Uri" />.</param>
+        <param name="uri1">The first URI.</param>
+        <param name="uri2">The second URI.</param>
         <param name="partsToCompare">A bitwise combination of the <see cref="T:System.UriComponents" /> values that specifies the parts of <paramref name="uri1" /> and <paramref name="uri2" /> to compare.</param>
-        <param name="compareFormat">One of the <see cref="T:System.UriFormat" /> values that specifies the character escaping used when the URI components are compared.</param>
-        <param name="comparisonType">One of the <see cref="T:System.StringComparison" /> values.</param>
+        <param name="compareFormat">One of the enumeration values that specifies the character escaping used when the URI components are compared.</param>
+        <param name="comparisonType">One of the enumeration values that specifies the the culture, case, and sort rules for the comparison.</param>
         <summary>Compares the specified parts of two URIs using the specified comparison rules.</summary>
-        <returns>An <see cref="T:System.Int32" /> value that indicates the lexical relationship between the compared <see cref="T:System.Uri" /> components.  
+        <returns>A value that indicates the lexical relationship between the compared <see cref="T:System.Uri" /> components.  
   
  <list type="table"><listheader><term> Value  
   
@@ -1581,7 +1552,7 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
       </ReturnValue>
       <Docs>
         <summary>Gets a host name that, after being unescaped if necessary, is safe to use for DNS resolution.</summary>
-        <value>A <see cref="T:System.String" /> that contains the host part of the URI in a format suitable for DNS resolution; or the original host string, if it is already suitable for resolution.</value>
+        <value>The host part of the URI in a format suitable for DNS resolution; or the original host string, if it is already suitable for resolution.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1596,13 +1567,9 @@ If you used an escaped string to construct this instance (for example, `"http://
   
  To enable support for IRI, the following two changes are required:  
   
-1.  Add the following line to the *machine.config* file under the .NET Framework 2.0 directory  
+1.  Add the following line to the *machine.config* file under the .NET Framework 2.0 directory  \<section name="uri" type="System.Configuration.UriSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />  
   
-     \<section name="uri" type="System.Configuration.UriSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />  
-  
-2.  Specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name and whether IRI parsing rules should be applied. This can be done in the *machine.config* or in the *app.config* file. For example, add the following:  
-  
-    ```xml  
+2.  Specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name and whether IRI parsing rules should be applied. This can be done in the *machine.config* or in the *app.config* file. For example, add the following: ```xml  
     <configuration>  
       <uri>  
       <idn enabled="All" />  
@@ -1617,23 +1584,15 @@ If you used an escaped string to construct this instance (for example, `"http://
   
  There are three possible values for IDN depending on the DNS servers that are used:  
   
--   idn enabled = All  
+-   idn enabled = All  This value will convert any Unicode domain names to their Punycode equivalents (IDN names).  
   
-     This value will convert any Unicode domain names to their Punycode equivalents (IDN names).  
+-   idn enabled = AllExceptIntranet  This value will convert all external Unicode domain names to use the Punycode equivalents (IDN names). In this case to handle international names on the local Intranet, the DNS servers that are used for the Intranet should support Unicode names.  
   
--   idn enabled = AllExceptIntranet  
-  
-     This value will convert all external Unicode domain names to use the Punycode equivalents (IDN names). In this case to handle international names on the local Intranet, the DNS servers that are used for the Intranet should support Unicode names.  
-  
--   idn enabled = None  
-  
-     This value will not convert any Unicode domain names to use Punycode. This is the default value which is consistent with the .NET Framework 2.0 behaviour.  
+-   idn enabled = None  This value will not convert any Unicode domain names to use Punycode. This is the default value which is consistent with the .NET Framework 2.0 behaviour.  
   
  Enabling IRI parsing (iriParsing enabled = `true`) will do normalization and character checking according to the latest IRI rules in RFC 3987. The default value is `false` and will do normalization and character checking according to RFC 2396 and RFC 2732 (for IPv6 literals).  
   
- For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.  
-  
-   
+ For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance from a string. It illustrates the difference between the value returned from <xref:System.Uri.Host%2A>, which returns the host name or address specified in the URI, and the value returned from <xref:System.Uri.DnsSafeHost%2A>, which returns an address that is safe to use in DNS resolution.  
@@ -1687,9 +1646,9 @@ If you used an escaped string to construct this instance (for example, `"http://
         <Parameter Name="comparand" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="comparand">The <see cref="T:System.Uri" /> instance or a URI identifier to compare with the current instance.</param>
+        <param name="comparand">The URI or a URI identifier to compare with the current instance.</param>
         <summary>Compares two <see cref="T:System.Uri" /> instances for equality.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the two instances represent the same URI; otherwise, <see langword="false" />.</returns>
+        <returns><see langword="true" /> if the two instances represent the same URI; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1704,9 +1663,7 @@ If you used an escaped string to construct this instance (for example, `"http://
 >  In the .NET Framework versions 1.0 and 1.1, the <xref:System.Uri.Query%2A> is also ignored.  
   
 > [!NOTE]
->  The <xref:System.Uri.Equals%2A> method can be overridden in a derived class; use caution as a malicious entity could modify the method. You should not use this method to perform security checks unless you know that this instance came from a trusted source.  
-  
-   
+>  The <xref:System.Uri.Equals%2A> method can be overridden in a derived class; use caution as a malicious entity could modify the method. You should not use this method to perform security checks unless you know that this instance came from a trusted source.
   
 ## Examples  
  This example creates two <xref:System.Uri> instances from strings and compares them to determine whether they represent the same value. `address1` and `address2` are the same because the <xref:System.Uri.Fragment%2A> portion is ignored for this comparison. The outcome is written to the console.  
@@ -1805,7 +1762,7 @@ If you used an escaped string to construct this instance (for example, `"http://
       <Docs>
         <param name="stringToEscape">The string to escape.</param>
         <summary>Converts a string to its escaped representation.</summary>
-        <returns>A <see cref="T:System.String" /> that contains the escaped representation of <paramref name="stringToEscape" />.</returns>
+        <returns>The escaped representation of <paramref name="stringToEscape" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1928,7 +1885,7 @@ If you used an escaped string to construct this instance (for example, `"http://
       <Docs>
         <param name="stringToEscape">The string to escape.</param>
         <summary>Converts a URI string to its escaped representation.</summary>
-        <returns>A <see cref="T:System.String" /> that contains the escaped representation of <paramref name="stringToEscape" />.</returns>
+        <returns>The escaped representation of <paramref name="stringToEscape" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1988,16 +1945,14 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets the escaped URI fragment.</summary>
-        <value>A <see cref="T:System.String" /> that contains any URI fragment information.</value>
+        <value>URI fragment information.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  The <xref:System.Uri.Fragment%2A> property gets any text following a fragment marker (#) in the URI, including the fragment marker itself. Given the URI `http://www.contoso.com/index.htm#main`, the <xref:System.Uri.Fragment%2A> property would return #main.  
   
- The <xref:System.Uri.Fragment%2A> property is not considered in any <xref:System.Uri.Equals%2A> comparison.  
-  
-   
+ The <xref:System.Uri.Fragment%2A> property is not considered in any <xref:System.Uri.Equals%2A> comparison.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and writes the fragment information to the console.  
@@ -2047,14 +2002,12 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       <Docs>
         <param name="digit">The hexadecimal digit (0-9, a-f, A-F) to convert.</param>
         <summary>Gets the decimal value of a hexadecimal digit.</summary>
-        <returns>An <see cref="T:System.Int32" /> value that contains a number from 0 to 15 that corresponds to the specified hexadecimal digit.</returns>
+        <returns>A number from 0 to 15 that corresponds to the specified hexadecimal digit.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Uri.FromHex%2A> method converts a character representing a hexadecimal digit (0-9, a-f, A-F) to its decimal value (0 to 15). If `digit` is not a valid hexadecimal digit, an <xref:System.ArgumentException> exception is thrown.  
-  
-   
+ The <xref:System.Uri.FromHex%2A> method converts a character representing a hexadecimal digit (0-9, a-f, A-F) to its decimal value (0 to 15). If `digit` is not a valid hexadecimal digit, an <xref:System.ArgumentException> exception is thrown.
   
 ## Examples  
  The following example determines whether a character is a hexadecimal character and, if it is, writes the corresponding decimal value to the console.  
@@ -2108,9 +2061,9 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </Parameters>
       <Docs>
         <param name="components">A bitwise combination of the <see cref="T:System.UriComponents" /> values that specifies which parts of the current instance to return to the caller.</param>
-        <param name="format">One of the <see cref="T:System.UriFormat" /> values that controls how special characters are escaped.</param>
+        <param name="format">One of the enumeration values that controls how special characters are escaped.</param>
         <summary>Gets the specified components of the current instance using the specified escaping for special characters.</summary>
-        <returns>A <see cref="T:System.String" /> that contains the components.</returns>
+        <returns>The components of the current instance.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2124,7 +2077,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
  For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.  
   
 > [!NOTE]
->  If the <xref:System.Uri.GetComponents%2A> method is called with `format` set to <xref:System.UriFormat.Unescaped> , you cannot use the return value as an argument to a <xref:System.Uri.%23ctor%2A> constructor to create an equivalent <xref:System.Uri>.  
+> If the <xref:System.Uri.GetComponents%2A> method is called with `format` set to <xref:System.UriFormat.Unescaped> , you cannot use the return value as an argument to a <xref:System.Uri.%23ctor%2A> constructor to create an equivalent <xref:System.Uri>.  
   
  ]]></format>
         </remarks>
@@ -2170,7 +2123,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       <Parameters />
       <Docs>
         <summary>Gets the hash code for the URI.</summary>
-        <returns>An <see cref="T:System.Int32" /> containing the hash value generated for this URI.</returns>
+        <returns>The hash value generated for this URI.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2219,9 +2172,9 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="part" Type="System.UriPartial" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="part">One of the <see cref="T:System.UriPartial" /> values that specifies the end of the URI portion to return.</param>
+        <param name="part">One of the enumeration values that specifies the end of the URI portion to return.</param>
         <summary>Gets the specified portion of a <see cref="T:System.Uri" /> instance.</summary>
-        <returns>A <see cref="T:System.String" /> that contains the specified portion of the <see cref="T:System.Uri" /> instance.</returns>
+        <returns>The specified portion of the <see cref="T:System.Uri" /> instance.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2247,9 +2200,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
 |`mailto:user@contoso.com?subject=uri`|`mailto:`|`mailto:user@contoso.com`|`mailto:user@contoso.com?subject=uri`|`<none>`|  
 |`nntp://news.contoso.com/123456@contoso.com`|`nntp://`|`nntp://news.contoso.com`|`nntp://news.contoso.com/123456@contoso.com`|`nntp://news.contoso.com/123456@contoso.com`|  
 |`news:123456@contoso.com`|`news:`|`news:123456@contoso.com`|`news:123456@contoso.com`|`<none>`|  
-|`file://server/filename.ext`|`file://`|`file://server`|`file://server/filename.ext`|`file://server/filename.ext`|  
-  
-   
+|`file://server/filename.ext`|`file://`|`file://server`|`file://server/filename.ext`|`file://server/filename.ext`|
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and writes the path to the console.  
@@ -2298,8 +2249,8 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="streamingContext" Type="System.Runtime.Serialization.StreamingContext" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="serializationInfo">A <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object containing the information required to serialize the <see cref="T:System.Uri" />.</param>
-        <param name="streamingContext">A <see cref="T:System.Runtime.Serialization.StreamingContext" /> object containing the source and destination of the serialized stream associated with the <see cref="T:System.Uri" />.</param>
+        <param name="serializationInfo">The information required to serialize the <see cref="T:System.Uri" />.</param>
+        <param name="streamingContext">An object that contains the source and destination of the serialized stream associated with the <see cref="T:System.Uri" />.</param>
         <summary>Returns the data needed to serialize the current instance.</summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -2448,14 +2399,12 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets the host component of this instance.</summary>
-        <value>A <see cref="T:System.String" /> that contains the host name. This is usually the DNS host name or IP address of the server.</value>
+        <value>The host name. This is usually the DNS host name or IP address of the server.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Unlike the <xref:System.Uri.Authority%2A> property, this property value does not include the port number.  
-  
-   
+ Unlike the <xref:System.Uri.Authority%2A> property, this property value does not include the port number.
   
 ## Examples  
  The following example writes the host name (`www.contoso.com`) of the server to the console.  
@@ -2552,7 +2501,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The RFC 3490 compliant International Domain Name of the host, using Punycode as appropriate. This string, after being unescaped if necessary, is safe to use for DNS resolution.</summary>
+        <summary>Gets the RFC 3490 compliant International Domain Name of the host, using Punycode as appropriate. This string, after being unescaped if necessary, is safe to use for DNS resolution.</summary>
         <value>The hostname, formatted with Punycode according to the IDN standard.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2604,8 +2553,8 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets whether the <see cref="T:System.Uri" /> instance is absolute.</summary>
-        <value>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> instance is absolute; otherwise, <see langword="false" />.</value>
+        <summary>Gets a value that indicates whether the <see cref="T:System.Uri" /> instance is absolute.</summary>
+        <value><see langword="true" /> if the <see cref="T:System.Uri" /> instance is absolute; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2661,7 +2610,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </Parameters>
       <Docs>
         <param name="character">The <see cref="T:System.Char" /> to test.</param>
-        <summary>Gets whether a character is invalid in a file system name.</summary>
+        <summary>Indicates whether a character is invalid in a file system name.</summary>
         <returns>
           <see langword="true" /> if the specified character is invalid; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -2711,7 +2660,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="uri" Type="System.Uri" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="uri">The specified <see cref="T:System.Uri" /> instance to test.</param>
+        <param name="uri">The specified URI to test.</param>
         <summary>Determines whether the current <see cref="T:System.Uri" /> instance is a base of the specified <see cref="T:System.Uri" /> instance.</summary>
         <returns>
           <see langword="true" /> if the current <see cref="T:System.Uri" /> instance is a base of <paramref name="uri" />; otherwise, <see langword="false" />.</returns>
@@ -2734,9 +2683,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
 |http://host/path/path#Fragment|no|  
 |http://host/path/path2/|no|  
 ://host/path/path2/MoreDir|no|  
-|http://host/path/File|no|  
-  
-   
+|http://host/path/File|no|
   
 ## Examples  
  This example creates a <xref:System.Uri> instance that represents a base <xref:System.Uri> instance. It then creates a second <xref:System.Uri> instance from a string. It calls <xref:System.Uri.IsBaseOf%2A> to determine whether the base instance is the base of the second instance. The outcome is written to the console.  
@@ -2786,8 +2733,8 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets whether the port value of the URI is the default for this scheme.</summary>
-        <value>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the value in the <see cref="P:System.Uri.Port" /> property is the default port for this scheme; otherwise, <see langword="false" />.</value>
+        <summary>Gets a value that indicates whether the port value of the URI is the default for this scheme.</summary>
+        <value><see langword="true" /> if the value in the <see cref="P:System.Uri.Port" /> property is the default port for this scheme; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2847,9 +2794,9 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="character" Type="System.Char" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="character">The <see cref="T:System.Char" /> to test.</param>
-        <summary>Gets whether the specified character should be escaped.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the specified character should be escaped; otherwise, <see langword="false" />.</returns>
+        <param name="character">The character to test.</param>
+        <summary>Determines whether the specified character should be escaped.</summary>
+        <returns><see langword="true" /> if the specified character should be escaped; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -2888,15 +2835,13 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value indicating whether the specified <see cref="T:System.Uri" /> is a file URI.</summary>
-        <value>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> is a file URI; otherwise, <see langword="false" />.</value>
+        <summary>Gets a value that indicates whether the specified <see cref="T:System.Uri" /> is a file URI.</summary>
+        <value><see langword="true" /> if the <see cref="T:System.Uri" /> is a file URI; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Uri.IsFile%2A> property is `true` when the <xref:System.Uri.Scheme%2A> property equals <xref:System.Uri.UriSchemeFile>.  
-  
-   
+ The <xref:System.Uri.IsFile%2A> property is `true` when the <xref:System.Uri.Scheme%2A> property equals <xref:System.Uri.UriSchemeFile>.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and determines whether it is a file URI.  
@@ -2952,9 +2897,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Hexadecimal digits are the digits 0 to 9 and the letters A-F or a-f.  
-  
-   
+ Hexadecimal digits are the digits 0 to 9 and the letters A-F or a-f.
   
 ## Examples  
  The following example determines whether a character is a hexadecimal character and, if it is, writes the corresponding decimal value to the console.  
@@ -3005,14 +2948,12 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <param name="pattern">The string to check.</param>
         <param name="index">The location in <paramref name="pattern" /> to check for hexadecimal encoding.</param>
         <summary>Determines whether a character in a string is hexadecimal encoded.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if <paramref name="pattern" /> is hexadecimal encoded at the specified location; otherwise, <see langword="false" />.</returns>
+        <returns><see langword="true" /> if <paramref name="pattern" /> is hexadecimal encoded at the specified location; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Uri.IsHexEncoding%2A> method checks for hexadecimal encoding that follows the pattern "%hexhex" in a string, where "hex" is a digit from 0 to 9 or a letter from A-F (case-insensitive).  
-  
-   
+ The <xref:System.Uri.IsHexEncoding%2A> method checks for hexadecimal encoding that follows the pattern "%hexhex" in a string, where "hex" is a digit from 0 to 9 or a letter from A-F (case-insensitive).
   
 ## Examples  
  The following code example determines whether a character is hexadecimal encoded and, if so, writes the equivalent character to the console.  
@@ -3060,15 +3001,13 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets whether the specified <see cref="T:System.Uri" /> references the local host.</summary>
-        <value>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if this <see cref="T:System.Uri" /> references the local host; otherwise, <see langword="false" />.</value>
+        <summary>Gets a value that indicates whether the specified <see cref="T:System.Uri" /> references the local host.</summary>
+        <value><see langword="true" /> if this <see cref="T:System.Uri" /> references the local host; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- <xref:System.Uri.IsLoopback%2A> returns `true` if the URI specified when this instance was created was 127.0.0.1, loopback, or localhost, or if the URI did not specify host information (for example, file:///c:Dir/file.txt). All other URIs return `false`.  
-  
-   
+ <xref:System.Uri.IsLoopback%2A> returns `true` if the URI specified when this instance was created was 127.0.0.1, loopback, or localhost, or if the URI did not specify host information (for example, file:///c:Dir/file.txt). All other URIs return `false`.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and determines whether it references a local host.  
@@ -3126,9 +3065,9 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="character" Type="System.Char" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="character">The <see cref="T:System.Char" /> to test.</param>
-        <summary>Gets whether the specified character is a reserved character.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the specified character is a reserved character otherwise, <see langword="false" />.</returns>
+        <param name="character">The character to test.</param>
+        <summary>Determines whether the specified character is a reserved character.</summary>
+        <returns><see langword="true" /> if the specified character is a reserved character otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3167,15 +3106,13 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets whether the specified <see cref="T:System.Uri" /> is a universal naming convention (UNC) path.</summary>
-        <value>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> is a UNC path; otherwise, <see langword="false" />.</value>
+        <summary>Gets a value that indicates whether the specified <see cref="T:System.Uri" /> is a universal naming convention (UNC) path.</summary>
+        <value><see langword="true" /> if the <see cref="T:System.Uri" /> is a UNC path; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Uri.IsUnc%2A> property is `true` if the specified <xref:System.Uri> instance is a UNC path (such as \\\server\folder or file://server/folder). This property always returns `true` if the URI has the file:// scheme and specifies a host component.  
-  
-   
+ The <xref:System.Uri.IsUnc%2A> property is `true` if the specified <xref:System.Uri> instance is a UNC path (such as \\\server\folder or file://server/folder). This property always returns `true` if the URI has the file:// scheme and specifies a host component.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and determines whether it is a UNC path.  
@@ -3224,7 +3161,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Indicates whether the string used to construct this <see cref="T:System.Uri" /> was well-formed and is not required to be further escaped.</summary>
+        <summary>Indicates whether the string used to construct this <see cref="T:System.Uri" /> was well-formed and does not require further escaping.</summary>
         <returns>
           <see langword="true" /> if the string was well-formed; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -3361,16 +3298,14 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets a local operating-system representation of a file name.</summary>
-        <value>A <see cref="T:System.String" /> that contains the local operating-system representation of a file name.</value>
+        <value>The local operating-system representation of a file name.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  The value returned by this property is unescaped. If the path is recognized as a Windows file path, all forward slashes (/) are replaced by backward slashes (\\).  
   
- For the URI `file://computer/file.ext`, the absolute path is `/file.ext` and the local path is `\\computer\file.ext`.  
-  
-   
+ For the URI `file://computer/file.ext`, the absolute path is `/file.ext` and the local path is `\\computer\file.ext`.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and writes the local path to the console.  
@@ -3446,9 +3381,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
 |`http://www.contoso.com:8000/`|`http://www.contoso.com/test/test.htm`|`http://www.contoso.com/test/test.htm`|  
 |`http://username@www.contoso.com/`|`http://www.contoso.com/test1/test1.txt`|`test1/test1.txt`|  
   
- User information, if present in the URI, is ignored.  
-  
-   
+ User information, if present in the URI, is ignored.
   
 ## Examples  
  The following example creates 2 <xref:System.Uri> instances. The difference in the path information is written to the console.  
@@ -3519,9 +3452,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
 |`http://www.contoso.com:8000/`|`http://www.contoso.com/test/test.htm`|`http://www.contoso.com/test/test.htm`|  
 |`http://username@www.contoso.com/`|`http://www.contoso.com/test1/test1.txt`|`test1/test1.txt`|  
   
- User information, if present in the URI, is ignored.  
-  
-   
+ User information, if present in the URI, is ignored.
   
 ## Examples  
  The following example creates 2 <xref:System.Uri> instances. The difference in the path information is written to the console.  
@@ -3575,17 +3506,15 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="uri2" Type="System.Uri" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="uri1">A <see cref="T:System.Uri" /> instance to compare with <paramref name="uri2" />.</param>
-        <param name="uri2">A <see cref="T:System.Uri" /> instance to compare with <paramref name="uri1" />.</param>
+        <param name="uri1">A URI to compare with <paramref name="uri2" />.</param>
+        <param name="uri2">A URI to compare with <paramref name="uri1" />.</param>
         <summary>Determines whether two <see cref="T:System.Uri" /> instances have the same value.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> instances are equivalent; otherwise, <see langword="false" />.</returns>
+        <returns><see langword="true" /> if the <see cref="T:System.Uri" /> instances are equivalent; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This overload uses the <xref:System.Uri.Equals%2A> method to determine whether the two <xref:System.Uri> instances are equivalent. <xref:System.Uri.UserInfo%2A> and <xref:System.Uri.Fragment%2A> content is ignored when making this comparison.  
-  
-   
+ This overload uses the <xref:System.Uri.Equals%2A> method to determine whether the two <xref:System.Uri> instances are equivalent. <xref:System.Uri.UserInfo%2A> and <xref:System.Uri.Fragment%2A> content is ignored when making this comparison.
   
 ## Examples  
  This example creates three <xref:System.Uri> instances from strings and compares them to determine whether they represent the same value. `Address1` and `Address2` are the same because the <xref:System.Uri.Fragment%2A> portion is ignored for this comparison. The outcome is written to the console.  
@@ -3636,17 +3565,15 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="uri2" Type="System.Uri" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="uri1">A <see cref="T:System.Uri" /> instance to compare with <paramref name="uri2" />.</param>
-        <param name="uri2">A <see cref="T:System.Uri" /> instance to compare with <paramref name="uri1" />.</param>
+        <param name="uri1">A URI to compare with <paramref name="uri2" />.</param>
+        <param name="uri2">A URI to compare with <paramref name="uri1" />.</param>
         <summary>Determines whether two <see cref="T:System.Uri" /> instances do not have the same value.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the two <see cref="T:System.Uri" /> instances are not equal; otherwise, <see langword="false" />. If either parameter is <see langword="null" />, this method returns <see langword="true" />.</returns>
+        <returns><see langword="true" /> if the two <see cref="T:System.Uri" /> instances are not equal; otherwise, <see langword="false" />. If either parameter is <see langword="null" />, this method returns <see langword="true" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This overload uses the <xref:System.Uri.Equals%2A> method to determine whether the two <xref:System.Uri> instances are not equivalent. <xref:System.Uri.UserInfo%2A> and <xref:System.Uri.Fragment%2A> content is ignored when making this comparison.  
-  
-   
+ This overload uses the <xref:System.Uri.Equals%2A> method to determine whether the two <xref:System.Uri> instances are not equivalent. <xref:System.Uri.UserInfo%2A> and <xref:System.Uri.Fragment%2A> content is ignored when making this comparison.
   
 ## Examples  
  This example creates three <xref:System.Uri> instances from strings and compares them to determine whether they represent the same value. `Address2` and `Address3` are not the same because `Address3` contains a <xref:System.Uri.Query%2A> that is not found in `Address2`. The outcome is written to the console.  
@@ -3694,7 +3621,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets the original URI string that was passed to the <see cref="T:System.Uri" /> constructor.</summary>
-        <value>A <see cref="T:System.String" /> containing the exact URI specified when this instance was constructed; otherwise, <see cref="F:System.String.Empty" />.</value>
+        <value>The exact URI specified when this instance was constructed; otherwise, <see cref="F:System.String.Empty" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3707,9 +3634,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
   
  For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.  
   
- When a <xref:System.Uri> object is serialized, the <xref:System.Uri.OriginalString%2A> is not preserved. The serialization process uses the fully escaped and canonicalized <xref:System.Uri.AbsoluteUri%2A> property when serializing. For a <xref:System.Uri> that contains an IPv6 address, the IPv6 address and the scope ID are included in the serialized <xref:System.Uri> object.  
-  
-   
+ When a <xref:System.Uri> object is serialized, the <xref:System.Uri.OriginalString%2A> is not preserved. The serialization process uses the fully escaped and canonicalized <xref:System.Uri.AbsoluteUri%2A> property when serializing. For a <xref:System.Uri> that contains an IPv6 address, the IPv6 address and the scope ID are included in the serialized <xref:System.Uri> object.
   
 ## Examples  
  The following example creates a new <xref:System.Uri> instance from a string. It illustrates the difference between the value returned from <xref:System.Uri.OriginalString%2A>, which returns the string that was passed to the constructor, and from a call to <xref:System.Uri.ToString%2A>, which returns the canonical form of the string.  
@@ -3805,7 +3730,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets the <see cref="P:System.Uri.AbsolutePath" /> and <see cref="P:System.Uri.Query" /> properties separated by a question mark (?).</summary>
-        <value>A <see cref="T:System.String" /> that contains the <see cref="P:System.Uri.AbsolutePath" /> and <see cref="P:System.Uri.Query" /> properties separated by a question mark (?).</value>
+        <value>The <see cref="P:System.Uri.AbsolutePath" /> and <see cref="P:System.Uri.Query" /> properties separated by a question mark (?).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3814,9 +3739,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
   
  The <xref:System.Uri.PathAndQuery%2A> property is escaped according to RFC 2396 by default. If International Resource Identifiers (IRIs) or Internationalized Domain Name (IDN) parsing is enabled, the <xref:System.Uri.PathAndQuery%2A> property is escaped according to RFC 3986 and RFC 3987.  
   
- For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.  
-  
-   
+ For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.
   
 ## Examples  
  The following example writes the URI path (/catalog/shownew.htm) and query (date= today) information to the console.  
@@ -3866,14 +3789,12 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets the port number of this URI.</summary>
-        <value>An <see cref="T:System.Int32" /> value that contains the port number for this URI.</value>
+        <value>The port number for this URI.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The port number defines the protocol port used for contacting the server referenced in the URI. If a port is not specified as part of the URI, the <xref:System.Uri.Port%2A> property returns the default value for the protocol. If there is no default port number, this property returns -1.  
-  
-   
+ The port number defines the protocol port used for contacting the server referenced in the URI. If a port is not specified as part of the URI, the <xref:System.Uri.Port%2A> property returns the default value for the protocol. If there is no default port number, this property returns -1.
   
 ## Examples  
  The following example writes the URI port number to the console. In this case, the value is the default port number for HTTP, port 80.  
@@ -3923,7 +3844,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets any query information included in the specified URI.</summary>
-        <value>A <see cref="T:System.String" /> that contains any query information included in the specified URI.</value>
+        <value>Any query information included in the specified URI.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3932,9 +3853,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
   
  The query information is escaped according to RFC 2396 by default. If International Resource Identifiers (IRIs) or Internationalized Domain Name (IDN) parsing is enabled, the query information is escaped according to RFC 3986 and RFC 3987.  
   
- For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.  
-  
-   
+ For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.
   
 ## Examples  
  The following example writes the query ?date= today to the console.  
@@ -3984,7 +3903,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets the scheme name for this URI.</summary>
-        <value>A <see cref="T:System.String" /> that contains the scheme for this URI, converted to lowercase.</value>
+        <value>The scheme for this URI, converted to lowercase.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -4007,9 +3926,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
 |news|The resource is accessed through the NNTP protocol.|  
 |nntp|The resource is accessed through the NNTP protocol.|  
 |telnet|The resource is accessed through the TELNET protocol.|  
-|uuid|The resource is accessed through a unique UUID endpoint name for communicating with a service.|  
-  
-   
+|uuid|The resource is accessed through a unique UUID endpoint name for communicating with a service.|
   
 ## Examples  
  The following example writes the scheme name (http) to the console for the `http://www.contoso.com/` URI.  
@@ -4105,7 +4022,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets an array containing the path segments that make up the specified URI.</summary>
-        <value>A <see cref="T:System.String" /> array that contains the path segments that make up the specified URI.</value>
+        <value>The path segments that make up the specified URI.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -4140,9 +4057,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
  - Sections/
  - Section1.htm  
   
- Note that because the absolute path starts with a '/', the first segment contains it and nothing else.  
-  
-   
+ Note that because the absolute path starts with a '/', the first segment contains it and nothing else.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance with 3 segments and displays the segments on the screen.  
@@ -4200,8 +4115,8 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="streamingContext" Type="System.Runtime.Serialization.StreamingContext" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="serializationInfo">A <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object containing the information required to serialize the <see cref="T:System.Uri" />.</param>
-        <param name="streamingContext">A <see cref="T:System.Runtime.Serialization.StreamingContext" /> object containing the source and destination of the serialized stream associated with the <see cref="T:System.Uri" />.</param>
+        <param name="serializationInfo">The information required to serialize the <see cref="T:System.Uri" />.</param>
+        <param name="streamingContext">An object containing the source and destination of the serialized stream associated with the <see cref="T:System.Uri" />.</param>
         <summary>Returns the data needed to serialize the current instance.</summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -4243,7 +4158,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       <Parameters />
       <Docs>
         <summary>Gets a canonical string representation for the specified <see cref="T:System.Uri" /> instance.</summary>
-        <returns>A <see cref="T:System.String" /> instance that contains the unescaped canonical representation of the <see cref="T:System.Uri" /> instance. All characters are unescaped except #, ?, and %.</returns>
+        <returns>The unescaped canonical representation of the <see cref="T:System.Uri" /> instance. All characters are unescaped except #, ?, and %.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -4251,9 +4166,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
  The string returned by this method does not contain port information when the port is the default port for the scheme.  
   
 > [!NOTE]
->  The string returned by the <xref:System.Uri.ToString%2A> method may contain control characters, which can corrupt the state of a console application. You can use the <xref:System.Uri.GetComponents%2A> method with the <xref:System.UriFormat.SafeUnescaped?displayProperty=nameWithType> format to remove control characters from the returned string.  
-  
-   
+> The string returned by the <xref:System.Uri.ToString%2A> method may contain control characters, which can corrupt the state of a console application. You can use the <xref:System.Uri.GetComponents%2A> method with the <xref:System.UriFormat.SafeUnescaped?displayProperty=nameWithType> format to remove control characters from the returned string.
   
 ## Examples  
  The following example creates a new <xref:System.Uri> instance from a string. It illustrates the difference between the value returned from <xref:System.Uri.OriginalString%2A>, which returns the string that was passed to the constructor, and from a call to <xref:System.Uri.ToString%2A>, which returns the canonical form of the string.  
@@ -4318,11 +4231,11 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="result" Type="System.Uri" RefType="out" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="uriString">The <see cref="T:System.String" /> representing the <see cref="T:System.Uri" />.</param>
+        <param name="uriString">The string representation of the <see cref="T:System.Uri" />.</param>
         <param name="uriKind">The type of the Uri.</param>
         <param name="result">When this method returns, contains the constructed <see cref="T:System.Uri" />.</param>
         <summary>Creates a new <see cref="T:System.Uri" /> using the specified <see cref="T:System.String" /> instance and a <see cref="T:System.UriKind" />.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> was successfully created; otherwise, <see langword="false" />.</returns>
+        <returns><see langword="true" /> if the <see cref="T:System.Uri" /> was successfully created; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -4372,11 +4285,11 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="result" Type="System.Uri" RefType="out" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="baseUri">The base <see cref="T:System.Uri" />.</param>
-        <param name="relativeUri">The relative <see cref="T:System.Uri" />, represented as a <see cref="T:System.String" />, to add to the base <see cref="T:System.Uri" />.</param>
+        <param name="baseUri">The base URI.</param>
+        <param name="relativeUri">The string representation of the relative URI to add to the base <see cref="T:System.Uri" />.</param>
         <param name="result">When this method returns, contains a <see cref="T:System.Uri" /> constructed from <paramref name="baseUri" /> and <paramref name="relativeUri" />. This parameter is passed uninitialized.</param>
         <summary>Creates a new <see cref="T:System.Uri" /> using the specified base and relative <see cref="T:System.String" /> instances.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> was successfully created; otherwise, <see langword="false" />.</returns>
+        <returns><see langword="true" /> if the <see cref="T:System.Uri" /> was successfully created; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -4426,11 +4339,11 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="result" Type="System.Uri" RefType="out" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="baseUri">The base <see cref="T:System.Uri" />.</param>
-        <param name="relativeUri">The relative <see cref="T:System.Uri" /> to add to the base <see cref="T:System.Uri" />.</param>
+        <param name="baseUri">The base URI.</param>
+        <param name="relativeUri">The relative URI to add to the base <see cref="T:System.Uri" />.</param>
         <param name="result">When this method returns, contains a <see cref="T:System.Uri" /> constructed from <paramref name="baseUri" /> and <paramref name="relativeUri" />. This parameter is passed uninitialized.</param>
         <summary>Creates a new <see cref="T:System.Uri" /> using the specified base and relative <see cref="T:System.Uri" /> instances.</summary>
-        <returns>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <see cref="T:System.Uri" /> was successfully created; otherwise, <see langword="false" />.</returns>
+        <returns><see langword="true" /> if the <see cref="T:System.Uri" /> was successfully created; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -4489,9 +4402,9 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <Parameter Name="path" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="path">The <see cref="T:System.String" /> to convert.</param>
+        <param name="path">The string to convert.</param>
         <summary>Converts the specified string by replacing any escape sequences with their unescaped representation.</summary>
-        <returns>A <see cref="T:System.String" /> that contains the unescaped value of the <paramref name="path" /> parameter.</returns>
+        <returns>The unescaped value of the <paramref name="path" /> parameter.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -4534,16 +4447,14 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       <Docs>
         <param name="stringToUnescape">The string to unescape.</param>
         <summary>Converts a string to its unescaped representation.</summary>
-        <returns>A <see cref="T:System.String" /> that contains the unescaped representation of <paramref name="stringToUnescape" />.</returns>
+        <returns>The unescaped representation of <paramref name="stringToUnescape" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  You should use this method with care. Unescaping a string that has been previously unescaped can lead to ambiguities and errors.  
   
- Many Web browsers escape spaces inside of URIs into plus ("+") characters; however, the UnescapeDataString method does not convert plus characters into spaces because this behavior is not standard across all URI schemes.  
-  
-   
+ Many Web browsers escape spaces inside of URIs into plus ("+") characters; however, the UnescapeDataString method does not convert plus characters into spaces because this behavior is not standard across all URI schemes.
   
 ## Examples  
  The following code example unescapes a URI, and then converts any plus characters ("+") into spaces.  
@@ -4594,9 +4505,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- In .NET Framework version 1.1, a "`file:///path`" URI was translated to "`file:/path`". This has been corrected for version 2.0.  
-  
-   
+ In .NET Framework version 1.1, a "`file:///path`" URI was translated to "`file:/path`". This has been corrected for version 2.0.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and determines whether the scheme is <xref:System.Uri.UriSchemeFile>.  
@@ -4989,9 +4898,7 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The NNTP <xref:System.Uri> parsing errors in .NET Framework version 1.1 have been corrected.  
-  
-   
+ The NNTP <xref:System.Uri> parsing errors in .NET Framework version 1.1 have been corrected.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and determines whether the scheme is <xref:System.Uri.UriSchemeNntp>.  
@@ -5039,15 +4946,13 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Indicates that the URI string was completely escaped before the <see cref="T:System.Uri" /> instance was created.</summary>
-        <value>A <see cref="T:System.Boolean" /> value that is <see langword="true" /> if the <paramref name="dontEscape" /> parameter was set to <see langword="true" /> when the <see cref="T:System.Uri" /> instance was created; otherwise, <see langword="false" />.</value>
+        <summary>Gets a value that indicates whether the URI string was completely escaped before the <see cref="T:System.Uri" /> instance was created.</summary>
+        <value><see langword="true" /> if the <paramref name="dontEscape" /> parameter was set to <see langword="true" /> when the <see cref="T:System.Uri" /> instance was created; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Uri.UserEscaped%2A> property is set to `true` to indicate that the string used to create the <xref:System.Uri> instance was completely escaped before it was passed to the constructor; that is, the `dontEscape` parameter of the constructor call was set to `true`.  
-  
-   
+ The <xref:System.Uri.UserEscaped%2A> property is set to `true` to indicate that the string used to create the <xref:System.Uri> instance was completely escaped before it was passed to the constructor; that is, the `dontEscape` parameter of the constructor call was set to `true`.
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and determines whether it was fully escaped when it was created.  
@@ -5096,14 +5001,12 @@ The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exce
       </ReturnValue>
       <Docs>
         <summary>Gets the user name, password, or other user-specific information associated with the specified URI.</summary>
-        <value>A <see cref="T:System.String" /> that contains the user information associated with the URI. The returned value does not include the '@' character reserved for delimiting the user information part of the URI.</value>
+        <value>The user information associated with the URI. The returned value does not include the '@' character reserved for delimiting the user information part of the URI.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The value returned by this property is usually in the format "userName:password".  
-  
-   
+ The value returned by this property is usually in the format "userName:password".
   
 ## Examples  
  The following example creates a <xref:System.Uri> instance and writes the user information to the console.  
