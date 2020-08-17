@@ -11,9 +11,9 @@ public class MyAttribute : Attribute
     {
         myName = name;
     }
-    public string Name 
+    public string Name
     {
-        get 
+        get
         {
             return myName;
         }
@@ -29,7 +29,7 @@ public class MyDerivedAttribute : MyAttribute
 
 // Define a class with a method that has three parameters. Apply
 // MyAttribute to one parameter, MyDerivedAttribute to another, and
-// no attributes to the third. 
+// no attributes to the third.
 public class MyClass1
 {
     public void MyMethod(
@@ -43,7 +43,7 @@ public class MyClass1
     }
 }
 
-public class MemberInfo_GetCustomAttributes 
+public class MemberInfo_GetCustomAttributes
 {
     public static void Main()
     {
@@ -65,12 +65,12 @@ public class MemberInfo_GetCustomAttributes
                 {
                     if (pi.IsDefined(typeof(MyAttribute), false))
                     {
-                        Console.WriteLine("Parameter {0}, name = {1}, type = {2}", 
+                        Console.WriteLine("Parameter {0}, name = {1}, type = {2}",
                             pi.Position, pi.Name, pi.ParameterType);
                     }
                 }
             }
-        }  
+        }
     }
 }
 

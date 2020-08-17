@@ -18,7 +18,7 @@ public class FileLength
             Console.WriteLine("The size of {0} is {1} bytes.", f.Name, f.Length);
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //The directory c:\ contains the following files:

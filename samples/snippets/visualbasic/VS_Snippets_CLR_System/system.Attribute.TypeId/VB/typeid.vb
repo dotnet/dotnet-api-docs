@@ -121,7 +121,7 @@ Namespace NDP_UE_VB
 End Namespace ' NDP_UE_VB
 
 ' This example of the Attribute.TypeId property
-' generates the following output.
+' generates output similar to the following:
 ' 
 ' Create instances from a derived Attribute class that implements TypeId,
 ' and then display the attributes and corresponding TypeId values:

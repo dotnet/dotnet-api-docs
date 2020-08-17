@@ -12,8 +12,8 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-            
-public class App 
+
+public class App
 {
 
 	private static PerformanceCounter PC;
@@ -35,7 +35,7 @@ public class App
 	private static bool SetupCategory()
 	{
 		
-		if ( !PerformanceCounterCategory.Exists("AverageTimer32SampleCategory") ) 
+		if ( !PerformanceCounterCategory.Exists("AverageTimer32SampleCategory") )
 		{
 
 			CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
@@ -45,7 +45,7 @@ public class App
 			averageTimer32.CounterType = PerformanceCounterType.AverageTimer32;
 			averageTimer32.CounterName = "AverageTimer32Sample";
 			CCDC.Add(averageTimer32);
-	        
+	
 	        // Add the base counter.
 			CounterCreationData averageTimer32Base = new CounterCreationData();
 			averageTimer32Base.CounterType = PerformanceCounterType.AverageBase;
@@ -53,8 +53,8 @@ public class App
 			CCDC.Add(averageTimer32Base);
 
 			// Create the category.
-			PerformanceCounterCategory.Create("AverageTimer32SampleCategory", 
-				"Demonstrates usage of the AverageTimer32 performance counter type", 
+			PerformanceCounterCategory.Create("AverageTimer32SampleCategory",
+				"Demonstrates usage of the AverageTimer32 performance counter type",
 				CCDC);
 				
 			return(true);
@@ -69,12 +69,12 @@ public class App
 	private static void CreateCounters()
 	{
 		// Create the counters.
-		PC = new PerformanceCounter("AverageTimer32SampleCategory", 
-			"AverageTimer32Sample", 
+		PC = new PerformanceCounter("AverageTimer32SampleCategory",
+			"AverageTimer32Sample",
 			false);
 			
-		BPC = new PerformanceCounter("AverageTimer32SampleCategory", 
-			"AverageTimer32SampleBase", 
+		BPC = new PerformanceCounter("AverageTimer32SampleCategory",
+			"AverageTimer32SampleBase",
 			false);
 			
 		PC.RawValue = 0;
@@ -90,7 +90,7 @@ public class App
 
 	    // Loop for the samples.
 	    for (int i = 0; i < 10; i++) {
-	        
+	
 			QueryPerformanceCounter(out perfTime);
 			PC.RawValue = perfTime;
 			
@@ -102,7 +102,7 @@ public class App
 	    }
 
     }
-    
+
 	private static void CalculateResults(ArrayList samplesList)
 	{
 		for(int i = 0; i < (samplesList.Count - 1); i++)
@@ -112,12 +112,12 @@ public class App
 			OutputSample( (CounterSample)samplesList[i+1] );
 
 			// Use .NET to calculate the counter value.
-			Console.WriteLine(".NET computed counter value = " + 
+			Console.WriteLine(".NET computed counter value = " +
 				CounterSample.Calculate((CounterSample)samplesList[i],
 				(CounterSample)samplesList[i+1]) );
 
 			// Calculate the counter value manually.
-			Console.WriteLine("My computed counter value = " + 
+			Console.WriteLine("My computed counter value = " +
 				MyComputeCounterValue((CounterSample)samplesList[i],
 				(CounterSample)samplesList[i+1]) );
 
@@ -128,26 +128,26 @@ public class App
 
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//+++++++
     // PERF_AVERAGE_TIMER
-    //  Description - This counter type measures the time it takes, on 
+    //  Description - This counter type measures the time it takes, on
     //     average, to complete a process or operation. Counters of this
-    //     type display a ratio of the total elapsed time of the sample 
+    //     type display a ratio of the total elapsed time of the sample
     //     interval to the number of processes or operations completed
-    //     during that time. This counter type measures time in ticks 
+    //     during that time. This counter type measures time in ticks
     //     of the system clock. The F variable represents the number of
     //     ticks per second. The value of F is factored into the equation
     //     so that the result can be displayed in seconds.
-    //    
+    //
     //  Generic type - Average
-    //    
+    //
     //  Formula - ((N1 - N0) / F) / (D1 - D0), where the numerator (N)
-    //     represents the number of ticks counted during the last 
-    //     sample interval, F represents the frequency of the ticks, 
+    //     represents the number of ticks counted during the last
+    //     sample interval, F represents the frequency of the ticks,
     //     and the denominator (D) represents the number of operations
     //     completed during the last sample interval.
-    //    
+    //
     //  Average - ((Nx - N0) / F) / (Dx - D0)
-    //    
-    //  Example - PhysicalDisk\ Avg. Disk sec/Transfer 
+    //
+    //  Example - PhysicalDisk\ Avg. Disk sec/Transfer
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//+++++++
     private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
 	{
@@ -244,8 +244,8 @@ public class App
             CCDC.Add(averageTimer32Base);
 
             // Create the category.
-            PerformanceCounterCategory.Create(categoryName, 
-                "Demonstrates usage of the AverageTimer32 performance counter type", 
+            PerformanceCounterCategory.Create(categoryName,
+                "Demonstrates usage of the AverageTimer32 performance counter type",
                 PerformanceCounterCategoryType.SingleInstance, CCDC);
 
             Console.WriteLine("Category created - " + categoryName);
@@ -316,26 +316,26 @@ public class App
 
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//+++++++
     // PERF_AVERAGE_TIMER
-    //  Description - This counter type measures the time it takes, on 
+    //  Description - This counter type measures the time it takes, on
     //     average, to complete a process or operation. Counters of this
-    //     type display a ratio of the total elapsed time of the sample 
+    //     type display a ratio of the total elapsed time of the sample
     //     interval to the number of processes or operations completed
-    //     during that time. This counter type measures time in ticks 
+    //     during that time. This counter type measures time in ticks
     //     of the system clock. The F variable represents the number of
     //     ticks per second. The value of F is factored into the equation
     //     so that the result can be displayed in seconds.
-    //    
+    //
     //  Generic type - Average
-    //    
+    //
     //  Formula - ((N1 - N0) / F) / (D1 - D0), where the numerator (N)
-    //     represents the number of ticks counted during the last 
-    //     sample interval, F represents the frequency of the ticks, 
+    //     represents the number of ticks counted during the last
+    //     sample interval, F represents the frequency of the ticks,
     //     and the denominator (D) represents the number of operations
     //     completed during the last sample interval.
-    //    
+    //
     //  Average - ((Nx - N0) / F) / (Dx - D0)
-    //    
-    //  Example - PhysicalDisk\ Avg. Disk sec/Transfer 
+    //
+    //  Example - PhysicalDisk\ Avg. Disk sec/Transfer
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//+++++++
     private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
     {

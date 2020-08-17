@@ -8,7 +8,7 @@ public class Example
    {
       Complex value = new Complex(12, -6);
       for (int power = -1; power <= 10; power++)
-         Console.WriteLine("{0} ^ {1,2} = {2:N2}", value, power, 
+         Console.WriteLine("{0} ^ {1,2} = {2:N2}", value, power,
                            Complex.Pow(value, power));
    }
 }

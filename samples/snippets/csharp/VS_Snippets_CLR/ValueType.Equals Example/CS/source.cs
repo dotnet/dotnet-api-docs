@@ -3,7 +3,7 @@
 namespace Snippets
 {
 	//<snippet1>
-	public struct Complex 
+	public struct Complex
 	{
 		public double m_Re;
 		public double m_Im;

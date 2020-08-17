@@ -7,13 +7,13 @@
 // System.Web.Services.Discovery.DiscoveryClientResultCollection.Contains
 // System.Web.Services.Discovery.DiscoveryClientResultCollection.Item
 /*
-The following example demonstrates 'ReferenceTypeName' ,'Url','Filename' properties and the 
-constructor of 'DiscoveryClientResult' class  and 'Remove', 'Add' 'Contains' methods and 
+The following example demonstrates 'ReferenceTypeName' ,'Url','Filename' properties and the
+constructor of 'DiscoveryClientResult' class  and 'Remove', 'Add' 'Contains' methods and
 'Item' property of 'DiscoveryClientResultCollection' class.
-A 'DiscoveryClientResultCollection' object is obtained by reading a '.discomap' file 
+A 'DiscoveryClientResultCollection' object is obtained by reading a '.discomap' file
 which contains the 'DiscoveryClientResult' objects, representing the details of
-discovery references. An element from the collection is removed and programmatically 
-added to it to show the usage of methods of 'DiscoveryClientResultCollection' class . 
+discovery references. An element from the collection is removed and programmatically
+added to it to show the usage of methods of 'DiscoveryClientResultCollection' class .
 The contents of this collection are displayed..
 */
 
@@ -26,11 +26,11 @@ using System.Web.Services.Discovery;
       {
          try
          {
-            DiscoveryClientProtocol myDiscoveryClientProtocol = 
+            DiscoveryClientProtocol myDiscoveryClientProtocol =
                new DiscoveryClientProtocol();
 
             // Get the collection of DiscoveryClientResult objects.
-            DiscoveryClientResultCollection myDiscoveryClientResultCollection = 
+            DiscoveryClientResultCollection myDiscoveryClientResultCollection =
                 myDiscoveryClientProtocol.ReadAll("results.discomap");
 
             Console.WriteLine("The number of DiscoveryClientResult objects: "
@@ -54,13 +54,13 @@ using System.Web.Services.Discovery;
             DiscoveryClientResult myDiscoveryClientResult =
                 new DiscoveryClientResult();
 
-            // Set the type of reference in the discovery document as 
+            // Set the type of reference in the discovery document as
             // DiscoveryDocumentReference.
-            myDiscoveryClientResult.ReferenceTypeName = 
+            myDiscoveryClientResult.ReferenceTypeName =
                 "System.Web.Services.Discovery.DiscoveryDocumentReference";
 
             // Set the URL for the reference.
-            myDiscoveryClientResult.Url = 
+            myDiscoveryClientResult.Url =
                 "http://localhost/Discovery/Service1_cs.asmx?disco";
 
             // Set the name of the file in which the reference is saved.
@@ -88,7 +88,7 @@ using System.Web.Services.Discovery;
 // <Snippet8>
             for(int i=0; i<myDiscoveryClientResultCollection.Count; i++)
             {
-               DiscoveryClientResult myClientResult = 
+               DiscoveryClientResult myClientResult =
                    myDiscoveryClientResultCollection[i];
                Console.WriteLine("DiscoveryClientResult "+(i+1));
                Console.WriteLine("Type of reference in the discovery document: "

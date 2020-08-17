@@ -14,7 +14,7 @@ public class Class1
         Console.WriteLine("Five random byte values:");
         foreach (byte byteValue in bytes)
             Console.Write("{0, 5}", byteValue);
-        Console.WriteLine();   
+        Console.WriteLine();
 
         // Generate and display 5 random integers.
         Console.WriteLine("Five random integer values:");

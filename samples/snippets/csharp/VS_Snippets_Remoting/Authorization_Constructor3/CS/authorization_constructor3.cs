@@ -1,13 +1,13 @@
 ﻿// System.Net.Authorization.Authorization(string,bool,string)
 
-/* This program demonstrates the contructor 'Authorization(string,bool,string)' of the authorization 
+/* This program demonstrates the contructor 'Authorization(string,bool,string)' of the authorization
  * class.
- * 
+ *
  * We implement the interface "IAuthenticationModule" to make CloneBasic which is a custom authentication module.
- * The custom authentication module encodes username and password as base64 strings and then returns 
- * back an authorization instance. This authorization is internally used by the HttpWebRequest for 
+ * The custom authentication module encodes username and password as base64 strings and then returns
+ * back an authorization instance. This authorization is internally used by the HttpWebRequest for
  * authentication.
- * * 
+ * *
  * Please Note : This program has to be compiled as a dll.
  */
 using System;
@@ -48,7 +48,7 @@ namespace CloneBasicAuthentication
                 string message;
                 // Check if Challenge string was raised by a site which requires CloneBasic authentication.
                 if ((challenge == null) || (!challenge.StartsWith("CloneBasic")))
-                    return null; 
+                    return null;
                 NetworkCredential myCredentials;
                 if (credentials is CredentialCache)
                 {
@@ -60,7 +60,7 @@ namespace CloneBasicAuthentication
                 {
                     myCredentials = (NetworkCredential)credentials;
                 }
-                // Message encryption scheme : 
+                // Message encryption scheme :
                 // a)Concatenate username and password seperated by space;
                 // b)Apply ASCII encoding to obtain a stream of bytes;
                 // c)Apply Base64 Encoding to this array of bytes to obtain our encoded authorization message.
@@ -81,13 +81,13 @@ namespace CloneBasicAuthentication
             }
             catch(Exception e)
             {
-                    Console.WriteLine("Exception Raised ...:"+e.Message);    
+                    Console.WriteLine("Exception Raised ...:"+e.Message);
                 return null;
             }
           }
 
 // </Snippet1>
-        
+
         public Authorization PreAuthenticate(WebRequest request,ICredentials credentials)
         {
           return null;

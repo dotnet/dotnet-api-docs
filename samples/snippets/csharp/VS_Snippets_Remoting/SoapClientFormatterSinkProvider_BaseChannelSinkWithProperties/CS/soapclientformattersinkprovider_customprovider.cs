@@ -7,8 +7,8 @@
    Custom client formatter provider is defined by implementing
    the 'IClientChannelSinkProvider' interface and custom channel sink is
    defined by inheriting 'BaseChannelSinkWithProperties' abstract class.
-   The sink provider chain has the custom sink provider and 
-   'SoapClientFormatterSinkProvider'. The 'CreateSink' method is used to 
+   The sink provider chain has the custom sink provider and
+   'SoapClientFormatterSinkProvider'. The 'CreateSink' method is used to
    return a sink to the caller and form the sink chain which is used to process
    the message being passed through it.
 */

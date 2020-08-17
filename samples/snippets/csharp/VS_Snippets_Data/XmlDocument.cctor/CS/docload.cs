@@ -28,7 +28,7 @@ namespace Microsoft.Samples.Xml
                 reader = XmlReader.Create(filename, settings);
 
                 // Pass the validating reader to the XML document.
-                // Validation fails due to an undefined attribute, but the 
+                // Validation fails due to an undefined attribute, but the
                 // data is still loaded into the document.
                 XmlDocument doc = new XmlDocument();
                 doc.Load(reader);

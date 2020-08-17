@@ -38,4 +38,7 @@ Class MyFindMembersClass
         End If
     End Function 'DelegateToSearchCriteria 
 End Class
+' The example produces the following output:
+'
+' Result of FindMembers - Boolean ReferenceEquals(System.Object, System.Object)
 ' </Snippet1>

@@ -33,8 +33,8 @@ class Example
             // Create another point.
             Point anotherP;
 
-            // Set this Point to the value of the 
-            // Point in unmanaged memory. 
+            // Set this Point to the value of the
+            // Point in unmanaged memory.
             anotherP = (Point)Marshal.PtrToStructure(pnt, typeof(Point));
 
             Console.WriteLine("The value of new point is " + anotherP.x + " and " + anotherP.y + ".");

@@ -2,9 +2,9 @@
 
 // System.Xml.Serialization.XmlAttributeAttribute.XmlAttributeAttribute()
 // System.Xml.Serialization.XmlAttributeAttribute.XmlAttributeAttribute(String)
-/*  The following example demonstrates the constructor of XmlAttributeAttribute .
-*  This sample serializes a class named 'Student'.The StudentName property is 
-*  serialized as an XML attribute.It also serializes a class named 'Book' 
+/*  The following example demonstrates the XmlAttributeAttribute constructor.
+*  This sample serializes a class named 'Student'. The StudentName property is
+*  serialized as an XML attribute. It also serializes a class named 'Book'.
 */
 // <Snippet1>
 // <Snippet2>

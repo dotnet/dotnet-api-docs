@@ -4,7 +4,7 @@
 // This sample requests the user to enter a password on the console screen.
 // Because the console window does not support methods allowing the password to be masked,
 // it will be visible to anyone viewing the screen.
-// On Windows Vista and later this sample must be run as an administrator. 
+// On Windows Vista and later this sample must be run as an administrator.
 
 using System;
 using System.Runtime.InteropServices;

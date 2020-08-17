@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example connects to a message queue, and
 		// requests exclusive read access to the queue.
 		//**************************************************
@@ -30,7 +30,7 @@ namespace MyProject
 
 		//**************************************************
 		// Requests exlusive read access to the queue. If
-		// access is granted, receives a message from the 
+		// access is granted, receives a message from the
 		// queue.
 		//**************************************************
 		
@@ -39,10 +39,10 @@ namespace MyProject
 			try
 			{
 				// Request exclusive read access to the queue.
-				MessageQueue myQueue = new 
+				MessageQueue myQueue = new
 					MessageQueue(".\\myQueue", true);
 
-				// Receive a message. This is where SharingViolation 
+				// Receive a message. This is where SharingViolation
 				// exceptions would be thrown.
 				Message myMessage = myQueue.Receive();
 			}
@@ -50,7 +50,7 @@ namespace MyProject
 			catch (MessageQueueException e)
 			{
 				// Handle request for denial of exclusive read access.
-				if (e.MessageQueueErrorCode == 
+				if (e.MessageQueueErrorCode ==
 					MessageQueueErrorCode.SharingViolation)
 				{
 					Console.WriteLine("Denied exclusive read access");

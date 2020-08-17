@@ -6,7 +6,7 @@ Imports System.Globalization
 
 Public Class Temperature
    ' Parses the temperature from a string. Temperature scale is 
-   ' indicated by 'F (for Fahrenheit) or 'C (for Celcius) at the end
+   ' indicated by 'F (for Fahrenheit) or 'C (for Celsius) at the end
    ' of the string.
    Public Shared Function Parse(s As String, styles As NumberStyles, _
                                 provider As IFormatProvider) As Temperature

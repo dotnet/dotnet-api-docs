@@ -5,7 +5,7 @@
 
 ' The following example demonstrates the constructor 'ServiceDescription()', 
 ' 'Messages','Name'  properties and 'Read'  method of 'ServiceDescription'
-' class.The input to the program is a WSDL file 'MyWsdl.wsdl'.
+' class. The input to the program is a WSDL file 'MyWsdl.wsdl'.
 ' This program removes one message from the existing WSDL.
 ' A new Message is defined and added to the ServiceDescription.
 ' A new wsdl with modified ServiceDescription is written in 'MyOutWsdl.wsdl'.

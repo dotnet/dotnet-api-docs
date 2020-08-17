@@ -5,7 +5,7 @@ public class Example
    public static void Main()
    {
       // <Snippet7>
-      float[] values= { Single.MaxValue, 16.354e-12F, 15.098123F, 0F, 
+      float[] values= { Single.MaxValue, 16.354e-12F, 15.098123F, 0F,
                         -19.069713F, -15.058e17F, Single.MinValue };
       foreach (float value in values)
          Console.WriteLine($"Abs({value}) = {Math.Abs(value)}");

@@ -2,26 +2,26 @@
 using System;
 using System.IO;
 
-class Test 
+class Test
 {
 	
-    public static void Main() 
+    public static void Main()
     {
         string path1 = @"c:\temp\MyTest.txt";
         string path2 = @"c:\temp\MyTest";
         string path3 = @"temp";
 
-        if (Path.HasExtension(path1)) 
+        if (Path.HasExtension(path1))
         {
             Console.WriteLine("{0} has an extension.", path1);
         }
 
-        if (!Path.HasExtension(path2)) 
+        if (!Path.HasExtension(path2))
         {
             Console.WriteLine("{0} has no extension.", path2);
         }
 
-        if (!Path.IsPathRooted(path3)) 
+        if (!Path.IsPathRooted(path3))
         {
             Console.WriteLine("The string {0} contains no root information.", path3);
         }

@@ -16,7 +16,7 @@ class Example
         // Copy the Secure string to unmanaged memory (and decrypt it).
         unmanagedRef = Marshal.SecureStringToCoTaskMemUnicode(passWord);
         passWord.Dispose();
-        
+
         if (unmanagedRef != IntPtr.Zero) {
             Console.WriteLine("Zeroing out unmanaged memory...");
             Marshal.ZeroFreeCoTaskMemUnicode(unmanagedRef);

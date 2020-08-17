@@ -1,5 +1,5 @@
 ﻿/*
-   This program is used as a client of the client proxy class. 
+   This program is used as a client of the client proxy class.
 */
 
 // System.Web.Services.Protocols.MatchAttribute
@@ -42,13 +42,13 @@ public class MatchAttribute_Example : HttpGetClientProtocol
 	}
 
 	public System.IAsyncResult BeginGetHeaders(System.AsyncCallback callback,
-		object asyncState) 
+		object asyncState)
 	{
-		return BeginInvoke("GetHeaders", (Url + "/MyHeaders.html"), 
+		return BeginInvoke("GetHeaders", (Url + "/MyHeaders.html"),
 			new object[0], callback, asyncState);
 	}
 
-	public Example_Headers EndGetHeaders(System.IAsyncResult asyncResult) 
+	public Example_Headers EndGetHeaders(System.IAsyncResult asyncResult)
 	{
 		return (Example_Headers)(EndInvoke(asyncResult));
 	}
@@ -59,21 +59,21 @@ public class MatchAttribute_Example : HttpGetClientProtocol
 // <Snippet5>
 // <Snippet6>
 // <Snippet7>
-public class Example_Headers 
-{    
+public class Example_Headers
+{
 	[MatchAttribute("TITLE>(.*?)<")]
 	public string Title;
-        
+
 	[MatchAttribute("", Pattern="h1>(.*?)<", IgnoreCase=true)]
 	public string H1;
 
-	[MatchAttribute("H2>((([^<,]*),?)+)<", Group=3, Capture=4)] 
+	[MatchAttribute("H2>((([^<,]*),?)+)<", Group=3, Capture=4)]
 	public string Element;
 
-	[MatchAttribute("H2>((([^<,]*),?){2,})<", Group=3, MaxRepeats=0)] 
+	[MatchAttribute("H2>((([^<,]*),?){2,})<", Group=3, MaxRepeats=0)]
 	public string[] Elements1;
 
-	[MatchAttribute("H2>((([^<,]*),?){2,})<", Group=3, MaxRepeats=1)] 
+	[MatchAttribute("H2>((([^<,]*),?){2,})<", Group=3, MaxRepeats=1)]
 	public string[] Elements2;
 
 	[MatchAttribute("H3 ([^=]*)=([^>]*)", Group=1)]

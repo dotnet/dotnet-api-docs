@@ -2,23 +2,23 @@
 using System;
 using System.Management;
 
-public class Sample 
+public class Sample
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
-        ManagementScope scope = 
+        ManagementScope scope =
             new ManagementScope("root\\CIMV2");
-        SelectQuery q = 
+        SelectQuery q =
             new SelectQuery("SELECT * FROM Win32_LogicalDisk");
-        EnumerationOptions o = 
+        EnumerationOptions o =
             new EnumerationOptions(
             null, System.TimeSpan.MaxValue,
-            1, true, false, true, 
+            1, true, false, true,
             true, false, true, true);
-        ManagementObjectSearcher s = 
+        ManagementObjectSearcher s =
             new ManagementObjectSearcher(scope, q, o);
 
-        foreach (ManagementObject disk in s.Get()) 
+        foreach (ManagementObject disk in s.Get())
         {
             // show the disk instance
             Console.WriteLine(disk.ToString());

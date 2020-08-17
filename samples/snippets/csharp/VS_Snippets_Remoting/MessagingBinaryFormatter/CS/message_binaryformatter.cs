@@ -15,7 +15,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example sends and receives a message from
 		// a queue.
 		//**************************************************
@@ -105,8 +105,8 @@ namespace MyProject
 				// Set the formatter to indicate body contains an Order.
 				myQueue.Formatter = new BinaryMessageFormatter();
 
-				// Receive and format the message. 
-				System.Messaging.Message myMessage = myQueue.Receive(); 
+				// Receive and format the message.
+				System.Messaging.Message myMessage = myQueue.Receive();
 				Bitmap myImage = (Bitmap)myMessage.Body;
 				
 				// This will be saved in the \bin\debug or \bin\retail folder.

@@ -33,10 +33,10 @@ public class Run
    {
       // Create an instance of the XmlSerializer class that
       // can be used for serializing as a SOAP message.
-      XmlTypeMapping mapp = 
+      XmlTypeMapping mapp =
          (new SoapReflectionImporter()).ImportTypeMapping(typeof(Group));
       XmlSerializer mySerializer = new XmlSerializer(mapp);
-      
+
       // Writing the file requires a TextWriter.
       TextWriter writer = new StreamWriter(filename);
 
@@ -74,7 +74,7 @@ public class Run
    {
       // Create an instance of the XmlSerializer class that
       // uses a SoapAttributeOverrides object.
-      
+
       XmlSerializer mySerializer =  CreateOverrideSerializer();
 
       // Writing the file requires a TextWriter.
@@ -114,7 +114,7 @@ public class Run
    {
       // Create and return an XmlSerializer instance used to
       // override and create SOAP messages.
-      SoapAttributeOverrides mySoapAttributeOverrides = 
+      SoapAttributeOverrides mySoapAttributeOverrides =
           new SoapAttributeOverrides();
       SoapAttributes soapAtts = new SoapAttributes();
 
@@ -124,14 +124,14 @@ public class Run
       soapType.IncludeInSchema = false;
       soapType.Namespace = "http://www.microsoft.com";
       soapAtts.SoapType = soapType;
-      
+
       mySoapAttributeOverrides.Add(typeof(Group),soapAtts);
 
-      // Create an XmlTypeMapping that is used to create an instance 
+      // Create an XmlTypeMapping that is used to create an instance
       // of the XmlSerializer. Then return the XmlSerializer object.
       XmlTypeMapping myMapping = (new SoapReflectionImporter(
       mySoapAttributeOverrides)).ImportTypeMapping(typeof(Group));
-    
+
       XmlSerializer ser = new XmlSerializer(myMapping);
       return ser;
    }

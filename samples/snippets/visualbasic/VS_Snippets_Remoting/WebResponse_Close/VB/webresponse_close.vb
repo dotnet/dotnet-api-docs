@@ -1,6 +1,6 @@
 ﻿'  System.Net.WebResponse.Close
 'This program demonstrates the 'Close' method of 'WebResponse' Class. 
-'It takes an URL from console and creates a 'WebRequest' object for the Url.It then gets back 
+'It takes an URL from console and creates a 'WebRequest' object for the Url. It then gets back 
 'the response object from the Url. The response object can be processed as desired.
 'The program then closes the response object and releases resources associated with it.
 

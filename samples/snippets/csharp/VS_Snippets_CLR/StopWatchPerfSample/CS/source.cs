@@ -28,7 +28,7 @@ namespace StopWatchSample
             {
                 Console.WriteLine("Operations timed using the system's high-resolution performance counter.");
             }
-            else 
+            else
             {
                 Console.WriteLine("Operations timed using the DateTime class.");
             }
@@ -37,11 +37,11 @@ namespace StopWatchSample
             Console.WriteLine("  Timer frequency in ticks per second = {0}",
                 frequency);
             long nanosecPerTick = (1000L*1000L*1000L) / frequency;
-            Console.WriteLine("  Timer is accurate within {0} nanoseconds", 
+            Console.WriteLine("  Timer is accurate within {0} nanoseconds",
                 nanosecPerTick);
         }
         //</Snippet2>
-        
+
         //<Snippet3>
         private static void TimeOperations()
         {
@@ -54,8 +54,8 @@ namespace StopWatchSample
                                            "Operation: Int32.Parse(\"a\")",
                                            "Operation: Int32.TryParse(\"a\")"};
 
-            // Time four different implementations for parsing 
-            // an integer from a string. 
+            // Time four different implementations for parsing
+            // an integer from a string.
 
             for (int operation = 0; operation <= 3; operation++)
             {
@@ -75,7 +75,7 @@ namespace StopWatchSample
                 // The first execution time will be tossed
                 // out, since it can skew the average time.
 
-                for (int i=0; i<=numIterations; i++) 
+                for (int i=0; i<=numIterations; i++)
                 {
                     // <Snippet4>
                     long ticksThisTime = 0;
@@ -91,7 +91,7 @@ namespace StopWatchSample
                             // Start a new stopwatch timer.
                             timePerParse = Stopwatch.StartNew();
 
-                            try 
+                            try
                             {
                                 inputNum = Int32.Parse("0");
                             }
@@ -114,7 +114,7 @@ namespace StopWatchSample
                             timePerParse = Stopwatch.StartNew();
 
                             if (!Int32.TryParse("0", out inputNum))
-                            { 
+                            {
                                 inputNum = 0;
                             }
 
@@ -130,7 +130,7 @@ namespace StopWatchSample
                             // Start a new stopwatch timer.
                             timePerParse = Stopwatch.StartNew();
 
-                            try 
+                            try
                             {
                                 inputNum = Int32.Parse("a");
                             }
@@ -152,7 +152,7 @@ namespace StopWatchSample
                             timePerParse = Stopwatch.StartNew();
 
                             if (!Int32.TryParse("a", out inputNum))
-                            { 
+                            {
                                 inputNum = 0;
                             }
 
@@ -175,7 +175,7 @@ namespace StopWatchSample
                         time10kOperations.Reset();
                         time10kOperations.Start();
                     }
-                    else 
+                    else
                     {
 
                         // Update operation statistics
@@ -197,8 +197,8 @@ namespace StopWatchSample
                             numRollovers ++;
                         }
                     }
-                }  
-                
+                }
+
                 // Display the statistics for 10000 iterations.
 
                 time10kOperations.Stop();
@@ -210,10 +210,10 @@ namespace StopWatchSample
                     indexSlowest, numIterations, maxTicks);
                 Console.WriteLine("  Fastest time:  #{0}/{1} = {2} ticks",
                     indexFastest, numIterations, minTicks);
-                Console.WriteLine("  Average time:  {0} ticks = {1} nanoseconds", 
-                    numTicks / numIterations, 
+                Console.WriteLine("  Average time:  {0} ticks = {1} nanoseconds",
+                    numTicks / numIterations,
                     (numTicks * nanosecPerTick) / numIterations );
-                Console.WriteLine("  Total time looping through {0} operations: {1} milliseconds", 
+                Console.WriteLine("  Total time looping through {0} operations: {1} milliseconds",
                     numIterations, milliSec);
                 //</Snippet5>
             }
@@ -221,5 +221,5 @@ namespace StopWatchSample
         //</Snippet3>
      }
 }
- 
+
 //</Snippet1>

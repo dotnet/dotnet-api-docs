@@ -88,7 +88,7 @@ public struct Point : INullable
         if (m_x == 0 && m_y == 0)
         {
             return "centered";
-        } 
+        }
 
         SqlString stringReturn = "";
 
@@ -99,13 +99,13 @@ public struct Point : INullable
         else if (m_x > 0)
         {
             stringReturn = "right";
-        } 
+        }
         else if (m_x < 0)
         {
             stringReturn = "left";
         }
 
-        if (m_y == 0) 
+        if (m_y == 0)
         {
             stringReturn = stringReturn + " center";
         }

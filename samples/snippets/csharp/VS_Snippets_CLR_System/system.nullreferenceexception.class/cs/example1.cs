@@ -10,19 +10,19 @@ public class Example
       List<String> names;
       if (value > 0)
          names = new List<String>();
-      
-      names.Add("Major Major Major");       
+
+      names.Add("Major Major Major");
    }
 }
 // Compilation displays a warning like the following:
-//    Example1.cs(10) : warning BC42104: Variable //names// is used before it 
-//    has been assigned a value. A null reference exception could result 
+//    Example1.cs(10) : warning BC42104: Variable //names// is used before it
+//    has been assigned a value. A null reference exception could result
 //    at runtime.
-//    
+//
 //          names.Add("Major Major Major")
 //          ~~~~~
 // The example displays output like the following output:
-//    Unhandled Exception: System.NullReferenceException: Object reference 
+//    Unhandled Exception: System.NullReferenceException: Object reference
 //    not set to an instance of an object.
 //       at Example.Main()
 // </Snippet1>

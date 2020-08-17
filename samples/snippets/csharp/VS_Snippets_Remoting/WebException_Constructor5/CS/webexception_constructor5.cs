@@ -6,7 +6,7 @@ A 'HttpConnect' class is defined which extends the 'WebResponse' class.  Then a 
 created by taking an uri(intranet) from the user as input and 'ConnectHttpServer' method is called to connect
 the InternetServer at the specified 'URL'. It asks for a file named 'nhjj.htm' ,gets the response from the 
 InternetServer and checks the status of the response. If status is '404 File not Found' a 'WebResponse' object
-is created and then a new 'WebException' object is created and thrown.That exception is caught in the calling
+is created and then a new 'WebException' object is created and thrown. That exception is caught in the calling
 method and the error message along with the response obtained from the InternetServer is displayed to the 
 console.
 */

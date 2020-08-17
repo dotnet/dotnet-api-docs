@@ -12,11 +12,11 @@ using System.IO;
 
 namespace Examples.System.Net
 {
-    public class SslTcpClient 
-    {   
+    public class SslTcpClient
+    {
         private static Hashtable certificateErrors = new Hashtable();
 //<snippet1>
-      
+
         // The following method is invoked by the RemoteCertificateValidationDelegate.
         public static bool ValidateServerCertificate(
               object sender,
@@ -28,13 +28,13 @@ namespace Examples.System.Net
                 return true;
 
             Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
-            
+
             // Do not allow this client to communicate with unauthenticated servers.
             return false;
         }
 //</snippet1>
         //<snippet3>
-        public static void RunClient(string machineName, string serverName)  
+        public static void RunClient(string machineName, string serverName)
         {
             //<snippet5>
             //<snippet4>
@@ -44,16 +44,16 @@ namespace Examples.System.Net
             Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
             SslStream sslStream = new SslStream(
-                client.GetStream(), 
-                false, 
-                new RemoteCertificateValidationCallback (ValidateServerCertificate), 
+                client.GetStream(),
+                false,
+                new RemoteCertificateValidationCallback (ValidateServerCertificate),
                 null
                 );
             // The server name must match the name on the server certificate.
-            try 
+            try
             {
                 sslStream.AuthenticateAsClient(serverName);
-            } 
+            }
             catch (AuthenticationException e)
             {
                 Console.WriteLine("Exception: {0}", e.Message);
@@ -69,7 +69,7 @@ namespace Examples.System.Net
             // Encode a test message into a byte array.
             // Signal the end of the message using the "<EOF>".
             byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
-            // Send hello message to the server. 
+            // Send hello message to the server.
             sslStream.Write(messsage);
             sslStream.Flush();
             //</snippet5>
@@ -93,7 +93,7 @@ namespace Examples.System.Net
             do
             {
                 bytes = sslStream.Read(buffer, 0, buffer.Length);
-                        
+
                 // Use Decoder class to convert from bytes to UTF8
                 // in case a character spans two buffers.
                 Decoder decoder = Encoding.UTF8.GetDecoder();
@@ -105,13 +105,13 @@ namespace Examples.System.Net
                 {
                     break;
                 }
-            } while (bytes != 0); 
-            
+            } while (bytes != 0);
+
             return messageData.ToString();
         }
         //</snippet6>
         private static void DisplayUsage()
-        { 
+        {
             Console.WriteLine("To start the client specify:");
             Console.WriteLine("clientSync machineName [serverName]");
             Environment.Exit(1);
@@ -125,13 +125,13 @@ namespace Examples.System.Net
                 DisplayUsage();
             }
             // User can specify the machine name and server name.
-            // Server name must match the name on the server's certificate. 
+            // Server name must match the name on the server's certificate.
             machineName = args[0];
             if (args.Length <2 )
             {
                 serverCertificateName = machineName;
             }
-            else 
+            else
             {
                 serverCertificateName = args[1];
             }
@@ -140,5 +140,5 @@ namespace Examples.System.Net
         }
     }
 }
-    
+
 //</snippet0>

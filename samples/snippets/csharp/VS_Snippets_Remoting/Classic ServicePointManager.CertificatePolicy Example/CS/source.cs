@@ -11,7 +11,7 @@ public class Form1: Form
     {
 // <Snippet1>
         ServicePointManager.CertificatePolicy = new MyCertificatePolicy();
- 
+
         // Create the request and receive the response
         try
         {

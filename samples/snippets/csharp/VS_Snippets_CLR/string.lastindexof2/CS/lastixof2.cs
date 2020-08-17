@@ -25,7 +25,7 @@ class Sample {
         {
         count = start - end; //Count must be within the substring.
         at = str.LastIndexOf('t', start, count);
-        if (at > -1) 
+        if (at > -1)
             {
             Console.Write("{0} ", at);
             start = at - 1;

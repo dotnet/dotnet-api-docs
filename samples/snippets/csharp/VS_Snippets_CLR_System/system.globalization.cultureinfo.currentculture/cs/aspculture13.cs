@@ -15,6 +15,6 @@ public class Example
 public class Request
 {
    private static string[] langs = new string[3];
-   
+
    public static string[] UserLanguages { get { return langs; } }
 }

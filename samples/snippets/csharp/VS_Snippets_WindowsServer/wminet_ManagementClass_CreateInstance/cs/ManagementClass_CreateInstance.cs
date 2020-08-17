@@ -2,14 +2,14 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
-        ManagementClass envClass = 
+        ManagementClass envClass =
             new ManagementClass("Win32_Environment");
-        ManagementObject newInstance = 
+        ManagementObject newInstance =
             envClass.CreateInstance();
         newInstance["Name"] = "testEnvironmentVariable";
         newInstance["VariableValue"] = "testValue";

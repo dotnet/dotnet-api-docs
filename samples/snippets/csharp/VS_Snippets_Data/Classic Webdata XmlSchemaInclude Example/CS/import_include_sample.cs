@@ -27,12 +27,12 @@ public class ImportIncludeSample
         schema.ElementFormDefault = XmlSchemaForm.Qualified;
         schema.TargetNamespace = "http://www.w3.org/2001/05/XMLInfoset";
 
-        // <xs:import namespace="http://www.example.com/IPO" />                            
+        // <xs:import namespace="http://www.example.com/IPO" />
         XmlSchemaImport import = new XmlSchemaImport();
         import.Namespace = "http://www.example.com/IPO";
         schema.Includes.Add(import);
 
-        // <xs:include schemaLocation="example.xsd" />               
+        // <xs:include schemaLocation="example.xsd" />
         XmlSchemaInclude include = new XmlSchemaInclude();
         include.SchemaLocation = "example.xsd";
         schema.Includes.Add(include);

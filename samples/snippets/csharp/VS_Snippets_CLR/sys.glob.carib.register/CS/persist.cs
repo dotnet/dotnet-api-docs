@@ -6,12 +6,12 @@
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     CultureAndRegionInfoBuilder cib = null;
-    try 
+    try
     {
 // Create a CultureAndRegionInfoBuilder object named "x-en-US-sample".
     Console.WriteLine("Create and explore the CultureAndRegionInfoBuilder...\n");

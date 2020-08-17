@@ -15,7 +15,7 @@ public partial class _Default : System.Web.UI.Page
     {
         ObjectCache cache = MemoryCache.Default;
         string fileContents = cache["filecontents"] as string;
-       
+
         if (fileContents == null)
         {
             CacheItemPolicy policy = new CacheItemPolicy();

@@ -9,7 +9,7 @@ public class Person
       FirstName = fName;
       LastName = lName;
    }
-   
+
    public String FirstName { get; set; }
    public String LastName { get; set; }
 }
@@ -19,7 +19,7 @@ public class Example
    public static void Main()
    {
       var people = new List<Person>();
-      
+
       people.Add(new Person("John", "Doe"));
       people.Add(new Person("Jane", "Doe"));
       people.Sort(PersonComparison);
@@ -30,7 +30,7 @@ public class Example
    public static int PersonComparison(Person x, Person y)
    {
       return String.Format("{0} {1}", x.LastName, x.FirstName).
-             CompareTo(String.Format("{0} {1}", y.LastName, y.FirstName));    
+             CompareTo(String.Format("{0} {1}", y.LastName, y.FirstName));
    }
 }
 // The example displays the following output:

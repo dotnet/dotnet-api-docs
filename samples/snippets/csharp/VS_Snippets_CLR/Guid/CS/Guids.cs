@@ -18,8 +18,8 @@ public class MyTestClass : IMyInterface
     public static void Main( string []args )
     {
         GuidAttribute IMyInterfaceAttribute = (GuidAttribute) Attribute.GetCustomAttribute(typeof(IMyInterface), typeof(GuidAttribute));
-        
-        System.Console.WriteLine("IMyInterface Attribute: " + IMyInterfaceAttribute.Value );    
+
+        System.Console.WriteLine("IMyInterface Attribute: " + IMyInterfaceAttribute.Value );
 
         // Use the string to create a guid.
         Guid myGuid1 = new Guid(IMyInterfaceAttribute.Value );

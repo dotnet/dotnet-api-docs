@@ -1,8 +1,8 @@
 ﻿/*
    The example demonstrates the remoting version of a server. When a client
-   calls the 'MyPrintMethod' on the 'PrintServer' class, the server object 
-   prints the parameters passed from the client and returns the last 
-   parameter back to the client. 
+   calls the 'MyPrintMethod' on the 'PrintServer' class, the server object
+   prints the parameters passed from the client and returns the last
+   parameter back to the client.
 */
 using System;
 using System.Runtime.Remoting;
@@ -18,6 +18,6 @@ public class Sample {
          (Type.GetType("PrintServer,ChannelServices_SyncDispatchMessage_Share"),
          "SayHello", WellKnownObjectMode.SingleCall);
       Console.WriteLine("Hit <enter> to exit...");
-      Console.ReadLine();            
+      Console.ReadLine();
    }
 }

@@ -128,7 +128,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's AcknowledgeType property.
         Console.WriteLine("Message.AcknowledgeType: {0}",
@@ -142,7 +142,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's AdministrationQueue property.
         Console.WriteLine("Message.AdministrationQueue: {0}",
@@ -156,7 +156,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's AppSpecific property.
         Console.WriteLine("Message.AppSpecific: {0}",
@@ -170,7 +170,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's ArrivedTime property.
         Console.WriteLine("Message.ArrivedTime: {0}",
@@ -184,7 +184,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's AttachSenderId property.
         Console.WriteLine("Message.AttachSenderId: {0}",
@@ -198,7 +198,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's Authenticated property.
         Console.WriteLine("Message.Authenticated: {0}",
@@ -212,7 +212,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's AuthenticationProviderName
         // property.
@@ -227,7 +227,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's AuthenticationProviderType
         // property.
@@ -242,7 +242,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's Body property.
         Console.WriteLine("Message.Body: {0}", orderMessage.Body);
@@ -255,7 +255,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's ConnectorType property.
         Console.WriteLine("Message.ConnectorType: {0}",
@@ -296,7 +296,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's DestinationQueue.QueueName
         // property.
@@ -311,7 +311,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's DestinationSymmetricKey property.
         Console.WriteLine("Message.DestinationSymmetricKey: {0}",
@@ -325,7 +325,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's DigitalSignature property.
         Console.WriteLine("Message.DigitalSignature: {0}",
@@ -339,7 +339,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's EncryptionAlgorithm property.
         Console.WriteLine("Message.EncryptionAlgorithm: {0}",
@@ -353,7 +353,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's Extension property.
         Console.WriteLine("Message.Extension: {0}",
@@ -367,7 +367,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's HashAlgorithm property.
         Console.WriteLine("Message.HashAlgorithm: {0}",
@@ -381,7 +381,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's Id property.
         Console.WriteLine("Message.Id: {0}",
@@ -395,7 +395,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's Label property.
         Console.WriteLine("Message.Label: {0}",
@@ -409,7 +409,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's MessageType property.
         Console.WriteLine("Message.MessageType: {0}",
@@ -423,7 +423,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's Recoverable property.
         Console.WriteLine("Message.Recoverable: {0}",
@@ -437,7 +437,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's ResponseQueue.QueueName property.
         if(orderMessage.ResponseQueue != null)
@@ -454,7 +454,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's SenderCertificate property.
         Console.WriteLine("Message.SenderCertificate: {0}",
@@ -468,7 +468,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's SenderId property.
         Console.WriteLine("Message.SenderId: {0}",
@@ -482,7 +482,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's SenderVersion property.
         Console.WriteLine("Message.SenderVersion: {0}",
@@ -496,7 +496,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's SentTime property.
         Console.WriteLine("Message.SentTime: {0}",
@@ -510,7 +510,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's SourceMachine property.
         Console.WriteLine("Message.SourceMachine: {0}",
@@ -524,7 +524,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's TimeToBeReceived property.
         Console.WriteLine("Message.TimeToBeReceived: {0}",
@@ -538,7 +538,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's TimeToReachQueue property.
         Console.WriteLine("Message.TimeToReachQueue: {0}",
@@ -552,7 +552,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's UseAuthentication property.
         Console.WriteLine("Message.UseAuthentication: {0}",
@@ -566,7 +566,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's UseDeadLetterQueue property.
         Console.WriteLine("Message.UseDeadLetterQueue: {0}",
@@ -580,7 +580,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's UseEncryption property.
         Console.WriteLine("Message.UseEncryption: {0}",
@@ -594,7 +594,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's UseJournalQueue property.
         Console.WriteLine("Message.UseJournalQueue: {0}",
@@ -608,7 +608,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's UseTracing property.
         Console.WriteLine("Message.UseTracing: {0}",
@@ -705,7 +705,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's IsFirstInTransaction property.
         Console.WriteLine("Message.IsFirstInTransaction: {0}",
@@ -719,7 +719,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's IsLastInTransaction property.
         Console.WriteLine("Message.IsLastInTransaction: {0}",
@@ -733,7 +733,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's TransactionId property.
         Console.WriteLine("Message.TransactionId: {0}",
@@ -747,7 +747,7 @@ public class OrderProcessor
 
         // Peek at the message. Time out after ten seconds in case the message
         // was not delivered.
-        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0)); 
+        orderMessage = queue.Peek(TimeSpan.FromSeconds(10.0));
 
         // Display the value of the message's TransactionStatusQueue.QueueName
         // property.

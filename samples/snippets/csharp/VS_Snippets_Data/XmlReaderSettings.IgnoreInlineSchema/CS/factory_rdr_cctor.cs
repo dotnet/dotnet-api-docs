@@ -18,7 +18,7 @@ public class ValidXSD {
     // Create the XmlReader object.
     XmlReader reader = XmlReader.Create("inlineSchema.xml", settings);
 
-    // Parse the file. 
+    // Parse the file.
     while (reader.Read());
   }
 
@@ -28,6 +28,6 @@ public class ValidXSD {
        Console.WriteLine("\tWarning: Matching schema not found.  No validation occurred." + args.Message);
      else
         Console.WriteLine("\tValidation error: " + args.Message);
-  }  
+  }
 }
 //</snippet1>

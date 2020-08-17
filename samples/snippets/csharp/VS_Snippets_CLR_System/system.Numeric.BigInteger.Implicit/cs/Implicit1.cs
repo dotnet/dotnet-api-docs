@@ -23,7 +23,7 @@ public class ImplicitConversions
       byte byteValue = 254;
       BigInteger number = byteValue;
       number = BigInteger.Add(number, byteValue);
-      Console.WriteLine(number > byteValue);            // Displays True     
+      Console.WriteLine(number > byteValue);            // Displays True
       // </Snippet1>
       Console.WriteLine();
    }
@@ -35,7 +35,7 @@ public class ImplicitConversions
       short shortValue = 25064;
       BigInteger number = shortValue;
       number += shortValue;
-      Console.WriteLine(number < shortValue);           // Displays False     
+      Console.WriteLine(number < shortValue);           // Displays False
       // </Snippet2>
       Console.WriteLine();
    }
@@ -47,7 +47,7 @@ public class ImplicitConversions
       int intValue = 65000;
       BigInteger number = intValue;
       number = BigInteger.Multiply(number, intValue);
-      Console.WriteLine(number == intValue);            // Displays False     
+      Console.WriteLine(number == intValue);            // Displays False
       // </Snippet3>
       Console.WriteLine();
    }
@@ -59,7 +59,7 @@ public class ImplicitConversions
       long longValue = 1358754982;
       BigInteger number = longValue;
       number = number + (longValue / 2);
-      Console.WriteLine(number * longValue / longValue); // Displays 2038132473     
+      Console.WriteLine(number * longValue / longValue); // Displays 2038132473
       // </Snippet4>
       Console.WriteLine();
    }
@@ -70,11 +70,11 @@ public class ImplicitConversions
       // <Snippet5>
       sbyte sByteValue = -12;
       BigInteger number = BigInteger.Pow(sByteValue, 3);
-      Console.WriteLine(number < sByteValue);            // Displays True     
+      Console.WriteLine(number < sByteValue);            // Displays True
       // </Snippet5>
       Console.WriteLine();
    }
-  
+
    private void ShowUShortConversion()
    {
       Console.WriteLine("Implicit UShort Conversion:");
@@ -82,7 +82,7 @@ public class ImplicitConversions
       ushort uShortValue = 25064;
       BigInteger number = uShortValue;
       number += uShortValue;
-      Console.WriteLine(number < uShortValue);           // Displays False     
+      Console.WriteLine(number < uShortValue);           // Displays False
       // </Snippet6>
       Console.WriteLine();
    }
@@ -94,7 +94,7 @@ public class ImplicitConversions
       uint uIntValue = 65000;
       BigInteger number = uIntValue;
       number = BigInteger.Multiply(number, uIntValue);
-      Console.WriteLine(number == uIntValue);           // Displays False     
+      Console.WriteLine(number == uIntValue);           // Displays False
       // </Snippet7>
       Console.WriteLine();
    }
@@ -106,7 +106,7 @@ public class ImplicitConversions
       ulong uLongValue = 1358754982;
       BigInteger number = uLongValue;
       number = number * 2 - uLongValue;
-      Console.WriteLine(number * uLongValue / uLongValue); // Displays 1358754982     
+      Console.WriteLine(number * uLongValue / uLongValue); // Displays 1358754982
       // </Snippet8>
       Console.WriteLine();
    }

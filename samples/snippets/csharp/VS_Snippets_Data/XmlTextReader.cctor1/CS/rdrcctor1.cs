@@ -7,7 +7,7 @@ public class Sample {
 
   public static void Main() {
 
-    string xmlData = 
+    string xmlData =
     @"<book>
        <title>Oberon's Legacy</title>
        <price>5.95</price>
@@ -29,11 +29,11 @@ public class Sample {
          case XmlNodeType.EndElement:
            Console.Write("</{0}>", reader.Name);
            break;
-      }       
-    }           
+      }
+    }
 
     // Close the reader.
-    reader.Close();       
+    reader.Close();
   }
 } // End class
 //</snippet1>

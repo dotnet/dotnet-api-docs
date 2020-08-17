@@ -15,6 +15,6 @@ public class Example
 }
 // The example displays the following output:
 //       Read-Only: True
-//       
+//
 //       Read-Only: False
 // </Snippet1>

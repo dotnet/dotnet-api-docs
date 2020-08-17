@@ -13,11 +13,11 @@ public class Sample {
     settings.DtdProcessing = DtdProcessing.Parse;
     settings.ValidationType = ValidationType.DTD;
     settings.ValidationEventHandler += new ValidationEventHandler (ValidationCallBack);
- 
+
     // Create the XmlReader object.
     XmlReader reader = XmlReader.Create("itemDTD.xml", settings);
 
-    // Parse the file. 
+    // Parse the file.
     while (reader.Read());
   }
 

@@ -2,9 +2,9 @@
 // This example demonstrates the OperatingSystem.ServicePack property.
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     OperatingSystem os = Environment.OSVersion;
     String sp = os.ServicePack;

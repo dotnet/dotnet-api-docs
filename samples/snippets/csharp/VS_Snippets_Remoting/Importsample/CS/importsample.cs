@@ -25,7 +25,7 @@ class MySample
    {
       Console.WriteLine("Import Sample");
 // <Snippet1>
-      ServiceDescription myServiceDescription = 
+      ServiceDescription myServiceDescription =
          ServiceDescription.Read("StockQuote_cs.wsdl");
       myServiceDescription.Imports.Add(
          CreateImport("http://localhost/stockquote/schemas",
@@ -39,7 +39,7 @@ class MySample
       // Print the import collection to the console.
       PrintImportCollection("StockQuote_cs.wsdl");
 // <Snippet2>
-      myServiceDescription = 
+      myServiceDescription =
          ServiceDescription.Read("StockQuoteService_cs.wsdl");
       myServiceDescription.Imports.Insert(
          0,CreateImport("http://localhost/stockquote/definitions",
@@ -58,7 +58,7 @@ class MySample
 // <Snippet4>
 // <Snippet5>
    // Creates an Import object with namespace and location.
-   public static Import CreateImport(string targetNamespace, 
+   public static Import CreateImport(string targetNamespace,
       string targetlocation)
    {
       Import myImport = new Import();
@@ -74,10 +74,10 @@ class MySample
    public static void PrintImportCollection(string fileName_wsdl)
    {
       // Read import collection properties from generated WSDL file.
-      ServiceDescription myServiceDescription1 = 
+      ServiceDescription myServiceDescription1 =
          ServiceDescription.Read(fileName_wsdl);
       ImportCollection myImportCollection = myServiceDescription1.Imports;
-      Console.WriteLine("Enumerating Import Collection for file '" + 
+      Console.WriteLine("Enumerating Import Collection for file '" +
          fileName_wsdl +"'...");
 
       // Print Import properties to console.
@@ -85,7 +85,7 @@ class MySample
       {
          Console.WriteLine("Namespace : " + myImportCollection[i].Namespace);
          Console.WriteLine("Location  : " + myImportCollection[i].Location);
-         Console.WriteLine("ServiceDescription  : " + 
+         Console.WriteLine("ServiceDescription  : " +
             myImportCollection[i].ServiceDescription.Name);
       }
    }

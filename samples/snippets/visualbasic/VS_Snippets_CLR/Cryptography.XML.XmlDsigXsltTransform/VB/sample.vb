@@ -17,7 +17,7 @@ Module SignVerifyEnvelope
 
     Sub Main(ByVal args() As String)
         ' Generate a signing key.
-        Dim Key As New RSACryptoServiceProvider()
+        Dim Key As RSA = RSA.Create()
 
         Dim xsl As String = "<xs:transform xmlns:xs='http://www.w3.org/1999/XSL/Transform' version='1.0'> <xs:template match='/'> <xs:apply-templates/> </xs:template> <xs:template match='ElementToTransform'> <transformedElement/> </xs:template> </xs:transform>"
 

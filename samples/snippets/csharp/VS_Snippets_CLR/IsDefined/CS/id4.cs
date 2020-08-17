@@ -2,9 +2,9 @@
 using System;
 using System.Reflection;
 
-namespace IsDef4CS 
+namespace IsDef4CS
 {
-    public class TestClass 
+    public class TestClass
     {
         // Assign the Obsolete attribute to a method.
         [Obsolete("This method is obsolete. Use Method2 instead.")]
@@ -14,9 +14,9 @@ namespace IsDef4CS
         {}
     }
 
-    public class DemoClass 
+    public class DemoClass
     {
-        static void Main(string[] args) 
+        static void Main(string[] args)
         {
             // Get the class type to access its metadata.
             Type clsType = typeof(TestClass);
@@ -28,10 +28,10 @@ namespace IsDef4CS
             Console.WriteLine("The Obsolete Attribute {0} defined for {1} of class {2}.",
                 isDef ? "is" : "is not", mInfo.Name, clsType.Name);
             // If it's defined, display the attribute's message.
-            if (isDef) 
+            if (isDef)
             {
-                ObsoleteAttribute obsAttr = 
-                                 (ObsoleteAttribute)Attribute.GetCustomAttribute( 
+                ObsoleteAttribute obsAttr =
+                                 (ObsoleteAttribute)Attribute.GetCustomAttribute(
                                                     mInfo, typeof(ObsoleteAttribute));
                 if (obsAttr != null)
                     Console.WriteLine("The message is: \"{0}\".",

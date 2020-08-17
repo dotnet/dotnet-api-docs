@@ -11,7 +11,6 @@ Public Module Example
 
    Const numThreads As Integer = 26
    Private running As Boolean = True
-   Private rnd As New Random()
    
    ' Statistics.
    Private readerTimeouts As Integer = 0
@@ -47,6 +46,8 @@ Public Module Example
    End Sub
 
    Sub ThreadProc()
+      Dim rnd As New Random
+
       ' Randomly select a way for the thread to read and write from the shared
       ' resource.
       While running
@@ -54,11 +55,11 @@ Public Module Example
          If action < 0.8 Then
             ReadFromResource(10)
          ElseIf action < 0.81 Then
-            ReleaseRestore(50)
+            ReleaseRestore(rnd, 50)
          ElseIf action < 0.9 Then
-            UpgradeDowngrade(100)
+            UpgradeDowngrade(rnd, 100)
          Else
-            WriteToResource(100)
+            WriteToResource(rnd, 100)
          End If
       End While
    End Sub
@@ -85,7 +86,7 @@ Public Module Example
 
    '<Snippet4>
    ' Request and release the writer lock, and handle time-outs.
-   Sub WriteToResource(timeOut As Integer)
+   Sub WriteToResource(rnd As Random, timeOut As Integer)
       Try
          rwl.AcquireWriterLock(timeOut)
          Try
@@ -107,7 +108,7 @@ Public Module Example
    '<Snippet5>
    ' Requests a reader lock, upgrades the reader lock to the writer
    ' lock, and downgrades it to a reader lock again.
-   Sub UpgradeDowngrade(timeOut As Integer)
+   Sub UpgradeDowngrade(rnd As Random, timeOut As Integer)
       Try
          rwl.AcquireReaderLock(timeOut)
          Try
@@ -153,7 +154,7 @@ Public Module Example
    ' Release all locks and later restores the lock state.
    ' Uses sequence numbers to determine whether another thread has
    ' obtained a writer lock since this thread last accessed the resource.
-   Sub ReleaseRestore(timeOut As Integer)
+   Sub ReleaseRestore(rnd As Random ,timeOut As Integer)
       Dim lastWriter As Integer
       
       Try

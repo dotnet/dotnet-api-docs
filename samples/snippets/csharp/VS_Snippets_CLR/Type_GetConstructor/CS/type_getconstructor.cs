@@ -20,14 +20,14 @@ public class MyClass1
             ConstructorInfo constructorInfoObj = myType.GetConstructor(types);
             if (constructorInfoObj != null)
             {
-                Console.WriteLine("The constructor of MyClass1 that takes an " + 
-                    "integer as a parameter is: "); 
+                Console.WriteLine("The constructor of MyClass1 that takes an " +
+                    "integer as a parameter is: ");
                 Console.WriteLine(constructorInfoObj.ToString());
             }
             else
             {
                 Console.WriteLine("The constructor of MyClass1 that takes an integer " +
-                    "as a parameter is not available."); 
+                    "as a parameter is not available.");
             }
         }
         catch(Exception e)

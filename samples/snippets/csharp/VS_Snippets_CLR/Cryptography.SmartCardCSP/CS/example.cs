@@ -1,4 +1,4 @@
-﻿//<SNIPPET1> 
+﻿//<SNIPPET1>
 using System;
 using System.Security.Cryptography;
 
@@ -13,7 +13,7 @@ namespace SmartCardSign
             // The available Smart Card CryptoGraphic Providers are listed
             // in HKEY_LOCAL_MACHINE\Software\Microsoft\Cryptography\Defaults\Provider.
 
-            // Create a new CspParameters object that identifies a 
+            // Create a new CspParameters object that identifies a
             // Smart Card CryptoGraphic Provider.
             // The 1st parameter comes from HKEY_LOCAL_MACHINE\Software\Microsoft\Cryptography\Defaults\Provider Types.
             // The 2nd parameter comes from HKEY_LOCAL_MACHINE\Software\Microsoft\Cryptography\Defaults\Provider.
@@ -30,15 +30,15 @@ namespace SmartCardSign
             Console.WriteLine("Data			: " + BitConverter.ToString(data));
 
             // Sign the data using the Smart Card CryptoGraphic Provider.
-            byte[] sig = rsa.SignData(data, "SHA1");
+            byte[] sig = rsa.SignData(data, "SHA256");
 
             Console.WriteLine("Signature	: " + BitConverter.ToString(sig));
 
             // Verify the data using the Smart Card CryptoGraphic Provider.
-            bool verified = rsa.VerifyData(data, "SHA1", sig);
+            bool verified = rsa.VerifyData(data, "SHA256", sig);
 
             Console.WriteLine("Verified		: " + verified);
         }
     }
 }
-//</SNIPPET1> 
+//</SNIPPET1>

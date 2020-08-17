@@ -7,7 +7,7 @@ using Microsoft.VisualBasic;
 public class Test
 {
     // Declare a delegate that will be used to execute the completed
-    // dynamic method. 
+    // dynamic method.
     private delegate int HelloInvoker(string msg, int ret);
 
     public static void Main()
@@ -21,9 +21,9 @@ public class Test
         // of int, and two parameters whose types are specified by the
         // array helloArgs. Create the method in the module that
         // defines the Test class.
-        DynamicMethod hello = new DynamicMethod("Hello", 
-            typeof(int), 
-            helloArgs, 
+        DynamicMethod hello = new DynamicMethod("Hello",
+            typeof(int),
+            helloArgs,
             typeof(Test).Module);
 
         // <Snippet2>
@@ -32,7 +32,7 @@ public class Test
         Type[] writeStringArgs = {typeof(string)};
         // Get the overload of Console.WriteLine that has one
         // String parameter.
-        MethodInfo writeString = 
+        MethodInfo writeString =
             typeof(Console).GetMethod("WriteLine", writeStringArgs);
 
         // Get an ILGenerator and emit a body for the dynamic method.
@@ -51,7 +51,7 @@ public class Test
         // Create a delegate that represents the dynamic method. This
         // action completes the method, and any further attempts to
         // change the method will cause an exception.
-        HelloInvoker hi = 
+        HelloInvoker hi =
             (HelloInvoker) hello.CreateDelegate(typeof(HelloInvoker));
         // </Snippet3>
 
@@ -65,7 +65,7 @@ public class Test
         retval = hi("\r\nHi, Mom!", 5280);
         Console.WriteLine("Executing delegate hi(\"Hi, Mom!\", 5280) returned {0}",
             retval);
-        
+
         // <Snippet4>
         // Create an array of arguments to use with the Invoke method.
         object[] invokeArgs = {"\r\nHello, World!", 42};

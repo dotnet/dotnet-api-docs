@@ -46,7 +46,7 @@ Namespace Contoso
 
         '<Snippet4>
         ' Create the encrypted key exchange data from the specified input
-        ' data. This method uses the RSACryptoServiceProvider only. To
+        ' data. This method uses the RSA class only. To
         ' support additional providers or provide custom decryption logic,
         ' add logic to this member.
         Public Overrides Function DecryptKeyExchange(
@@ -55,11 +55,11 @@ Namespace Contoso
             Dim decryptedBytes() As Byte
 
             If (Not rsaKey Is Nothing) Then
-                If (TypeOf (rsaKey) Is RSACryptoServiceProvider) Then
-                    Dim rsaProvider As RSACryptoServiceProvider
-                    rsaProvider = CType(rsaKey, RSACryptoServiceProvider)
+                If (TypeOf (rsaKey) Is RSA) Then
+                    Dim rsa As RSA
+                    rsa = CType(rsaKey, RSA)
 
-                    decryptedBytes = rsaProvider.Decrypt(rgbData, True)
+                    decryptedBytes = rsa.Decrypt(rgbData, RSAEncryptionPadding.OaepSHA1)
                 End If
 
                 ' Add custom decryption logic here.

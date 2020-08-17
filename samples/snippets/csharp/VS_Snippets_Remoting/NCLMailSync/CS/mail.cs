@@ -26,7 +26,7 @@ namespace Examples.SmtpExamples.Sync
             string body = @"Using this new feature, you can send an email message from an application very easily.";
             MailMessage message = new MailMessage(from, to, subject, body);
             SmtpClient client = new SmtpClient(server, port);
-            // Credentials are necessary if the server requires the client 
+            // Credentials are necessary if the server requires the client
             // to authenticate before it will send email on the client's behalf.
             client.Credentials = CredentialCache.DefaultNetworkCredentials;
             client.Send(message);
@@ -42,7 +42,7 @@ namespace Examples.SmtpExamples.Sync
             message.Subject = "Using the new SMTP client.";
             message.Body = @"Using this new feature, you can send an email message from an application very easily.";
             SmtpClient client = new SmtpClient(server);
-            // Credentials are necessary if the server requires the client 
+            // Credentials are necessary if the server requires the client
             // to authenticate before it will send email on the client's behalf.
             client.UseDefaultCredentials = true;
 
@@ -52,7 +52,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateTestMessage2(): {0}", 
+                Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
                     ex.ToString());
             }
         }
@@ -69,7 +69,7 @@ namespace Examples.SmtpExamples.Sync
             SmtpClient client = new SmtpClient(server);
             Console.WriteLine("Changing time out from {0} to 100.", client.Timeout);
             client.Timeout = 100;
-            // Credentials are necessary if the server requires the client 
+            // Credentials are necessary if the server requires the client
             // to authenticate before it will send email on the client's behalf.
             client.Credentials = CredentialCache.DefaultNetworkCredentials;
             client.Send(message);
@@ -84,7 +84,7 @@ namespace Examples.SmtpExamples.Sync
             MailMessage message = new MailMessage(from, to);
             message.Subject = "Using the new SMTP client.";
             message.Body = @"Using this new feature, you can send an email message from an application very easily.";
-            // Use the application or machine configuration to get the 
+            // Use the application or machine configuration to get the
             // host, port, and credentials.
             SmtpClient client = new SmtpClient();
             Console.WriteLine("Sending an email message to {0} at {1} by using the SMTP host={2}.",
@@ -111,7 +111,7 @@ namespace Examples.SmtpExamples.Sync
 
             ContentType mimeType = new System.Net.Mime.ContentType("text/html");
             // Add the alternate body to the message.
-            
+
             AlternateView alternate = AlternateView.CreateAlternateViewFromString(body, mimeType);
             message.AlternateViews.Add(alternate);
 
@@ -125,7 +125,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateMessageWithMultipleViews(): {0}", 
+                Console.WriteLine("Exception caught in CreateMessageWithMultipleViews(): {0}",
                     ex.ToString());
             }
             // Display the values in the ContentType for the attachment.
@@ -181,7 +181,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateMessageWithAttachment(): {0}", 
+                Console.WriteLine("Exception caught in CreateMessageWithAttachment(): {0}",
                     ex.ToString());
             }
             // Display the values in the ContentDisposition for the attachment.
@@ -221,7 +221,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateTestMessage4(): {0}", 
+                Console.WriteLine("Exception caught in CreateTestMessage4(): {0}",
                     ex.ToString());
           }
         }
@@ -243,7 +243,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateTestMessage5(): {0}\n", 
+                Console.WriteLine("Exception caught in CreateTestMessage5(): {0}\n",
                     ex.ToString());
           }
         }
@@ -261,7 +261,7 @@ namespace Examples.SmtpExamples.Sync
             message.Bcc.Add(bcc);
             SmtpClient client = new SmtpClient(server);
             client.Credentials = CredentialCache.DefaultNetworkCredentials;
-            Console.WriteLine("Sending an email message to {0} and {1}.", 
+            Console.WriteLine("Sending an email message to {0} and {1}.",
                 to.DisplayName, message.Bcc.ToString());
 
             try
@@ -270,7 +270,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateBccTestMessage(): {0}", 
+                Console.WriteLine("Exception caught in CreateBccTestMessage(): {0}",
                     ex.ToString());
             }
         }
@@ -293,14 +293,14 @@ namespace Examples.SmtpExamples.Sync
             client.Credentials = CredentialCache.DefaultNetworkCredentials;
             Console.WriteLine("Sending an email message to {0} by using the SMTP host {1}.",
                  to.Address, client.Host);
-    
+
             try
             {
                 client.Send(message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateCopyMessage(): {0}", 
+                Console.WriteLine("Exception caught in CreateCopyMessage(): {0}",
                     ex.ToString());
             }
         }
@@ -332,7 +332,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateMessageAttachment1(): {0}", 
+                Console.WriteLine("Exception caught in CreateMessageAttachment1(): {0}",
                     ex.ToString());
             }
             // Display the values in the ContentDisposition for the attachment.
@@ -381,7 +381,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateMessageInlineAttachment: {0}", 
+                Console.WriteLine("Exception caught in CreateMessageInlineAttachment: {0}",
                     ex.ToString());
             }
             data.Dispose();
@@ -416,7 +416,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateMessageInlineAttachment2: {0}", 
+                Console.WriteLine("Exception caught in CreateMessageInlineAttachment2: {0}",
                     ex.ToString());
             }
             data.Dispose();
@@ -472,7 +472,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in SendErrorLog: {0}", 
+                Console.WriteLine("Exception caught in SendErrorLog: {0}",
                     ex.ToString());
             }
             data.Dispose();
@@ -529,7 +529,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in SendNamedErrorLog: {0}", 
+                Console.WriteLine("Exception caught in SendNamedErrorLog: {0}",
                     ex.ToString());
             }
             data.Dispose();
@@ -584,7 +584,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in SendNamedAndTypedErrorLog: {0}", 
+                Console.WriteLine("Exception caught in SendNamedAndTypedErrorLog: {0}",
                     ex.ToString());
             }
             data.Dispose();
@@ -605,7 +605,7 @@ namespace Examples.SmtpExamples.Sync
             Console.Write("To: ");
             string recipient = Console.ReadLine();
             // Check for recipient data.
-            // A real application would add error checking here for a valid email 
+            // A real application would add error checking here for a valid email
             // address format. This example accepts any input.
             if (recipient.Length == 0)
                 return null;
@@ -649,12 +649,12 @@ namespace Examples.SmtpExamples.Sync
             {
 
                 try
-                { 
+                {
                     client.Send(message);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Exception caught in SendAttachedMessage: {0}", 
+                    Console.WriteLine("Exception caught in SendAttachedMessage: {0}",
                         ex.ToString());
                 }
                 Console.WriteLine("Message sent.");
@@ -687,7 +687,7 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateMessageWithFile: {0}", 
+                Console.WriteLine("Exception caught in CreateMessageWithFile: {0}",
                     ex.ToString());
             }
         }
@@ -720,8 +720,8 @@ namespace Examples.SmtpExamples.Sync
             Console.WriteLine("Content: {0}", reader.ReadToEnd());
             Console.WriteLine("Content Type {0}", a.ContentType.ToString());
             Console.WriteLine("Transfer Encoding {0}", a.TransferEncoding);
-            // Note that you cannot close the reader before the email is sent. 
-            // Closing the reader before sending the email will close the 
+            // Note that you cannot close the reader before the email is sent.
+            // Closing the reader before sending the email will close the
             // ContentStream and cause an SmtpException.
             reader = null;
         }
@@ -761,13 +761,13 @@ namespace Examples.SmtpExamples.Sync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateMessageWithAttachment2: {0}", 
+                Console.WriteLine("Exception caught in CreateMessageWithAttachment2: {0}",
                     ex.ToString());
             }
             finally
             {
                 data.Dispose();
-            } 
+            }
         }
         //</snippet22>
 
@@ -943,14 +943,14 @@ namespace Examples.SmtpExamples.Sync
                     }
                     else
                     {
-                        Console.WriteLine("Failed to deliver message to {0}", 
+                        Console.WriteLine("Failed to deliver message to {0}",
                             ex.InnerExceptions[i].FailedRecipient);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in RetryIfBusy(): {0}", 
+                Console.WriteLine("Exception caught in RetryIfBusy(): {0}",
                         ex.ToString() );
             }
         }
@@ -1092,10 +1092,10 @@ namespace Examples.SmtpExamples.Sync
 
             Console.WriteLine("\ncall CreateTestMessage2({0})", args[0]);
             CreateTestMessage2(args[0]);
-                    
+
             Console.WriteLine("\ncall CreateTestMessage2({0})", args[0]);
             CreateTimeoutTestMessage(args[0]);
-            
+
             Console.WriteLine("\ncall CreateTestMessage3()");
             CreateTestMessage3();
 
@@ -1114,7 +1114,7 @@ namespace Examples.SmtpExamples.Sync
 
             Console.WriteLine("\ncall CreateBccTestMessage({0})", args[0]);
             CreateBccTestMessage(args[0]);
-            
+
             // CreateMessageInlineAttachment3("smarthost", "string  textMessage");
             //CreateCopyMessage("sharriso1");
             //  CreateMessageWithMultipleRecipients("sharriso1");

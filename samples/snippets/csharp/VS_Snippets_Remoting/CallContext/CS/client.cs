@@ -10,12 +10,12 @@ using System.Security.Permissions;
 public class ClientClass {
    [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main() {
-      
+
       GenericIdentity ident = new GenericIdentity("Bob");
-      GenericPrincipal prpal = new GenericPrincipal(ident, 
+      GenericPrincipal prpal = new GenericPrincipal(ident,
                                                     new string[] {"Level1"});
-      LogicalCallContextData data = new LogicalCallContextData(prpal);      
-      
+      LogicalCallContextData data = new LogicalCallContextData(prpal);
+
       //Enter data into the CallContext
       CallContext.SetData("test data", data);
 
@@ -43,7 +43,7 @@ public class ClientClass {
       Console.WriteLine();
 
       //Extract the returned data from the call context
-      LogicalCallContextData returnedData = 
+      LogicalCallContextData returnedData =
          (LogicalCallContextData)CallContext.GetData("test data");
 
       Console.WriteLine(data.numOfAccesses);

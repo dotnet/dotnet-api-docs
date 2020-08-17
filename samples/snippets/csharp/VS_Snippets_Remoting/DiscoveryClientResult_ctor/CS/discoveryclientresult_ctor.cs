@@ -3,12 +3,12 @@
 /*
 The following example demonstrates the DiscoveryClientResult(Type,String,String)
 constructor of 'DiscoveryClientResult' class.
-A 'DiscoveryClientResultCollection' object is obtained by reading a '.discomap' file 
-which contains the 'DiscoveryClientResult' objects, representing the details of 
-discovery references. A 'DiscoveryClientProtocol' object from the collection is 
+A 'DiscoveryClientResultCollection' object is obtained by reading a '.discomap' file
+which contains the 'DiscoveryClientResult' objects, representing the details of
+discovery references. A 'DiscoveryClientProtocol' object from the collection is
 removed. Then a 'DiscoveryClientProtocol' is created suppling the type of reference
 in the discovery document, URL for the reference and  name of the file in which the
-reference is saved.and programmatically added to it. The contents of this collection 
+reference is saved.and programmatically added to it. The contents of this collection
 are displayed.
 */
 
@@ -22,11 +22,11 @@ public class MyDiscoveryClientResult
    {
       try
       {
-         DiscoveryClientProtocol myDiscoveryClientProtocol = 
+         DiscoveryClientProtocol myDiscoveryClientProtocol =
                   new DiscoveryClientProtocol();
 
          // Get the collection of DiscoveryClientResult objects.
-         DiscoveryClientResultCollection myDiscoveryClientResultCollection = 
+         DiscoveryClientResultCollection myDiscoveryClientResultCollection =
             myDiscoveryClientProtocol.ReadAll("results.discomap");
          Console.WriteLine("The number of DiscoveryClientResult objects: "
             + myDiscoveryClientResultCollection.Count);
@@ -40,7 +40,7 @@ public class MyDiscoveryClientResult
             + "to the collection...");
 // <Snippet1>
          // Initialize a new instance of the DiscoveryClientResult class.
-         DiscoveryClientResult myDiscoveryClientResult = 
+         DiscoveryClientResult myDiscoveryClientResult =
             new DiscoveryClientResult(
             typeof(System.Web.Services.Discovery.DiscoveryDocumentReference),
             "http://localhost/Discovery/Service1_cs.asmx?disco",
@@ -52,7 +52,7 @@ public class MyDiscoveryClientResult
          Console.WriteLine("Displaying the items in the collection");
          for(int i=0;i<myDiscoveryClientResultCollection.Count;i++)
          {
-            DiscoveryClientResult myClientResult = 
+            DiscoveryClientResult myClientResult =
                myDiscoveryClientResultCollection[i];
             Console.WriteLine("DiscoveryClientResult Object "+(i+1));
             Console.WriteLine("Type of reference in the discovery document: "

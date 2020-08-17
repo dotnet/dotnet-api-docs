@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 Object MyObject;
 MyObject = Server.CreateObject("Acme.Component.3");
-   
+
 // </Snippet1>
  }
 }

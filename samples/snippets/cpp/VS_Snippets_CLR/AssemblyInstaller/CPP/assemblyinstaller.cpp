@@ -33,9 +33,6 @@ int main()
       // Commit the 'MyAssembly' assembly.
       myAssemblyInstaller->Commit( mySavedState );
    }
-   catch ( ArgumentException^ ) 
-   {
-   }
    catch ( Exception^ e ) 
    {
       Console::WriteLine( e->Message );

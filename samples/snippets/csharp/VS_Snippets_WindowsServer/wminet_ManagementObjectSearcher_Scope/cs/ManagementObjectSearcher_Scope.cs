@@ -2,19 +2,19 @@
 using System;
 using System.Management;
 
-public class Sample 
+public class Sample
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
         ManagementScope ms = new ManagementScope(
             "\\\\.\\root\\cimv2");
         ms.Connect();
-        ManagementObjectSearcher searcher = 
+        ManagementObjectSearcher searcher =
             new ManagementObjectSearcher(
             "SELECT * FROM Win32_Service");
         searcher.Scope = ms;
 
-        foreach (ManagementObject service in searcher.Get()) 
+        foreach (ManagementObject service in searcher.Get())
         {
             // show the service
             Console.WriteLine(service.ToString());

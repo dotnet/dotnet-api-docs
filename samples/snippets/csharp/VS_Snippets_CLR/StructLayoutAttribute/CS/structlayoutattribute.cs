@@ -2,8 +2,8 @@
    System.Runtime.InteropServices.StructLayoutAttribute.StructLayoutAttribute(LayoutKind)
    System.Runtime.InteropServices.StructLayoutAttribute.CharSet
    System.Runtime.InteropServices.StructLayoutAttribute.Size
-   
-   The program shows a managed declaration of the GetSystemTime function and defines 
+
+   The program shows a managed declaration of the GetSystemTime function and defines
    MySystemTime class with explicit layout. The GetSystemTime get the system time
    and print to the console.
 */
@@ -13,21 +13,21 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace InteropSample
-{   
+{
 
 // <Snippet2>
 // <Snippet3>
    [StructLayout(LayoutKind.Explicit, Size=16, CharSet=CharSet.Ansi)]
-   public class MySystemTime 
+   public class MySystemTime
    {
-      [FieldOffset(0)]public ushort wYear; 
+      [FieldOffset(0)]public ushort wYear;
       [FieldOffset(2)]public ushort wMonth;
-      [FieldOffset(4)]public ushort wDayOfWeek; 
-      [FieldOffset(6)]public ushort wDay; 
-      [FieldOffset(8)]public ushort wHour; 
-      [FieldOffset(10)]public ushort wMinute; 
-      [FieldOffset(12)]public ushort wSecond; 
-      [FieldOffset(14)]public ushort wMilliseconds; 
+      [FieldOffset(4)]public ushort wDayOfWeek;
+      [FieldOffset(6)]public ushort wDay;
+      [FieldOffset(8)]public ushort wHour;
+      [FieldOffset(10)]public ushort wMinute;
+      [FieldOffset(12)]public ushort wSecond;
+      [FieldOffset(14)]public ushort wMilliseconds;
    }
 
    internal static class NativeMethods
@@ -37,7 +37,7 @@ namespace InteropSample
    };
 
    class TestApplication
-   {      
+   {
       public static void Main()
       {
          try
@@ -45,8 +45,8 @@ namespace InteropSample
             MySystemTime sysTime = new MySystemTime();
             NativeMethods.GetSystemTime(sysTime);
             Console.WriteLine("The System time is {0}/{1}/{2} {3}:{4}:{5}", sysTime.wDay,
-               sysTime.wMonth, sysTime.wYear, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);            
-         }         
+               sysTime.wMonth, sysTime.wYear, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
+         }
          catch(TypeLoadException e)
          {
             Console.WriteLine("TypeLoadException : " + e.Message);

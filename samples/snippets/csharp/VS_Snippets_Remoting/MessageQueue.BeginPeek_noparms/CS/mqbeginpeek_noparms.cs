@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example performs asynchronous peek operation
 		// processing.
 		//**************************************************
@@ -25,7 +25,7 @@ namespace MyProject
 				{typeof(String)});
 
 			// Add an event handler for the PeekCompleted event.
-			myQueue.PeekCompleted += new 
+			myQueue.PeekCompleted += new
 				PeekCompletedEventHandler(MyPeekCompleted);
 			
 			// Begin the asynchronous peek operation.
@@ -41,7 +41,7 @@ namespace MyProject
 		// event.
 		//**************************************************
 		
-		private static void MyPeekCompleted(Object source, 
+		private static void MyPeekCompleted(Object source,
 			PeekCompletedEventArgs asyncResult)
 		{
 			// Connect to the queue.
@@ -56,7 +56,7 @@ namespace MyProject
 			// Restart the asynchronous peek operation.
 			mq.BeginPeek();
 			
-			return; 
+			return;
 		}
 	}
 }

@@ -9,7 +9,7 @@ class MyProcess : Process
         this.CloseMainWindow();
         this.Close();
         OnExited();
-    } 
+    }
 }
 class StartNotePad
 {

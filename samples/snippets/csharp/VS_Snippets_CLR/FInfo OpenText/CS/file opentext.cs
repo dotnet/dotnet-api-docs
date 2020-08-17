@@ -3,9 +3,9 @@ using System;
 using System.IO;
 using System.Text;
 
-class Test 
+class Test
 {
-    public static void Main() 
+    public static void Main()
     {
         string path = @"c:\MyTest.txt";
 
@@ -17,7 +17,7 @@ class Test
             // Create the file.
             using (FileStream fs = fi.Create())
             {
-                Byte[] info = 
+                Byte[] info =
                     new UTF8Encoding(true).GetBytes("This is some text in the file.");
 
                 // Add some information to the file.
@@ -30,14 +30,14 @@ class Test
         using (StreamReader sr = fi.OpenText())
         {
             string s = "";
-            while ((s = sr.ReadLine()) != null) 
+            while ((s = sr.ReadLine()) != null)
             {
                 Console.WriteLine(s);
             }
         }
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //This is some text in the file.

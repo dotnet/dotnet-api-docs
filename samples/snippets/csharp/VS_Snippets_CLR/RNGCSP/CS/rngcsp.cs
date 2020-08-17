@@ -27,7 +27,6 @@ class RNGCSP
             Console.WriteLine("{0}: {1} ({2:p1})", i + 1, results[i], (double)results[i] / (double)totalRolls);
         }
         rngCsp.Dispose();
-        Console.ReadLine();
     }
 
     // This method simulates a roll of the dice. The input parameter is the

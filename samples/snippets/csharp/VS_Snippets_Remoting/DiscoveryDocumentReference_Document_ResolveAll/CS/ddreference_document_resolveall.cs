@@ -2,7 +2,7 @@
 // System.Web.Services.Discovery.DiscoveryDocumentReference.ResolveAll()
 
 /*
-   This program demonstrates the 'Document' property and 'ResolveAll()' method of 
+   This program demonstrates the 'Document' property and 'ResolveAll()' method of
    'DiscoveryDocumentReference' class. Set the 'ClientProtocol' of
    'DiscoveryDocumentReference' class. The validity of the documents within the discovery
    document is verified using the 'ResolveAll' method and the valid references to the
@@ -37,7 +37,7 @@ class DiscoveryDocumentReference_Document_ResolveAll
          IEnumerator myEnumerator = myDiscoveryDocument.References.GetEnumerator();
          while(myEnumerator.MoveNext())
          {
-            DiscoveryDocumentReference myNewReference = 
+            DiscoveryDocumentReference myNewReference =
                            (DiscoveryDocumentReference)myEnumerator.Current;
             // Set the ClientProtocol of myNewReference.
             DiscoveryClientProtocol myNewProtocol = myNewReference.ClientProtocol;
@@ -45,10 +45,10 @@ class DiscoveryDocumentReference_Document_ResolveAll
             myNewReference.ResolveAll();
 
             // Get the document of myNewReference.
-            DiscoveryDocument myNewDiscoveryDocument = 
+            DiscoveryDocument myNewDiscoveryDocument =
                                                  myNewReference.Document;
 
-            IEnumerator myNewEnumerator = 
+            IEnumerator myNewEnumerator =
                            myNewDiscoveryDocument.References.GetEnumerator();
             Console.WriteLine("The valid discovery document is : \n");
             while(myNewEnumerator.MoveNext())

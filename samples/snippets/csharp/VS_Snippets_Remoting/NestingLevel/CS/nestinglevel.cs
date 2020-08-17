@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using System.IO;
 
 public class Forest{
-   /* Set the NestingLevel for each array. The first 
+   /* Set the NestingLevel for each array. The first
    attribute (NestingLevel = 0) is optional. */
    [XmlArrayItem(ElementName = "tree", NestingLevel = 0)]
    [XmlArrayItem(ElementName = "branch", NestingLevel = 1)]
@@ -19,7 +19,7 @@ public class Test{
       t.SerializeObject("Tree.xml");
    }
    private void SerializeObject(string filename){
-      XmlSerializer serializer = 
+      XmlSerializer serializer =
       new XmlSerializer(typeof(Forest));
 
       Forest f = new Forest();
@@ -33,7 +33,7 @@ public class Test{
       myBranchArray2[0]=new string[2]{"One","Two"};
       myBranchArray2[1]=new string[3]{"One","Two","Three"};
       myTreeArray[1]=myBranchArray2;
-   
+
       f.TreeArray=myTreeArray;
 
      serializer.Serialize(Console.Out, f);

@@ -12,7 +12,7 @@ public class MyHeader : SoapHeader {
 public class MyWebService {
     // Member variable to receive the contents of the MyHeader SOAP header.
     public MyHeader myHeader;
- 
+
     [WebMethod]
     [SoapHeader("myHeader", Direction=SoapHeaderDirection.InOut)]
     public void Hello() {

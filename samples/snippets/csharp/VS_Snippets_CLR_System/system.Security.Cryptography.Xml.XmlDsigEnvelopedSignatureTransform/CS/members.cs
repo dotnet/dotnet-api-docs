@@ -182,7 +182,7 @@ class Class1
     private static void SignDocument(ref XmlDocument xmlDoc)
     {
         // Generate a signing key.
-        RSACryptoServiceProvider Key = new RSACryptoServiceProvider();
+        RSA Key = RSA.Create();
 
         // Create a SignedXml object.
         SignedXml signedXml = new SignedXml(xmlDoc);

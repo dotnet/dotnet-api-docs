@@ -18,9 +18,9 @@ public class Example
 // The example displays the following output:
 //    1^1
 //    Adding 1 to the collection...
-//    
-//    
-//    Unhandled Exception: System.InvalidOperationException: Collection was modified; 
+//
+//
+//    Unhandled Exception: System.InvalidOperationException: Collection was modified;
 //       enumeration operation may not execute.
 //       at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
 //       at System.Collections.Generic.List`1.Enumerator.MoveNextRare()

@@ -17,7 +17,7 @@ namespace ServiceControllerSample
       [STAThread]
       static void Main()
       {
-         try 
+         try
          {
             // This is a simple interface for exercising the snippet code.
             Console.WriteLine("Service options:");
@@ -29,7 +29,7 @@ namespace ServiceControllerSample
             Console.WriteLine("  6. List the running services on this computer");
             Console.WriteLine("Enter the desired option (or any other key to quit): ");
 
-            // Get the input number. 
+            // Get the input number.
             String inputText = Console.ReadLine();
             int option = 0;
 
@@ -73,8 +73,8 @@ namespace ServiceControllerSample
 
       private static void CheckAlerterServiceStarted()
       {
-         // The following example uses the ServiceController class to 
-         // check whether the Alerter service is stopped.  If the service is 
+         // The following example uses the ServiceController class to
+         // check whether the Alerter service is stopped.  If the service is
          // stopped, the example starts the service and waits until
          // the service status is set to "Running".
 
@@ -84,7 +84,7 @@ namespace ServiceControllerSample
 
          ServiceController sc  = new ServiceController();
          sc.ServiceName = "Alerter";
-         Console.WriteLine("The Alerter service status is currently set to {0}", 
+         Console.WriteLine("The Alerter service status is currently set to {0}",
                             sc.Status.ToString());
 
          if (sc.Status == ServiceControllerStatus.Stopped)
@@ -92,14 +92,14 @@ namespace ServiceControllerSample
             // Start the service if the current status is stopped.
 
             Console.WriteLine("Starting the Alerter service...");
-            try 
+            try
             {
                // Start the service, and wait until its status is "Running".
                sc.Start();
                sc.WaitForStatus(ServiceControllerStatus.Running);
-            
+
                // Display the current service status.
-               Console.WriteLine("The Alerter service status is now set to {0}.", 
+               Console.WriteLine("The Alerter service status is now set to {0}.",
                                   sc.Status.ToString());
             }
             catch (InvalidOperationException)
@@ -112,8 +112,8 @@ namespace ServiceControllerSample
 
       private static void ToggleTelNetServiceState()
       {
-         // The following example uses the ServiceController class to 
-         // check the current status of the TelNet service.  
+         // The following example uses the ServiceController class to
+         // check the current status of the TelNet service.
          // If the service is stopped, the example starts the service.
          // If the service is running, the example stops the service.
 
@@ -121,11 +121,11 @@ namespace ServiceControllerSample
 
          // <snippet2>
 
-         // Toggle the Telnet service - 
+         // Toggle the Telnet service -
          // If it is started (running, paused, etc), stop the service.
          // If it is stopped, start the service.
          ServiceController sc = new ServiceController("Telnet");
-         Console.WriteLine("The Telnet service status is currently set to {0}", 
+         Console.WriteLine("The Telnet service status is currently set to {0}",
                            sc.Status.ToString());
 
          if  ((sc.Status.Equals(ServiceControllerStatus.Stopped)) ||
@@ -135,43 +135,43 @@ namespace ServiceControllerSample
 
             Console.WriteLine("Starting the Telnet service...");
             sc.Start();
-         }  
+         }
          else
          {
             // Stop the service if its status is not set to "Stopped".
 
             Console.WriteLine("Stopping the Telnet service...");
             sc.Stop();
-         }  
+         }
 
          // Refresh and display the current service status.
          sc.Refresh();
-         Console.WriteLine("The Telnet service status is now set to {0}.", 
+         Console.WriteLine("The Telnet service status is now set to {0}.",
                             sc.Status.ToString());
-         
+
          // </snippet2>
       }
 
       private static void CheckDependenciesOnEventLogService()
       {
          Console.WriteLine();
-         
-         // The following example uses the ServiceController class to 
-         // display the set of services that are dependent on the 
+
+         // The following example uses the ServiceController class to
+         // display the set of services that are dependent on the
          // Event Log service.
 
          // <snippet3>
 
          ServiceController sc =  new ServiceController("Event Log");
          ServiceController[] scServices = sc.DependentServices;
-       
+
          // Display the list of services dependent on the Event Log service.
          if (scServices.Length == 0)
          {
-            Console.WriteLine("There are no services dependent on {0}", 
+            Console.WriteLine("There are no services dependent on {0}",
                                sc.ServiceName);
          }
-         else 
+         else
          {
             Console.WriteLine("Services dependent on {0}:",
                                sc.ServiceName);
@@ -187,7 +187,7 @@ namespace ServiceControllerSample
 
       private static void CheckMessengerServiceDependencies()
       {
-         // The following example uses the ServiceController class to 
+         // The following example uses the ServiceController class to
          // display the set of services that the "Messenger" service
          // is dependent on.
 
@@ -200,10 +200,10 @@ namespace ServiceControllerSample
          // Display the services that the Messenger service is dependent on.
          if (scServices.Length == 0)
          {
-            Console.WriteLine("{0} service is not dependent on any other services.", 
+            Console.WriteLine("{0} service is not dependent on any other services.",
                                sc.ServiceName);
          }
-         else 
+         else
          {
             Console.WriteLine("{0} service is dependent on the following:",
                                sc.ServiceName);
@@ -218,8 +218,8 @@ namespace ServiceControllerSample
 
       private static void ListDeviceDriverServices()
       {
-         // The following example uses the ServiceController class to 
-         // display the device driver services on the local computer. 
+         // The following example uses the ServiceController class to
+         // display the device driver services on the local computer.
 
          Console.WriteLine();
 
@@ -228,10 +228,10 @@ namespace ServiceControllerSample
          scDevices = ServiceController.GetDevices();
 
          int numAdapter = 0,
-             numFileSystem = 0, 
-             numKernel = 0, 
+             numFileSystem = 0,
+             numKernel = 0,
              numRecognizer = 0;
-       
+
          // Display the list of device driver services.
          Console.WriteLine("Device driver services on the local computer:");
 
@@ -241,23 +241,23 @@ namespace ServiceControllerSample
             //   [Running] PCI Bus Driver
             //             Type = KernelDriver
 
-            Console.WriteLine(" [{0}] {1}", 
+            Console.WriteLine(" [{0}] {1}",
                               scTemp.Status, scTemp.DisplayName);
-            Console.WriteLine("           Type = {0}", scTemp.ServiceType); 
+            Console.WriteLine("           Type = {0}", scTemp.ServiceType);
 
             // Update counters using the service type bit flags.
             if ((scTemp.ServiceType & ServiceType.Adapter) != 0)
             {
                numAdapter++;
-            } 
+            }
             if ((scTemp.ServiceType & ServiceType.FileSystemDriver) != 0)
             {
                numFileSystem++;
-            }  
+            }
             if ((scTemp.ServiceType & ServiceType.KernelDriver) != 0)
             {
                numKernel++;
-            } 
+            }
             if ((scTemp.ServiceType & ServiceType.RecognizerDriver) != 0)
             {
                numRecognizer++;
@@ -276,7 +276,7 @@ namespace ServiceControllerSample
 
       private static void ListRunningServices()
       {
-         // The following example uses the ServiceController class to 
+         // The following example uses the ServiceController class to
          // display services that are running on the local computer.
 
          Console.WriteLine();
@@ -299,7 +299,7 @@ namespace ServiceControllerSample
                Console.WriteLine("    Display name:    {0}", scTemp.DisplayName);
 
                // Query WMI for additional information about this service.
-               // Display the start name (LocalSytem, etc) and the service
+               // Display the start name (LocalSystem, etc) and the service
                // description.
                ManagementObject wmiService;
                wmiService = new ManagementObject("Win32_Service.Name='" + scTemp.ServiceName + "'");

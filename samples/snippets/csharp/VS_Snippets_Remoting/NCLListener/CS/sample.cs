@@ -35,7 +35,7 @@ public class NetListener
             message.Append("</BODY></HTML>");
             message403 = message.ToString();
 
-            // Turn the error message into a byte array using the 
+            // Turn the error message into a byte array using the
             // encoding from the response when present.
             System.Text.Encoding encoding = response.ContentEncoding;
             if (encoding == null)
@@ -79,10 +79,10 @@ public class NetListener
         prefixes.Add(@"http://contoso.com:8080/");
 
         // Specify the authentication delegate.
-        listener.AuthenticationSchemeSelectorDelegate = 
+        listener.AuthenticationSchemeSelectorDelegate =
             new AuthenticationSchemeSelector (AuthenticationSchemeForClient);
 
-        // Start listening for requests and process them 
+        // Start listening for requests and process them
         // synchronously.
         listener.Start();
         // </snippet2>
@@ -98,7 +98,7 @@ public class NetListener
 
             // Did the client omit the certificate or send an invalid certificate?
             if (request.IsAuthenticated &&
-                request.GetClientCertificate() == null || 
+                request.GetClientCertificate() == null ||
                 request.ClientCertificateError != 0)
             {
                 // Send a 403 response.
@@ -122,9 +122,9 @@ public class NetListener
                 // Get the requester's identity.
                 System.Security.Principal.WindowsIdentity identity = WindowsIdentity.GetCurrent();
                 // Construct the response body.
-                message.AppendFormat ("<HTML><BODY><p> Hello {0}!<br/>", 
+                message.AppendFormat ("<HTML><BODY><p> Hello {0}!<br/>",
                     identity.Name);
-                message.AppendFormat ("You were authenticated using {0}.</p>", 
+                message.AppendFormat ("You were authenticated using {0}.</p>",
                     identity.AuthenticationType);
                 message.Append ("</BODY></HTML>");
                 // </snippet6>
@@ -146,7 +146,7 @@ public class NetListener
             response.StatusCode = (int) HttpStatusCode.OK;
             response.StatusDescription = "OK";
             response.ProtocolVersion = new Version ("1.1");
-            // Don't keep the TCP connection alive; 
+            // Don't keep the TCP connection alive;
             // We don't expect multiple requests from the same client.
             response.KeepAlive = false;
             // Write the response body.
@@ -157,7 +157,7 @@ public class NetListener
             Console.WriteLine("Request complete. Press q to quit, enter to continue.");
             string answer = Console.ReadLine();
             if (answer.StartsWith("q"))
-            { 
+            {
                Console.WriteLine("bye.");
                listener.Close();
                break;

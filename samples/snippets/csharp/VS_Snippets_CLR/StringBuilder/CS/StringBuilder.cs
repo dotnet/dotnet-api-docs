@@ -1,6 +1,6 @@
 ﻿//Code Modification: Removed AppendLine and associated comment after the AppendFormat line.
-//The CR/LF bytes introduces by AppendLine made the sb.Length appear incorrect.   
-// Before 
+//The CR/LF bytes introduces by AppendLine made the sb.Length appear incorrect.
+// Before
 //sb.AppendFormat("GHI{0}{1}", 'J', 'k');
 ////APpend a blank line to the end of the StringBuilder.
 //   sb.AppendLine();
@@ -12,9 +12,9 @@
 using System;
 using System.Text;
 
-public sealed class App 
+public sealed class App
 {
-    static void Main() 
+    static void Main()
     {
         //<snippet2>
         // Create a StringBuilder that expects to hold 50 characters.
@@ -22,7 +22,7 @@ public sealed class App
         StringBuilder sb = new StringBuilder("ABC", 50);
         //</snippet2>
 
-        //<snippet3> 
+        //<snippet3>
         // Append three characters (D, E, and F) to the end of the StringBuilder.
         sb.Append(new char[] { 'D', 'E', 'F' });
         //</snippet3>

@@ -1,6 +1,6 @@
 ﻿//The following sample initializes a CredentialCache with multiple security credentials
 //and later uses NTLM credentials with SmtpClient
- 
+
 using System;
 using System.Net;
 using System.Net.Mail;
@@ -19,12 +19,12 @@ class SMTP_CredentailCache_Sample
         message.Subject = "Test Email using Credentials";
 
         NetworkCredential myCreds = new NetworkCredential("username", "password", "domain");
-        CredentialCache myCredentialCache = new CredentialCache();        
-        try 
+        CredentialCache myCredentialCache = new CredentialCache();
+        try
         {
             myCredentialCache.Add("ContoscoMail", 35, "Basic", myCreds);
             myCredentialCache.Add("ContoscoMail", 45, "NTLM", myCreds);
-                    
+
             client.Credentials = myCredentialCache.GetCredential("ContosoMail", 45, "NTLM");
             client.Send(message);
             Console.WriteLine("Goodbye.");

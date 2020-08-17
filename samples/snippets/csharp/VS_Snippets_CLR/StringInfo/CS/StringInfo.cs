@@ -21,7 +21,7 @@ public sealed class App {
       // This StringBuilder holds the output results.
       StringBuilder sb = new StringBuilder();
 
-      // Use the enumerator returned from GetTextElementEnumerator 
+      // Use the enumerator returned from GetTextElementEnumerator
       // method to examine each real character.
       TextElementEnumerator charEnum = StringInfo.GetTextElementEnumerator(s);
       while (charEnum.MoveNext()) {
@@ -41,7 +41,7 @@ public sealed class App {
       // This StringBuilder holds the output results.
       StringBuilder sb = new StringBuilder();
 
-      // Use the ParseCombiningCharacters method to 
+      // Use the ParseCombiningCharacters method to
       // get the index of each real character in the string.
       Int32[] textElemIndex = StringInfo.ParseCombiningCharacters(s);
 
@@ -58,13 +58,13 @@ public sealed class App {
    }
 }
 
-// This code produces the following output.
+// This code produces the following output:
 //
 // Result of GetTextElementEnumerator:
-// Character at index 0 is 'a-"'
+// Character at index 0 is 'ā̈'
 // Character at index 3 is 'b'
-// Character at index 4 is 'c,'
-// 
+// Character at index 4 is 'ç'
+//
 // Result of ParseCombiningCharacters:
 // Character 0 starts at index 0
 // Character 1 starts at index 3

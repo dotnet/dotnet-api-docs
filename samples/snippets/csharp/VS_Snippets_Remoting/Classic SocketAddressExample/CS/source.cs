@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using System.Net; 
+using System.Net;
 using System.Net.Sockets;
 
 public class MySerializeExample{
@@ -13,7 +13,7 @@ public static void MySerializeIPEndPointClassMethod(){
 IPAddress ipAddress = Dns.Resolve("www.contoso.com").AddressList[0];
 IPEndPoint ipLocalEndPoint = new IPEndPoint(ipAddress, 11000);
 
-//Serializes the IPEndPoint. 
+//Serializes the IPEndPoint.
 SocketAddress socketAddress = ipLocalEndPoint.Serialize();
 
 //Verifies that ipLocalEndPoint is now serialized by printing its contents.

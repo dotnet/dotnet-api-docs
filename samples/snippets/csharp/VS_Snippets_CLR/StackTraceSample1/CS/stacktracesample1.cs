@@ -33,9 +33,9 @@ class StackTraceSample
         }
     }
 
-    public void MyPublicMethod () 
-    { 
-        MyProtectedMethod(); 
+    public void MyPublicMethod ()
+    {
+        MyProtectedMethod();
     }
 
     protected void MyProtectedMethod ()
@@ -66,7 +66,7 @@ class StackTraceSample
                     Console.WriteLine();
                     Console.WriteLine(stackIndent + " Method: {0}",
                         sf.GetMethod() );
-                    Console.WriteLine(  stackIndent + " File: {0}", 
+                    Console.WriteLine(  stackIndent + " File: {0}",
                         sf.GetFileName());
                     Console.WriteLine(  stackIndent + " Line Number: {0}",
                         sf.GetFileLineNumber());
@@ -81,7 +81,7 @@ class StackTraceSample
 /*
 This console application produces the following output when
 compiled with the Debug configuration.
-  
+
    Method: Void ThrowsException()
    File: c:\samples\stacktraceframe\myclass.cs
    Line Number: 59

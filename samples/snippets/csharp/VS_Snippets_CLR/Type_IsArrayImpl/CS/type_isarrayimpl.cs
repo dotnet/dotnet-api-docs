@@ -19,7 +19,7 @@ public class MyTypeDelegator : TypeDelegator
             return true;
         }
         // Return false if the type is not an array.
-        return false;  
+        return false;
     }
 }
 public class Type_IsArrayImpl
@@ -28,19 +28,19 @@ public class Type_IsArrayImpl
     {
         try
         {
-            int myInt = 0 ; 
+            int myInt = 0 ;
             // Create an instance of an array element.
             int[] myArray = new int[5];
             MyTypeDelegator myType = new MyTypeDelegator(myArray.GetType());
             Console.WriteLine("\nDetermine whether the variable is an array.\n");
-            // Determine whether myType is an array type.  
+            // Determine whether myType is an array type.
             if( myType.IsArray)
                 Console.WriteLine("The type of myArray is {0}.", myType.myElementType);
             else
                 Console.WriteLine("myArray is not an array.");
             myType = new MyTypeDelegator(myInt.GetType());
 
-            // Determine whether myType is an array type. 
+            // Determine whether myType is an array type.
             if( myType.IsArray)
                 Console.WriteLine("The type of myInt is {0}.", myType.myElementType);
             else

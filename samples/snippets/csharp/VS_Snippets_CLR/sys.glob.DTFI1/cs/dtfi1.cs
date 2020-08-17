@@ -1,15 +1,15 @@
 ﻿//<snippet1>
-// This code example demonstrates the DateTimeFormatInfo 
-// MonthGenitiveNames, AbbreviatedMonthGenitiveNames, 
+// This code example demonstrates the DateTimeFormatInfo
+// MonthGenitiveNames, AbbreviatedMonthGenitiveNames,
 // ShortestDayNames, and NativeCalendarName properties, and
 // the GetShortestDayName() and SetAllDateTimePatterns() methods.
 
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     string[] myDateTimePatterns = new string[] {"MM/dd/yy", "MM/dd/yyyy"};
 
@@ -21,27 +21,27 @@ class Sample
 // Display the effective culture.
     Console.WriteLine("This code example uses the {0} culture.", ci.Name);
 
-// Display the native calendar name.    
+// Display the native calendar name.
     Console.WriteLine("\nNativeCalendarName...");
     Console.WriteLine("\"{0}\"", dtfi.NativeCalendarName);
 
 // Display month genitive names.
     Console.WriteLine("\nMonthGenitiveNames...");
-    foreach (string name in dtfi.MonthGenitiveNames) 
+    foreach (string name in dtfi.MonthGenitiveNames)
     {
     Console.WriteLine("\"{0}\"", name);
     }
 
 // Display abbreviated month genitive names.
     Console.WriteLine("\nAbbreviatedMonthGenitiveNames...");
-    foreach (string name in dtfi.AbbreviatedMonthGenitiveNames) 
+    foreach (string name in dtfi.AbbreviatedMonthGenitiveNames)
     {
     Console.WriteLine("\"{0}\"", name);
     }
 
 // Display shortest day names.
     Console.WriteLine("\nShortestDayNames...");
-    foreach (string name in dtfi.ShortestDayNames) 
+    foreach (string name in dtfi.ShortestDayNames)
     {
     Console.WriteLine("\"{0}\"", name);
     }
@@ -52,7 +52,7 @@ class Sample
 
 // Display the initial DateTime format patterns for the 'd' format specifier.
     Console.WriteLine("\nInitial DateTime format patterns for the 'd' format specifier...");
-    foreach (string name in dtfi.GetAllDateTimePatterns('d')) 
+    foreach (string name in dtfi.GetAllDateTimePatterns('d'))
     {
     Console.WriteLine("\"{0}\"", name);
     }
@@ -64,7 +64,7 @@ class Sample
 
 // Display the new DateTime format patterns for the 'd' format specifier.
     Console.WriteLine("\nNew DateTime format patterns for the 'd' format specifier...");
-    foreach (string name in dtfi.GetAllDateTimePatterns('d')) 
+    foreach (string name in dtfi.GetAllDateTimePatterns('d'))
     {
     Console.WriteLine("\"{0}\"", name);
     }

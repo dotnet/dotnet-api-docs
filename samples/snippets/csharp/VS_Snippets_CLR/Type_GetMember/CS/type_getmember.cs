@@ -4,7 +4,7 @@ using System;
 using System.Security;
 using System.Reflection;
 
-public class MyMemberSample 
+public class MyMemberSample
 {
     public static void Main()
     {
@@ -14,7 +14,7 @@ public class MyMemberSample
             myClass.GetMemberInfo();
             myClass.GetPublicStaticMemberInfo();	
             myClass.GetPublicInstanceMethodMemberInfo();	
-        }      
+        }
         catch(ArgumentNullException e)
         {
             Console.WriteLine("ArgumentNullException occurred.");
@@ -88,7 +88,7 @@ public class MyMemberSample
         String myString = "GetMember_String_MemberType_BindingFlag";
         Type myType = myString.GetType();
         // Get the public instance methods for myString starting with the letter C.
-        MemberInfo[] myMembers = myType.GetMember("C*", MemberTypes.Method, 
+        MemberInfo[] myMembers = myType.GetMember("C*", MemberTypes.Method,
             BindingFlags.Public | BindingFlags.Instance);
         if(myMembers.Length > 0)
         {

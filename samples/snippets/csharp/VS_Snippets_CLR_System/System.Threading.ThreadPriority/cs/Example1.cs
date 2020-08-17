@@ -29,7 +29,7 @@ class Test
 
 class PriorityTest
 {
-    static bool loopSwitch;
+    static volatile bool loopSwitch;
     [ThreadStatic] static long threadCount = 0;
 
     public PriorityTest()

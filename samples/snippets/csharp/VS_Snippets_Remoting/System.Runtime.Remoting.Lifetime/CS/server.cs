@@ -13,7 +13,7 @@ public class Server {
       Server myServer = new Server();
       myServer.Run();
    }
- 
+
 [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
    public void Run()
    {
@@ -21,12 +21,12 @@ public class Server {
       LifetimeServices.LeaseManagerPollTime = TimeSpan.FromSeconds(3);
       LifetimeServices.RenewOnCallTime = TimeSpan.FromSeconds(2);
       LifetimeServices.SponsorshipTimeout = TimeSpan.FromSeconds(1);
-   
+
       ChannelServices.RegisterChannel(new HttpChannel(8080), true);
       RemotingConfiguration.RegisterActivatedServiceType(typeof(ClientActivatedType));
-      
+
       Console.WriteLine("The server is listening. Press Enter to exit....");
-      Console.ReadLine();  
+      Console.ReadLine();
 
       Console.WriteLine("GC'ing.");
       GC.Collect();

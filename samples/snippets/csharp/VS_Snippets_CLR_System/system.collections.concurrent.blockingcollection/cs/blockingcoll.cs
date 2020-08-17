@@ -27,32 +27,30 @@ class AddTakeDemo
         using (BlockingCollection<int> bc = new BlockingCollection<int>())
         {
             // Spin up a Task to populate the BlockingCollection
-            using (Task t1 = Task.Run(() =>
+            Task t1 = Task.Run(() =>
             {
                 bc.Add(1);
                 bc.Add(2);
                 bc.Add(3);
                 bc.CompleteAdding();
-            }))
+            });
+
+            // Spin up a Task to consume the BlockingCollection
+            Task t2 = Task.Run(() =>
             {
-                // Spin up a Task to consume the BlockingCollection
-                using (Task t2 = Task.Run(() =>
+                try
                 {
-                    try
-                    {
-                        // Consume consume the BlockingCollection
-                        while (true) Console.WriteLine(bc.Take());
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        // An InvalidOperationException means that Take() was called on a completed collection
-                        Console.WriteLine("That's All!");
-                    }
-                }))
-                {
-                    await Task.WhenAll(t1, t2);
+                    // Consume consume the BlockingCollection
+                    while (true) Console.WriteLine(bc.Take());
                 }
-            }
+                catch (InvalidOperationException)
+                {
+                    // An InvalidOperationException means that Take() was called on a completed collection
+                    Console.WriteLine("That's All!");
+                }
+            });
+
+            await Task.WhenAll(t1, t2);
         }
     }
 }

@@ -10,7 +10,7 @@
 
 // <Snippet1>
 
-// This program shows how to use the IPAddress class to obtain a server 
+// This program shows how to use the IPAddress class to obtain a server
 // IP addressess and related information.
 
 using System;
@@ -21,25 +21,25 @@ using System.Text.RegularExpressions;
 namespace Mssc.Services.ConnectionManagement
 {
 
-  class TestIPAddress 
+  class TestIPAddress
   {
 
     /**
       * The IPAddresses method obtains the selected server IP address information.
-      * It then displays the type of address family supported by the server and its 
+      * It then displays the type of address family supported by the server and its
       * IP address in standard and byte format.
       **/
-    private static void IPAddresses(string server) 
+    private static void IPAddresses(string server)
     {
-      try 
+      try
       {
         System.Text.ASCIIEncoding ASCII = new System.Text.ASCIIEncoding();
-  
+
         // Get server related information.
         IPHostEntry heserver = Dns.GetHostEntry(server);
 
         // Loop on the AddressList
-        foreach (IPAddress curAdd in heserver.AddressList) 
+        foreach (IPAddress curAdd in heserver.AddressList)
         {
 
 //<Snippet3>
@@ -48,42 +48,42 @@ namespace Mssc.Services.ConnectionManagement
           // server is IPv6-enabled this value is: InterNetworkV6. If the server
           // is also IPv4-enabled there will be an additional value of InterNetwork.
           Console.WriteLine("AddressFamily: " + curAdd.AddressFamily.ToString());
-          
+
           // Display the ScopeId property in case of IPV6 addresses.
           if(curAdd.AddressFamily.ToString() == ProtocolFamily.InterNetworkV6.ToString())
             Console.WriteLine("Scope Id: " + curAdd.ScopeId.ToString());
 
 //</Snippet3>
 
-          // Display the server IP address in the standard format. In 
+          // Display the server IP address in the standard format. In
           // IPv4 the format will be dotted-quad notation, in IPv6 it will be
           // in in colon-hexadecimal notation.
           Console.WriteLine("Address: " + curAdd.ToString());
-        
+
           // Display the server IP address in byte format.
           Console.Write("AddressBytes: ");
 
 //<Snippet2>
           Byte[] bytes = curAdd.GetAddressBytes();
-          for (int i = 0; i < bytes.Length; i++) 
+          for (int i = 0; i < bytes.Length; i++)
           {
             Console.Write(bytes[i]);
-          }                          
+          }
 // </Snippet2>
 
           Console.WriteLine("\r\n");
         }
       }
-      catch (Exception e) 
+      catch (Exception e)
       {
         Console.WriteLine("[DoResolve] Exception: " + e.ToString());
       }
     }
 
     // This IPAddressAdditionalInfo displays additional server address information.
-    private static void IPAddressAdditionalInfo() 
+    private static void IPAddressAdditionalInfo()
     {
-      try 
+      try
       {
         // Display the flags that show if the server supports IPv4 or IPv6
         // address schemas.
@@ -92,30 +92,30 @@ namespace Mssc.Services.ConnectionManagement
 
         if (Socket.SupportsIPv6)
         {
-          // Display the server Any address. This IP address indicates that the server 
-          // should listen for client activity on all network interfaces. 
+          // Display the server Any address. This IP address indicates that the server
+          // should listen for client activity on all network interfaces.
           Console.WriteLine("\r\nIPv6Any: " + IPAddress.IPv6Any.ToString());
 
-          // Display the server loopback address. 
+          // Display the server loopback address.
           Console.WriteLine("IPv6Loopback: " + IPAddress.IPv6Loopback.ToString());
-      
+
           // Used during autoconfiguration first phase.
           Console.WriteLine("IPv6None: " + IPAddress.IPv6None.ToString());
-      
+
           Console.WriteLine("IsLoopback(IPv6Loopback): " + IPAddress.IsLoopback(IPAddress.IPv6Loopback));
         }
         Console.WriteLine("IsLoopback(Loopback): " + IPAddress.IsLoopback(IPAddress.Loopback));
       }
-      catch (Exception e) 
+      catch (Exception e)
       {
         Console.WriteLine("[IPAddresses] Exception: " + e.ToString());
       }
     }
 
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
       string server = null;
-    
+
       // Define a regular expression to parse user's input.
       // This is a security check. It allows only
       // alphanumeric input string between 2 to 40 character long.
@@ -123,7 +123,7 @@ namespace Mssc.Services.ConnectionManagement
 
       if (args.Length < 1)
       {
-        // If no server name is passed as an argument to this program, use the current 
+        // If no server name is passed as an argument to this program, use the current
         // server name as default.
         server = Dns.GetHostName();
         Console.WriteLine("Using current host: " + server);
@@ -140,7 +140,7 @@ namespace Mssc.Services.ConnectionManagement
 
       // Get the list of the addresses associated with the requested server.
       IPAddresses(server);
-    
+
       // Get additional address information.
       IPAddressAdditionalInfo();
     }

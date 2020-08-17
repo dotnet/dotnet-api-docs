@@ -1,5 +1,5 @@
 ﻿/// Class: System.Runtime.Remoting.Metadata.W3cXsd2001.SoapMonthDay
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(DateTime)
 ///    13    GetXsdType()
@@ -9,15 +9,15 @@
 ///    16    XsdType
 
 ///    Bugs in SoapMonthDay:
-///    1. SoapMonthDay.Parse throws exception when the time zone is "Z": 
+///    1. SoapMonthDay.Parse throws exception when the time zone is "Z":
 ///    SoapMonthDay.Parse throws the following exception,
-///        System.FormatException: String was not recognized 
+///        System.FormatException: String was not recognized
 ///        as a valid DateTime.
 /// when invoked as follows,
 ///        SoapMonthDay.Parse("--02--Z");    // Throws exception.
 ///    It fails to correctly interpret "Z" as the current time zone.
-///    
-/// 2. SoapMonthDay.Parse documentation incorrect: The documentation 
+///
+/// 2. SoapMonthDay.Parse documentation incorrect: The documentation
 /// does not state how to compose a SoapMonthDay for Parse. It also
 /// incorrectly states that "08:00" is a valid time zone (this should
 /// be "+08:00").
@@ -38,7 +38,7 @@ public class Demo
         //</snippet11>
 
         //<snippet12>
-        // Print the monthDay in XSD format. 
+        // Print the monthDay in XSD format.
         Console.WriteLine("The SoapMonthDay object in XSD format is {0}.",
             monthDay.ToString());
         //</snippet12>

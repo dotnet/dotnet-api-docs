@@ -5,11 +5,11 @@
 
 /* The following example demonstrates the  'GetTypeCode()', 'GetProperties()', 'GetTypeArray()',
     'GetType(String,Boolean,Boolean)' methods of 'Type' class.
-    An object of 'Type' corresponding to 'System.Int32 is obtained '. Properties of 'System.Type' 
-    is retrieved into 'PropertyInfo' array and displayed. Array of 'Type' objects is created 
-    which represents the type specified by an arbitary    set of objects. When 'Type' object is 
-    attempted to create for 'sYSTem.iNT32', an exception is thrown when case-sensitive search 
-    is done.  
+    An object of 'Type' corresponding to 'System.Int32 is obtained '. Properties of 'System.Type'
+    is retrieved into 'PropertyInfo' array and displayed. Array of 'Type' objects is created
+    which represents the type specified by an arbitary    set of objects. When 'Type' object is
+    attempted to create for 'sYSTem.iNT32', an exception is thrown when case-sensitive search
+    is done.
  */
 using System;
 using System.Reflection;

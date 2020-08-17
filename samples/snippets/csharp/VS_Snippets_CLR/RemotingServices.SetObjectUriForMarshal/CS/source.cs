@@ -8,10 +8,10 @@ public class SetObjectUriForMarshalTest  {
     class TestClass : MarshalByRefObject {
     }
 
-    [SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.RemotingConfiguration)] 
+    [SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.RemotingConfiguration)]
     public static void Main()  {
 
-        TestClass obj = new TestClass();    
+        TestClass obj = new TestClass();
 
         RemotingServices.SetObjectUriForMarshal(obj, "testUri");
         RemotingServices.Marshal(obj);

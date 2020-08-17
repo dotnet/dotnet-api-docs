@@ -2,9 +2,9 @@
 // System.Runtime.Remoting.Proxies.RealProxy.GetCOMIUnknown(bool);
 // System.Runtime.Remoting.Proxies.RealProxy.SetCOMIUnknown(IntPtr);
 /* The following example demonstrates implementation of methods
-   'GetCOMIUnknown','SupportsInterface' and 'SetCOMIUnknown' of 
+   'GetCOMIUnknown','SupportsInterface' and 'SetCOMIUnknown' of
    System.Runtime.Remoting.Proxies.RealProxy.
-   
+
    The following program has a 'CustomProxy' referring to unmanaged COM component.
    A COM Runtime Wrapper takes care of method call to unmanaged world. SupportsInterface
    method is overridden to return address of COM Runtime Wrapper.
@@ -18,7 +18,7 @@ using System.Runtime.Remoting.Activation;
 using System.Runtime.Remoting.Proxies;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Messaging;
-using System.Runtime.Remoting.Contexts; 
+using System.Runtime.Remoting.Contexts;
 using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using ActiveDs;
@@ -57,11 +57,11 @@ namespace CustomProxySample
       public override IMessage Invoke(IMessage msg)
       {
          if (msg is IConstructionCallMessage)
-         {  
+         {
             // Initialize a new instance of remote object
-            IConstructionReturnMessage myIConstructionReturnMessage = 
+            IConstructionReturnMessage myIConstructionReturnMessage =
                this.InitializeServerObject((IConstructionCallMessage)msg);
-            ConstructionResponse constructionResponse = new 
+            ConstructionResponse constructionResponse = new
                ConstructionResponse(null,(IMethodCallMessage) msg);
             return constructionResponse;
          }
@@ -93,21 +93,21 @@ namespace CustomProxySample
 // </Snippet3>
 // </Snippet2>
 // </Snippet1>
-   }      
+   }
    public class ProxySample
    {
       // Acts as a custom proxy user.
       [SecurityPermission(SecurityAction.LinkDemand)]
       public static void Main()
-      {  
+      {
          Console.WriteLine("");
          Console.WriteLine("CustomProxy Sample");
          Console.WriteLine("==================");
          MyProxy mProxy = new MyProxy(typeof(WinNTSystemInfo));
          WinNTSystemInfo myHelloServer = (WinNTSystemInfo)mProxy.GetTransparentProxy();
-         Console.WriteLine("Machine Name = " + myHelloServer.ComputerName);  
-         Console.WriteLine("Domain Name = " + myHelloServer.DomainName);  
-         Console.WriteLine("User Name = " + myHelloServer.UserName);  
+         Console.WriteLine("Machine Name = " + myHelloServer.ComputerName);
+         Console.WriteLine("Domain Name = " + myHelloServer.DomainName);
+         Console.WriteLine("User Name = " + myHelloServer.UserName);
          // Construct Guid object from unmanaged Interface 'IADsWinNTSystemInfo' guid.
          Guid myGuid = new Guid("{6C6D65DC-AFD1-11D2-9CB9-0000F87A369E}");
          IntPtr myIntrPtr = mProxy.SupportsInterface(ref myGuid);

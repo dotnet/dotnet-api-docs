@@ -1,12 +1,12 @@
 ﻿//<snippet1>
-// This code example demonstrates the 
+// This code example demonstrates the
 // Nullable<T>.GetValueOrDefault methods.
 
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     float? mySingle = 12.34f;
     float? yourSingle = -1.0f;
@@ -16,8 +16,8 @@ class Sample
 
     Display("A1", mySingle, yourSingle);
 
-// Assign the value of mySingle to yourSingle, then display the values 
-// of mySingle and yourSingle. The yourSingle variable is assigned the 
+// Assign the value of mySingle to yourSingle, then display the values
+// of mySingle and yourSingle. The yourSingle variable is assigned the
 // value 12.34 because mySingle has a value.
 
     yourSingle = mySingle.GetValueOrDefault();
@@ -25,7 +25,7 @@ class Sample
 
 // Assign null (Nothing in Visual Basic) to mySingle, which means no value is
 // defined for mySingle. Then assign the value of mySingle to yourSingle and
-// display the values of both variables. The default value of all binary zeroes 
+// display the values of both variables. The default value of all binary zeroes
 // is assigned to yourSingle because mySingle has no value.
 
     mySingle = null;
@@ -42,8 +42,8 @@ class Sample
 // Display the values of mySingle and yourSingle.
     Display("B1", mySingle, yourSingle);
 
-// Assign the value of mySingle to yourSingle, then display the values 
-// of mySingle and yourSingle. The yourSingle variable is assigned the 
+// Assign the value of mySingle to yourSingle, then display the values
+// of mySingle and yourSingle. The yourSingle variable is assigned the
 // value 12.34 because mySingle has a value.
 
     yourSingle = mySingle.GetValueOrDefault(-222.22f);
@@ -60,14 +60,14 @@ class Sample
     }
 
 // Display the values of two nullable of System.Single structures.
-// The Console.WriteLine method automatically calls the ToString methods of 
+// The Console.WriteLine method automatically calls the ToString methods of
 // each input argument to display its values. If no value is defined for a
 // nullable type, the ToString method for that argument returns the empty
 // string ("").
     public static void Display(string title, float? dspMySingle, float? dspYourSingle)
     {
-    Console.WriteLine("{0}) mySingle = [{1}], yourSingle = [{2}]", 
-                      title, dspMySingle, dspYourSingle);    
+    Console.WriteLine("{0}) mySingle = [{1}], yourSingle = [{2}]",
+                      title, dspMySingle, dspYourSingle);
     }
 }
 

@@ -1,12 +1,12 @@
 ﻿/// Class: System.Runtime.Remoting.Metadata.W3cXsd2001.SoapDateTime
-///    10    class 
+///    10    class
 ///    11    Parse
 ///    12    ToString
 ///    13    XsdType
 
 ///    !    #ctor
 
-///    
+///
 ///    Bug report:
 ///    Constructor unusable since all methods are static.
 

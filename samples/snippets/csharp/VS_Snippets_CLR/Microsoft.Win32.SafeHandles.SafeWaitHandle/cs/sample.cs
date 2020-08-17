@@ -31,7 +31,7 @@ class SafeHandlesExample
     }
 }
 
-class UnmanagedMutex 
+class UnmanagedMutex
 {
 
     // Use interop to call the CreateMutex function.
@@ -67,7 +67,7 @@ class UnmanagedMutex
                                         true, nameValue);
 
         // If the handle is invalid,
-        // get the last Win32 error 
+        // get the last Win32 error
         // and throw a Win32Exception.
         if (handleValue.IsInvalid)
         {

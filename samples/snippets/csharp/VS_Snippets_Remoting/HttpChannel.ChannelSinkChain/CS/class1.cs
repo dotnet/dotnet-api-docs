@@ -30,7 +30,7 @@ class CustomChannel : BaseChannelWithProperties, IChannelReceiverHook,
       CustomChannel channel = new CustomChannel(8085);
       channel.AddHookChannelUri("TempConverter");
 
-      /*System.Runtime.Remoting.Channels.Http.HttpChannel channel = 
+      /*System.Runtime.Remoting.Channels.Http.HttpChannel channel =
          new System.Runtime.Remoting.Channels.Http.HttpChannel(8085);*/
 
       /*System.Runtime.Remoting.Channels.Tcp.TcpChannel channel =
@@ -144,7 +144,7 @@ class CustomChannel : BaseChannelWithProperties, IChannelReceiverHook,
       object remoteChannelData,
       out string objectURI) {
       Parse(url, out objectURI);
-      
+
       return null;
    }
 
@@ -187,7 +187,7 @@ class CustomChannel : BaseChannelWithProperties, IChannelReceiverHook,
          out IMessage msg,
          out ITransportHeaders responseHeaders,
          out Stream responseStream
-         ) {   
+         ) {
 
          msg = null;
          responseHeaders = null;
@@ -197,8 +197,8 @@ class CustomChannel : BaseChannelWithProperties, IChannelReceiverHook,
 
       public IDictionary Properties {
          get {
-            return null;      
+            return null;
          }
-      } 
+      }
    }
 }

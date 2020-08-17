@@ -4,7 +4,7 @@
 This program demonstrates the 'WebException(String,InnerException)' constructor of 'WebException' class.
 It creates a 'HttpConnect' object and calls the 'ConnectHttpServer' method with invalid 'URL'.
 When the method tries to establish a socket connection to that address an exception is thrown and 
-in the 'catch' block  a new 'WebException' object is created  and  thrown.That exception is caught
+in the 'catch' block a new 'WebException' object is created  and thrown. That exception is caught
 in the calling method and the error message is displayed on the console.
 */
 
@@ -21,7 +21,7 @@ public class HttpConnect{
 		   {
 		      HttpConnect myHttpConnect = new HttpConnect();
 			   // If the Uri is valid  then 'ConnectHttpServer' method will connect to the server.
-			   myHttpConnect.ConnectHttpServer("www.constoso.com");
+			   myHttpConnect.ConnectHttpServer("www.contoso.com");
 		   }
          catch(WebException e)
 		   {

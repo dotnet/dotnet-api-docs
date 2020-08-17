@@ -21,7 +21,7 @@ public partial class Default2 : System.Web.UI.Page
    {
       string locale;
       float number;
-      CultureInfo culture; 
+      CultureInfo culture;
 
       // Return if string is empty
       if (String.IsNullOrEmpty(this.inputNumber.Text))
@@ -32,11 +32,11 @@ public partial class Default2 : System.Web.UI.Page
          return;
       locale = Request.UserLanguages[0];
       if (String.IsNullOrEmpty(locale))
-         return; 
+         return;
 
       // Instantiate CultureInfo object for the user's locale
       culture = new CultureInfo(locale);
-      
+
       // Convert user input from a string to a number
       try
       {

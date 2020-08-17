@@ -12,15 +12,15 @@ public class Example : IComparer
 
    private struct Region
    {
-      internal Region(string id, string name) 
+      internal Region(string id, string name)
       {
          this.Id = id;
          this.NativeName = name;
       }
-      
+
       public string Id;
       public string NativeName;
-      
+
       public override string ToString()
       {
          return this.NativeName;
@@ -30,14 +30,14 @@ public class Example : IComparer
    public static void Main()
    {
       bool reindex = false;
-      
+
       Region[] regions;
       SortVersion ver = null;
 
       // If the data has not been saved, create it.
-      if (! File.Exists(FILENAME)) { 
+      if (! File.Exists(FILENAME)) {
          regions = GenerateData();
-         ver = CultureInfo.CurrentCulture.CompareInfo.Version;  
+         ver = CultureInfo.CurrentCulture.CompareInfo.Version;
          reindex = true;
       }
       // Retrieve the existing data.
@@ -46,12 +46,12 @@ public class Example : IComparer
       }
 
       // Determine whether the current ordering is valid; if not, reorder.
-      if (reindex || ver != CultureInfo.CurrentCulture.CompareInfo.Version) { 
-         Array.Sort(regions, new Example());      
+      if (reindex || ver != CultureInfo.CurrentCulture.CompareInfo.Version) {
+         Array.Sort(regions, new Example());
          // Save newly reordered data.
          SaveData(regions);
       }
-      
+
       // Continue with application...
    }
 
@@ -62,7 +62,7 @@ public class Example : IComparer
       foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures)) {
          if (culture.IsNeutralCulture | culture.Equals(CultureInfo.InvariantCulture))
             continue;
-            
+
          RegionInfo region = new RegionInfo(culture.Name);
          regions.Add(new Region(region.Name, region.NativeName));
       }
@@ -72,18 +72,18 @@ public class Example : IComparer
    private static Region[] RestoreData(out SortVersion ver)
    {
       List<Region> regions = new List<Region>();
-      
+
       BinaryReader rdr = new BinaryReader(File.Open(FILENAME, FileMode.Open));
-      
+
       int sortVer = rdr.ReadInt32();
       Guid sortId = Guid.Parse(rdr.ReadString());
       ver = new SortVersion(sortVer, sortId);
-      
+
       string id, name;
       while (rdr.PeekChar() != -1) {
          id = rdr.ReadString();
          name = rdr.ReadString();
-         regions.Add(new Region(id, name));      
+         regions.Add(new Region(id, name));
       }
       return regions.ToArray();
    }
@@ -93,9 +93,9 @@ public class Example : IComparer
       SortVersion ver = CultureInfo.CurrentCulture.CompareInfo.Version;
 
       BinaryWriter wrtr = new BinaryWriter(File.Open(FILENAME, FileMode.Create));
-      wrtr.Write(ver.FullVersion); 
-      wrtr.Write(ver.SortId.ToString()); 
-      
+      wrtr.Write(ver.FullVersion);
+      wrtr.Write(ver.SortId.ToString());
+
       foreach (var region in regions) {
          wrtr.Write(region.Id);
          wrtr.Write(region.NativeName);
@@ -108,9 +108,9 @@ public class Example : IComparer
         // Assume that all casts succeed.
         Region r1 = (Region) o1;
         Region r2 = (Region) o2;
-        
-        return String.Compare(r1.NativeName, r2.NativeName, 
-                              StringComparison.CurrentCulture);        
+
+        return String.Compare(r1.NativeName, r2.NativeName,
+                              StringComparison.CurrentCulture);
    }
 }
 // </Snippet1>

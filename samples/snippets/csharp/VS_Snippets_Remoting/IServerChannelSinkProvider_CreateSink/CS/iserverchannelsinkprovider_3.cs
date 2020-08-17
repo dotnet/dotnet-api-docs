@@ -2,12 +2,12 @@
 // System.Runtime.Remoting.Channels.IServerChannelSinkProvider.GetChannelData()
 // System.Runtime.Remoting.Channels.IServerChannelSinkProvider.Next
 
-/* The following program demonstrates 'CreateSink', 'GetChannelData' 
-   methods and 'Next' property of 
+/* The following program demonstrates 'CreateSink', 'GetChannelData'
+   methods and 'Next' property of
    'System.Runtime.Remoting.Channels.ServerChannelSinkStack' class.
    It chains together two different sink providers using the 'Next'
    property. The return value of 'GetChannelData()' is displayed on
-   the console.   
+   the console.
 */
 
 using System;
@@ -23,7 +23,7 @@ class MyServerChannelSinkStack
 
    static void Main()
    {
-      MyServerChannelSinkStack myNewServerChannelSinkStack = 
+      MyServerChannelSinkStack myNewServerChannelSinkStack =
                               new MyServerChannelSinkStack();
       myNewServerChannelSinkStack.MyCreateSinkMethod();
       myNewServerChannelSinkStack.MyGetChannelDataMethod();
@@ -47,7 +47,7 @@ class MyServerChannelSinkStack
 // </Snippet1>
       Console.WriteLine("Two sink providers have been set");
    }
-   
+
    public void MyGetChannelDataMethod()
    {
 // <Snippet2>
@@ -59,7 +59,7 @@ class MyServerChannelSinkStack
 // </Snippet2>
       Console.WriteLine("Number of Uris in first IChannelDataStore: " +
                               myIChannelDataStore.ChannelUris.Length);
-      Console.WriteLine("Number of Uris in second IChannelDataStore: " + 
+      Console.WriteLine("Number of Uris in second IChannelDataStore: " +
                               myIChannelDataStore1.ChannelUris.Length);
    }
 }

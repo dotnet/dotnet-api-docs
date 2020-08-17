@@ -19,14 +19,14 @@ public class Sample
      //Create a resolver and set the credentials to use.
      XmlUrlResolver resolver = new XmlUrlResolver();
      resolver.Credentials = CredentialCache.DefaultCredentials;
-  
+
      //Load the stylesheet.
      xslt.Load(stylesheet, resolver);
 
      //Load the XML data file.
      XPathDocument doc = new XPathDocument(filename);
 
-     //Create the XmlTextWriter to output to the console.            
+     //Create the XmlTextWriter to output to the console.
      XmlTextWriter writer = new XmlTextWriter(Console.Out);
 
      //Transform the file.

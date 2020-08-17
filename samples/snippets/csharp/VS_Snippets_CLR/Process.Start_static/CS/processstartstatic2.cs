@@ -19,7 +19,7 @@ namespace StartArgsEcho
 
             // Start with one argument.
             // Output of ArgsEcho:
-            //  [0]=/a            
+            //  [0]=/a
             startInfo.Arguments = "/a";
             Process.Start(startInfo);
 

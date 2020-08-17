@@ -4,7 +4,7 @@
 '   The following example demonstrates the contructors 'XmlTypeAttribute()'
 '   and 'XmlTypeAttribute(string)' of class 'XmlTypeAttribute'.
 '   This program demonstrates 'Person' and 'Address' classes to 
-'   which the 'XmlTypeAttribute' has been applied.This sample then 
+'   which the 'XmlTypeAttribute' has been applied. This sample then 
 '   serializes an object of class 'Person' into an XML document.
 
 ' <Snippet1>

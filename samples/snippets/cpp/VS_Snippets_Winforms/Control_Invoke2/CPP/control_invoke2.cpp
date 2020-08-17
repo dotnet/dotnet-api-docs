@@ -3,7 +3,7 @@
 /*
 The following example demonstrates the 'Invoke(Delegate*)' method of 'Control class.
 A 'ListBox' and a 'Button' control are added to a form, containing a delegate
-which encapsulates a method that adds items to the listbox.This function is executed
+which encapsulates a method that adds items to the listbox. This function is executed
 on the thread that owns the underlying handle of the form. When user clicks on button
 the above delegate is executed using 'Invoke' method.
 */

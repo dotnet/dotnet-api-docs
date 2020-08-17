@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 public class Sample {
 
     protected string Text;
-    
+
 // <Snippet1>
  public virtual bool LoadPostData(string postDataKey,
     NameValueCollection postCollection) {
@@ -18,6 +18,6 @@ public class Sample {
     }
     return false;
  }
-   
+
 // </Snippet1>
 }

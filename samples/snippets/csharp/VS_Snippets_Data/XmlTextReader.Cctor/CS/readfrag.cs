@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-public class Sample 
+public class Sample
 {
   public static void Main()
   {
@@ -12,7 +12,7 @@ public class Sample
     string xmlFrag ="<book> " +
                     "<title>Pride And Prejudice</title>" +
                     "<bk:genre>novel</bk:genre>" +
-                    "</book>"; 
+                    "</book>";
 
     //Create the XmlNamespaceManager.
     NameTable nt = new NameTable();
@@ -22,10 +22,10 @@ public class Sample
     //Create the XmlParserContext.
     XmlParserContext context = new XmlParserContext(null, nsmgr, null, XmlSpace.None);
 
-    //Create the reader. 
+    //Create the reader.
     XmlTextReader reader = new XmlTextReader(xmlFrag, XmlNodeType.Element, context);
-  
-    //Parse the XML.  If they exist, display the prefix and  
+
+    //Parse the XML.  If they exist, display the prefix and
     //namespace URI of each element.
     while (reader.Read()){
       if (reader.IsStartElement()){
@@ -40,9 +40,9 @@ public class Sample
         }
       }
     }
-  
+
     //Close the reader.
-    reader.Close();     
+    reader.Close();
   }
 } // End class
 //</snippet1>

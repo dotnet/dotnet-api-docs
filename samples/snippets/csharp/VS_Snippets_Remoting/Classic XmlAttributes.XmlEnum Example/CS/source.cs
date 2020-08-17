@@ -26,7 +26,7 @@ public class Run
       test.DeserializeObject("OverrideEnum.xml");
    }
 
-   // Return an XmlSerializer used for overriding. 
+   // Return an XmlSerializer used for overriding.
    public XmlSerializer CreateOverrider()
    {
       // Create the XmlAttributeOverrides and XmlAttributes objects.
@@ -72,11 +72,11 @@ public class Run
    {
       XmlSerializer mySerializer = CreateOverrider();
       FileStream fs = new FileStream(filename, FileMode.Open);
-      Food myFood = (Food) 
+      Food myFood = (Food)
       mySerializer.Deserialize(fs);
 
       Console.WriteLine(myFood.Type);
    }
 }
-   
+
 // </Snippet1>

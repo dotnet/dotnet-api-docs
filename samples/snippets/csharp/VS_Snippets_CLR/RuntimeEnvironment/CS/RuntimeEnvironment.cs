@@ -4,17 +4,17 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-public sealed class App 
+public sealed class App
 {
-    static void Main() 
-    {       
+    static void Main()
+    {
         //<snippet2>
         // Show whether the EXE assembly was loaded from the GAC or from a private subdirectory.
         Assembly assem = typeof(App).Assembly;
         Console.WriteLine("Did the {0} assembly load from the GAC? {1}",
            assem, RuntimeEnvironment.FromGlobalAccessCache(assem));
         //</snippet2>
-        
+
         //<snippet3>
         // Show the path where the CLR was loaded from.
         Console.WriteLine("Runtime directory: {0}", RuntimeEnvironment.GetRuntimeDirectory());
@@ -25,7 +25,7 @@ public sealed class App
         Console.WriteLine("System version: {0}", RuntimeEnvironment.GetSystemVersion());
         //</snippet4>
 
-        //<snippet5> 
+        //<snippet5>
         // Show the path of the machine's configuration file.
         Console.WriteLine("System configuration file: {0}", RuntimeEnvironment.SystemConfigurationFile);
         //</snippet5>

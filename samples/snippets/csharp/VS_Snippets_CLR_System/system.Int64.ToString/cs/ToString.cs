@@ -26,7 +26,7 @@ public class LongToString
       Console.WriteLine(value.ToString("D"));         // Displays -16325091
       Console.WriteLine(value.ToString("F"));         // Displays -16325091.00
       Console.WriteLine(value.ToString("N"));         // Displays -16,325,091.00
-      Console.WriteLine(value.ToString("X"));         // Displays FFFFFFFFFF06E61D      
+      Console.WriteLine(value.ToString("X"));         // Displays FFFFFFFFFF06E61D
       // </Snippet1>
    }
 
@@ -46,13 +46,13 @@ public class LongToString
       //       -16325901
       // </Snippet2>
    }
-   
+
    private static void CallToStringWithSpecificSpecifiers()
    {
       // <Snippet3>
       long value = -16325;
       string specifier;
-      
+
       // Use standard numeric format specifier.
       specifier = "G";
       Console.WriteLine("{0}: {1}", specifier, value.ToString(specifier));
@@ -80,8 +80,8 @@ public class LongToString
       // Displays:    P: -16.33 %
       specifier = "X";
       Console.WriteLine("{0}: {1}", specifier, value.ToString(specifier));
-      // Displays:    X: FFFFFFFFFFFFC03B 
-      
+      // Displays:    X: FFFFFFFFFFFFC03B
+
       // Use custom numeric format specifiers.
       specifier = "0,0.000";
       Console.WriteLine("{0}: {1}", specifier, value.ToString(specifier));
@@ -90,27 +90,27 @@ public class LongToString
       Console.WriteLine("{0}: {1}", specifier, (value*-1).ToString(specifier));
       // Displays:    #,#.00#;(#,#.00#): 16,325.00
       // </Snippet3>
-   }   
+   }
 
    private static void CallToStringWithSpecifiersAndCultures()
    {
       // <Snippet4>
       // Define cultures whose formatting conventions are to be used.
-      CultureInfo[] cultures = {CultureInfo.CreateSpecificCulture("en-US"), 
-                                CultureInfo.CreateSpecificCulture("fr-FR"), 
+      CultureInfo[] cultures = {CultureInfo.CreateSpecificCulture("en-US"),
+                                CultureInfo.CreateSpecificCulture("fr-FR"),
                                 CultureInfo.CreateSpecificCulture("es-ES") };
       long positiveNumber = 1679;
       long negativeNumber = -3045;
-      string[] specifiers = {"G", "C", "D8", "E2", "F", "N", "P", "X8"}; 
-      
+      string[] specifiers = {"G", "C", "D8", "E2", "F", "N", "P", "X8"};
+
       foreach (string specifier in specifiers)
       {
          foreach (CultureInfo culture in cultures)
          {
             // Display values with "G" format specifier.
-            Console.WriteLine("{0} format using {1} culture: {2, 16} {3, 16}",  
-                              specifier, culture.Name, 
-                              positiveNumber.ToString(specifier, culture), 
+            Console.WriteLine("{0} format using {1} culture: {2, 16} {3, 16}",
+                              specifier, culture.Name,
+                              positiveNumber.ToString(specifier, culture),
                               negativeNumber.ToString(specifier, culture));
          }
          Console.WriteLine();
@@ -119,34 +119,34 @@ public class LongToString
       //    G format using en-US culture:             1679            -3045
       //    G format using fr-FR culture:             1679            -3045
       //    G format using es-ES culture:             1679            -3045
-      //    
+      //
       //    C format using en-US culture:        $1,679.00      ($3,045.00)
-      //    C format using fr-FR culture:       1 679,00 ?      -3 045,00 ?
-      //    C format using es-ES culture:       1.679,00 ?      -3.045,00 ?
-      //    
+      //    C format using fr-FR culture:       1 679,00 €      -3 045,00 €
+      //    C format using es-ES culture:       1.679,00 €      -3.045,00 €
+      //
       //    D8 format using en-US culture:         00001679        -00003045
       //    D8 format using fr-FR culture:         00001679        -00003045
       //    D8 format using es-ES culture:         00001679        -00003045
-      //    
+      //
       //    E2 format using en-US culture:        1.68E+003       -3.05E+003
       //    E2 format using fr-FR culture:        1,68E+003       -3,05E+003
       //    E2 format using es-ES culture:        1,68E+003       -3,05E+003
-      //    
+      //
       //    F format using en-US culture:          1679.00         -3045.00
       //    F format using fr-FR culture:          1679,00         -3045,00
       //    F format using es-ES culture:          1679,00         -3045,00
-      //    
+      //
       //    N format using en-US culture:         1,679.00        -3,045.00
       //    N format using fr-FR culture:         1 679,00        -3 045,00
       //    N format using es-ES culture:         1.679,00        -3.045,00
-      //    
-      //    P format using en-US culture:     167,900.00 %    -304,500.00 %
+      //
+      //    P format using en-US culture:      167,900.00%     -304,500.00%
       //    P format using fr-FR culture:     167 900,00 %    -304 500,00 %
       //    P format using es-ES culture:     167.900,00 %    -304.500,00 %
-      //    
-      //    X8 format using en-US culture:         0000068F         FFFFF41B
-      //    X8 format using fr-FR culture:         0000068F         FFFFF41B
-      //    X8 format using es-ES culture:         0000068F         FFFFF41B
-      // </Snippet4>                                      
+      //
+      //    X8 format using en-US culture:         0000068F FFFFFFFFFFFFF41B
+      //    X8 format using fr-FR culture:         0000068F FFFFFFFFFFFFF41B
+      //    X8 format using es-ES culture:         0000068F FFFFFFFFFFFFF41B
+      // </Snippet4>
    }
 }

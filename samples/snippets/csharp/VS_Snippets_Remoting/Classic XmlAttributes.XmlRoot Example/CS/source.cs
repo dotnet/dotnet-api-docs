@@ -25,7 +25,7 @@ public class Test
       // Create the XmlAttributes and XmlAttributeOverrides objects.
       XmlAttributes attrs = new XmlAttributes();
       XmlAttributeOverrides xOver = new XmlAttributeOverrides();
-   
+
       XmlRootAttribute xRoot = new XmlRootAttribute();
 
       // Set a new Namespace and ElementName for the root element.
@@ -33,8 +33,8 @@ public class Test
       xRoot.ElementName = "NewGroup";
       attrs.XmlRoot = xRoot;
 
-      /* Add the XmlAttributes object to the XmlAttributeOverrides. 
-         No  member name is needed because the whole class is 
+      /* Add the XmlAttributes object to the XmlAttributeOverrides.
+         No  member name is needed because the whole class is
          overridden. */
       xOver.Add(typeof(Group), attrs);
 

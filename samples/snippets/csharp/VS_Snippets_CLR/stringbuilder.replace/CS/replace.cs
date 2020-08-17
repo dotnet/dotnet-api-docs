@@ -3,9 +3,9 @@
 using System;
 using System.Text;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
 //                0----+----1----+----2----+----3----+----4---
 //                01234567890123456789012345678901234567890123

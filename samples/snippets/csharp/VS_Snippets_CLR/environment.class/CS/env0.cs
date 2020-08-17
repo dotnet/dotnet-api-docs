@@ -79,7 +79,7 @@ class Sample
 }
 /*
 This example produces results similar to the following:
-(Any result that is lengthy or reveals information that should remain 
+(Any result that is lengthy or reveals information that should remain
 secure has been omitted and marked "!---OMITTED---!".)
 
 C:\>env0 ARBITRARY TEXT
@@ -111,7 +111,7 @@ ExpandEnvironmentVariables:
   My system drive is C: and my system root is C:\WINNT
 GetEnvironmentVariable:
   My temporary directory is C:\DOCUME~1\!---OMITTED---!\LOCALS~1\Temp.
-GetEnvironmentVariables: 
+GetEnvironmentVariables:
   !---OMITTED---!
 GetFolderPath: C:\WINNT\System32
 GetLogicalDrives: A:\, C:\, D:\

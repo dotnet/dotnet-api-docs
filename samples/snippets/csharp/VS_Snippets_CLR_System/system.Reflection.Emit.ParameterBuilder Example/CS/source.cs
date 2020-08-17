@@ -5,7 +5,7 @@ using System.Threading;
 using System.Reflection;
 using System.Reflection.Emit;
 
-class ParamBuilderDemo 
+class ParamBuilderDemo
 
 {
 
@@ -36,14 +36,14 @@ class ParamBuilderDemo
 								
 	ConstructorBuilder myCtorBuilder = myTypeBuilder.DefineConstructor(
 							MethodAttributes.Public,
-							CallingConventions.HasThis, 
+							CallingConventions.HasThis,
 							new Type[] { typeof(string),
 								     typeof(string),
 								     typeof(double) });
 
 	ILGenerator ctorIL = myCtorBuilder.GetILGenerator();
 
-	Type objType = Type.GetType("System.Object"); 
+	Type objType = Type.GetType("System.Object");
         ConstructorInfo objCtor = objType.GetConstructor(new Type[] {});
 
 	ctorIL.Emit(OpCodes.Ldarg_0);
@@ -64,11 +64,11 @@ class ParamBuilderDemo
 	ctorIL.Emit(OpCodes.Ret);
 
 	// This method will take an amount from a static pool and add it to the balance.
-       
+
 	// Note that we are passing the first parameter, fundsPool, by reference. Therefore,
 	// we need to inform the MethodBuilder to expect a ref, by declaring the first
 	// parameter's type to be System.Double& (a reference to a double).
- 
+
 	MethodBuilder myMthdBuilder = myTypeBuilder.DefineMethod("AddFundsFromPool",
 						MethodAttributes.Public,
 						typeof(double),
@@ -85,8 +85,8 @@ class ParamBuilderDemo
 
 	ILGenerator mthdIL = myMthdBuilder.GetILGenerator();
 
-	mthdIL.Emit(OpCodes.Ldarg_1); 
-	mthdIL.Emit(OpCodes.Ldarg_1); 
+	mthdIL.Emit(OpCodes.Ldarg_1);
+	mthdIL.Emit(OpCodes.Ldarg_1);
 	mthdIL.Emit(OpCodes.Ldind_R8);
 	mthdIL.Emit(OpCodes.Ldarg_2);
 	mthdIL.Emit(OpCodes.Sub);
@@ -123,8 +123,8 @@ class ParamBuilderDemo
 
 	ConstructorInfo myCustCtor = custType.GetConstructor(custArgTypes);
 	double initialBalance = 100.00;
-	custObj = myCustCtor.Invoke(new object[] { "Joe Consumer", 
-						   "5678-XYZ", 
+	custObj = myCustCtor.Invoke(new object[] { "Joe Consumer",
+						   "5678-XYZ",
 					  	   initialBalance });
 
 	MemberInfo[] myMemberInfo = custType.GetMember("AddFundsFromPool");

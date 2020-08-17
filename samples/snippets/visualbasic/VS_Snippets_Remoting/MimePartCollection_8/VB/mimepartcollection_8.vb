@@ -13,7 +13,7 @@
 ' one 'MimePart' object that supports 'HttpPost'. A mimepartcollection object is 
 ' created and new mimepart objects are added to mimepartcollection using 'Insert' 
 ' and 'Add' methods. A mimepart object is removed from the mimepartcollection using 
-' 'Remove'method.The ServiceDescription is finally written into output wsdl file
+' 'Remove'method. The ServiceDescription is finally written into output wsdl file
 ' 'MimePartCollection_8_out_vb.wsdl'.
 
 Imports System.Collections
@@ -66,7 +66,7 @@ Public Class MyMimePartCollection
       ' Check whether 'Insert' was successful or not.
       If myMimePartCollection.Contains(myMimePart1) Then
          ' Display the index of inserted 'MimePart'.
-         Console.WriteLine("'MimePart' is succesfully inserted at position: " + _
+         Console.WriteLine("'MimePart' is successfully inserted at position: " + _
                                             myMimePartCollection.IndexOf(myMimePart1).ToString())
       End If
 ' </Snippet4>
@@ -87,7 +87,7 @@ Public Class MyMimePartCollection
       Console.WriteLine("Adding a mimepart object...")
       ' Check if collection contains added mimepart object.
       If myMimePartCollection.Contains(myMimePart2) Then
-         Console.WriteLine("'MimePart' is succesfully added at position: " + _
+         Console.WriteLine("'MimePart' is successfully added at position: " + _
                         myMimePartCollection.IndexOf(myMimePart2).ToString())
       End If
 ' </Snippet6>
@@ -116,7 +116,7 @@ Public Class MyMimePartCollection
       myMimePartCollection.Remove(myMimePart1)
       ' Check whether the mimepart is removed or not.
       If Not myMimePartCollection.Contains(myMimePart1) Then
-         Console.WriteLine("Mimepart is succesfully removed from mimepartcollection")
+         Console.WriteLine("Mimepart is successfully removed from mimepartcollection")
       End If
 ' </Snippet8>
       Console.WriteLine("Total number of elements in collection after removing is: " + _

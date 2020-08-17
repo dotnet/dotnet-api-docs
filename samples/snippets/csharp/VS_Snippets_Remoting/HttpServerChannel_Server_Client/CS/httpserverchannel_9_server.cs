@@ -4,8 +4,8 @@
 
 /* The following program demonstrates the 'HttpServerChannel' class, 'ChannelName',
    'ChannelPriority', 'ChannelScheme', 'WantsToListen' properties, 'GetChannelUri',
-   'StartListening', 'StopListening' and 'Parse' methods of 'HttpServerChannel' class. 
-   This program creates and registers 'HttpServerChannel'. This will change the priority 
+   'StartListening', 'StopListening' and 'Parse' methods of 'HttpServerChannel' class.
+   This program creates and registers 'HttpServerChannel'. This will change the priority
    of the 'HttpServerChannel' channel and displays the property values of this class.
 */
 
@@ -35,8 +35,8 @@ class MyHttpServerChannel
                                              new BinaryServerFormatterSinkProvider());
          // Register the server channel.
          ChannelServices.RegisterChannel(myHttpServerChannel);
-         RemotingConfiguration.RegisterWellKnownServiceType(typeof(MyHelloServer), 
-                                       "SayHello", WellKnownObjectMode.SingleCall);  
+         RemotingConfiguration.RegisterWellKnownServiceType(typeof(MyHelloServer),
+                                       "SayHello", WellKnownObjectMode.SingleCall);
          myHttpServerChannel.WantsToListen = true;
          // Start listening on a specific port.
          myHttpServerChannel.StartListening((object)myPort);
@@ -53,7 +53,7 @@ class MyHttpServerChannel
 // </Snippet2>
 // <Snippet3>
          // Extract the channel URI and the remote well known object URI from the specified URL.
-         Console.WriteLine("Parsed : " + 
+         Console.WriteLine("Parsed : " +
                         myHttpServerChannel.Parse(myHttpServerChannel.GetChannelUri()+
                                                                "/SayHello",out myString));
          Console.WriteLine("Remote WellKnownObject : " + myString);
