@@ -94,7 +94,7 @@
   
 -   By default, any reserved characters in the URI are escaped in accordance with RFC 2396. This behavior changes if International Resource Identifiers or International Domain Name parsing is enabled in which case reserved characters in the URI are escaped in accordance with RFC 3986 and RFC 3987.
 
- As part of canonicalization in the constructor for some schemes, dot-segments and empty segments (/./, /../, and //) are compacted (in other words, they are removed). The schemes for which URI will compact these sequences include http, https, tcp, net.pipe, and net.tcp. For some other schemes, these sequences are not compacted. Here's how this compacting looks in practice.
+ As part of canonicalization in the constructor for some schemes, dot-segments and empty segments (`/./`, `/../`, and `//`) are compacted (in other words, they are removed). The schemes for which URI will compact these sequences include http, https, tcp, net.pipe, and net.tcp. For some other schemes, these sequences are not compacted. The following code snippet shows how compacting looks in practice. The escaped sequences are unescaped, if necessary, and then compacted.
   
 ```csharp
 var uri = new Uri("http://myUrl/../.."); // http scheme, unescaped
@@ -105,15 +105,15 @@ var uri = new Uri("ftp://myUrl/../.."); // ftp scheme, unescaped
 OR
 var uri = new Uri("ftp://myUrl/%2E%2E/%2E%2E"); // ftp scheme, escaped
 
-Console.WriteLine(uri.AbsoluteUri);  
-Console.WriteLine(uri.PathAndQuery);  
+Console.WriteLine($"AbsoluteUri: {uri.AbsoluteUri}");
+Console.WriteLine($"PathAndQuery: {uri.PathAndQuery}");
 ```  
-  
- When this code is executed, it returns the following output, with the escaped sequences unescaped if necessary and then compacted.
+
+When this code executes, it returns output similar to the following text.
 
 ```  
-http://myUrl/  
-/  
+AbsoluteUri: http://myurl/
+PathAndQuery: /
 ```  
   
  You can transform the contents of the <xref:System.Uri> class from an escape encoded URI reference to a readable URI reference by using the <xref:System.Uri.ToString%2A> method. Note that some reserved characters might still be escaped in the output of the <xref:System.Uri.ToString%2A> method. This is to support unambiguous reconstruction of a URI from the value returned by <xref:System.Uri.ToString%2A>.  
