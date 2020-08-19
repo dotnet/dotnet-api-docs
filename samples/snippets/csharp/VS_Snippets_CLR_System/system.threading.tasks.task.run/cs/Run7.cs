@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 public class Example
 {
     private static CancellationTokenSource source = new CancellationTokenSource();
-    private static volatile int completedIterations = 0;
+    private static int completedIterations = 0;
     public static void Main()
     {
         var tasks = new List<Task<int>>();
