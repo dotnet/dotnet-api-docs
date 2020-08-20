@@ -15,27 +15,27 @@ public class Form1 : Form
     // <Snippet2>
     Uri uri = new Uri("https://user:password@www.contoso.com:80/Home/Index.htm?q1=v1&q2=v2#FragmentName");
     
-    Console.WriteLine("AbsolutePath: {0}", uri.AbsolutePath);
-    Console.WriteLine("AbsoluteUri: {0}", uri.AbsoluteUri);
-    Console.WriteLine("DnsSafeHost: {0}", uri.DnsSafeHost);
-    Console.WriteLine("Fragment: {0}", uri.Fragment);
-    Console.WriteLine("Host: {0}", uri.Host);
-    Console.WriteLine("HostNameType: {0}", uri.HostNameType);
-    Console.WriteLine("IdnHost: {0}", uri.IdnHost);
-    Console.WriteLine("IsAbsoluteUri: {0}", uri.IsAbsoluteUri);
-    Console.WriteLine("IsDefaultPort: {0}", uri.IsDefaultPort);
-    Console.WriteLine("IsFile: {0}", uri.IsFile);
-    Console.WriteLine("IsLoopback: {0}", uri.IsLoopback);
-    Console.WriteLine("IsUnc: {0}", uri.IsUnc);
-    Console.WriteLine("LocalPath: {0}", uri.LocalPath);
-    Console.WriteLine("OriginalString: {0}", uri.OriginalString);
-    Console.WriteLine("PathAndQuery: {0}", uri.PathAndQuery);
-    Console.WriteLine("Port: {0}", uri.Port);
-    Console.WriteLine("Query: {0}", uri.Query);
-    Console.WriteLine("Scheme: {0}", uri.Scheme);
-    Console.WriteLine("Segments: {0}", string.Join(", ", uri.Segments));
-    Console.WriteLine("UserEscaped: {0}", uri.UserEscaped);
-    Console.WriteLine("UserInfo: {0}", uri.UserInfo);
+    Console.WriteLine($"AbsolutePath: {uri.AbsolutePath}");
+    Console.WriteLine($"AbsoluteUri: {uri.AbsoluteUri}");
+    Console.WriteLine($"DnsSafeHost: {uri.DnsSafeHost}");
+    Console.WriteLine($"Fragment: {uri.Fragment}");
+    Console.WriteLine($"Host: {uri.Host}");
+    Console.WriteLine($"HostNameType: {uri.HostNameType}");
+    Console.WriteLine($"IdnHost: {uri.IdnHost}");
+    Console.WriteLine($"IsAbsoluteUri: {uri.IsAbsoluteUri}");
+    Console.WriteLine($"IsDefaultPort: {uri.IsDefaultPort}");
+    Console.WriteLine($"IsFile: {uri.IsFile}");
+    Console.WriteLine($"IsLoopback: {uri.IsLoopback}");
+    Console.WriteLine($"IsUnc: {uri.IsUnc}");
+    Console.WriteLine($"LocalPath: {uri.LocalPath}");
+    Console.WriteLine($"OriginalString: {uri.OriginalString}");
+    Console.WriteLine($"PathAndQuery: {uri.PathAndQuery}");
+    Console.WriteLine($"Port: {uri.Port}");
+    Console.WriteLine($"Query: {uri.Query}");
+    Console.WriteLine($"Scheme: {uri.Scheme}");
+    Console.WriteLine($"Segments: {string.Join(", ", uri.Segments)}");
+    Console.WriteLine($"UserEscaped: {uri.UserEscaped}");
+    Console.WriteLine($"UserInfo: {uri.UserInfo}");
     
     // AbsolutePath: /Home/Index.htm
     // AbsoluteUri: https://user:password@www.contoso.com:80/Home/Index.htm?q1=v1&q2=v2#FragmentName
