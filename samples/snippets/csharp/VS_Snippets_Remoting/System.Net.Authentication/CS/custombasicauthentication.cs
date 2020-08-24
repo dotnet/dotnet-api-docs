@@ -49,7 +49,7 @@ namespace Mssc.Services.Authentication
     private static string username, password, domain, uri;
 
     // This method invoked when the user does not enter the required input parameters.
-    private static void showusage()
+    private static void ShowUsage()
     {
       Console.WriteLine("Attempts to authenticate to a URL");
       Console.WriteLine("\r\nUse one of the following:");
@@ -59,7 +59,7 @@ namespace Mssc.Services.Authentication
 
 // <Snippet8>
     // Display registered authentication modules.
-    private static void displayRegisteredModules()
+    private static void DisplayRegisteredModules()
     {
       // The AuthenticationManager calls all authentication modules sequentially
       // until one of them responds with an authorization instance.  Show
@@ -77,7 +77,7 @@ namespace Mssc.Services.Authentication
 
     // The getPage method accesses the selected page and displays its content
     // on the console.
-    private static void getPage(String url)
+    private static void GetPage(String url)
     {
       try
       {
@@ -124,7 +124,7 @@ namespace Mssc.Services.Authentication
 
     // The displayPageContent method display the content of the
     // selected page.
-    private static void displayPageContent(Stream ReceiveStream)
+    private static void DisplayPageContent(Stream ReceiveStream)
     {
       // Create an ASCII encoding object.
       Encoding ASCII = Encoding.ASCII;
@@ -154,10 +154,10 @@ namespace Mssc.Services.Authentication
     {
 
       if (args.Length < 3)
-            {
-                showusage();
-            }
-            else
+      {
+        ShowUsage();
+      }
+      else
       {
 
         // Read the user's credentials.
@@ -183,10 +183,10 @@ namespace Mssc.Services.Authentication
         AuthenticationManager.Register(customBasicModule);
 
         // Display registered authorization modules.
-        displayRegisteredModules();
+        DisplayRegisteredModules();
 
         // Read the specified page and display it on the console.
-        getPage(uri);
+        GetPage(uri);
       }
       return;
     }
@@ -241,7 +241,7 @@ namespace Mssc.Services.Authentication
     // Note: The challenge is in the form BASIC REALM="DOMAINNAME";
     // the Internet Web site must reside on a server whose
     // domain name is equal to DOMAINNAME.
-    public bool checkChallenge(string Challenge, string domain)
+    public bool CheckChallenge(string Challenge, string domain)
     {
       bool challengePasses = false;
 
@@ -298,7 +298,7 @@ namespace Mssc.Services.Authentication
         Console.WriteLine("\n Pre-authentication is allowed.");
 
       // Verify that the challenge satisfies the authorization requirements.
-      bool challengeOk = checkChallenge(challenge, MyCreds.Domain);
+      bool challengeOk = CheckChallenge(challenge, MyCreds.Domain);
 
       if (!challengeOk)
         return null;
