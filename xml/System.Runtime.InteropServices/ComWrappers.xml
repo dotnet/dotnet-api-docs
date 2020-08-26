@@ -1,4 +1,4 @@
-<Type Name="ComWrappers" FullName="System.Runtime.InteropServices.ComWrappers">
+﻿<Type Name="ComWrappers" FullName="System.Runtime.InteropServices.ComWrappers">
   <TypeSignature Language="C#" Value="public abstract class ComWrappers" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit ComWrappers extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Runtime.InteropServices.ComWrappers" />
@@ -167,7 +167,15 @@ If the object cannot be created and `null` is returned, the call to <xref:System
         <param name="flags">Flags used to configure the generated interface.</param>
         <summary>Creates a COM representation of the supplied object that can be passed to a non-managed environment.</summary>
         <returns>The generated COM interface that can be passed outside the .NET runtime.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If a COM representation was previously created for the specified `instance` using this <xref:System.Runtime.InteropServices.ComWrappers> instance, the previously created COM interface will be returned. If not, a new one will be created.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetOrCreateObjectForComInstance">
@@ -194,7 +202,15 @@ If the object cannot be created and `null` is returned, the call to <xref:System
         <param name="flags">Flags used to describe the external object.</param>
         <summary>Gets the currently registered managed object or creates a new managed object and registers it.</summary>
         <returns>A managed object associated with the supplied external COM object.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If a managed object was previously created for the specified `externalComObject` using this <xref:System.Runtime.InteropServices.ComWrappers> instance, the previously created object will be returned. If not, a new one will be created.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetOrRegisterObjectForComInstance">
@@ -246,9 +262,22 @@ If the object cannot be created and `null` is returned, the call to <xref:System
         <Parameter Name="instance" Type="System.Runtime.InteropServices.ComWrappers" />
       </Parameters>
       <Docs>
-        <param name="instance">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="instance">The instance to register.</param>
+        <summary>Registers a <see cref="T:System.Runtime.InteropServices.ComWrappers" /> instance to be used as the global instance for marshalling in the runtime.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This function can only be called a single time. Subsequent calls to this function will result in a <xref:System.InvalidOperationException> being thrown.
+             Scenarios where this global instance may be used are:
+              * Usage of COM-related Marshal APIs
+              * P/Invokes with COM-related types
+              * COM activation
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The method was called more than once.</exception>
       </Docs>
     </Member>
     <Member MemberName="RegisterForTrackerSupport">
@@ -270,9 +299,20 @@ If the object cannot be created and `null` is returned, the call to <xref:System
         <Parameter Name="instance" Type="System.Runtime.InteropServices.ComWrappers" />
       </Parameters>
       <Docs>
-        <param name="instance">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="instance">The instance to register.</param>
+        <summary>Registers a <see cref="T:System.Runtime.InteropServices.ComWrappers" /> instance to be used as the global instance for reference tracker support.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This function can only be called a single time. Subsequent calls to this function will result in a <xref:System.InvalidOperationException> being thrown.
+             Scenarios where this global instance may be used are:
+              * Object tracking via the <xref:System.Runtime.InteropServices.CreateComInterfaceFlags.TrackerSupport> and <xref:System.Runtime.InteropServices.CreateObjectFlags.TrackerObject> flags.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The method was called more than once.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReleaseObjects">

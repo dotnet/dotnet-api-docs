@@ -1,4 +1,4 @@
-<Type Name="IDynamicInterfaceCastable" FullName="System.Runtime.InteropServices.IDynamicInterfaceCastable">
+﻿<Type Name="IDynamicInterfaceCastable" FullName="System.Runtime.InteropServices.IDynamicInterfaceCastable">
   <TypeSignature Language="C#" Value="public interface IDynamicInterfaceCastable" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IDynamicInterfaceCastable" />
   <TypeSignature Language="DocId" Value="T:System.Runtime.InteropServices.IDynamicInterfaceCastable" />
@@ -11,8 +11,16 @@
   </AssemblyInfo>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Interface used to participate in a type cast failure.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Implementation of this interface on a value type will be ignored. Only non-value types are allowed to participate in a type cast failure through this interface.
+
+          ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="GetInterfaceImplementation">
@@ -34,10 +42,20 @@
         <Parameter Name="interfaceType" Type="System.RuntimeTypeHandle" />
       </Parameters>
       <Docs>
-        <param name="interfaceType">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="interfaceType">The interface type.</param>
+        <summary>Called during interface dispatch when the given interface type cannot be found in the class's metadata.</summary>
+        <returns>The type that should be used to dispatch for <paramref name="interfaceType" /> on the current object.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When this function is called, the cast of this object to the given interface should already have been verified through the `castclass/isinst` instructions.
+             The returned type must be an interface type and be marked with the <xref:System.Runtime.InteropServices.DynamicInterfaceCastableImplementationAttribute>. Otherwise, <xref:System.InvalidOperationException> will be thrown.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The returned type is not an interface type, or it was not marked with the <see cref="T:System.Runtime.InteropServices.DynamicInterfaceCastableImplementationAttribute" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsInterfaceImplemented">
@@ -60,11 +78,20 @@
         <Parameter Name="throwIfNotImplemented" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="interfaceType">To be added.</param>
-        <param name="throwIfNotImplemented">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="interfaceType">The interface type.</param>
+        <param name="throwIfNotImplemented">Indicates if the function should throw an exception instead of returning <see langword="false" />.</param>
+        <summary>Called when an implementing class instance is cast to an interface type that is not contained in the class's metadata.</summary>
+        <returns><see langword="true" /> if this object can be cast to the given interface; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This is called if casting this object to the given interface type would otherwise fail. Casting here means the IL `isinst` and `castclass` instructions in the case where they are given an interface type as the target type.
+             If `throwIfNotImplemented` is `false`, this function should avoid throwing exceptions. If `throwIfNotImplemented` is `true` and this function returns `false`, then <xref:System.InvalidCastException> will be thrown unless an exception is thrown by the implementation.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
