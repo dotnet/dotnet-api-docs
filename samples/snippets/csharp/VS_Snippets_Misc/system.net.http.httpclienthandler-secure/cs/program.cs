@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 class HttpClientHandler_SecureExample
 {
-// <Snippet1>
+    // <Snippet1>
     static async Task Main()
     {
         // Create an HttpClientHandler object and set to use default credentials
@@ -30,10 +30,10 @@ class HttpClientHandler_SecureExample
             string responseBody = await response.Content.ReadAsStringAsync();
             Console.WriteLine($"Read {responseBody.Length} characters");
         }
-        catch(HttpRequestException e)
+        catch (HttpRequestException e)
         {
             Console.WriteLine("\nException Caught!");
-            Console.WriteLine("Message :{0} ",e.Message);
+            Console.WriteLine($"Message: {e.Message} ");
         }
 
         // Need to call dispose on the HttpClient and HttpClientHandler objects
@@ -55,5 +55,5 @@ class HttpClientHandler_SecureExample
         Console.WriteLine($"Errors: {sslErrors}");
         return sslErrors == SslPolicyErrors.None;
     }
-// </Snippet1>
+    // </Snippet1>
 }
