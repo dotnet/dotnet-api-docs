@@ -37,7 +37,7 @@ Public Class TestSyncDomainWait
 
         Dim runWaiter As Thread
 
-        Console.WriteLine(vbNewLine + "Wait and signal INSIDE synchronization domain:" + vbNewLine)
+        Console.WriteLine(Environment.NewLine + "Wait and signal INSIDE synchronization domain:" + Environment.NewLine)
         runWaiter = New Thread(AddressOf RunWaitKeepContext)
         runWaiter.Start(syncClass)
         Thread.Sleep(1000)
@@ -46,7 +46,7 @@ Public Class TestSyncDomainWait
         syncClass.Signal()
         runWaiter.Join()
 
-        Console.WriteLine(vbNewLine + "Wait and signal OUTSIDE synchronization domain:" + vbNewLine)
+        Console.WriteLine(Environment.NewLine + "Wait and signal OUTSIDE synchronization domain:" + Environment.NewLine)
         runWaiter = New Thread(AddressOf RunWaitLeaveContext)
         runWaiter.Start(syncClass)
         Thread.Sleep(1000)

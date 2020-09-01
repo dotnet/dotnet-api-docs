@@ -106,6 +106,17 @@ namespace Examples.System.Net.Networking
         }
 //</snippet5>
 
+//<snippet6>
+        public static PhysicalAddress StrictParseAddress(ReadOnlySpan<char> address)
+        {
+            PhysicalAddress newAddress = PhysicalAddress.Parse(address);
+            if (PhysicalAddress.None.Equals(newAddress))
+                return null;
+
+            return newAddress;
+        }
+//</snippet6>
+
         public static void Main()
         {
            DisplayAddressNone();
@@ -117,8 +128,11 @@ namespace Examples.System.Net.Networking
               Console.WriteLine(address.ToString());
            }
 
-          PhysicalAddress a =   StrictParseAddress(null);
-          Console.WriteLine(a== null? "null" : a.ToString());
+          PhysicalAddress a = StrictParseAddress((string)null);
+          Console.WriteLine(a?.ToString() ?? "null");
+
+          PhysicalAddress b = StrictParseAddress("".AsSpan());
+          Console.WriteLine(b?.ToString() ?? "null");
         }
     }
 }
