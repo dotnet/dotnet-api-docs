@@ -135,11 +135,12 @@ class ConsumingEnumerableDemo
         using (BlockingCollection<int> bc = new BlockingCollection<int>())
         {
             // Kick off a producer task
-            await Task.Run(async () =>
+            var producerTask = Task.Run(async () =>
             {
                 for (int i = 0; i < 10; i++)
                 {
                     bc.Add(i);
+                    Console.WriteLine($"Producing: {i}")
                     await Task.Delay(100); // sleep 100 ms between adds
                 }
 
@@ -153,8 +154,9 @@ class ConsumingEnumerableDemo
             // simply take a snapshot of the current state of the underlying collection.
             foreach (var item in bc.GetConsumingEnumerable())
             {
-                Console.WriteLine(item);
+                Console.WriteLine($"Consuming: {item}");
             }
+            await producerTask; // Allow task to complete cleanup
         }
     }
 }
