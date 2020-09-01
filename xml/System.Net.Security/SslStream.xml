@@ -545,9 +545,33 @@
         <Parameter Name="sslClientAuthenticationOptions" Type="System.Net.Security.SslClientAuthenticationOptions" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="sslClientAuthenticationOptions">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="sslClientAuthenticationOptions">The property bag for the SSL connection.</param>
+        <summary>Called by clients to authenticate the server and optionally the client in a client-server connection.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ [!INCLUDE[sslprotocols-none](~/includes/sslprotocols-none-md.md)] No client certificates are used in the authentication. The certificate revocation list is not checked during authentication. The value specified for `targetHost` must match the name on the server's certificate.  
+  
+ When authentication succeeds, you must check the <xref:System.Net.Security.SslStream.IsEncrypted%2A> and <xref:System.Net.Security.SslStream.IsSigned%2A> properties to determine what security services are used by the <xref:System.Net.Security.SslStream>. Check the <xref:System.Net.Security.SslStream.IsMutuallyAuthenticated%2A> property to determine whether mutual authentication occurred.  
+  
+ If the authentication fails, you receive a <xref:System.Security.Authentication.AuthenticationException>, and this <xref:System.Net.Security.SslStream> is no longer useable. You should close this object and remove all references to it so that it can be collected by the garbage collector.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="targetHost" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.
+
+ -or-
+
+ Server authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.
+
+ -or-
+
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AuthenticateAsClient">
@@ -1025,9 +1049,34 @@
         <Parameter Name="sslServerAuthenticationOptions" Type="System.Net.Security.SslServerAuthenticationOptions" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="sslServerAuthenticationOptions">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="sslServerAuthenticationOptions">The property bag for the SSL connection.</param>
+        <summary>Called by servers to authenticate the server and optionally the client in a client-server connection using the specified certificate.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ [!INCLUDE[sslprotocols-none](~/includes/sslprotocols-none-md.md)] The certificate revocation list is not checked during authentication. The client is not required to provide a certificate for authentication.
+
+ This method blocks until the operation completes. To prevent blocking until the operation completes, use one of the <xref:System.Net.Security.SslStream.BeginAuthenticateAsServer%2A> method overloads.
+
+ If the authentication fails, you receive a <xref:System.Security.Authentication.AuthenticationException>, and this <xref:System.Net.Security.SslStream> is no longer useable. You should close this object and remove all references to it so that it can be collected by the garbage collector.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="serverCertificate" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Client authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The <see cref="Overload:System.Net.Security.SslStream.AuthenticateAsServer" /> method is not supported on Windows 95, Windows 98, or Windows Millennium.</exception>
       </Docs>
     </Member>
     <Member MemberName="AuthenticateAsServer">
@@ -2928,8 +2977,17 @@ Authentication has not occurred.</exception>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Releases all resources used by the <see cref="T:System.Net.Sockets.SslStream" />.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method overrides <xref:System.Object.Finalize%2A?displayProperty=nameWithType>. Application code should not call this method; an object's <xref:System.Object.Finalize%2A> method is automatically invoked during garbage collection, unless finalization by the garbage collector has been disabled by a call to the <xref:System.GC.SuppressFinalize%2A?displayProperty=nameWithType> method.
+
+ For more information about using the Finalize method, see [Finalize Methods and Destructors](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/0s71x931(v%3dvs.100)), [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged), and [Overriding the Finalize Method](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Flush">
