@@ -4,15 +4,15 @@
 '  The 'Accept' property of 'HttpWebRequest' class is set to 
 '' image/*' that in turn sets the 'Accept' field of HTTP Request Headers 
 '  to "image/*". HTTP Request  and  
-'  Response headers are displayed to the console.The contents of the 
+'  Response headers are displayed to the console. The contents of the 
 '  page of the requested URI are displayed 
 '  to the console.'Accept' property is set with an aim to receive the 
 '  response in a specific format.
 '
 'Note:This program requires http://localhost/CodeSnippetTest.html as 
-'     Command line parameter.If the requested page contains any content 
+'     Command line parameter. If the requested page contains any content 
 '     other than 'image/*' an error of 'status (406) Not Acceptable'
-'     is returned.The functionality of 'Accept' property is supported 
+'     is returned. The functionality of 'Accept' property is supported 
 '     only by servers that use HTTP 1.1 protocol.
 '     Please refer to RFC 2616 for further information on HTTP Headers.
 

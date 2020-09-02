@@ -80,12 +80,12 @@ Class Class1f51e40a2f8843e2a83e28a0b5c0d6fd
             ByVal key As String, 
             ByVal length As Integer) As Byte()
 
-            Dim sha1 As New SHA1CryptoServiceProvider
+            Dim sha256 As SHA256 = SHA256.Create()
 
             ' Hash the key.
-            Dim keyBytes() As Byte = 
+            Dim keyBytes() As Byte =
                 System.Text.Encoding.Unicode.GetBytes(key)
-            Dim hash() As Byte = sha1.ComputeHash(keyBytes)
+            Dim hash() As Byte = sha256.ComputeHash(keyBytes)
 
             ' Truncate or pad the hash.
             ReDim Preserve hash(length - 1)

@@ -1,6 +1,6 @@
 // System::Net::HttpWebResponse::LastModified
 /* This program demonstrates the 'LastModified' property of the 'HttpWebResponse' class
-It creates a web request and queries for a response.The program checks
+It creates a web request and queries for a response. The program checks
 if the entity requested was modified any time today.
 */
 

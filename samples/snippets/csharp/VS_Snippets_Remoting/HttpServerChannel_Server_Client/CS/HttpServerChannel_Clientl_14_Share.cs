@@ -5,14 +5,14 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 
-public class MyHelloServer : MarshalByRefObject 
+public class MyHelloServer : MarshalByRefObject
 {
-   public MyHelloServer() 
+   public MyHelloServer()
    {
       Console.WriteLine("HelloServer activated");
    }
 
-   public String myHelloMethod(String name) 
+   public String myHelloMethod(String name)
    {
       Console.WriteLine("Hello.HelloMethod : {0}", name);
       return "Hi there " + name;

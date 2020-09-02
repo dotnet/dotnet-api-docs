@@ -22,13 +22,13 @@ public class Example
             Console.WriteLine(dinosaur);
         }
 
-        Console.WriteLine("\nIndexOf(\"Tyrannosaurus\"): {0}", 
+        Console.WriteLine("\nIndexOf(\"Tyrannosaurus\"): {0}",
             dinosaurs.IndexOf("Tyrannosaurus"));
 
-        Console.WriteLine("\nIndexOf(\"Tyrannosaurus\", 3): {0}", 
+        Console.WriteLine("\nIndexOf(\"Tyrannosaurus\", 3): {0}",
             dinosaurs.IndexOf("Tyrannosaurus", 3));
 
-        Console.WriteLine("\nIndexOf(\"Tyrannosaurus\", 2, 2): {0}", 
+        Console.WriteLine("\nIndexOf(\"Tyrannosaurus\", 2, 2): {0}",
             dinosaurs.IndexOf("Tyrannosaurus", 2, 2));
     }
 }

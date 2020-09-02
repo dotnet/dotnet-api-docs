@@ -14,15 +14,15 @@ public class Example
       string[] cultures = { "de-DE", "en-us", "fr-FR" };
       Random rnd = new Random();
       int index = rnd.Next(0, cultures.Length);
-      Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(cultures[index]);      
-      Console.WriteLine("The current culture is {0}", 
-                        CultureInfo.CurrentUICulture.Name);       
+      Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(cultures[index]);
+      Console.WriteLine("The current culture is {0}",
+                        CultureInfo.CurrentUICulture.Name);
 
       // Retrieve the resource.
-      ResourceManager rm = new ResourceManager("ExampleResources" , 
+      ResourceManager rm = new ResourceManager("ExampleResources" ,
                                                typeof(Example).Assembly);
       string greeting = rm.GetString("Greeting");
-      
+
       Console.Write("Enter your name: ");
       string name = Console.ReadLine();
       Console.WriteLine("{0} {1}!", greeting, name);

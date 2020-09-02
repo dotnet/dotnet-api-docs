@@ -7,11 +7,11 @@ public class Example
    public static void Main()
    {
       Complex number1 = new Complex(8.3, 17.5);
-      Complex[] numbers = { new Complex(1.4, 6.3), 
-                            new Complex(-2.7, 1.8), 
+      Complex[] numbers = { new Complex(1.4, 6.3),
+                            new Complex(-2.7, 1.8),
                             new Complex(3.1, -2.1) };
       foreach (Complex number2 in numbers)
-         Console.WriteLine("{0} x {1} = {2}", number1, number2, 
+         Console.WriteLine("{0} x {1} = {2}", number1, number2,
                            Complex.Multiply(number1, number2));
    }
 }

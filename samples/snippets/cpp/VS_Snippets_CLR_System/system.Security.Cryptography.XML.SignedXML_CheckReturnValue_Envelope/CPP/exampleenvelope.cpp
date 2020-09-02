@@ -17,7 +17,7 @@ using namespace System::Xml;
 
 // <Snippet2>
 // Sign an XML file and save the signature in a new file.
-void SignXmlFile( String^ FileName, String^ SignedFileName, DSA^ DSAKey )
+void SignXmlFile( String^ FileName, String^ SignedFileName, RSA^ RSAKey )
 {
    
    // Create a new XML document.
@@ -32,8 +32,8 @@ void SignXmlFile( String^ FileName, String^ SignedFileName, DSA^ DSAKey )
    // Create a SignedXml object.
    SignedXml^ signedXml = gcnew SignedXml( doc );
    
-   // Add the DSA key to the SignedXml document. 
-   signedXml->SigningKey = DSAKey;
+   // Add the RSA key to the SignedXml document. 
+   signedXml->SigningKey = RSAKey;
    
    // Create a reference to be signed.
    Reference^ reference = gcnew Reference;
@@ -46,9 +46,9 @@ void SignXmlFile( String^ FileName, String^ SignedFileName, DSA^ DSAKey )
    // Add the reference to the SignedXml object.
    signedXml->AddReference( reference );
    
-   // Add a DSAKeyValue to the KeyInfo (optional; helps recipient find key to validate).
+   // Add a RSAKeyValue to the KeyInfo (optional; helps recipient find key to validate).
    KeyInfo^ keyInfo = gcnew KeyInfo;
-   keyInfo->AddClause( gcnew DSAKeyValue( safe_cast<DSA^>(DSAKey) ) );
+   keyInfo->AddClause( gcnew RSAKeyValue( safe_cast<RSA^>(RSAKey) ) );
    signedXml->KeyInfo = keyInfo;
    
    // Compute the signature.
@@ -133,8 +133,8 @@ int main()
    try
    {
       
-      // Generate a DSA signing key.
-      DSACryptoServiceProvider^ DSAKey = gcnew DSACryptoServiceProvider;
+      // Generate a RSA signing key.
+      RSA^ RSAKey = RSA::Create();
       
       // Create an XML file to sign.
       CreateSomeXml( "Example.xml" );
@@ -142,7 +142,7 @@ int main()
       
       // Sign the XML that was just created and save it in a 
       // new file.
-      SignXmlFile( "Example.xml", "SignedExample.xml", DSAKey );
+      SignXmlFile( "Example.xml", "SignedExample.xml", RSAKey );
       Console::WriteLine( "XML file signed." );
       
       // Verify the signature of the signed XML.

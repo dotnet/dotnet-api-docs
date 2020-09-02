@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example demonstrates several ways to set
 		// a queue's path.
 		//**************************************************
@@ -46,7 +46,7 @@ namespace MyProject
 		// References private queues.
 		public void SendPrivate()
 		{
-			MessageQueue myQueue = new 
+			MessageQueue myQueue = new
 				MessageQueue(".\\Private$\\myQueue");
 			myQueue.Send("Private queue by path name.");
 
@@ -65,8 +65,8 @@ namespace MyProject
 		// References queues by format name.
 		public void SendByFormatName()
 		{
-			MessageQueue myQueue = new 
-				MessageQueue("FormatName:Public=5A5F7535-AE9A-41d4" + 
+			MessageQueue myQueue = new
+				MessageQueue("FormatName:Public=5A5F7535-AE9A-41d4" +
 				"-935C-845C2AFF7112");
 			myQueue.Send("Queue by format name.");
 
@@ -76,7 +76,7 @@ namespace MyProject
 		// References computer journal queues.
 		public void MonitorComputerJournal()
 		{
-			MessageQueue computerJournal = new 
+			MessageQueue computerJournal = new
 				MessageQueue(".\\Journal$");
 			while(true)
 			{
@@ -88,7 +88,7 @@ namespace MyProject
 		// References queue journal queues.
 		public void MonitorQueueJournal()
 		{
-			MessageQueue queueJournal = new 
+			MessageQueue queueJournal = new
 				MessageQueue(".\\myQueue\\Journal$");
 			while(true)
 			{
@@ -100,7 +100,7 @@ namespace MyProject
 		// References dead-letter queues.
 		public void MonitorDeadLetter()
 		{
-			MessageQueue deadLetter = new 
+			MessageQueue deadLetter = new
 				MessageQueue(".\\DeadLetter$");
 			while(true)
 			{
@@ -112,7 +112,7 @@ namespace MyProject
 		// References transactional dead-letter queues.
 		public void MonitorTransactionalDeadLetter()
 		{
-			MessageQueue TxDeadLetter = new 
+			MessageQueue TxDeadLetter = new
 				MessageQueue(".\\XactDeadLetter$");
 			while(true)
 			{

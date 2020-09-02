@@ -12,14 +12,14 @@
 
 /* This example demonstrates 'SchemaReference' class, its constructors, 'ReadDocument',
  * 'WriteDocument', 'Namespace, 'DefaultFileName', 'Schema', 'Ref', 'TargetNamespace',
- * and 'Url' members. A variable of type 'SchemaReference' is taken. An xml schema 
+ * and 'Url' members. A variable of type 'SchemaReference' is taken. An xml schema
  * document is passed as parameter to overloaded constructor. All the membes are shown
- * using 'SchemaReference' variable. 
+ * using 'SchemaReference' variable.
   Note : The dataservice.xsd file should be copied to Inetpub\wwwroot
 
 */
 
-// <Snippet1> 
+// <Snippet1>
 using System;
 using System.IO;
 using System.Net;
@@ -41,42 +41,42 @@ public class SchemaReferenceClass
          XmlSchema myXmlSchema;
 
          // Create the client protocol.
-         DiscoveryClientProtocol myDiscoveryClientProtocol = 
+         DiscoveryClientProtocol myDiscoveryClientProtocol =
              new DiscoveryClientProtocol();
-         myDiscoveryClientProtocol.Credentials = 
+         myDiscoveryClientProtocol.Credentials =
              CredentialCache.DefaultCredentials;
-         
+
          //  Create a schema reference.
          SchemaReference mySchemaReferenceNoParam = new SchemaReference();
-         
+
          SchemaReference mySchemaReference = new SchemaReference(myStringUrl);
-                  
+
          // Set the client protocol.
          mySchemaReference.ClientProtocol = myDiscoveryClientProtocol;
 
          // Access the default file name associated with the schema reference.
-         Console.WriteLine("Default filename is : " + 
+         Console.WriteLine("Default filename is : " +
              mySchemaReference.DefaultFilename);
-         
+
          // Access the namespace associated with schema reference class.
          Console.WriteLine("Namespace is : " + SchemaReference.Namespace);
-         
-         FileStream myStream = 
-             new FileStream(myStringUrl,FileMode.OpenOrCreate); 
-         
+
+         FileStream myStream =
+             new FileStream(myStringUrl,FileMode.OpenOrCreate);
+
          // Read the document in a stream.
          mySchemaReference.ReadDocument(myStream);
-         
+
          // Get the schema of referenced document.
          myXmlSchema = mySchemaReference.Schema;
-         
-         Console.WriteLine("Reference is : " + mySchemaReference.Ref);      
-         
-         Console.WriteLine("Target namespace (default empty) is : " + 
+
+         Console.WriteLine("Reference is : " + mySchemaReference.Ref);
+
+         Console.WriteLine("Target namespace (default empty) is : " +
              mySchemaReference.TargetNamespace);
 
          Console.WriteLine("URL is : " + mySchemaReference.Url);
-         
+
          // Write the document in the stream.
          mySchemaReference.WriteDocument(myXmlSchema,myStream);
 
@@ -92,4 +92,4 @@ public class SchemaReferenceClass
    }
 }
 
-// </Snippet1> 
+// </Snippet1>

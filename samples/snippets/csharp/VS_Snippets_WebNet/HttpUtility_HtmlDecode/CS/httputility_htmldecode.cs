@@ -5,7 +5,7 @@
 The following example demonstrates the  'HtmlEncode(string)'
 and 'HtmlDecode(string,TextWriter)' methods of 'HttpUtility' class.
 The input string is taken from user and encoded using 'HtmlEncode(string)'
-method.The encoded string thus obtained is then decoded using 
+method. The encoded string thus obtained is then decoded using 
 'HtmlDecode(string,TextWriter)' method.
 */
 

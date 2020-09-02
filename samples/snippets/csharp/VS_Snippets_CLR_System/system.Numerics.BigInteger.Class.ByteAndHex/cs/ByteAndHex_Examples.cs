@@ -20,14 +20,14 @@ public class Example
    private static void RoundtripBigInteger()
    {
       Console.WriteLine("Round-trip bytes");
-      
+
       // <Snippet1>
-      BigInteger number = BigInteger.Pow(Int64.MaxValue, 2);     
+      BigInteger number = BigInteger.Pow(Int64.MaxValue, 2);
       Console.WriteLine(number);
-      
+
       // Write the BigInteger value to a byte array.
       byte[] bytes = number.ToByteArray();
-      
+
       // Display the byte array.
       foreach (byte byteValue in bytes)
          Console.Write("0x{0:X2} ", byteValue);
@@ -39,7 +39,7 @@ public class Example
       // The example displays the following output:
       //    8.5070591730234615847396907784E+37
       //    0x01 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0x3F
-      //    
+      //
       //    8.5070591730234615847396907784E+37
       // </Snippet1>
    }
@@ -51,7 +51,7 @@ public class Example
       // <Snippet2>
       short originalValue = 30000;
       Console.WriteLine(originalValue);
-      
+
       // Convert the Int16 value to a byte array.
       byte[] bytes = BitConverter.GetBytes(originalValue);
 
@@ -68,26 +68,26 @@ public class Example
       //       0x30 0x75
       //       30000
       // </Snippet2>
-   }      
-   
+   }
+
    private static void HandleSignsInByteArray()
    {
       // <Snippet3>
       int negativeNumber = -1000000;
       uint positiveNumber = 4293967296;
-      
-      byte[] negativeBytes = BitConverter.GetBytes(negativeNumber); 
+
+      byte[] negativeBytes = BitConverter.GetBytes(negativeNumber);
       BigInteger negativeBigInt = new BigInteger(negativeBytes);
       Console.WriteLine(negativeBigInt.ToString("N0"));
-      
+
       byte[] tempPosBytes = BitConverter.GetBytes(positiveNumber);
       byte[] positiveBytes = new byte[tempPosBytes.Length + 1];
       Array.Copy(tempPosBytes, positiveBytes, tempPosBytes.Length);
       BigInteger positiveBigInt = new BigInteger(positiveBytes);
-      Console.WriteLine(positiveBigInt.ToString("N0")); 
+      Console.WriteLine(positiveBigInt.ToString("N0"));
       // The example displays the following output:
       //    -1,000,000
-      //    4,293,967,296      
+      //    4,293,967,296
       // </Snippet3>
    }
 
@@ -97,7 +97,7 @@ public class Example
       // <Snippet4>
       BigInteger positiveValue = 15777216;
       BigInteger negativeValue  = -1000000;
-      
+
       Console.WriteLine("Positive value: " + positiveValue.ToString("N0"));
       byte[] bytes = positiveValue.ToByteArray();
 
@@ -106,9 +106,9 @@ public class Example
       Console.WriteLine();
       positiveValue = new BigInteger(bytes);
       Console.WriteLine("Restored positive value: " + positiveValue.ToString("N0"));
-      
+
       Console.WriteLine();
-         
+
       Console.WriteLine("Negative value: " + negativeValue.ToString("N0"));
       bytes = negativeValue.ToByteArray();
       foreach (byte byteValue in bytes)
@@ -120,7 +120,7 @@ public class Example
       //       Positive value: 15,777,216
       //       C0 BD F0 00
       //       Restored positive value: 15,777,216
-      //       
+      //
       //       Negative value: -1,000,000
       //       C0 BD F0
       //       Restored negative value: -1,000,000
@@ -132,20 +132,20 @@ public class Example
       // <Snippet5>
       BigInteger negativeNumber = -1000000;
       BigInteger positiveNumber  = 15777216;
-      
+
       string negativeHex = negativeNumber.ToString("X");
       string positiveHex = positiveNumber.ToString("X");
-      
-      BigInteger negativeNumber2, positiveNumber2;  
-      negativeNumber2 = BigInteger.Parse(negativeHex, 
+
+      BigInteger negativeNumber2, positiveNumber2;
+      negativeNumber2 = BigInteger.Parse(negativeHex,
                                          NumberStyles.HexNumber);
       positiveNumber2 = BigInteger.Parse(positiveHex,
                                          NumberStyles.HexNumber);
 
-      Console.WriteLine("Converted {0:N0} to {1} back to {2:N0}.", 
-                         negativeNumber, negativeHex, negativeNumber2);                                         
-      Console.WriteLine("Converted {0:N0} to {1} back to {2:N0}.", 
-                         positiveNumber, positiveHex, positiveNumber2);                                         
+      Console.WriteLine("Converted {0:N0} to {1} back to {2:N0}.",
+                         negativeNumber, negativeHex, negativeNumber2);
+      Console.WriteLine("Converted {0:N0} to {1} back to {2:N0}.",
+                         positiveNumber, positiveHex, positiveNumber2);
       // The example displays the following output:
       //       Converted -1,000,000 to F0BDC0 back to -1,000,000.
       //       Converted 15,777,216 to 0F0BDC0 back to 15,777,216.

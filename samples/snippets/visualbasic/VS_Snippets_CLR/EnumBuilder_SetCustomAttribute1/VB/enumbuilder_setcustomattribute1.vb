@@ -4,10 +4,10 @@
 ' System.Reflection.Emit.EnumBuilder.SetCustomAttribute(CustomAttributeBuilder)
 
 ' The following program demonstrates the EnumBuilder class and
-' its methods  'IsDefined', 'GetCustomAttributes(Type, Boolean)' and
+' its methods 'IsDefined', 'GetCustomAttributes(Type, Boolean)', and
 ' 'SetCustomAttribute(CustomAttributeBuilder)'. It defines a 'MyAttribute'
 ' class which is derived from 'System.Attribute' class. It builds an Enum
-' and sets 'MyAttribute' as  custom attribute to the Enum.It gets the
+' and sets 'MyAttribute' as a custom attribute to the Enum. It gets the
 ' custom attributes of the Enum type and displays its contents on the console.
 
 ' <Snippet1>

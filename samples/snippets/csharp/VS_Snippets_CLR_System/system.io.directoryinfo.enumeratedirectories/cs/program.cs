@@ -17,10 +17,10 @@ class Program
             {
                 try
                 {
-                    // Display each file over 10 MB;
+                    // Display each file over 10 MB.
                     if (fi.Length > 10000000)
                     {
-                        Console.WriteLine($"{fi.FullName}\t\t{fi.Length.ToString("NO")}");
+                        Console.WriteLine($"{fi.FullName}\t\t{fi.Length:N0}");
                     }
                 }
                 catch (UnauthorizedAccessException unAuthTop)
@@ -28,7 +28,7 @@ class Program
                     Console.WriteLine($"{unAuthTop.Message}");
                 }
             }
-            
+
             foreach (var di in diTop.EnumerateDirectories("*"))
             {
                 try
@@ -37,10 +37,10 @@ class Program
                     {
                         try
                         {
-                            // Display each file over 10 MB;
+                            // Display each file over 10 MB.
                             if (fi.Length > 10000000)
                             {
-                                Console.WriteLine($"{fi.FullName}\t\t{fi.Length.ToString("NO")}");
+                                Console.WriteLine($"{fi.FullName}\t\t{fi.Length:N0}");
                             }
                         }
                         catch (UnauthorizedAccessException unAuthFile)

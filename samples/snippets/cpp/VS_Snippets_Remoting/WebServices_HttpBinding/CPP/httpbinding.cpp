@@ -9,7 +9,7 @@
   'constructor and 'Location' property of class 'HttpAddressBinding'.
   It creates a 'ServiceDescription' instance by using the
   static read method of 'ServiceDescription' by passing the  
-  'AddNumbers1.wsdl' name as an argument.It creates  a 'Binding' 
+  'AddNumbers1.wsdl' name as an argument. It creates  a 'Binding' 
   object and adds that binding object to 'ServiceDescription'. 
   It adds the 'PortType',Messages to the 'ServiceDescription' object. 
   Finally it writes the 'ServiceDescrption' as a WSDL file with name 

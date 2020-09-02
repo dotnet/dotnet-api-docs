@@ -5,7 +5,7 @@ using System.Messaging;
 namespace MyProject
 {
 
-	// This class represents an object the following example 
+	// This class represents an object the following example
 	// sends to a queue and receives from a queue.
 	public class Order
 	{
@@ -21,9 +21,9 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example posts a notification that a message
-		// has arrived in a queue. It sends a message 
+		// has arrived in a queue. It sends a message
 		// containing an other to a separate queue, and then
 		// peeks the first message in the queue.
 		//**************************************************
@@ -46,8 +46,8 @@ namespace MyProject
 		}
 
 		//**************************************************
-		// Posts a notification when a message arrives in 
-		// the queue "monitoredQueue". Does not retrieve any 
+		// Posts a notification when a message arrives in
+		// the queue "monitoredQueue". Does not retrieve any
 		// message information when peeking the message.
 		//**************************************************
 		
@@ -55,13 +55,13 @@ namespace MyProject
 		{
 
 			// Connect to a queue.
-			MessageQueue myQueue = new 
+			MessageQueue myQueue = new
 				MessageQueue(".\\monitoredQueue");
 	
 			// Specify to retrieve no message information.
 			myQueue.MessageReadPropertyFilter.ClearAll();
 
-			// Wait for a message to arrive. 
+			// Wait for a message to arrive.
 			Message emptyMessage = myQueue.Peek();
 
 			// Post a notification when a message arrives.
@@ -106,14 +106,14 @@ namespace MyProject
 			
 			try
 			{
-				// Peek and format the message. 
-				Message myMessage =	myQueue.Peek(); 
+				// Peek and format the message.
+				Message myMessage =	myQueue.Peek();
 				Order myOrder = (Order)myMessage.Body;
 
 				// Display message information.
-				Console.WriteLine("Order ID: " + 
+				Console.WriteLine("Order ID: " +
 					myOrder.orderId.ToString());
-				Console.WriteLine("Sent: " + 
+				Console.WriteLine("Sent: " +
 					myOrder.orderTime.ToString());
 			}
 			

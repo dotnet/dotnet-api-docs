@@ -16,12 +16,12 @@ namespace A
 			{
 				ImportedFromTypeLibAttribute imptlb = ( ImportedFromTypeLibAttribute )AsmAttributes[0];
 				string strImportedFrom  = imptlb.Value;
-				    
+				
 				// Print out the name of the DLL from which the assembly is imported.
 				Console.WriteLine( "Assembly " + a.FullName + " is imported from " + strImportedFrom );
 			
 				return true;
-			}  
+			}
 			// This is not a COM assembly.
 			Console.WriteLine( "Assembly " + a.FullName + " is not imported from COM" );
 			return false;

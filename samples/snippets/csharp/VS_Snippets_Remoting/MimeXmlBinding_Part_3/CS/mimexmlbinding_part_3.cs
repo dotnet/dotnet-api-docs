@@ -5,8 +5,8 @@
 /* The following program demonstrates constructor and 'Part'property
    of 'MimeXmlBinding' class. This program takes 'MimeXmlBinding_Part_3_Input_CS.wsdl'
    as input, which does not contain 'Binding' object that supports 'HttpPost'.
-   It sets message part property to 'Body' on which 'MimeXmlBinding' is 
-   applied and finally writes into 'MimeXmlBinding_Part_3_Output_CS.wsdl'.    
+   It sets message part property to 'Body' on which 'MimeXmlBinding' is
+   applied and finally writes into 'MimeXmlBinding_Part_3_Output_CS.wsdl'.
 */
 
 // <Snippet1>
@@ -21,13 +21,13 @@ class MyXmlBinding
    {
       try
       {
-         ServiceDescription myDescription = 
+         ServiceDescription myDescription =
             ServiceDescription.Read("MimeXmlBinding_Part_3_Input_CS.wsdl");
          // Create the 'Binding' object.
          Binding myBinding = new Binding();
          // Initialize 'Name' property of 'Binding' class.
          myBinding.Name = "MimeXmlBinding_Part_3_ServiceHttpPost";
-         XmlQualifiedName 
+         XmlQualifiedName
             myXmlQualifiedName = new XmlQualifiedName("s0:MimeXmlBinding_Part_3_ServiceHttpPost");
          myBinding.Type = myXmlQualifiedName;
          // Create the 'HttpBinding' object.
@@ -41,21 +41,21 @@ class MyXmlBinding
          HttpOperationBinding myHttpOperationBinding = new HttpOperationBinding();
          myHttpOperationBinding.Location="/AddNumbers";
          // Add the 'HttpOperationBinding' to 'OperationBinding'.
-         myOperationBinding.Extensions.Add(myHttpOperationBinding);   
+         myOperationBinding.Extensions.Add(myHttpOperationBinding);
          // Create the 'InputBinding' object.
          InputBinding myInputBinding = new InputBinding();
          MimeContentBinding myMimeContentBinding = new MimeContentBinding();
          myMimeContentBinding.Type="application/x-www-form-urlencoded";
          myInputBinding.Extensions.Add(myMimeContentBinding);
          // Add the 'InputBinding' to 'OperationBinding'.
-         myOperationBinding.Input = myInputBinding;   
+         myOperationBinding.Input = myInputBinding;
 // <Snippet2>
 // <Snippet3>
          // Create an OutputBinding.
          OutputBinding myOutputBinding = new OutputBinding();
          MimeXmlBinding myMimeXmlBinding = new MimeXmlBinding();
 
-         // Initialize the Part property of the MimeXmlBinding. 
+         // Initialize the Part property of the MimeXmlBinding.
          myMimeXmlBinding.Part="Body";
 
          // Add the MimeXmlBinding to the OutputBinding.
@@ -63,7 +63,7 @@ class MyXmlBinding
 // </Snippet3>
 // </Snippet2>
          // Add the 'OutPutBinding' to 'OperationBinding'.
-         myOperationBinding.Output = myOutputBinding; 
+         myOperationBinding.Output = myOutputBinding;
          // Add the 'OperationBinding' to 'Binding'.
          myBinding.Operations.Add(myOperationBinding);
          // Add the 'Binding' to 'BindingCollection' of 'ServiceDescription'.

@@ -9,10 +9,10 @@ Imports System.Threading
 
 Module Example
    Public Sub Main()
-      Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US")
+      CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US")
       PersistData()
       
-      Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB")
+      CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR")
       RestoreData()
    End Sub
    

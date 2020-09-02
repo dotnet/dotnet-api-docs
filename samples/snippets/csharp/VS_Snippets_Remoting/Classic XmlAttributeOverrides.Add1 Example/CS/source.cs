@@ -16,7 +16,7 @@ public class Sample
 {
 public XmlSerializer CreateOverrider()
 {
-   // Create an XmlAttributeOverrides object. 
+   // Create an XmlAttributeOverrides object.
    XmlAttributeOverrides xOver = new XmlAttributeOverrides();
 
    /* Create an XmlAttributeAttribute to override the base class
@@ -25,7 +25,7 @@ public XmlSerializer CreateOverrider()
    XmlAttributeAttribute xAtt = new XmlAttributeAttribute();
    xAtt.AttributeName = "Code";
 
-   /* Create an instance of the XmlAttributes class and set the 
+   /* Create an instance of the XmlAttributes class and set the
    XmlAttribute property to the XmlAttributeAttribute object. */
    XmlAttributes attrs = new XmlAttributes();
    attrs.XmlAttribute = xAtt;

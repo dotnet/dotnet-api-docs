@@ -9,7 +9,7 @@
     if (e.AffectedRows > 0) {
         // Perform any additional processing, such as sending an email notification.
         Label1.Text = Request.LogonUserIdentity.Name +
-            " changed user information sucessfully!";
+            " changed user information successfully!";
     }
     else {
         Label1.Text = "No data updated!";

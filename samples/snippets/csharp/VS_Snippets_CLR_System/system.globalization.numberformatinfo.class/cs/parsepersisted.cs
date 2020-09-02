@@ -9,23 +9,23 @@ public class Example
 {
    public static void Main()
    {
-      Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+      CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
       PersistData();
-      
-      Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
+
+      CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
       RestoreData();
    }
 
    private static void PersistData()
    {
       // Define an array of floating-point values.
-      Double[] values = { 160325.972, 8631.16, 1.304e5, 98017554.385, 
+      Double[] values = { 160325.972, 8631.16, 1.304e5, 98017554.385,
                           8.5938287084321676e94 };
       Console.WriteLine("Original values: ");
-      foreach (var value in values) 
+      foreach (var value in values)
          Console.WriteLine(value.ToString("R", CultureInfo.InvariantCulture));
-         
-      // Serialize an array of doubles to a file 
+
+      // Serialize an array of doubles to a file
       StreamWriter sw = new StreamWriter(@".\NumericData.bin");
       for (int ctr = 0; ctr < values.Length; ctr++) {
          sw.Write(values[ctr].ToString("R"));
@@ -34,28 +34,28 @@ public class Example
       sw.Close();
       Console.WriteLine();
    }
-   
+
    private static void RestoreData()
-   {   
+   {
       // Deserialize the data
       StreamReader sr = new StreamReader(@".\NumericData.bin");
       String data = sr.ReadToEnd();
       sr.Close();
-      
+
       String[] stringValues = data.Split('|');
       List<Double> newValueList = new List<Double>();
-      
+
       foreach (var stringValue in stringValues) {
          try {
             newValueList.Add(Double.Parse(stringValue));
          }
          catch (FormatException) {
             newValueList.Add(Double.NaN);
-         }   
-      }                                   
+         }
+      }
 
       Console.WriteLine("Restored values:");
-      foreach (var newValue in newValueList) 
+      foreach (var newValue in newValueList)
          Console.WriteLine(newValue.ToString("R", NumberFormatInfo.InvariantInfo));
    }
 }
@@ -66,7 +66,7 @@ public class Example
 //       130400
 //       98017554.385
 //       8.5938287084321671E+94
-//       
+//
 //       Restored values:
 //       160325972
 //       863116

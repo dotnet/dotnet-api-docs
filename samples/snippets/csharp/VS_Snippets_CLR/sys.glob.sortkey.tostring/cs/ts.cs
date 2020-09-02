@@ -1,15 +1,15 @@
 ﻿//<snippet1>
-// This code example demonstrates the 
-// GetSortKey() and ToString() methods, and the 
-// OriginalString and KeyData properties of the 
+// This code example demonstrates the
+// GetSortKey() and ToString() methods, and the
+// OriginalString and KeyData properties of the
 // System.Globalization.SortKey class.
 
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     CompareInfo cmpi = null;
     SortKey sk1 = null;

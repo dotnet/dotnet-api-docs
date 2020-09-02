@@ -22,7 +22,7 @@ namespace SampleNamespace {
             }
         }
     }
-    
+
     // Define the delegate for the event
     public delegate void SomethingHappenedEventHandler (object sender, SampleServiceEventArgs e);
 

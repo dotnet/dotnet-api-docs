@@ -9,9 +9,9 @@ public class Client {
 
        // open channel and get handle to object
        ChannelServices.RegisterChannel(new TcpChannel());
-            
+
        //Registering the well known object on the client side for use by the operator new.
-       RemotingConfiguration.RegisterWellKnownClientType(typeof(HelloServer), 
+       RemotingConfiguration.RegisterWellKnownClientType(typeof(HelloServer),
                                                           "tcp://localhost:8084/SayHello");
        HelloServer obj = new HelloServer();
 

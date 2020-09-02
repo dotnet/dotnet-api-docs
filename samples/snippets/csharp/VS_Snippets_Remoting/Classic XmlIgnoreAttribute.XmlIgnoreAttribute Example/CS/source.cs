@@ -13,5 +13,5 @@ public class Group
    // The XmlSerializer serializes this field.
    public string GroupName;
 }
-   
+
 // </Snippet1>

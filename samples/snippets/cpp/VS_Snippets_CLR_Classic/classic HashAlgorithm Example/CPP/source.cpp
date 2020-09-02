@@ -15,7 +15,7 @@ protected:
    void Method()
    {
       // <Snippet1>
-      HashAlgorithm^ sha = gcnew SHA1CryptoServiceProvider;
+      HashAlgorithm^ sha = SHA256::Create();
       array<Byte>^ result = sha->ComputeHash( dataArray );
       // </Snippet1>
    }

@@ -1,5 +1,5 @@
 ﻿/// Class: System.Runtime.Remoting.Metadata.W3cXsd2001.SoapHexBinary
-///    10    class 
+///    10    class
 ///    21    #ctor()
 ///    22    #ctor(byte[])
 ///    13    GetXsdType()
@@ -26,7 +26,7 @@ public class Demo
         //</snippet11>
 
         //<snippet12>
-        // Print the value of the SoapHexBinary object in XSD format. 
+        // Print the value of the SoapHexBinary object in XSD format.
         Console.WriteLine("The SoapHexBinary object in XSD format is {0}.",
             hexBinary.ToString());
         //</snippet12>

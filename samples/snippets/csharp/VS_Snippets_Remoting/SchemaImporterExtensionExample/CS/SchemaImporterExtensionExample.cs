@@ -21,7 +21,7 @@ public class Test
 
 public abstract class MyFakeAbstract
 {
-        public virtual string ImportSchemaType(string name, string ns, XmlSchemaObject context, XmlSchemas schemas, XmlSchemaImporter importer, 
+        public virtual string ImportSchemaType(string name, string ns, XmlSchemaObject context, XmlSchemas schemas, XmlSchemaImporter importer,
             CodeCompileUnit compileUnit, CodeNamespace mainNamespace, CodeGenerationOptions options, CodeDomProvider codeProvider) {
             return null;
         }
@@ -30,10 +30,10 @@ public abstract class MyFakeAbstract
 public class MyExtension: MyFakeAbstract
 {
 //<snippet1>
-public override string ImportSchemaType(string name, string ns, 
-    XmlSchemaObject context, XmlSchemas schemas, 
-    XmlSchemaImporter importer, 
-    CodeCompileUnit compileUnit, CodeNamespace codeNamespace, 
+public override string ImportSchemaType(string name, string ns,
+    XmlSchemaObject context, XmlSchemas schemas,
+    XmlSchemaImporter importer,
+    CodeCompileUnit compileUnit, CodeNamespace codeNamespace,
     CodeGenerationOptions options, CodeDomProvider codeGenerator)
     {
         if (name.Equals("Order") && ns.Equals("http://orders/"))

@@ -3,14 +3,14 @@ using System;
 using System.IO;
 using System.Xml.Serialization;
 
-/* This is the class that will be overridden. The XmlIncludeAttribute 
+/* This is the class that will be overridden. The XmlIncludeAttribute
 tells the XmlSerializer that the overriding type exists. */
 
 [XmlInclude(typeof(Band))]
 public class Orchestra
 {
    public Instrument[] Instruments;
-}   
+}
 
 // This is the overriding class.
 public class Band:Orchestra
@@ -34,7 +34,7 @@ public class Run
 
     public void SerializeObject(string filename)
     {
-      /* Each object that is being overridden requires 
+      /* Each object that is being overridden requires
       an XmlAttributes object. */
       XmlAttributes attrs = new XmlAttributes();
 
@@ -45,14 +45,14 @@ public class Run
       attrs.XmlRoot = xmlRoot;
 
       // Create an XmlAttributeOverrides object.
-      XmlAttributeOverrides attrOverrides = 
+      XmlAttributeOverrides attrOverrides =
       new XmlAttributeOverrides();
 
       // Add the XmlAttributes to the XmlAttributeOverrrides.
       attrOverrides.Add(typeof(Orchestra), attrs);
 
       // Create the XmlSerializer using the XmlAttributeOverrides.
-      XmlSerializer s = 
+      XmlSerializer s =
       new XmlSerializer(typeof(Orchestra), attrOverrides);
 
       // Writing the file requires a TextWriter.
@@ -78,12 +78,12 @@ public class Run
       XmlAttributes attrs = new XmlAttributes();
       XmlRootAttribute attr = new XmlRootAttribute();
       attrs.XmlRoot = attr;
-      XmlAttributeOverrides attrOverrides = 
+      XmlAttributeOverrides attrOverrides =
          new XmlAttributeOverrides();
 
       attrOverrides.Add(typeof(Orchestra), "Instruments", attrs);
 
-      XmlSerializer s = 
+      XmlSerializer s =
       new XmlSerializer(typeof(Orchestra), attrOverrides);
 
       FileStream fs = new FileStream(filename, FileMode.Open);
@@ -92,7 +92,7 @@ public class Run
       Band band = (Band) s.Deserialize(fs);
       Console.WriteLine("Brass:");
 
-      foreach(Instrument i in band.Instruments) 
+      foreach(Instrument i in band.Instruments)
       {
          Console.WriteLine(i.Name);
       }

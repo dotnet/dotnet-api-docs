@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 class Example
 {
     private static int _staticProperty = 41;
-    public static int StaticProperty    
+    public static int StaticProperty
     {
         get
         {
@@ -20,7 +20,7 @@ class Example
     }
 
     private int _instanceProperty = 42;
-    public int InstanceProperty    
+    public int InstanceProperty
     {
         get
         {
@@ -32,13 +32,13 @@ class Example
         }
     }
 
-    private Dictionary<int, string> _indexedInstanceProperty = 
+    private Dictionary<int, string> _indexedInstanceProperty =
         new Dictionary<int, string>();
     // By default, the indexer is named Item, and that name must be used
     // to search for the property. In this example, the indexer is given
     // a different name by using the IndexerNameAttribute attribute.
     [IndexerNameAttribute("IndexedInstanceProperty")]
-    public string this[int key]    
+    public string this[int key]
     {
         get
         {
@@ -74,25 +74,25 @@ class Example
 
     public static void Main()
     {
-        Console.WriteLine("Initial value of class-level property: {0}", 
+        Console.WriteLine("Initial value of class-level property: {0}",
             Example.StaticProperty);
 
         PropertyInfo piShared = typeof(Example).GetProperty("StaticProperty");
         piShared.SetValue(null, 76, null);
-                 
-        Console.WriteLine("Final value of class-level property: {0}", 
+
+        Console.WriteLine("Final value of class-level property: {0}",
             Example.StaticProperty);
 
         Example exam = new Example();
 
-        Console.WriteLine("\nInitial value of instance property: {0}", 
+        Console.WriteLine("\nInitial value of instance property: {0}",
             exam.InstanceProperty);
 
-        PropertyInfo piInstance = 
+        PropertyInfo piInstance =
             typeof(Example).GetProperty("InstanceProperty");
         piInstance.SetValue(exam, 37, null);
-                 
-        Console.WriteLine("Final value of instance property: {0}", 
+
+        Console.WriteLine("Final value of instance property: {0}",
             exam.InstanceProperty);
 
         exam[17] = "String number 17";
@@ -100,22 +100,22 @@ class Example
         exam[9] = "String number 9";
 
         Console.WriteLine(
-            "\nInitial value of indexed instance property(17): '{0}'", 
+            "\nInitial value of indexed instance property(17): '{0}'",
             exam[17]);
 
         // By default, the indexer is named Item, and that name must be used
         // to search for the property. In this example, the indexer is given
         // a different name by using the IndexerNameAttribute attribute.
-        PropertyInfo piIndexedInstance = 
+        PropertyInfo piIndexedInstance =
             typeof(Example).GetProperty("IndexedInstanceProperty");
         piIndexedInstance.SetValue(
-            exam, 
-            "New value for string number 17", 
+            exam,
+            "New value for string number 17",
             new object[] { (int) 17 });
-                 
+
         Console.WriteLine(
-            "Final value of indexed instance property(17): '{0}'", 
-            exam[17]);       
+            "Final value of indexed instance property(17): '{0}'",
+            exam[17]);
     }
 }
 

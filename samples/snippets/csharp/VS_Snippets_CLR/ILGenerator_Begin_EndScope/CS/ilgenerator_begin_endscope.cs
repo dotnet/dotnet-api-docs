@@ -8,7 +8,7 @@
    constructor 'myConstructor' and a method 'myMethod' are created dynamically. Their IL's
    are generated. A local variable 'myLocalBuilder' is declared using 'DeclareLocal' property
    of 'myMethodIL'. The scope of 'myLocalBuilder' is specified using 'BeginScope' and
-   'EndScope' methods. Respective messages related to scope are printed on the console. 
+   'EndScope' methods. Respective messages related to scope are printed on the console.
 */
 
 // <Snippet1>
@@ -40,7 +40,7 @@ public class ILGenerator_Begin_EndScope
          TypeBuilder myTypeBuilder = myModule.DefineType("MyDynamicClass",
                                           TypeAttributes.Public);
          // Define a public string field.
-         FieldBuilder myField = myTypeBuilder.DefineField("MyDynamicField", 
+         FieldBuilder myField = myTypeBuilder.DefineField("MyDynamicField",
                                   typeof(String), FieldAttributes.Public);
          // Create the constructor.
          Type[] myConstructorArgs = {typeof(String)};
@@ -72,7 +72,7 @@ public class ILGenerator_Begin_EndScope
          Console.WriteLine("'myLocalBuilder' type is: {0}", myLocalBuilder.LocalType);
          myMethodIL.Emit(OpCodes.Ldstr, "Local value");
          myMethodIL.Emit(OpCodes.Stloc_0, myLocalBuilder);
-         
+
          // End the scope of 'myLocalBuilder'.
          myMethodIL.EndScope();
 
@@ -96,7 +96,7 @@ public class ILGenerator_Begin_EndScope
       }
       catch(Exception e)
       {
-         Console.WriteLine("Exception: {0}", e.Message ); 
+         Console.WriteLine("Exception: {0}", e.Message );
       }
    }
 }

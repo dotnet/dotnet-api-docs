@@ -32,20 +32,20 @@ class Example
         // Change the static property value.
         PropertyInfo piShared = examType.GetProperty("StaticProperty");
         piShared.SetValue(null, 76);
-                 
+
         Console.WriteLine("New value of static property: {0}",
                           Example.StaticProperty);
 
         // Create an instance of the Example class.
         Example exam = new Example();
 
-        Console.WriteLine("\nInitial value of instance property: {0}", 
+        Console.WriteLine("\nInitial value of instance property: {0}",
                           exam.InstanceProperty);
 
         // Change the instance property value.
         PropertyInfo piInstance = examType.GetProperty("InstanceProperty");
         piInstance.SetValue(exam, 37);
-                 
+
         Console.WriteLine("New value of instance property: {0}",
                           exam.InstanceProperty);
     }

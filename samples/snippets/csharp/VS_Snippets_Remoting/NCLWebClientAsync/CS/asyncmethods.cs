@@ -716,18 +716,18 @@ public class Test
         private static void UploadProgressCallback(object sender, UploadProgressChangedEventArgs e)
         {
             // Displays the operation identifier, and the transfer progress.
-            Console.WriteLine("{0}    uploaded {1} of {2} bytes. {3} % complete...", 
-                (string)e.UserState, 
-                e.BytesSent, 
+            Console.WriteLine("{0}    uploaded {1} of {2} bytes. {3} % complete...",
+                (string)e.UserState,
+                e.BytesSent,
                 e.TotalBytesToSend,
                 e.ProgressPercentage);
         }
         private static void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
         {
             // Displays the operation identifier, and the transfer progress.
-            Console.WriteLine("{0}    downloaded {1} of {2} bytes. {3} % complete...", 
-                (string)e.UserState, 
-                e.BytesReceived, 
+            Console.WriteLine("{0}    downloaded {1} of {2} bytes. {3} % complete...",
+                (string)e.UserState,
+                e.BytesReceived,
                 e.TotalBytesToReceive,
                 e.ProgressPercentage);
         }
@@ -742,15 +742,15 @@ public class Test
          //  System.Threading.Thread.Sleep (10000);
 
          UploadDataInBackground2 ("http://JOHNALLRED-0/test/postaccepter.aspx");
-		  
+		
          // DownloadString ("http://google.com");
    /*
         UploadDataInBackground ("http://sharriso1/test/postaccepter.aspx");
-        
+
         System.Threading.Thread.Sleep (1000);
         UploadDataInBackground3 ("http://sharriso1/test/postaccepter.aspx");
         System.Threading.Thread.Sleep (1000);
-  
+
         UploadStringInBackground ("http://sharriso1/test/postaccepter.aspx");
         UploadStringInBackground2 ("http://sharriso1/test/postaccepter.aspx");
         System.Threading.Thread.Sleep (1000);
@@ -763,7 +763,7 @@ public class Test
         // DownloadString ("http://google.com");
         //  DownloadStringInBackground ("http://google.com");
         //  DownloadStringInBackground2 ("http://google.com");
-        //  System.Threading.Thread.Sleep (1000); 
+        //  System.Threading.Thread.Sleep (1000);
          //  DownLoadFileInBackground2 ("http://sharriso1/test/uploadedFiles/onesandtwos.txt");
          DownLoadFileWithProgressNotify("http://JOHNALLRED-0/test/uploadedFiles/onesandtwos.txt");
         //System.Threading.Thread.Sleep (10000);

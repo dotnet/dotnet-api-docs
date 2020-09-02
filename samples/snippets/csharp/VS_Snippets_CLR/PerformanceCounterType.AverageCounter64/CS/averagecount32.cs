@@ -12,7 +12,7 @@ public class App {
 
     public static void Main()
     {
-    
+
         ArrayList samplesList = new ArrayList();
 
         // If the category does not exist, create the category and exit.
@@ -29,7 +29,7 @@ public class App {
 
     private static bool SetupCategory()
     {
-        if ( !PerformanceCounterCategory.Exists("AverageCounter64SampleCategory") ) 
+        if ( !PerformanceCounterCategory.Exists("AverageCounter64SampleCategory") )
         {
 
             CounterCreationDataCollection counterDataCollection = new CounterCreationDataCollection();
@@ -65,14 +65,14 @@ public class App {
         // Create the counters.
 
         //<snippet2>
-        avgCounter64Sample = new PerformanceCounter("AverageCounter64SampleCategory", 
-            "AverageCounter64Sample", 
+        avgCounter64Sample = new PerformanceCounter("AverageCounter64SampleCategory",
+            "AverageCounter64Sample",
             false);
 
         //</snippet2>
 
-        avgCounter64SampleBase = new PerformanceCounter("AverageCounter64SampleCategory", 
-            "AverageCounter64SampleBase", 
+        avgCounter64SampleBase = new PerformanceCounter("AverageCounter64SampleCategory",
+            "AverageCounter64SampleBase",
             false);
 
         avgCounter64Sample.RawValue=0;
@@ -85,7 +85,7 @@ public class App {
         Random r = new Random( DateTime.Now.Millisecond );
 
         // Loop for the samples.
-        for (int j = 0; j < 100; j++) 
+        for (int j = 0; j < 100; j++)
         {
 
             int value = r.Next(1, 10);
@@ -95,7 +95,7 @@ public class App {
 
             avgCounter64SampleBase.Increment();
 
-            if ((j % 10) == 9) 
+            if ((j % 10) == 9)
             {
                 OutputSample(avgCounter64Sample.NextSample());
                 samplesList.Add( avgCounter64Sample.NextSample() );
@@ -124,7 +124,7 @@ public class App {
                 (CounterSample)samplesList[i+1]) );
 
             // Calculate the counter value manually.
-            Console.WriteLine("My computed counter value = " + 
+            Console.WriteLine("My computed counter value = " +
                 MyComputeCounterValue((CounterSample)samplesList[i],
                 (CounterSample)samplesList[i+1]) );
         }
@@ -132,17 +132,17 @@ public class App {
 
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
     //    Description - This counter type shows how many items are processed, on average,
-    //        during an operation. Counters of this type display a ratio of the items 
-    //        processed (such as bytes sent) to the number of operations completed. The  
-    //        ratio is calculated by comparing the number of items processed during the 
-    //        last interval to the number of operations completed during the last interval. 
+    //        during an operation. Counters of this type display a ratio of the items
+    //        processed (such as bytes sent) to the number of operations completed. The
+    //        ratio is calculated by comparing the number of items processed during the
+    //        last interval to the number of operations completed during the last interval.
     // Generic type - Average
-    //      Formula - (N1 - N0) / (D1 - D0), where the numerator (N) represents the number 
-    //        of items processed during the last sample interval and the denominator (D) 
-    //        represents the number of operations completed during the last two sample 
-    //        intervals. 
-    //    Average (Nx - N0) / (Dx - D0)  
-    //    Example PhysicalDisk\ Avg. Disk Bytes/Transfer 
+    //      Formula - (N1 - N0) / (D1 - D0), where the numerator (N) represents the number
+    //        of items processed during the last sample interval and the denominator (D)
+    //        represents the number of operations completed during the last two sample
+    //        intervals.
+    //    Average (Nx - N0) / (Dx - D0)
+    //    Example PhysicalDisk\ Avg. Disk Bytes/Transfer
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
     private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
     {

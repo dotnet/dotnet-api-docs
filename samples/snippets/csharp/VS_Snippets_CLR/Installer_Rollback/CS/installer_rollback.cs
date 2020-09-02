@@ -26,7 +26,7 @@ namespace MyAssembly
          Console.WriteLine( "The Install method of 'MyInstallerSample'" +
                            " has been called" );
          Console.WriteLine( "" );
-         
+
          // Exception generated to call Rollback method.
          Exception myException = new Exception();
          Console.WriteLine("Exception thrown during Installation");

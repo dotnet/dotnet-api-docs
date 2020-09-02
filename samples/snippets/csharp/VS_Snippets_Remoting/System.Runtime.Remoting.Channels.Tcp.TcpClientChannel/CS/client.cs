@@ -32,15 +32,15 @@ public class Client
         //<snippet32>
         // Create a message sink.
         string objectUri;
-        System.Runtime.Remoting.Messaging.IMessageSink messageSink = 
+        System.Runtime.Remoting.Messaging.IMessageSink messageSink =
             clientChannel.CreateMessageSink(
                 "tcp://localhost:9090/RemoteObject.rem", null,
                 out objectUri);
-        Console.WriteLine("The URI of the message sink is {0}.", 
+        Console.WriteLine("The URI of the message sink is {0}.",
             objectUri);
         if (messageSink != null)
         {
-            Console.WriteLine("The type of the message sink is {0}.", 
+            Console.WriteLine("The type of the message sink is {0}.",
                 messageSink.GetType().ToString());
         }
         //</snippet32>
@@ -53,9 +53,9 @@ public class Client
         Console.WriteLine("The object URI is {0}.", objectUri);
         Console.WriteLine("The channel URI is {0}.", channelUri);
         //</snippet33>
-        
+
         // Create an instance of the remote object.
-        RemoteObject service = new RemoteObject(); 
+        RemoteObject service = new RemoteObject();
 
         // Invoke a method on the remote object.
         Console.WriteLine("The client is invoking the remote object.");

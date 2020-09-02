@@ -57,7 +57,7 @@ public class Example
         /* This code example produces the following output:
 
         Initial list:
-        
+
         Pachycephalosaurus
         Amargasaurus
         Mamenchisaurus

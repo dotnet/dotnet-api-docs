@@ -19,7 +19,7 @@ class Sample {
     Console.Write("A character in '{0}' occurs at position: ", target);
 
     at = str.LastIndexOfAny(anyOf, start);
-    if (at > -1) 
+    if (at > -1)
         Console.Write(at);
     else
         Console.Write("(not found)");

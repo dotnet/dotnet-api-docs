@@ -16,16 +16,16 @@ namespace FileSystemExample
                 Console.WriteLine("Adding access control entry for " + FileName);
 
                 // Add the access control entry to the file.
-                // Before compiling this snippet, change MyDomain to your 
-                // domain name and MyAccessAccount to the name 
+                // Before compiling this snippet, change MyDomain to your
+                // domain name and MyAccessAccount to the name
                 // you use to access your domain.
                 AddFileSecurity(FileName, @"MyDomain\MyAccessAccount", FileSystemRights.ReadData, AccessControlType.Allow);
 
                 Console.WriteLine("Removing access control entry from " + FileName);
 
                 // Remove the access control entry from the file.
-                // Before compiling this snippet, change MyDomain to your 
-                // domain name and MyAccessAccount to the name 
+                // Before compiling this snippet, change MyDomain to your
+                // domain name and MyAccessAccount to the name
                 // you use to access your domain.
                 RemoveFileSecurity(FileName, @"MyDomain\MyAccessAccount", FileSystemRights.ReadData, AccessControlType.Allow);
 
@@ -43,11 +43,11 @@ namespace FileSystemExample
             // Create a new FileInfo object.
             FileInfo fInfo = new FileInfo(FileName);
 
-            // Get a FileSecurity object that represents the 
+            // Get a FileSecurity object that represents the
             // current security settings.
             FileSecurity fSecurity = fInfo.GetAccessControl();
 
-            // Add the FileSystemAccessRule to the security settings. 
+            // Add the FileSystemAccessRule to the security settings.
             fSecurity.AddAccessRule(new FileSystemAccessRule(Account,
                                                             Rights,
                                                             ControlType));
@@ -62,11 +62,11 @@ namespace FileSystemExample
             // Create a new FileInfo object.
             FileInfo fInfo = new FileInfo(FileName);
 
-            // Get a FileSecurity object that represents the 
+            // Get a FileSecurity object that represents the
             // current security settings.
             FileSecurity fSecurity = fInfo.GetAccessControl();
 
-            // Add the FileSystemAccessRule to the security settings. 
+            // Add the FileSystemAccessRule to the security settings.
             fSecurity.RemoveAccessRule(new FileSystemAccessRule(Account,
                                                             Rights,
                                                             ControlType));
@@ -76,7 +76,7 @@ namespace FileSystemExample
         }
     }
 }
-//This code produces output similar to the following; 
+//This code produces output similar to the following;
 //results may vary based on the computer/file structure/etc.:
 //
 //Adding access control entry for c:\test.xml

@@ -5,24 +5,24 @@ using System.Windows.Forms;
 
 public class Form1: Form
 {
- protected void Method()
- {
-// <Snippet1>
-Uri baseUri = new Uri("http://www.contoso.com/");
- Uri myUri = new Uri(baseUri, "catalog/shownew.htm?date=today");
- 
- Console.WriteLine(myUri.PathAndQuery);
- // </Snippet1>
-}
+    protected void Method()
+    {
+        // <Snippet1>
+        Uri baseUri = new Uri("http://www.contoso.com/");
+        Uri myUri = new Uri(baseUri, "catalog/shownew.htm?date=today");
 
-public void Method2()
-{
+        Console.WriteLine(myUri.PathAndQuery);
+        // </Snippet1>
+    }
 
- // <Snippet2>
- Uri baseUri = new Uri ("http://www.contoso.com/");
- Uri myUri = new Uri (baseUri, "catalog/shownew.htm?date=today");
+    public void Method2()
+    {
 
- Console.WriteLine (myUri.Query);
-// </Snippet2>
- }
+        // <Snippet2>
+        Uri baseUri = new Uri ("http://www.contoso.com/");
+        Uri myUri = new Uri (baseUri, "catalog/shownew.htm?date=today");
+
+        Console.WriteLine (myUri.Query);
+        // </Snippet2>
+    }
 }

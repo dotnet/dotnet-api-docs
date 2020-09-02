@@ -3,9 +3,9 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 
-public class Server 
+public class Server
 {
-    static void Main() 
+    static void Main()
     {
         // This is a Windows Sockets 2 error code.
         const int WSAETIMEDOUT = 10060;
@@ -25,7 +25,7 @@ public class Server
 
         // Create a socket and listen for incoming connections.
         using(Socket listenSocket = new Socket(
-            AddressFamily.InterNetwork, SocketType.Stream, 
+            AddressFamily.InterNetwork, SocketType.Stream,
             ProtocolType.Tcp))
         {
             listenSocket.Bind(ipEndpoint);
@@ -42,7 +42,7 @@ public class Server
             Console.Write("Sending data ... ");
             int bytesSent = serverSocket.Send(
                 dataToSend, 0, dataToSend.Length, SocketFlags.None);
-            Console.WriteLine("{0} bytes sent.\n", 
+            Console.WriteLine("{0} bytes sent.\n",
                 bytesSent.ToString());
 
             // Set the timeout for receiving data to 2 seconds.
@@ -70,7 +70,7 @@ public class Server
                 }
                 else
                 {
-                    Console.WriteLine("{0}: {1}\n", 
+                    Console.WriteLine("{0}: {1}\n",
                         e.GetType().Name, e.Message);
                 }
             }

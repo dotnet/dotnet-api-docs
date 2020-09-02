@@ -33,6 +33,7 @@
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Runtime.Extensions" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="System.Runtime.Extensions" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
   </TypeForwardingChain>
   <Base>
@@ -40,11 +41,13 @@
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-      <AttributeName>System.Runtime.InteropServices.ComVisible(true)</AttributeName>
-    </Attribute>
     <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
-      <AttributeName>System.Serializable</AttributeName>
+      <AttributeName Language="C#">[System.Serializable]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Serializable&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+      <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(true)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(true)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -108,7 +111,7 @@ To avoid this problem, create a single <xref:System.Random> object instead of mu
 ## The System.Random class and thread safety  
  Instead of instantiating individual <xref:System.Random> objects, we recommend that you create a single <xref:System.Random> instance to generate all the random numbers needed by your app. However, <xref:System.Random> objects are not thread safe. If your app calls <xref:System.Random> methods from multiple threads, you must use a synchronization object to ensure that only one thread can access the random number generator at a time. If you don't ensure that the <xref:System.Random> object is accessed in a thread-safe way, calls to methods that return random numbers return 0.  
   
- The following example uses the C# [lock Statement](~/docs/csharp/language-reference/keywords/lock-statement.md) and the Visual Basic [SyncLock statement](~/docs/visual-basic/language-reference/statements/synclock-statement.md) to ensure that a single random number generator is accessed by 11 threads in a thread-safe manner. Each thread generates 2 million random numbers, counts the number of random numbers generated and calculates their sum, and then updates the totals for all threads when it finishes executing.  
+ The following example uses the C# [lock Statement](/dotnet/csharp/language-reference/keywords/lock-statement) and the Visual Basic [SyncLock statement](/dotnet/visual-basic/language-reference/statements/synclock-statement) to ensure that a single random number generator is accessed by 11 threads in a thread-safe manner. Each thread generates 2 million random numbers, counts the number of random numbers generated and calculates their sum, and then updates the totals for all threads when it finishes executing.  
   
  [!code-cpp[System.Random#3](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/threadsafeex1.cpp#3)]
  [!code-csharp[System.Random#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/threadsafeex1.cs#3)]
@@ -252,7 +255,7 @@ Random.NextDouble() * (maxValue - minValue) + minValue
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/booleans1.cs" interactive="try-dotnet" id="Snippet8":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/booleans1.vb" id="Snippet8":::
   
- Instead of creating a separate class to generate random <xref:System.Boolean> values, the example could simply have defined a single method. In that case, however, the <xref:System.Random> object should have been defined as a class-level variable to avoid instantiating a new <xref:System.Random> instance in each method call. In Visual Basic, the Random instance can be defined as a [Static](~/docs/visual-basic/language-reference/modifiers/static.md) variable in the `NextBoolean` method.  The following example provides an implementation.  
+ Instead of creating a separate class to generate random <xref:System.Boolean> values, the example could simply have defined a single method. In that case, however, the <xref:System.Random> object should have been defined as a class-level variable to avoid instantiating a new <xref:System.Random> instance in each method call. In Visual Basic, the Random instance can be defined as a [Static](/dotnet/visual-basic/language-reference/modifiers/static) variable in the `NextBoolean` method.  The following example provides an implementation.  
   
  [!code-cpp[System.Random#20](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/booleans2.cpp#20)]
  [!code-csharp-interactive[System.Random#20](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/booleans2.cs#20)]
@@ -391,7 +394,7 @@ In .NET Framework, the default seed value is derived from the system clock, whic
 
 In .NET Core, the default seed value is produced by the thread-static, pseudo-random number generator, so the previously described limitation does not apply. Different <xref:System.Random> objects created in close succession produce different sets of random numbers in .NET Core.
   
- Call this constructor if you want your random number generator to generate a random sequence of numbers. To generate a fixed  sequence of random numbers that will be the same for different random number generators, call the <xref:System.Random.%23ctor%28System.Int32%29> constructor with a fixed seed value . This <xref:System.Random> constructor overload is frequently used when testing apps that use random numbers.  
+ Call this constructor if you want your random number generator to generate a random sequence of numbers. To generate a fixed  sequence of random numbers that will be the same for different random number generators, call the <xref:System.Random.%23ctor%28System.Int32%29> constructor with a fixed seed value. This <xref:System.Random> constructor overload is frequently used when testing apps that use random numbers.  
   
  Once you've instantiated the random number generator, you call individual <xref:System.Random> methods, such as <xref:System.Random.Next> or <xref:System.Random.NextDouble>, to generate random numbers.  
   
@@ -521,7 +524,8 @@ The following example uses the parameterless constructor to instantiate three <x
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -542,15 +546,15 @@ The following example uses the parameterless constructor to instantiate three <x
 ## Examples  
  The following example makes repeated calls to the <xref:System.Random.Next%2A> method to generate a specific number of random numbers requested by the user. The <xref:System.Console.ReadLine%2A?displayProperty=nameWithType> method is used to get customer input.  
   
- [!code-cpp[System.Random.Next#5](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random.Next/CPP/next3.cpp#5)]
- [!code-csharp[System.Random.Next#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random.Next/CS/next3.cs#5)]
- [!code-vb[System.Random.Next#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random.Next/VB/next3.vb#5)]  
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random.Next/CPP/next3.cpp" id="Snippet5":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random.Next/CS/next3.cs" interactive="try-dotnet-method" id="Snippet5":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random.Next/VB/next3.vb" id="Snippet5":::
   
  The following example derives a class from <xref:System.Random> to generate a sequence of random numbers whose distribution differs from the uniform distribution generated by the <xref:System.Random.Sample%2A> method of the base class. It overrides the <xref:System.Random.Sample%2A> method to provide the distribution of random numbers, and overrides the <xref:System.Random.Next%2A?displayProperty=nameWithType> method to use series of random numbers.  
   
- [!code-cpp[System.Random.Sample#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random.Sample/cpp/sampleex.cpp#1)]
- [!code-csharp[System.Random.Sample#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random.Sample/CS/sample.cs#1)]
- [!code-vb[System.Random.Sample#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random.Sample/VB/sample.vb#1)]  
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random.Sample/cpp/sampleex.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random.Sample/CS/sample.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random.Sample/VB/sample.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -858,7 +862,8 @@ Each element of the span of bytes is set to a random number greater than or equa
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -932,7 +937,8 @@ Each element of the span of bytes is set to a random number greater than or equa
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>

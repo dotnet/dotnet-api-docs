@@ -10,7 +10,7 @@ namespace Examples.System.Net.Networking
         static void DisplayAddressNone()
         {
             PhysicalAddress none = PhysicalAddress.None;
-            
+
             Console.WriteLine("None: {0}", none.ToString());
             byte[] bytes = none.GetAddressBytes();
             foreach (byte b in bytes)
@@ -33,7 +33,7 @@ namespace Examples.System.Net.Networking
                 Console.WriteLine("  No network interfaces found.");
                 return;
             }
-                             
+
             Console.WriteLine("  Number of interfaces .................... : {0}", nics.Length);
             foreach (NetworkInterface adapter in nics)
             {
@@ -49,7 +49,7 @@ namespace Examples.System.Net.Networking
                 {
                     // Display the physical address in hexadecimal.
                     Console.Write("{0}", bytes[i].ToString("X2"));
-                    // Insert a hyphen after each byte, unless we are at the end of the 
+                    // Insert a hyphen after each byte, unless we are at the end of the
                     // address.
                     if (i != bytes.Length -1)
                     {
@@ -81,7 +81,7 @@ namespace Examples.System.Net.Networking
                 Console.WriteLine("  No network interfaces found.");
                 return null;
             }
-                             
+
             PhysicalAddress[] addresses = new PhysicalAddress[nics.Length];
             int i = 0;
             foreach (NetworkInterface adapter in nics)
@@ -106,6 +106,17 @@ namespace Examples.System.Net.Networking
         }
 //</snippet5>
 
+//<snippet6>
+        public static PhysicalAddress StrictParseAddress(ReadOnlySpan<char> address)
+        {
+            PhysicalAddress newAddress = PhysicalAddress.Parse(address);
+            if (PhysicalAddress.None.Equals(newAddress))
+                return null;
+
+            return newAddress;
+        }
+//</snippet6>
+
         public static void Main()
         {
            DisplayAddressNone();
@@ -115,10 +126,13 @@ namespace Examples.System.Net.Networking
            foreach (PhysicalAddress address in addresses)
            {
               Console.WriteLine(address.ToString());
-           } 
-         
-          PhysicalAddress a =   StrictParseAddress(null);
-          Console.WriteLine(a== null? "null" : a.ToString());
+           }
+
+          PhysicalAddress a = StrictParseAddress((string)null);
+          Console.WriteLine(a?.ToString() ?? "null");
+
+          PhysicalAddress b = StrictParseAddress("".AsSpan());
+          Console.WriteLine(b?.ToString() ?? "null");
         }
     }
 }

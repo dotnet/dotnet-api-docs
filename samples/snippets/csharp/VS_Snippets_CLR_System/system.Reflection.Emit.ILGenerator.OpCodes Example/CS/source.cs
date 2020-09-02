@@ -7,7 +7,7 @@ using System.Reflection.Emit;
 
 class EmitWriteLineDemo {
 
-   public static Type CreateDynamicType() {       
+   public static Type CreateDynamicType() {
        Type[] ctorParams = new Type[] {typeof(int),
 				   typeof(int)};
  	
@@ -16,7 +16,7 @@ class EmitWriteLineDemo {
        myAsmName.Name = "MyDynamicAssembly";
 
        AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(
-				      myAsmName, 
+				      myAsmName,
 				      AssemblyBuilderAccess.Run);
 
        ModuleBuilder pointModule = myAsmBuilder.DefineDynamicModule("PointModule",
@@ -27,10 +27,10 @@ class EmitWriteLineDemo {
 
        FieldBuilder xField = pointTypeBld.DefineField("x", typeof(int),
                                                       FieldAttributes.Public);
-       FieldBuilder yField = pointTypeBld.DefineField("y", typeof(int), 
+       FieldBuilder yField = pointTypeBld.DefineField("y", typeof(int),
                                                       FieldAttributes.Public);
 
-       Type objType = Type.GetType("System.Object"); 
+       Type objType = Type.GetType("System.Object");
        ConstructorInfo objCtor = objType.GetConstructor(new Type[0]);
 
        ConstructorBuilder pointCtor = pointTypeBld.DefineConstructor(
@@ -44,29 +44,29 @@ class EmitWriteLineDemo {
        ctorIL.Emit(OpCodes.Call, objCtor);
        ctorIL.Emit(OpCodes.Ldarg_0);
        ctorIL.Emit(OpCodes.Ldarg_1);
-       ctorIL.Emit(OpCodes.Stfld, xField); 
+       ctorIL.Emit(OpCodes.Stfld, xField);
        ctorIL.Emit(OpCodes.Ldarg_0);
        ctorIL.Emit(OpCodes.Ldarg_2);
-       ctorIL.Emit(OpCodes.Stfld, yField); 
-       ctorIL.Emit(OpCodes.Ret); 
+       ctorIL.Emit(OpCodes.Stfld, yField);
+       ctorIL.Emit(OpCodes.Ret);
 
        //  Now, you'll build a method to output some information on the
        // inside your dynamic class. This method will have the following
        // definition in C#:
 	//  public void WritePoint()
-      
+
        MethodBuilder writeStrMthd = pointTypeBld.DefineMethod(
-        		                     "WritePoint", 
+        		                     "WritePoint",
 				             MethodAttributes.Public,
-                                             typeof(void), 
+                                             typeof(void),
                                              null);
 
        ILGenerator writeStrIL = writeStrMthd.GetILGenerator();
-      
-       // The below ILGenerator created demonstrates a few ways to create
-       // string output through STDIN. 
 
-       // ILGenerator.EmitWriteLine(string) will generate a ldstr and a 
+       // The below ILGenerator created demonstrates a few ways to create
+       // string output through STDIN.
+
+       // ILGenerator.EmitWriteLine(string) will generate a ldstr and a
        // call to WriteLine for you.
 
        writeStrIL.EmitWriteLine("The value of this current instance is:");
@@ -88,12 +88,12 @@ class EmitWriteLineDemo {
 						wlParams);
 
        // Push the string with the substitutions onto the stack.
-       // This is the first argument for WriteLine - the string one. 
+       // This is the first argument for WriteLine - the string one.
 
        writeStrIL.Emit(OpCodes.Ldstr, inStr);
 
        // Since the second argument is an object, and it corresponds to
-       // to the substitution for the value of our integer field, you 
+       // to the substitution for the value of our integer field, you
        // need to box that field to an object. First, push a reference
        // to the current instance, and then push the value stored in
        // field 'x'. We need the reference to the current instance (stored
@@ -136,7 +136,7 @@ class EmitWriteLineDemo {
        // return the top stack value.
 
        writeStrIL.Emit(OpCodes.Ret);
-      
+
        return pointTypeBld.CreateType();
    }
 
@@ -144,9 +144,9 @@ class EmitWriteLineDemo {
 
       object[] ctorParams = new object[2];
 
-      Console.Write("Enter a integer value for X: "); 
+      Console.Write("Enter a integer value for X: ");
       string myX = Console.ReadLine();
-      Console.Write("Enter a integer value for Y: "); 
+      Console.Write("Enter a integer value for Y: ");
       string myY = Console.ReadLine();
 
       Console.WriteLine("---");
@@ -155,7 +155,7 @@ class EmitWriteLineDemo {
       ctorParams[1] = Convert.ToInt32(myY);
 
       Type ptType = CreateDynamicType();
-  
+
       object ptInstance = Activator.CreateInstance(ptType, ctorParams);
       ptType.InvokeMember("WritePoint",
 			  BindingFlags.InvokeMethod,

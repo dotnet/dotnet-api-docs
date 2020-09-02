@@ -6,7 +6,7 @@ using System.Xml;
 public class Sample {
 
   public static void Main() {
- 
+
     XmlReader reader = XmlReader.Create("test1.xml");
     XmlWriterSettings settings = new XmlWriterSettings();
     settings.Indent = true;

@@ -17,7 +17,7 @@ namespace XMLProcessingApp
         //  Loads XML from a file. If the file is not found, load XML from a string.
         //
         //************************************************************************************
- 
+
         public XmlDocument LoadDocument(bool generateXML)
         {
             //<Snippet1>
@@ -36,10 +36,10 @@ namespace XMLProcessingApp
                 "    <title>The Handmaid's Tale</title> \n" +
                 "    <price>29.95</price> \n" +
                 "  </book> \n" +
-                "</books>");             
+                "</books>");
             }
             //</Snippet1>
-            
+
             return doc;
         }
 
@@ -48,7 +48,7 @@ namespace XMLProcessingApp
         //  Helper method that generates an XML string.
         //
         //************************************************************************************
- 
+
         private string generateXMLString()
         {
             string xml = "<?xml version=\"1.0\"?> \n" +
@@ -244,11 +244,11 @@ namespace XMLProcessingApp
         #endregion
 
         #region Find XML elements and attributes
-        
+
         //************************************************************************************
         //
         //  Search the XML tree for a specific XMLNode element by using an attribute value.
-        //  Description: Must identify the namespace of the nodes and define a prefix. Also include the 
+        //  Description: Must identify the namespace of the nodes and define a prefix. Also include the
         //  prefix in the XPath string.
         //
         //************************************************************************************
@@ -264,17 +264,17 @@ namespace XMLProcessingApp
         //</Snippet3>
         //************************************************************************************
         //
-        //  Get information about a specific book. Pass in an XMLNode that 
+        //  Get information about a specific book. Pass in an XMLNode that
         //  represents the book and populate strings passed in by reference.
         //
-        //  **********************************************************************************  
+        //  **********************************************************************************
        //<Snippet4>
         public void GetBookInformation(ref string title, ref string ISBN, ref string publicationDate,
             ref string price, ref string genre, XmlNode book)
         {
             XmlElement bookElement = (XmlElement)book;
 
-            // Get the attributes of a book.        
+            // Get the attributes of a book.
             XmlAttribute attr = bookElement.GetAttributeNode("ISBN");
             ISBN = attr.InnerXml;
 
@@ -404,15 +404,15 @@ namespace XMLProcessingApp
         //************************************************************************************
         //
         //  Add an element to the XML document.
-        //  This method creates a new book element and saves that element to the 
+        //  This method creates a new book element and saves that element to the
         //  XMLDocument object. It addes attributes for the new element and introduces
         //  newline characters between elements fora nice readable format.
-        //  
+        //
         //
         //************************************************************************************
 
         //<Snippet5>
-        public XmlElement AddNewBook(string genre, string ISBN, string misc, 
+        public XmlElement AddNewBook(string genre, string ISBN, string misc,
             string title, string price, XmlDocument doc)
         {
             // Create a new book element.
@@ -437,10 +437,10 @@ namespace XMLProcessingApp
             bookElement.AppendChild(titleElement);
 
             // Introduce a newline character so that XML is nicely formatted.
-            bookElement.InnerXml = 
-                bookElement.InnerXml.Replace(titleElement.OuterXml, 
+            bookElement.InnerXml =
+                bookElement.InnerXml.Replace(titleElement.OuterXml,
                 "\n    " + titleElement.OuterXml + " \n    ");
-            
+
             // Create and append a child element for the price of the book.
             XmlElement priceElement = doc.CreateElement("price");
             priceElement.InnerText= price;
@@ -459,8 +459,8 @@ namespace XMLProcessingApp
         //  Add an element to the XML document at a specific location
         //  Takes a string that describes where the user wants the new node
         //  to be positioned. The string comes from a series of radio buttons in a UI.
-        //  this method also accepts the XMLDocument in context. You have to use the 
-        //  this instance because it is the object that was used to generate the 
+        //  this method also accepts the XMLDocument in context. You have to use the
+        //  this instance because it is the object that was used to generate the
         //  selectedBook XMLNode.
         //
         //************************************************************************************
@@ -486,25 +486,25 @@ namespace XMLProcessingApp
                     XmlNode appendedNode = doc.DocumentElement.AppendChild(bookElement);
                     doc.DocumentElement.InsertBefore(whitespace, appendedNode);
                     sigWhiteSpace = doc.CreateSignificantWhitespace("\n");
-                    doc.DocumentElement.InsertAfter(sigWhiteSpace, appendedNode);                 
+                    doc.DocumentElement.InsertAfter(sigWhiteSpace, appendedNode);
                     break;
-                
+
                 case Constants.positionAbove:
                     // Add newline characters to make XML more readable.
                     XmlNode currNode = doc.DocumentElement.InsertBefore(bookElement, selectedBook);
                     sigWhiteSpace = doc.CreateSignificantWhitespace("\n  ");
                     doc.DocumentElement.InsertAfter(sigWhiteSpace, currNode);
                     break;
-                
+
                 case Constants.positionBelow:
                     // Add newline characters to make XML more readable.
                     sigWhiteSpace = doc.CreateSignificantWhitespace("\n  ");
                     XmlNode whiteSpaceNode = doc.DocumentElement.InsertAfter(sigWhiteSpace, selectedBook);
-                    doc.DocumentElement.InsertAfter(bookElement, whiteSpaceNode);                  
+                    doc.DocumentElement.InsertAfter(bookElement, whiteSpaceNode);
                     break;
-                
+
                 default:
-                    doc.DocumentElement.AppendChild(bookElement);                    
+                    doc.DocumentElement.AppendChild(bookElement);
                     break;
             }
 
@@ -531,7 +531,7 @@ namespace XMLProcessingApp
 
             XmlElement bookElement = (XmlElement)book;
 
-            // Get the attributes of a book.        
+            // Get the attributes of a book.
             bookElement.SetAttribute("ISBN", ISBN);
             bookElement.SetAttribute("genre", genre);
             bookElement.SetAttribute("publicationdate", publicationDate);
@@ -554,17 +554,17 @@ namespace XMLProcessingApp
         //************************************************************************************
         //
         //  Summary: Delete a book node from the XMLDocument.
-        //  
+        //
         //
         //************************************************************************************
         //<Snippet6>
         public void deleteBook(XmlNode book)
         {
             XmlNode prevNode = book.PreviousSibling;
-            
+
             book.OwnerDocument.DocumentElement.RemoveChild(book);
 
-            if (prevNode.NodeType == XmlNodeType.Whitespace || 
+            if (prevNode.NodeType == XmlNodeType.Whitespace ||
                 prevNode.NodeType == XmlNodeType.SignificantWhitespace)
             {
                 prevNode.OwnerDocument.DocumentElement.RemoveChild(prevNode);
@@ -578,10 +578,10 @@ namespace XMLProcessingApp
         //************************************************************************************
         //
         //  Summary: Move elements up in the XML.
-        //  
+        //
         //
         //************************************************************************************
-        
+
         public void MoveElementUp(XmlNode book)
         {
             XmlNode previousNode = book.PreviousSibling;
@@ -593,12 +593,12 @@ namespace XMLProcessingApp
             {
                 XmlNode newLineNode = book.NextSibling;
                 book.OwnerDocument.DocumentElement.RemoveChild(book);
-                if (newLineNode.NodeType == XmlNodeType.Whitespace | 
+                if (newLineNode.NodeType == XmlNodeType.Whitespace |
                     newLineNode.NodeType == XmlNodeType.SignificantWhitespace)
                 {
                     newLineNode.OwnerDocument.DocumentElement.RemoveChild(newLineNode);
                 }
-                InsertBookElement((XmlElement)book, Constants.positionAbove, 
+                InsertBookElement((XmlElement)book, Constants.positionAbove,
                     previousNode, false, false);
             }
         }
@@ -606,7 +606,7 @@ namespace XMLProcessingApp
         //************************************************************************************
         //
         //  Summary: Move elements down in the XML.
-        //  
+        //
         //
         //************************************************************************************
         public void MoveElementDown(XmlNode book)
@@ -627,7 +627,7 @@ namespace XMLProcessingApp
                     newLineNode.OwnerDocument.DocumentElement.RemoveChild(newLineNode);
                 }
 
-                InsertBookElement((XmlElement)book, Constants.positionBelow, 
+                InsertBookElement((XmlElement)book, Constants.positionBelow,
                     NextNode, false, false);
             }
         }

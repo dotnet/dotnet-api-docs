@@ -1,9 +1,9 @@
 // System::Windows::Forms::DataGridColumnStyle::ReadOnlyChanged
 
 /*
-The following example demonstrates 'ReadOnlyChanged' Event of 'DataGridColumnStyle' class.
-It adds DataGrid and Button to a form. When user clicks on button the 'ReadOnly'  property of 'DataGridColumnStyle'
-is changed . This raises the 'ReadOnlyChanged' event which then calls the user defined EventHandler function .
+The following example demonstrates the 'ReadOnlyChanged' event of the 'DataGridColumnStyle' class.
+It adds DataGrid and Button to a form. When user clicks on button the 'ReadOnly' property of 'DataGridColumnStyle'
+is changed. This raises the 'ReadOnlyChanged' event which then calls the user defined EventHandler function.
 */
 
 #using <System.dll>

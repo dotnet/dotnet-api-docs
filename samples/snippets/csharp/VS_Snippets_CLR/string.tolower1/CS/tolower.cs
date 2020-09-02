@@ -4,9 +4,9 @@
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     String str1 = "INDIGO";
     // str2 = str1, except each 'I' is '\u0130' (Unicode LATIN CAPITAL I WITH DOT ABOVE).
@@ -17,7 +17,7 @@ class Sample
     Console.WriteLine("str1 = '{0}'", str1);
 
     Console.WriteLine();
-    Console.WriteLine("str1 is {0} to str2.", 
+    Console.WriteLine("str1 is {0} to str2.",
          ((0 == String.CompareOrdinal(str1, str2)) ? "equal" : "not equal"));
     CodePoints("str1", str1);
     CodePoints("str2", str2);
@@ -33,7 +33,7 @@ class Sample
 
     // Compare the code points in str3 and str4.
     Console.WriteLine();
-    Console.WriteLine("str3 is {0} to str4.", 
+    Console.WriteLine("str3 is {0} to str4.",
          ((0 == String.CompareOrdinal(str3, str4)) ? "equal" : "not equal"));
     CodePoints("str3", str3);
     CodePoints("str4", str4);

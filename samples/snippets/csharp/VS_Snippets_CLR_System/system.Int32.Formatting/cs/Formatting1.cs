@@ -24,7 +24,7 @@ public class Example
          Console.Write("{0,12:X2}", number);
          // Display value with eight hexadecimal digits.
          Console.WriteLine("{0,14:X8}", number);
-      }   
+      }
       // The example displays the following output:
       //    -1403     -->         -1403     -1,403.0    FFFFFA85      FFFFFA85
       //    0         -->           000          0.0          00      00000000
@@ -32,19 +32,19 @@ public class Example
       //    1483104   -->       1483104  1,483,104.0      16A160      0016A160
       // </Snippet1>
    }
-   
+
    private static void CallConvert()
    {
       // <Snippet2>
       int[] numbers = { -146, 11043, 2781913 };
-      Console.WriteLine("{0,8}   {1,32}   {2,11}   {3,10}", 
+      Console.WriteLine("{0,8}   {1,32}   {2,11}   {3,10}",
                         "Value", "Binary", "Octal", "Hex");
       foreach (int number in numbers) {
-         Console.WriteLine("{0,8}   {1,32}   {2,11}   {3,10}", 
-                           number, Convert.ToString(number, 2), 
-                           Convert.ToString(number, 8), 
+         Console.WriteLine("{0,8}   {1,32}   {2,11}   {3,10}",
+                           number, Convert.ToString(number, 2),
+                           Convert.ToString(number, 8),
                            Convert.ToString(number, 16));
-      }      
+      }
       // The example displays the following output:
       //       Value                             Binary         Octal          Hex
       //        -146   11111111111111111111111101101110   37777777556     ffffff6e

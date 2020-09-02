@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System.Web.Services;
 using System;
- 
+
 public class Math
 {
     [WebMethod]

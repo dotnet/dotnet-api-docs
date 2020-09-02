@@ -89,7 +89,7 @@ Public Class SamplesHybridDictionary
 End Class
 
 
-'This code produces the following output.
+'This code produces output similar to the following:
 '
 'Displays the elements using For Each:
 '   KEY                       VALUE

@@ -3,16 +3,16 @@ using System.EnterpriseServices;
 namespace EnterpriseServices_ActivitySample
 {
     //<snippet0>
-    class SvcClass: IServiceCall 
+    class SvcClass: IServiceCall
     {
         static int callNumber = 0;
         public void OnCall()
         {
             callNumber++;
             System.Guid contextID = ContextUtil.ContextId;
-            Console.WriteLine("This is call number "+ callNumber.ToString()); 
+            Console.WriteLine("This is call number "+ callNumber.ToString());
             Console.WriteLine(contextID.ToString());
-            System.TimeSpan sleepTime = new System.TimeSpan(0,0,0,10); 
+            System.TimeSpan sleepTime = new System.TimeSpan(0,0,0,10);
             System.Threading.Thread.Sleep(sleepTime);
         }
     }
@@ -26,10 +26,10 @@ namespace EnterpriseServices_ActivitySample
             serviceConfig.ThreadPool = ThreadPoolOption.MTA;
             SvcClass serviceCall = new SvcClass();
             //<snippet1>
-	    Activity activity = new Activity(serviceConfig); 
+	    Activity activity = new Activity(serviceConfig);
             //</snippet1>
             //<snippet2>
-            activity.AsynchronousCall(serviceCall); 
+            activity.AsynchronousCall(serviceCall);
             //</snippet2>
             activity.AsynchronousCall(serviceCall);
             Console.WriteLine("Waiting for asynchronous calls to terminate");

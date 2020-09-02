@@ -8,7 +8,7 @@
 // and the instance is added to the Installers collection.
 //
 // Note:
-//     1) Run this program using the following command: 
+//     1) Run this program using the following command:
 //          InstallUtil.exe  <filename.exe>
 //     2) Uninstall the event log created in step 1 using the
 //        following command:
@@ -25,7 +25,7 @@ public class MyEventLogInstaller: Installer
 {
     private EventLogInstaller myEventLogInstaller;
 
-    public MyEventLogInstaller() 
+    public MyEventLogInstaller()
     {
         // Create an instance of an EventLogInstaller.
         myEventLogInstaller = new EventLogInstaller();
@@ -37,7 +37,7 @@ public class MyEventLogInstaller: Installer
         myEventLogInstaller.Log = "MyNewLog";
 
         // Add myEventLogInstaller to the Installer collection.
-        Installers.Add(myEventLogInstaller);   
+        Installers.Add(myEventLogInstaller);
     }
 
     public static void Main()
@@ -45,4 +45,4 @@ public class MyEventLogInstaller: Installer
         MyEventLogInstaller myInstaller = new MyEventLogInstaller();
     }
 }
-// </Snippet1> 
+// </Snippet1>

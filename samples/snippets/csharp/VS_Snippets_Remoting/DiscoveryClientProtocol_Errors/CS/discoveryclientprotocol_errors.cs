@@ -2,12 +2,12 @@
 /*
    The following example demonstrates the usage of the 'Errors' property
    of the class 'DiscoveryClientProtocol'. The input to the program is
-   a discovery file 'MathService_cs.vsdisco', which holds reference 
-   related to 'MathService_cs.asmx' web service. The program is 
-   excecuted first time with existence of the file 
+   a discovery file 'MathService_cs.vsdisco', which holds reference
+   related to 'MathService_cs.asmx' web service. The program is
+   excecuted first time with existence of the file
    'MathService_cs.asmx' in the location as specified in the discovery
-   file. The file 'MathService_cs.asmx' is removed from the referred 
-   location in a way to simulate a scenario wherein the file related 
+   file. The file 'MathService_cs.asmx' is removed from the referred
+   location in a way to simulate a scenario wherein the file related
    to web service is missing, and the program is excecuted the second time
    to show the exception occuring.
 */
@@ -23,13 +23,13 @@ public class DiscoveryClientProtocol_Errors
 // <Snippet1>
       string myDiscoFile = "http://localhost/MathService_cs.vsdisco";
       string myUrlKey = "http://localhost/MathService_cs.asmx?wsdl";
-      DiscoveryClientProtocol myDiscoveryClientProtocol = 
+      DiscoveryClientProtocol myDiscoveryClientProtocol =
             new DiscoveryClientProtocol();
 
       // Get the discovery document.
-      DiscoveryDocument myDiscoveryDocument = 
+      DiscoveryDocument myDiscoveryDocument =
          myDiscoveryClientProtocol.Discover(myDiscoFile);
-      IEnumerator myEnumerator = 
+      IEnumerator myEnumerator =
             myDiscoveryDocument.References.GetEnumerator();
       while ( myEnumerator.MoveNext() )
       {
@@ -40,7 +40,7 @@ public class DiscoveryClientProtocol_Errors
          myDiscoveryClientProtocol = myContractReference.ClientProtocol;
          myDiscoveryClientProtocol.ResolveAll();
 
-         DiscoveryExceptionDictionary myExceptionDictionary 
+         DiscoveryExceptionDictionary myExceptionDictionary
             = myDiscoveryClientProtocol.Errors;
 
          if (myExceptionDictionary.Contains(myUrlKey))

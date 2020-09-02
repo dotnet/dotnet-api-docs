@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example performs asynchronous receive operation
 		// processing.
 		//**************************************************
@@ -25,7 +25,7 @@ namespace MyProject
 				{typeof(String)});
 
 			// Add an event handler for the ReceiveCompleted event.
-			myQueue.ReceiveCompleted += new 
+			myQueue.ReceiveCompleted += new
 				ReceiveCompletedEventHandler(MyReceiveCompleted);
 			
 			// Begin the asynchronous receive operation.
@@ -41,7 +41,7 @@ namespace MyProject
 		// event.
 		//**************************************************
 		
-		private static void MyReceiveCompleted(Object source, 
+		private static void MyReceiveCompleted(Object source,
 			ReceiveCompletedEventArgs asyncResult)
 		{
 			// Connect to the queue.
@@ -56,7 +56,7 @@ namespace MyProject
 			// Restart the asynchronous Receive operation.
 			mq.BeginReceive();
 			
-			return; 
+			return;
 		}
 	}
 }

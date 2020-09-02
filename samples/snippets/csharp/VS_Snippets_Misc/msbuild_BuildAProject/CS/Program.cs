@@ -7,7 +7,7 @@ using Microsoft.Build.BuildEngine;
 namespace BuildAProjectCS
 {
     class Program
-    {       
+    {
         static void Main(string[] args)
         {
             // Instantiate a new Engine object

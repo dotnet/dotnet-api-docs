@@ -16,7 +16,7 @@ Module SignVerifyEnvelope
 
     Sub Main(ByVal args() As String)
         ' Generate a signing key.
-        Dim Key As New RSACryptoServiceProvider()
+        Dim Key As RSA = RSA.Create()
 
         Try
             ' Specify an element to sign. 
@@ -43,7 +43,7 @@ Module SignVerifyEnvelope
             Console.WriteLine(e.Message)
         Finally
             ' Clear resources associated with the 
-            ' RSACryptoServiceProvider.
+            ' RSA instance.
             Key.Clear()
         End Try
 

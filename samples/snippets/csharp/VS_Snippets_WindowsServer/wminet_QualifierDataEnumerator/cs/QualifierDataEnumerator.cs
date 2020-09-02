@@ -1,23 +1,23 @@
 ﻿//<Snippet1>
-using System; 
+using System;
 using System.Management;
- 
-// This sample demonstrates how to 
-// enumerate qualifiers of a ManagementClass 
+
+// This sample demonstrates how to
+// enumerate qualifiers of a ManagementClass
 // using QualifierDataEnumerator object.
-class Sample_QualifierDataEnumerator 
-{ 
-    public static int Main(string[] args) 
-    { 
-        ManagementClass diskClass = 
-            new ManagementClass("Win32_LogicalDisk"); 
-        diskClass.Options.UseAmendedQualifiers = true; 
-        QualifierDataCollection diskQualifier = 
+class Sample_QualifierDataEnumerator
+{
+    public static int Main(string[] args)
+    {
+        ManagementClass diskClass =
+            new ManagementClass("Win32_LogicalDisk");
+        diskClass.Options.UseAmendedQualifiers = true;
+        QualifierDataCollection diskQualifier =
             diskClass.Qualifiers;
-        QualifierDataCollection.QualifierDataEnumerator 
-            qualifierEnumerator = 
+        QualifierDataCollection.QualifierDataEnumerator
+            qualifierEnumerator =
             diskQualifier.GetEnumerator();
-        while(qualifierEnumerator.MoveNext()) 
+        while(qualifierEnumerator.MoveNext())
         {
             Console.WriteLine(
                 qualifierEnumerator.Current.Name + " = " +

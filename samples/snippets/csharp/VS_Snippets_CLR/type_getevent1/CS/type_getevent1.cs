@@ -1,4 +1,4 @@
-﻿// <Snippet1>   
+﻿// <Snippet1>
 using System;
 using System.Reflection;
 using System.Security;
@@ -6,7 +6,7 @@ using System.Security;
 class MyEventExample
 {
     public static void Main()
-    {  
+    {
         try
         {
 

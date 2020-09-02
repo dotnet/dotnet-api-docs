@@ -10,7 +10,7 @@ public class Page1: Page
 HttpFileCollection MyFileColl = Request.Files;
  HttpPostedFile MyPostedMember = MyFileColl.Get(0);
  String MyFileName = MyPostedMember.FileName;
-   
+
 // </Snippet1>
  }
 }

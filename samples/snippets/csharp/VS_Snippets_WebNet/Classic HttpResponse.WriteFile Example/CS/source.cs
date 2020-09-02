@@ -9,7 +9,7 @@ public class Page1: Page
 // <Snippet1>
 Response.Write("Please Login: <br>");
  Response.WriteFile("login.txt");
-    
+
 // </Snippet1>
  }
 }

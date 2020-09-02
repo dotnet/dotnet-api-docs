@@ -74,7 +74,7 @@ namespace AddNewItem
                     // set to "fr-fr", then ...
                     if ((item.Name == "EmbeddedResource") && (item.GetMetadata("Culture") == "fr-fr"))
                     {
-                        // Change the item's Include path to "FrenchStrings.fr.resx", 
+                        // Change the item's Include path to "FrenchStrings.fr.resx",
                         // and add a new metadata Visiable="false".
                         item.Include = @"FrenchStrings.fr.resx";
                         item.SetMetadata("Visible", "false");

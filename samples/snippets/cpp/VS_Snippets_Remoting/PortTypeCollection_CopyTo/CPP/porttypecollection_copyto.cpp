@@ -2,7 +2,7 @@
 
 /*
 The following sample demonstrates the 'CopyTo()' method of the class
-'PortTypeCollection'.This sample reads the contents of a file 'MathService.wsdl'
+'PortTypeCollection'. This sample reads the contents of a file 'MathService.wsdl'
 into a 'ServiceDescription' instance. It gets the collection of 'PortType'
 from 'ServiceDescription'. It copies the collection into an array of 'PortType' 
 and displays their names.

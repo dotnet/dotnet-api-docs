@@ -1,7 +1,7 @@
 ﻿// System.Diagnostics.ProcessModule.ModuleMemorySize
 
-/* The following program demonstrates the use of 'ModuleMemorySize' property of 
-   'ProcessModule' class. It creates a notepad, gets the 'MainModule' and 
+/* The following program demonstrates the use of 'ModuleMemorySize' property of
+   'ProcessModule' class. It creates a notepad, gets the 'MainModule' and
    all other modules of the process 'notepad.exe', displays 'ModuleMemorySize'
    for all the modules and the main module.
 */

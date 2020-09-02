@@ -17,7 +17,7 @@ namespace LocationEvent1
                 Console.WriteLine("Lat: {0}, Long: {1}", coordinate.Latitude,
                     coordinate.Longitude);
                 // Uncomment to get only one event.
-                // watcher.Stop(); 
+                // watcher.Stop();
             };
 
             // Begin listening for location updates.

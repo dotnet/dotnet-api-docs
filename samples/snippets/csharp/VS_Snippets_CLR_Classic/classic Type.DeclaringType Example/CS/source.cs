@@ -1,23 +1,27 @@
 ﻿// <Snippet1>
 using System;
 using System.Reflection;
- 
-public abstract class dtype 
+
+public abstract class dtype
 {
-    
-    public abstract class MyClassA 
+
+    public abstract class MyClassA
     {
-        public abstract int m(); 
+        public abstract int m();
     }
-    
-    public abstract class MyClassB : MyClassA 
+
+    public abstract class MyClassB : MyClassA
     {
     }
-  
-    public static void Main(string[] args) 
-    { 
+
+    public static void Main(string[] args)
+    {
         Console.WriteLine("The declaring type of m is {0}.",
             typeof(MyClassB).GetMethod("m").DeclaringType);
     }
 }
+/* The example produces the following output:
+
+The declaring type of m is dtype+MyClassA.
+*/
 // </Snippet1>

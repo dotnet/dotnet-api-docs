@@ -1,14 +1,14 @@
 ﻿//<Snippet1>
 using System;
 using System.Management;
-   
+
 public class Sample
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
-        ManagementObject o = 
+        ManagementObject o =
             new ManagementObject("Win32_Service='Alerter'");
-    
+
         foreach (ManagementObject b in
             o.GetRelated("Win32_Service"))
 

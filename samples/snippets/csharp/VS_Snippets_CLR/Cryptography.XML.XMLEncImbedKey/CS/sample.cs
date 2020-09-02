@@ -25,8 +25,8 @@ class Program
         }
 
         // Create a new RSA key.  This key will encrypt a symmetric key,
-        // which will then be imbedded in the XML document.  
-        RSA rsaKey = new RSACryptoServiceProvider();
+        // which will then be imbedded in the XML document.
+        RSA rsaKey = RSA.Create();
 
         try
         {
@@ -62,7 +62,7 @@ class Program
 
     public static void Encrypt(XmlDocument Doc, string ElementToEncrypt, RSA Alg, string KeyName)
     {
-        // Check the arguments.  
+        // Check the arguments.
         if (Doc == null)
             throw new ArgumentNullException("Doc");
         if (ElementToEncrypt == null)
@@ -84,13 +84,13 @@ class Program
         }
 
         //////////////////////////////////////////////////
-        // Create a new instance of the EncryptedXml class 
-        // and use it to encrypt the XmlElement with the 
+        // Create a new instance of the EncryptedXml class
+        // and use it to encrypt the XmlElement with the
         // a new random symmetric key.
         //////////////////////////////////////////////////
 
-        // Create a 256 bit Rijndael key.
-        RijndaelManaged sessionKey = new RijndaelManaged();
+        // Create a 256 bit Aes key.
+        Aes sessionKey = Aes.Create();
         sessionKey.KeySize = 256;
 
         EncryptedXml eXml = new EncryptedXml();
@@ -105,7 +105,7 @@ class Program
         EncryptedData edElement = new EncryptedData();
         edElement.Type = EncryptedXml.XmlEncElementUrl;
 
-        // Create an EncryptionMethod element so that the 
+        // Create an EncryptionMethod element so that the
         // receiver knows which algorithm to use for decryption.
 
         edElement.EncryptionMethod = new EncryptionMethod(EncryptedXml.XmlEncAES256Url);
@@ -131,16 +131,16 @@ class Program
         // Specify a name for the key.
         kin.Value = KeyName;
 
-        // Add the KeyInfoName element to the 
+        // Add the KeyInfoName element to the
         // EncryptedKey object.
         ek.KeyInfo.AddClause(kin);
 
-        // Add the encrypted key to the 
+        // Add the encrypted key to the
         // EncryptedData object.
 
         edElement.KeyInfo.AddClause(new KeyInfoEncryptedKey(ek));
 
-        // Add the encrypted element data to the 
+        // Add the encrypted element data to the
         // EncryptedData object.
         edElement.CipherData.CipherValue = encryptedElement;
 
@@ -154,7 +154,7 @@ class Program
 
     public static void Decrypt(XmlDocument Doc, RSA Alg, string KeyName)
     {
-        // Check the arguments.  
+        // Check the arguments.
         if (Doc == null)
             throw new ArgumentNullException("Doc");
         if (Alg == null)

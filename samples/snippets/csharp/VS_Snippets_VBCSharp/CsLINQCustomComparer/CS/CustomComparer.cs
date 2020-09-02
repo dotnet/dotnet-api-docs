@@ -15,7 +15,7 @@ class ProductComparer : IEqualityComparer<Product>
     // Products are equal if their names and product numbers are equal.
     public bool Equals(Product x, Product y)
     {
-       
+
         //Check whether the compared objects reference the same data.
         if (Object.ReferenceEquals(x, y)) return true;
 
@@ -27,7 +27,7 @@ class ProductComparer : IEqualityComparer<Product>
         return x.Code == y.Code && x.Name == y.Name;
     }
 
-    // If Equals() returns true for a pair of objects 
+    // If Equals() returns true for a pair of objects
     // then GetHashCode() must return the same value for these objects.
 
     public int GetHashCode(Product product)
@@ -52,19 +52,19 @@ class Program
     static void Main(string[] args)
     {
         //<Snippet2>
-        Product[] store1 = { new Product { Name = "apple", Code = 9 }, 
+        Product[] store1 = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 } };
 
-        Product[] store2 = { new Product { Name = "apple", Code = 9 }, 
+        Product[] store2 = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "lemon", Code = 12 } };
         //</Snippet2>
 
         //INTERSECT
 
         //<Snippet3>
-        // Get the products from the first array 
+        // Get the products from the first array
         // that have duplicates in the second array.
-        
+
         IEnumerable<Product> duplicates =
             store1.Intersect(store2, new ProductComparer());
 
@@ -78,7 +78,7 @@ class Program
         //</Snippet3>
 
         //UNION
-        
+
         //<Snippet4>
         //Get the products from the both arrays
         //excluding duplicates.
@@ -91,7 +91,7 @@ class Program
 
         /*
             This code produces the following output:
-         
+
             apple 9
             orange 4
             lemon 12
@@ -101,13 +101,13 @@ class Program
         //DISTINCT
 
         //<Snippet5>
-        Product[] products = { new Product { Name = "apple", Code = 9 }, 
-                               new Product { Name = "orange", Code = 4 }, 
-                               new Product { Name = "apple", Code = 9 }, 
+        Product[] products = { new Product { Name = "apple", Code = 9 },
+                               new Product { Name = "orange", Code = 4 },
+                               new Product { Name = "apple", Code = 9 },
                                new Product { Name = "lemon", Code = 12 } };
 
         //Exclude duplicates.
-        
+
         IEnumerable<Product> noduplicates =
             products.Distinct(new ProductComparer());
 
@@ -116,7 +116,7 @@ class Program
 
         /*
             This code produces the following output:
-            apple 9 
+            apple 9
             orange 4
             lemon 12
         */
@@ -126,8 +126,8 @@ class Program
 
         //<Snippet6>
 
-        Product[] fruits = { new Product { Name = "apple", Code = 9 }, 
-                               new Product { Name = "orange", Code = 4 }, 
+        Product[] fruits = { new Product { Name = "apple", Code = 9 },
+                               new Product { Name = "orange", Code = 4 },
                                new Product { Name = "lemon", Code = 12 } };
 
         Product apple = new Product { Name = "apple", Code = 9 };
@@ -143,17 +143,17 @@ class Program
 
         /*
             This code produces the following output:
-         
+
             Apple? True
             Kiwi? False
-        */    
+        */
 
         //</Snippet6>
 
         //EXCEPT
 
         //<Snippet7>
-        Product[] fruits1 = { new Product { Name = "apple", Code = 9 }, 
+        Product[] fruits1 = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 },
                                 new Product { Name = "lemon", Code = 12 } };
 
@@ -170,7 +170,7 @@ class Program
 
         /*
           This code produces the following output:
-         
+
           orange 4
           lemon 12
         */
@@ -181,10 +181,10 @@ class Program
 
         //<Snippet8>
 
-        Product[] storeA = { new Product { Name = "apple", Code = 9 }, 
+        Product[] storeA = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 } };
 
-        Product[] storeB = { new Product { Name = "apple", Code = 9 }, 
+        Product[] storeB = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 } };
 
         bool equalAB = storeA.SequenceEqual(storeB, new ProductComparer());
@@ -193,7 +193,7 @@ class Program
 
         /*
             This code produces the following output:
-            
+
             Equal? True
         */
 

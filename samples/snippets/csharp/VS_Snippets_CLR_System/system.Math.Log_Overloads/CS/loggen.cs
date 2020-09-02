@@ -4,13 +4,13 @@ using System;
 
 class LogDLogDD
 {
-    public static void Main() 
+    public static void Main()
     {
-        Console.WriteLine( 
+        Console.WriteLine(
             "This example of Math.Log( double ) and " +
             "Math.Log( double, double )\n" +
             "generates the following output.\n" );
-        Console.WriteLine( 
+        Console.WriteLine(
             "Evaluate these identities with " +
             "selected values for X and B (base):" );
         Console.WriteLine( "   log(B)[X] == 1 / log(X)[B]" );
@@ -27,20 +27,20 @@ class LogDLogDD
     static void UseBaseAndArg(double argB, double argX)
     {
         // Evaluate log(B)[X] == 1 / log(X)[B].
-        Console.WriteLine( 
-            "\n                   Math.Log({1}, {0}) == {2:E16}" + 
-            "\n             1.0 / Math.Log({0}, {1}) == {3:E16}", 
+        Console.WriteLine(
+            "\n                   Math.Log({1}, {0}) == {2:E16}" +
+            "\n             1.0 / Math.Log({0}, {1}) == {3:E16}",
             argB, argX, Math.Log(argX, argB),
             1.0 / Math.Log(argB, argX) );
 
         // Evaluate log(B)[X] == ln[X] / ln[B].
-        Console.WriteLine( 
+        Console.WriteLine(
             "        Math.Log({1}) / Math.Log({0}) == {2:E16}",
             argB, argX, Math.Log(argX) / Math.Log(argB) );
 
         // Evaluate log(B)[X] == log(B)[e] * ln[X].
-        Console.WriteLine( 
-            "Math.Log(Math.E, {0}) * Math.Log({1}) == {2:E16}", 
+        Console.WriteLine(
+            "Math.Log(Math.E, {0}) * Math.Log({1}) == {2:E16}",
             argB, argX, Math.Log(Math.E, argB) * Math.Log(argX) );
     }
 }

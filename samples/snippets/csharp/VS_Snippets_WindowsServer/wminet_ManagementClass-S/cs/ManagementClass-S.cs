@@ -2,13 +2,13 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class
-        ManagementClass c = 
+        ManagementClass c =
             new ManagementClass("Win32_LogicalDisk");
 
         // Get the methods in the class

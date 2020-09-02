@@ -12,7 +12,7 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
+		//		
 		// This example specifies different types of default
 		// properties for messages.
 		//**************************************************
@@ -38,14 +38,14 @@ namespace MyProject
 		{
 
 			// Connect to a message queue.
-			MessageQueue myQueue = new 
+			MessageQueue myQueue = new
 				MessageQueue(".\\myQueue");
 
 			// Associate selected default property values with high
 			// priority messages.
-			myQueue.DefaultPropertiesToSend.Priority = 
+			myQueue.DefaultPropertiesToSend.Priority =
 				MessagePriority.High;
-			myQueue.DefaultPropertiesToSend.Label = 
+			myQueue.DefaultPropertiesToSend.Label =
 				"High Priority Message";
 			myQueue.DefaultPropertiesToSend.Recoverable = true;
 			myQueue.DefaultPropertiesToSend.TimeToReachQueue =
@@ -72,9 +72,9 @@ namespace MyProject
 
 			// Associate selected default property values with normal
 			// priority messages.
-			myQueue.DefaultPropertiesToSend.Priority = 
+			myQueue.DefaultPropertiesToSend.Priority =
 				MessagePriority.Normal;
-			myQueue.DefaultPropertiesToSend.Label = 
+			myQueue.DefaultPropertiesToSend.Label =
 				"Normal Priority Message";
 			myQueue.DefaultPropertiesToSend.Recoverable = false;
 			myQueue.DefaultPropertiesToSend.TimeToReachQueue =

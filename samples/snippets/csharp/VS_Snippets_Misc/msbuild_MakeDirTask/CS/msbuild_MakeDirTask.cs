@@ -19,7 +19,7 @@ namespace Microsoft.Build.Tasks
 	    // The Required attribute indicates the following to MSBuild:
 	    //	     - if the parameter is a scalar type, and it is not supplied, fail the build immediately
 	    //	     - if the parameter is an array type, and it is not supplied, pass in an empty array
-	    // In this case the parameter is an array type, so if a project fails to pass in a value for the 
+	    // In this case the parameter is an array type, so if a project fails to pass in a value for the
             // Directories parameter, the task will get invoked, but this implementation will do nothing,
             // because the array will be empty.
 		[Required]
@@ -38,7 +38,7 @@ namespace Microsoft.Build.Tasks
 		}
 
 		// The Output attribute indicates to MSBuild that the value of this property can be gathered after the
-		// task has returned from Execute(), if the project has an <Output> tag under this task's element for 
+		// task has returned from Execute(), if the project has an <Output> tag under this task's element for
 		// this property.
 		[Output]
 		// A project may need the subset of the inputs that were actually created, so make that available here.
@@ -78,7 +78,7 @@ namespace Microsoft.Build.Tasks
 						// Add to the list of created directories
 						items.Add(directory);
 					}
-					// If a directory fails to get created, log an error, but proceed with the remaining 
+					// If a directory fails to get created, log an error, but proceed with the remaining
 					// directories.
 					catch (Exception ex)
 					{
@@ -101,7 +101,7 @@ namespace Microsoft.Build.Tasks
 			// Populate the "DirectoriesCreated" output items.
 			directoriesCreated = (ITaskItem[])items.ToArray(typeof(ITaskItem));
 
-			// Log.HasLoggedErrors is true if the task logged any errors -- even if they were logged 
+			// Log.HasLoggedErrors is true if the task logged any errors -- even if they were logged
 			// from a task's constructor or property setter. As long as this task is written to always log an error
 			// when it fails, we can reliably return HasLoggedErrors.
 			return !Log.HasLoggedErrors;

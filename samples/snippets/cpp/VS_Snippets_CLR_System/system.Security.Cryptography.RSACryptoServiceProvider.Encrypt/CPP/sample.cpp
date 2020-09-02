@@ -31,13 +31,13 @@ int main()
       //Import key parameters into RSA.
       RSA->ImportParameters( RSAKeyInfo );
       
-      //Create a new instance of the RijndaelManaged class.
-      RijndaelManaged^ RM = gcnew RijndaelManaged;
+      //Create a new instance of the Aes class.
+      Aes^ aes = Aes::Create();
       
       //Encrypt the symmetric key and IV.
-      EncryptedSymmetricKey = RSA->Encrypt( RM->Key, false );
-      EncryptedSymmetricIV = RSA->Encrypt( RM->IV, false );
-      Console::WriteLine( "RijndaelManaged Key and IV have been encrypted with RSACryptoServiceProvider." );
+      EncryptedSymmetricKey = RSA->Encrypt( aes->Key, false );
+      EncryptedSymmetricIV = RSA->Encrypt( aes->IV, false );
+      Console::WriteLine( "Aes Key and IV have been encrypted with RSACryptoServiceProvider." );
    }
    catch ( CryptographicException^ e ) 
    {

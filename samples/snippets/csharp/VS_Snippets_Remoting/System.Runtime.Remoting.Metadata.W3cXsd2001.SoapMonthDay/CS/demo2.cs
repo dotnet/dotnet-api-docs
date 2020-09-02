@@ -13,7 +13,7 @@ public class Demo2
         // Create a SoapMonthDay object.
         SoapMonthDay monthDay = new SoapMonthDay();
         monthDay.Value = DateTime.Now;
-        Console.WriteLine("The SoapMonthDay object is {0}.", 
+        Console.WriteLine("The SoapMonthDay object is {0}.",
             monthDay.ToString());
         //</snippet21>
     }
@@ -23,7 +23,7 @@ public class Demo2
         //<snippet22>
         // Create a SoapMonthDay object.
         SoapMonthDay monthDay = new SoapMonthDay(DateTime.Now);
-        Console.WriteLine("The SoapMonthDay object is {0}.", 
+        Console.WriteLine("The SoapMonthDay object is {0}.",
             monthDay.ToString());
         //</snippet22>
     }

@@ -6,7 +6,7 @@
   'Remove()' and 'Add()' of class 'PortTypeCollection'. It reads the
   contents of a file 'MathService.wsdl'into a 'ServiceDescription' instance.
   It gets the collection of 'PortType' from 'ServiceDescription' and adds
-  a new PortType and writes a new web service description file into 
+  a new PortType and writes a new web service description file into
   'MathService_New.wsdl'.
 */
 
@@ -23,13 +23,13 @@ class MyPortTypeCollectionClass
 // <Snippet1>
 // <Snippet2>
 // <Snippet3>
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MathService_CS.wsdl");
-         PortTypeCollection myPortTypeCollection = 
+         PortTypeCollection myPortTypeCollection =
             myServiceDescription.PortTypes;
 
          int noOfPortTypes = myServiceDescription.PortTypes.Count;
-         Console.WriteLine("\nTotal number of PortTypes: " 
+         Console.WriteLine("\nTotal number of PortTypes: "
             + myServiceDescription.PortTypes.Count);
 
          // Get the first PortType in the collection.

@@ -20,8 +20,8 @@ public class Server
     public static void Main(string[] args)
     {
         // Create the server channel.
-        IpcServerChannel serverChannel = 
-            new IpcServerChannel("localhost:9090"); 
+        IpcServerChannel serverChannel =
+            new IpcServerChannel("localhost:9090");
 
         // Register the server channel.
         System.Runtime.Remoting.Channels.ChannelServices.RegisterChannel(
@@ -29,20 +29,20 @@ public class Server
 
         //<snippet12>
         // Show the name of the channel.
-        Console.WriteLine("The name of the channel is {0}.", 
+        Console.WriteLine("The name of the channel is {0}.",
             serverChannel.ChannelName);
         //</snippet12>
 
         //<snippet13>
         // Show the priority of the channel.
-        Console.WriteLine("The priority of the channel is {0}.", 
+        Console.WriteLine("The priority of the channel is {0}.",
             serverChannel.ChannelPriority);
         //</snippet13>
 
         //<snippet15>
         // Show the URIs associated with the channel.
-        System.Runtime.Remoting.Channels.ChannelDataStore channelData = 
-            (System.Runtime.Remoting.Channels.ChannelDataStore) 
+        System.Runtime.Remoting.Channels.ChannelDataStore channelData =
+            (System.Runtime.Remoting.Channels.ChannelDataStore)
             serverChannel.ChannelData;
         foreach (string uri in channelData.ChannelUris)
         {
@@ -53,9 +53,9 @@ public class Server
         // Expose an object for remote calls.
         System.Runtime.Remoting.RemotingConfiguration.
             RegisterWellKnownServiceType(
-                typeof(RemoteObject), "RemoteObject.rem", 
+                typeof(RemoteObject), "RemoteObject.rem",
                 System.Runtime.Remoting.WellKnownObjectMode.Singleton);
-    
+
         //<snippet19>
         // Parse the channel's URI.
         string[] urls = serverChannel.GetUrlsForUri("RemoteObject.rem");

@@ -1,5 +1,5 @@
 ﻿//<snippet1>
-// This code example demonstrates the Encoder.Convert() and Decoder.Convert methods. 
+// This code example demonstrates the Encoder.Convert() and Decoder.Convert methods.
 // This example uses files for input and output, but any source that can be expressed
 // as a stream can be used instead.
 
@@ -11,17 +11,17 @@
     {
     static void Main(string[] args)
         {
-// Create a large file of UTF-16 encoded Unicode characters. The file is named Example.txt, 
-// and is used as input to the Encoder.Convert() method. 
+// Create a large file of UTF-16 encoded Unicode characters. The file is named Example.txt,
+// and is used as input to the Encoder.Convert() method.
 
             CreateTestFile("Example.txt");
 
-// Using an input file of UTF-16 encoded characters named Example.txt, create an output file 
+// Using an input file of UTF-16 encoded characters named Example.txt, create an output file
 // of UTF-8 encoded bytes named UTF8.txt.
 
             EncoderConvert("Example.txt", "UTF8.txt", Encoding.UTF8);
 
-// Using an input file of UTF-8 encoded bytes named UTF8.txt, create an output file 
+// Using an input file of UTF-8 encoded bytes named UTF8.txt, create an output file
 // of UTF-16 encoded characters named UTF16.txt.
 
             DecoderConvert("UTF8.txt", "UTF16.txt", Encoding.UTF8);
@@ -33,7 +33,7 @@
         static void EncoderConvert(String inputFileName, String outputFileName, Encoding enc)
         {
 // Convert an input file of characters to an output file of encoded bytes.
-// StreamWriter could convert the input file for us, but we'll perform the conversion 
+// StreamWriter could convert the input file for us, but we'll perform the conversion
 // ourselves.
 
             FileStream fs = new FileStream(outputFileName, FileMode.Create);
@@ -44,24 +44,24 @@
 
 // Get an Encoder.
             Encoder encoder = enc.GetEncoder();
-            
+
 // Guarantee the output buffer large enough to convert a few characters.
             int UseBufferSize = 64;
             if (UseBufferSize < enc.GetMaxByteCount(10))
                     UseBufferSize = enc.GetMaxByteCount(10);
             byte[] bytes = new byte[UseBufferSize];
 
-// Intentionally make the input character buffer larger than the output byte buffer so the 
-// conversion loop executes more than one cycle. 
+// Intentionally make the input character buffer larger than the output byte buffer so the
+// conversion loop executes more than one cycle.
 
             char[] chars = new char[UseBufferSize * 4];
             int charsRead;
             do
             {
-// Read at most the number of characters that will fit in the input buffer. The return 
-// value is the actual number of characters read, or zero if no characters remain. 
+// Read at most the number of characters that will fit in the input buffer. The return
+// value is the actual number of characters read, or zero if no characters remain.
                 charsRead = inputFile.Read(chars, 0, UseBufferSize * 4);
-   
+
                 bool completed = false;
                 int charIndex = 0;
                 int charsUsed;
@@ -97,7 +97,7 @@
         static void DecoderConvert(String inputFileName, String outputFileName, Encoding enc)
         {
 // Convert an input file of of encoded bytes to an output file characters.
-// StreamWriter could convert the input file for us, but we'll perform the conversion 
+// StreamWriter could convert the input file for us, but we'll perform the conversion
 // ourselves.
 
             StreamWriter outputFile = new StreamWriter(outputFileName, false, Encoding.Unicode);
@@ -108,25 +108,25 @@
 
 // Get a Decoder.
             Decoder decoder = enc.GetDecoder();
-            
+
 // Guarantee the output buffer large enough to convert a few characters.
             int UseBufferSize = 64;
             if (UseBufferSize < enc.GetMaxCharCount(10))
                     UseBufferSize = enc.GetMaxCharCount(10);
             char[] chars = new char[UseBufferSize];
 
-// Intentionally make the input byte buffer larger than the output character buffer so the 
-// conversion loop executes more than one cycle. 
+// Intentionally make the input byte buffer larger than the output character buffer so the
+// conversion loop executes more than one cycle.
 
             byte[] bytes = new byte[UseBufferSize * 4];
             int bytesRead;
             do
             {
-// Read at most the number of bytes that will fit in the input buffer. The 
-// return value is the actual number of bytes read, or zero if no bytes remain. 
+// Read at most the number of bytes that will fit in the input buffer. The
+// return value is the actual number of bytes read, or zero if no bytes remain.
 
                 bytesRead = inputFile.Read(bytes, 0, UseBufferSize * 4);
-   
+
                 bool completed = false;
                 int byteIndex = 0;
                 int bytesUsed;
@@ -155,14 +155,14 @@
             outputFile.Close();
             fs.Close();
             inputFile.Close();
-        }        
+        }
 
 // --------------------------------------------------------------------------------------------
-// Create a large file of UTF-16 encoded Unicode characters. 
+// Create a large file of UTF-16 encoded Unicode characters.
 // --------------------------------------------------------------------------------------------
         static void CreateTestFile(String FileName)
         {
-// StreamWriter defaults to UTF-8 encoding so explicitly specify Unicode, that is, 
+// StreamWriter defaults to UTF-8 encoding so explicitly specify Unicode, that is,
 // UTF-16, encoding.
             StreamWriter file = new StreamWriter(FileName, false, Encoding.Unicode);
 

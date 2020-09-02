@@ -24,7 +24,7 @@ public class GetNamesTest {
 //       Green
 //       Blue
 //       Yellow
-//       
+//
 //       The members of the Styles enum are:
 //       Plaid
 //       Striped

@@ -16,7 +16,7 @@ public class MyType_IsAnsiClass
             Type myType = typeof(MyClass);
             // Get the field information and the attributes associated with MyClass.
             FieldInfo myFieldInfo = myType.GetField("myField", BindingFlags.NonPublic|BindingFlags.Instance);
-            Console.WriteLine( "\nChecking for the AnsiClass attribute for a field.\n"); 
+            Console.WriteLine( "\nChecking for the AnsiClass attribute for a field.\n");
             // Get and display the name, field, and the AnsiClass attribute.
             Console.WriteLine("Name of Class: {0} \nValue of Field: {1} \nIsAnsiClass = {2}", myType.FullName, myFieldInfo.GetValue(myObject), myType.IsAnsiClass);
         }

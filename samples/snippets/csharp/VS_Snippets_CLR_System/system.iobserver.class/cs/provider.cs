@@ -31,9 +31,9 @@ public class LocationTracker : IObservable<Location>
    // <Snippet13>
    private List<IObserver<Location>> observers;
 
-   public IDisposable Subscribe(IObserver<Location> observer) 
+   public IDisposable Subscribe(IObserver<Location> observer)
    {
-      if (! observers.Contains(observer)) 
+      if (! observers.Contains(observer))
          observers.Add(observer);
       return new Unsubscriber(observers, observer);
    }
@@ -81,7 +81,7 @@ public class LocationTracker : IObservable<Location>
 // <Snippet7>
 public class LocationUnknownException : Exception
 {
-   internal LocationUnknownException() 
+   internal LocationUnknownException()
    { }
 }
 // </Snippet7>

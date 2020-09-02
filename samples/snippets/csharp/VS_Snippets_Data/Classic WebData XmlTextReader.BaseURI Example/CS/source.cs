@@ -10,7 +10,7 @@ public class Sample
     XmlTextReader reader = null;
 
     try
-    {           
+    {
         //Load the reader with the XML file.
         reader = new XmlTextReader("http://localhost/baseuri.xml");
 
@@ -18,7 +18,7 @@ public class Sample
         while (reader.Read())
         {
             Console.WriteLine("({0}) {1}", reader.NodeType, reader.BaseURI);
-         }           
+         }
      }
 
      finally

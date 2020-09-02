@@ -16,7 +16,7 @@ public class MyFaultCollectionSample
 {
    public static void Main()
    {
-      try 
+      try
       {
          // Read the 'StockQuote.wsdl' file as input.
          ServiceDescription myServiceDescription = ServiceDescription.

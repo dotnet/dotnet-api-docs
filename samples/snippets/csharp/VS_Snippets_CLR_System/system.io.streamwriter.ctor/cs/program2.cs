@@ -19,7 +19,7 @@ namespace ConsoleApplication
                 {
                     writer.Write(textToAdd);
                 }
-            }       
+            }
             finally
             {
                 if (fs != null)

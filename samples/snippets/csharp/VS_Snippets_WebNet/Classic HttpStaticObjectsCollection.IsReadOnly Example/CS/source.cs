@@ -11,7 +11,7 @@ if (Application.StaticObjects.IsReadOnly)
 {
    //...
 }
-   
+
 // </Snippet1>
  }
 }

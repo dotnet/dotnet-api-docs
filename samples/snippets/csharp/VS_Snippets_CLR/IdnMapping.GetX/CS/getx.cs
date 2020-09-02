@@ -6,13 +6,13 @@
 using System;
 using System.Globalization;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
-/* 
-   Define a domain name consisting of the labels: GREEK SMALL LETTER 
-   PI (U+03C0); IDEOGRAPHIC FULL STOP (U+3002); GREEK SMALL LETTER 
+/*
+   Define a domain name consisting of the labels: GREEK SMALL LETTER
+   PI (U+03C0); IDEOGRAPHIC FULL STOP (U+3002); GREEK SMALL LETTER
    THETA (U+03B8); FULLWIDTH FULL STOP (U+FF0E); and "com".
 */
     string name = "\u03C0\u3002\u03B8\uFF0Ecom";
@@ -57,7 +57,7 @@ class Sample
     static void CodePoints(string value, string title)
     {
     Console.WriteLine("Display the Unicode code points of {0}", title);
-    foreach (char c in value) 
+    foreach (char c in value)
         {
         Console.Write("{0:x4} ", Convert.ToInt32(c));
         }

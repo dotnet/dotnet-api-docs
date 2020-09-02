@@ -17,7 +17,7 @@ class Test
                 Console.WriteLine("  Volume label: {0}", d.VolumeLabel);
                 Console.WriteLine("  File system: {0}", d.DriveFormat);
                 Console.WriteLine(
-                    "  Available space to current user:{0, 15} bytes", 
+                    "  Available space to current user:{0, 15} bytes",
                     d.AvailableFreeSpace);
 
                 Console.WriteLine(
@@ -31,25 +31,25 @@ class Test
         }
     }
 }
-/* 
+/*
 This code produces output similar to the following:
 
 Drive A:\
   Drive type: Removable
 Drive C:\
   Drive type: Fixed
-  Volume label: 
+  Volume label:
   File system: FAT32
   Available space to current user:     4770430976 bytes
   Total available space:               4770430976 bytes
-  Total size of drive:                10731683840 bytes 
+  Total size of drive:                10731683840 bytes
 Drive D:\
   Drive type: Fixed
-  Volume label: 
+  Volume label:
   File system: NTFS
   Available space to current user:    15114977280 bytes
   Total available space:              15114977280 bytes
-  Total size of drive:                25958948864 bytes 
+  Total size of drive:                25958948864 bytes
 Drive E:\
   Drive type: CDRom
 

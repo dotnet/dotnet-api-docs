@@ -23,17 +23,17 @@
 
 
 '  The following example demonstrates the  members of 'DataBinding' and
-' 'DataBindingCollection'.A new control 'SimpleWebControl'  is created
+' 'DataBindingCollection'. A new control 'SimpleWebControl'  is created
 '  and a 'Designer' attribute is attached to it which actually refers to the
-'  DesignTimeClass.The 'OnBindingsCollectionChanged(string)' method  is overridden
+'  DesignTimeClass. The 'OnBindingsCollectionChanged(string)' method  is overridden
 '  to actually capture the DataBindingCollection instance and add the
 '  DataBinding Expression to the property in the ASPX file. When 'Text' property of the
 '  SimpleWebControl is bound to the 'Text' property of 'Button1' at the DesignTime
 '  using the IDE, the 'OnBindingCollectionChanged' method is called and
 '  the 'Text' property of the 'SimpleWebControl' is updated in .aspx file.
-'  The actual DataBinding is done at the runtime.The  properties of the 'DataBinding'
+'  The actual DataBinding is done at the runtime. The  properties of the 'DataBinding'
 '  and 'DataBindingCollection' are written into a text file (DataBindingOutput.txt)
-'  in drive C.The Output is written at the design time itself.
+'  in drive C. The Output is written at the design time itself.
 
 'Note:This program has to be tested at "DesignTime".
 'These are the instructions to be followed to successfully test the functionality of the program.

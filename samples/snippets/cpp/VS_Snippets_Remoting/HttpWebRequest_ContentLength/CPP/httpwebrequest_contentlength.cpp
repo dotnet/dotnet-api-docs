@@ -1,13 +1,13 @@
 /*
 System::Net::HttpWebRequest::Method, System::Net::HttpWebRequest::ContentLength, System::Net::HttpWebRequest::ContentType
 System::Net::HttpWebRequest::GetRequestStream
-This program demonstrates 'Method', 'ContentLength' and 'ContentType' properties and 'GetRequestStream'
-method of HttpWebRequest Class.
-It creates a 'HttpWebRequest' Object*.The 'Method' property of 'HttpWebRequestClass' is set to 'POST'.
-The 'ContentType' property is set to 'application/x-www-form-urlencoded'.The 'ContentLength' property
-is set to the length of the Byte stream to be posted.A new 'Stream' Object* is obtained from the
+This program the demonstrates 'Method', 'ContentLength', and 'ContentType' properties and the 'GetRequestStream'
+method of the HttpWebRequest Class.
+It creates a 'HttpWebRequest' Object*. The 'Method' property of 'HttpWebRequestClass' is set to 'POST'.
+The 'ContentType' property is set to 'application/x-www-form-urlencoded'. The 'ContentLength' property
+is set to the length of the Byte stream to be posted. A new 'Stream' Object* is obtained from the
 'GetRequestStream' method of the 'HttpWebRequest' class. Data to be posted is requested from the user.
-Data is posted using the stream Object*.The HTML contents of the page are then displayed to the console
+Data is posted using the stream Object*. The HTML contents of the page are then displayed to the console
 after the Posted data is accepted by the URL.
 Note: This program POSTs data to the Uri: http://www20.Brinkster::com/codesnippets/next.asp
 */
@@ -23,7 +23,7 @@ int main()
 {
    try
    {
-      // Create a new WebRequest Object to the mentione Uri.
+      // Create a new WebRequest Object to the mentioned Uri.
       HttpWebRequest^ myHttpWebRequest = (HttpWebRequest^)( WebRequest::Create( "http://www.contoso.com/codesnippets/next.asp" ) );
 
       Console::WriteLine( "\nThe value of 'ContentLength' property before sending the data is {0}", myHttpWebRequest->ContentLength );

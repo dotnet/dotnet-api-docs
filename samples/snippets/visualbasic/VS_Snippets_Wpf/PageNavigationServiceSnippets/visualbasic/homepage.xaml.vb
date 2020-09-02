@@ -15,7 +15,7 @@ Namespace VisualBasic
             InitializeComponent()
 
             ' Don't allow back navigation if no navigation service
-            If Me.NavigationService IsNot Nothing Then
+            If Me.NavigationService Is Nothing Then
                 Me.goBackButton.IsEnabled = False
             End If
         End Sub

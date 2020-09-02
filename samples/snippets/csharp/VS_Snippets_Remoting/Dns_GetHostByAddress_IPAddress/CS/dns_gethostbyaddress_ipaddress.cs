@@ -1,9 +1,9 @@
 ﻿/*
    This program demonstrates 'GetHostByAddress(IPAddress)' method of 'Dns' class.
-   It takes an IP address string from commandline or uses default value and creates 
-   an instance of IPAddress for the specified IP address string. Obtains the IPHostEntry 
+   It takes an IP address string from commandline or uses default value and creates
+   an instance of IPAddress for the specified IP address string. Obtains the IPHostEntry
    object by calling 'GetHostByAddress' method of 'Dns' class and prints host name,
-   IP address list and aliases.   
+   IP address list and aliases.
 */
 
 using System;
@@ -25,14 +25,14 @@ class DnsHostByAddress
    }
    public void DisplayHostAddress(String IpAddressString)
    {
-      // Call 'GetHostByAddress(IPAddress)' method giving an 'IPAddress' object as argument. 
+      // Call 'GetHostByAddress(IPAddress)' method giving an 'IPAddress' object as argument.
       // Obtain an 'IPHostEntry' instance, containing address information of the specified host.
-// <Snippet1>   
-      try 
+// <Snippet1>
+      try
       {
          IPAddress hostIPAddress = IPAddress.Parse(IpAddressString);
          IPHostEntry hostInfo = Dns.GetHostByAddress(hostIPAddress);
-         // Get the IP address list that resolves to the host names contained in 
+         // Get the IP address list that resolves to the host names contained in
          // the Alias property.
          IPAddress[] address = hostInfo.AddressList;
          // Get the alias names of the addresses in the IP address list.
@@ -42,13 +42,13 @@ class DnsHostByAddress
          Console.WriteLine("\nAliases :");
          for(int index=0; index < alias.Length; index++) {
            Console.WriteLine(alias[index]);
-         } 
+         }
          Console.WriteLine("\nIP address list : ");
          for(int index=0; index < address.Length; index++) {
             Console.WriteLine(address[index]);
          }
       }
-      catch(SocketException e) 
+      catch(SocketException e)
       {
 	 Console.WriteLine("SocketException caught!!!");
          Console.WriteLine("Source : " + e.Source);
@@ -72,6 +72,6 @@ class DnsHostByAddress
 		  Console.WriteLine("Source : " + e.Source);
 		  Console.WriteLine("Message : " + e.Message);
 	  }
-// </Snippet1>   
+// </Snippet1>
    }
 }

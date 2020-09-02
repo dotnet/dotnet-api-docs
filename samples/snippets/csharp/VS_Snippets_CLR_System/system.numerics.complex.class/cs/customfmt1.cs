@@ -4,20 +4,20 @@ using System.Numerics;
 
 public class ComplexFormatter :IFormatProvider, ICustomFormatter
 {
-   public object GetFormat(Type formatType) 
-   {   
+   public object GetFormat(Type formatType)
+   {
       if (formatType == typeof(ICustomFormatter))
          return this;
       else
          return null;
    }
-   
-   public string Format(string format, object arg, 
+
+   public string Format(string format, object arg,
                         IFormatProvider provider)
    {
       if (arg is Complex)
       {
-         Complex c1 = (Complex) arg; 
+         Complex c1 = (Complex) arg;
          // Check if the format string has a precision specifier.
          int precision;
          string fmtString = String.Empty;
@@ -41,28 +41,28 @@ public class ComplexFormatter :IFormatProvider, ICustomFormatter
       {
          if (arg is IFormattable)
             return ((IFormattable) arg).ToString(format, provider);
-         else if (arg != null) 
+         else if (arg != null)
             return arg.ToString();
          else
             return String.Empty;
-      }                        
+      }
    }
 }
 // </Snippet1>
 
-// <Snippet4> 
+// <Snippet4>
 public class Example
 {
    public static void Main()
    {
       Complex c1 = new Complex(12.1, 15.4);
-      Console.WriteLine("Formatting with ToString():       " + 
+      Console.WriteLine("Formatting with ToString():       " +
                         c1.ToString());
-      Console.WriteLine("Formatting with ToString(format): " + 
+      Console.WriteLine("Formatting with ToString(format): " +
                         c1.ToString("N2"));
-      Console.WriteLine("Custom formatting with I0:        " + 
+      Console.WriteLine("Custom formatting with I0:        " +
                         String.Format(new ComplexFormatter(), "{0:I0}", c1));
-      Console.WriteLine("Custom formatting with J3:        " + 
+      Console.WriteLine("Custom formatting with J3:        " +
                         String.Format(new ComplexFormatter(), "{0:J3}", c1));
    }
 }

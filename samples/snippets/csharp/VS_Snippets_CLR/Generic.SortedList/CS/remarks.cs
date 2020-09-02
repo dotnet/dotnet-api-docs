@@ -10,7 +10,7 @@ public class Example
         SortedList<int, string> mySortedList =
             new SortedList<int, string>();
 
-        // Add some elements to the list. There are no 
+        // Add some elements to the list. There are no
         // duplicate keys, but some of the values are duplicates.
         mySortedList.Add(0, "notepad.exe");
         mySortedList.Add(1, "paint.exe");

@@ -13,7 +13,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet1>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression adds the values of its two arguments.
             // Both arguments must be of the same type.
@@ -26,7 +26,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(sumExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.            
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<int>>(sumExpr).Compile()());
 
             // This code example produces the following output:
@@ -41,11 +41,11 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet2>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression perfroms a logical AND operation
             // on its two arguments. Both arguments must be of the same type,
-            // which can be boolean or integer.             
+            // which can be boolean or integer.
             Expression andExpr = Expression.And(
                 Expression.Constant(true),
                 Expression.Constant(false)
@@ -55,7 +55,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(andExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.       
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<bool>>(andExpr).Compile()());
 
             // This code example produces the following output:
@@ -70,13 +70,13 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet3>
             // Add the following directive to your file:
-            // using System.Linq.Expressions; 
+            // using System.Linq.Expressions;
 
             int num = 100;
 
-            // This expression represents a conditional operation. 
+            // This expression represents a conditional operation.
             // It evaluates the test (first expression) and
-            // executes the iftrue block (second argument) if the test evaluates to true, 
+            // executes the iftrue block (second argument) if the test evaluates to true,
             // or the iffalse block (third argument) if the test evaluates to false.
             Expression conditionExpr = Expression.Condition(
                                        Expression.Constant(num > 10),
@@ -88,7 +88,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(conditionExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.       
+            // then compiles it, and then executes it.
             Console.WriteLine(
                 Expression.Lambda<Func<string>>(conditionExpr).Compile()());
 
@@ -104,7 +104,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet4>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression represents a Constant value.
             Expression constantExpr = Expression.Constant(5.5);
@@ -129,12 +129,12 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet5>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             double num = 5.5;
 
-            // This expression represents a decrement operation 
-            // that subtracts 1 from a value. 
+            // This expression represents a decrement operation
+            // that subtracts 1 from a value.
             Expression decrementExpr = Expression.Decrement(
                                         Expression.Constant(num)
                                     );
@@ -164,7 +164,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet6>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression represents the default value of a type
             // (0 for integer, null for a string, etc.)
@@ -192,7 +192,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet7>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression divides its first argument by its second argument.
             // Both arguments must be of the same type.
@@ -220,7 +220,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet8>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression compares the values of its two arguments.
             // Both arguments need to be of the same type.
@@ -249,10 +249,10 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet9>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression represents an exclusive OR operation for its two arguments.
-            // Both arguments must be of the same type, 
+            // Both arguments must be of the same type,
             // which can be either integer or boolean.
 
             Expression exclusiveOrExpr = Expression.ExclusiveOr(
@@ -264,7 +264,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(exclusiveOrExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.           
+            // then compiles it, and then executes it.
             Console.WriteLine(
                 Expression.Lambda<Func<int>>(exclusiveOrExpr).Compile()());
 
@@ -283,7 +283,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet10>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression compares the values of its two arguments.
             // Both arguments must be of the same type.
@@ -296,7 +296,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(greaterThanExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.    
+            // then compiles it, and then executes it.
             Console.WriteLine(
                 Expression.Lambda<Func<bool>>(greaterThanExpr).Compile()());
 
@@ -312,7 +312,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet11>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression compares the values of its two arguments.
             // Both arguments must be of the same type.
@@ -325,7 +325,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(greaterThanOrEqual.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it. 
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<bool>>(greaterThanOrEqual).Compile()());
 
             // This code example produces the following output:
@@ -339,7 +339,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet12>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // To demonstrate the assignment operation, we create a variable.
             ParameterExpression variableExpr = Expression.Variable(typeof(String), "sampleVar");
@@ -365,7 +365,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(assignExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.  
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<String>>(blockExpr).Compile()());
 
             // This code example produces the following output:
@@ -381,7 +381,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet13>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // The block expression allows for executing several expressions sequentually.
             // When the block expression is executed,
@@ -402,7 +402,7 @@ namespace ExpressionTreesCSharp
 
             Console.WriteLine("The result of executing the expression tree:");
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.           
+            // then compiles it, and then executes it.
             var result = Expression.Lambda<Func<int>>(blockExpr).Compile()();
 
             // Print out the expressions from the block expression.
@@ -434,12 +434,12 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet14>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This block has a parameter expression
             // that represents a variable within the block scope.
             // It assigns a value to the variable,
-            // and then adds a constant to the assigned value. 
+            // and then adds a constant to the assigned value.
 
             ParameterExpression varExpr = Expression.Variable(typeof(int), "sampleVar");
             BlockExpression blockExpr = Expression.Block(
@@ -474,7 +474,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet15>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression represents a call to an instance method without arguments.
             Expression callExpr = Expression.Call(
@@ -484,7 +484,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(callExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.  
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<String>>(callExpr).Compile()());
 
             // This code example produces the following output:
@@ -500,7 +500,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet16>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             public class SampleClass
             {
@@ -539,7 +539,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet17>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
             public class SampleClass
             {
                 public int AddIntegers(int arg1, int arg2)
@@ -585,7 +585,7 @@ namespace ExpressionTreesCSharp
             ParameterExpression variableExpr = Expression.Variable(typeof(int), "sampleVar");
 
             // The block expression enables you to execute several expressions sequentually.
-            // In this bloc, the variable is first initialized with 1. 
+            // In this bloc, the variable is first initialized with 1.
             // Then the AddAssign method adds 2 to the variable and assigns the result to the variable.
             BlockExpression addAssignExpr = Expression.Block(
                 new ParameterExpression[] { variableExpr },
@@ -622,7 +622,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet19>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression perfroms a logical AND operation
             // on its two arguments, but if the first argument is false,
@@ -637,7 +637,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(andAlsoExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it. 
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<bool>>(andAlsoExpr).Compile()());
 
             // This code example produces the following output:
@@ -653,12 +653,12 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet20>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This parameter expression represents a variable that will hold the array.
             ParameterExpression arrayExpr = Expression.Parameter(typeof(int[]), "Array");
 
-            // This parameter expression represents an array index.            
+            // This parameter expression represents an array index.
             ParameterExpression indexExpr = Expression.Parameter(typeof(int), "Index");
 
             // This parameter represents the value that will be added to a corresponding array element.
@@ -714,14 +714,14 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet21>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This parameter expression represents a variable that will hold the two-dimensional array.
             ParameterExpression arrayExpr = Expression.Parameter(typeof(int[,]), "Array");
 
-            // This parameter expression represents a first array index.            
+            // This parameter expression represents a first array index.
             ParameterExpression firstIndexExpr = Expression.Parameter(typeof(int), "FirstIndex");
-            // This parameter expression represents a second array index.            
+            // This parameter expression represents a second array index.
             ParameterExpression secondIndexExpr = Expression.Parameter(typeof(int), "SecondIndex");
 
             // The list of indexes.
@@ -771,7 +771,7 @@ namespace ExpressionTreesCSharp
             // Array[FirstIndex, SecondIndex]
 
             // Lambda Expression:
-            // (Array, FirstIndex, SecondIndex Value) => 
+            // (Array, FirstIndex, SecondIndex Value) =>
             // (Array[FirstIndex, SecondIndex] = (Array[FirstIndex, SecondIndex] + Value))
 
             // The result of executing the lambda expression:
@@ -785,10 +785,10 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet22>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
-            // This expression represents a constant value, 
-            // for which you can explicitly specify the type. 
+            // This expression represents a constant value,
+            // for which you can explicitly specify the type.
             // This can be used, for example, for defining constants of a nullable type.
             Expression constantExpr = Expression.Constant(
                                         null,
@@ -810,9 +810,9 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet23>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
-            // This expression represents a type conversion operation. 
+            // This expression represents a type conversion operation.
             Expression convertExpr = Expression.Convert(
                                         Expression.Constant(5.5),
                                         typeof(Int16)
@@ -838,9 +838,9 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet24>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
-            // This expression represents an increment operation. 
+            // This expression represents an increment operation.
             double num = 5.5;
             Expression incrementExpr = Expression.Increment(
                                         Expression.Constant(num)
@@ -870,7 +870,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet25>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression compares the values of its two arguments.
             // Both arguments must be of the same type.
@@ -883,7 +883,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(lessThanExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.    
+            // then compiles it, and then executes it.
             Console.WriteLine(
                 Expression.Lambda<Func<bool>>(lessThanExpr).Compile()());
 
@@ -899,7 +899,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet26>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression compares the values of its two arguments.
             // Both arguments must be of the same type.
@@ -912,7 +912,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(lessThanOrEqual.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it. 
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<bool>>(lessThanOrEqual).Compile()());
 
             // This code example produces the following output:
@@ -927,7 +927,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet27>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression multiplies its two arguments.
             // Both arguments must be of the same type.
@@ -956,11 +956,11 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet28>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression perfroms a logical OR operation
             // on its two arguments. Both arguments must be of the same type,
-            // which can be boolean or integer.             
+            // which can be boolean or integer.
             Expression orExpr = Expression.Or(
                 Expression.Constant(true),
                 Expression.Constant(false)
@@ -970,7 +970,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(orExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.       
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<bool>>(orExpr).Compile()());
 
             // This code example produces the following output:
@@ -985,7 +985,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet29>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This expression perfroms a logical OR operation
             // on its two arguments, but if the first argument is true,
@@ -1000,7 +1000,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(orElseExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it. 
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<bool>>(orElseExpr).Compile().Invoke());
 
             // This code example produces the following output:
@@ -1016,9 +1016,9 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet30>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
-            // This expression subtracts the second argument 
+            // This expression subtracts the second argument
             // from the first argument.
             // Both arguments must be of the same type.
             Expression subtractExpr = Expression.Subtract(
@@ -1030,7 +1030,7 @@ namespace ExpressionTreesCSharp
             Console.WriteLine(subtractExpr.ToString());
 
             // The following statement first creates an expression tree,
-            // then compiles it, and then executes it.            
+            // then compiles it, and then executes it.
             Console.WriteLine(Expression.Lambda<Func<int>>(subtractExpr).Compile().Invoke());
 
             // This code example produces the following output:
@@ -1045,7 +1045,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet31>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // This statement creates an empty expression.
             DefaultExpression emptyExpr = Expression.Empty();
@@ -1063,7 +1063,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet32>
             // Add the following directive to the file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
             bool test = true;
 
             // This expression represents the conditional block.
@@ -1091,7 +1091,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet33>
             // Add the following directive to the file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
             bool test = true;
 
             // This expression represents the conditional block.
@@ -1124,12 +1124,12 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet34>
             // Add the following directive to the file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // An expression that represents the switch value.
             ConstantExpression switchValue = Expression.Constant(2);
 
-            // This expression represents a switch statement 
+            // This expression represents a switch statement
             // without a default case.
             SwitchExpression switchExpr =
                 Expression.Switch(
@@ -1169,12 +1169,12 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet35>
             // Add the following directive to the file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // An expression that represents the switch value.
             ConstantExpression switchValue = Expression.Constant(3);
 
-            // This expression represents a switch statement 
+            // This expression represents a switch statement
             // that has a default case.
             SwitchExpression switchExpr =
                 Expression.Switch(
@@ -1219,7 +1219,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet36>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             ConstantExpression constExpr = Expression.Constant(5);
             Console.WriteLine("NodeType: " + constExpr.NodeType);
@@ -1237,11 +1237,11 @@ namespace ExpressionTreesCSharp
             // Type: System.Int32
             //</Snippet36>
         }
-    
+
         // Expression.Field
         //<Snippet37>
         // Add the following directive to your file:
-        // using System.Linq.Expressions;  
+        // using System.Linq.Expressions;
 
         class TestFieldClass
         {
@@ -1249,9 +1249,9 @@ namespace ExpressionTreesCSharp
         }
 
         static void TestField()
-        {       
+        {
             TestFieldClass obj = new TestFieldClass();
-          
+
             // This expression represents accessing a field.
             // For static fields, the first parameter must be null.
             Expression fieldExpr = Expression.Field(
@@ -1272,7 +1272,7 @@ namespace ExpressionTreesCSharp
         //Expression.Property
         //<Snippet38>
         // Add the following directive to your file:
-        // using System.Linq.Expressions;  
+        // using System.Linq.Expressions;
 
          class TestPropertyClass
          {
@@ -1293,7 +1293,7 @@ namespace ExpressionTreesCSharp
 
              // The following statement first creates an expression tree,
              // then compiles it, and then runs it.
-             Console.WriteLine(Expression.Lambda<Func<int>>(propertyExpr).Compile()());            
+             Console.WriteLine(Expression.Lambda<Func<int>>(propertyExpr).Compile()());
          }
 
          // This code example produces the following output:
@@ -1305,7 +1305,7 @@ namespace ExpressionTreesCSharp
          //Expression.PropertyOrField
          //<Snippet39>
          // Add the following directive to your file:
-         // using System.Linq.Expressions;  
+         // using System.Linq.Expressions;
 
          class TestClass
          {
@@ -1339,7 +1339,7 @@ namespace ExpressionTreesCSharp
          //<Snippet40>
 
          // Add the following directive to your file:
-         // using System.Linq.Expressions;  
+         // using System.Linq.Expressions;
 
          class TestMemberInitClass
          {
@@ -1347,7 +1347,7 @@ namespace ExpressionTreesCSharp
          }
 
          static void MemberInit()
-         {   
+         {
              // This expression creates a new TestMemberInitClass object
              // and assigns 10 to its sample property.
              Expression testExpr = Expression.MemberInit(
@@ -1371,7 +1371,7 @@ namespace ExpressionTreesCSharp
         //Expression.MemberBind
         //<Snippet41>
         // Add the following directive to your file
-        // using System.Linq.Expressions;  
+        // using System.Linq.Expressions;
 
         public class Circle
         {
@@ -1384,13 +1384,13 @@ namespace ExpressionTreesCSharp
             public int x;
             public int y;
         }
- 
+
         public static void MemberBind()
         {
              // This variable represents the result of the MemberInit expression.
             ParameterExpression Variable = Expression.Variable(typeof(Circle), "Variable");
 
-            // This expression represents the recursive initialization of the members 
+            // This expression represents the recursive initialization of the members
             // of a new class instance.
             Expression memberBindExpr =
                 Expression.Block(
@@ -1399,8 +1399,8 @@ namespace ExpressionTreesCSharp
                         Variable,
                         Expression.MemberInit(
                             Expression.New(typeof(Circle)),
-                            new MemberBinding[] { 
-                                Expression.Bind(typeof(Circle).GetMember("Radius")[0], Expression.Constant(5.2)),                               
+                            new MemberBinding[] {
+                                Expression.Bind(typeof(Circle).GetMember("Radius")[0], Expression.Constant(5.2)),
                                 Expression.MemberBind(
                                     typeof(Circle).GetField("Center"),
                                     new MemberBinding[] {
@@ -1413,11 +1413,11 @@ namespace ExpressionTreesCSharp
                     ),
                     Expression.Field(Expression.Field(Variable, "Center"), "y")
                 );
-        
+
             // The following statement first creates an expression tree,
             // then compiles it, and then executes it.
             // It prints the value of the Circle.Center.y member which is set to 2.
-            Console.WriteLine(Expression.Lambda<Func<int>>(memberBindExpr).Compile()());                      
+            Console.WriteLine(Expression.Lambda<Func<int>>(memberBindExpr).Compile()());
         }
         // This code example produces the following output:
         //
@@ -1429,7 +1429,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet42>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // A parameter for the lambda expression.
             ParameterExpression paramExpr = Expression.Parameter(typeof(int), "arg");
@@ -1443,7 +1443,7 @@ namespace ExpressionTreesCSharp
                 ),
                 new List<ParameterExpression>() { paramExpr }
             );
-            
+
             // Print out the expression.
             Console.WriteLine(lambdaExpr);
 
@@ -1462,7 +1462,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet43>
             // Add the following directive to the file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // A label expression of the void type that is the target for Expression.Return().
             LabelTarget returnTarget = Expression.Label();
@@ -1486,7 +1486,7 @@ namespace ExpressionTreesCSharp
             //
             // Return
 
-            // "Other Work" is not printed because 
+            // "Other Work" is not printed because
             // the Return expression transfers execution from Expression.Return(returnTarget)
             // to Expression.Label(returnTarget).
             //</Snippet43>
@@ -1494,14 +1494,14 @@ namespace ExpressionTreesCSharp
 
         public static void TestLoop()
         {
-            //<Snippet44> 
+            //<Snippet44>
             // Add the following directive to the file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // Creating a parameter expression.
             ParameterExpression value = Expression.Parameter(typeof(int), "value");
 
-            // Creating an expression to hold a local variable. 
+            // Creating an expression to hold a local variable.
             ParameterExpression result = Expression.Parameter(typeof(int), "result");
 
             // Creating a label to jump to from a loop.
@@ -1537,7 +1537,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet45>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // A label expression of the void type that is the target for the GotoExpression.
             LabelTarget returnTarget = Expression.Label();
@@ -1561,7 +1561,7 @@ namespace ExpressionTreesCSharp
             //
             // GoTo
 
-            // "Other Work" is not printed because 
+            // "Other Work" is not printed because
             // the GoTo expression transfers execution from Expression.GoTo(returnTarget)
             // to Expression.Label(returnTarget).
             //</Snippet45>
@@ -1571,9 +1571,9 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet46>
             // Add the following directive to your file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
-            // A label that is used by a break statement and a loop. 
+            // A label that is used by a break statement and a loop.
             LabelTarget breakLabel = Expression.Label();
 
             // A label that is used by the Continue statement and the loop it refers to.
@@ -1622,7 +1622,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet47>
             // Add the following directive to the file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // A TryExpression object that has a Catch statement.
             // The return types of the Try block and all Catch blocks must be the same.
@@ -1640,8 +1640,8 @@ namespace ExpressionTreesCSharp
 
             // The following statement first creates an expression tree,
             // then compiles it, and then runs it.
-            // If the exception is caught, 
-            // the result of the TryExpression is the last statement 
+            // If the exception is caught,
+            // the result of the TryExpression is the last statement
             // of the corresponding Catch statement.
             Console.WriteLine(Expression.Lambda<Func<string>>(tryCatchExpr).Compile()());
 
@@ -1655,7 +1655,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet48>
             // Add the following directive to the file.
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // A TryExpression object that has a catch statement and a finally statement.
             // The return types of the try block and all catch blocks must be the same.
@@ -1674,8 +1674,8 @@ namespace ExpressionTreesCSharp
 
             // The following statement first creates an expression tree,
             // then compiles it, and then runs it.
-            // If the exception is caught, 
-            // the result of the TryExpression is the last statement 
+            // If the exception is caught,
+            // the result of the TryExpression is the last statement
             // of the corresponding catch statement.
             Console.WriteLine(Expression.Lambda<Func<string>>(tryCatchExpr).Compile()());
 
@@ -1690,7 +1690,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet49>
             // Add the following directive to the file:
-            // using System.Linq.Expressions;  
+            // using System.Linq.Expressions;
 
             // Creating a parameter for the expression tree.
             ParameterExpression param = Expression.Parameter(typeof(int));
@@ -1718,7 +1718,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet50>
             // Add the following directive to your file:
-            // using System.Linq.Expressions; 
+            // using System.Linq.Expressions;
 
             // This expression represents a negation operation.
             Expression negateExpr = Expression.Negate(Expression.Constant(5));
@@ -1738,7 +1738,7 @@ namespace ExpressionTreesCSharp
         {
             //<Snippet51>
             // Add the following directive to your file:
-            // using System.Linq.Expressions; 
+            // using System.Linq.Expressions;
 
             // This expression represents a NOT operation.
             Expression notExpr = Expression.Not(Expression.Constant(true));
@@ -1779,7 +1779,7 @@ namespace ExpressionTreesCSharp
             //ArrayAccessOneDimensional();
             //ArrayAccessMultidimensional();
             //ConstantNull();
-            //Convert1();            
+            //Convert1();
             //Increment1();
             //LessThan1();
             //LessThanOrEqual1();

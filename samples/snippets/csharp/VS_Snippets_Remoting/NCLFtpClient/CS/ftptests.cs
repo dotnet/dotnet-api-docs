@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace Examples
 {
     public class FtpRequestTest
-    { 
+    {
 
         // FxCop rule requires a private constructor.
         FtpRequestTest() {}
@@ -22,31 +22,31 @@ namespace Examples
             // Get the object used to communicate with the server.
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
             request.Method = WebRequestMethods.Ftp.ListDirectory;
-            
+
             // Get the ServicePoint object used for this request, and limit it to one connection.
             // In a real-world application you might use the default number of connections (2),
             // or select a value that works best for your application.
-            
+
             ServicePoint sp = request.ServicePoint;
             Console.WriteLine("ServicePoint connections = {0}.", sp.ConnectionLimit);
             sp.ConnectionLimit = 1;
-            
+
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-             
+
             // The following streams are used to read the data returned from the server.
             Stream responseStream = null;
             StreamReader readStream = null;
             try
             {
-                responseStream = response.GetResponseStream(); 
+                responseStream = response.GetResponseStream();
                 readStream = new StreamReader(responseStream, System.Text.Encoding.UTF8);
- 
+
                 if (readStream != null)
                 {
                     // Display the data received from the server.
                     Console.WriteLine(readStream.ReadToEnd());
-                } 
-                Console.WriteLine("List status: {0}",response.StatusDescription);            
+                }
+                Console.WriteLine("List status: {0}",response.StatusDescription);
             }
             finally
             {
@@ -59,7 +59,7 @@ namespace Examples
                     response.Close();
                 }
             }
-           
+
             return true;
         }
         //</snippet1>
@@ -125,7 +125,7 @@ namespace Examples
             FtpWebResponse response = (FtpWebResponse)request.GetResponse ();
             Console.WriteLine ("{0} {1}",serverUri,response.LastModified);
 
-            // The output from this method will vary depending on the 
+            // The output from this method will vary depending on the
             // file specified and your regional settings. It is similar to:
             // ftp://contoso.com/Data.txt 4/15/2003 10:46:02 AM
             return true;
@@ -155,7 +155,7 @@ namespace Examples
             // The URI described by serverUri should use the ftp:// scheme.
             // It contains the name of the directory on the server.
             // Example: ftp://contoso.com.
-            // 
+            //
             // The fileName parameter identifies the file containing the data to be uploaded.
 
             if (serverUri.Scheme != Uri.UriSchemeFtp)
@@ -167,7 +167,7 @@ namespace Examples
             request.Method = WebRequestMethods.Ftp.UploadFileWithUniqueName;
             // Set a time limit for the operation to complete.
             request.Timeout = 600000;
-            
+
             // Copy the file contents to the request stream.
             const int bufferLength = 2048;
             byte[] buffer = new byte[bufferLength];
@@ -182,12 +182,12 @@ namespace Examples
                 count += readBytes;
             }
             while (readBytes != 0);
-            
+
             Console.WriteLine ("Writing {0} bytes to the stream.", count);
             // IMPORTANT: Close the request stream before sending the request.
             requestStream.Close();
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-            Console.WriteLine("Upload status: {0}, {1}",response.StatusCode, response.StatusDescription);         
+            Console.WriteLine("Upload status: {0}, {1}",response.StatusCode, response.StatusDescription);
             Console.WriteLine ("File name: {0}", response.ResponseUri);
             response.Close();
             return true;
@@ -216,7 +216,7 @@ namespace Examples
             // The URI described by serverUri should use the ftp:// scheme.
             // It contains the name of the file on the server.
             // Example: ftp://contoso.com/someFile.txt.
-            // 
+            //
             // The fileName parameter identifies the file containing the data to be uploaded.
 
             if (serverUri.Scheme != Uri.UriSchemeFtp)
@@ -227,12 +227,12 @@ namespace Examples
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
             request.Method = WebRequestMethods.Ftp.UploadFile;
             // Don't set a time limit for the operation to complete.
-            request.Timeout = System.Threading.Timeout.Infinite;            
-            
+            request.Timeout = System.Threading.Timeout.Infinite;
+
             // Copy the file contents to the request stream.
             const int bufferLength = 2048;
             byte[] buffer = new byte[bufferLength];
-           
+
             int count = 0;
             int readBytes = 0;
             FileStream stream = File.OpenRead(fileName);
@@ -244,14 +244,14 @@ namespace Examples
                 count += readBytes;
             }
             while (readBytes != 0);
-            
+
             Console.WriteLine ("Writing {0} bytes to the stream.", count);
             // IMPORTANT: Close the request stream before sending the request.
             requestStream.Close();
 
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
             Console.WriteLine("Upload status: {0}, {1}", response.StatusCode, response.StatusDescription);
-            
+
             response.Close();
             return true;
         }
@@ -261,10 +261,10 @@ namespace Examples
         {
             // The URI described by serverUri should use the ftp:// scheme.
             // It contains the name of the file on the server.
-            // Example: ftp://contoso.com/someFile.txt. 
-            // The fileName parameter identifies the file containing 
+            // Example: ftp://contoso.com/someFile.txt.
+            // The fileName parameter identifies the file containing
             // the data to be appended to the file on the server.
-            
+
             if (serverUri.Scheme != Uri.UriSchemeFtp)
             {
                 return false;
@@ -272,22 +272,22 @@ namespace Examples
             // Get the object used to communicate with the server.
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
             request.Method = WebRequestMethods.Ftp.AppendFile;
-            
+
             StreamReader sourceStream = new StreamReader(fileName);
             byte [] fileContents = Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
             sourceStream.Close();
             request.ContentLength = fileContents.Length;
- 
+
             // This example assumes the FTP site uses anonymous logon.
             request.Credentials = new NetworkCredential ("anonymous","janeDoe@contoso.com");
             Stream requestStream = request.GetRequestStream();
             requestStream.Write(fileContents, 0, fileContents.Length);
             requestStream.Close();
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-            
+
             Console.WriteLine("Append status: {0}",response.StatusDescription);
-            
-            response.Close();  
+
+            response.Close();
             return true;
         }
         //</snippet3>
@@ -297,8 +297,8 @@ namespace Examples
             // The serverUri parameter should use the ftp:// scheme.
             // It contains the name of the server file that is to be deleted.
             // Example: ftp://contoso.com/someFile.txt.
-            // 
-            
+            //
+
             if (serverUri.Scheme != Uri.UriSchemeFtp)
             {
                 return false;
@@ -306,9 +306,9 @@ namespace Examples
             // Get the object used to communicate with the server.
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
             request.Method = WebRequestMethods.Ftp.DeleteFile;
-         
+
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-            Console.WriteLine("Delete status: {0}",response.StatusDescription);  
+            Console.WriteLine("Delete status: {0}",response.StatusDescription);
             response.Close();
             return true;
         }
@@ -323,10 +323,10 @@ namespace Examples
             }
             // Get the object used to communicate with the server.
             WebClient request = new WebClient();
-            
+
             // This example assumes the FTP site uses anonymous logon.
             request.Credentials = new NetworkCredential ("anonymous","janeDoe@contoso.com");
-            try 
+            try
             {
                 byte [] newFileData = request.DownloadData (serverUri.ToString());
                 string fileString = System.Text.Encoding.UTF8.GetString(newFileData);
@@ -342,44 +342,44 @@ namespace Examples
         //<snippet6>
         // DisplayRequestProperties prints a request's properties.
         // This method should be called after the request is sent to the server.
-       
+
         private static void DisplayRequestProperties(FtpWebRequest request)
         {
         //<snippet14>
-            Console.WriteLine("User {0} {1}", 
+            Console.WriteLine("User {0} {1}",
                 request.Credentials.GetCredential(request.RequestUri,"basic").UserName,
                 request.RequestUri
             );
-        //</snippet14>    
-            Console.WriteLine("Request: {0} {1}", 
+        //</snippet14>
+            Console.WriteLine("Request: {0} {1}",
                 request.Method,
                 request.RequestUri
             );
         //<snippet15>
-            Console.WriteLine("Passive: {0}  Keep alive: {1}  Binary: {2} Timeout: {3}.", 
-                request.UsePassive, 
-                request.KeepAlive, 
+            Console.WriteLine("Passive: {0}  Keep alive: {1}  Binary: {2} Timeout: {3}.",
+                request.UsePassive,
+                request.KeepAlive,
                 request.UseBinary,
                 request.Timeout == -1 ? "none" : request.Timeout.ToString()
             );
-        //</snippet15>  
-        //<snippet16>      
+        //</snippet15>
+        //<snippet16>
             IWebProxy proxy = request.Proxy;
             if (proxy != null)
             {
                 Console.WriteLine("Proxy: {0}", proxy.GetProxy(request.RequestUri));
-            } 
+            }
             else
             {
                 Console.WriteLine("Proxy: (none)");
             }
-            
+
             Console.WriteLine("ConnectionGroup: {0}",
                 request.ConnectionGroupName == null ? "none" : request.ConnectionGroupName
             );
         //</snippet16>
 
-            Console.WriteLine("Encrypted connection: {0}", 
+            Console.WriteLine("Encrypted connection: {0}",
                 request.EnableSsl);
 
             Console.WriteLine("Method: {0}", request.Method);
@@ -396,7 +396,7 @@ namespace Examples
             // The fileName parameter identifies the local file.
             //The serverUri parameter identifies the remote file.
             // The offset parameter specifies where in the server file to start reading data.
-            
+
             if (serverUri.Scheme != Uri.UriSchemeFtp)
             {
                 return false;
@@ -406,7 +406,7 @@ namespace Examples
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.ContentOffset = offset;
             FtpWebResponse response = null;
-            try 
+            try
             {
                 response = (FtpWebResponse) request.GetResponse();
             }
@@ -435,19 +435,19 @@ namespace Examples
             return true;
         }
         //</snippet7>
-        
+
          // not enabled in M2
         // Sample call: SendCommandToServer("ftp://contoso.com/", "pwd");
-        // The output can only return  status information. 
-        
+        // The output can only return  status information.
+
         public static bool SendCommandToServer(string serverUri, string command)
         {
             // The serverUri parameter should start with the ftp:// scheme.
             // It contains the name of the file on the server that will be appended.
             // Example: ftp://contoso.com/someFile.txt.
-            // 
+            //
             // The command parameter identifies the command to send to the server.
-            
+
             if (serverUri.ToLower().StartsWith(Uri.UriSchemeFtp) == false)
             {
                 return false;
@@ -458,12 +458,12 @@ namespace Examples
             // This example assumes the FTP site uses anonymous logon.
             request.Credentials = new NetworkCredential ("anonymous","janeDoe@contoso.com");
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-            Console.WriteLine("{0} status: {1}",command, response.StatusDescription);  
-            
+            Console.WriteLine("{0} status: {1}",command, response.StatusDescription);
+
             response.Close();
             return true;
         }
-        
+
         //<snippet9>
         public static bool DownloadFileFromServer(Uri serverUri, string localFileName)
         {
@@ -481,22 +481,22 @@ namespace Examples
             //
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
-            
+
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-            
+
             Stream responseStream = null;
             StreamReader readStream = null;
             StreamWriter writeStream = null;
             try
             {
-                responseStream = response.GetResponseStream(); 
+                responseStream = response.GetResponseStream();
                 readStream = new StreamReader(responseStream, System.Text.Encoding.UTF8);
                 // Display information about the data received from the server.
-                Console.WriteLine("Bytes received: {0}",response.ContentLength);   
-                 
+                Console.WriteLine("Bytes received: {0}",response.ContentLength);
+
                 Console.WriteLine("Message from server: {0}", response.StatusDescription);
                 Console.WriteLine("Resource: {0}", response.ResponseUri);
-               
+
                 // Write the bytes received from the server to the local file.
                 if (readStream != null)
                 {
@@ -530,13 +530,13 @@ namespace Examples
            // This example assumes the FTP site uses anonymous logon.
            request.Credentials = new NetworkCredential ("anonymous","janeDoe@contoso.com");
            request.Proxy = new WebProxy();
-      
+
               request.Method = WebRequestMethods.Ftp.DownloadFile;
               DisplayRequestProperties(request);
        }
 
        //<snippet11>
-        public static bool GetFileSizeFromServer(Uri serverUri) 
+        public static bool GetFileSizeFromServer(Uri serverUri)
         {
             // The serverUri parameter should start with the ftp:// scheme.
             if (serverUri.Scheme != Uri.UriSchemeFtp)
@@ -546,12 +546,12 @@ namespace Examples
             // Get the object used to communicate with the server.
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
             request.Method = WebRequestMethods.Ftp.GetFileSize;
-        
+
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-            
+
             // Display information about the server response.
             Console.WriteLine("size of file: {0}", response.ContentLength);
-            
+
             response.Close();
             return true;
         }
@@ -568,15 +568,15 @@ namespace Examples
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             request.EnableSsl = true;
-            
+
             // Get the ServicePoint object used for this request, and limit it to one connection.
             // In a real-world application you might use the default number of connections (2),
             // or select a value that works best for your application.
-            
+
             ServicePoint sp = request.ServicePoint;
             Console.WriteLine("ServicePoint connections = {0}.", sp.ConnectionLimit);
             sp.ConnectionLimit = 1;
-            
+
             FtpWebResponse response = (FtpWebResponse) request.GetResponse();
              Console.WriteLine("The content length is {0}", response.ContentLength);
             // The following streams are used to read the data returned from the server.
@@ -584,15 +584,15 @@ namespace Examples
             StreamReader readStream = null;
             try
             {
-                responseStream = response.GetResponseStream(); 
+                responseStream = response.GetResponseStream();
                 readStream = new StreamReader(responseStream, System.Text.Encoding.UTF8);
- 
+
                 if (readStream != null)
                 {
                     // Display the data received from the server.
                     Console.WriteLine(readStream.ReadToEnd());
-                } 
-                Console.WriteLine("List status: {0}",response.StatusDescription);            
+                }
+                Console.WriteLine("List status: {0}",response.StatusDescription);
             }
             finally
             {
@@ -607,22 +607,22 @@ namespace Examples
             }
 
                 //<snippet12>
-            Console.WriteLine("Banner message: {0}", 
+            Console.WriteLine("Banner message: {0}",
                 response.BannerMessage);
                 //</snippet12>
 
                //<snippet13>
-            Console.WriteLine("Welcome message: {0}", 
+            Console.WriteLine("Welcome message: {0}",
                 response.WelcomeMessage);
                 //</snippet13>
 
            //<snippet17>
-            Console.WriteLine("Exit message: {0}", 
+            Console.WriteLine("Exit message: {0}",
                 response.ExitMessage);
             //</snippet17>
             return true;
         }
- 
+
         // </snippet8>
 
         internal static FtpStatusCode WaitForFinalStatus(FtpWebResponse response)
@@ -646,17 +646,17 @@ namespace Examples
         public static void Main(string [] args)
         {
             // tests for snippets:
-            // snippet 1  - works m3.3 
-             // ListFilesOnServer(new Uri("ftp://sharriso1/")); 
+            // snippet 1  - works m3.3
+             // ListFilesOnServer(new Uri("ftp://sharriso1/"));
              // snippet 20
-            //ListFilesOnServerSsl(new Uri("ftp://sharriso1")); 
+            //ListFilesOnServerSsl(new Uri("ftp://sharriso1"));
 
             // snippet 20
-           // NameListFilesOnServer (new Uri ("ftp://sharriso1")); 
+           // NameListFilesOnServer (new Uri ("ftp://sharriso1"));
 
             //snippet 21
              // throws
-            //GetDateTimestampOnServer (new Uri ("ftp://sharriso1")); 
+            //GetDateTimestampOnServer (new Uri ("ftp://sharriso1"));
             //GetDateTimestampOnServer (new Uri ("ftp://sharriso1/localfile.txt"));
 
 
@@ -665,52 +665,52 @@ namespace Examples
           // snippet 24
          //  RemoveDirectoryOnServer (new Uri ("ftp://sharriso1/DirtyDir2"));
            // snippet 23
-        //   UploadUniqueFileOnServer (new Uri ("ftp://sharriso1/SherdieDir/"), "alltwos.txt"); 
-         //   ListFilesOnServer (new Uri ("ftp://sharriso1")); 
-            // snippet 8 - not working 
+        //   UploadUniqueFileOnServer (new Uri ("ftp://sharriso1/SherdieDir/"), "alltwos.txt");
+         //   ListFilesOnServer (new Uri ("ftp://sharriso1"));
+            // snippet 8 - not working
             //SendCommandToServer("ftp://sharriso1/", "rename localfile.txt loc2.txt");
-           
+
             // new snippet 7
                     // upload is just helper
                     //UploadFileToServer("NCLFtpClient.xml", new Uri("ftp://sharriso1/NCLFtpClient.xml"));
             //   RestartDownloadFromServer("restart.txt", new Uri("ftp://sharriso1/NCLFtpClient2.xml"), 8);
             //        DownloadFileFromServer(new Uri("ftp://sharriso1/onesandtwos.txt"), "downloadedFile0320_1.txt");
-                   
+
                 // snippet 11 - works m3.1
              // GetFileSizeFromServer(new Uri("ftp://sharriso1/localfile.txt"));
-           
+
             // snippet 5
             // DisplayFileFromServer(new Uri("ftp://sharriso1/onesandtwos.txt"));
-            
+
             // snippet 2
            // UploadFileToServer("out.txt", new Uri("ftp://sharriso1/out.txt"));
-           
+
            // snippet 3
             // AppendFileOnServer("out.txt", new Uri("ftp://sharriso1/out.txt"));
 
               //Snippet 4
               //DeleteFileOnServer(new Uri("ftp://sharriso1/out.txt"));
-             
+
             // Snippets 6, 14, 15, and 16
           //  GetRequestProperties(new Uri("ftp://sharriso1/localfile.txt"));
 
-            
+
             // Snippet 9
           //   DownloadFileFromServer(new Uri("ftp://sharriso1/localFile.txt"), "dlagain.txt");
-           
+
             //AsynchronousUploadFileToServer( "system.pdb","ftp://sharriso1/localFile.pdb");
            // ListFilesOnServer(new Uri("ftp://sharriso1"));
             //DownloadFileFromServer(new Uri("ftp://sharriso1/localFileagain.txt"), "dlagain.txt");
             //UploadPartialFileOnServer("allOnes.txt", "ftp://sharriso1/babyones.txt", 20 );
            // TestCloning();
-           
-          //  test the async methods 
+
+          //  test the async methods
         //    ManualResetEvent wait = new ManualResetEvent(false);
          //   AsynchronousFtpUpLoader uploader = new AsynchronousFtpUpLoader(wait);
          //   uploader.AsynchronousUploadFileToServer("ftptests.cs", "ftp://sharriso1/ftptests.txt");
            //   wait.WaitOne();
 
-        }  
+        }
         */
     }
     /*
@@ -720,16 +720,16 @@ namespace Examples
         {
             internal FtpWebRequest request;
             internal object requestData;
-        
+
             internal RequestState(FtpWebRequest theRequest, object data)
             {
                 request = theRequest;
                 requestData = data;
             }
         }
-       
+
         */
-    
+
 //<snippet10>
 public class ApplicationMain
 {
@@ -751,7 +751,7 @@ public class ApplicationMain
         FtpWebRequest request;
         byte [] fileContents;
         Exception asyncException = null;
-        
+
         public AsynchronousFtpUpLoader(ManualResetEvent wait)
         {
             this.wait = wait;
@@ -761,7 +761,7 @@ public class ApplicationMain
         {
             get { return asyncException;}
         }
-        
+
         private void EndGetStreamCallback(IAsyncResult ar)
         {
             Stream requestStream = null;
@@ -769,7 +769,7 @@ public class ApplicationMain
             try
             {
                 requestStream = request.EndGetRequestStream(ar);
-            } 
+            }
             // Return exceptions to the main application thread.
             catch (Exception e)
             {
@@ -785,12 +785,12 @@ public class ApplicationMain
             requestStream.Close();
         }
 
-        // The EndGetResponseCallback method  
+        // The EndGetResponseCallback method
         // completes a call to BeginGetResponse.
         private void EndGetResponseCallback(IAsyncResult ar)
         {
             FtpWebResponse response = null;
-            try 
+            try
             {
                 response = (FtpWebResponse) request.EndGetResponse(ar);
             }
@@ -811,7 +811,7 @@ public class ApplicationMain
             Console.WriteLine("Request aborted!");
             wait.Set();
         }
-        
+
        public void AllowAbortUpload(string fileName, string serverUri)
        {
             request = (FtpWebRequest)WebRequest.Create(serverUri);

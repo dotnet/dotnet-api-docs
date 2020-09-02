@@ -26,7 +26,7 @@ public class Example
         Console.WriteLine("\nTrueForAll(EndsWithSaurus): {0}",
             dinosaurs.TrueForAll(EndsWithSaurus));
 
-        Console.WriteLine("\nFind(EndsWithSaurus): {0}", 
+        Console.WriteLine("\nFind(EndsWithSaurus): {0}",
             dinosaurs.Find(EndsWithSaurus));
 
         Console.WriteLine("\nFindLast(EndsWithSaurus): {0}",
@@ -41,7 +41,7 @@ public class Example
         }
 
         Console.WriteLine(
-            "\n{0} elements removed by RemoveAll(EndsWithSaurus).", 
+            "\n{0} elements removed by RemoveAll(EndsWithSaurus).",
             dinosaurs.RemoveAll(EndsWithSaurus));
 
         Console.WriteLine("\nList now contains:");
@@ -50,7 +50,7 @@ public class Example
             Console.WriteLine(dinosaur);
         }
 
-        Console.WriteLine("\nExists(EndsWithSaurus): {0}", 
+        Console.WriteLine("\nExists(EndsWithSaurus): {0}",
             dinosaurs.Exists(EndsWithSaurus));
     }
 

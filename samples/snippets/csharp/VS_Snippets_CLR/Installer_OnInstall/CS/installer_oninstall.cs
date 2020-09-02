@@ -5,12 +5,12 @@
    The following example demonstrates the methods 'OnBeforeInstall' and
    'OnAfterInstall' of the 'Installer' class. The methods 'OnBeforeInstall'
    and 'OnAfterInstall' are overridden in the derived class. Space is provided
-   to add steps to be done before the installation in 'OnBeforeInstall' method 
+   to add steps to be done before the installation in 'OnBeforeInstall' method
    and after the installation in 'OnAfterInstall' method.
-   
-   Use the installer process 'InstallUtil' to run the assembly 
+
+   Use the installer process 'InstallUtil' to run the assembly
    Installer_OnInstall.exe.
-   
+
 */
 
 using System;

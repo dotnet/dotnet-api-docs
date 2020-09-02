@@ -21,10 +21,6 @@ Namespace NDP_UE_VB
     Module HResultDemo
        
         Sub Main()
-            Console.WriteLine( _
-                "This example of Exception.HResult " & _
-                "generates the following output." & vbCrLf )
-              
             ' This function forces a division by 0 and throws 
             ' a second exception.
             Try
