@@ -34,9 +34,9 @@ Namespace Ambiguity
                 Dim Mymethodinfo As MethodInfo = Mytype.GetMethod("Mymethod")
                 ' end of try block
             Catch ex As AmbiguousMatchException
-                Console.WriteLine(vbNewLine + "{0}" + vbNewLine + "{1}", ex.GetType().FullName, ex.Message)
+                Console.WriteLine(Environment.NewLine + "{0}" + Environment.NewLine + "{1}", ex.GetType().FullName, ex.Message)
             Catch
-                Console.WriteLine(vbNewLine + "Some other exception.")
+                Console.WriteLine(Environment.NewLine + "Some other exception.")
             End Try
             Return
         End Sub
