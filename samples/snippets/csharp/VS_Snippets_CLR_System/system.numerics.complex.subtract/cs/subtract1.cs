@@ -7,13 +7,13 @@ public class Example
    public static void Main()
    {
       Complex c1 = new Complex(4.93, 6.87);
-      Complex[] values = { new Complex(12.5, 9.6), 
-                           new Complex(4.3, -8.1), 
-                           new Complex(-1.9, 7.4), 
+      Complex[] values = { new Complex(12.5, 9.6),
+                           new Complex(4.3, -8.1),
+                           new Complex(-1.9, 7.4),
                            new Complex(-5.3, -6.6) };
 
       foreach (var c2 in values)
-         Console.WriteLine("{0} - {1} = {2}", c1, c2, 
+         Console.WriteLine("{0} - {1} = {2}", c1, c2,
                            Complex.Subtract(c1, c2));
    }
 }

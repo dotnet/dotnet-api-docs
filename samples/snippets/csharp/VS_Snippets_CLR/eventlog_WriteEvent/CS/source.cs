@@ -10,16 +10,16 @@ namespace EventLogSamples
 
         // The following constants match the message definitions
         // in the message resource file. They are used to specify
-        // the resource identifier for a localized string in the 
+        // the resource identifier for a localized string in the
         // message resource file.
 
-        // The message resource file is an .mc file built into a 
+        // The message resource file is an .mc file built into a
         // Win32 resource file using the message compiler (MC) tool.
         //<Snippet3>
         private const short InstallCategoryMsgId = 1;
         private const short QueryCategoryMsgId = 2;
         private const short RefreshCategoryMsgId = 3;
-        
+
         private const short CategoryCount = 3;
         //</Snippet3>
 
@@ -56,8 +56,8 @@ namespace EventLogSamples
 
                 // Use the default message dll.
 
-                messageFile =  String.Format("{0}\\{1}", 
-                        System.Environment.CurrentDirectory, 
+                messageFile =  String.Format("{0}\\{1}",
+                        System.Environment.CurrentDirectory,
                         "EventLogMsgs.dll");
             }
 
@@ -94,7 +94,7 @@ namespace EventLogSamples
             if(!EventLog.SourceExists(sourceName))
             {
                 // Create a new event source for the custom event log
-                // named "myNewLog."  
+                // named "myNewLog."
 
                 myLogName = "myNewLog";
                 EventSourceCreationData mySourceData = new EventSourceCreationData(sourceName, myLogName);
@@ -103,22 +103,22 @@ namespace EventLogSamples
                 // All event resource identifiers correspond to text in this file.
                 if (!System.IO.File.Exists(messageFile))
                 {
-                    Console.WriteLine("Input message resource file does not exist - {0}", 
+                    Console.WriteLine("Input message resource file does not exist - {0}",
                         messageFile);
                     messageFile = "";
                 }
-                else 
+                else
                 {
                     // Set the specified file as the resource
-                    // file for message text, category text, and 
-                    // message parameter strings.  
+                    // file for message text, category text, and
+                    // message parameter strings.
 
                     mySourceData.MessageResourceFile = messageFile;
                     mySourceData.CategoryResourceFile = messageFile;
                     mySourceData.CategoryCount = CategoryCount;
                     mySourceData.ParameterResourceFile = messageFile;
 
-                    Console.WriteLine("Event source message resource file set to {0}", 
+                    Console.WriteLine("Event source message resource file set to {0}",
                         messageFile);
                 }
 
@@ -137,7 +137,7 @@ namespace EventLogSamples
             // "Sample Application Log" or some other application-specific
             // text.
             EventLog myEventLog = new EventLog(myLogName, ".", sourceName);
-            
+
             if (messageFile.Length > 0)
             {
                 myEventLog.RegisterDisplayName(messageFile, DisplayNameMsgId);
@@ -157,8 +157,8 @@ namespace EventLogSamples
                 // for the event log "myNewLog."  Use the resource file
                 // EventLogMsgs.dll in the current directory for message text.
 
-                string messageFile =  String.Format("{0}\\{1}", 
-                    System.Environment.CurrentDirectory, 
+                string messageFile =  String.Format("{0}\\{1}",
+                    System.Environment.CurrentDirectory,
                     "EventLogMsgs.dll");
 
                 CreateEventSourceSample1(messageFile);
@@ -166,7 +166,7 @@ namespace EventLogSamples
 
             // Get the event log corresponding to the existing source.
             string myLogName = EventLog.LogNameFromSourceName(sourceName,".");
-       
+
             EventLog myEventLog = new EventLog(myLogName, ".", sourceName);
 
             // Define two audit events.
@@ -178,14 +178,14 @@ namespace EventLogSamples
 
             // Insert the method name into the event log message.
             string [] insertStrings = {"EventLogSamples.WriteEventSample1"};
-            
+
             // Write the events to the event log.
 
-            myEventLog.WriteEvent(myAuditSuccessEvent, insertStrings); 
+            myEventLog.WriteEvent(myAuditSuccessEvent, insertStrings);
 
             // Append binary data to the audit failure event entry.
             byte [] binaryData = { 3, 4, 5, 6 };
-            myEventLog.WriteEvent(myAuditFailEvent, binaryData, insertStrings); 
+            myEventLog.WriteEvent(myAuditFailEvent, binaryData, insertStrings);
 
             //</Snippet7>
         }
@@ -197,7 +197,7 @@ namespace EventLogSamples
             string sourceName = "SampleApplicationSource";
             if(EventLog.SourceExists(sourceName))
             {
-    
+
                 // Define an informational event and a warning event.
 
                 // The message identifiers correspond to the message text in the
@@ -207,18 +207,18 @@ namespace EventLogSamples
 
                 // Insert the method name into the event log message.
                 string [] insertStrings = {"EventLogSamples.WriteEventSample2"};
-            
+
                 // Write the events to the event log.
 
-                EventLog.WriteEvent(sourceName, myInfoEvent); 
+                EventLog.WriteEvent(sourceName, myInfoEvent);
 
                 // Append binary data to the warning event entry.
                 byte [] binaryData = { 7, 8, 9, 10 };
-                EventLog.WriteEvent(sourceName, myWarningEvent, binaryData, insertStrings); 
+                EventLog.WriteEvent(sourceName, myWarningEvent, binaryData, insertStrings);
             }
-            else 
+            else
             {
-                Console.WriteLine("Warning - event source {0} not registered", 
+                Console.WriteLine("Warning - event source {0} not registered",
                     sourceName);
             }
             //</Snippet8>
@@ -238,7 +238,7 @@ namespace EventLogSamples
                 // The message identifier corresponds to the message text in the
                 // message resource file defined for the source.
                 EventInstance myEvent = new EventInstance(UpdateCycleCompleteMsgId, 0);
-                
+
                 // Write the event to the event log using the registered source.
                 EventLog.WriteEvent(sourceName, myEvent);
 
@@ -255,9 +255,9 @@ namespace EventLogSamples
                 // Insert the machine name into the event message text.
                 EventLog.WriteEvent(sourceName, myEvent, Environment.MachineName);
             }
-            else 
+            else
             {
-                Console.WriteLine("Warning - event source {0} not registered", 
+                Console.WriteLine("Warning - event source {0} not registered",
                     sourceName);
             }
 
@@ -265,7 +265,7 @@ namespace EventLogSamples
             //<Snippet10>
             // Get the event log corresponding to the existing source.
             string myLogName = EventLog.LogNameFromSourceName(sourceName,".");
-       
+
             // Find each instance of a specific event log entry in a
             // particular event log.
 
@@ -284,14 +284,14 @@ namespace EventLogSamples
                 {
                     count ++;
                     Console.WriteLine();
-                    Console.WriteLine("Entry ID    = {0}", 
+                    Console.WriteLine("Entry ID    = {0}",
                         entry.InstanceId.ToString());
-                    Console.WriteLine("Reported at {0}", 
+                    Console.WriteLine("Reported at {0}",
                         entry.TimeWritten.ToString());
                     Console.WriteLine("Message text:");
                     Console.WriteLine("\t{0}", entry.Message);
                 }
-            }    
+            }
             Console.WriteLine();
             Console.WriteLine("Found {0} events with ID {1} in event log {2}.",
                 count.ToString(), ServerConnectionDownMsgId.ToString(), myLogName);

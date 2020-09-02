@@ -20,7 +20,7 @@ namespace MyLoggers
 		{
 			// The name of the log file should be passed as the first item in the
 			// "parameters" specification in the /logger switch.  It is required
-			// to pass a log file to this logger. Other loggers may have zero or more than 
+			// to pass a log file to this logger. Other loggers may have zero or more than
 			// one parameters.
 			if (null == Parameters)
 			{
@@ -155,7 +155,7 @@ namespace MyLoggers
 		}
 		
 		/// <summary>
-		/// Shutdown() is guaranteed to be called by MSBuild at the end of the build, after all 
+		/// Shutdown() is guaranteed to be called by MSBuild at the end of the build, after all
 		/// events have been raised.
 		/// </summary>
 		public override void Shutdown()

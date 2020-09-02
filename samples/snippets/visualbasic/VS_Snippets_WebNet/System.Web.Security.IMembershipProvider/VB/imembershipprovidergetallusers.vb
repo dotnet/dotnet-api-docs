@@ -1331,7 +1331,7 @@ End Function
           encodedPassword = _
             Convert.ToBase64String(EncryptPassword(Encoding.Unicode.GetBytes(password)))
         Case MembershipPasswordFormat.Hashed
-          Dim hash As HMACSHA1 = New HMACSHA1()
+          Dim hash As HMACSHA256 = New HMACSHA256()
           hash.Key = HexToByte(machineKey.ValidationKey)
           encodedPassword = _
             Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(password)))

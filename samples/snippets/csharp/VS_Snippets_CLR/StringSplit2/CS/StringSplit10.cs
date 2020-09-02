@@ -2,7 +2,7 @@
 
 public class Example
 {
-   public static void Main() 
+   public static void Main()
    {
       //<snippet10>
       string delimStr = " ,.:";
@@ -11,11 +11,11 @@ public class Example
       string [] split = null;
 
       Console.WriteLine("The delimiters are -{0}-", delimStr);
-      for (int x = 1; x <= 5; x++) 
+      for (int x = 1; x <= 5; x++)
       {
          split = words.Split(delimiter, x);
          Console.WriteLine("\ncount = {0,2} ..............", x);
-         foreach (var s in split) 
+         foreach (var s in split)
          {
              Console.WriteLine("-{0}-", s);
          }

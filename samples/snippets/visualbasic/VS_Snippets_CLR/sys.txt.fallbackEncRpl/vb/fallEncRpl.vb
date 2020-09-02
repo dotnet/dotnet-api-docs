@@ -32,8 +32,6 @@ Class Sample
         Dim encodedBytes(numberOfEncodedBytes - 1) As Byte
         
         ' --------------------------------------------------------------------------
-        Console.Clear()
-        
         ' Display the name of the encoding.
         Console.WriteLine("The name of the encoding is ""{0}""." & vbCrLf, ae.WebName)
         

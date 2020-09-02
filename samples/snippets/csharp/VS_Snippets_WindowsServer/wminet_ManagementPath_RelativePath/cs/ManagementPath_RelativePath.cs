@@ -2,13 +2,13 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class path
-        ManagementPath p = 
+        ManagementPath p =
             new ManagementPath(
             "\\\\ComputerName\\root" +
             "\\cimv2:Win32_LogicalDisk.DeviceID=\"C:\"");
@@ -29,7 +29,7 @@ public class Sample
             p.NamespacePath);
         // Should be "ComputerName\cimv2"
 
-        Console.WriteLine("Server: " + 
+        Console.WriteLine("Server: " +
             p.Server);
         // Should be "ComputerName"
 

@@ -1,10 +1,10 @@
 ﻿/*
-** This program is used as the server for 
-** the programs demonstrating the use of 
-** cookies. If the initial request from the 
+** This program is used as the server for
+** the programs demonstrating the use of
+** cookies. If the initial request from the
 ** client has cookies, the server uses these
 ** cookies to generate a page structured with
-** the information provided. Otherwise the 
+** the information provided. Otherwise the
 ** server sends a page to the client requesting
 ** some information, this information is used
 ** to structure the subsequent page that is sent
@@ -85,9 +85,9 @@ public class CookiesPage : Page {
 				myHttpCookie.Expires = DateTime.Now.AddHours(-12);
 				myHttpCookie.Secure = false;
 				Response.Cookies.Add(myHttpCookie);
-				Response.Write(Request.Form["UserName"] + 
-							   " , was born on " + 
-							   Request.Form["DateOfBirth"] + 
+				Response.Write(Request.Form["UserName"] +
+							   " , was born on " +
+							   Request.Form["DateOfBirth"] +
 							   " at " +
 							   Request.Form["PlaceOfBirth"]);
 			}
@@ -100,10 +100,10 @@ public class CookiesPage : Page {
 		}
 		// Compose a page with the information in the cookies sent over.
 		else {
-			Response.Write(Request.Cookies["UserName"].Value + 
-				           " , was born on " + 
-						   Request.Cookies["DateOfBirth"].Value + 
-						   " at " + 
+			Response.Write(Request.Cookies["UserName"].Value +
+				           " , was born on " +
+						   Request.Cookies["DateOfBirth"].Value +
+						   " at " +
 						   Request.Cookies["PlaceOfBirth"].Value);
 		}
 	}

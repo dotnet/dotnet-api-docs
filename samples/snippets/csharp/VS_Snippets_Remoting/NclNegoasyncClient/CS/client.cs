@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Examples.NegotiateStreamExample
 {
-    public class ASynchronousAuthenticatingTcpClient 
-    {   
+    public class ASynchronousAuthenticatingTcpClient
+    {
         static TcpClient client = null;
 
-        public static void Main(String[] args)  
+        public static void Main(String[] args)
         {
     //<snippet2>
     //<snippet1>
@@ -19,22 +19,22 @@ namespace Examples.NegotiateStreamExample
             // For this example, use the local machine.
             IPHostEntry ipHostInfo = Dns.GetHostEntry("localhost");
             IPAddress ipAddress = ipHostInfo.AddressList[0];
-            // Client and server use port 11000. 
+            // Client and server use port 11000.
             IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
             // Create a TCP/IP socket.
             client = new TcpClient();
             // Connect the socket to the remote endpoint.
             client.Connect(remoteEP);
             Console.WriteLine("Client connected to {0}.", remoteEP.ToString());
-            // Ensure the client does not close when there is 
+            // Ensure the client does not close when there is
             // still data to be sent to the server.
             client.LingerState = new LingerOption(true, 0);
     //<snippet3>
             // Request authentication.
             NetworkStream clientStream = client.GetStream();
             NegotiateStream authStream = new NegotiateStream(clientStream, false);
-    //</snippet1>        
-            // Pass the NegotiateStream as the AsyncState object 
+    //</snippet1>
+            // Pass the NegotiateStream as the AsyncState object
             // so that it is available to the callback delegate.
             Task authenticateTask = authStream
                 .AuthenticateAsClientAsync()

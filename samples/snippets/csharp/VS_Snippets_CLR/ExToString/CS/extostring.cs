@@ -4,7 +4,7 @@ using System;
 public class TestClass
 {}
 
-public class Example 
+public class Example
 {
    public static void Main()
    {

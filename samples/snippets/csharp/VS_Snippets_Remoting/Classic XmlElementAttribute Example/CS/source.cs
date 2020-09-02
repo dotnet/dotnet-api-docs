@@ -10,12 +10,12 @@ public class Group
    By applying an XmlElementAttribute to an array,  you instruct
    the XmlSerializer to serialize the array as a series of XML
    elements, instead of a nested set of elements. */
-   
+
    [XmlElement(
    ElementName = "Members",
    Namespace = "http://www.cpandl.com")]
    public Employee[] Employees;
-      
+
    [XmlElement(DataType = "double",
    ElementName = "Building")]
    public double GroupID;
@@ -34,7 +34,7 @@ public class Group
    XmlElement(typeof(string),
    ElementName = "ObjectString")]
    public ArrayList ExtraInfo;
-}   
+}
 
 public class Employee
 {
@@ -67,7 +67,7 @@ public class Run
       Group group = new Group();
       group.GroupID = 10.089f;
       group.IsActive = false;
-      
+
       group.HexBytes = new byte[1]{Convert.ToByte(100)};
 
       Employee x = new Employee();
@@ -75,7 +75,7 @@ public class Run
 
       x.Name = "Jack";
       y.Name = "Jill";
-      
+
       group.Employees = new Employee[2]{x,y};
 
       Manager mgr = new Manager();
@@ -83,13 +83,13 @@ public class Run
       mgr.Level = 4;
       group.Manager = mgr;
 
-      /* Add a number and a string to the 
+      /* Add a number and a string to the
       ArrayList returned by the ExtraInfo property. */
       group.ExtraInfo = new ArrayList();
       group.ExtraInfo.Add(42);
       group.ExtraInfo.Add("Answer");
 
-      // Serialize the object, and close the TextWriter.      
+      // Serialize the object, and close the TextWriter.
       s.Serialize(writer, group);
       writer.Close();
    }
@@ -108,5 +108,5 @@ public class Run
       }
    }
 }
-   
+
 // </Snippet1>

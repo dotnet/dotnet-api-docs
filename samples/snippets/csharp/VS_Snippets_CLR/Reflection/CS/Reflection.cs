@@ -6,7 +6,7 @@ class Module1
 {
     public static void Main()
     {
-        // This variable holds the amount of indenting that 
+        // This variable holds the amount of indenting that
         // should be used when displaying each line of information.
         Int32 indent = 0;
         // <snippet2>
@@ -16,7 +16,7 @@ class Module1
         Display(indent+1, "Codebase={0}", a.CodeBase);
 
         // Display the set of assemblies our assemblies reference.
-      
+
         Display(indent, "Referenced assemblies:");
         foreach (AssemblyName an in a.GetReferencedAssemblies() )
         {
@@ -24,7 +24,7 @@ class Module1
         }
         // </snippet2>
         Display(indent, "");
-        
+
         // Display information about each assembly loading into this AppDomain.
         foreach (Assembly b in AppDomain.CurrentDomain.GetAssemblies())
         {
@@ -37,7 +37,7 @@ class Module1
             }
 
             // Display information about each type exported from this assembly.
-           
+
             indent += 1;
             foreach ( Type t in b.GetExportedTypes() )
             {
@@ -45,7 +45,7 @@ class Module1
                 Display(indent, "Type: {0}", t);
 
                 // For each type, show its members & their custom attributes.
-           
+
                 indent += 1;
                 foreach (MemberInfo mi in t.GetMembers() )
                 {
@@ -53,7 +53,7 @@ class Module1
                     DisplayAttributes(indent, mi);
 
                     // If the member is a method, display information about its parameters.
-                    
+
                     if (mi.MemberType==MemberTypes.Method)
                     {
                         foreach ( ParameterInfo pi in ((MethodInfo) mi).GetParameters() )
@@ -93,7 +93,7 @@ class Module1
     }
 
     // Display a formatted string indented by the specified amount.
-    public static void Display(Int32 indent, string format, params object[] param) 
+    public static void Display(Int32 indent, string format, params object[] param)
 
     {
         Console.Write(new string(' ', indent*2));

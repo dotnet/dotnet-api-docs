@@ -3,13 +3,13 @@
 using System;
 using System.Text;
 
-class Sample 
+class Sample
 {
 //                         index: 012345
     static string initialValue = "--[]--";
     static StringBuilder sb;
 
-    public static void Main() 
+    public static void Main()
     {
     string      xyz       = "xyz";
     char[]      abc       = {'a', 'b', 'c'};

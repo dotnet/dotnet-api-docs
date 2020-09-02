@@ -12,7 +12,7 @@ public class Example
 
         // Create name/value pairs.
 
-        // This overload supports QWord (long) values. 
+        // This overload supports QWord (long) values.
         rk.SetValue("QuadWordValue", 42, RegistryValueKind.QWord);
 
         // The following SetValue calls have the same effect as using the
@@ -46,7 +46,7 @@ public class Example
                     }
                     Console.WriteLine();
                     break;
-                
+
                 case RegistryValueKind.Binary :
                     byte[] bytes = (byte[]) rk.GetValue(s);
                     Console.Write("\r\n {0} ({1}) =", s, rvk);
@@ -57,7 +57,7 @@ public class Example
                     }
                     Console.WriteLine();
                     break;
-                
+
                 default :
                     Console.WriteLine("\r\n {0} ({1}) = {2}", s, rvk, rk.GetValue(s));
                     break;

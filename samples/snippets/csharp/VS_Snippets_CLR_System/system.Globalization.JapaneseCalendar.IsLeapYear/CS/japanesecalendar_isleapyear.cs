@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
 
-public class SamplesJapaneseCalendar  
+public class SamplesJapaneseCalendar
 {
-   public static void Main()  
+   public static void Main()
    {
       // Creates and initializes a JapaneseCalendar.
       JapaneseCalendar myCal = new JapaneseCalendar();

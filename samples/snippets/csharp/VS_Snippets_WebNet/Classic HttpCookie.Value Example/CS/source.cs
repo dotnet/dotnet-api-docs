@@ -10,7 +10,7 @@ public class Page1: Page
  {
 // <Snippet1>
 MyCookie.Value = "abc123";
-    
+
 // </Snippet1>
  }
 }

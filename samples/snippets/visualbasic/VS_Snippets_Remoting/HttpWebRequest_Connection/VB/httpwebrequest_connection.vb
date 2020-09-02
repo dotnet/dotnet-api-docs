@@ -1,9 +1,9 @@
 ﻿' System.Net.HttpWebRequest.KeepAlive System.Net.HttpWebRequest.Connection
 '  This program demonstrates 'Connection' and 'KeepAlive' properties of HttpWebRequest Class.
-'  Two new 'HttpWebRequest' objects are created .The 'KeepAlive' property of one of the 'HttpWebRequest' 
+'  Two new 'HttpWebRequest' objects are created . The 'KeepAlive' property of one of the 'HttpWebRequest' 
 '  objects is set to 'false' that in turn sets the value of Connection field of the HTTP request Headers to
-'  'Close'.The 'Connection' property of the other 'HttpWebRequest' object is assigned the value 'Close'.This
-'  throws an 'ArgumentException' which is caught.The HTTP request Headers are displayed to the console.
+'  'Close'. The 'Connection' property of the other 'HttpWebRequest' object is assigned the value 'Close'. This
+'  throws an 'ArgumentException' which is caught. The HTTP request Headers are displayed to the console.
 '  The contents of the HTML page of the requested URI are displayed to the console. 
 
 Imports System.IO

@@ -22,7 +22,7 @@ public class OrderedItem
         LineTotal = UnitPrice * Quantity;
     }
 }
- 
+
 public class Test
 {
     public static void Main()
@@ -33,19 +33,19 @@ public class Test
     }
 
     private void DeserializeObject(string filename)
-    {   
+    {
         Console.WriteLine("Reading with Stream");
         // Create an instance of the XmlSerializer.
-        XmlSerializer serializer = 
+        XmlSerializer serializer =
         new XmlSerializer(typeof(OrderedItem));
-          
+
         // Declare an object variable of the type to be deserialized.
         OrderedItem i;
 
         using (Stream reader = new FileStream(filename, FileMode.Open))
         {
             // Call the Deserialize method to restore the object's state.
-            i = (OrderedItem)serializer.Deserialize(reader);          
+            i = (OrderedItem)serializer.Deserialize(reader);
         }
 
         // Write out the properties of the object.

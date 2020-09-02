@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Xml.Serialization;
 
-// This is the class that will be serialized. 
+// This is the class that will be serialized.
 public class Group
 {
    // The GroupName value will be serialized--unless it's overridden.
@@ -40,7 +40,7 @@ public class Test
       attrs = new XmlAttributes();
       attrs.XmlIgnore = true;
       xOver.Add(typeof(Group), "GroupName", attrs);
-      
+
       XmlSerializer xSer = new XmlSerializer(typeof(Group), xOver);
       return xSer;
    }
@@ -54,7 +54,7 @@ public class Test
       Group myGroup = new Group();
       myGroup.GroupName = ".NET";
       myGroup.Comment = "My Comment...";
-   
+
       // Writing the file requires a TextWriter.
       TextWriter writer = new StreamWriter(filename);
 

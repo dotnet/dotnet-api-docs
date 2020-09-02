@@ -15,7 +15,7 @@ namespace Examples.NetworkInformation.Permissions
             //<Snippet5>
             //<Snippet2>
             //<Snippet1>
-            System.Net.NetworkInformation.NetworkInformationPermission unrestricted = 
+            System.Net.NetworkInformation.NetworkInformationPermission unrestricted =
                 new System.Net.NetworkInformation.NetworkInformationPermission(
                     System.Security.Permissions.PermissionState.Unrestricted);
             //</Snippet1>
@@ -25,7 +25,7 @@ namespace Examples.NetworkInformation.Permissions
 
             //<Snippet4>
             //<Snippet3>
-            System.Net.NetworkInformation.NetworkInformationPermission read = 
+            System.Net.NetworkInformation.NetworkInformationPermission read =
                 new System.Net.NetworkInformation.NetworkInformationPermission(
                     System.Net.NetworkInformation.NetworkInformationAccess.Read);
             //</Snippet3>
@@ -41,7 +41,7 @@ namespace Examples.NetworkInformation.Permissions
             //</Snippet6>
 
             //<Snippet7>
-            System.Net.NetworkInformation.NetworkInformationPermission permission = 
+            System.Net.NetworkInformation.NetworkInformationPermission permission =
                 new System.Net.NetworkInformation.NetworkInformationPermission(
                     System.Security.Permissions.PermissionState.None);
             permission.AddPermission(

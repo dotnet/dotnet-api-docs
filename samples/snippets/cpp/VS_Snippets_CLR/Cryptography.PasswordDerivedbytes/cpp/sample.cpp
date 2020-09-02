@@ -74,6 +74,8 @@ int main(array<String^>^ args)
        // <Snippet2>
 	   // Create the key and set it to the Key property
 	   // of the TripleDESCryptoServiceProvider object.
+       // This example uses the SHA1 algorithm.
+       // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
         cryptoDESProvider->Key = passwordDeriveBytes->CryptDeriveKey
             ("TripleDES", "SHA1", 192, cryptoDESProvider->IV);
 		//</Snippet2>

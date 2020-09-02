@@ -67,7 +67,7 @@ public class ServerSink : BaseChannelSinkWithProperties, IServerChannelSink
         Console.WriteLine("---------------------------------");
 
         return(status);
-    } 
+    }
 // </snippet64>
 
 // <snippet65>

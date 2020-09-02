@@ -22,7 +22,7 @@ class SafeHandlesExample
     }
 }
 
-class UnmanagedFileLoader 
+class UnmanagedFileLoader
 {
 
     public const short FILE_ATTRIBUTE_NORMAL = 0x80;
@@ -59,7 +59,7 @@ class UnmanagedFileLoader
         handleValue = CreateFile(Path, GENERIC_WRITE, 0, IntPtr.Zero, OPEN_EXISTING, 0, IntPtr.Zero);
 
         // If the handle is invalid,
-        // get the last Win32 error 
+        // get the last Win32 error
         // and throw a Win32Exception.
         if (handleValue.IsInvalid)
         {

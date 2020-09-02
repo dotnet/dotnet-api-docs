@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 
-public class Sample 
+public class Sample
 {
   public static void Main(){
 //<snippet1>
@@ -22,8 +22,8 @@ public class Sample
          // Do additional processing.
      }
 
-//</snippet1>  
+//</snippet1>
     //Close the reader.
-    reader.Close();     
+    reader.Close();
   }
 } // End class

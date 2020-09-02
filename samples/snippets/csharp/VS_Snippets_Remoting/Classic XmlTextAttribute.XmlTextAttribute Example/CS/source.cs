@@ -15,17 +15,17 @@ public class Test {
         Test t = new Test();
         t.SerializerOrder("TextOverride.xml");
     }
-    /* Create an instance of the XmlSerializer class that overrides 
+    /* Create an instance of the XmlSerializer class that overrides
        the default way it serializes an object. */
     public XmlSerializer CreateOverrider() {
-        /* Create instances of the XmlAttributes and 
+        /* Create instances of the XmlAttributes and
         XmlAttributeOverrides classes. */
-   
+
         XmlAttributes attrs = new XmlAttributes();
 
         XmlAttributeOverrides xOver = new XmlAttributeOverrides();
-              
-        /* Create an XmlTextAttribute to override the default 
+
+        /* Create an XmlTextAttribute to override the default
         serialization process. */
         XmlTextAttribute xText = new XmlTextAttribute();
         attrs.XmlText = xText;
@@ -45,10 +45,10 @@ public class Test {
         // Create the object and serialize it.
         Group myGroup = new Group();
         myGroup.Comment = "This is a great product.";
-      
+
         TextWriter writer = new StreamWriter(filename);
         xSer.Serialize(writer, myGroup);
     }
 }
-   
+
 // </Snippet1>

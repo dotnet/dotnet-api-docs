@@ -2,25 +2,25 @@
 // Example for the hyperbolic Math.Tanh( double ) method.
 using System;
 
-class DemoTanh 
+class DemoTanh
 {
-    public static void Main() 
+    public static void Main()
     {
-        Console.WriteLine( 
+        Console.WriteLine(
             "This example of hyperbolic Math.Tanh( double )\n" +
             "generates the following output." );
-        Console.WriteLine( 
+        Console.WriteLine(
             "\nEvaluate these hyperbolic identities " +
             "with selected values for X:" );
         Console.WriteLine( "   tanh(X) == sinh(X) / cosh(X)" );
-        Console.WriteLine( 
+        Console.WriteLine(
             "   tanh(2 * X) == 2 * tanh(X) / (1 + tanh^2(X))" );
 
         UseTanh(0.1);
         UseTanh(1.2);
         UseTanh(4.9);
 
-        Console.WriteLine( 
+        Console.WriteLine(
             "\nEvaluate [tanh(X + Y) == (tanh(X) + tanh(Y)) " +
             "/ (1 + tanh(X) * tanh(Y))]" +
             "\nwith selected values for X and Y:" );
@@ -35,20 +35,20 @@ class DemoTanh
         double tanhArg = Math.Tanh(arg);
 
         // Evaluate tanh(X) == sinh(X) / cosh(X).
-        Console.WriteLine( 
+        Console.WriteLine(
             "\n                       Math.Tanh({0}) == {1:E16}\n" +
             "      Math.Sinh({0}) / Math.Cosh({0}) == {2:E16}",
             arg, tanhArg, (Math.Sinh(arg) / Math.Cosh(arg)) );
 
         // Evaluate tanh(2 * X) == 2 * tanh(X) / (1 + tanh^2(X)).
-        Console.WriteLine( 
-            "                   2 * Math.Tanh({0}) /", 
+        Console.WriteLine(
+            "                   2 * Math.Tanh({0}) /",
             arg, 2.0 * tanhArg );
-        Console.WriteLine( 
-            "             (1 + (Math.Tanh({0}))^2) == {1:E16}", 
+        Console.WriteLine(
+            "             (1 + (Math.Tanh({0}))^2) == {1:E16}",
             arg, 2.0 * tanhArg / (1.0 + tanhArg * tanhArg ) );
-        Console.WriteLine( 
-            "                       Math.Tanh({0}) == {1:E16}", 
+        Console.WriteLine(
+            "                       Math.Tanh({0}) == {1:E16}",
             2.0 * arg, Math.Tanh(2.0 * arg) );
     }
 
@@ -56,12 +56,12 @@ class DemoTanh
     static void UseTwoArgs(double argX, double argY)
     {
         // Evaluate tanh(X + Y) == (tanh(X) + tanh(Y)) / (1 + tanh(X) * tanh(Y)).
-        Console.WriteLine( 
-            "\n    (Math.Tanh({0}) + Math.Tanh({1})) /\n" + 
-            "(1 + Math.Tanh({0}) * Math.Tanh({1})) == {2:E16}", 
+        Console.WriteLine(
+            "\n    (Math.Tanh({0}) + Math.Tanh({1})) /\n" +
+            "(1 + Math.Tanh({0}) * Math.Tanh({1})) == {2:E16}",
             argX, argY, (Math.Tanh(argX) + Math.Tanh(argY)) /
             (1.0 + Math.Tanh(argX) * Math.Tanh(argY)) );
-        Console.WriteLine( 
+        Console.WriteLine(
             "                       Math.Tanh({0}) == {1:E16}",
             argX + argY, Math.Tanh(argX + argY));
     }

@@ -1,8 +1,8 @@
 ﻿/**
   * File name:socket.cs.
-  * This example creates a socket connection to the server specified by the user, 
-  * using port 80. Once the connection has been established it asks the server for 
-  * the content of its home page. If no server name is passed as argument to this 
+  * This example creates a socket connection to the server specified by the user,
+  * using port 80. Once the connection has been established it asks the server for
+  * the content of its home page. If no server name is passed as argument to this
   * program, it sends the request to the current machine.
   * */
  //<Snippet1>
@@ -18,7 +18,7 @@ public class GetSocket
     {
         Socket s = null;
         IPHostEntry hostEntry = null;
-        
+
         // Get host related information.
         hostEntry = Dns.GetHostEntry(server);
 
@@ -28,7 +28,7 @@ public class GetSocket
         foreach(IPAddress address in hostEntry.AddressList)
         {
             IPEndPoint ipe = new IPEndPoint(address, port);
-            Socket tempSocket = 
+            Socket tempSocket =
                 new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             tempSocket.Connect(ipe);
@@ -47,23 +47,23 @@ public class GetSocket
     }
 
     // This method requests the home page content for the specified server.
-    private static string SocketSendReceive(string server, int port) 
+    private static string SocketSendReceive(string server, int port)
     {
-        string request = "GET / HTTP/1.1\r\nHost: " + server + 
+        string request = "GET / HTTP/1.1\r\nHost: " + server +
             "\r\nConnection: Close\r\n\r\n";
         Byte[] bytesSent = Encoding.ASCII.GetBytes(request);
         Byte[] bytesReceived = new Byte[256];
         string page = "";
-        
+
         // Create a socket connection with the specified server and port.
         using(Socket s = ConnectSocket(server, port)) {
 
             if (s == null)
                 return ("Connection failed");
-        
+
             // Send request to the server.
-            s.Send(bytesSent, bytesSent.Length, 0);  
-            
+            s.Send(bytesSent, bytesSent.Length, 0);
+
             // Receive the server home page content.
             int bytes = 0;
             page = "Default HTML page on " + server + ":\r\n";
@@ -75,23 +75,23 @@ public class GetSocket
             }
             while (bytes > 0);
         }
-        
+
         return page;
     }
-    
-    public static void Main(string[] args) 
+
+    public static void Main(string[] args)
     {
         string host;
         int port = 80;
 
         if (args.Length == 0)
-            // If no server name is passed as argument to this program, 
+            // If no server name is passed as argument to this program,
             // use the current host name as the default.
             host = Dns.GetHostName();
         else
             host = args[0];
 
-        string result = SocketSendReceive(host, port); 
+        string result = SocketSendReceive(host, port);
         Console.WriteLine(result);
     }
 }

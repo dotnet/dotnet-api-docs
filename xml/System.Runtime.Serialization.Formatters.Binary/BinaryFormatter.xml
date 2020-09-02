@@ -29,20 +29,24 @@
     <AssemblyVersion>4.0.4.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime.Serialization.Formatters" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces>
     <Interface>
-      <InterfaceName>System.Runtime.Remoting.Messaging.IRemotingFormatter</InterfaceName>
-    </Interface>
-    <Interface>
       <InterfaceName>System.Runtime.Serialization.IFormatter</InterfaceName>
+    </Interface>
+    <Interface FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+      <InterfaceName>System.Runtime.Remoting.Messaging.IRemotingFormatter</InterfaceName>
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-      <AttributeName>System.Runtime.InteropServices.ComVisible(true)</AttributeName>
+    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+      <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(true)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(true)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -50,7 +54,10 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
+## Remarks
+
+[!INCLUDE[binaryformatter](~/includes/binaryformatter.md)]
+
  The <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> and <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter> classes implement the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> interface to support remote procedure calls (RPCs), and the <xref:System.Runtime.Serialization.IFormatter> interface (inherited by the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter>) to support serialization of a graph of objects. The <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> class also supports RPCs with <xref:System.Runtime.Serialization.Formatters.ISoapMessage> objects, without using the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> functionality.  
   
  During RPCs, the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> interface allows the specification of two separate object graphs: the graph of objects to serialize, and an additional graph that contains an array of header objects that convey information about the remote function call (for example, transaction ID or a method signature).  
@@ -62,7 +69,7 @@
  The serialization procedure for a method response is identical to that of a method call, except the first object of the object graph must support the <xref:System.Runtime.Remoting.Messaging.IMethodReturnMessage> interface. To deserialize a method response, use the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.DeserializeMethodResponse%2A> method. To save time, details about the caller object are not sent to the remote object during the method call. These details are instead obtained from the original method call, which is passed to the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.DeserializeMethodResponse%2A> method in the <xref:System.Runtime.Remoting.Messaging.IMethodCallMessage> parameter. The first object in the graph returned by the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.DeserializeMethodResponse%2A> method supports the <xref:System.Runtime.Remoting.Messaging.IMethodReturnMessage> interface.  
   
 > [!IMPORTANT]
->  Using binary serialization to deserialize untrusted data can lead to security risks. For more information, see [Data Validation](https://www.owasp.org/index.php/Data_Validation).  
+>  Using binary serialization to deserialize untrusted data can lead to security risks. For more information, see [Data Validation](https://www.owasp.org/index.php/Data_Validation) and the [BinaryFormatter security guide](/dotnet/standard/serialization/binaryformatter-security-guide).
   
 ## Unpaired Surrogates  
  Any unpaired surrogate characters are lost in binary serialization. For example, the following string contains a high surrogate Unicode character `(\ud800`) in between the two `Test` words:  
@@ -286,11 +293,15 @@
         <ReturnType>System.Runtime.Serialization.SerializationBinder</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets an object of type <see cref="T:System.Runtime.Serialization.SerializationBinder" /> that controls the binding of a serialized object to a type.</summary>
+        <summary>(Insecure) Gets or sets an object of type <see cref="T:System.Runtime.Serialization.SerializationBinder" /> that controls the binding of a serialized object to a type.</summary>
         <value>The serialization binder to use with this formatter.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
-  
+
+## BinaryFormatter is insecure
+
+[!INCLUDE[binaryformatter](~/includes/binaryformatter.md)]
+
 ## Examples  
  [!code-cpp[SerializationBinder Example#1](~/samples/snippets/cpp/VS_Snippets_Remoting/SerializationBinder Example/CPP/serializationbinder.cpp#1)]
  [!code-csharp[SerializationBinder Example#1](~/samples/snippets/csharp/VS_Snippets_Remoting/SerializationBinder Example/CS/serializationbinder.cs#1)]
@@ -399,7 +410,8 @@
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Security.SecuritySafeCritical</AttributeName>
+          <AttributeName Language="C#">[System.Security.SecuritySafeCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecuritySafeCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -432,8 +444,15 @@
   
  -or-  
   
- The target type is a <see cref="T:System.Decimal" />, but the value is out of range of the <see cref="T:System.Decimal" /> type.</exception>
+The input stream does not represent a well-formed <see cref="T:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter" /> serialized payload.
+          
+-or-
+          
+An error occurred while deserializing an object from the input stream.
+          
+The <see langword="InnerException" /> property may contain more information about the root cause.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
+        <exception cref="T:System.NotSupportedException">ASP.NET 5.0 and later: Always thrown unless <see cref="T:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter" /> functionality is re-enabled in the project file. For more information, see <see href="https://aka.ms/binaryformatter">Resolving BinaryFormatter obsoletion and disablement errors</see>.</exception>
       </Docs>
     </Member>
     <Member MemberName="Deserialize">
@@ -461,8 +480,9 @@
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-          <AttributeName>System.Security.SecuritySafeCritical</AttributeName>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <AttributeName Language="C#">[System.Security.SecuritySafeCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecuritySafeCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -520,8 +540,9 @@
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-          <AttributeName>System.Security.SecuritySafeCritical</AttributeName>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <AttributeName Language="C#">[System.Security.SecuritySafeCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecuritySafeCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -582,7 +603,8 @@
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-1.1">
-          <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -644,7 +666,8 @@
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Security.SecuritySafeCritical</AttributeName>
+          <AttributeName Language="C#">[System.Security.SecuritySafeCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecuritySafeCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -675,6 +698,7 @@
  The <paramref name="graph" /> is null.</exception>
         <exception cref="T:System.Runtime.Serialization.SerializationException">An error has occurred during serialization, such as if an object in the <paramref name="graph" /> parameter is not marked as serializable.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
+        <exception cref="T:System.NotSupportedException">ASP.NET 5.0 and later: Always thrown unless <see cref="T:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter" /> functionality is re-enabled in the project file. For more information, see <see href="https://aka.ms/binaryformatter">Resolving BinaryFormatter obsoletion and disablement errors</see>.</exception>
       </Docs>
     </Member>
     <Member MemberName="Serialize">
@@ -702,8 +726,9 @@
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-          <AttributeName>System.Security.SecuritySafeCritical</AttributeName>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <AttributeName Language="C#">[System.Security.SecuritySafeCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecuritySafeCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -840,11 +865,13 @@
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-          <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+        <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(false)&gt;]</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-          <AttributeName>System.Security.SecurityCritical</AttributeName>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -900,11 +927,13 @@
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-          <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+        <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(false)&gt;]</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-          <AttributeName>System.Security.SecurityCritical</AttributeName>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>

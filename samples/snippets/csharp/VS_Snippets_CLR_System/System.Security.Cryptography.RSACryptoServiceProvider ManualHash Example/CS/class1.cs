@@ -1,4 +1,6 @@
 ﻿//<Snippet1>
+// This example uses the SHA1 algorithm.
+// Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
 using System;
 using System.Text;
 using System.Security.Cryptography;

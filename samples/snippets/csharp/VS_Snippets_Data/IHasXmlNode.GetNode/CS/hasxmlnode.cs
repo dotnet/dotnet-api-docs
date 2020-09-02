@@ -10,7 +10,7 @@ public class Sample
   {
      XmlDocument doc = new XmlDocument();
      doc.Load("books.xml");
-                         
+
      // Create an XPathNavigator and select all books by Plato.
      XPathNavigator nav = doc.CreateNavigator();
      XPathNodeIterator ni = nav.Select("descendant::book[author/name='Plato']");

@@ -22,11 +22,11 @@ using System.IO;
 
             Console.WriteLine ("Content length is {0}", response.ContentLength);
             Console.WriteLine ("Content type is {0}", response.ContentType);
-             
+
             // Get the stream associated with the response.
             Stream receiveStream = response.GetResponseStream ();
 
-            // Pipes the stream to a higher level stream reader with the required encoding format. 
+            // Pipes the stream to a higher level stream reader with the required encoding format.
             StreamReader readStream = new StreamReader (receiveStream, Encoding.UTF8);
 
             Console.WriteLine ("Response stream received.");
@@ -37,7 +37,7 @@ using System.IO;
     }
 
 /*
-The output from this example will vary depending on the value passed into Main 
+The output from this example will vary depending on the value passed into Main
 but will be similar to the following:
 
 Content length is 1542

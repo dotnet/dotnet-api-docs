@@ -3,17 +3,17 @@ using System.Net;
 using System.IO;
 using System.Text;
 
-class HttpWebResponseSnippet 
+class HttpWebResponseSnippet
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
 	{
-		if (args.Length < 1) 
+		if (args.Length < 1)
 		{	
 			Console.WriteLine("\nPlease enter the url as command line parameter:");
 			Console.WriteLine("Example:");
 			Console.WriteLine("HttpWebResponse_ContentLength_ContentType http://www.microsoft.com/net/");
-		} 
-		else 
+		}
+		else
 		{
 			GetPage(args[0]);
 		}
@@ -22,13 +22,13 @@ class HttpWebResponseSnippet
 		return;
     	}
 	
-    public static void GetPage(String url) 
+    public static void GetPage(String url)
 	{
 // <Snippet1>
-	try 
+	try
  		  {	
-			HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url); 
-			HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse(); 
+			HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+			HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 
 			Console.WriteLine("The encoding method used is: " + myHttpWebResponse.ContentEncoding);
 			Console.WriteLine("The character set used is :" + myHttpWebResponse.CharacterSet);
@@ -38,7 +38,7 @@ class HttpWebResponseSnippet
 			// Retrieve 'text' if the content type is of 'text/html.
 			String maintype = contenttype.Substring(0,contenttype.IndexOf(seperator));
 			// Display only 'text' type.
-			if (String.Compare(maintype,"text") == 0) 
+			if (String.Compare(maintype,"text") == 0)
 				{
 				Console.WriteLine("\n Content type is 'text'.");
 
@@ -71,10 +71,10 @@ class HttpWebResponseSnippet
   				myHttpWebResponse.Close();
 				
 // </Snippet2>
-        	   } 
-		catch(WebException e) 
+        	   }
+		catch(WebException e)
 		{
-		    Console.WriteLine("\r\nWebException Raised. The following error occurred : {0}",e.Status); 
+		    Console.WriteLine("\r\nWebException Raised. The following error occurred : {0}",e.Status);
         }
 		catch(Exception e)
 		{

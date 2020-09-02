@@ -17,13 +17,13 @@ public class X509
 
         // Get the value.
         string resultsTrue = cert.ToString(true);
-       
+
         // Display the value to the console.
         Console.WriteLine(resultsTrue);
 
         // Get the value.
         string resultsFalse = cert.ToString(false);
-       
+
         // Display the value to the console.
         Console.WriteLine(resultsFalse);
     }

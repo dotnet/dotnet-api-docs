@@ -7,14 +7,14 @@ using System.Xml.Schema;
 public class Sample{
 
   public static void Main(){
-  
+
   XmlTextReader tr = new XmlTextReader("booksSchema.xml");
   XmlValidatingReader vr = new XmlValidatingReader(tr);
- 
+
   vr.Schemas.Add(null, "books.xsd");
   vr.ValidationType = ValidationType.Schema;
   vr.ValidationEventHandler += new ValidationEventHandler (ValidationCallBack);
- 
+
   while(vr.Read()){
     if(vr.NodeType == XmlNodeType.Element){
       if(vr.SchemaType is XmlSchemaComplexType){

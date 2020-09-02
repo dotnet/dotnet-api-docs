@@ -2,7 +2,7 @@
 
 '  This program demonstrates 'TransferEncoding' and 'SendChunked' 
 '  properties of 'HttpWebRequestClass'.
-'  A new 'HttpWebRequest' object is created.The 'SendChunked' property 
+'  A new 'HttpWebRequest' object is created. The 'SendChunked' property 
 '  value is set to 'true' and 'TransferEncoding' property is set to "gzip".
 '  If 'TransferEncoding' property is set with 'SendChunked' 
 '  property set to 'false' then 'InvalidOperationException' is raised.

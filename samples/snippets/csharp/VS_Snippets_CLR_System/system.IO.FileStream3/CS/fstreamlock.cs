@@ -8,17 +8,17 @@ class FStreamLock
     static void Main()
     {
         UnicodeEncoding uniEncoding = new UnicodeEncoding();
-        string lastRecordText = 
+        string lastRecordText =
             "The last processed record number was: ";
         int textLength = uniEncoding.GetByteCount(lastRecordText);
         int recordNumber = 13;
-        int byteCount = 
+        int byteCount =
             uniEncoding.GetByteCount(recordNumber.ToString());
         string tempString;
 
         // <Snippet2>
         using(FileStream fileStream = new FileStream(
-            "Test#@@#.dat", FileMode.OpenOrCreate, 
+            "Test#@@#.dat", FileMode.OpenOrCreate,
             FileAccess.ReadWrite, FileShare.ReadWrite))
         // </Snippet2>
         {
@@ -26,9 +26,9 @@ class FStreamLock
             // Write the original file data.
             if(fileStream.Length == 0)
             {
-                tempString = 
+                tempString =
                     lastRecordText + recordNumber.ToString();
-                fileStream.Write(uniEncoding.GetBytes(tempString), 
+                fileStream.Write(uniEncoding.GetBytes(tempString),
                     0, uniEncoding.GetByteCount(tempString));
             }
             // </Snippet3>
@@ -39,7 +39,7 @@ class FStreamLock
             while(consoleInput != 'X')
             {
                 Console.Write(
-                    "\nEnter 'R' to read, 'W' to write, 'L' to " + 
+                    "\nEnter 'R' to read, 'W' to write, 'L' to " +
                     "lock, 'U' to unlock, anything else to exit: ");
 
                 if((tempString = Console.ReadLine()).Length == 0)
@@ -49,7 +49,7 @@ class FStreamLock
                 consoleInput = char.ToUpper(tempString[0]);
                 switch(consoleInput)
                 {
-                    // Read data from the file and 
+                    // Read data from the file and
                     // write it to the console.
                     case 'R':
                         try
@@ -66,14 +66,14 @@ class FStreamLock
                                 tempString.IndexOf(':') + 2));
                         }
 
-                        // Catch the IOException generated if the 
+                        // Catch the IOException generated if the
                         // specified part of the file is locked.
                         catch(IOException e)
                         {
                             Console.WriteLine("{0}: The read " +
                                 "operation could not be performed " +
                                 "because the specified part of the " +
-                                "file is locked.", 
+                                "file is locked.",
                                 e.GetType().Name);
                         }
                         break;
@@ -83,7 +83,7 @@ class FStreamLock
                     case 'W':
                         try
                         {
-                            fileStream.Seek(textLength, 
+                            fileStream.Seek(textLength,
                                 SeekOrigin.Begin);
                             fileStream.Read(
                                 readText, textLength - 1, byteCount);
@@ -94,7 +94,7 @@ class FStreamLock
                             fileStream.Seek(
                                 textLength, SeekOrigin.Begin);
                             fileStream.Write(uniEncoding.GetBytes(
-                                recordNumber.ToString()), 
+                                recordNumber.ToString()),
                                 0, byteCount);
                             fileStream.Flush();
                             Console.WriteLine(
@@ -103,14 +103,14 @@ class FStreamLock
                     // </Snippet4>
 
                         // <Snippet6>
-                        // Catch the IOException generated if the 
+                        // Catch the IOException generated if the
                         // specified part of the file is locked.
                         catch(IOException e)
                         {
                             Console.WriteLine(
                                 "{0}: The write operation could not " +
                                 "be performed because the specified " +
-                                "part of the file is locked.", 
+                                "part of the file is locked.",
                                 e.GetType().Name);
                         }
                         // </Snippet6>
@@ -146,7 +146,7 @@ class FStreamLock
                         {
                             Console.WriteLine(
                                 "{0}: The specified part of file is " +
-                                "not locked by the current process.", 
+                                "not locked by the current process.",
                                 e.GetType().Name);
                         }
                         break;

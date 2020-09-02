@@ -11,7 +11,7 @@
    'SolicitResponse', 'RequestResponse'. The input to the program is a
    WSDL file 'MathService_input_cs.wsdl'  It creates a new file
    'MathService_new_cs.wsdl' by adding the operation messages
-   'OperationInput' and 'OperationOutput' are added to the 
+   'OperationInput' and 'OperationOutput' are added to the
    'OperationInput' and 'OperationOutput' in such way that all members of
    the 'OperationFlow' enumeration are generated.
 */
@@ -28,20 +28,20 @@ class MyOperationFlowSample
    {
       try
       {
-         ServiceDescription myDescription = 
+         ServiceDescription myDescription =
             ServiceDescription.Read("MathService_Input_cs.wsdl");
-         PortTypeCollection  myPortTypeCollection  = 
+         PortTypeCollection  myPortTypeCollection  =
             myDescription.PortTypes;
 
          // Get the OperationCollection for SOAP protocol.
-         OperationCollection myOperationCollection = 
+         OperationCollection myOperationCollection =
             myPortTypeCollection[0].Operations;
 
          // Get the OperationMessageCollection for the Add operation.
-         OperationMessageCollection myOperationMessageCollection = 
+         OperationMessageCollection myOperationMessageCollection =
             myOperationCollection[0].Messages;
 
-         // Indicate that the endpoint or service receives no 
+         // Indicate that the endpoint or service receives no
          // transmissions (None).
          Console.WriteLine("myOperationMessageCollection does not " +
             "contain any operation messages.");
@@ -49,9 +49,9 @@ class MyOperationFlowSample
          Console.WriteLine();
 
          // Indicate that the endpoint or service receives a message (OneWay).
-         OperationMessage myInputOperationMessage = 
+         OperationMessage myInputOperationMessage =
             (OperationMessage) new OperationInput();
-         XmlQualifiedName myXmlQualifiedName = 
+         XmlQualifiedName myXmlQualifiedName =
             new XmlQualifiedName("AddSoapIn", myDescription.TargetNamespace);
          myInputOperationMessage.Message = myXmlQualifiedName;
          myOperationMessageCollection.Add(myInputOperationMessage);
@@ -63,7 +63,7 @@ class MyOperationFlowSample
          myOperationMessageCollection.Remove(myInputOperationMessage);
 
          // Indicate that an endpoint or service sends a message (Notification).
-         OperationMessage myOutputOperationMessage = 
+         OperationMessage myOutputOperationMessage =
             (OperationMessage) new OperationOutput();
          XmlQualifiedName myXmlQualifiedName1 = new XmlQualifiedName
             ("AddSoapOut", myDescription.TargetNamespace);

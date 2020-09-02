@@ -4,7 +4,7 @@
 The following example demonstrates the 'DefineResource(String,String)' method
 of 'ModuleBuilder' class.
 A dynamic assembly with a module in it is created in 'CodeGenerator' class.
-Then a managed resource is defined in the module using the 'DefineResource' 
+Then a managed resource is defined in the module using the 'DefineResource'
 method.
 */
 // <Snippet1>
@@ -24,15 +24,15 @@ using System.Resources;
          myAssemblyName.Name = "TempAssembly";
 
          // Define 'TempAssembly' assembly in the current application domain.
-         AssemblyBuilder myAssemblyBuilder = 
+         AssemblyBuilder myAssemblyBuilder =
             currentDomain.DefineDynamicAssembly
                         (myAssemblyName, AssemblyBuilderAccess.RunAndSave);
          // Define 'TempModule' module in 'TempAssembly' assembly.
-         ModuleBuilder myModuleBuilder = 
+         ModuleBuilder myModuleBuilder =
             myAssemblyBuilder.DefineDynamicModule("TempModule",
                                        "TempModule.netmodule",true);
          // Define the managed embedded resource, 'MyResource' in 'TempModule'.
-         IResourceWriter myResourceWriter = 
+         IResourceWriter myResourceWriter =
                myModuleBuilder.DefineResource("MyResource.resource","Description");
          // Add resources to the resource writer.
          myResourceWriter.AddResource("String 1", "First String");

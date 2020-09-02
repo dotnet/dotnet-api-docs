@@ -2,9 +2,9 @@
 
 /*
   The following sample demonstrates the 'CopyTo()' method of the class
-  'PortTypeCollection'.This sample reads the contents of a file 'MathService.wsdl'
+  'PortTypeCollection'. This sample reads the contents of a file 'MathService.wsdl'
   into a 'ServiceDescription' instance. It gets the collection of 'PortType'
-  from 'ServiceDescription'. It copies the collection into an array of 'PortType' 
+  from 'ServiceDescription'. It copies the collection into an array of 'PortType'
   and displays their names.
 */
 
@@ -21,12 +21,12 @@ class MyPortTypeCollectionClass
 // <Snippet1>
          PortTypeCollection myPortTypeCollection;
 
-         ServiceDescription myServiceDescription = 
+         ServiceDescription myServiceDescription =
             ServiceDescription.Read("MathService_CS.wsdl");
 
          myPortTypeCollection = myServiceDescription.PortTypes;
          int noOfPortTypes = myServiceDescription.PortTypes.Count;
-         Console.WriteLine("\nTotal number of PortTypes: " 
+         Console.WriteLine("\nTotal number of PortTypes: "
             + myServiceDescription.PortTypes.Count);
 
          // Copy the collection into an array.

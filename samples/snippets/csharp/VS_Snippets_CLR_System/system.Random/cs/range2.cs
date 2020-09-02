@@ -9,7 +9,7 @@ public class Example
       for (int ctr = 1; ctr <= 50; ctr++) {
          Console.Write("{0,3}    ", rnd.Next(1000, 10000));
          if(ctr % 10 == 0) Console.WriteLine();
-      }   
+      }
 
       // The example displays output like the following:
       //    9570    8979    5770    1606    3818    4735    8495    7196    7070    2313

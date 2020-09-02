@@ -12,7 +12,7 @@ public class Page1: Page
 // <Snippet1>
 CacheDependency dep = new CacheDependency(Server.MapPath("isbn.xml"));
 Cache.Insert("ISBNData", Source, dep);
-   
+
 // </Snippet1>
  }
 }

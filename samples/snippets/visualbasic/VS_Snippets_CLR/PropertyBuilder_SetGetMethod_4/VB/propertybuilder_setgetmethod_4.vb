@@ -79,7 +79,7 @@ Public Class App
       Dim constructor As ConstructorBuilder = helloWorldTypeBuilder.DefineConstructor _
                            (MethodAttributes.Public, CallingConventions.Standard, constructorArgs)
 
-      ' Generate IL code for the method.The constructor stores its argument in the private field.
+      ' Generate IL code for the method. The constructor stores its argument in the private field.
       Dim constructorIL As ILGenerator = constructor.GetILGenerator()
       constructorIL.Emit(OpCodes.Ldarg_0)
       constructorIL.Emit(OpCodes.Ldarg_1)

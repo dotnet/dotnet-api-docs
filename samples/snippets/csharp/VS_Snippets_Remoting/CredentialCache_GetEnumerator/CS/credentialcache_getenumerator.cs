@@ -2,7 +2,7 @@
 
 /*This program demontrates the  'GetEnumerator' method of the CredentialCache class.
 It takes an URL, creates a 'WebRequest' object for the Url. The program stores a known set of credentials
-in a credential cache which is then bound to the request. If the url requested has it's credentials in the cache 
+in a credential cache which is then bound to the request. If the url requested has it's credentials in the cache
 the response will be OK . 'GetEnumerator' method is used to enlist all the credentials stored in the
 'CredentialCache' object.
 */
@@ -12,8 +12,8 @@ using System.Net;
 using System.Collections;
 
 class CredentialCacheSnippet {
- 
-    public static void Main(string[] args) 
+
+    public static void Main(string[] args)
     {
         if (args.Length <4) {
             Console.WriteLine("\n Usage:");
@@ -24,7 +24,7 @@ class CredentialCacheSnippet {
         else{
         Console.WriteLine("\n Invalid arguments.");
         return;
-        }             
+        }
 
         Console.WriteLine("Press any key to continue...");Console.ReadLine();
         return;
@@ -32,19 +32,19 @@ class CredentialCacheSnippet {
 // <Snippet1>
    public static void GetPage(string url,string userName,string password,string domainName)
      {
-        try 
+        try
         {
             CredentialCache myCredentialCache = new CredentialCache();
-            // Dummy Credentials used here.             
+            // Dummy Credentials used here.
             myCredentialCache.Add(new Uri("http://microsoft.com/"),"Basic", new NetworkCredential("user1","passwd1","domain1"));
             myCredentialCache.Add(new Uri("http://msdn.com/"),"Basic", new NetworkCredential("user2","passwd2","domain2"));
 
-            myCredentialCache.Add(new Uri(url),"Basic", new NetworkCredential(userName,password,domainName));    
-            // Creates a webrequest with the specified url.                 
+            myCredentialCache.Add(new Uri(url),"Basic", new NetworkCredential(userName,password,domainName));
+            // Creates a webrequest with the specified url.
             WebRequest myWebRequest = WebRequest.Create(url);
-            myWebRequest.Credentials = myCredentialCache;            
+            myWebRequest.Credentials = myCredentialCache;
             IEnumerator listCredentials = myCredentialCache.GetEnumerator();
-            
+
             Console.WriteLine("\nDisplaying credentials stored in CredentialCache: ");
             while(listCredentials.MoveNext())
             {
@@ -55,19 +55,19 @@ class CredentialCacheSnippet {
             foreach(NetworkCredential credential in myCredentialCache)
                 Display(credential);
             // Send the request and waits for response.
-         WebResponse myWebResponse = myWebRequest.GetResponse(); 
-            
+         WebResponse myWebResponse = myWebRequest.GetResponse();
+
            // Process response here.
-            
+
            Console.WriteLine("\nResponse Received.");
             myWebResponse.Close();
-        } 
-        catch(WebException e) 
+        }
+        catch(WebException e)
         {
             if (e.Response != null)
-                Console.WriteLine("\r\nFailed to obtain a response. The following error occurred : {0}",((HttpWebResponse)(e.Response)).StatusDescription); 
+                Console.WriteLine("\r\nFailed to obtain a response. The following error occurred : {0}",((HttpWebResponse)(e.Response)).StatusDescription);
             else
-                Console.WriteLine("\r\nFailed to obtain a response. The following error occurred : {0}",e.Status); 
+                Console.WriteLine("\r\nFailed to obtain a response. The following error occurred : {0}",e.Status);
         }
         catch(Exception e)
         {

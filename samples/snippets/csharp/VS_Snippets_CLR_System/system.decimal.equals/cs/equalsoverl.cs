@@ -4,7 +4,7 @@ using System;
 public class Example
 {
    static decimal value = 112m;
-   
+
    public static void Main()
    {
       byte byte1= 112;
@@ -22,7 +22,7 @@ public class Example
       long long1 = 112;
       Console.WriteLine("value = long1: {0,18}", value.Equals(long1));
       TestObjectForEquality(long1);
-      
+
       sbyte sbyte1 = 112;
       Console.WriteLine("value = sbyte1: {0,17}", value.Equals(sbyte1));
       TestObjectForEquality(sbyte1);
@@ -57,33 +57,33 @@ public class Example
    }
 }
 // The example displays the following output:
-//       value = byte1:             True
-//       112 (Double) = 112 (Byte): False
+//       value = byte1:              True
+//       112 (Decimal) = 112 (Byte): False
 //
-//       value = short1:             True
-//       112 (Double) = 112 (Int16): False
+//       value = short1:              True
+//       112 (Decimal) = 112 (Int16): False
 //
-//       value = int1:               True
-//       112 (Double) = 112 (Int32): False
+//       value = int1:                True
+//       112 (Decimal) = 112 (Int32): False
 //
-//       value = long1:              True
-//       112 (Double) = 112 (Int64): False
+//       value = long1:               True
+//       112 (Decimal) = 112 (Int64): False
 //
-//       value = sbyte1:             True
-//       112 (Double) = 112 (SByte): False
+//       value = sbyte1:              True
+//       112 (Decimal) = 112 (SByte): False
 //
-//       value = ushort1:             True
-//       112 (Double) = 112 (UInt16): False
+//       value = ushort1:              True
+//       112 (Decimal) = 112 (UInt16): False
 //
-//       value = uint1:               True
-//       112 (Double) = 112 (UInt32): False
+//       value = uint1:                True
+//       112 (Decimal) = 112 (UInt32): False
 //
-//       value = ulong1:              True
-//       112 (Double) = 112 (UInt64): False
+//       value = ulong1:               True
+//       112 (Decimal) = 112 (UInt64): False
 //
-//       value = dec1:                 False
-//       112 (Double) = 112 (Decimal): False
+//       value = sng1:                 False
+//       112 (Decimal) = 112 (Single): False
 //
-//       value = sng1:                True
-//       112 (Double) = 112 (Single): False
+//       value = dbl1:                 False
+//       112 (Decimal) = 112 (Double): False
 // </Snippet2>

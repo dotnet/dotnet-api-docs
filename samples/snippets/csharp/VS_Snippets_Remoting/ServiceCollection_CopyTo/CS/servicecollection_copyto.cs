@@ -2,10 +2,10 @@
 // System.Web.Services.Description.ServiceCollection.IndexOf(service)
 // System.Web.Services.Description.ServiceCollection.CopyTo(System[],int)
 /*
-   The following program demonstrates the methods of 
-   ServiceDescription and ServiceCollection class. An existing WSDL document 
-   is read. An exiting service named "MathService" is removed from the 
-   collection. A new Service object is constructed and added at index 1 of the 
+   The following program demonstrates the methods of
+   ServiceDescription and ServiceCollection class. An existing WSDL document
+   is read. An exiting service named "MathService" is removed from the
+   collection. A new Service object is constructed and added at index 1 of the
    Collection .A new WSDL file is created as output.
 */
 
@@ -23,10 +23,10 @@ class ServiceDescription_Sample
       try
       {
          // Read the Existing Wsdl.
-         ServiceDescription myServiceDescription= 
+         ServiceDescription myServiceDescription=
                            ServiceDescription.Read("AddSubtractService_CS.wsdl");
         // Remove the service named "MathService".
-         ServiceCollection myServiceDescriptionCollection= 
+         ServiceCollection myServiceDescriptionCollection=
                             myServiceDescription.Services;
          myServiceDescriptionCollection.
                              Remove(myServiceDescription.Services["MathService"]);
@@ -34,25 +34,25 @@ class ServiceDescription_Sample
          Service myService =new Service();
          myService.Name="MathService";
 
-         XmlQualifiedName myXmlQualifiedName= 
+         XmlQualifiedName myXmlQualifiedName=
                         new XmlQualifiedName("s0:MathServiceSoap");
          // Build a new Port for Soap.
          Port mySoapPort= new Port();
          mySoapPort.Name="MathServiceSoap";
          mySoapPort.Binding=myXmlQualifiedName;
-         SoapAddressBinding mySoapAddressBinding = 
+         SoapAddressBinding mySoapAddressBinding =
                                           new SoapAddressBinding();
          mySoapAddressBinding.Location=
                            "http://localhost/ServiceCollection_CopyTo/AddSubtractService_CS.asmx";
          mySoapPort.Extensions.Add(mySoapAddressBinding);
 
          // Build a new Port for HttpGet.
-         XmlQualifiedName myXmlQualifiedName2= 
+         XmlQualifiedName myXmlQualifiedName2=
                            new XmlQualifiedName("s0:MathServiceHttpGet");
          Port myHttpGetPort= new Port();
          myHttpGetPort.Name="MathServiceHttpGet";
          myHttpGetPort.Binding=myXmlQualifiedName2;
-         HttpAddressBinding myHttpAddressBinding = 
+         HttpAddressBinding myHttpAddressBinding =
                             new HttpAddressBinding();
          myHttpAddressBinding.Location=
                          "http://localhost/ServiceCollection_CopyTo/AddSubtractService_CS.asmx";
@@ -80,7 +80,7 @@ class ServiceDescription_Sample
          // Output the Wsdl.
          myServiceDescription.Write(myStreamWriter);
          myStreamWriter.Close();
-         
+
 // <Snippet1>
 // <Snippet2>
          if(myServiceDescription.Services.Contains(myService))

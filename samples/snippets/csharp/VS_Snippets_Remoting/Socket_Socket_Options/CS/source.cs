@@ -14,7 +14,7 @@ public class Sync_Send_Receive
         Socket s = new Socket (lep.Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
 //<Snippet1>
-        // Send operations will time-out if confirmation 
+        // Send operations will time-out if confirmation
         // is not received within 1000 milliseconds.
         s.SetSocketOption (SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 1000);
 
@@ -23,7 +23,7 @@ public class Sync_Send_Receive
 
         s.SetSocketOption (SocketOptionLevel.Socket, SocketOptionName.Linger, lingerOption);
 
-//</Snippet1>                  
+//</Snippet1>
         s.Connect (lep);
 
         byte[] msg = Encoding.ASCII.GetBytes ("This is a test");

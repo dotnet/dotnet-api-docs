@@ -11,18 +11,18 @@ public class Class1 {
         xRoot.ElementName = "CustomRoot";
         xRoot.Namespace = "http://www.cpandl.com";
         xRoot.IsNullable = true;
-         
+
         // Construct the XmlSerializer with the XmlRootAttribute.
         XmlSerializer serializer = new XmlSerializer
             (typeof(OrderedItem),xRoot);
-         
+
         // Create an instance of the object to serialize.
         OrderedItem i = new OrderedItem();
         // Insert code to set properties of the ordered item.
-         
+
         // Writing the document requires a TextWriter.
         TextWriter writer = new StreamWriter(filename);
-         
+
         serializer.Serialize(writer, i);
         writer.Close();
     }
@@ -33,10 +33,10 @@ public class Class1 {
         xRoot.ElementName = "CustomRoot";
         xRoot.Namespace = "http://www.cpandl.com";
         xRoot.IsNullable = true;
-         
+
         XmlSerializer serializer = new XmlSerializer
             (typeof(OrderedItem),xRoot);
-         
+
         // A FileStream is needed to read the XML document.
         FileStream fs = new FileStream(filename, FileMode.Open);
         // Deserialize the object.

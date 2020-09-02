@@ -1,13 +1,13 @@
 ﻿/*
    System.Configuration.Install.Installer.BeforeInstall
 
-   The following example demonstrates the event 'BeforeInstall' of the 
+   The following example demonstrates the event 'BeforeInstall' of the
    'Installer' class. The event 'BeforeInstall' is raised by the method
    'OnBeforeInstall'.
-   
-   Use the installer process 'InstallUtil' to run the assembly 
+
+   Use the installer process 'InstallUtil' to run the assembly
    Installer_BeforeInstall.exe.
-   
+
 */
 
 using System;
@@ -27,10 +27,10 @@ public class MyInstaller: Installer
    private void BeforeInstallEventHandler(object sender, InstallEventArgs e)
    {
       // Add steps to perform any actions before the install process.
-      Console.WriteLine("Code for BeforeInstallEventHandler"); 
+      Console.WriteLine("Code for BeforeInstallEventHandler");
    }
 // </Snippet1>
-   
+
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)
    {

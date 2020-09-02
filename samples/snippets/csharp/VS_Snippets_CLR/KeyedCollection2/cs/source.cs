@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 // This class derives from KeyedCollection and shows how to override
-// the protected ClearItems, InsertItem, RemoveItem, and SetItem 
-// methods in order to change the behavior of the default Item 
+// the protected ClearItems, InsertItem, RemoveItem, and SetItem
+// methods in order to change the behavior of the default Item
 // property and the Add, Clear, Insert, and Remove methods. The
 // class implements a Changed event, which is raised by all the
 // protected methods.
@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 // SimpleOrder is a collection of OrderItem objects, and its key
 // is the PartNumber field of OrderItem. PartNumber is an Integer,
 // so SimpleOrder inherits KeyedCollection<int, OrderItem>.
-// (Note that the key of OrderItem cannot be changed; if it could 
+// (Note that the key of OrderItem cannot be changed; if it could
 // be changed, SimpleOrder would have to override ChangeItemKey.)
 //
 public class SimpleOrder : KeyedCollection<int, OrderItem>
@@ -22,14 +22,14 @@ public class SimpleOrder : KeyedCollection<int, OrderItem>
 
     // This parameterless constructor calls the base class constructor
     // that specifies a dictionary threshold of 0, so that the internal
-    // dictionary is created as soon as an item is added to the 
+    // dictionary is created as soon as an item is added to the
     // collection.
     //
     public SimpleOrder() : base(null, 0) {}
-    
+
     // This is the only method that absolutely must be overridden,
     // because without it the KeyedCollection cannot extract the
-    // keys from the items. 
+    // keys from the items.
     //
     protected override int GetKeyForItem(OrderItem item)
     {
@@ -102,7 +102,7 @@ public class SimpleOrderChangedEventArgs : EventArgs
     public ChangeType ChangeType { get { return _changeType; }}
     public OrderItem ReplacedWith { get { return _replacedWith; }}
 
-    public SimpleOrderChangedEventArgs(ChangeType change, 
+    public SimpleOrderChangedEventArgs(ChangeType change,
         OrderItem item, OrderItem replacement)
     {
         _changeType = change;
@@ -113,18 +113,18 @@ public class SimpleOrderChangedEventArgs : EventArgs
 
 public enum ChangeType
 {
-    Added, 
-    Removed, 
-    Replaced, 
+    Added,
+    Removed,
+    Replaced,
     Cleared
 };
 
 public class Demo
-{    
+{
     public static void Main()
     {
         SimpleOrder weekly = new SimpleOrder();
-        weekly.Changed += new 
+        weekly.Changed += new
             EventHandler<SimpleOrderChangedEventArgs>(ChangedHandler);
 
         // The Add method, inherited from Collection, takes OrderItem.
@@ -135,16 +135,16 @@ public class Demo
         weekly.Add(new OrderItem(110072684, "Gear", 175, 5.17));
 
         Display(weekly);
-        
+
         // The Contains method of KeyedCollection takes TKey.
         //
-        Console.WriteLine("\nContains(101030411): {0}", 
+        Console.WriteLine("\nContains(101030411): {0}",
             weekly.Contains(101030411));
 
         // The default Item property of KeyedCollection takes the key
         // type, Integer. The property is read-only.
         //
-        Console.WriteLine("\nweekly[101030411].Description: {0}", 
+        Console.WriteLine("\nweekly[101030411].Description: {0}",
             weekly[101030411].Description);
 
         // The Remove method of KeyedCollection takes a key.
@@ -152,17 +152,17 @@ public class Demo
         Console.WriteLine("\nRemove(101030411)");
         weekly.Remove(101030411);
 
-        // The Insert method, inherited from Collection, takes an 
+        // The Insert method, inherited from Collection, takes an
         // index and an OrderItem.
         //
         Console.WriteLine("\nInsert(2, new OrderItem(...))");
         weekly.Insert(2, new OrderItem(111033401, "Nut", 10, .5));
-         
+
         // The default Item property is overloaded. One overload comes
         // from KeyedCollection<int, OrderItem>; that overload
-        // is read-only, and takes Integer because it retrieves by key. 
-        // The other overload comes from Collection<OrderItem>, the 
-        // base class of KeyedCollection<int, OrderItem>; it 
+        // is read-only, and takes Integer because it retrieves by key.
+        // The other overload comes from Collection<OrderItem>, the
+        // base class of KeyedCollection<int, OrderItem>; it
         // retrieves by index, so it also takes an Integer. The compiler
         // uses the most-derived overload, from KeyedCollection, so the
         // only way to access SimpleOrder by index is to cast it to
@@ -170,17 +170,17 @@ public class Demo
         // as a key, and KeyNotFoundException is thrown.
         //
         Collection<OrderItem> coweekly = weekly;
-        Console.WriteLine("\ncoweekly[2].Description: {0}", 
+        Console.WriteLine("\ncoweekly[2].Description: {0}",
             coweekly[2].Description);
- 
+
         Console.WriteLine("\ncoweekly[2] = new OrderItem(...)");
         coweekly[2] = new OrderItem(127700026, "Crank", 27, 5.98);
 
         OrderItem temp = coweekly[2];
 
-        // The IndexOf method, inherited from Collection<OrderItem>, 
+        // The IndexOf method, inherited from Collection<OrderItem>,
         // takes an OrderItem instead of a key.
-        // 
+        //
         Console.WriteLine("\nIndexOf(temp): {0}", weekly.IndexOf(temp));
 
         // The inherited Remove method also takes an OrderItem.
@@ -193,8 +193,8 @@ public class Demo
 
         // Increase the quantity for a line item.
         Console.WriteLine("\ncoweekly(1) = New OrderItem(...)");
-        coweekly[1] = new OrderItem(coweekly[1].PartNumber, 
-            coweekly[1].Description, coweekly[1].Quantity + 1000, 
+        coweekly[1] = new OrderItem(coweekly[1].PartNumber,
+            coweekly[1].Description, coweekly[1].Quantity + 1000,
             coweekly[1].UnitPrice);
 
         Display(weekly);
@@ -202,7 +202,7 @@ public class Demo
         Console.WriteLine();
         weekly.Clear();
     }
-    
+
     private static void Display(SimpleOrder order)
     {
         Console.WriteLine();
@@ -212,7 +212,7 @@ public class Demo
         }
     }
 
-    private static void ChangedHandler(object source, 
+    private static void ChangedHandler(object source,
         SimpleOrderChangedEventArgs e)
     {
 
@@ -223,8 +223,8 @@ public class Demo
             OrderItem replacement = e.ReplacedWith;
 
             Console.WriteLine("{0} (quantity {1}) was replaced " +
-                "by {2}, (quantity {3}).", item.Description, 
-                item.Quantity, replacement.Description, 
+                "by {2}, (quantity {3}).", item.Description,
+                item.Quantity, replacement.Description,
                 replacement.Quantity);
         }
         else if(e.ChangeType == ChangeType.Cleared)
@@ -233,28 +233,28 @@ public class Demo
         }
         else
         {
-            Console.WriteLine("{0} (quantity {1}) was {2}.", 
+            Console.WriteLine("{0} (quantity {1}) was {2}.",
                 item.Description, item.Quantity, e.ChangeType);
         }
     }
 }
 
-// This class represents a simple line item in an order. All the 
+// This class represents a simple line item in an order. All the
 // values are immutable except quantity.
-// 
+//
 public class OrderItem
 {
     private int _partNumber;
     private string _description;
     private double _unitPrice;
     private int _quantity;
-    
+
     public int PartNumber { get { return _partNumber; }}
     public string Description { get { return _description; }}
     public double UnitPrice { get { return _unitPrice; }}
     public int Quantity { get { return _quantity; }}
-    
-    public OrderItem(int partNumber, string description, int quantity, 
+
+    public OrderItem(int partNumber, string description, int quantity,
         double unitPrice)
     {
         _partNumber = partNumber;
@@ -262,12 +262,12 @@ public class OrderItem
         _quantity = quantity;
         _unitPrice = unitPrice;
     }
-    
+
     public override string ToString()
     {
         return String.Format(
-            "{0,9} {1,6} {2,-12} at {3,8:#,###.00} = {4,10:###,###.00}", 
-            PartNumber, _quantity, Description, UnitPrice, 
+            "{0,9} {1,6} {2,-12} at {3,8:#,###.00} = {4,10:###,###.00}",
+            PartNumber, _quantity, Description, UnitPrice,
             UnitPrice * _quantity);
     }
 }

@@ -1,4 +1,4 @@
-﻿// The following sample is intended to demonstrate how to use a 
+﻿// The following sample is intended to demonstrate how to use a
 //NetworkStream for synchronous communcation with a remote host
 //This class uses several NetworkStream members that would be useful
 // in a synchronous communciation senario
@@ -27,37 +27,37 @@ public static void MySample(bool networkStreamOwnsSocket){
 
             //<Snippet1>
             // Example for creating a NetworkStreams
-            
+
             mySocket.Connect(myIpEndPoint);
-                     
+
             // Create the NetworkStream for communicating with the remote host.
             NetworkStream myNetworkStream;
-            
+
             if (networkStreamOwnsSocket){
-                 myNetworkStream = new NetworkStream(mySocket, FileAccess.ReadWrite, true);          
+                 myNetworkStream = new NetworkStream(mySocket, FileAccess.ReadWrite, true);
             }
             else{
-                 myNetworkStream = new NetworkStream(mySocket, FileAccess.ReadWrite);     
+                 myNetworkStream = new NetworkStream(mySocket, FileAccess.ReadWrite);
             }
-    
+
            //</Snippet1>
 
            //<Snippet2>
            //Example of CanWrite, and BeginWrite.
-           
+
             // Check to see if this NetworkStream is writable.
             if (myNetworkStream.CanWrite){
-               
+
                  byte[] myWriteBuffer = Encoding.ASCII.GetBytes("Are you receiving this message?");
-                 myNetworkStream.BeginWrite(myWriteBuffer, 0, myWriteBuffer.Length, 
-                                                              new AsyncCallback(NetworkStream_ASync_Send_Receive.myWriteCallBack), 
+                 myNetworkStream.BeginWrite(myWriteBuffer, 0, myWriteBuffer.Length,
+                                                              new AsyncCallback(NetworkStream_ASync_Send_Receive.myWriteCallBack),
                                                               myNetworkStream);
                  allDone.WaitOne();
             }
             else{
-                 Console.WriteLine("Sorry.  You cannot write to this NetworkStream.");  
+                 Console.WriteLine("Sorry.  You cannot write to this NetworkStream.");
             }
-           
+
             //</Snippet2>
 
             //<Snippet3>
@@ -67,9 +67,9 @@ public static void MySample(bool networkStreamOwnsSocket){
             if(myNetworkStream.CanRead){
             	
                 byte[] myReadBuffer = new byte[1024];
-                myNetworkStream.BeginRead(myReadBuffer, 0, myReadBuffer.Length, 
-                                                             new AsyncCallback(NetworkStream_ASync_Send_Receive.myReadCallBack), 
-                                                             myNetworkStream);  
+                myNetworkStream.BeginRead(myReadBuffer, 0, myReadBuffer.Length,
+                                                             new AsyncCallback(NetworkStream_ASync_Send_Receive.myReadCallBack),
+                                                             myNetworkStream);
 
                 allDone.WaitOne();
             }
@@ -84,7 +84,7 @@ public static void MySample(bool networkStreamOwnsSocket){
        }
        catch (Exception exception){
             Console.WriteLine("Exception Thrown: " + exception.ToString());
-       } 
+       }
 }
 
 //<Snippet4>
@@ -108,15 +108,15 @@ public static void myReadCallBack(IAsyncResult ar ){
     int numberOfBytesRead;
 
     numberOfBytesRead = myNetworkStream.EndRead(ar);
-    myCompleteMessage = 
-        String.Concat(myCompleteMessage, Encoding.ASCII.GetString(myReadBuffer, 0, numberOfBytesRead));    
-    
+    myCompleteMessage =
+        String.Concat(myCompleteMessage, Encoding.ASCII.GetString(myReadBuffer, 0, numberOfBytesRead));
+
     // message received may be larger than buffer size so loop through until you have it all.
     while(myNetworkStream.DataAvailable){
     	
-        myNetworkStream.BeginRead(myReadBuffer, 0, myReadBuffer.Length, 
-        	                                       new AsyncCallback(NetworkStream_ASync_Send_Receive.myReadCallBack), 
-        	                                       myNetworkStream);  
+        myNetworkStream.BeginRead(myReadBuffer, 0, myReadBuffer.Length,
+        	                                       new AsyncCallback(NetworkStream_ASync_Send_Receive.myReadCallBack),
+        	                                       myNetworkStream);
     }
 
     // Print out the received message to the console.

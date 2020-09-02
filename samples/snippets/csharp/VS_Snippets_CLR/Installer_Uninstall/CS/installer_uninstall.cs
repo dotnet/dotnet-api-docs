@@ -1,7 +1,7 @@
 ﻿/*
    System.Configuration.Install.Installer.Uninstall
 
-   The following example demonstrates the Uninstall method 
+   The following example demonstrates the Uninstall method
    of the class 'installer'. The method Uninstall is overridden
    in the derived class of 'installer'.
 */
@@ -19,7 +19,7 @@ namespace MyAssembly
 // <Snippet1>
       // Override 'Uninstall' method of Installer class.
       public override void Uninstall( IDictionary mySavedState )
-      {  
+      {
          if (mySavedState == null)
          {
             Console.WriteLine("Uninstallation Error !");

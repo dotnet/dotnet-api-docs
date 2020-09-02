@@ -138,7 +138,7 @@ int main()
    {
       
       // Generate a DSA signing key.
-      DSACryptoServiceProvider^ DSAKey = gcnew DSACryptoServiceProvider;
+      DSA^ DSAKey = DSA::Create();
       
       // Create an XML file to sign.
       CreateSomeXml( "Example.xml" );

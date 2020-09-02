@@ -1,10 +1,10 @@
 ﻿// System.Xml.Serialization.XmlTypeAttribute.XmlTypeAttribute()
 // System.Xml.Serialization.XmlTypeAttribute.XmlTypeAttribute(string)
 
-/* The following example demonstrates the contructors 'XmlTypeAttribute()'
-   and 'XmlTypeAttribute(string)' of class 'XmlTypeAttribute'.
-   This program demonstrates 'Person' and 'Address' classes to 
-   which the 'XmlTypeAttribute' has been applied.This sample then 
+/* The following example demonstrates the 'XmlTypeAttribute()'
+   and 'XmlTypeAttribute(string)' constructors of the 'XmlTypeAttribute' class.
+   This program demonstrates the 'Person' and 'Address' classes to
+   which the 'XmlTypeAttribute' has been applied. This sample then 
    serializes an object of class 'Person' into an XML document.
  */
 // <Snippet1>

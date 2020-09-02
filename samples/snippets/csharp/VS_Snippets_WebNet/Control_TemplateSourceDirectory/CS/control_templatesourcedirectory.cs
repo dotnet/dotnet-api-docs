@@ -3,7 +3,7 @@
 
 /* The following example demonstrates 'TemplateSourceDirectory' and 'MapPathSecure' 
   properties of 'Control' class. A new CustomControl derived from control class is 
-  instantiated and the 'TemplateSourceDirectory' property is displayed.The absolute path 
+  instantiated and the 'TemplateSourceDirectory' property is displayed. The absolute path 
   of the control is obtained and all the files in the directory are rendered onto the 
   browser.
 */

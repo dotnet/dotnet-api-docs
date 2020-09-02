@@ -24,7 +24,7 @@ namespace TimerSample {
             }
         }
     }
-    
+
     // Define the delegate for the event
     public delegate void TimerExpiredEventHandler (object sender, TimerServiceEventArgs e);
 
@@ -40,14 +40,14 @@ namespace TimerSample {
         // to brew coffee in a French Press.
         public TimerService():this(4.0) {
         }
-        
+
         public TimerService(double minutes) {
             Console.WriteLine("TimerService instantiated.");
             m_MinutesToTime = minutes;
             m_Timer = new Timer();
             m_Timer.Elapsed += new ElapsedEventHandler(OnElapsed);
         }
-        
+
         public double MinutesToTime {
             get {
                 return m_MinutesToTime;
@@ -67,7 +67,7 @@ namespace TimerSample {
                 // TODO: Raise an exception
             }
         }
-        
+
         private void OnElapsed(object source, ElapsedEventArgs e) {
             m_Timer.Enabled = false;
 

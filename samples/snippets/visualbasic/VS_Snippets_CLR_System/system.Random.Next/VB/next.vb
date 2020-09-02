@@ -1,83 +1,82 @@
 ﻿'<Snippet1>
-' Example of the Random.Next( ) methods.
-Module  RandomNextDemo
+' Example of the Random.Next() methods.
+Module RandomNextDemo
 
     ' Generate random numbers with no bounds specified.
-    Sub NoBoundsRandoms( seed As Integer )
+    Sub NoBoundsRandoms(seed As Integer)
 
-        Console.WriteLine( vbCrLf & _
-            "Random object, seed = {0}, no bounds:", seed )
-        Dim randObj As New Random( seed )
-            
+        Console.WriteLine(vbCrLf &
+            "Random object, seed = {0}, no bounds:", seed)
+        Dim randObj As New Random(seed)
+
         ' Generate six random integers from 0 to int.MaxValue.
         Dim j As Integer
         For j = 0 To 5
-            Console.Write( "{0,11} ", randObj.Next( ) )
+            Console.Write("{0,11} ", randObj.Next())
         Next j
-        Console.WriteLine( )
-    End Sub 
-        
-    ' Generate random numbers with an upper bound specified.
-    Sub UpperBoundRandoms( seed As Integer, upper As Integer )
+        Console.WriteLine()
+    End Sub
 
-        Console.WriteLine( vbCrLf & _
-            "Random object, seed = {0}, upper bound = {1}:", _
-            seed, upper )
-        Dim randObj As New Random( seed )
-            
+    ' Generate random numbers with an upper bound specified.
+    Sub UpperBoundRandoms(seed As Integer, upper As Integer)
+
+        Console.WriteLine(vbCrLf &
+            "Random object, seed = {0}, upper bound = {1}:",
+            seed, upper)
+        Dim randObj As New Random(seed)
+
         ' Generate six random integers from 0 to the upper bound.
         Dim j As Integer
         For j = 0 To 5
-            Console.Write( "{0,11} ", randObj.Next( upper ) )
+            Console.Write("{0,11} ", randObj.Next(upper))
         Next j
-        Console.WriteLine( )
-    End Sub 
-        
-    ' Generate random numbers with both bounds specified.
-    Sub BothBoundsRandoms( _
-        seed As Integer, lower As Integer, upper As Integer )
+        Console.WriteLine()
+    End Sub
 
-        Console.WriteLine( vbCrLf & _
-            "Random object, seed = {0}, lower = {1}, " & _
-            "upper = {2}:", seed, lower, upper )
-        Dim randObj As New Random( seed )
-            
+    ' Generate random numbers with both bounds specified.
+    Sub BothBoundsRandoms(seed As Integer, lower As Integer, upper As Integer)
+
+        Console.WriteLine(vbCrLf &
+            "Random object, seed = {0}, lower = {1}, " &
+            "upper = {2}:", seed, lower, upper)
+        Dim randObj As New Random(seed)
+
         ' Generate six random integers from the lower to 
         ' upper bounds.
         Dim j As Integer
         For j = 0 To 5
-            Console.Write( "{0,11} ", _
-                randObj.Next( lower, upper ) )
+            Console.Write("{0,11} ",
+                randObj.Next(lower, upper))
         Next j
-        Console.WriteLine( )
-    End Sub 
-        
-    Sub Main( )
-        Console.WriteLine( _
-            "This example of the Random.Next( ) methods" & _ 
-            vbCrLf & "generates the following output." & vbCrLf )
-        Console.WriteLine( _
-            "Create Random objects all with the same seed " & _
-            "and generate" & vbCrLf & "sequences of numbers " & _
-            "with different bounds. Note the effect " & vbCrLf & _
-            "that the various combinations " & _
-            "of bounds have on the sequences." )
-            
-        NoBoundsRandoms( 234 )
+        Console.WriteLine()
+    End Sub
 
-        UpperBoundRandoms( 234, Int32.MaxValue )
-        UpperBoundRandoms( 234, 2000000000 )
-        UpperBoundRandoms( 234, 200000000 )
+    Sub Main()
+        Console.WriteLine(
+            "This example of the Random.Next() methods" &
+            vbCrLf & "generates the following output." & vbCrLf)
+        Console.WriteLine(
+            "Create Random objects all with the same seed " &
+            "and generate" & vbCrLf & "sequences of numbers " &
+            "with different bounds. Note the effect " & vbCrLf &
+            "that the various combinations " &
+            "of bounds have on the sequences.")
 
-        BothBoundsRandoms( 234, 0, Int32.MaxValue )
-        BothBoundsRandoms( 234, Int32.MinValue, Int32.MaxValue )
-        BothBoundsRandoms( 234, -2000000000, 2000000000 )
-        BothBoundsRandoms( 234, -200000000, 200000000 )
-        BothBoundsRandoms( 234, -2000, 2000 )
-    End Sub 
-End Module 
+        NoBoundsRandoms(234)
 
-' This example of the Random.Next( ) methods
+        UpperBoundRandoms(234, Int32.MaxValue)
+        UpperBoundRandoms(234, 2000000000)
+        UpperBoundRandoms(234, 200000000)
+
+        BothBoundsRandoms(234, 0, Int32.MaxValue)
+        BothBoundsRandoms(234, Int32.MinValue, Int32.MaxValue)
+        BothBoundsRandoms(234, -2000000000, 2000000000)
+        BothBoundsRandoms(234, -200000000, 200000000)
+        BothBoundsRandoms(234, -2000, 2000)
+    End Sub
+End Module
+
+' This example of the Random.Next() methods
 ' generates the following output.
 ' 
 ' Create Random objects all with the same seed and generate

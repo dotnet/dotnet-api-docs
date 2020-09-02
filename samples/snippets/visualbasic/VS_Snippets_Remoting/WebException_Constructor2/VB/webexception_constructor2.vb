@@ -4,7 +4,7 @@
 ' It creates a 'HttpConnect' object and calls the 'ConnectHttpServer' method with invalid 'URL'.
 ' When the method tries to establish a socket connection to that address an exception is thrown.In 
 ' the 'catch' block  a new 'WebException' object is created with a message(specific to the present 
-' situatuation) and  thrown to the caller.That exception is caught in the calling method and the 
+' situatuation) and  thrown to the caller. That exception is caught in the calling method and the 
 ' error message is dispalyed on the console.
 
 

@@ -18,7 +18,7 @@ public class Client
             RegisterChannel(channel);
 
         // Register as client for remote object.
-        System.Runtime.Remoting.WellKnownClientTypeEntry remoteType = 
+        System.Runtime.Remoting.WellKnownClientTypeEntry remoteType =
             new System.Runtime.Remoting.WellKnownClientTypeEntry(
                 typeof(RemoteObject),
                 "ipc://localhost:9090/RemoteObject.rem");
@@ -42,7 +42,7 @@ public class Client
         //</snippet22>
 
         // Create an instance of the remote object.
-        RemoteObject service = new RemoteObject(); 
+        RemoteObject service = new RemoteObject();
 
         // Invoke a method on the remote object.
         Console.WriteLine("The client is invoking the remote object.");

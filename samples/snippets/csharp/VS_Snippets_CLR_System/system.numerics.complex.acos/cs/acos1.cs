@@ -6,12 +6,12 @@ public class Example
 {
    public static void Main()
    {
-      Complex[] values = { new Complex(.5, 2), 
+      Complex[] values = { new Complex(.5, 2),
                            new Complex(.5, -2),
                            new Complex(-.5, 2),
                            new Complex(-.3, -.8) };
       foreach (Complex value in values)
-         Console.WriteLine("Cos(ACos({0})) = {1}", value, 
+         Console.WriteLine("Cos(ACos({0})) = {1}", value,
                            Complex.Cos(Complex.Acos(value)));
    }
 }

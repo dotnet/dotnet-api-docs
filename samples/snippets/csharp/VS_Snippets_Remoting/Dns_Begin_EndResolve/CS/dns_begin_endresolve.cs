@@ -1,8 +1,8 @@
 ﻿/*
    This program demonstrates 'BeginResolve' and 'EndResolve' methods of Dns class.
-   It obtains the 'IPHostEntry' object by calling 'BeginResolve' and 'EndResolve' method 
+   It obtains the 'IPHostEntry' object by calling 'BeginResolve' and 'EndResolve' method
    of 'Dns' class by passing a URL, a callback function and an instance of 'RequestState'
-   class.Then prints host name, IP address list and aliases.         
+   class.Then prints host name, IP address list and aliases.
 */
 
 using System;
@@ -12,7 +12,7 @@ using System.Threading;
 // <Snippet1>
 // <Snippet2>
 class DnsBeginGetHostByName
-{   
+{
    public static System.Threading.ManualResetEvent allDone = null;
 
    class RequestState
@@ -30,7 +30,7 @@ class DnsBeginGetHostByName
      // Create an instance of the RequestState class.
      RequestState myRequestState = new RequestState();
 
-     // Begin an asynchronous request for information like host name, IP addresses, or 
+     // Begin an asynchronous request for information like host name, IP addresses, or
      // aliases for specified the specified URI.
      IAsyncResult asyncResult = Dns.BeginResolve("www.contoso.com", new AsyncCallback(RespCallback), myRequestState );
 
@@ -41,17 +41,17 @@ class DnsBeginGetHostByName
      for(int index=0; index < myRequestState.host.AddressList.Length; index++)
      {
        Console.WriteLine(myRequestState.host.AddressList[index]);
-     }      
+     }
      Console.WriteLine("\nAliases : ");
      for(int index=0; index < myRequestState.host.Aliases.Length; index++)
      {
        Console.WriteLine(myRequestState.host.Aliases[index]);
-     }      
+     }
    }
-   
+
    private static void RespCallback(IAsyncResult ar)
    {
-     try 
+     try
      {
        // Convert the IAsyncResult object to a RequestState object.
        RequestState tempRequestState = (RequestState)ar.AsyncState;
@@ -59,12 +59,12 @@ class DnsBeginGetHostByName
        tempRequestState.host = Dns.EndResolve(ar);
        allDone.Set();
      }
-	   catch(ArgumentNullException e) 
+	   catch(ArgumentNullException e)
      {
        Console.WriteLine("ArgumentNullException caught!!!");
        Console.WriteLine("Source : " + e.Source);
        Console.WriteLine("Message : " + e.Message);
-     }   
+     }
      catch(Exception e)
      {
        Console.WriteLine("Exception caught!!!");

@@ -2,13 +2,13 @@
    System.Web.Services.Discovery.DiscoveryClientDocumentCollection.Keys
    System.Web.Services.Discovery.DiscoveryClientDocumentCollection.Values
    System.Web.Services.Discovery.DiscoveryClientDocumentCollection.Contains(String)
-   
+
    The following example demonstrates the 'Keys', 'Values' properties
    and the 'Contains' method. The 'Keys' property returns the names
-   the discoverydocuments in the 'DiscoveryClientDocumentCollection' and 
-   the 'Values' property returns the type of objects in the 
+   the discoverydocuments in the 'DiscoveryClientDocumentCollection' and
+   the 'Values' property returns the type of objects in the
    'DiscoveryClientDocumentCollection'. A sample discovery document is read
-   and the properties 'Keys' and 'Values' and the method 'Contains' are 
+   and the properties 'Keys' and 'Values' and the method 'Contains' are
    displayed.
 */
 using System;
@@ -34,18 +34,18 @@ class DiscoveryClientDocumentCollectionSample_Keys
 
       // 'dataservice.disco' is a sample discovery document.
       string myStringUrl = "http://localhost/dataservice.disco";
-      
+
       // 'Discover' method is called to populate the 'Documents' property.
-      DiscoveryDocument myDiscoveryDocument = 
+      DiscoveryDocument myDiscoveryDocument =
                         myDiscoveryClientProtocol.Discover(myStringUrl);
-      
-      DiscoveryClientDocumentCollection myDiscoveryClientDocumentCollection = 
+
+      DiscoveryClientDocumentCollection myDiscoveryClientDocumentCollection =
                         myDiscoveryClientProtocol.Documents;
-      
+
       // 'Keys' in the collection are retrieved.
 // <Snippet1>
       ICollection myCollection = myDiscoveryClientDocumentCollection.Keys;
-      object[] myObjectCollection = 
+      object[] myObjectCollection =
                      new object[myDiscoveryClientDocumentCollection.Count];
       myCollection.CopyTo(myObjectCollection, 0);
       Console.WriteLine("The discovery documents in the collection are :");
@@ -58,7 +58,7 @@ class DiscoveryClientDocumentCollectionSample_Keys
 // <Snippet2>
       // 'Values' in the collection are retrieved.
       ICollection myCollection1 = myDiscoveryClientDocumentCollection.Values;
-      object[] myObjectCollection1 = 
+      object[] myObjectCollection1 =
                      new object[myDiscoveryClientDocumentCollection.Count];
       myCollection1.CopyTo(myObjectCollection1, 0);
       Console.WriteLine("The objects in the collection are :");
@@ -69,7 +69,7 @@ class DiscoveryClientDocumentCollectionSample_Keys
 // <Snippet3>
       bool myContains = myDiscoveryClientDocumentCollection.Contains(myStringUrl);
       if (myContains)
-         Console.WriteLine("The discovery document {0} is present in the" 
+         Console.WriteLine("The discovery document {0} is present in the"
                            + " Collection",myStringUrl);
 // </Snippet3>
    }

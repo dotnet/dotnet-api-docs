@@ -3,7 +3,7 @@
 // System.Reflection.Emit.TypeBuilder.DefineTypeInitializer
 
 /*
-   The following program demonstrates DefineTypeInitializer and 'GetConstructors' methods and 
+   The following program demonstrates DefineTypeInitializer and 'GetConstructors' methods and
    the 'FullName' property of 'TypeBuilder' class. It builds an assembly by defining 'HelloWorld'
    type. It also defines a constructor for 'HelloWorld' type. Then it displays the
    full name of type and its constructors to the console.

@@ -9,5 +9,5 @@ public class Group
 {
    // Insert the members of the Group class.
 }
-   
+
 // </Snippet1>

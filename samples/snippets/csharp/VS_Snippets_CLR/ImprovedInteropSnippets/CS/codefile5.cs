@@ -18,7 +18,7 @@ namespace C
 			{
 				TypeLibFuncAttribute tlf = ( TypeLibFuncAttribute )MethodAttributes[0];
 				TypeLibFuncFlags  flags = tlf.Value;
-				return ( flags & TypeLibFuncFlags.FHidden ) != 0; 
+				return ( flags & TypeLibFuncFlags.FHidden ) != 0;
 			}
 			return false;
 		}

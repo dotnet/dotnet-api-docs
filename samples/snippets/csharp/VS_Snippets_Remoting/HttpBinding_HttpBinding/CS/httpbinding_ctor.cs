@@ -15,8 +15,8 @@ class MyHttpBindingClass
   public static void Main()
    {
       ServiceDescription myDescription = ServiceDescription.Read("HttpBinding_ctor_Input_CS.wsdl");
-// <Snippet1>       
-// <Snippet2>    
+// <Snippet1>
+// <Snippet2>
       // Create 'Binding' object.
       Binding myBinding = new Binding();
       myBinding.Name = "MyHttpBindingServiceHttpPost";
@@ -26,7 +26,7 @@ class MyHttpBindingClass
       HttpBinding myHttpBinding = new HttpBinding();
       myHttpBinding.Verb = "POST";
       Console.WriteLine("HttpBinding Namespace : "+HttpBinding.Namespace);
-// </Snippet2> 
+// </Snippet2>
       // Add 'HttpBinding' to 'Binding'.
       myBinding.Extensions.Add(myHttpBinding);
 // </Snippet1>
@@ -50,7 +50,7 @@ class MyHttpBindingClass
       postMimeXmlbinding .Part = "Body";
       myOutput.Extensions.Add(postMimeXmlbinding);
       // Add 'OutPutBinding' to 'OperationBinding'.
-      myOperationBinding.Output = myOutput; 
+      myOperationBinding.Output = myOutput;
       // Add 'OperationBinding' to 'Binding'.
       myBinding.Operations.Add(myOperationBinding);
       // Add 'Binding' to 'BindingCollection' of 'ServiceDescription'.

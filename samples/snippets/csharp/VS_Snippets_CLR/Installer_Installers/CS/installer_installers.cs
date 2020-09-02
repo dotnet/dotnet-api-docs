@@ -3,7 +3,7 @@
    System.Configuration.Install.Installer.Parent
 
    The following example demonstrates the properties 'Installers' and
-   'Parent'. The Installers property shows the InstallerCollection 
+   'Parent'. The Installers property shows the InstallerCollection
    associated with an Installer and the Parent property gets the
    installer containing the collection that this installer belongs to.
 */
@@ -22,9 +22,9 @@ public class Installer_Installers
       AssemblyInstaller myAssemblyInstaller = new AssemblyInstaller();
       ServiceInstaller myServiceInstaller = new ServiceInstaller();
       EventLogInstaller myEventLogInstaller = new EventLogInstaller();
-      
+
       InstallerCollection myInstallerCollection = myAssemblyInstaller.Installers;
-      
+
       // Add Installers to the InstallerCollection of 'myAssemblyInstaller'.
       myInstallerCollection.Add(myServiceInstaller);
       myInstallerCollection.Add(myEventLogInstaller);

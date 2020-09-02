@@ -45,10 +45,10 @@ namespace DNSChanges
 
 //<Snippet2>
         // Signals when the resolve has finished.
-        public static ManualResetEvent GetHostEntryFinished = 
+        public static ManualResetEvent GetHostEntryFinished =
             new ManualResetEvent(false);
 
-        // Define the state object for the callback. 
+        // Define the state object for the callback.
         // Use hostName to correlate calls with the proper result.
         public class ResolveState
         {
@@ -80,18 +80,18 @@ namespace DNSChanges
             ioContext.IPs = Dns.EndGetHostEntry(ar);
             GetHostEntryFinished.Set();
         }
-        
-        // Determine the Internet Protocol (IP) addresses for 
+
+        // Determine the Internet Protocol (IP) addresses for
         // this host asynchronously.
         public static void DoGetHostEntryAsync(string hostname)
         {
             GetHostEntryFinished.Reset();
             ResolveState ioContext= new ResolveState(hostname);
 
-            Dns.BeginGetHostEntry(ioContext.host, 
+            Dns.BeginGetHostEntry(ioContext.host,
                 new AsyncCallback(GetHostEntryCallback), ioContext);
 
-            // Wait here until the resolve completes (the callback 
+            // Wait here until the resolve completes (the callback
             // calls .Set())
             GetHostEntryFinished.WaitOne();
 

@@ -1,37 +1,37 @@
-﻿//<Snippet1> 
+﻿//<Snippet1>
 // For Directory.GetFiles and Directory.GetDirectories
-//<Snippet2> 
+//<Snippet2>
 // For File.Exists, Directory.Exists
 using System;
 using System.IO;
 using System.Collections;
 
-public class RecursiveFileProcessor 
+public class RecursiveFileProcessor
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
-        foreach(string path in args) 
+        foreach(string path in args)
         {
-            if(File.Exists(path)) 
+            if(File.Exists(path))
             {
                 // This path is a file
-                ProcessFile(path); 
-            }               
-            else if(Directory.Exists(path)) 
+                ProcessFile(path);
+            }
+            else if(Directory.Exists(path))
             {
                 // This path is a directory
                 ProcessDirectory(path);
             }
-            else 
+            else
             {
                 Console.WriteLine("{0} is not a valid file or directory.", path);
-            }        
-        }        
+            }
+        }
     }
 
-    // Process all files in the directory passed in, recurse on any directories 
+    // Process all files in the directory passed in, recurse on any directories
     // that are found, and process the files they contain.
-    public static void ProcessDirectory(string targetDirectory) 
+    public static void ProcessDirectory(string targetDirectory)
     {
         // Process the list of files found in the directory.
         string [] fileEntries = Directory.GetFiles(targetDirectory);
@@ -43,11 +43,11 @@ public class RecursiveFileProcessor
         foreach(string subdirectory in subdirectoryEntries)
             ProcessDirectory(subdirectory);
     }
-        
+
     // Insert logic for processing found files here.
-    public static void ProcessFile(string path) 
+    public static void ProcessFile(string path)
     {
-        Console.WriteLine("Processed file '{0}'.", path);	    
+        Console.WriteLine("Processed file '{0}'.", path);	
     }
 }
 //</Snippet2>

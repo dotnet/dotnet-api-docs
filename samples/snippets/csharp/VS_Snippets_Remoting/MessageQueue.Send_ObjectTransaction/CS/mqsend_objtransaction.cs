@@ -13,7 +13,7 @@ namespace MyProject
 
         //**************************************************
         // Provides an entry point into the application.
-        // 
+        //
         // This example sends and receives a message from
         // a transactional queue.
         //**************************************************
@@ -40,14 +40,14 @@ namespace MyProject
         {
 						
             // Connect to a queue on the local computer.
-            MessageQueue myQueue = new 
+            MessageQueue myQueue = new
                 MessageQueue(".\\myTransactionalQueue");
 
             // Send a message to the queue.
             if (myQueue.Transactional == true)
             {
                 // Create a transaction.
-                MessageQueueTransaction myTransaction = new 
+                MessageQueueTransaction myTransaction = new
                     MessageQueueTransaction();
 
                 // Begin the transaction.
@@ -70,7 +70,7 @@ namespace MyProject
         public  void ReceiveMessageTransactional()
         {
             // Connect to a transactional queue on the local computer.
-            MessageQueue myQueue = new 
+            MessageQueue myQueue = new
                 MessageQueue(".\\myTransactionalQueue");
 
             // Set the formatter.
@@ -78,7 +78,7 @@ namespace MyProject
                 {typeof(String)});
 			
             // Create a transaction.
-            MessageQueueTransaction myTransaction = new 
+            MessageQueueTransaction myTransaction = new
                 MessageQueueTransaction();
 
             try
@@ -86,8 +86,8 @@ namespace MyProject
                 // Begin the transaction.
                 myTransaction.Begin();
 				
-                // Receive the message. 
-                Message myMessage =	myQueue.Receive(myTransaction); 
+                // Receive the message.
+                Message myMessage =	myQueue.Receive(myTransaction);
                 String myOrder = (String)myMessage.Body;
 
                 // Display message information.
@@ -100,9 +100,9 @@ namespace MyProject
             catch (MessageQueueException e)
             {
                 // Handle nontransactional queues.
-                if (e.MessageQueueErrorCode == 
+                if (e.MessageQueueErrorCode ==
                     MessageQueueErrorCode.TransactionUsage)
-                { 
+                {
                     Console.WriteLine("Queue is not transactional.");
                 }
 				
@@ -112,8 +112,8 @@ namespace MyProject
                 myTransaction.Abort();
             }
 
-            // Catch other exceptions as necessary, such as 
-            // InvalidOperationException, thrown when the formatter 
+            // Catch other exceptions as necessary, such as
+            // InvalidOperationException, thrown when the formatter
             // cannot deserialize the message.
 
             return;

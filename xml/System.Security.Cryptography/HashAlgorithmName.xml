@@ -23,6 +23,9 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Cryptography.Primitives" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
@@ -32,8 +35,9 @@
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0">
-      <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+    <Attribute FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -44,7 +48,7 @@
 ## Remarks  
  The <xref:System.Security.Cryptography.HashAlgorithmName> structure includes some static properties that return predefined hash algorithm names, as well as a <xref:System.Security.Cryptography.HashAlgorithmName.Name%2A> property that can represent a custom hash algorithm name as a strongly-typed string. Hash algorithm names are case-sensitive.  
   
- Asymmetric algorithms implemented using Microsoft's CNG (Cryptographic Next Generation) API interpret the underlying string value as a [CNG algorithm identifier](https://msdn.microsoft.com/library/windows/desktop/aa375534.aspx).  
+ Asymmetric algorithms implemented using Microsoft's CNG (Cryptographic Next Generation) API interpret the underlying string value as a [CNG algorithm identifier](/windows/win32/seccng/cng-algorithm-identifiers).  
   
  Asymmetric algorithms implemented using other technologies:  
   
@@ -215,10 +219,14 @@ Due to collision problems with MD5 and SHA1, Microsoft recommends a security mod
         <Parameter Name="oidValue" Type="System.String" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="oidValue">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="oidValue">The OID of the hash algorithm.</param>
+        <summary>Converts the specified OID to a hash algorithm name.</summary>
+        <returns>The hash algorithm name identified by the OID.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="oidValue" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="oidValue" /> does not represent a known hash algorithm.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -324,7 +332,15 @@ Due to collision problems with MD5 and SHA1, Microsoft recommends a security mod
       <Docs>
         <summary>Gets the underlying string representation of the algorithm name.</summary>
         <value>The string representation of the algorithm name, or <see langword="default" /> if no hash algorithm is available.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+May be `null` or empty to indicate that no hash algorithm is applicable.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Equality">
@@ -631,11 +647,14 @@ Due to collision problems with MD5 and SHA1, Microsoft recommends a security mod
         <Parameter Name="value" Type="System.Security.Cryptography.HashAlgorithmName" RefType="out" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="oidValue">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="oidValue">The OID of the hash algorithm.</param>
+        <param name="value">When this method returns <see langword="true" />, the hash algorithm. When this method returns <see langword="false" />, contains <c>default</c>.</param>
+        <summary>Tries to convert the specified OID to a hash algorithm name.</summary>
+        <returns>
+          <see langword="true" /> if the OID was successfully mapped to a hash algorithm; otherwise <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="oidValue" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
   </Members>

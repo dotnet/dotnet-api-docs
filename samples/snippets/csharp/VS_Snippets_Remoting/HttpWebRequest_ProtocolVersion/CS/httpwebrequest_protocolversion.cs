@@ -1,10 +1,10 @@
 ﻿/* System.Net.HttpWebRequest.ProtocolVersion
-This Program demonstrates the  'ProtocolVersion' property of the 'HttpWebRequest' Class.
+This Program demonstrates the 'ProtocolVersion' property of the 'HttpWebRequest' class.
 The 'ProtocolVersion' is a property that identifies the Version of the Protocol being used.
-A new 'HttpWebRequest' object is created.Then the default version, being used is displayed onto 
-the console.It is then set to another version and displayed to the Console.The HTML contents 
+A new 'HttpWebRequest' object is created. Then the default version, being used is displayed onto
+the console. It is then set to another version and displayed to the Console. The HTML contents
 of the page of the requested Uri are printed to the console.
-Note:Here the 'ProtocolVersion' property displays the ProtocolVersion being used.
+Note: Here the 'ProtocolVersion' property displays the ProtocolVersion being used.
 */
 
 using System;
@@ -38,7 +38,7 @@ class HttpWebRequest_ProtocolVersion
 			Char[] readBuff = new Char[256];
 			int count = streamRead.Read( readBuff, 0, 256 );
 			Console.WriteLine("\nThe contents of the HTML Page are  :");
-			while (count > 0) 
+			while (count > 0)
 			{
 				String outputData = new String(readBuff, 0, count);
 				Console.Write(outputData);

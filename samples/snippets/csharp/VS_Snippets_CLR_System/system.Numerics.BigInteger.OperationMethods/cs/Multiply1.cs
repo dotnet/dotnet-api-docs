@@ -10,7 +10,7 @@ public class Class1
       Subtract();
       Negate();
    }
-   
+
    private static void Multiply()
    {
       // <Snippet1>
@@ -40,7 +40,7 @@ public class Class1
       //    BigInteger number = Int64.MinValue - Int64.MaxValue;
       // produces compiler error CS0220: The operation overflows at compile time in checked mode.
       // The alternative:
-      BigInteger number = BigInteger.Subtract(Int64.MinValue, Int64.MaxValue);     
+      BigInteger number = BigInteger.Subtract(Int64.MinValue, Int64.MaxValue);
       // </Snippet3>
    }
 
@@ -51,7 +51,7 @@ public class Class1
       //    BigInteger number = -Int64.MinValue;
       // produces compiler error CS0220: The operation overflows at compile time in checked mode.
       // The alternative:
-      BigInteger number = BigInteger.Negate(Int64.MinValue);     
+      BigInteger number = BigInteger.Negate(Int64.MinValue);
       // </Snippet4>
    }
 }

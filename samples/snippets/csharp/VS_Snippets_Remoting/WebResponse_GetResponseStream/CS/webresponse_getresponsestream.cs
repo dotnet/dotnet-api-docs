@@ -1,8 +1,8 @@
 ﻿// System.Net.WebResponse.GetResponseStream
 
 /* This program demonstrates the 'GetResponseStream' method of the 'WebResponse' class.
-It creates a web request and queries for a response. It then gets the response stream . This response stream 
-is piped to a higher level stream reader. The reader reads 256 characters at a time , writes them into a string and then displays the string in the console.*/
+It creates a web request and queries for a response. It then gets the response stream. This response stream 
+is piped to a higher level stream reader. The reader reads 256 characters at a time, writes them into a string and then displays the string in the console.*/
 
 using System;
 using System.Net;

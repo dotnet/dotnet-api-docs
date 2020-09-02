@@ -80,7 +80,7 @@ public class SignVerifyEnvelope
         SignedXml signedXml = new SignedXml(doc);
 
         // Add the key to the SignedXml document. 
-        signedXml.SigningKey = cert.PrivateKey;
+        signedXml.SigningKey = cert.GetRSAPrivateKey();
 
         // Create a reference to be signed.
         Reference reference = new Reference();
@@ -140,7 +140,7 @@ public class SignVerifyEnvelope
     }
     // </Snippet2>
 
-    // Verify the signature of an XML file against an asymetric 
+    // Verify the signature of an XML file against an asymmetric 
     // algorithm and return the result.
     public static Boolean VerifyXmlFile(String FileName, String CertificateSubject)
     {

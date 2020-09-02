@@ -7,19 +7,19 @@ public class Example
     public static void Main()
     {
         //<Snippet2>
-        // Create a new dictionary of strings, with string keys, 
+        // Create a new dictionary of strings, with string keys,
         // and access it through the IDictionary generic interface.
-        IDictionary<string, string> openWith = 
+        IDictionary<string, string> openWith =
             new Dictionary<string, string>();
 
-        // Add some elements to the dictionary. There are no 
+        // Add some elements to the dictionary. There are no
         // duplicate keys, but some of the values are duplicates.
         openWith.Add("txt", "notepad.exe");
         openWith.Add("bmp", "paint.exe");
         openWith.Add("dib", "paint.exe");
         openWith.Add("rtf", "wordpad.exe");
 
-        // The Add method throws an exception if the new key is 
+        // The Add method throws an exception if the new key is
         // already in the dictionary.
         try
         {
@@ -32,15 +32,15 @@ public class Example
         //</Snippet2>
 
         //<Snippet3>
-        // The Item property is another name for the indexer, so you 
-        // can omit its name when accessing elements. 
-        Console.WriteLine("For key = \"rtf\", value = {0}.", 
+        // The Item property is another name for the indexer, so you
+        // can omit its name when accessing elements.
+        Console.WriteLine("For key = \"rtf\", value = {0}.",
             openWith["rtf"]);
 
         // The indexer can be used to change the value associated
         // with a key.
         openWith["rtf"] = "winword.exe";
-        Console.WriteLine("For key = \"rtf\", value = {0}.", 
+        Console.WriteLine("For key = \"rtf\", value = {0}.",
             openWith["rtf"]);
 
         // If a key does not exist, setting the indexer for that key
@@ -53,7 +53,7 @@ public class Example
         // not in the dictionary.
         try
         {
-            Console.WriteLine("For key = \"tif\", value = {0}.", 
+            Console.WriteLine("For key = \"tif\", value = {0}.",
                 openWith["tif"]);
         }
         catch (KeyNotFoundException)
@@ -64,7 +64,7 @@ public class Example
 
         //<Snippet5>
         // When a program often has to try keys that turn out not to
-        // be in the dictionary, TryGetValue can be a more efficient 
+        // be in the dictionary, TryGetValue can be a more efficient
         // way to retrieve values.
         string value = "";
         if (openWith.TryGetValue("tif", out value))
@@ -78,12 +78,12 @@ public class Example
         //</Snippet5>
 
         //<Snippet6>
-        // ContainsKey can be used to test keys before inserting 
+        // ContainsKey can be used to test keys before inserting
         // them.
         if (!openWith.ContainsKey("ht"))
         {
             openWith.Add("ht", "hypertrm.exe");
-            Console.WriteLine("Value added for key = \"ht\": {0}", 
+            Console.WriteLine("Value added for key = \"ht\": {0}",
                 openWith["ht"]);
         }
         //</Snippet6>
@@ -94,7 +94,7 @@ public class Example
         Console.WriteLine();
         foreach( KeyValuePair<string, string> kvp in openWith )
         {
-            Console.WriteLine("Key = {0}, Value = {1}", 
+            Console.WriteLine("Key = {0}, Value = {1}",
                 kvp.Key, kvp.Value);
         }
         //</Snippet7>

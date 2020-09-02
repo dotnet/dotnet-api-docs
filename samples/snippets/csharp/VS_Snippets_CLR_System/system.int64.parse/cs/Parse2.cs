@@ -19,8 +19,8 @@ public class ParseInt32
       Convert("-1,345,791", NumberStyles.AllowThousands);
       Convert("(1,345,791)", NumberStyles.AllowThousands |
                              NumberStyles.AllowParentheses);
-      Convert("FFCA00A0", NumberStyles.HexNumber);                       
-      Convert("0xFFCA00A0", NumberStyles.HexNumber);                       
+      Convert("FFCA00A0", NumberStyles.HexNumber);
+      Convert("0xFFCA00A0", NumberStyles.HexNumber);
    }
 
    private static void Convert(string value, NumberStyles style)
@@ -36,7 +36,7 @@ public class ParseInt32
       }
       catch (OverflowException)
       {
-         Console.WriteLine("'{0}' is out of range of the Int64 type.", value);   
+         Console.WriteLine("'{0}' is out of range of the Int64 type.", value);
       }
    }
 }

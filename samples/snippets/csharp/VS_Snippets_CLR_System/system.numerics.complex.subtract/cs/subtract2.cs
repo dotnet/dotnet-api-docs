@@ -10,7 +10,7 @@ public class Example
       System.Numerics.Complex result = c1 - c2;
       Console.WriteLine("{0} - {1} = {2}", c1, c2, result);
       // The example displays the following output:
-      //       (6.7, -1.3); - (1.4, 3.8); = (5.3, -5.1)      
+      //       (6.7, -1.3); - (1.4, 3.8); = (5.3, -5.1)
       // </Snippet2>
    }
 }

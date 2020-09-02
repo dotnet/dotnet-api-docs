@@ -2,13 +2,13 @@
 // Sample for String.GetTypeCode()
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     String str = "abc";
     TypeCode tc = str.GetTypeCode();
-    Console.WriteLine("The type code for '{0}' is {1}, which represents {2}.", 
+    Console.WriteLine("The type code for '{0}' is {1}, which represents {2}.",
                          str, tc.ToString("D"), tc.ToString("F"));
     }
 }

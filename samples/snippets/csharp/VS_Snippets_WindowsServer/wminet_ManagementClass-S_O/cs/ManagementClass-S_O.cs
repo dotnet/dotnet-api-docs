@@ -2,17 +2,17 @@
 using System;
 using System.Management;
 
-public class Sample 
-{    
-    public static void Main() 
+public class Sample
+{
+    public static void Main()
     {
 
         // Get the WMI class
         //Options specify that amended qualifiers
         // should be retrieved along with the class
         ObjectGetOptions o = new ObjectGetOptions(
-            null, System.TimeSpan.MaxValue, true); 
-        ManagementClass c = 
+            null, System.TimeSpan.MaxValue, true);
+        ManagementClass c =
             new ManagementClass("Win32_ComputerSystem",o);
 
         // Get the methods in the class

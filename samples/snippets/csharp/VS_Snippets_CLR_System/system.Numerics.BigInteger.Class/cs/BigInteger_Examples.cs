@@ -2,7 +2,7 @@
 using System.Numerics;
 
 public class Example
-{ 
+{
    public static void Main()
    {
       // <Snippet1>
@@ -18,7 +18,7 @@ public class Example
       Console.WriteLine();
 
       // <Snippet2>
-      long longValue = 6315489358112;      
+      long longValue = 6315489358112;
       BigInteger assignedFromLong = longValue;
       Console.WriteLine(assignedFromLong);
       // The example displays the following output:
@@ -29,12 +29,12 @@ public class Example
       Console.WriteLine("Casting:");
       // <Snippet3>
       BigInteger assignedFromDouble = (BigInteger) 179032.6541;
-      Console.WriteLine(assignedFromDouble);   
-      BigInteger assignedFromDecimal = (BigInteger) 64312.65m;      
+      Console.WriteLine(assignedFromDouble);
+      BigInteger assignedFromDecimal = (BigInteger) 64312.65m;
       Console.WriteLine(assignedFromDecimal);
       // The example displays the following output:
       //   179032
-      //   64312      
+      //   64312
       // </Snippet3>
 
       Console.WriteLine();
@@ -42,7 +42,7 @@ public class Example
       // <Snippet4>
       byte[] byteArray = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
       BigInteger newBigInt = new BigInteger(byteArray);
-      Console.WriteLine("The value of newBigInt is {0} (or 0x{0:x}).", newBigInt);    
+      Console.WriteLine("The value of newBigInt is {0} (or 0x{0:x}).", newBigInt);
       // The example displays the following output:
       //   The value of newBigInt is 4759477275222530853130 (or 0x102030405060708090a).
       // </Snippet4>
@@ -61,14 +61,14 @@ public class Example
       }
       catch (FormatException)
       {
-         Console.WriteLine("Unable to convert the string '{0}' to a BigInteger value.", 
+         Console.WriteLine("Unable to convert the string '{0}' to a BigInteger value.",
                            positiveString);
       }
 
       if (BigInteger.TryParse(negativeString, out negBigInt))
         Console.WriteLine(negBigInt);
       else
-         Console.WriteLine("Unable to convert the string '{0}' to a BigInteger value.", 
+         Console.WriteLine("Unable to convert the string '{0}' to a BigInteger value.",
                             negativeString);
 
       // The example displays the following output:
@@ -83,6 +83,6 @@ public class Example
       Console.WriteLine(number);
       // The example displays the following output:
       //    6277101735386680762814942322444851025767571854389858533375
-      // </Snippet6>      
+      // </Snippet6>
    }
 }

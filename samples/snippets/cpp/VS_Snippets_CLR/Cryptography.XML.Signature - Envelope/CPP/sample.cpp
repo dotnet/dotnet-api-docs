@@ -127,7 +127,7 @@ int main()
 {
    
    // Generate a signing key.
-   RSACryptoServiceProvider^ Key = gcnew RSACryptoServiceProvider;
+   RSA^ Key = RSA::Create();
    try
    {
       
@@ -159,7 +159,7 @@ int main()
    {
       
       // Clear resources associated with the 
-      // RSACryptoServiceProvider.
+      // RSA instance.
       Key->Clear();
    }
 

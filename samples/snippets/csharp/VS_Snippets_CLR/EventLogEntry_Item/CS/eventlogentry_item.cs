@@ -2,13 +2,13 @@
 // System.Diagnostics.EventLogEntryCollection.Item
 
 /*
-   The following example demonstrates 'Item','Count' properties of 
-   EventLogEntryCollection class.A new Source for eventlog 'MyNewLog' is created.
-   The program checks if a Event source exists.If the source already exists, it gets 
-   the Log name associated with it otherwise, creates a new event source. 
-   A new entry is created for 'MyNewLog'.Entries  of 'MyNewLog' are obtained and 
+   The following example demonstrates 'Item' and 'Count' properties of the
+   EventLogEntryCollection class. A new Source for eventlog 'MyNewLog' is created.
+   The program checks if a Event source exists. If the source already exists, it gets
+   the Log name associated with it otherwise, creates a new event source.
+   A new entry is created for 'MyNewLog'.Entries  of 'MyNewLog' are obtained and
    the count and the messages are displayed.
-   
+
  */
 
 using System;

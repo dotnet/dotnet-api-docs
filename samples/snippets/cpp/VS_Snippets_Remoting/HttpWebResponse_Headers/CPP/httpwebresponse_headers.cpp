@@ -1,7 +1,7 @@
 // System::Net::HttpWebResponse::Headers
 
 /* This program demonstrates the 'Headers' property of the 'HttpWebResponse' class
-It creates a web request and queries for a response.It then displays all the response headers
+It creates a web request and queries for a response. It then displays all the response headers
 onto the console. */
 #using <System.dll>
 

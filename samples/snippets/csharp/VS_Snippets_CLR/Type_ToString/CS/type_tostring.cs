@@ -13,7 +13,7 @@ public class Example
     public static void Main()
     {
          Type myType = typeof(MyNamespace.MyClass);
-         Console.WriteLine("Displaying information about {0}:", myType); 
+         Console.WriteLine("Displaying information about {0}:", myType);
          // Get the namespace of the myClass class.
          Console.WriteLine("   Namespace: {0}.", myType.Namespace);
          // Get the name of the module.

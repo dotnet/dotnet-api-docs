@@ -6,13 +6,13 @@ public class Example
 {
    public static void Main()
    {
-      DateTime dateValue = new DateTime(2013, 08, 28); 
+      DateTime dateValue = new DateTime(2013, 08, 28);
       CultureInfo frFR = CultureInfo.CreateSpecificCulture("fr-FR");
       DateTimeFormatInfo dtfi = frFR.DateTimeFormat;
-      
+
       Console.WriteLine("Before modifying DateSeparator property: {0}",
                         dateValue.ToString("g", frFR));
-      
+
       // Modify the date separator.
       dtfi.DateSeparator = "-";
       Console.WriteLine("After modifying the DateSeparator property: {0}",

@@ -29,7 +29,7 @@ public class Example
             {
                 Console.WriteLine($"Bad Format: {stringGuid}");
             }
-        }     
+        }
 
         // The example displays output similar to the following:
         //

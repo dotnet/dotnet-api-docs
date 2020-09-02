@@ -3,7 +3,7 @@
 /* This program demonstrates the 'GetResponseStream' method of the 'FileWebResponse' class.
 It creates a 'FileWebRequest' Object* and queries for a response.
 The response stream obtained is piped to a higher level stream reader. The reader reads
-256 characters at a time , writes them into a String* and then displays the String* onto the console*/
+256 characters at a time, writes them into a String* and then displays the String* onto the console*/
 
 #using <System.dll>
 
@@ -51,7 +51,7 @@ void GetPage( String^ url )
    }
    catch ( WebException^ e ) 
    {
-      Console::WriteLine( "\r\nWebException thrown.The Reason for failure is : {0}", e->Status );
+      Console::WriteLine( "\r\nWebException thrown. The Reason for failure is : {0}", e->Status );
    }
    catch ( Exception^ e ) 
    {

@@ -88,7 +88,7 @@ public class ILGenerator_BeginFinallyBlock
 
       // Call catch block.
       myAdderIL.BeginCatchBlock(null);
-      
+
       // Call other catch block.
       myAdderIL.BeginCatchBlock(typeof(OverflowException));
 

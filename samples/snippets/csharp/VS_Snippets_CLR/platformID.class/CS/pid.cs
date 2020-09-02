@@ -2,9 +2,9 @@
 // This example demonstrates the PlatformID enumeration.
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     string msg1 = "This is a Windows operating system.";
     string msg2 = "This is a Unix operating system.";
@@ -14,7 +14,7 @@ class Sample
 
     OperatingSystem os = Environment.OSVersion;
     PlatformID     pid = os.Platform;
-    switch (pid) 
+    switch (pid)
         {
         case PlatformID.Win32NT:
         case PlatformID.Win32S:

@@ -5,15 +5,15 @@
 
 // Grouping Clause : Snippet5 and Snippet8 go together.
 
-/* The following example demonstrates the constructor 'Binding()' and properties 'Extensions','Name','Operations',
-  'ServiceDescription' and 'Type' property of 'Binding' class AND method 'Insert' of 'BindingCollection' class.
-  The input to the program is a WSDL file 'MathService_input.wsdl' with all information related to SOAP protocol 
-  removed from it.In a way it tries to simulate a scenario wherein a service initially did not support a protocol, however later 
-  on happen to support it. 
-  IN this example the WSDL file is modified to insert a new Binding for SOAP. The binding is populated based on
+/* The following example demonstrates the 'Binding()' constructor and the 'Extensions', 'Name' , 'Operations',
+  'ServiceDescription', and 'Type' properties of the 'Binding' class AND the 'Insert' method of the 'BindingCollection' class.
+  The input to the program is a WSDL file 'MathService_input.wsdl' with all information related to SOAP protocol
+  removed from it. In a way, it tries to simulate a scenario wherein a service initially did not support a protocol, however later
+  on happen to support it.
+  In this example, the WSDL file is modified to insert a new Binding for SOAP. The binding is populated based on
   WSDL document structure defined in WSDL specification. The ServiceDescription instance is loaded with values
-  for 'Messages', 'PortTypes','Bindings' and 'Port'.The instance is then written to an external file 'MathService_new.wsdl'.
-  
+  for 'Messages', 'PortTypes', 'Bindings', and 'Port'. The instance is then written to an external file 'MathService_new.wsdl'.
+
  * */
 using System;
 using System.Web.Services.Description;
@@ -27,14 +27,14 @@ class MyClass
       ServiceDescription myServiceDescription = ServiceDescription.Read("MathService_input.wsdl");
       // Create SOAP Messages.
       myServiceDescription.Messages.Add(CreateMessage("AddSoapIn","parameters","Add",myServiceDescription.TargetNamespace));
-      myServiceDescription.Messages.Add(CreateMessage("AddSoapOut","parameters","AddResponse",myServiceDescription.TargetNamespace));            
+      myServiceDescription.Messages.Add(CreateMessage("AddSoapOut","parameters","AddResponse",myServiceDescription.TargetNamespace));
       myServiceDescription.Messages.Add(CreateMessage("SubtractSoapIn","parameters","Subtract",myServiceDescription.TargetNamespace));
       myServiceDescription.Messages.Add(CreateMessage("SubtractSoapOut","parameters","SubtractResponse",myServiceDescription.TargetNamespace));
       myServiceDescription.Messages.Add(CreateMessage("MultiplySoapIn","parameters","Multiply",myServiceDescription.TargetNamespace));
       myServiceDescription.Messages.Add(CreateMessage("MultiplySoapOut","parameters","MultiplyResponse",myServiceDescription.TargetNamespace));
       myServiceDescription.Messages.Add(CreateMessage("DivideSoapIn","parameters","Divide",myServiceDescription.TargetNamespace));
       myServiceDescription.Messages.Add(CreateMessage("DivideSoapOut","parameters","DivideResponse",myServiceDescription.TargetNamespace));
-      
+
       // Create a new PortType.
       PortType soapPortType = new PortType();
       soapPortType.Name = "MathServiceSoap";
@@ -106,7 +106,7 @@ class MyClass
       myMessage.Parts.Add(myMessagePart);
       return myMessage;
    }
-// <Snippet8>   
+// <Snippet8>
    // Used to create OperationBinding instances within 'Binding'.
    public static OperationBinding CreateOperationBinding(string operation,string targetNamespace)
    {
@@ -121,7 +121,7 @@ class MyClass
       // Create OutputBinding for operation.
       OutputBinding myOutputBinding = new OutputBinding();
       myOutputBinding.Extensions.Add(mySoapBodyBinding);
-      // Add 'InputBinding' and 'OutputBinding' to 'OperationBinding'. 
+      // Add 'InputBinding' and 'OutputBinding' to 'OperationBinding'.
       myOperationBinding.Input = myInputBinding;
       myOperationBinding.Output = myOutputBinding;
       // Create extensibility element for 'SoapOperationBinding'.

@@ -11,7 +11,7 @@ class XmlReaderSettings_Examples
 	{
     }
 
-    // 
+    //
     static void String_Fragment()
     {
 //<snippet1>
@@ -27,7 +27,7 @@ nsmgr.AddNamespace("rk", "urn:store-items");
 // Create the XmlParserContext.
 XmlParserContext context = new XmlParserContext(null, nsmgr, null, XmlSpace.None);
 
-// Create the reader. 
+// Create the reader.
 XmlReaderSettings settings = new XmlReaderSettings();
 settings.ConformanceLevel = ConformanceLevel.Fragment;
 XmlReader reader = XmlReader.Create(new StringReader(xmlFrag), settings, context);
@@ -45,7 +45,7 @@ XmlReader reader = XmlReader.Create(new StringReader(xmlFrag), settings, context
         //<snippet2>
 // Create an XmlUrlResolver with the credentials necessary to access the Web server.
 var resolver = new XmlUrlResolver();
-var myCred = new NetworkCredential(UserName, SecurelyStoredPassword, Domain);  
+var myCred = new NetworkCredential(UserName, SecurelyStoredPassword, Domain);
 resolver.Credentials = myCred;
 
 var settings = new XmlReaderSettings();
@@ -65,11 +65,11 @@ XmlReaderSettings settings = new XmlReaderSettings();
 settings.DtdProcessing = DtdProcessing.Parse;
 settings.ValidationType = ValidationType.DTD;
 settings.ValidationEventHandler += new ValidationEventHandler (ValidationCallBack);
- 
+
  // Create the XmlReader object.
 XmlReader reader = XmlReader.Create("itemDTD.xml", settings);
 
-// Parse the file. 
+// Parse the file.
 while (reader.Read()) {}
         //</snippet3>
     }
@@ -128,7 +128,7 @@ XmlReader reader = XmlReader.Create(new StringReader(xmlData));
     {
       // <snippet8>
 
-FileStream fs = new FileStream(@"C:\data\books.xml", FileMode.OpenOrCreate, 
+FileStream fs = new FileStream(@"C:\data\books.xml", FileMode.OpenOrCreate,
                                                                     FileAccess.Read, FileShare.Read);
 
 // Create the XmlReader object.
@@ -140,7 +140,7 @@ XmlReader reader = XmlReader.Create(fs);
     {
       // <snippet9>
 
-FileStream fs = new FileStream(@"C:\data\books.xml", FileMode.OpenOrCreate, 
+FileStream fs = new FileStream(@"C:\data\books.xml", FileMode.OpenOrCreate,
                                                                     FileAccess.Read, FileShare.Read);
 
 XmlUrlResolver resolver = new XmlUrlResolver();
@@ -170,7 +170,7 @@ XmlReader reader = XmlReader.Create("http://serverName/data/books.xml", settings
         //</snippet10>
     }
 
-    // 
+    //
 static void GeneralSettings()
     {
         //<snippet11>
@@ -183,7 +183,7 @@ XmlReader reader = XmlReader.Create("books.xml", settings);
         //</snippet11>
     }
 
-    // 
+    //
 static void ChainReaders()
     {
         //<snippet12>
@@ -196,7 +196,7 @@ XmlReader outer = XmlReader.Create(inner, settings);  // XML Schema Validation
         //</snippet12>
     }
 
-    // 
+    //
 static void WrapTextReader()
     {
         //<snippet13>

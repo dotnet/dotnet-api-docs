@@ -41,13 +41,13 @@ public class Run
 
    private XmlSerializer CreateOverrideSerializer(){
    	
-      SoapAttributeOverrides mySoapAttributeOverrides = 
+      SoapAttributeOverrides mySoapAttributeOverrides =
 		new SoapAttributeOverrides();
       SoapAttributes mySoapAttributes = new SoapAttributes();
-      // Create a new SoapAttributeAttribute to override the 
-      // one applied to the Group class. The resulting XML 
+      // Create a new SoapAttributeAttribute to override the
+      // one applied to the Group class. The resulting XML
       // stream will use the new namespace and attribute name.
-      SoapAttributeAttribute mySoapAttribute = 
+      SoapAttributeAttribute mySoapAttribute =
       new SoapAttributeAttribute();
       mySoapAttribute.AttributeName = "TeamName";
       // Change the Namespace.
@@ -64,8 +64,8 @@ public class Run
       return ser;
    }
 }
-//<?xml version="1.0" encoding="utf-8" ?> 
-// <Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-//xmlns:xsd="http://www.w3.org/2001/XMLSchema" n1:TeamName=".NET" 
-//xmlns:n1="http://www.cohowinery" /> 
+//<?xml version="1.0" encoding="utf-8" ?>
+// <Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+//xmlns:xsd="http://www.w3.org/2001/XMLSchema" n1:TeamName=".NET"
+//xmlns:n1="http://www.cohowinery" />
 //</Snippet1>

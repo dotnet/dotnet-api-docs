@@ -2,9 +2,9 @@
 // Sample for the Environment.SystemDirectory property
 using System;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
     Console.WriteLine();
 //  <-- Keep this information secure! -->

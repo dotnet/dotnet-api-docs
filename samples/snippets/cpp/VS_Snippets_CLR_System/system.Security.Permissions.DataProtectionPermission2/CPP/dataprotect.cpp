@@ -17,7 +17,7 @@ private:
 
    // Create a byte array for additional entropy when using the
    // Protect and Unprotect methods.
-   static array<Byte>^ s_aditionalEntropy = {9,8,7,6,5};
+   static array<Byte>^ s_additionalEntropy = {9,8,7,6,5};
    static array<Byte>^ encryptedSecret;
    static array<Byte>^ originalData;
 
@@ -166,7 +166,7 @@ public:
          // Encrypt the data using DataProtectionScope.CurrentUser.
          // The result can be decrypted only by the user who encrypted
          // the data.
-         return ProtectedData::Protect( data, s_aditionalEntropy, DataProtectionScope::CurrentUser );
+         return ProtectedData::Protect( data, s_additionalEntropy, DataProtectionScope::CurrentUser );
       }
       catch ( CryptographicException^ e ) 
       {
@@ -193,7 +193,7 @@ public:
       {
          
          //Decrypt the data using DataProtectionScope.CurrentUser.
-         return ProtectedData::Unprotect( data, s_aditionalEntropy, DataProtectionScope::CurrentUser );
+         return ProtectedData::Unprotect( data, s_additionalEntropy, DataProtectionScope::CurrentUser );
       }
       catch ( CryptographicException^ e ) 
       {

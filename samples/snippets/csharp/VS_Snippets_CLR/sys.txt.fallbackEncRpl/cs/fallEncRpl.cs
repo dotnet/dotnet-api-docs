@@ -4,27 +4,27 @@
 using System;
 using System.Text;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
 
-// Create an encoding, which is equivalent to calling the 
-// ASCIIEncoding class constructor. 
+// Create an encoding, which is equivalent to calling the
+// ASCIIEncoding class constructor.
 // The EncoderReplacementFallback parameter specifies that the
-// string, "(unknown)", replace characters that cannot be encoded. 
-// A decoder replacement fallback is also specified, but in this 
-// code example the decoding operation cannot fail.  
+// string, "(unknown)", replace characters that cannot be encoded.
+// A decoder replacement fallback is also specified, but in this
+// code example the decoding operation cannot fail.
 
     Encoding ae = Encoding.GetEncoding(
                   "us-ascii",
-                  new EncoderReplacementFallback("(unknown)"), 
+                  new EncoderReplacementFallback("(unknown)"),
                   new DecoderReplacementFallback("(error)"));
 
-// The input string consists of the Unicode characters LEFT POINTING 
-// DOUBLE ANGLE QUOTATION MARK (U+00AB), 'X' (U+0058), and RIGHT POINTING 
-// DOUBLE ANGLE QUOTATION MARK (U+00BB). 
-// The encoding can only encode characters in the US-ASCII range of U+0000 
+// The input string consists of the Unicode characters LEFT POINTING
+// DOUBLE ANGLE QUOTATION MARK (U+00AB), 'X' (U+0058), and RIGHT POINTING
+// DOUBLE ANGLE QUOTATION MARK (U+00BB).
+// The encoding can only encode characters in the US-ASCII range of U+0000
 // through U+007F. Consequently, the characters bracketing the 'X' character
 // are replaced with the fallback replacement string, "(unknown)".
 
@@ -36,32 +36,30 @@ class Sample
     int ix = 0;
 
 // --------------------------------------------------------------------------
-    Console.Clear();
-
 // Display the name of the encoding.
     Console.WriteLine("The name of the encoding is \"{0}\".\n", ae.WebName);
 
 // Display the input string in text.
-    Console.WriteLine("Input string ({0} characters): \"{1}\"", 
+    Console.WriteLine("Input string ({0} characters): \"{1}\"",
                        inputString.Length, inputString);
 
 // Display the input string in hexadecimal.
     Console.Write("Input string in hexadecimal: ");
-    foreach (char c in inputString.ToCharArray()) 
+    foreach (char c in inputString.ToCharArray())
         {
         Console.Write("0x{0:X2} ", (int)c);
         }
     Console.Write(twoNewLines);
 
 // --------------------------------------------------------------------------
-// Encode the input string. 
+// Encode the input string.
 
     Console.WriteLine("Encode the input string...");
-    numberOfEncodedBytes = ae.GetBytes(inputString, 0, inputString.Length, 
+    numberOfEncodedBytes = ae.GetBytes(inputString, 0, inputString.Length,
                                        encodedBytes, 0);
 
 // Display the encoded bytes.
-    Console.WriteLine("Encoded bytes in hexadecimal ({0} bytes):\n", 
+    Console.WriteLine("Encoded bytes in hexadecimal ({0} bytes):\n",
                        numberOfEncodedBytes);
     ix = 0;
     foreach (byte b in encodedBytes)

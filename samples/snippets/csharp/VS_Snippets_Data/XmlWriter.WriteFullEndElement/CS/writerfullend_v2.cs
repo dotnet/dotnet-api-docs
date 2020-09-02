@@ -6,7 +6,7 @@ using System.Xml;
 public class Sample {
 
   public static void Main() {
-  
+
      // Create a writer to write XML to the console.
      XmlWriterSettings settings = new XmlWriterSettings();
      settings.Indent = true;
@@ -26,9 +26,9 @@ public class Sample {
      writer.WriteFullEndElement();
 
      writer.WriteEndElement();
-             
+
      // Write the XML to file and close the writer
-     writer.Close();  
+     writer.Close();
   }
 }
 //</snippet1>

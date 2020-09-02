@@ -2,7 +2,7 @@
 using System;
 using System.Threading;
 
-public class ThreadWork 
+public class ThreadWork
 {
    public static void DoWork()
    {

@@ -6,7 +6,7 @@ using System.Runtime.Remoting.Channels.Tcp;
 
 public class ClientClass {
 
-    public static void Main() { 
+    public static void Main() {
 
         ChannelServices.RegisterChannel(new TcpChannel());
 

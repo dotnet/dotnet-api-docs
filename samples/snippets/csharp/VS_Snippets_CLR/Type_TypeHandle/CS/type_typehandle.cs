@@ -19,7 +19,7 @@ class Type_TypeHandle
 
             // Get the runtime handle of MyClass.
             RuntimeTypeHandle myClassHandle = myClassType.TypeHandle;
-         
+
             DisplayTypeHandle(myClassHandle);
         }
         catch(Exception e)
@@ -31,7 +31,7 @@ class Type_TypeHandle
     public static void DisplayTypeHandle(RuntimeTypeHandle myTypeHandle)
     {
         // Get the type from the handle.
-        Type myType = Type.GetTypeFromHandle(myTypeHandle);      
+        Type myType = Type.GetTypeFromHandle(myTypeHandle);
         // Display the type.
         Console.WriteLine("\nDisplaying the type from the handle:\n");
         Console.WriteLine("The type is {0}.", myType.ToString());

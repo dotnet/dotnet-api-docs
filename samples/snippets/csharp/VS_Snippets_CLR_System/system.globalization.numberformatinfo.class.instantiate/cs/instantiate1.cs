@@ -8,10 +8,10 @@ public class Example
    {
       NumberFormatInfo current1 = CultureInfo.CurrentCulture.NumberFormat;
       Console.WriteLine(current1.IsReadOnly);
-      
+
       NumberFormatInfo current2 = NumberFormatInfo.CurrentInfo;
       Console.WriteLine(current2.IsReadOnly);
-      
+
       NumberFormatInfo current3 = NumberFormatInfo.GetInstance(CultureInfo.CurrentCulture);
       Console.WriteLine(current3.IsReadOnly);
    }

@@ -21,7 +21,7 @@ public class X509
 
         // Get the value.
         bool result = cert.Equals(certTwo);
-       
+
         // Display the value to the console.
         Console.WriteLine(result);
     }

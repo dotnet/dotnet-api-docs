@@ -10,12 +10,12 @@ public class ToLowerTest {
         foreach (string s in info)
             Console.WriteLine(s);
 
-        Console.WriteLine("{0}The lowercase of these values is:", Environment.NewLine);        
+        Console.WriteLine("{0}The lowercase of these values is:", Environment.NewLine);
 
         foreach (string s in info)
             Console.WriteLine(s.ToLower());
 
-        Console.WriteLine("{0}The uppercase of these values is:", Environment.NewLine);        
+        Console.WriteLine("{0}The uppercase of these values is:", Environment.NewLine);
 
         foreach (string s in info)
             Console.WriteLine(s.ToUpper());
@@ -28,14 +28,14 @@ public class ToLowerTest {
 //       Age
 //       Location
 //       Gender
-//       
+//
 //       The lowercase of these values is:
 //       name
 //       title
 //       age
 //       location
 //       gender
-//       
+//
 //       The uppercase of these values is:
 //       NAME
 //       TITLE

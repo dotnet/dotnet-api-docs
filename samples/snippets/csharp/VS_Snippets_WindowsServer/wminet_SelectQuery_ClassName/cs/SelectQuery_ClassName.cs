@@ -1,12 +1,12 @@
 ﻿//<Snippet1>
-using System; 
+using System;
 using System.Management;
- 
-class Sample 
-{ 
-    public static void Main(string[] args) 
-    { 
-        SelectQuery s = 
+
+class Sample
+{
+    public static void Main(string[] args)
+    {
+        SelectQuery s =
             new SelectQuery("SELECT * FROM Win32_LogicalDisk");
 
         //output is : SELECT * FROM Win32_LogicalDisk

@@ -19,7 +19,7 @@ Public Class SignVerifyEnvelope
       Try
          
          ' Generate a signing key.
-         Dim Key As New HMACSHA1()
+         Dim Key As New HMACSHA256()
          
          ' Create an XML file to sign.
          CreateSomeXml("Example.xml")

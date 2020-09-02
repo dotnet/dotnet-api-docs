@@ -3,8 +3,8 @@
 
 /*
    The following example demonstrates the 'DefineGlobalMethod(String,MethodAttributes,Type,Type[])'
-   and 'CreateGlobalFunctions' methods of 'ModuleBuilder' class. 
-   A dynamic assembly with a module in it is created in 'CodeGenerator' class. Then a global method 
+   and 'CreateGlobalFunctions' methods of 'ModuleBuilder' class.
+   A dynamic assembly with a module in it is created in 'CodeGenerator' class. Then a global method
    is created in the module using the 'DefineGlobalMethod' method. The global method is called from
    the 'CallerClass'.
 */
@@ -31,9 +31,9 @@
          currentDomain = AppDomain.CurrentDomain;
          myAssemblyName = new AssemblyName();
          myAssemblyName.Name = "TempAssembly";
-         
+
          // Define a dynamic assembly in the 'currentDomain'.
-         myAssemblyBuilder = 
+         myAssemblyBuilder =
             currentDomain.DefineDynamicAssembly
                         (myAssemblyName, AssemblyBuilderAccess.RunAndSave);
          // Define a dynamic module in "TempAssembly" assembly.
@@ -51,7 +51,7 @@
 // </Snippet2>
 // </Snippet1>
       }
-      
+
       public AssemblyBuilder MyAssembly
       {
          get

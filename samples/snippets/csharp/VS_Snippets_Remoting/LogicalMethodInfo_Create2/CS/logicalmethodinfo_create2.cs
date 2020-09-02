@@ -11,13 +11,13 @@
 /*
    This following example demonstrates the 'AsyncCallbackParameter',
    'AsyncResultParameter', 'AsyncStateParameter', 'BeginMethodInfo',
-   'EndMethodInfo', 'IsAsync' properties and 
-   'Create(MethodInfo[], LogicalMethodTypes)' method of the 
-   'LogicalMethodInfo' class and the 'Async' enum member of the 
+   'EndMethodInfo', 'IsAsync' properties and
+   'Create(MethodInfo[], LogicalMethodTypes)' method of the
+   'LogicalMethodInfo' class and the 'Async' enum member of the
    'LogicalMethodTypes' enumeration. This example displays the callback,
-   result and state parameters for asynchronous methods. It also displays 
+   result and state parameters for asynchronous methods. It also displays
    the begin and end for such asynchronous methods.
-   
+
    Note : The 'LogicalMethodInfo' class should only be used with
    'SoapMessage'. 'SoapClientMessage' and 'SoapServerMessage' contain
    a property named 'MethodInfo' which provides for an instance of
@@ -41,11 +41,11 @@ public class MyService : SoapHttpClientProtocol
       return this.BeginInvoke("Add", new object[] {xValue,yValue}, callback, asyncState);
    }
 
-   public int EndAdd(System.IAsyncResult asyncResult) 
+   public int EndAdd(System.IAsyncResult asyncResult)
    {
       object[] results = this.EndInvoke(asyncResult);
       return ((int)(results[0]));
-   } 
+   }
 }
 
 public class LogicalMethodInfo_Create
@@ -55,7 +55,7 @@ public class LogicalMethodInfo_Create
       Type myType = typeof(MyService);
       MethodInfo myBeginMethod = myType.GetMethod("BeginAdd");
       MethodInfo myEndMethod = myType.GetMethod("EndAdd");
-      LogicalMethodInfo myLogicalMethodInfo = 
+      LogicalMethodInfo myLogicalMethodInfo =
          (LogicalMethodInfo.Create(new MethodInfo[] { myBeginMethod,
                                                       myEndMethod },
                                    LogicalMethodTypes.Async))[0];

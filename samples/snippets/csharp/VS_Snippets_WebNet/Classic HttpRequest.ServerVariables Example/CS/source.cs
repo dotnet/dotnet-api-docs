@@ -10,12 +10,12 @@ public class Page1: Page
 // <Snippet1>
 int loop1, loop2;
 NameValueCollection coll;
- 
+
 // Load ServerVariable collection into NameValueCollection object.
-coll=Request.ServerVariables; 
-// Get names of all keys into a string array. 
-String[] arr1 = coll.AllKeys; 
-for (loop1 = 0; loop1 < arr1.Length; loop1++) 
+coll=Request.ServerVariables;
+// Get names of all keys into a string array.
+String[] arr1 = coll.AllKeys;
+for (loop1 = 0; loop1 < arr1.Length; loop1++)
 {
    Response.Write("Key: " + arr1[loop1] + "<br>");
    String[] arr2=coll.GetValues(arr1[loop1]);
@@ -23,7 +23,7 @@ for (loop1 = 0; loop1 < arr1.Length; loop1++)
       Response.Write("Value " + loop2 + ": " + Server.HtmlEncode(arr2[loop2]) + "<br>");
    }
 }
-   
+
 // </Snippet1>
  }
 }

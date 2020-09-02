@@ -9,7 +9,7 @@ public class MyTypeClass
     {
     }
 
-    public class Myclass2 
+    public class Myclass2
     {
     }
 
@@ -24,7 +24,7 @@ public class MyTypeClass
 
 public class TypeMain
 {
-    public static void Main() 
+    public static void Main()
     {
         Type myType = (typeof(MyTypeClass));
         // Get the public nested classes.
@@ -33,7 +33,7 @@ public class TypeMain
         // Display all the public nested classes.
         DisplayTypeInfo(myTypeArray);
         Console.WriteLine();
-        
+
         // Get the nonpublic nested classes.
         Type[] myTypeArray1 = myType.GetNestedTypes(BindingFlags.NonPublic|BindingFlags.Instance);
         Console.WriteLine("The number of nested protected classes is {0}.", myTypeArray1.Length);
@@ -52,7 +52,7 @@ public class TypeMain
 //       The number of public nested classes is 2.
 //       The name of the nested class is MyTypeClass+Myclass1.
 //       The name of the nested class is MyTypeClass+Myclass2.
-//       
+//
 //       The number of protected nested classes is 2.
 //       The name of the nested class is MyTypeClass+MyClass3.
 //       The name of the nested class is MyTypeClass+MyClass4.

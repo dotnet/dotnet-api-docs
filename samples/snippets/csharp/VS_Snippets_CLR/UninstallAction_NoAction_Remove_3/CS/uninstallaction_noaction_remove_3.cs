@@ -2,9 +2,9 @@
 // System.Configuration.Install.UninstallAction.NoAction
 // System.Configuration.Install.UninstallAction.Remove
 
-/* The following program demonstrates "NoAction" and "Remove" 
-   members of "UninstallAction" enumeration. A resource is 
-   installed and uninstalled using 'installutil.exe' in an event 
+/* The following program demonstrates "NoAction" and "Remove"
+   members of "UninstallAction" enumeration. A resource is
+   installed and uninstalled using 'installutil.exe' in an event
    log depending on the user input.
 */
 
@@ -16,10 +16,10 @@ using System.ComponentModel;
 using System.Configuration.Install;
 
 [RunInstaller(true)]
-public class MyUninstallActionClass : Installer 
+public class MyUninstallActionClass : Installer
 {
    EventLogInstaller myInstaller = new EventLogInstaller();
-   
+
    // Override the 'Install' method.
    public override void Install(IDictionary savedState)
    {
@@ -51,7 +51,7 @@ public class MyUninstallActionClass : Installer
 
       Console.Write("Do you want to uninstall, press 'y' for 'YES' and 'n' for 'NO':");
       string myUninstall = Console.ReadLine();
-     
+
       if( myUninstall == "n" )
       {
          // No action to be taken on the resource in the event log.

@@ -1,6 +1,6 @@
 ﻿/*
    This program demonstrates the 'Intersect' and 'Union' methods of 'DnsPermission' class.
-   It creates a 'DnsPermission' instance that is the Union/Intersection of current permission 
+   It creates a 'DnsPermission' instance that is the Union/Intersection of current permission
    instance and specified permission instance.
 */
 
@@ -11,24 +11,24 @@ using System.Security.Permissions;
 using System.Collections;
 
 class DnsPermissionExample {
- 
+
    private DnsPermission dnsPermission1;
-   private DnsPermission dnsPermission2; 
+   private DnsPermission dnsPermission2;
 
    public static void Main() {
-     try 
+     try
      {
        DnsPermissionExample dnsPermissionExampleObj = new DnsPermissionExample();
        dnsPermissionExampleObj.useDns();
      }
-     catch(SecurityException e) 
+     catch(SecurityException e)
      {
        Console.WriteLine("SecurityException caught!!!");
        Console.WriteLine("Source : " + e.Source);
        Console.WriteLine("Message : " + e.Message);
      }
      catch(Exception e)
-     {  
+     {
        Console.WriteLine("Exception caught!!!");
        Console.WriteLine("Source : " + e.Source);
        Console.WriteLine("Message : " + e.Message);
@@ -38,7 +38,7 @@ class DnsPermissionExample {
    private void MyUnion()
    {
       // Create a DnsPermission instance that is the union of the current DnsPermission
-      // instance and the specified DnsPermission instance.     
+      // instance and the specified DnsPermission instance.
       DnsPermission permission = (DnsPermission)dnsPermission1.Union(dnsPermission2);
       // Print the attributes and the values of the union instance of DnsPermission.
       PrintKeysAndValues(permission.ToXml().Attributes);

@@ -19,7 +19,7 @@ class BinaryRW
         binWriter.Write(dataArray);
 
         // Create the reader using the stream from the writer.
-        BinaryReader binReader = 
+        BinaryReader binReader =
             new BinaryReader(binWriter.BaseStream);
 
         // Set Position to the beginning of the stream.

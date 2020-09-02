@@ -1,5 +1,5 @@
 ﻿namespace LCIDConversion
-{ 
+{
 	//<Snippet1>
 	using System;
 	using System.Runtime.InteropServices;

@@ -24,14 +24,14 @@ class HttpClientHandler_Example
 
          string responseBody = await response.Content.ReadAsStringAsync();
          Console.WriteLine(responseBody);
-      }  
+      }
       catch(HttpRequestException e)
       {
           Console.WriteLine("\nException Caught!");	
           Console.WriteLine("Message :{0} ",e.Message);
       }
 
-      // Need to call dispose on the HttpClient and HttpClientHandler objects 
+      // Need to call dispose on the HttpClient and HttpClientHandler objects
       // when done using them, so the app doesn't leak resources
       handler.Dispose(true);
       client.Dispose(true);

@@ -12,8 +12,8 @@ namespace MyProject
 
 		//**************************************************
 		// Provides an entry point into the application.
-		//		 
-		// This example verifies existence and attempts to 
+		//		
+		// This example verifies existence and attempts to
 		// delete a queue.
 		//**************************************************
 
@@ -30,10 +30,10 @@ namespace MyProject
 				}
 				catch(MessageQueueException e)
 				{
-					if(e.MessageQueueErrorCode == 
+					if(e.MessageQueueErrorCode ==
 						MessageQueueErrorCode.AccessDenied)
 					{
-						Console.WriteLine("Access is denied. " + 
+						Console.WriteLine("Access is denied. " +
 							"Queue might be a system queue.");
 					}
 

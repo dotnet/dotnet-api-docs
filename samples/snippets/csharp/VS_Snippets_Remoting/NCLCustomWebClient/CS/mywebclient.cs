@@ -70,7 +70,7 @@ namespace Examples.DerivedWebClient
             // and event handlers are called...
 
             base.OnDownloadStringCompleted (e);
- 
+
             // Here you can perform any post event actions...
         }
         // </snippet6>

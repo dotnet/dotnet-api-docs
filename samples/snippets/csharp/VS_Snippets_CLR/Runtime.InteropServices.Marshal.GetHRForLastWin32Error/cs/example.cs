@@ -36,7 +36,7 @@ class Program
         Run();
     }
 }
-// This code example displays the following to the console: 
+// This code example displays the following to the console:
 //
 // Calling Win32 MessageBox with error...
 // The last Win32 Error was: -2147023496

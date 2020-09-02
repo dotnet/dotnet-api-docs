@@ -3,17 +3,17 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace IsDef3CS 
+namespace IsDef3CS
 {
     // Assign a Guid attribute to a class.
     [Guid("BF235B41-52D1-46cc-9C55-046793DB363F")]
-    public class TestClass 
+    public class TestClass
     {
     }
 
-    public class DemoClass 
+    public class DemoClass
     {
-        static void Main(string[] args) 
+        static void Main(string[] args)
         {
             // Get the class type to access its metadata.
             Type clsType = typeof(TestClass);
@@ -23,15 +23,15 @@ namespace IsDef3CS
             Console.WriteLine("The Guid attribute {0} defined for class {1}.",
                 isDef ? "is" : "is not", clsType.Name);
             // If it's defined, display the GUID.
-            if (isDef) 
+            if (isDef)
             {
-                GuidAttribute guidAttr = 
-                    (GuidAttribute)Attribute.GetCustomAttribute(clsType, 
+                GuidAttribute guidAttr =
+                    (GuidAttribute)Attribute.GetCustomAttribute(clsType,
                         typeof(GuidAttribute));
                 if (guidAttr != null)
                     Console.WriteLine("GUID: {" + guidAttr.Value + "}.");
                 else
-                    Console.WriteLine("The Guid attribute could " + 
+                    Console.WriteLine("The Guid attribute could " +
                         "not be retrieved.");
             }
         }

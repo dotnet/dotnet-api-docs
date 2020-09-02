@@ -15,7 +15,7 @@ Namespace NDP_UE_VB
             MyBase.New( String.Format( "{0} - {1}", _
                 overflowMessage, auxMessage ), inner )
 
-            Me.HelpLink = "http://msdn.microsoft.com"
+            Me.HelpLink = "https://docs.microsoft.com"
             Me.Source = "Exception_Class_Samples"
 
         End Sub
@@ -101,7 +101,7 @@ End Namespace ' NDP_UE_VB
 ' The log table has overflowed. - Record "Log record number 5" was not logged.
 ' 
 ' HelpLink ---
-' http://msdn.microsoft.com
+' https://docs.microsoft.com
 ' 
 ' Source ---
 ' Exception_Class_Samples
