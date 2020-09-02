@@ -241,13 +241,14 @@ This shows up in the <xref:System.Diagnostics.Activity.TagObjects> enumeration. 
         <returns>
           <see langword="this" /> for convenient chaining.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
+          <format type="text/markdown">
+  <![CDATA[
 
 ## Remarks
 
-This key/value pair is included in the collection returned by the <xref:System.Diagnostics.Activity.Tags> property.
+This key/value pair is included in the collection returned by the <xref:System.Diagnostics.Activity.Tags> or <xref:System.Diagnostics.Activity.TagObjects> property.
 
-<xref:System.Diagnostics.Activity.Tags> is meant for information that is useful to log with the <xref:System.Diagnostics.Activity>. For information that's needed for runtime control, use the <xref:System.Diagnostics.Activity.Baggage> property.
+<xref:System.Diagnostics.Activity.Tags> <xref:System.Diagnostics.Activity.TagObjects> are meant for information that is useful to log with the <xref:System.Diagnostics.Activity>. For information that's needed for runtime control, use the <xref:System.Diagnostics.Activity.Baggage> property.
 
 ]]></format>
         </remarks>
@@ -388,13 +389,15 @@ In .NET 5.0 and later, the default format is <xref:System.Diagnostics.ActivityId
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the display name of the activity.</summary>
-        <value>To be added.</value>
+        <value>A string that represents the activity display name.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
 `DisplayName` is intended to be used in a user interface and need not be the same as `OperationName`.
+
+If the `DisplayName` property is not set, it will return the same value as `OperationName`.
 
           ]]></format>
         </remarks>
@@ -636,7 +639,16 @@ An ID has a hierarchical structure: `root-id.id1_id2.id3_`. The ID is generated 
       <Docs>
         <summary>Gets the format for the <see cref="P:System.Diagnostics.Activity.Id" />.</summary>
         <value>The format for the <see cref="P:System.Diagnostics.Activity.Id" />.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown">
+  <![CDATA[
+
+## Remarks
+
+The best practice for the library authors is not try to set this property. This property is automatically set when creating the Activity. The setter is useful only in the case of Activity objects created using the Activity constructor and want to override the default value. Activity objects created using <xref:System.Diagnostics.ActivitySource.StartActivity> automatically have this property set to the right value.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsAllDataRequested">
@@ -678,7 +690,7 @@ An ID has a hierarchical structure: `root-id.id1_id2.id3_`. The ID is generated 
       </ReturnValue>
       <Docs>
         <summary>Gets the relationship between the activity, its parents, and its children in a trace.</summary>
-        <value>To be added.</value>
+        <value>One of the enumeration values that indicate relationship between the activity, its parents, and its children in a trace.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -911,7 +923,7 @@ The root ID is a substring from the <xref:System.Diagnostics.Activity.Id> or the
       <Docs>
         <param name="propertyName">The name to associate the value with.</param>
         <param name="propertyValue">The object to attach and map to the property name.</param>
-        <summary>Attaches any custom object to this activity. If the specified <paramref name="propertyName" /> was previously associated with another object, the property will be updated to be associated with the new <paramref name="propertyValue" /> instead.</summary>
+        <summary>Attaches any custom object to this activity. If the specified <paramref name="propertyName" /> was previously associated with another object, the property will be updated to be associated with the new <paramref name="propertyValue" /> instead. It is recommended to use a unique property name to avoid conflicts with anyone using the same value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
