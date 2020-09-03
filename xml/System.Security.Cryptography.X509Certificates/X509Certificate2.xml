@@ -256,9 +256,10 @@
         <Parameter Name="rawData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="rawData">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="rawData">The certificate data to process.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.X509Certificates.X509Certificate2" /> class from certificate data.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error with the certificate occurs.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -790,11 +791,12 @@
         <Parameter Name="keyStorageFlags" Type="System.Security.Cryptography.X509Certificates.X509KeyStorageFlags" Index="2" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="rawData">To be added.</param>
-        <param name="password">To be added.</param>
-        <param name="keyStorageFlags">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="rawData">The certificate data to process.</param>
+        <param name="password">The password required to access the certificate data.</param>
+        <param name="keyStorageFlags">A bitwise combination of the enumeration values that control where and how to import the certificate.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.X509Certificates.X509Certificate2" /> class from certificate data, a password, and key storage flags.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error with the certificate occurs.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -1026,12 +1028,37 @@
         <Parameter Name="password" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="2" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="certPem">To be added.</param>
-        <param name="keyPem">To be added.</param>
-        <param name="password">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="certPem">The text of the PEM-encoded X509 certificate.</param>
+        <param name="keyPem">The text of the password protected PEM-encoded private key.</param>
+        <param name="password">The password for the encrypted PEM.</param>
+        <summary>Creates a new X509 certificate from the contents of an RFC 7468 PEM-encoded certificate and password protected private key.</summary>
+        <returns>A new certificate with the private key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ Password protected PEM-encoded keys are always expected to have the PEM label "ENCRYPTED PRIVATE KEY".
+            
+
+PEM-encoded items that have a different label are ignored.
+
+ If the PEM-encoded certificate and private key are in the same text, use the same string for both `certPem` and `keyPem`, such as:
+              <code> CreateFromEncryptedPem(combinedCertAndKey, combinedCertAndKey, theKeyPassword); </code> Combined PEM-encoded certificates and keys do not require a specific order. For the certificate, the the first certificate with a CERTIFICATE label is loaded. For the private key, the first private key with the label "ENCRYPTED PRIVATE KEY" is loaded. More advanced scenarios for loading certificates and private keys can leverage <xref:System.Security.Cryptography.PemEncoding> to enumerate PEM-encoded values and apply any custom loading behavior.
+            
+
+ For PEM-encoded keys without a password, use <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char})>.
+            
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of <paramref name="certPem" /> do not contain a PEM-encoded certificate, or it is malformed.
+-or- The contents of <paramref name="keyPem" /> do not contain a password protected PEM-encoded private key, or it is malformed.
+             -or- The contents of <paramref name="keyPem" /> contains a key that does not match the public key in the certificate.
+-or- The certificate uses an unknown public key algorithm.
+-or- The password specified for the private key is incorrect.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromEncryptedPemFile">
@@ -1057,12 +1084,42 @@
         <Parameter Name="keyPemFilePath" Type="System.String" Index="2" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="certPemFilePath">To be added.</param>
-        <param name="password">To be added.</param>
-        <param name="keyPemFilePath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="certPemFilePath">The path for the PEM-encoded X509 certificate.</param>
+        <param name="password">The password for the encrypted PEM.</param>
+        <param name="keyPemFilePath">If specified, the path for the password protected PEM-encoded private key.
+            If unspecified, the <paramref name="certPemFilePath" /> file will be used to load the private key.</param>
+        <summary>Creates a new X509 certificate from the file contents of an RFC 7468 PEM-encoded certificate and password protected private key.</summary>
+        <returns>A new certificate with the private key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ See <xref:System.IO.File.ReadAllText(System.String)> for additional documentation about exceptions that can be thrown.
+            
+
+ Password protected PEM-encoded keys are always expected to have the PEM label "ENCRYPTED PRIVATE KEY".
+            
+
+PEM-encoded items that have a different label are ignored.
+
+ Combined PEM-encoded certificates and keys do not require a specific order. For the certificate, the the first certificate with a CERTIFICATE label is loaded. For the private key, the first private key with the label "ENCRYPTED PRIVATE KEY" is loaded. More advanced scenarios for loading certificates and private keys can leverage <xref:System.Security.Cryptography.PemEncoding> to enumerate PEM-encoded values and apply any custom loading behavior.
+            
+
+ For PEM-encoded keys without a password, use <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPemFile(System.String,System.String)>.
+            
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of the file path in <paramref name="certPemFilePath" /> do not contain a PEM-encoded certificate, or it is malformed.
+             -or- The contents of the file path in <paramref name="keyPemFilePath" /> do not contain a password protected PEM-encoded private key, or it is malformed.
+             -or- The contents of the file path in <paramref name="keyPemFilePath" /> contains a key that does not match the public key in the certificate.
+             -or- The certificate uses an unknown public key algorithm.
+-or- The password specified for the private key is incorrect.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="certPemFilePath" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromPem">
@@ -1088,11 +1145,38 @@
         <Parameter Name="keyPem" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="certPem">To be added.</param>
-        <param name="keyPem">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="certPem">The text of the PEM-encoded X509 certificate.</param>
+        <param name="keyPem">The text of the PEM-encoded private key.</param>
+        <summary>Creates a new X509 certificate from the contents of an RFC 7468 PEM-encoded certificate and private key.</summary>
+        <returns>A new certificate with the private key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ The SubjectPublicKeyInfo from the certificate determines what PEM labels are accepted for the private key.
+              For RSA certificates, accepted private key PEM labels are "RSA PRIVATE KEY" and "PRIVATE KEY".
+              For ECDSA certificates, accepted private key PEM labels are "EC PRIVATE KEY" and "PRIVATE KEY".
+              For DSA certificates, the accepted private key PEM label is "PRIVATE KEY".
+            
+
+PEM-encoded items that have a different label are ignored.
+
+ If the PEM-encoded certificate and private key are in the same text, use the same string for both `certPem` and `keyPem`, such as:
+              <code> CreateFromPem(combinedCertAndKey, combinedCertAndKey); </code> Combined PEM-encoded certificates and keys do not require a specific order. For the certificate, the the first certificate with a CERTIFICATE label is loaded. For the private key, the first private key with an acceptable label is loaded. More advanced scenarios for loading certificates and private keys can leverage <xref:System.Security.Cryptography.PemEncoding> to enumerate PEM-encoded values and apply any custom loading behavior.
+            
+
+ For password protected PEM-encoded keys, use <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromEncryptedPem(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char})> to specify a password.
+            
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of <paramref name="certPem" /> do not contain a PEM-encoded certificate, or it is malformed.
+-or- The contents of <paramref name="keyPem" /> do not contain a PEM-encoded private key, or it is malformed.
+-or- The contents of <paramref name="keyPem" /> contains a key that does not match the public key in the certificate.
+-or- The certificate uses an unknown public key algorithm.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromPemFile">
@@ -1117,11 +1201,43 @@
         <Parameter Name="keyPemFilePath" Type="System.String" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="certPemFilePath">To be added.</param>
-        <param name="keyPemFilePath">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="certPemFilePath">The path for the PEM-encoded X509 certificate.</param>
+        <param name="keyPemFilePath">If specified, the path for the PEM-encoded private key.
+            If unspecified, the <paramref name="certPemFilePath" /> file will be used to load the private key.</param>
+        <summary>Creates a new X509 certificate from the file contents of an RFC 7468 PEM-encoded certificate and private key.</summary>
+        <returns>A new certificate with the private key.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ See <xref:System.IO.File.ReadAllText(System.String)> for additional documentation about exceptions that can be thrown.
+            
+
+ The SubjectPublicKeyInfo from the certificate determines what PEM labels are accepted for the private key.
+              For RSA certificates, accepted private key PEM labels are "RSA PRIVATE KEY" and "PRIVATE KEY".
+              For ECDSA certificates, accepted private key PEM labels are "EC PRIVATE KEY" and "PRIVATE KEY".
+              For DSA certificates, the accepted private key PEM label is "PRIVATE KEY".
+            
+
+PEM-encoded items that have a different label are ignored.
+
+ Combined PEM-encoded certificates and keys do not require a specific order. For the certificate, the the first certificate with a CERTIFICATE label is loaded. For the private key, the first private key with an acceptable label is loaded. More advanced scenarios for loading certificates and private keys can leverage <xref:System.Security.Cryptography.PemEncoding> to enumerate PEM-encoded values and apply any custom loading behavior.
+            
+
+ For password protected PEM-encoded keys, use <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromEncryptedPemFile(System.String,System.ReadOnlySpan{System.Char},System.String)> to specify a password.
+            
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of the file path in <paramref name="certPemFilePath" /> do not contain a PEM-encoded certificate, or it is malformed.
+             -or- The contents of the file path in <paramref name="keyPemFilePath" /> do not contain a PEM-encoded private key, or it is malformed.
+             -or- The contents of the file path in <paramref name="keyPemFilePath" /> contains a key that does not match the public key in the certificate.
+             -or- The certificate uses an unknown public key algorithm.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="certPemFilePath" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Export">
@@ -1387,9 +1503,9 @@
         <Parameter Name="rawData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="rawData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="rawData">The data to identify.</param>
+        <summary>Indicates the type of certificate contained in the provided data.</summary>
+        <returns>One of the enumeration values that indicate the content type of the provided data.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
