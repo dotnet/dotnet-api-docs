@@ -75,7 +75,7 @@ Public Class Test
         
         Console.WriteLine("The path of this Uri is {0}", uriAddress.GetLeftPart(UriPartial.Path))
         Console.WriteLine("Hash code {0}", uriAddress.GetHashCode())
-        ' The example displays the following output:
+        ' The example displays output similar to the following:
         '        #search
         '        Uri uses the default port
         '        The path of this Uri is http://www.contoso.com/index.htm

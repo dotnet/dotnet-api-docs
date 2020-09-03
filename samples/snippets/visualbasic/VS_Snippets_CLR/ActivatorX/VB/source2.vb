@@ -14,10 +14,10 @@ Class DynamicInstanceList
             item = Activator.CreateInstance(Type.GetType(instances(i)))
             instlist.SetValue(item, i)
         Next i
-        Console.WriteLine(vbNewLine + "Objects and their default values:" + vbNewLine)
+        Console.WriteLine(Environment.NewLine + "Objects and their default values:" + Environment.NewLine)
         For Each o As Object In instlist
-            Console.WriteLine("Type:     {0}" + vbNewLine + "Value:    {1}" + _
-                vbNewLine + "HashCode: {2}" + vbNewLine, _
+            Console.WriteLine("Type:     {0}" + Environment.NewLine + "Value:    {1}" + _
+                Environment.NewLine + "HashCode: {2}" + Environment.NewLine, _
                 o.GetType().FullName, o.ToString(), o.GetHashCode())
         Next o
     End Sub

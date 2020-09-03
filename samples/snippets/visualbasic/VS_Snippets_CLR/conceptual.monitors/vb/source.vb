@@ -45,7 +45,7 @@ Public Module App
         Next
         ' Wait until this WaitHandle is signaled.
         opsAreDone.WaitOne()
-        Console.WriteLine(vbTab + vbNewLine + "All synchronized operations have completed.")
+        Console.WriteLine(vbTab + Environment.NewLine + "All synchronized operations have completed.")
         Console.WriteLine()
 
         numOps = 5
@@ -56,7 +56,7 @@ Public Module App
 
         ' Wait until this WaitHandle is signaled.
         opsAreDone.WaitOne()
-        Console.WriteLine(vbTab + vbNewLine + "All unsynchronized thread operations have completed.")
+        Console.WriteLine(vbTab + Environment.NewLine + "All unsynchronized thread operations have completed.")
     End Sub
 
     Sub SyncUpdateResource()
