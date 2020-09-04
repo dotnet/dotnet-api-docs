@@ -13,7 +13,7 @@ Class Program
         ' Add in the vehicles contained in the someVehicles list.
         allVehicles.UnionWith(someVehicles)
 
-        Console.WriteLine("The current HashSet contains:" + vbNewLine)
+        Console.WriteLine("The current HashSet contains:" + Environment.NewLine)
         For Each vehicle As String In allVehicles
             Console.WriteLine(vehicle)
         Next vehicle
@@ -24,7 +24,7 @@ Class Program
         allVehicles.Add("Helicopters")
         allVehicles.Add("Submarines")
 
-        Console.WriteLine(vbNewLine + "The updated HashSet contains:" + vbNewLine)
+        Console.WriteLine(Environment.NewLine + "The updated HashSet contains:" + Environment.NewLine)
         For Each vehicle As String In allVehicles
             Console.WriteLine(vehicle)
         Next vehicle
@@ -32,18 +32,18 @@ Class Program
         ' Verify that the 'All Vehicles' set contains at least the vehicles in
         ' the 'Some Vehicles' list.
         If allVehicles.IsSupersetOf(someVehicles) Then
-            Console.Write(vbNewLine + "The 'All' vehicles set contains everything in ")
+            Console.Write(Environment.NewLine + "The 'All' vehicles set contains everything in ")
             Console.WriteLine("'Some' vechicles list.")
         End If
 
         ' Check for Rockets. Here the OrdinalIgnoreCase comparer will compare
         ' True for the mixed-case vehicle type.
         If allVehicles.Contains("roCKeTs") Then
-            Console.WriteLine(vbNewLine + "The 'All' vehicles set contains 'roCKeTs'")
+            Console.WriteLine(Environment.NewLine + "The 'All' vehicles set contains 'roCKeTs'")
         End If
 
         allVehicles.ExceptWith(someVehicles)
-        Console.WriteLine(vbNewLine + "The excepted HashSet contains:" + vbNewLine)
+        Console.WriteLine(Environment.NewLine + "The excepted HashSet contains:" + Environment.NewLine)
         For Each vehicle As String In allVehicles
             Console.WriteLine(vehicle)
         Next vehicle
@@ -51,7 +51,7 @@ Class Program
         ' Remove all the vehicles that are not 'super cool'.
         allVehicles.RemoveWhere(AddressOf isNotSuperCool)
 
-        Console.WriteLine(vbNewLine + "The super cool vehicles are:" + vbNewLine)
+        Console.WriteLine(Environment.NewLine + "The super cool vehicles are:" + Environment.NewLine)
         For Each vehicle As String In allVehicles
             Console.WriteLine(vehicle)
         Next vehicle

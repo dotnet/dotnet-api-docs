@@ -14,8 +14,19 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents the producer side of a <see cref="T:System.Threading.Tasks.Task" /> unbound to a delegate, providing access to the consumer side through the <see cref="T:System.Threading.Tasks.Task" /> property.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ It is often the case that a <xref:System.Threading.Tasks.Task> is desired to represent another asynchronous operation.
+ <xref:System.Threading.Tasks.TaskCompletionSource> is provided for this purpose. It enables the creation of a task that can be handed out to consumers, and those consumers can use the members of the task as they would any other. However, unlike most tasks, the state of a task created by a <xref:System.Threading.Tasks.TaskCompletionSource> is controlled explicitly by the methods on <xref:System.Threading.Tasks.TaskCompletionSource>. This enables the completion of the external asynchronous operation to be propagated to the underlying `Task`. The separation also ensures that consumers are not able to transition the state without access to the corresponding <xref:System.Threading.Tasks.TaskCompletionSource>.
+  All members of <xref:System.Threading.Tasks.TaskCompletionSource> are thread-safe and may be used from multiple threads concurrently.
+ 
+
+          ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -31,7 +42,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Creates a <see cref="T:System.Threading.Tasks.TaskCompletionSource" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -51,8 +62,8 @@
         <Parameter Name="state" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="state">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="state">The state to use as the underlying <see cref="T:System.Threading.Tasks.Task" />'s <see langword="AsyncState" />.</param>
+        <summary>Creates a <see cref="T:System.Threading.Tasks.TaskCompletionSource" /> with the specified state.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -72,9 +83,19 @@
         <Parameter Name="creationOptions" Type="System.Threading.Tasks.TaskCreationOptions" />
       </Parameters>
       <Docs>
-        <param name="creationOptions">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="creationOptions">The options to use when creating the underlying <see cref="T:System.Threading.Tasks.Task" />.</param>
+        <summary>Creates a <see cref="T:System.Threading.Tasks.TaskCompletionSource" /> with the specified options.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The <xref:System.Threading.Tasks.Task> created by this instance and accessible through its <xref:System.Threading.Tasks.TaskCompletionSource.Task> property will be instantiated using the specified `creationOptions`.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">One or more of the specified <paramref name="creationOptions" /> are invalid for use with a <see cref="T:System.Threading.Tasks.TaskCompletionSource" />.
+</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -94,10 +115,12 @@
         <Parameter Name="creationOptions" Type="System.Threading.Tasks.TaskCreationOptions" />
       </Parameters>
       <Docs>
-        <param name="state">To be added.</param>
-        <param name="creationOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="state">The state to use as the underlying <see cref="T:System.Threading.Tasks.Task" />'s <see langword="AsyncState" />.</param>
+        <param name="creationOptions">The options to use when creating the underlying <see cref="T:System.Threading.Tasks.Task" />.</param>
+        <summary>Creates a <see cref="T:System.Threading.Tasks.TaskCompletionSource" /> with the specified state and options.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">One or more of the specified <paramref name="creationOptions" /> are invalid for use with a <see cref="T:System.Threading.Tasks.TaskCompletionSource" />.
+</exception>
       </Docs>
     </Member>
     <Member MemberName="SetCanceled">
@@ -117,8 +140,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Transitions the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" /> state.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The underlying <see cref="T:System.Threading.Tasks.Task" /> is already in one of the three final states: <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" />, <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" />, or <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetCanceled">
@@ -140,9 +164,10 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="cancellationToken">The cancellation token with which to cancel the <see cref="T:System.Threading.Tasks.Task" />.</param>
+        <summary>Transitions the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" /> state using the specified token.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The underlying <see cref="T:System.Threading.Tasks.Task" /> is already in one of the three final states: <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" />, <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" />, or <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetException">
@@ -164,9 +189,13 @@
         <Parameter Name="exceptions" Type="System.Collections.Generic.IEnumerable&lt;System.Exception&gt;" />
       </Parameters>
       <Docs>
-        <param name="exceptions">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="exceptions">The collection of exceptions to bind to this <see cref="T:System.Threading.Tasks.Task" />.</param>
+        <summary>Transitions the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" /> state.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="exceptions" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">There are one or more <see langword="null" /> elements in <paramref name="exceptions" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The underlying <see cref="T:System.Threading.Tasks.Task" /> is already in one of the three final states: <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" />, <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" />, or <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetException">
@@ -188,9 +217,12 @@
         <Parameter Name="exception" Type="System.Exception" />
       </Parameters>
       <Docs>
-        <param name="exception">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="exception">The exception to bind to this <see cref="T:System.Threading.Tasks.Task" />.</param>
+        <summary>Transitions the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" /> state.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="exception" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The underlying <see cref="T:System.Threading.Tasks.Task" /> is already in one of the three final states: <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" />, <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" />, or <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetResult">
@@ -210,8 +242,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Transitions the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" /> state.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The underlying <see cref="T:System.Threading.Tasks.Task" /> is already in one of the three final states: <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" />, <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" />, or <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Task">
@@ -230,9 +263,18 @@
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the <see cref="T:System.Threading.Tasks.Task" /> created by this <see cref="T:System.Threading.Tasks.TaskCompletionSource" />.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This property gives a consumer access to the <xref:System.Threading.Tasks.TaskCompletionSource.Task> that's controlled by this instance.
+ The <xref:System.Threading.Tasks.TaskCompletionSource.SetResult>, <xref:System.Threading.Tasks.TaskCompletionSource.SetException(System.Exception)>, <xref:System.Threading.Tasks.TaskCompletionSource.SetException(System.Collections.Generic.IEnumerable{System.Exception})>, and <xref:System.Threading.Tasks.TaskCompletionSource.SetCanceled> methods (and their `Try` variants) on this instance all result in the relevant state transitions on this underlying `Task`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TrySetCanceled">
@@ -252,9 +294,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Attempts to transition the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" /> state.</summary>
+        <returns>
+          <see langword="true" /> if the operation was successful; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This operation will return `false` if the <xref:System.Threading.Tasks.Task> is already in one of the three final states:
+ <xref:System.Threading.Tasks.TaskStatus.RanToCompletion>, <xref:System.Threading.Tasks.TaskStatus.Faulted>, or <xref:System.Threading.Tasks.TaskStatus.Canceled>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TrySetCanceled">
@@ -276,10 +328,20 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="cancellationToken">The cancellation token with which to cancel the <see cref="T:System.Threading.Tasks.Task" />.</param>
+        <summary>Attempts to transition the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" /> state.</summary>
+        <returns>
+          <see langword="true" /> if the operation was successful; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This operation will return `false` if the <xref:System.Threading.Tasks.Task> is already in one of the three final states:
+ <xref:System.Threading.Tasks.TaskStatus.RanToCompletion>, <xref:System.Threading.Tasks.TaskStatus.Faulted>, or <xref:System.Threading.Tasks.TaskStatus.Canceled>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TrySetException">
@@ -301,10 +363,24 @@
         <Parameter Name="exceptions" Type="System.Collections.Generic.IEnumerable&lt;System.Exception&gt;" />
       </Parameters>
       <Docs>
-        <param name="exceptions">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="exceptions">The collection of exceptions to bind to this <see cref="T:System.Threading.Tasks.Task" />.</param>
+        <summary>Attempts to transition the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" /> state.</summary>
+        <returns>
+          <see langword="true" /> if the operation was successful; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This operation will return `false` if the <xref:System.Threading.Tasks.Task> is already in one of the three final states:
+ <xref:System.Threading.Tasks.TaskStatus.RanToCompletion>, <xref:System.Threading.Tasks.TaskStatus.Faulted>, or <xref:System.Threading.Tasks.TaskStatus.Canceled>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="exceptions" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">There are one or more <see langword="null" /> elements in <paramref name="exceptions" />.</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="exceptions" /> collection is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="TrySetException">
@@ -326,10 +402,22 @@
         <Parameter Name="exception" Type="System.Exception" />
       </Parameters>
       <Docs>
-        <param name="exception">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="exception">The exception to bind to this <see cref="T:System.Threading.Tasks.Task" />.</param>
+        <summary>Attempts to transition the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" /> state.</summary>
+        <returns>
+          <see langword="true" /> if the operation was successful; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This operation will return `false` if the <xref:System.Threading.Tasks.Task> is already in one of the three final states:
+ <xref:System.Threading.Tasks.TaskStatus.RanToCompletion>, <xref:System.Threading.Tasks.TaskStatus.Faulted>, or <xref:System.Threading.Tasks.TaskStatus.Canceled>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="exception" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TrySetResult">
@@ -349,9 +437,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Attempts to transition the underlying <see cref="T:System.Threading.Tasks.Task" /> into the <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" /> state.</summary>
+        <returns>
+          <see langword="true" /> if the operation was successful; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This operation will return `false` if the <xref:System.Threading.Tasks.Task> is already in one of the three final states:
+ <xref:System.Threading.Tasks.TaskStatus.RanToCompletion>, <xref:System.Threading.Tasks.TaskStatus.Faulted>, or <xref:System.Threading.Tasks.TaskStatus.Canceled>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

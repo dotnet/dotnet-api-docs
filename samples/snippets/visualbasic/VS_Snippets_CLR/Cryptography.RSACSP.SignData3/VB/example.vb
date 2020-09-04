@@ -73,9 +73,9 @@ Module RSACSPExample
 
             RSAalg.ImportParameters(Key)
 
-            ' Hash and sign the data. Pass a new instance of SHA1CryptoServiceProvider
-            ' to specify the use of SHA1 for hashing.
-            Return RSAalg.SignData(DataStream, New SHA1CryptoServiceProvider)
+            ' Hash and sign the data. Pass a new instance of SHA256
+            ' to specify the hashing algorithm.
+            Return RSAalg.SignData(DataStream, SHA256.Create())
         Catch e As CryptographicException
             Console.WriteLine(e.Message)
 
@@ -92,9 +92,9 @@ Module RSACSPExample
 
             RSAalg.ImportParameters(Key)
 
-            ' Verify the data using the signature.  Pass a new instance of SHA1CryptoServiceProvider
-            ' to specify the use of SHA1 for hashing.
-            Return RSAalg.VerifyData(DataToVerify, New SHA1CryptoServiceProvider, SignedData)
+            ' Verify the data using the signature.  Pass a new instance of SHA256
+            ' to specify the hashing algorithm.
+            Return RSAalg.VerifyData(DataToVerify, SHA256.Create(), SignedData)
 
         Catch e As CryptographicException
             Console.WriteLine(e.Message)

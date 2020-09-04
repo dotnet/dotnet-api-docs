@@ -27,4 +27,9 @@ void main()
       Console::WriteLine( "\nAn exception occurred: {0}.", e->Message );
    }
 }
+/* The example produces the following output:
+
+Is the specified type an interface? True.
+Is the specified type an interface? False.
+*/
 // </Snippet1>

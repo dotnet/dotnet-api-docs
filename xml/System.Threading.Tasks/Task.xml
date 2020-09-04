@@ -3447,8 +3447,8 @@ Task t Status: RanToCompletion, Result: 42
       </Parameters>
       <Docs>
         <param name="action">The work to execute asynchronously</param>
-        <param name="cancellationToken">A cancellation token that can be used to cancel the work</param>
-        <summary>Queues the specified work to run on the thread pool and returns a <see cref="T:System.Threading.Tasks.Task" /> object that represents that work. A cancellation token allows the work to be cancelled.</summary>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the work if it has not yet started. <see cref="M:System.Threading.Tasks.Task.Run(System.Action,System.Threading.CancellationToken)" /> does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.</param>
+        <summary>Queues the specified work to run on the thread pool and returns a <see cref="T:System.Threading.Tasks.Task" /> object that represents that work. A cancellation token allows the work to be cancelled if it has not yet started.</summary>
         <returns>A task that represents the work queued to execute in the thread pool.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -3520,8 +3520,8 @@ Task t Status: RanToCompletion, Result: 42
       </Parameters>
       <Docs>
         <param name="function">The work to execute asynchronously.</param>
-        <param name="cancellationToken">A cancellation token that should be used to cancel the work.</param>
-        <summary>Queues the specified work to run on the thread pool and returns a proxy for the task returned by <paramref name="function" />.</summary>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the work if it has not yet started. <see cref="M:System.Threading.Tasks.Task.Run(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)" /> does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.</param>
+        <summary>Queues the specified work to run on the thread pool and returns a proxy for the task returned by <paramref name="function" />. A cancellation token allows the work to be cancelled if it has not yet started.</summary>
         <returns>A task that represents a proxy for the task returned by <paramref name="function" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -3581,7 +3581,7 @@ Task t Status: RanToCompletion, Result: 42
       <Docs>
         <typeparam name="TResult">The type of the result returned by the proxy task.</typeparam>
         <param name="function">The work to execute asynchronously</param>
-        <summary>Queues the specified work to run on the thread pool and returns a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />.</summary>
+        <summary>Queues the specified work to run on the thread pool and returns a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />. A cancellation token allows the work to be cancelled if it has not yet started.</summary>
         <returns>A <see langword="Task(TResult)" /> that represents a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -3637,7 +3637,7 @@ Task t Status: RanToCompletion, Result: 42
       <Docs>
         <typeparam name="TResult">The return type of the task.</typeparam>
         <param name="function">The work to execute asynchronously.</param>
-        <summary>Queues the specified work to run on the thread pool and returns a <see cref="T:System.Threading.Tasks.Task`1" /> object that represents that work.</summary>
+        <summary>Queues the specified work to run on the thread pool and returns a <see cref="T:System.Threading.Tasks.Task`1" /> object that represents that work. A cancellation token allows the work to be cancelled if it has not yet started.</summary>
         <returns>A task object that represents the work queued to execute in the thread pool.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -3713,7 +3713,7 @@ Task t Status: RanToCompletion, Result: 42
       <Docs>
         <typeparam name="TResult">The type of the result returned by the proxy task.</typeparam>
         <param name="function">The work to execute asynchronously</param>
-        <param name="cancellationToken">A cancellation token that should be used to cancel the work</param>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the work if it has not yet started. <see cref="M:System.Threading.Tasks.Task.Run``1(System.Func{System.Threading.Tasks.Task{``0}},System.Threading.CancellationToken)" /> does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.</param>
         <summary>Queues the specified work to run on the thread pool and returns a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />.</summary>
         <returns>A <see langword="Task(TResult)" /> that represents a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />.</returns>
         <remarks>
@@ -3774,8 +3774,8 @@ Task t Status: RanToCompletion, Result: 42
       <Docs>
         <typeparam name="TResult">The result type of the task.</typeparam>
         <param name="function">The work to execute asynchronously</param>
-        <param name="cancellationToken">A cancellation token that should be used to cancel the work</param>
-        <summary>Queues the specified work to run on the thread pool and returns a <see langword="Task(TResult)" /> object that represents that work. A cancellation token allows the work to be cancelled.</summary>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the work if it has not yet started. <see cref="M:System.Threading.Tasks.Task.Run``1(System.Func{``0},System.Threading.CancellationToken)" /> does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.</param>
+        <summary>Queues the specified work to run on the thread pool and returns a <see langword="Task(TResult)" /> object that represents that work.</summary>
         <returns>A <see langword="Task(TResult)" /> that represents the work queued to execute in the thread pool.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -4215,7 +4215,15 @@ Task t Status: RanToCompletion, Result: 42
         <summary>Gets an indication of whether the operation completed synchronously.</summary>
         <value>
           <see langword="true" /> if the operation completed synchronously; otherwise, <see langword="false" />.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This member is an explicit interface member implementation. It can be used only when the <xref:System.Threading.Tasks.Task> instance is cast to an <xref:System.IAsyncResult> interface.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="Wait">
@@ -5650,11 +5658,21 @@ Task t Status: RanToCompletion, Result: 42
         <Parameter Name="task2" Type="System.Threading.Tasks.Task" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="task1">To be added.</param>
-        <param name="task2">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="task1">The first task to wait on for completion.</param>
+        <param name="task2">The second task to wait on for completion.</param>
+        <summary>Creates a task that will complete when either of the supplied tasks have completed.</summary>
+        <returns>A new task that represents the completion of one of the supplied tasks. Its <see langword="Result" /> is the task that completed first.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the `RanToCompletion` state with its `Result` set to the first task to complete.  The result value is `true` even if the first task to complete ended in the `Canceled` or `Faulted` state.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="task1" /> or <paramref name="task2" /> was <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WhenAny&lt;TResult&gt;">
@@ -5809,11 +5827,21 @@ Task t Status: RanToCompletion, Result: 42
       </Parameters>
       <Docs>
         <typeparam name="TResult">To be added.</typeparam>
-        <param name="task1">To be added.</param>
-        <param name="task2">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="task1">The first task to wait on for completion.</param>
+        <param name="task2">The second task to wait on for completion.</param>
+        <summary>Creates a task that will complete when either of the supplied tasks have completed.</summary>
+        <returns>A task that represents the completion of one of the supplied tasks. Its <see langword="Result" /> is the task that completed first.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the `RanToCompletion` state with its `Result` set to the first task to complete.  The result value is `true` even if the first task to complete ended in the `Canceled` or `Faulted` state.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="task1" /> or <paramref name="task2" /> was <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Yield">

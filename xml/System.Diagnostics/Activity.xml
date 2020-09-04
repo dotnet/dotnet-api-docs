@@ -168,10 +168,45 @@ This key/value pair is included in the collection returned by the <xref:System.D
         <Parameter Name="e" Type="System.Diagnostics.ActivityEvent" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="e">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="e">The activity event to add.</param>
+        <summary>Adds the specified activity event to the events list.</summary>
+        <returns><see langword="this" /> for convenient chaining.</returns>
         <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddTag">
+      <MemberSignature Language="C#" Value="public System.Diagnostics.Activity AddTag (string key, object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Diagnostics.Activity AddTag(string key, object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Activity.AddTag(System.String,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Function AddTag (key As String, value As Object) As Activity" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Diagnostics::Activity ^ AddTag(System::String ^ key, System::Object ^ value);" />
+      <MemberSignature Language="F#" Value="member this.AddTag : string * obj -&gt; System.Diagnostics.Activity" Usage="activity.AddTag (key, value)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Diagnostics.Activity</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="value" Type="System.Object" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="key">The tag key name.</param>
+        <param name="value">The tag value mapped to the input key.</param>
+        <summary>Updates the activity to have a tag with an additional <paramref name="key" /> and <paramref name="value" />.</summary>
+        <returns><see langword="this" /> for convenient chaining.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This shows up in the <xref:System.Diagnostics.Activity.TagObjects> enumeration. It is meant for information that is useful to log but not needed for runtime control (for the latter, <xref:System.Diagnostics.Activity.Baggage>).
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddTag">
@@ -206,13 +241,14 @@ This key/value pair is included in the collection returned by the <xref:System.D
         <returns>
           <see langword="this" /> for convenient chaining.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
+          <format type="text/markdown">
+  <![CDATA[
 
 ## Remarks
 
-This key/value pair is included in the collection returned by the <xref:System.Diagnostics.Activity.Tags> property.
+This key/value pair is included in the collection returned by the <xref:System.Diagnostics.Activity.Tags> or <xref:System.Diagnostics.Activity.TagObjects> property.
 
-<xref:System.Diagnostics.Activity.Tags> is meant for information that is useful to log with the <xref:System.Diagnostics.Activity>. For information that's needed for runtime control, use the <xref:System.Diagnostics.Activity.Baggage> property.
+<xref:System.Diagnostics.Activity.Tags> <xref:System.Diagnostics.Activity.TagObjects> are meant for information that is useful to log with the <xref:System.Diagnostics.Activity>. For information that's needed for runtime control, use the <xref:System.Diagnostics.Activity.Baggage> property.
 
 ]]></format>
         </remarks>
@@ -269,8 +305,8 @@ This key/value pair is included in the collection returned by the <xref:System.D
         <ReturnType>System.Diagnostics.ActivityContext</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the context of the activity. Context becomes valid only if the activity has been started.</summary>
+        <value>The context of the activity, if the activity has been started; otherwise, returns the default context.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -352,9 +388,19 @@ In .NET 5.0 and later, the default format is <xref:System.Diagnostics.ActivityId
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the display name of the activity.</summary>
+        <value>A string that represents the activity display name.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+`DisplayName` is intended to be used in a user interface and need not be the same as `OperationName`.
+
+If the `DisplayName` property is not set, it will return the same value as `OperationName`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -377,7 +423,7 @@ In .NET 5.0 and later, the default format is <xref:System.Diagnostics.ActivityId
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Stops the activity if it is already started and notifies any event listeners. Nothing will happen otherwise.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -447,8 +493,8 @@ In .NET 5.0 and later, the default format is <xref:System.Diagnostics.ActivityId
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Diagnostics.ActivityEvent&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the list of all the activity events attached to this activity.</summary>
+        <value>An enumeration of activity events attached to this activity. If the activity has no events, returns an empty enumeration.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -532,9 +578,9 @@ Normally if the <xref:System.Diagnostics.Activity.ParentId> is defined, its form
         <Parameter Name="propertyName" Type="System.String" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="propertyName">The name associated to the object.</param>
+        <summary>Returns the object mapped to the specified property name.</summary>
+        <returns>The object mapped to the property name, if one is found; otherwise, <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -612,9 +658,18 @@ An ID has a hierarchical structure: `root-id.id1_id2.id3_`. The ID is generated 
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Indicates if the this activity should be populated with all the propagation information, as well as all the other properties such as links, tags and events.</summary>
+        <value>
+          <see langword="true" /> if the activity should be populated; <see langword="false" /> otherwise.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The best practice for the library authors is not try to set this property. This property is automatically set when creating the Activity. The setter is useful only in the case of Activity objects created using the Activity constructor and want to override the default value. Activity objects created using <xref:System.Diagnostics.ActivitySource.StartActivity%2A> automatically have this property set to the right value.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Kind">
@@ -633,8 +688,8 @@ An ID has a hierarchical structure: `root-id.id1_id2.id3_`. The ID is generated 
         <ReturnType>System.Diagnostics.ActivityKind</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the relationship between the activity, its parents, and its children in a trace.</summary>
+        <value>One of the enumeration values that indicate relationship between the activity, its parents, and its children in a trace.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -654,8 +709,8 @@ An ID has a hierarchical structure: `root-id.id1_id2.id3_`. The ID is generated 
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Diagnostics.ActivityLink&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the list of all the activity links attached to this activity.</summary>
+        <value>An enumeration of activity links attached to this activity. If the activity has no links, returns an empty enumeration.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -865,9 +920,9 @@ The root ID is a substring from the <xref:System.Diagnostics.Activity.Id> or the
         <Parameter Name="propertyValue" Type="System.Object" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="propertyName">To be added.</param>
-        <param name="propertyValue">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="propertyName">The name to associate the value with.</param>
+        <param name="propertyValue">The object to attach and map to the property name.</param>
+        <summary>Attaches any custom object to this activity. If the specified <paramref name="propertyName" /> was previously associated with another object, the property will be updated to be associated with the new <paramref name="propertyValue" /> instead. It is recommended to use a unique property name to avoid conflicts with anyone using the same value.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1047,6 +1102,47 @@ This method has the advantage that no string manipulation is needed to set the I
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="SetTag">
+      <MemberSignature Language="C#" Value="public System.Diagnostics.Activity SetTag (string key, object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Diagnostics.Activity SetTag(string key, object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Activity.SetTag(System.String,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Function SetTag (key As String, value As Object) As Activity" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Diagnostics::Activity ^ SetTag(System::String ^ key, System::Object ^ value);" />
+      <MemberSignature Language="F#" Value="member this.SetTag : string * obj -&gt; System.Diagnostics.Activity" Usage="activity.SetTag (key, value)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Diagnostics.Activity</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="value" Type="System.Object" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="key">The tag key name.</param>
+        <param name="value">The tag value mapped to the input key.</param>
+        <summary>Adds or update the activity tag with the input key and value.</summary>
+        <returns><see langword="this" /> for convenient chaining.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+
+- If the input value is `null`:
+    - If the collection has any tag with the same key, then this tag will get removed from the collection.
+    - Otherwise, nothing will happen and the collection will not change.
+- If the input value is not `null`:
+    - If the collection has any tag with the same key, then the value mapped to this key will get updated with the new input value.
+    - Otherwise, the key and value will get added as a new tag to the collection.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Source">
       <MemberSignature Language="C#" Value="public System.Diagnostics.ActivitySource Source { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Diagnostics.ActivitySource Source" />
@@ -1063,9 +1159,17 @@ This method has the advantage that no string manipulation is needed to set the I
         <ReturnType>System.Diagnostics.ActivitySource</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Get the activity source associated with this activity.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+All activities created from public constructors will have a singleton source where the source name is an empty string. Otherwise, the source will hold the object that created the activity through <xref:System.Diagnostics.ActivitySource.StartActivity%2A>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SpanId">
@@ -1205,6 +1309,27 @@ Call <xref:System.Diagnostics.DiagnosticSource.StopActivity%2A?displayProperty=n
 
 ]]></format>
         </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TagObjects">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;System.Collections.Generic.KeyValuePair&lt;string,object&gt;&gt;? TagObjects { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;valuetype System.Collections.Generic.KeyValuePair`2&lt;string, object&gt;&gt; TagObjects" />
+      <MemberSignature Language="DocId" Value="P:System.Diagnostics.Activity.TagObjects" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property TagObjects As IEnumerable(Of KeyValuePair(Of String, Object))" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::Generic::IEnumerable&lt;System::Collections::Generic::KeyValuePair&lt;System::String ^, System::Object ^&gt;&gt; ^ TagObjects { System::Collections::Generic::IEnumerable&lt;System::Collections::Generic::KeyValuePair&lt;System::String ^, System::Object ^&gt;&gt; ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.TagObjects : seq&lt;System.Collections.Generic.KeyValuePair&lt;string, obj&gt;&gt;" Usage="System.Diagnostics.Activity.TagObjects" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Collections.Generic.KeyValuePair&lt;System.String,System.Object&gt;&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Returns the list of tags representing information to log along with the activity. This information is not passed on to the children of this activity.</summary>
+        <value>A key-value pair enumeration of tags and objects.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Tags">

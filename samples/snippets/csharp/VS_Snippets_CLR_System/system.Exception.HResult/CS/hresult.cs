@@ -23,10 +23,6 @@ namespace NDP_UE_CS
     {
         public static void Main()
         {
-            Console.WriteLine(
-                "This example of Exception.HResult " +
-                "generates the following output.\n" );
-
             // This function forces a division by 0 and throws
             // a second exception.
             try

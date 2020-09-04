@@ -146,11 +146,8 @@ This is a simple wrapper around OS calls and does not perform any name mangling.
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
-Given a library name, this method searches specific paths based on the  runtime configuration, input parameters, and attributes of the calling assembly. If the `searchPath` parameter is non-null, the flags in this enumeration are used. Otherwise, the flags specified by the <xref:System.Runtime.InteropServices.DefaultDllImportSearchPathsAttribute> on the calling assembly, if any are present, are used. This method does not invoke the following managed callbacks for native library resolution: 
-
-- The per-assembly registered callback.
-- The <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll%2A?displayProperty=nameWithType> method.
-- The <xref:System.Runtime.Loader.AssemblyLoadContext.ResolvingUnmanagedDll?displayProperty=nameWithType> event.
+Given a library name, this method searches specific paths based on the  runtime configuration, input parameters, and attributes of the calling assembly. If the `searchPath` parameter is non-null, the flags in this enumeration are used. Otherwise, the flags specified by the <xref:System.Runtime.InteropServices.DefaultDllImportSearchPathsAttribute> on the calling assembly, if any are present, are used. This method does not invoke the resolver registered using <xref:System.Runtime.InteropServices.NativeLibrary.SetDllImportResolver(System.Reflection.Assembly,System.Runtime.InteropServices.DllImportResolver)>
+method. Starting with .NET 5, this method does invoke the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll%2A?displayProperty=nameWithType> method and the <xref:System.Runtime.Loader.AssemblyLoadContext.ResolvingUnmanagedDll?displayProperty=nameWithType> event.
 
          ]]></format>
         </remarks>
@@ -190,14 +187,16 @@ Given a library name, this method searches specific paths based on the  runtime 
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
-This per-assembly resolver is the first attempt to resolve native library loads initiated by this assembly. 
+This per-assembly resolver is the first attempt to resolve native library loads initiated by this assembly.
+ 
+The callers of this method should register the resolver for their own assemblies only.
 
 Only one resolver can be registered per assembly. Trying to register a second resolver fails with an <xref:System.InvalidOperationException>.
 
          ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="assembly" /> or paramref name="resolver" /&gt; is <see langword="null" />.</exception>
+          <paramref name="assembly" /> or <paramref name="resolver" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">A resolver is already set for this assembly.</exception>
       </Docs>
     </Member>

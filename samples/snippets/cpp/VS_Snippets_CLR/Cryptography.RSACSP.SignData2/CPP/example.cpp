@@ -13,9 +13,9 @@ array<Byte>^ HashAndSignBytes( array<Byte>^DataToSign, RSAParameters Key )
       RSACryptoServiceProvider^ RSAalg = gcnew RSACryptoServiceProvider;
       RSAalg->ImportParameters( Key );
       
-      // Hash and sign the data. Pass a new instance of SHA1CryptoServiceProvider
-      // to specify the use of SHA1 for hashing.
-      return RSAalg->SignData( DataToSign, gcnew SHA1CryptoServiceProvider );
+      // Hash and sign the data. Pass a new instance of SHA256
+      // to specify the hashing algorithm.
+      return RSAalg->SignData( DataToSign, SHA256::Create() );
    }
    catch ( CryptographicException^ e ) 
    {
@@ -35,9 +35,9 @@ bool VerifySignedHash( array<Byte>^DataToVerify, array<Byte>^SignedData, RSAPara
       RSACryptoServiceProvider^ RSAalg = gcnew RSACryptoServiceProvider;
       RSAalg->ImportParameters( Key );
       
-      // Verify the data using the signature.  Pass a new instance of SHA1CryptoServiceProvider
-      // to specify the use of SHA1 for hashing.
-      return RSAalg->VerifyData( DataToVerify, gcnew SHA1CryptoServiceProvider, SignedData );
+      // Verify the data using the signature.  Pass a new instance of SHA256
+      // to specify the hashing algorithm.
+      return RSAalg->VerifyData( DataToVerify, SHA256::Create(), SignedData );
    }
    catch ( CryptographicException^ e ) 
    {

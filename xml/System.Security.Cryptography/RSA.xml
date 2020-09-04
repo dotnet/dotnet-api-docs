@@ -945,10 +945,52 @@ The algorithm-specific key import failed.
         <Parameter Name="passwordBytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="input">To be added.</param>
-        <param name="passwordBytes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="input">The PEM text of the encrypted key to import.</param>
+        <param name="passwordBytes">The bytes to use as a password when decrypting the key material.</param>
+        <summary>Imports an encrypted RFC 7468 PEM-encoded private key, replacing the keys for this object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ The password bytes are passed directly into the Key Derivation Function (KDF) used by the algorithm indicated by `pbeParameters`. This enables compatibility with other systems that use a text encoding other than UTF-8 when processing passwords with PBKDF2 (Password-Based Key Derivation Function 2).
+ 
+
+ Unsupported or malformed PEM-encoded objects will be ignored. If multiple supported PEM labels are found, an exception is thrown to prevent importing a key when the key is ambiguous.
+ 
+
+This method supports the `ENCRYPTED PRIVATE KEY` PEM label.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="input" /> does not contain a PEM-encoded key with a recognized label.
+
+-or-
+
+<paramref name="input" /> contains multiple PEM-encoded keys with a recognized label.
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+The password is incorrect.
+
+-or-
+
+The base-64 decoded contents of the PEM text from <paramref name="input" /> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.
+
+-or-
+
+The base-64 decoded contents of the PEM text from <paramref name="input" /> indicate the key is for an algorithm other than the algorithm represented by this instance.
+
+-or-
+
+The base-64 decoded contents of the PEM text from <paramref name="input" /> represent the key in a format that is not supported.
+
+-or-
+
+The algorithm-specific key import failed.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportFromEncryptedPem">
@@ -974,10 +1016,52 @@ The algorithm-specific key import failed.
         <Parameter Name="password" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="input">To be added.</param>
-        <param name="password">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="input">The PEM text of the encrypted key to import.</param>
+        <param name="password">The password to use for decrypting the key material.</param>
+        <summary>Imports an encrypted RFC 7468 PEM-encoded private key, replacing the keys for this object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ When the base-64 decoded contents of `input` indicate an algorithm that uses PBKDF1 (Password-Based Key Derivation Function 1) or PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.
+ 
+
+ Unsupported or malformed PEM-encoded objects will be ignored. If multiple supported PEM labels are found, an exception is thrown to prevent importing a key when the key is ambiguous.
+ 
+
+This method supports the `ENCRYPTED PRIVATE KEY` PEM label.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="input" /> does not contain a PEM-encoded key with a recognized label.
+
+-or-
+
+<paramref name="input" /> contains multiple PEM-encoded keys with a recognized label.
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+The password is incorrect.
+
+-or-
+
+The base-64 decoded contents of the PEM text from <paramref name="input" /> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.
+
+-or-
+
+The base-64 decoded contents of the PEM text from <paramref name="input" /> indicate the key is for an algorithm other than the algorithm represented by this instance.
+
+-or-
+
+The base-64 decoded contents of the PEM text from <paramref name="input" /> represent the key in a format that is not supported.
+
+-or-
+
+The algorithm-specific key import failed.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportFromPem">
@@ -1002,9 +1086,37 @@ The algorithm-specific key import failed.
         <Parameter Name="input" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="input">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="input">The PEM text of the key to import.</param>
+        <summary>Imports an RFC 7468 PEM-encoded key, replacing the keys for this object.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ Unsupported or malformed PEM-encoded objects will be ignored. If multiple supported PEM labels are found, an exception is raised to prevent importing a key when the key is ambiguous.
+ 
+
+ This method supports the following PEM labels:
+ 
+ - PUBLIC KEY
+ - PRIVATE KEY
+ - RSA PRIVATE KEY
+ - RSA PUBLIC KEY
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="input" /> does not contain a PEM-encoded key with a recognized label.
+
+-or-
+
+<paramref name="input" /> contains multiple PEM-encoded keys with a recognized label.
+
+-or-
+
+<paramref name="input" /> contains an encrypted PEM-encoded key.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportParameters">

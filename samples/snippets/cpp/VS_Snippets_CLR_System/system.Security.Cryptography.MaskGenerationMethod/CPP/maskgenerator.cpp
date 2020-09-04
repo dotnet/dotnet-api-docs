@@ -15,10 +15,10 @@ namespace Contoso
         String^ hashNameValue;
 
     public:
-        // Initialize a mask to encrypt using the SHA1 algorithm.
+        // Initialize a mask to encrypt using the SHA256 algorithm.
         MaskGenerator()
         {
-            hashNameValue = "SHA1";
+            hashNameValue = "SHA256";
         }
 
         //</Snippet2>

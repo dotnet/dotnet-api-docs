@@ -29,12 +29,12 @@ Module SCSign
         Console.WriteLine("Data   : " + BitConverter.ToString(data))
 
         ' Sign the data using the Smart Card CryptoGraphic Provider.
-        Dim sig As Byte() = rsa.SignData(data, "SHA1")
+        Dim sig As Byte() = rsa.SignData(data, "SHA256")
 
         Console.WriteLine("Signature : " + BitConverter.ToString(sig))
 
         ' Verify the data using the Smart Card CryptoGraphic Provider.
-        Dim verified As Boolean = rsa.VerifyData(data, "SHA1", sig)
+        Dim verified As Boolean = rsa.VerifyData(data, "SHA256", sig)
 
         Console.WriteLine("Verified")
 

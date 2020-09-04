@@ -23,7 +23,16 @@
   </Attributes>
   <Docs>
     <summary>Provides a set of APIs that can be used to retrieve garbage collection information.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A GC is identified by its Index. which starts from 1 and increases with each GC (see more explanation of it in the Index prooperty).
+            If you are asking for a GC that does not exist, eg, you called the GC.GetGCMemoryInfo API before a GC happened, or you are asking for a GC of GCKind.FullBlocking and no full blocking GCs have happened, you will get all 0's in the info, including the Index. So you can use Index 0 to detect that no GCs, or no GCs of the kind you specified have happened.
+
+          ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Compacted">
@@ -42,8 +51,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Specifies if this is a compacting GC or not.</summary>
+        <value>
+          <see langword="true" /> if this is a compacting GC; <see langword="false" /> otherwise.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -63,8 +73,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Specifies if this is a concurrent GC (BGC) or not.</summary>
+        <value>
+          <see langword="true" /> if this is a concurrent GC (BGC); <see langword="false" /> otherwise.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -84,8 +95,8 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the number of objects ready for finalization this GC observed.</summary>
+        <value>A number representing the total objects observed by this GC that are ready for finalization.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -146,8 +157,8 @@ The memory after `OBJ_D` is not considered part of the `FragmentedBytes` but wil
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the generation this GC collected. Collecting a generation means all its younger generation(s) are also collected.</summary>
+        <value>A number representing the generation this GC collected.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -167,8 +178,8 @@ The memory after `OBJ_D` is not considered part of the `FragmentedBytes` but wil
         <ReturnType>System.ReadOnlySpan&lt;System.GCGenerationInfo&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the generation information for all generations.</summary>
+        <value>A read-only span containing the generation information for all generations.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -213,8 +224,8 @@ The memory after `OBJ_D` is not considered part of the `FragmentedBytes` but wil
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the high memory load threshold when the last garbage collection occured.</summary>
-        <value>The high memory load threshold, in bytes, when the last garbage collection occured.</value>
+        <summary>Gets the high memory load threshold when the last garbage collection occurred.</summary>
+        <value>The high memory load threshold, in bytes, when the last garbage collection occurred.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -234,8 +245,9 @@ The memory after `OBJ_D` is not considered part of the `FragmentedBytes` but wil
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The index of this GC. GC indices start with 1 and get increased at the beginning of a GC.
+            Since the information is updated at the end of a GC, this means you can get the information for a BGC with a smaller index than a foreground GC finished earlier.</summary>
+        <value>A number representing the index of this GC.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -278,8 +290,8 @@ The memory after `OBJ_D` is not considered part of the `FragmentedBytes` but wil
         <ReturnType>System.ReadOnlySpan&lt;System.TimeSpan&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the pause durations. For blocking GCs there's only 1 pause; for BGC there are 2.</summary>
+        <value>A timespan representing the pause durations.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -299,9 +311,16 @@ The memory after `OBJ_D` is not considered part of the `FragmentedBytes` but wil
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the pause time percentage in the GC so far.</summary>
+        <value>A number representing the pause time percentage.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+## Remarks
+
+If it's 1.2%, this number is 1.2.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PinnedObjectsCount">
@@ -320,8 +339,8 @@ The memory after `OBJ_D` is not considered part of the `FragmentedBytes` but wil
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the number of pinned objects this GC observed.</summary>
+        <value>A number representing the total pinned objects observed by this GC.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -341,8 +360,8 @@ The memory after `OBJ_D` is not considered part of the `FragmentedBytes` but wil
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the promoted bytes for this GC.</summary>
+        <value>A number representing the number of promoted bytes for this GC.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -397,8 +416,8 @@ Otherwise, the value of the property is the physical memory on the machine that 
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the total committed bytes of the managed heap.</summary>
+        <value>A number representing the total commited bytes of the managed heap.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
