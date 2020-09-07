@@ -247,18 +247,7 @@
         <remarks>
           <format type="text/markdown"><![CDATA[
           
-`ArgumentList`, which is supported starting with .NET Core 2.1 and .NET Standard 2.1, and the <xref:System.Diagnostics.ProcessStartInfo.Arguments> property are independent of one another. That is, the strings assigned to the `ArgumentList` collection are not used to populate the <xref:System.Diagnostics.ProcessStartInfo.Arguments> property, and the string assigned to the <xref:System.Diagnostics.ProcessStartInfo.Arguments> property is not parsed into individual strings that are assigned to `ArgumentList` collection. 
-
-`ArgumentList` is easier to use than the <xref:System.Diagnostics.ProcessStartInfo.Arguments> property. Because each string is assigned to a member of the collection, you can single- rather than triple-escape strings that are delimited by quotation marks. For example, the following example include `-full "Mary Smith"` as a member of the `ArgumentList` collection:
-
-```csharp
-info.ArgumentList.Add("-full \"Mary Smith\"");
-```
-
-The corresponding assignment to the <xref:System.Diagnostics.ProcessStartInfo.Arguments> property is:
-
-```csharp
-info.Arguments = "-full \"\"\"Mary Smith\"\"\""
+`ArgumentList` and the <xref:System.Diagnostics.ProcessStartInfo.Arguments> property are independent of one another and only one of them can be used at the same time. The main difference between both APIs is that `ArgumentList` takes care of escaping the provided arguments and **internally** builds a single string that is passed to operating system when calling `Process.Start(info)`. So if you are not sure how to properly escape your arguments, you should choose `ArgumentList` over <xref:System.Diagnostics.ProcessStartInfo.Arguments>.
 ```
 
 If you use this property to set command-line arguments, <xref:System.Diagnostics.ProcessStartInfo.Arguments> must be set to an empty string.
@@ -273,7 +262,7 @@ info.ArgumentList.Add("/c");
 info.ArgumentList.Add("dir");
 info.ArgumentList.Add(@"C:\Program Files\dotnet"); // there is no need to escape the space, the API takes care of it
 
-// which is equivalent to
+// or if you prefer collection property initializer syntax:
 
 var info = new System.Diagnostics.ProcessStartInfo("cmd.exe")
 {
@@ -282,6 +271,13 @@ var info = new System.Diagnostics.ProcessStartInfo("cmd.exe")
         "dir",
         @"C:\Program Files\dotnet"
     }
+};
+
+// The corresponding assignment to the Arguments property is:
+
+var info = new System.Diagnostics.ProcessStartInfo("cmd.exe")
+{
+    Arguments = "/c dir \"C:\\Program Files\\dotnet\""
 };
 ```
 ```vb
