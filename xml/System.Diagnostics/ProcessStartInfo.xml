@@ -242,7 +242,7 @@
         <ReturnType>System.Collections.ObjectModel.Collection&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a collection of command-line arguments to use when starting the application.</summary>
+        <summary>Gets a collection of command-line arguments to use when starting the application. Strings added to the list don't need to be previously escaped.</summary>
         <value>A collection of command-line arguments.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -265,17 +265,30 @@ If you use this property to set command-line arguments, <xref:System.Diagnostics
 
 ## Examples
 
-This example adds two arguments to the process start info.
+This example adds three arguments to the process start info.
 
 ```csharp
-var info = new System.Diagnostics.ProcessStartInfo("names.exe");
-info.ArgumentList.Add("-first Mary");
-info.ArgumentList.Add("-last Smith");
+var info = new System.Diagnostics.ProcessStartInfo("cmd.exe");
+info.ArgumentList.Add("/c");
+info.ArgumentList.Add("dir");
+info.ArgumentList.Add(@"C:\Program Files\dotnet"); // there is no need to escape the space, the API takes care of it
+
+// which is equivalent to
+
+var info = new System.Diagnostics.ProcessStartInfo("cmd.exe")
+{
+    ArgumentList = {
+        "/c",
+        "dir",
+        @"C:\Program Files\dotnet"
+    }
+};
 ```
 ```vb
-Dim info As New System.Diagnostics.ProcessStartInfo("names.exe")
-info.ArgumentList.Add("-first Mary")
-info.ArgumentList.Add("-last Smith")
+Dim info As New System.Diagnostics.ProcessStartInfo("cmd.exe")
+info.ArgumentList.Add("/c")
+info.ArgumentList.Add("echo")
+info.ArgumentList.Add(@"C:\Program Files\dotnet")
 ```
 ]]></format>
         </remarks>
