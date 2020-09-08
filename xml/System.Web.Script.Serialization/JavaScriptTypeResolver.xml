@@ -31,14 +31,236 @@
  If you provide a type resolver to the <xref:System.Web.Script.Serialization.JavaScriptSerializer> instance, the serializer will use the <xref:System.Web.Script.Serialization.JavaScriptTypeResolver.ResolveTypeId%2A> and <xref:System.Web.Script.Serialization.JavaScriptTypeResolver.ResolveType%2A> methods to map between the managed type and the string value during the serialization and deserialization process, respectively.  
   
  The <xref:System.Web.Script.Serialization.JavaScriptTypeResolver> class is the base class for the <xref:System.Web.Script.Serialization.SimpleTypeResolver> class, which provides an implementation of a type resolver that uses the managed type assembly-qualified name.  
-  
-   
-  
+
+> [!NOTE]
+> When using a `JavaScriptTypeResolver`, the resulting JSON payload contains a special `__type` property. This property includes the full type name, including namespace, of the target type. Before using a custom resolver, verify that the full name of the target type does not contain sensitive or privileged information.
+
 ## Examples  
- The following example demonstrates how to create a custom type resolver.  
-  
- [!code-csharp[System.Web.Script.Serialization.TypeResolver#2](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.Script.Serialization.TypeResolver/CS/App_Code/TypeResolver.cs#2)]
- [!code-vb[System.Web.Script.Serialization.TypeResolver#2](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.Script.Serialization.TypeResolver/VB/App_Code/TypeResolver.vb#2)]  
+
+The following example shows how to create a custom `JavaScriptTypeResolver` and how to use it to serialize or deserialize an object.
+
+```cs
+using System;
+using System.Linq;
+using System.Web.Script.Serialization;
+
+namespace SampleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // The object array to serialize.
+            Person[] people = new Person[]
+            {
+                new Person()
+                {
+                    Name = "Kristen Solstad",
+                    Age = 15,
+                    HomeAddress = new Address()
+                    {
+                        Street1 = "123 Palm Ave",
+                        City = "Some City",
+                        StateOrProvince = "ST",
+                        Country = "United States",
+                        PostalCode = "00000"
+                    }
+                },
+                new Adult()
+                {
+                    Name = "Alex Johnson",
+                    Age = 39,
+                    Occupation = "Mechanic",
+                    HomeAddress = new Address()
+                    {
+                        Street1 = "445 Lorry Way",
+                        Street2 = "Unit 3A",
+                        City = "Some City",
+                        Country = "United Kingdom",
+                        PostalCode = "AA0 A00"
+                    }
+                }
+            };
+
+            // Serialize the object array, then write it to the console.
+            string serializedData = SerializePeopleArray(people);
+            Console.WriteLine("Serialized:");
+            Console.WriteLine(serializedData);
+            Console.WriteLine();
+
+            // Now deserialize the object array.
+            Person[] deserializedArray = DeserializePeopleArray(serializedData);
+            Console.WriteLine("Deserialized " + deserializedArray.Length + " people.");
+            foreach (Person person in deserializedArray)
+            {
+                Console.WriteLine(person.Name + " (Age " + person.Age + ") [" + person.GetType() + "]");
+            }
+        }
+
+        static string SerializePeopleArray(Person[] people)
+        {
+            // The custom type resolver to use.
+            // Note: Except for primitives like int and string, *every* type that
+            // we might see in the object graph must be listed here.
+            CustomTypeResolver resolver = new CustomTypeResolver(
+                typeof(Person),
+                typeof(Adult),
+                typeof(Address));
+
+            // Instantiate the serializer.
+            JavaScriptSerializer serializer = new JavaScriptSerializer(resolver);
+
+            // Serialize the object array, then return it.
+            string serialized = serializer.Serialize(people);
+            return serialized;
+        }
+
+        static Person[] DeserializePeopleArray(string serializedData)
+        {
+            // The custom type resolver to use.
+            // Note: This is the same list that was provided to the Serialize routine.
+            CustomTypeResolver resolver = new CustomTypeResolver(
+                typeof(Person),
+                typeof(Adult),
+                typeof(Address));
+
+            // Instantiate the serializer.
+            JavaScriptSerializer serializer = new JavaScriptSerializer(resolver);
+
+            // Deserialize the object array, then return it.
+            Person[] deserialized = serializer.Deserialize<Person[]>(serializedData);
+            return deserialized;
+        }
+    }
+
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public Address HomeAddress { get; set; }
+    }
+
+    public class Adult : Person
+    {
+        public string Occupation { get; set; }
+    }
+
+    public class Address
+    {
+        public string Street1 { get; set; }
+        public string Street2 { get; set; }
+        public string City { get; set; }
+        public string StateOrProvince { get; set; }
+        public string Country { get; set; }
+        public string PostalCode { get; set; }
+    }
+
+    // A custom JavaScriptTypeResolver that restricts the payload
+    // to a set of known good types.
+    class CustomTypeResolver : JavaScriptTypeResolver
+    {
+        private readonly Type[] _allowedTypes;
+
+        public CustomTypeResolver(params Type[] allowedTypes)
+        {
+            if (allowedTypes == null)
+            {
+                throw new ArgumentNullException("allowedTypes");
+            }
+
+            // Make a copy of the array the caller gave us.
+            _allowedTypes = (Type[])allowedTypes.Clone();
+        }
+
+        public override Type ResolveType(string id)
+        {
+            // Iterate over all of the allowed types, looking for a match
+            // for the 'id' parameter. Calling Type.GetType(id) is dangerous,
+            // so we instead perform a match on the Type.FullName property.
+            foreach (Type allowedType in _allowedTypes)
+            {
+                if (allowedType.FullName == id)
+                {
+                    return allowedType;
+                }
+            }
+
+            // The caller provided a type we don't recognize. This could be
+            // dangerous, so we'll fail the operation immediately.
+            throw new ArgumentException("Unknown type: " + id, "id");
+        }
+
+        public override string ResolveTypeId(Type type)
+        {
+            // Before we serialize data, quickly double-check to make
+            // sure we're allowed to deserialize the data. Otherwise it's
+            // no good serializing something if we can't deserialize it.
+            if (_allowedTypes.Contains(type))
+            {
+                return type.FullName;
+            }
+
+            throw new InvalidOperationException("Cannot serialize an object of type " + type + ". Did you forget to add it to the allow list?");
+        }
+    }
+}
+```
+
+The preceding app outputs the following to the console, formatted for readability.
+
+```txt
+Serialized:
+[
+    {
+        "__type": "SampleApp.Person",
+        "Name": "Kristen Solstad",
+        "Age": 15,
+        "HomeAddress": {
+            "__type": "SampleApp.Address",
+            "Street1": "123 Palm Ave",
+            "Street2": null,
+            "City": "Some City",
+            "StateOrProvince": "ST",
+            "Country": "United States",
+            "PostalCode": "00000"
+        }
+    },
+    {
+        "__type": "SampleApp.Adult",
+        "Occupation": "Mechanic",
+        "Name": "Alex Johnson",
+        "Age": 39,
+        "HomeAddress": {
+            "__type": "SampleApp.Address",
+            "Street1": "445 Lorry Way",
+            "Street2": "Unit 3A",
+            "City": "Some City",
+            "StateOrProvince": null,
+            "Country": "United Kingdom",
+            "PostalCode": "AA0 A00"
+        }
+    }
+]
+
+Deserialized 2 people.
+Kristen Solstad (Age 15) [SampleApp.Person]
+Alex Johnson (Age 39) [SampleApp.Adult]
+```
+
+In the preceding sample, the `Adult` type subclasses the `Person` type. A custom `JavaScriptTypeResolver` is used to include the type information as part of the generated JSON payload. This allows limited polymorphism when deserializing the JSON payload back into a .NET object graph. The payload can control whether to return a base `Person` instance or a derived `Adult` instance back to the caller.
+
+This sample is safe because it uses an `allow-list` mechanism to control deserialization. The code:
+
+* Initializes the `CustomTypeResolver` with an explicit list of allowed types.
+* Restricts the deserialization process to only approved list of types. The restriction prevents [deserialization attacks](https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data), where the remote client specifies a malicious `__type` in the JSON payload and tricks the server into deserializing a dangerous type.
+
+Even though the app only expects `Person` and `Adult` instances to be deserialized as part of the top-level array, it's still necessary to add `Address` to the allow-list because:
+
+* Serializing a `Person` or `Adult` also serializes an `Address` as part of the object graph.
+* All types that might be present in the object graph need to be accounted for in the allow list. Primitives like `int` and `string` do not need to be specified.
+
+> [!WARNING]
+>  Do not call `Type.GetType(id)` within the `ResolveType` method. This could introduce a security vunerability into the app. Instead, iterate through the list of allowed types and compare their `Type.FullName` property against the incoming `id`, as shown in the preceding sample.
   
  ]]></format>
     </remarks>
@@ -61,7 +283,8 @@
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters />
@@ -98,7 +321,7 @@
   
 ## Remarks  
  When a type resolver is associated with a <xref:System.Web.Script.Serialization.JavaScriptSerializer> instance, the serializer uses the <xref:System.Web.Script.Serialization.JavaScriptTypeResolver.ResolveType%2A> method when it iterates through a JSON string to determine the specific managed type to which the JSON type should be converted.  
-  
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -110,6 +333,7 @@
       <MemberSignature Language="C#" Value="public abstract string ResolveTypeId (Type type);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance string ResolveTypeId(class System.Type type) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Web.Script.Serialization.JavaScriptTypeResolver.ResolveTypeId(System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public MustOverride Function ResolveTypeId (type As Type) As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; abstract System::String ^ ResolveTypeId(Type ^ type);" />
       <MemberSignature Language="F#" Value="abstract member ResolveTypeId : Type -&gt; string" Usage="javaScriptTypeResolver.ResolveTypeId type" />
       <MemberType>Method</MemberType>
