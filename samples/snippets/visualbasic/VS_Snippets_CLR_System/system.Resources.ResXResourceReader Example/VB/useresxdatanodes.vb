@@ -6,10 +6,10 @@ Imports System.ComponentModel.Design
 Namespace UseDataNodesExample
     Public Class Program
         Public Shared Sub Main()
-            Console.WriteLine(vbNewLine + "Enumerating as data items...")
+            Console.WriteLine(Environment.NewLine + "Enumerating as data items...")
             EnumResourceItems("Resource1.resx", False)
 
-            Console.WriteLine(vbNewLine + "Enumerating as data nodes...")
+            Console.WriteLine(Environment.NewLine + "Enumerating as data nodes...")
             EnumResourceItems("Resource1.resx", True)
         End Sub
 
@@ -19,7 +19,7 @@ Namespace UseDataNodesExample
 
                 '<Snippet3>
                 ' Enumerate using IEnumerable.GetEnumerator().
-                Console.WriteLine(vbNewLine + "  Default enumerator:")
+                Console.WriteLine(Environment.NewLine + "  Default enumerator:")
                 For Each entry As DictionaryEntry In reader
                     ShowResourceItem(entry, useDataNodes)
                 Next entry
@@ -29,7 +29,7 @@ Namespace UseDataNodesExample
                 ' Enumerate using GetMetadataEnumerator()
                 Dim metadataEnumerator As IDictionaryEnumerator = reader.GetMetadataEnumerator()
 
-                Console.WriteLine(vbNewLine + "  MetadataEnumerator:")
+                Console.WriteLine(Environment.NewLine + "  MetadataEnumerator:")
                 While metadataEnumerator.MoveNext()
                     ShowResourceItem(metadataEnumerator.Entry, useDataNodes)
                 End While
@@ -39,7 +39,7 @@ Namespace UseDataNodesExample
                 ' Enumerate using GetEnumerator()
                 Dim enumerator As IDictionaryEnumerator = reader.GetEnumerator()
 
-                Console.WriteLine(vbNewLine + "  Enumerator:")
+                Console.WriteLine(Environment.NewLine + "  Enumerator:")
                 While enumerator.MoveNext()
                     ShowResourceItem(enumerator.Entry, useDataNodes)
                 End While

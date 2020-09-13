@@ -14,10 +14,10 @@ Class EncryptorExample
          aesCSP.GenerateIV()
          Dim encQuote() As Byte = EncryptString(aesCSP, quote)
 
-         Console.WriteLine("Encrypted Quote:" + vbNewLine)
+         Console.WriteLine("Encrypted Quote:" + Environment.NewLine)
          Console.WriteLine(Convert.ToBase64String(encQuote))
 
-         Console.WriteLine(vbNewLine + "Decrypted Quote:" + vbNewLine)
+         Console.WriteLine(Environment.NewLine + "Decrypted Quote:" + Environment.NewLine)
          Console.WriteLine(DecryptBytes(aesCSP, encQuote))
      End Sub
 

@@ -38,12 +38,26 @@ interface IUserData
 {
     void DoSomeStuff(
         [MarshalAs(UnmanagedType.CustomMarshaler,
-             MarshalType="MyCompany.NewOldMarshaler")]
+             MarshalType="NewOldMarshaler")]
         INew pINew
     );
 }
 // </Snippet5>
 }
+
+// <Snippet6>
+public NewOldMarshaler : ICustomMarshaler
+{
+    public static ICustomMarshaler GetInstance(string pstrCookie)
+        => return new NewOldMarshaler();
+
+    public Object MarshalNativeToManaged( IntPtr pNativeData ) => throw new NotImplementedException();
+    public IntPtr MarshalManagedToNative( Object ManagedObj ) => throw new NotImplementedException();
+    public void CleanUpNativeData( IntPtr pNativeData ) => throw new NotImplementedException();
+    public void CleanUpManagedData( Object ManagedObj ) => throw new NotImplementedException();
+    public int GetNativeDataSize() => throw new NotImplementedException();
+}
+// </Snippet6>
 
 class StubClass
 {

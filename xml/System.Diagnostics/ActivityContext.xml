@@ -18,16 +18,24 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>A representation that conforms to the W3C TraceContext specification. It contains two identifiers: a TraceId and a SpanId,  along with a set of common TraceFlags and system-specific TraceState values.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ActivityContext contains the property `IsRemote`, which is not part of W3C. `IsRemote` is indicating if the context is propagated from a remote parent.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ActivityContext (System.Diagnostics.ActivityTraceId traceId, System.Diagnostics.ActivitySpanId spanId, System.Diagnostics.ActivityTraceFlags traceOptions, string traceState = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.Diagnostics.ActivityTraceId traceId, valuetype System.Diagnostics.ActivitySpanId spanId, valuetype System.Diagnostics.ActivityTraceFlags traceOptions, string traceState) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.ActivityContext.#ctor(System.Diagnostics.ActivityTraceId,System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivityTraceFlags,System.String)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (traceId As ActivityTraceId, spanId As ActivitySpanId, traceOptions As ActivityTraceFlags, Optional traceState As String = Nothing)" />
-      <MemberSignature Language="F#" Value="new System.Diagnostics.ActivityContext : System.Diagnostics.ActivityTraceId * System.Diagnostics.ActivitySpanId * System.Diagnostics.ActivityTraceFlags * string -&gt; System.Diagnostics.ActivityContext" Usage="new System.Diagnostics.ActivityContext (traceId, spanId, traceOptions, traceState)" />
+      <MemberSignature Language="C#" Value="public ActivityContext (System.Diagnostics.ActivityTraceId traceId, System.Diagnostics.ActivitySpanId spanId, System.Diagnostics.ActivityTraceFlags traceOptions, string traceState = default, bool isRemote = false);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.Diagnostics.ActivityTraceId traceId, valuetype System.Diagnostics.ActivitySpanId spanId, valuetype System.Diagnostics.ActivityTraceFlags traceOptions, string traceState, bool isRemote) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.ActivityContext.#ctor(System.Diagnostics.ActivityTraceId,System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivityTraceFlags,System.String,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (traceId As ActivityTraceId, spanId As ActivitySpanId, traceOptions As ActivityTraceFlags, Optional traceState As String = Nothing, Optional isRemote As Boolean = false)" />
+      <MemberSignature Language="F#" Value="new System.Diagnostics.ActivityContext : System.Diagnostics.ActivityTraceId * System.Diagnostics.ActivitySpanId * System.Diagnostics.ActivityTraceFlags * string * bool -&gt; System.Diagnostics.ActivityContext" Usage="new System.Diagnostics.ActivityContext (traceId, spanId, traceOptions, traceState, isRemote)" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
@@ -38,14 +46,24 @@
         <Parameter Name="spanId" Type="System.Diagnostics.ActivitySpanId" />
         <Parameter Name="traceOptions" Type="System.Diagnostics.ActivityTraceFlags" />
         <Parameter Name="traceState" Type="System.String" />
+        <Parameter Name="isRemote" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="traceId">To be added.</param>
-        <param name="spanId">To be added.</param>
-        <param name="traceOptions">To be added.</param>
-        <param name="traceState">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="traceId">A trace identifier.</param>
+        <param name="spanId">A span identifier.</param>
+        <param name="traceOptions">An 8-bit field that controls tracing flags such as sampling, trace level, etc.</param>
+        <param name="traceState">Carries system-specific configuration data.</param>
+        <param name="isRemote">Indicates if the context is propagated from a remote parent.</param>
+        <summary>Construct a new activity context instance using the specified arguments.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+`isRemote` is not a part of W3C specification. It is needed for the OpenTelemetry scenarios.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -70,9 +88,10 @@
         <Parameter Name="value" Type="System.Diagnostics.ActivityContext" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The object to compare to this instance.</param>
+        <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        <returns>
+          <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -95,9 +114,9 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="obj">The object to compare to this instance.</param>
+        <summary>Determines whether this instance and a specified <see langword="ActivityContext" /> object have the same value.</summary>
+        <returns><see langword="true" /> if the current object is equal to the <paramref name="obj" /> parameter; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -118,9 +137,39 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Provides a hash function for the current <see langword="ActivityContext" /> that's suitable for hashing algorithms and data structures, such as hash tables.</summary>
+        <returns>A hash code for the current <see langword="ActivityContext" />.</returns>
         <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsRemote">
+      <MemberSignature Language="C#" Value="public bool IsRemote { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsRemote" />
+      <MemberSignature Language="DocId" Value="P:System.Diagnostics.ActivityContext.IsRemote" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsRemote As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsRemote { bool get(); };" />
+      <MemberSignature Language="F#" Value="member this.IsRemote : bool" Usage="System.Diagnostics.ActivityContext.IsRemote" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.DiagnosticSource</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Indicates if the activity context was propagated from a remote parent.</summary>
+        <value>
+          <see langword="true" /> if it was propagated from a remote parent; <see langword="false" /> otherwise.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+`IsRemote` is not a part of W3C specification. It is needed for the OpenTelemetry scenarios.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Equality">
@@ -143,10 +192,11 @@
         <Parameter Name="right" Type="System.Diagnostics.ActivityContext" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Determines whether two specified <see langword="ActivityContext" /> values are equal.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are equal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -170,10 +220,11 @@
         <Parameter Name="right" Type="System.Diagnostics.ActivityContext" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first value to compare.</param>
+        <param name="right">The second value to compare.</param>
+        <summary>Determines whether two specified <see langword="ActivityContext" /> values are not equal.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are not equal; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -193,8 +244,8 @@
         <ReturnType>System.Diagnostics.ActivitySpanId</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The Id of the request as known by the caller.</summary>
+        <value>The Span Id in the context.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -214,8 +265,8 @@
         <ReturnType>System.Diagnostics.ActivityTraceFlags</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The flags defined by the W3C standard along with the ID for the activity.</summary>
+        <value>The context tracing flags.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -235,8 +286,8 @@
         <ReturnType>System.Diagnostics.ActivityTraceId</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The trace identifier.</summary>
+        <value>The tracing identifier in the context.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -256,8 +307,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Holds the W3C 'tracestate' header.</summary>
+        <value>A string representing the W3C 'tracestate' header.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
