@@ -12,11 +12,11 @@ Public Class ScrambleList
             integerList.Add(i)
         Next i
 
-        Console.WriteLine("Ordered:" + vbNewLine)
+        Console.WriteLine("Ordered:" + Environment.NewLine)
         For Each value As Integer In integerList
             Console.Write("{0}, ", value)
         Next value
-        Console.WriteLine("<end>" + vbNewLine + vbNewLine + "Scrambled:" + vbNewLine)
+        Console.WriteLine("<end>" + Environment.NewLine + Environment.NewLine + "Scrambled:" + Environment.NewLine)
 
         ' Scramble the order of the items in the list.
         integerList.Scramble()
@@ -24,7 +24,7 @@ Public Class ScrambleList
         For Each value As Integer In integerList
             Console.Write("{0}, ", value)
         Next value
-        Console.WriteLine("<end>" + vbNewLine)
+        Console.WriteLine("<end>" + Environment.NewLine)
     End Sub
 
     Public Sub Scramble()

@@ -3845,7 +3845,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The `Connected` property gets the connection state of the <xref:System.Net.Sockets.Socket> as of the last I/O operation. When it returns `false`, the <xref:System.Net.Sockets.Socket> was either never connected, or is no longer connected.  
+ The `Connected` property gets the connection state of the <xref:System.Net.Sockets.Socket> as of the last I/O operation. When it returns `false`, the <xref:System.Net.Sockets.Socket> was either never connected, or is no longer connected. `Connected` is not thread-safe; it may return `true` after an operation is aborted when the <xref:System.Net.Sockets.Socket> is disconnected from another thread.
   
  The value of the <xref:System.Net.Sockets.Socket.Connected%2A> property reflects the state of the connection as of the most recent operation. If you need to determine the current state of the connection, make a nonblocking, zero-byte Send call. If the call returns successfully or throws a WAEWOULDBLOCK error code (10035), then the socket is still connected; otherwise, the socket is no longer connected.  
   
@@ -6669,8 +6669,9 @@ The maximum length of the pending connections queue is determined automatically.
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Indicates whether the underlying operating system support the Unix domain sockets.</summary>
+        <value>
+          <see langword="true" /> if the operating system support the Unix domain sockets; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -8975,6 +8976,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
   
  The <paramref name="checkError" /> parameter is <see langword="null" /> or empty.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">.NET 5.0 and later: One or more sockets are disposed.</exception>
         <altmember cref="T:System.Collections.IList" />
         <altmember cref="M:System.Net.Sockets.Socket.Accept" />
         <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />

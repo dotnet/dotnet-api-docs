@@ -346,6 +346,8 @@ The specified `handler` will be disposed of by calling [HttpClient.Dispose](xref
   
 ## Remarks  
  When sending a <xref:System.Net.Http.HttpRequestMessage> with a relative Uri, the message Uri will be added to the <xref:System.Net.Http.HttpClient.BaseAddress%2A> property to create an absolute Uri.  
+ 
+ Note that all characters after the right-most "/" in the base URI are excluded when combined with the message URI. See [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification.
   
  ]]></format>
         </remarks>
@@ -427,11 +429,14 @@ The default instance returned by this property will initialize following a diffe
 * **For Linux:** Reads proxy configuration from environment variables or, in case those are not defined, this property initializes a non-configured instance that bypasses all addresses.
 
 The environment variables used for `DefaultProxy` initialization on Windows and Unix-based platforms are:
-* HTTP_PROXY: the hostname or IP address of the proxy server used on HTTP requests.
-* HTTPS_PROXY: the hostname or IP address of the proxy server used on HTTPS requests.
-* ALL_PROXY: the hostname or IP address of the proxy server used on HTTP and/or HTTPS requests in case HTTP_PROXY and/or HTTPS_PROXY are not defined.
+* HTTP_PROXY: the proxy server used on HTTP requests.
+* HTTPS_PROXY: the proxy server used on HTTPS requests.
+* ALL_PROXY: the proxy server used on HTTP and/or HTTPS requests in case HTTP_PROXY and/or HTTPS_PROXY are not defined.
 * NO_PROXY: a comma-separated list of hostnames that should be excluded from proxying.
 
+On systems where environment variables are case-sensitive, the variable names may be all lowercase or all uppercase.  The lowercase names are checked first.
+
+The proxy server may be a hostname or IP address, optionally followed by a colon and port number, or it may be an http URL, optionally including a username and password for proxy authentication. The URL must be start with `http`, not `https`, and cannot include any text after the hostname, IP, or port.
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The value passed cannot be <see langword="null" />.</exception>
@@ -576,8 +581,15 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.</exception>
+        <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.
+
+-or-
+
+The <paramref name="requestUri" /> is not an absolute URI.
+
+-or-
+
+<see cref="P:System.Net.Http.HttpClient.BaseAddress" /> is not set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -629,8 +641,15 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.</exception>
+        <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.
+
+-or-
+
+The <paramref name="requestUri" /> is not an absolute URI.
+
+-or-
+
+<see cref="P:System.Net.Http.HttpClient.BaseAddress" /> is not set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -684,8 +703,15 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.</exception>
+        <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.
+
+-or-
+
+The <paramref name="requestUri" /> is not an absolute URI.
+
+-or-
+
+<see cref="P:System.Net.Http.HttpClient.BaseAddress" /> is not set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -739,8 +765,15 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.</exception>
+        <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.
+
+-or-
+
+The <paramref name="requestUri" /> is not an absolute URI.
+
+-or-
+
+<see cref="P:System.Net.Http.HttpClient.BaseAddress" /> is not set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -858,7 +891,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -910,7 +943,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -964,7 +997,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -1018,7 +1051,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -1072,7 +1105,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -1126,7 +1159,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -1182,7 +1215,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -1238,7 +1271,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -1315,7 +1348,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -1367,14 +1400,15 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response body is read.  
 
 > [!NOTE]
-> In case of timeout, different exceptions are thrown on different .NET implementations.
-> - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
- ]]></format>
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+
+          ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
@@ -1401,11 +1435,26 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+        <summary>Sends a GET request to the specified Uri and return the response body as a byte array in an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response body is read.  
+
+> [!NOTE]
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetByteArrayAsync">
@@ -1431,11 +1480,26 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+        <summary>Send a GET request to the specified Uri and return the response body as a byte array in an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response body is read.  
+
+> [!NOTE]
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="GetStreamAsync">
@@ -1504,14 +1568,14 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the response headers are read. This method does not read nor buffer the response body.  
 
 > [!NOTE]
-> In case of timeout, different exceptions are thrown on different .NET implementations.
-> - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
@@ -1562,14 +1626,14 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the response headers are read. This method does not read nor buffer the response body.  
 
 > [!NOTE]
-> In case of timeout, different exceptions are thrown on different .NET implementations.
-> - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
@@ -1596,12 +1660,27 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+        <summary>Send a GET request to the specified Uri and return the response body as a stream in an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the response headers are read. This method does not read nor buffer the response body.  
+
+> [!NOTE]
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+ ]]></format>
+        </remarks>
       </Docs>
+      <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+      <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
+      <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
     </Member>
     <Member MemberName="GetStreamAsync">
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.IO.Stream&gt; GetStreamAsync (Uri? requestUri, System.Threading.CancellationToken cancellationToken);" />
@@ -1626,11 +1705,26 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+        <summary>Send a GET request to the specified Uri and return the response body as a stream in an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the response headers are read. This method does not read nor buffer the response body.  
+
+> [!NOTE]
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="GetStringAsync">
@@ -1699,14 +1793,14 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response body is read.  
 
 > [!NOTE]
-> In case of timeout, different exceptions are thrown on different .NET implementations.
-> - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
@@ -1757,14 +1851,14 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
  This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response body is read.  
 
 > [!NOTE]
-> In case of timeout, different exceptions are thrown on different .NET implementations.
-> - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
@@ -1791,11 +1885,26 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+        <summary>Send a GET request to the specified Uri and return the response body as a string in an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response body is read.  
+
+> [!NOTE]
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetStringAsync">
@@ -1821,11 +1930,26 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="requestUri">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="requestUri">The Uri the request is sent to.</param>
+        <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+        <summary>Send a GET request to the specified Uri and return the response body as a string in an asynchronous operation.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response body is read.  
+
+> [!NOTE]
+> In case of a timeout:
+> - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
+> - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
+> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="MaxResponseContentBufferSize">
@@ -2106,7 +2230,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -2160,7 +2284,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -2216,7 +2340,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -2272,7 +2396,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -2345,7 +2469,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -2399,7 +2523,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -2455,7 +2579,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
       </Docs>
@@ -2511,9 +2635,129 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
 > - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Send">
+      <MemberSignature Language="C#" Value="public System.Net.Http.HttpResponseMessage Send (System.Net.Http.HttpRequestMessage request);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Net.Http.HttpResponseMessage Send(class System.Net.Http.HttpRequestMessage request) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpClient.Send(System.Net.Http.HttpRequestMessage)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Send (request As HttpRequestMessage) As HttpResponseMessage" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Net::Http::HttpResponseMessage ^ Send(System::Net::Http::HttpRequestMessage ^ request);" />
+      <MemberSignature Language="F#" Value="override this.Send : System.Net.Http.HttpRequestMessage -&gt; System.Net.Http.HttpResponseMessage" Usage="httpClient.Send request" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="request">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Send">
+      <MemberSignature Language="C#" Value="public System.Net.Http.HttpResponseMessage Send (System.Net.Http.HttpRequestMessage request, System.Net.Http.HttpCompletionOption completionOption);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Net.Http.HttpResponseMessage Send(class System.Net.Http.HttpRequestMessage request, valuetype System.Net.Http.HttpCompletionOption completionOption) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpClient.Send(System.Net.Http.HttpRequestMessage,System.Net.Http.HttpCompletionOption)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Send (request As HttpRequestMessage, completionOption As HttpCompletionOption) As HttpResponseMessage" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Net::Http::HttpResponseMessage ^ Send(System::Net::Http::HttpRequestMessage ^ request, System::Net::Http::HttpCompletionOption completionOption);" />
+      <MemberSignature Language="F#" Value="override this.Send : System.Net.Http.HttpRequestMessage * System.Net.Http.HttpCompletionOption -&gt; System.Net.Http.HttpResponseMessage" Usage="httpClient.Send (request, completionOption)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="completionOption" Type="System.Net.Http.HttpCompletionOption" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="request">To be added.</param>
+        <param name="completionOption">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Send">
+      <MemberSignature Language="C#" Value="public override System.Net.Http.HttpResponseMessage Send (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Net.Http.HttpResponseMessage Send(class System.Net.Http.HttpRequestMessage request, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpClient.Send(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Send (request As HttpRequestMessage, cancellationToken As CancellationToken) As HttpResponseMessage" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Net::Http::HttpResponseMessage ^ Send(System::Net::Http::HttpRequestMessage ^ request, System::Threading::CancellationToken cancellationToken);" />
+      <MemberSignature Language="F#" Value="override this.Send : System.Net.Http.HttpRequestMessage * System.Threading.CancellationToken -&gt; System.Net.Http.HttpResponseMessage" Usage="httpClient.Send (request, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="request">To be added.</param>
+        <param name="cancellationToken">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Send">
+      <MemberSignature Language="C#" Value="public System.Net.Http.HttpResponseMessage Send (System.Net.Http.HttpRequestMessage request, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Net.Http.HttpResponseMessage Send(class System.Net.Http.HttpRequestMessage request, valuetype System.Net.Http.HttpCompletionOption completionOption, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpClient.Send(System.Net.Http.HttpRequestMessage,System.Net.Http.HttpCompletionOption,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Send (request As HttpRequestMessage, completionOption As HttpCompletionOption, cancellationToken As CancellationToken) As HttpResponseMessage" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Net::Http::HttpResponseMessage ^ Send(System::Net::Http::HttpRequestMessage ^ request, System::Net::Http::HttpCompletionOption completionOption, System::Threading::CancellationToken cancellationToken);" />
+      <MemberSignature Language="F#" Value="override this.Send : System.Net.Http.HttpRequestMessage * System.Net.Http.HttpCompletionOption * System.Threading.CancellationToken -&gt; System.Net.Http.HttpResponseMessage" Usage="httpClient.Send (request, completionOption, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="completionOption" Type="System.Net.Http.HttpCompletionOption" Index="1" FrameworkAlternate="net-5.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="request">To be added.</param>
+        <param name="completionOption">To be added.</param>
+        <param name="cancellationToken">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="SendAsync">

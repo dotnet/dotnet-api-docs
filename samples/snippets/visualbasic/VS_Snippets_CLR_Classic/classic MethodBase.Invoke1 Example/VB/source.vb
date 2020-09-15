@@ -26,7 +26,7 @@ Public Class TestMethodInfo
         Dim magicMethod As MethodInfo = magicType.GetMethod("ItsMagic")
         Dim magicValue As Object = magicMethod.Invoke(magicClassObject, New Object(){100})
 
-        Console.WriteLine("MethodInfo.Invoke() Example" + vbNewLine)
+        Console.WriteLine("MethodInfo.Invoke() Example" + Environment.NewLine)
         Console.WriteLine("MagicClass.ItsMagic() returned: {0}", magicValue)
     End Sub
 End Class

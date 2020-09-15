@@ -200,7 +200,7 @@ Class Class9b20cd53c9d649169e840eb84667a921
         Response = MsgBox(Msg, MsgBoxStyle.YesNo)
         If Response <> MsgBoxResult.No Then
             If TotPmts > 12 Then MsgBox("Only first year will be shown.")
-            Msg = "Month  Payment  Principal  Interest" & vbNewLine
+            Msg = "Month  Payment  Principal  Interest" & Environment.NewLine
             For Period = 1 To TotPmts
                 ' Show only first 12.
                 If Period > 12 Then Exit For
@@ -211,7 +211,7 @@ Class Class9b20cd53c9d649169e840eb84667a921
                 ' Round interest.
                 I = (Int((I + 0.005) * 100) / 100)
                 Msg = Msg & Period & vbTab & Format(Payment, Fmt)
-                Msg = Msg & vbTab & Format(P, Fmt) & vbTab & Format(I, Fmt) & vbNewLine
+                Msg = Msg & vbTab & Format(P, Fmt) & vbTab & Format(I, Fmt) & Environment.NewLine
             Next Period
             ' Display amortization table.
             MsgBox(Msg)

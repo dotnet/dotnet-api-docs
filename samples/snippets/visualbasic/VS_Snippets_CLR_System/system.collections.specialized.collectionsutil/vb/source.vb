@@ -12,7 +12,7 @@ Class TestCollectionsUtils
         population1("McHenry") = 185
 
         ' Select cities from the table using mixed case.
-        Console.WriteLine("Case insensitive hashtable results:" + vbNewLine)
+        Console.WriteLine("Case insensitive hashtable results:" + Environment.NewLine)
         Console.WriteLine("{0}'s population is: {1}", "Trapperville", population1("trapperville"))
         Console.WriteLine("{0}'s population is: {1}", "Doggerton", population1("DOGGERTON"))
         Console.WriteLine("{0}'s population is: {1}", "New Hollow", population1("New hoLLow"))
@@ -25,7 +25,7 @@ Class TestCollectionsUtils
         Next city
 
         ' Select cities from the sorted list using mixed case.
-        Console.WriteLine(vbNewLine + "Case insensitive sorted list results:" + vbNewLine)
+        Console.WriteLine(Environment.NewLine + "Case insensitive sorted list results:" + Environment.NewLine)
         Console.WriteLine("{0}'s population is: {1}", "Trapperville", population2("trapPeRVille"))
         Console.WriteLine("{0}'s population is: {1}", "Doggerton", population2("dOGGeRtON"))
         Console.WriteLine("{0}'s population is: {1}", "New Hollow", population2("nEW hOLLOW"))
