@@ -25,17 +25,23 @@ public class Example
                 // Each task begins by requesting the semaphore.
                 Console.WriteLine("Task {0} begins and waits for the semaphore.",
                                   Task.CurrentId);
+                
+                int semaphoreCount;
                 semaphore.Wait();
+                try
+                {
+                    Interlocked.Add(ref padding, 100);
 
-                Interlocked.Add(ref padding, 100);
+                    Console.WriteLine("Task {0} enters the semaphore.", Task.CurrentId);
 
-                Console.WriteLine("Task {0} enters the semaphore.", Task.CurrentId);
-
-                // The task just sleeps for 1+ seconds.
-                Thread.Sleep(1000 + padding);
-
+                    // The task just sleeps for 1+ seconds.
+                    Thread.Sleep(1000 + padding);
+                }
+                finally {
+                    semaphoreCount = semaphore.Release();
+                }
                 Console.WriteLine("Task {0} releases the semaphore; previous count: {1}.",
-                                  Task.CurrentId, semaphore.Release());
+                                  Task.CurrentId, semaphoreCount);
             });
         }
 
