@@ -110,24 +110,24 @@
 |Sign (0 = positive, 1 = negative)|31|  
   
  Just as decimal fractions are unable to precisely represent some fractional values (such as 1/3 or <xref:System.Math.PI?displayProperty=nameWithType>), binary fractions are unable to represent some fractional values. For example, 2/10, which is represented precisely by .2 as a decimal fraction, is represented by .0011111001001100 as a binary fraction, with the pattern "1100" repeating to infinity. In this case, the floating-point value provides an imprecise representation of the number that it represents. Performing additional mathematical operations on the original floating-point value often increases its lack of precision. For example, if you compare the results of multiplying .3 by 10 and adding .3 to .3 nine times, you will see that addition produces the less precise result, because it involves eight more operations than multiplication. Note that this disparity is apparent only if you display the two <xref:System.Single> values by using the "R" [standard numeric format string](/dotnet/standard/base-types/standard-numeric-format-strings), which, if necessary, displays all 9 digits of precision supported by the <xref:System.Single> type.  
-  
- [!code-csharp[System.Single.Structure#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/representation1.cs#3)]
- [!code-vb[System.Single.Structure#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/representation1.vb#3)]  
-  
+ 
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/representation1.cs" interactive="try-dotnet" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/representation1.vb" id="Snippet3":::
+
  Because some numbers cannot be represented exactly as fractional binary values, floating-point numbers can only approximate real numbers.  
   
  All floating-point numbers have a limited number of significant digits, which also determines how accurately a floating-point value approximates a real number. A <xref:System.Single> value has up to 7 decimal digits of precision, although a maximum of 9 digits is maintained internally. This means that some floating-point operations may lack the precision to change a floating-point value. The following example defines a large single-precision floating-point value, and then adds the product of <xref:System.Single.Epsilon?displayProperty=nameWithType> and one quadrillion to it. However, the product is too small to modify the original floating-point value. Its least significant digit is thousandths, whereas the most significant digit in the product is 10<sup>-30</sup>.  
   
- [!code-csharp[System.Single.Structure#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/representation2.cs#4)]
- [!code-vb[System.Single.Structure#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/representation2.vb#4)]  
-  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/representation2.cs" interactive="try-dotnet" id="Snippet4":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/representation2.vb" id="Snippet4":::
+
  The limited precision of a floating-point number has several consequences:  
   
 -   Two floating-point numbers that appear equal for a particular precision might not compare equal because their least significant digits are different. In the following example, a series of numbers are added together, and their total is compared with their expected total. Although the two values appear to be the same, a call to the `Equals` method indicates that they are not.  
   
-     [!code-csharp[System.Single.Structure#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/precisionlist3.cs#6)]
-     [!code-vb[System.Single.Structure#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/precisionlist3.vb#6)]  
-  
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/precisionlist3.cs" interactive="try-dotnet" id="Snippet6":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/precisionlist3.vb" id="Snippet6":::
+
      If you change the format items in the <xref:System.Console.WriteLine%28System.String%2CSystem.Object%2CSystem.Object%29?displayProperty=nameWithType> statement from `{0}` and `{1}` to `{0:R}` and `{1:R}` to display all significant digits of the two <xref:System.Single> values, it is clear that the two values are unequal because of a loss of precision during the addition operations. In this case, the issue can be resolved by calling the <xref:System.Math.Round%28System.Double%2CSystem.Int32%29?displayProperty=nameWithType> method to round the <xref:System.Single> values to the desired precision before performing the comparison.  
   
 -   A mathematical or comparison operation that uses a floating-point number might not yield the same result if a decimal number is used, because the binary floating-point number might not equal the decimal number. A previous example illustrated this by displaying the result of multiplying .3 by 10 and adding .3 to .3 nine times.  
@@ -146,30 +146,30 @@
   
 -   <xref:System.Single> values have less precision than <xref:System.Double> values. A <xref:System.Single> value that is converted to a seemingly equivalent <xref:System.Double> often does not equal the <xref:System.Double> value because of differences in precision. In the following example, the result of identical division operations is assigned to a <xref:System.Double> value and a <xref:System.Single> value. After the <xref:System.Single> value is cast to a <xref:System.Double>, a comparison of the two values shows that they are unequal.  
   
-     [!code-csharp[System.Double.Structure#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.structure/cs/precisionlist1.cs#5)]
-     [!code-vb[System.Double.Structure#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.structure/vb/precisionlist1.vb#5)]  
-  
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.double.structure/cs/precisionlist1.cs" interactive="try-dotnet" id="Snippet5":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.double.structure/vb/precisionlist1.vb" id="Snippet5":::
+
      To avoid this problem, either use the <xref:System.Double> data type in place of the <xref:System.Single> data type, or use the <xref:System.Math.Round%2A> method so that both values have the same precision.  
   
 <a name="Equality"></a>   
 ## Testing for equality  
  To be considered equal, two <xref:System.Single> values must represent identical values. However, because of differences in precision between values, or because of a loss of precision by one or both values, floating-point values that are expected to be identical often turn out to be unequal due to differences in their least significant digits. As a result, calls to the <xref:System.Single.Equals%2A> method to determine whether two values are equal, or calls to the <xref:System.Single.CompareTo%2A> method to determine the relationship between two <xref:System.Single> values, often yield unexpected results. This is evident in the following example, where two apparently equal <xref:System.Single> values turn out to be unequal, because the first value has 7 digits of precision, whereas the second value has 9.  
   
- [!code-csharp[System.Single.Structure#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/comparison1.cs#9)]
- [!code-vb[System.Single.Structure#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/comparison1.vb#9)]  
-  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/comparison1.cs" interactive="try-dotnet" id="Snippet9":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/comparison1.vb" id="Snippet9":::
+
  Calculated values that follow different code paths and that are manipulated in different ways often prove to be unequal. In the following example, one <xref:System.Single> value is squared, and then the square root is calculated to restore the original value. A second <xref:System.Single> is multiplied by 3.51 and squared before the square root of the result is divided by 3.51 to restore the original value. Although the two values appear to be identical, a call to the <xref:System.Single.Equals%28System.Single%29> method indicates that they are not equal. Using the "G9" standard format string to return a result string that displays all the significant digits of each <xref:System.Single> value shows that the second value is .0000000000001 less than the first.  
   
- [!code-csharp[System.Single.Structure#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/comparison2.cs#10)]
- [!code-vb[System.Single.Structure#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/comparison2.vb#10)]  
-  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/comparison2.cs" interactive="try-dotnet" id="Snippet10":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/comparison2.vb" id="Snippet10":::
+
  In cases where a loss of precision is likely to affect the result of a comparison, you can use the following techniques instead of calling the <xref:System.Single.Equals%2A> or <xref:System.Single.CompareTo%2A> method:  
   
 -   Call the <xref:System.Math.Round%2A?displayProperty=nameWithType> method to ensure that both values have the same precision. The following example modifies a previous example to use this approach so that two fractional values are equivalent.  
   
-     [!code-csharp[System.Single.Structure#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/comparison3.cs#11)]
-     [!code-vb[System.Single.Structure#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/comparison3.vb#11)]  
-  
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/comparison3.cs" interactive="try-dotnet" id="Snippet11":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/comparison3.vb" id="Snippet11":::
+
      Note that the problem of precision still applies to rounding of midpoint values. For more information, see the <xref:System.Math.Round%28System.Double%2CSystem.Int32%2CSystem.MidpointRounding%29?displayProperty=nameWithType> method.  
   
 -   Test for approximate equality instead of equality. This technique requires that you define either an absolute amount by which the two values can differ but still be equal, or that you define a relative amount by which the smaller value can diverge from the larger value.  
@@ -179,23 +179,23 @@
   
      The following example uses the latter approach to define an `IsApproximatelyEqual` method that tests the relative difference between two values. It also contrasts the result of calls to the `IsApproximatelyEqual` method and the <xref:System.Single.Equals%28System.Single%29> method.  
   
-     [!code-csharp[System.Single.Structure#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/comparison4.cs#12)]
-     [!code-vb[System.Single.Structure#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/comparison4.vb#12)]  
-  
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/comparison4.cs" interactive="try-dotnet" id="Snippet12":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/comparison4.vb" id="Snippet12":::
+     
 <a name="Exceptions"></a>   
 ## Floating-point values and exceptions  
  Operations with floating-point values do not throw exceptions, unlike operations with integral types, which throw exceptions in cases of illegal operations such as division by zero or overflow.  Instead, in these situations, the result of a floating-point operation is zero, positive infinity, negative infinity, or not a number (NaN):  
   
 -   If the result of a floating-point operation is too small for the destination format, the result is zero. This can occur when two very small floating-point numbers are multiplied, as the following example shows.  
   
-     [!code-csharp[System.Single.Structure#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/exceptional1.cs#1)]
-     [!code-vb[System.Single.Structure#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/exceptional1.vb#1)]  
-  
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/exceptional1.cs" interactive="try-dotnet" id="Snippet1":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/exceptional1.vb" id="Snippet1":::
+
 -   If the magnitude of the result of a floating-point operation exceeds the range of the destination format, the result of the operation is <xref:System.Single.PositiveInfinity> or <xref:System.Single.NegativeInfinity>, as appropriate for the sign of the result. The result of an operation that overflows <xref:System.Single.MaxValue?displayProperty=nameWithType> is <xref:System.Single.PositiveInfinity>, and the result of an operation that overflows <xref:System.Single.MinValue?displayProperty=nameWithType> is <xref:System.Single.NegativeInfinity>, as the following example shows.  
   
-     [!code-csharp[System.Single.Structure#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/exceptional2.cs#2)]
-     [!code-vb[System.Single.Structure#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/exceptional2.vb#2)]  
-  
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/exceptional2.cs" interactive="try-dotnet" id="Snippet2":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/exceptional2.vb" id="Snippet2":::
+
      <xref:System.Single.PositiveInfinity> also results from a division by zero with a positive dividend, and <xref:System.Single.NegativeInfinity> results from a division by zero with a negative dividend.  
   
 -   If a floating-point operation is invalid, the result of the operation is <xref:System.Single.NaN>. For example, <xref:System.Single.NaN> results from the following operations:  
@@ -292,9 +292,9 @@
   
      The problem of precision most frequently affects <xref:System.Single> values that are converted to <xref:System.Double> values. In the following example, two values produced by identical division operations are unequal, because one of the values is a single-precision floating point value that is converted to a <xref:System.Double>.  
   
-     [!code-csharp[System.Single.Structure#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/precisionlist1.cs#5)]
-     [!code-vb[System.Single.Structure#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/precisionlist1.vb#5)]  
-  
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.single.structure/cs/precisionlist1.cs" interactive="try-dotnet" id="Snippet5":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.single.structure/vb/precisionlist1.vb" id="Snippet5":::
+
  ]]></format>
     </remarks>
     <threadsafe>All members of this type are thread safe. Members that appear to modify instance state actually return a new instance initialized with the new value. As with any other type, reading and writing to a shared variable that contains an instance of this type must be protected by a lock to guarantee thread safety.</threadsafe>

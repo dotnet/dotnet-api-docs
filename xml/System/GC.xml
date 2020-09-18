@@ -157,7 +157,9 @@
 ## Remarks  
  In determining when to schedule garbage collection, the runtime takes into account how much managed memory is allocated. If a small managed object allocates a large amount of unmanaged memory, the runtime takes into account only the managed memory, and thus underestimates the urgency of scheduling garbage collection. The <xref:System.GC.AddMemoryPressure%2A> method informs the runtime of this additional pressure on system memory.  
   
- In the simplest usage pattern, a managed object allocates unmanaged memory in the constructor and releases it in the `Dispose` or `Finalize` method. Call the <xref:System.GC.AddMemoryPressure%2A> method after allocating the unmanaged memory, and call the <xref:System.GC.RemoveMemoryPressure%2A> method after releasing it.  
+ The <xref:System.GC.AddMemoryPressure%2A> and <xref:System.GC.RemoveMemoryPressure%2A> methods improve performance only for types that exclusively depend on finalizers to release the unmanaged resources. It's not necessary to use these methods in types that follow the dispose pattern, where finalizers are used to clean up unmanaged resources only in the event that a consumer of the type forgets to call `Dispose`. For more information on object finalization and the dispose pattern, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged).
+
+ In the simplest usage pattern, a managed object allocates unmanaged memory in the constructor and releases it in the `Finalize` method. Call the <xref:System.GC.AddMemoryPressure%2A> method after allocating the unmanaged memory, and call the <xref:System.GC.RemoveMemoryPressure%2A> method after releasing it.  
   
  In more complicated scenarios, where the unmanaged memory allocation changes substantially during the lifetime of the managed object, you can call the <xref:System.GC.AddMemoryPressure%2A> and <xref:System.GC.RemoveMemoryPressure%2A> methods to communicate these incremental changes to the runtime.  
   
@@ -1448,8 +1450,10 @@ This method is most useful in monitoring scenarios for measuring the difference 
   
 ## Remarks  
  In determining when to schedule garbage collection, the runtime takes into account how much managed memory is allocated. If a small managed object allocates a large amount of unmanaged memory, the runtime takes into account only the managed memory, and thus underestimates the urgency of scheduling garbage collection. The <xref:System.GC.AddMemoryPressure%2A> method informs the runtime of this additional pressure on system memory, and the <xref:System.GC.RemoveMemoryPressure%2A> method informs the runtime that the additional pressure has been released.  
-  
- In the simplest usage pattern, a managed object allocates unmanaged memory in the constructor and releases it in the `Dispose` or `Finalize` method. Call the <xref:System.GC.AddMemoryPressure%2A> method after allocating the unmanaged memory, and call the <xref:System.GC.RemoveMemoryPressure%2A> method after releasing it.  
+
+ The <xref:System.GC.AddMemoryPressure%2A> and <xref:System.GC.RemoveMemoryPressure%2A> methods improve performance only for types that exclusively depend on finalizers to release the unmanaged resources. It's not necessary to use these methods in types that follow the dispose pattern, where finalizers are used to clean up unmanaged resources only in the event that a consumer of the type forgets to call `Dispose`. For more information on object finalization and the dispose pattern, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged).
+
+ In the simplest usage pattern, a managed object allocates unmanaged memory in the constructor and releases it in the `Finalize` method. Call the <xref:System.GC.AddMemoryPressure%2A> method after allocating the unmanaged memory, and call the <xref:System.GC.RemoveMemoryPressure%2A> method after releasing it.  
   
  In more complicated scenarios, where the unmanaged memory allocation changes substantially during the lifetime of the managed object, you can call the <xref:System.GC.AddMemoryPressure%2A> and <xref:System.GC.RemoveMemoryPressure%2A> methods to communicate these incremental changes to the runtime.  
   
