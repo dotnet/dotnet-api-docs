@@ -1399,7 +1399,7 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
-          Either <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificateSelectionCallback" /> or <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificate" /> is <see langword="null" /> and <see cref="T:System.Net.Security.LocalCertificateSelectionCallback" /> is not set in the <see langword="SslStream" /> constructor.</exception>
+          Either <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificateSelectionCallback" /> or <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificate" /> or <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificateContext" /> is <see langword="null" /> and <see cref="T:System.Net.Security.LocalCertificateSelectionCallback" /> is not set in the <see langword="SslStream" /> constructor.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="sslServerAuthenticationOptions" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
@@ -1438,12 +1438,33 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0" />
       </Parameters>
       <Docs>
-        <param name="optionsCallback">To be added.</param>
-        <param name="state">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="optionsCallback">The callback delegate.</param>
+        <param name="state">The state object to pass to <paramref name="optionsCallback" /> when the callback is invoked.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        <summary>Called by servers to authenticate the server and optionally the client in a client-server connection as an asynchronous operation. The authentication process uses information returned by <paramref name="optionsCallback" />.</summary>
+        <returns>The task object representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ 
+ If the authentication fails, you receive a <xref:System.Security.Authentication.AuthenticationException>, and this <xref:System.Net.Security.SslStream> is no longer useable. You should close this object and remove all references to it so that it can be collected by the garbage collector.  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          Either <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificateSelectionCallback" /> or <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificate" /> or <see cref="P:System.Net.Security.SslServerAuthenticationOptions.ServerCertificateContext" /> is <see langword="null" /> and <see cref="T:System.Net.Security.LocalCertificateSelectionCallback" /> is not set in the <see langword="SslStream" /> constructor.</exception>
+        <exception cref="T:System.Security.Authentication.AuthenticationException">The authentication failed and left this object in an unusable state.</exception>
+        <exception cref="T:System.InvalidOperationException">Authentication has already occurred.  
+  
+ -or-  
+  
+ Client authentication using this <see cref="T:System.Net.Security.SslStream" /> was tried previously.  
+  
+ -or-  
+  
+ Authentication is already in progress.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AuthenticateAsServerAsync">
@@ -4346,8 +4367,8 @@ This property gets the cipher suite that is going to be used in the communicatio
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the name of the server the client is trying to connect to. That name is used for server certificate validation. It can be a DNS name or an IP address.</summary>
+        <value>The name of the server the client is trying to connect to.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
