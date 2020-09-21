@@ -93,7 +93,7 @@ decryptionStreamBacking.ToArray());
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error: ", e);
+                Console.WriteLine("Error: {0}", e);
             }
         }
     }
