@@ -55,7 +55,7 @@ Public Class PathSnippets
             Console.WriteLine("GetDirectoryName('{0}') returns '{1}'", _
                 filepath, directoryName)
             filepath = directoryName
-            If i = 1
+            If i = 1 Then
                filepath = directoryName + "\"  ' this will preserve the previous path
             End If
             i = i + 1
