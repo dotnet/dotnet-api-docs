@@ -43,20 +43,41 @@
       <Docs>
         <param name="initialCount">The initial number of requests for the semaphore that can be satisfied concurrently.</param>
         <param name="maximumCount">The maximum number of requests for the semaphore that can be satisfied concurrently.</param>
-        <param name="name">Optional argument to create a system semaphore. Set to <see langword="null" /> or <see cref="F:System.String.Empty" /> to create a local semaphore.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
         <param name="createdNew">When this method returns, this argument is always set to <see langword="true" /> if a local semaphore is created; that is, when <paramref name="name" /> is <see langword="null" /> or <see cref="F:System.String.Empty" />. If <paramref name="name" /> has a valid, non-empty value, this argument is set to <see langword="true" /> when the system semaphore is created, or it is set to <see langword="false" /> if an existing system semaphore is found with that name. This parameter is passed uninitialized.</param>
         <param name="semaphoreSecurity">The optional semaphore access control security to apply.</param>
         <summary>Gets or creates an <see cref="T:System.Threading.Semaphore" /> instance, allowing a <see cref="T:System.Security.AccessControl.SemaphoreSecurity" /> instance to be optionally specified to set it during the event creation.</summary>
         <returns>An object that represents a system semaphore, if named, or a local semaphore, if nameless.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
+
+ If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
+
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="initialCount" /> is a negative number.
  -or- 
 
 <paramref name="maximumCount" /> is not a positive number.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="initialCount" /> is greater than <paramref name="maximumCount" />.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A semaphore handle with the system-wide name '<paramref name="name" />' cannot be created. A semaphore handle of a different type might have the same name.</exception>
+          <paramref name="initialCount" /> is greater than <paramref name="maximumCount" />.
+
+-or-
+
+.NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See https://docs.microsoft.com/windows/win32/sync/object-names for more information. For cross-platform compatibility, use <see cref="T:System.IO.IOException"/> instead.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
       </Docs>
     </Member>
   </Members>

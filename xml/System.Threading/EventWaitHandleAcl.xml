@@ -44,7 +44,7 @@
         <param name="initialState">
           <see langword="true" /> to set the initial state to signaled if the named event is created as a result of this call; <see langword="false" /> to set it to non-signaled.</param>
         <param name="mode">One of the enum values that determines whether the event resets automatically or manually.</param>
-        <param name="name">The name, if the event is to be shared with other processes; otherwise, <see langword="null" /> or an empty string.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
         <param name="createdNew">When this method returns, this argument is always set to <see langword="true" /> if a local event is created; that is, when <paramref name="name" /> is <see langword="null" /> or <see cref="F:System.String.Empty" />. If <paramref name="name" /> has a valid, non-empty value, this argument is set to <see langword="true" /> when the system event is created, or it is set to <see langword="false" /> if an existing system event is found with that name.</param>
         <param name="eventSecurity">The optional Windows access control security to apply.</param>
         <summary>Gets or creates an <see cref="T:System.Threading.EventWaitHandle" /> instance, allowing a <see cref="T:System.Security.AccessControl.EventWaitHandleSecurity" /> instance to be optionally specified to set it during the event creation.</summary>
@@ -53,20 +53,29 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
 
-If a `name` is passed and the system event already exists, the existing event is returned. If `name` is `null` or <xref:System.String.Empty>, a new process-local event is created.
+ If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
 
           ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">.NET Framework only: The <paramref name="name" /> length is beyond MAX_PATH (260 characters).
+        <exception cref="T:System.ArgumentException">
+          The <paramref name="mode" /> enum value was out of legal range.
 
 -or-
 
-.NET Framework only: The <paramref name="mode" /> enum value was out of legal range.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="mode" /> enum value was out of legal range.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">Could not find a part of the path specified in <paramref name="name" />.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A system-wide synchronization event with the provided <paramref name="name" /> was not found.
- -or- An <see cref="T:System.Threading.EventWaitHandle" /> with system-wide name <paramref name="name" /> cannot be created. An <see cref="T:System.Threading.EventWaitHandle" /> of a different type might have the same name.</exception>
+.NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="mode" /> enum value was out of legal range. In some cases <see cref="T:System.ArgumentException"/> is thrown, so use that instead.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See https://docs.microsoft.com/windows/win32/sync/object-names for more information. For cross-platform compatibility, use <see cref="T:System.IO.IOException"/> instead.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The named event exists, but the user does not have the desired security access.</exception>
       </Docs>
     </Member>
   </Members>

@@ -281,12 +281,16 @@
       <Docs>
         <param name="initiallyOwned">
           <see langword="true" /> to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, <see langword="false" />.</param>
-        <param name="name">The name of the <see cref="T:System.Threading.Mutex" />. If the value is <see langword="null" />, the <see cref="T:System.Threading.Mutex" /> is unnamed.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, and a string that is the name of the mutex.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
+
+ If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
+
  If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the mutex only if the named system mutex was created as a result of this call. Since there is no mechanism for determining whether the named system mutex was created, it is better to specify `false` for `initiallyOwned` when calling this constructor overload. You can use the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%2CSystem.String%2CSystem.Boolean%40%29> constructor if you need to determine initial ownership.  
   
  This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.  
@@ -316,10 +320,17 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
-        <exception cref="T:System.IO.IOException">A Win32 error occurred.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See https://docs.microsoft.com/windows/win32/sync/object-names for more information. For cross-platform compatibility, use <see cref="T:System.IO.IOException"/> instead.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is longer than 260 characters.</exception>
+          .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
         <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
       </Docs>
@@ -371,13 +382,17 @@
       <Docs>
         <param name="initiallyOwned">
           <see langword="true" /> to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, <see langword="false" />.</param>
-        <param name="name">The name of the <see cref="T:System.Threading.Mutex" />. If the value is <see langword="null" />, the <see cref="T:System.Threading.Mutex" /> is unnamed.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
         <param name="createdNew">When this method returns, contains a Boolean that is <see langword="true" /> if a local mutex was created (that is, if <paramref name="name" /> is <see langword="null" /> or an empty string) or if the specified named system mutex was created; <see langword="false" /> if the specified named system mutex already existed. This parameter is passed uninitialized.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, and a Boolean value that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
+
+ If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
+
  If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.  
   
  This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.  
@@ -403,10 +418,17 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
-        <exception cref="T:System.IO.IOException">A Win32 error occurred.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See https://docs.microsoft.com/windows/win32/sync/object-names for more information. For cross-platform compatibility, use <see cref="T:System.IO.IOException"/> instead.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is longer than 260 characters.</exception>
+          .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
         <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
       </Docs>
@@ -450,7 +472,7 @@
       <Docs>
         <param name="initiallyOwned">
           <see langword="true" /> to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, <see langword="false" />.</param>
-        <param name="name">The name of the system mutex. If the value is <see langword="null" />, the <see cref="T:System.Threading.Mutex" /> is unnamed.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
         <param name="createdNew">When this method returns, contains a Boolean that is <see langword="true" /> if a local mutex was created (that is, if <paramref name="name" /> is <see langword="null" /> or an empty string) or if the specified named system mutex was created; <see langword="false" /> if the specified named system mutex already existed. This parameter is passed uninitialized.</param>
         <param name="mutexSecurity">A <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security to be applied to the named system mutex.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, a Boolean variable that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex, and the access control security to be applied to the named mutex.</summary>
@@ -458,6 +480,10 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
+
+ If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
+
  If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.  
   
  Use this constructor to apply access control security to a named system mutex when it is created, preventing other code from taking control of the mutex.  
@@ -496,11 +522,18 @@
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.IO.IOException">A Win32 error occurred.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See https://docs.microsoft.com/windows/win32/sync/object-names for more information. For cross-platform compatibility, use <see cref="T:System.IO.IOException"/> instead.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is longer than 260 characters.</exception>
+          .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAccessControl">
@@ -620,14 +653,18 @@
         <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="name">The name of the system mutex to open.</param>
+        <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive.</param>
         <summary>Opens the specified named mutex, if it already exists.</summary>
         <returns>An object that represents the named system mutex.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open the specified named system mutex. If the system mutex does not exist, this method throws an exception instead of creating the system object. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
+
+ If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown.
+
+ The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open the specified named system mutex. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
   
  Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  
   
@@ -655,15 +692,22 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is an empty string.  
-  
- -or-  
-  
- <paramref name="name" /> is longer than 260 characters.</exception>
+          <paramref name="name" /> is an empty string.
+
+-or-
+
+.NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">The named mutex does not exist.</exception>
-        <exception cref="T:System.IO.IOException">A Win32 error occurred.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See https://docs.microsoft.com/windows/win32/sync/object-names for more information. For cross-platform compatibility, use <see cref="T:System.IO.IOException"/> instead.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the security access required to use it.</exception>
       </Docs>
     </Member>
@@ -701,7 +745,7 @@
         <Parameter Name="rights" Type="System.Security.AccessControl.MutexRights" Index="1" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="name">The name of the system mutex to open.</param>
+        <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive.</param>
         <param name="rights">A bitwise combination of the enumeration values that represent the desired security access.</param>
         <summary>Opens the specified named mutex, if it already exists, with the desired security access.</summary>
         <returns>An object that represents the named system mutex.</returns>
@@ -709,9 +753,13 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
+
+ If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown.
+
  The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  
   
- The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open an existing named mutex. If the system mutex does not exist, this method throws an exception instead of creating the system object. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
+ The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open an existing named mutex. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
   
  Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  
   
@@ -735,15 +783,22 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is an empty string.  
-  
- -or-  
-  
- <paramref name="name" /> is longer than 260 characters.</exception>
+          <paramref name="name" /> is an empty string.
+
+-or-
+
+.NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">The named mutex does not exist.</exception>
-        <exception cref="T:System.IO.IOException">A Win32 error occurred.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See https://docs.microsoft.com/windows/win32/sync/object-names for more information. For cross-platform compatibility, use <see cref="T:System.IO.IOException"/> instead.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the desired security access.</exception>
       </Docs>
     </Member>
@@ -947,7 +1002,7 @@
         <Parameter Name="result" Type="System.Threading.Mutex" RefType="out" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="name">The name of the system mutex to open.</param>
+        <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive.</param>
         <param name="result">When this method returns, contains a <see cref="T:System.Threading.Mutex" /> object that represents the named mutex if the call succeeded, or <see langword="null" /> if the call failed. This parameter is treated as uninitialized.</param>
         <summary>Opens the specified named mutex, if it already exists, and returns a value that indicates whether the operation succeeded.</summary>
         <returns>
@@ -956,7 +1011,11 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- If the named mutex does not exist, this method does not create it. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
+
+ If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned.
+
+ To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
   
  If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload, which throws an exception if the mutex does not exist.  
   
@@ -969,14 +1028,20 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is an empty string.  
-  
- -or-  
-  
- <paramref name="name" /> is longer than 260 characters.</exception>
+          <paramref name="name" /> is an empty string.
+
+-or-
+
+.NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.IOException">A Win32 error occurred.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc. For some invalid names, the method may return <see langword="false" /> instead.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the security access required to use it.</exception>
       </Docs>
     </Member>
@@ -1014,7 +1079,7 @@
         <Parameter Name="result" Type="System.Threading.Mutex" RefType="out" Index="2" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="name">The name of the system mutex to open.</param>
+        <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive.</param>
         <param name="rights">A bitwise combination of the enumeration values that represent the desired security access.</param>
         <param name="result">When this method returns, contains a <see cref="T:System.Threading.Mutex" /> object that represents the named mutex if the call succeeded, or <see langword="null" /> if the call failed. This parameter is treated as uninitialized.</param>
         <summary>Opens the specified named mutex, if it already exists, with the desired security access, and returns a value that indicates whether the operation succeeded.</summary>
@@ -1024,7 +1089,11 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- If the named mutex does not exist, this method does not create it. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unixes, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchornization object names on Windows, see https://docs.microsoft.com/windows/win32/sync/object-names.
+
+ If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned.
+
+ To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
   
  If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload, which throws an exception if the mutex does not exist.  
   
@@ -1037,14 +1106,20 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is an empty string.  
-  
- -or-  
-  
- <paramref name="name" /> is longer than 260 characters.</exception>
+          <paramref name="name" /> is an empty string.
+
+-or-
+
+.NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.IOException">A Win32 error occurred.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix (note that the name and common prefixes "Global\" and "Local\" are case-sensitive), invalid characters, etc. For some invalid names, the method may return <see langword="false" /> instead.
+
+-or-
+
+There was some other error. The `HResult` property may provide more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the security access required to use it.</exception>
       </Docs>
     </Member>
