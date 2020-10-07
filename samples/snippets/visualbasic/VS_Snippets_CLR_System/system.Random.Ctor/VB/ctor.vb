@@ -1,75 +1,75 @@
 ﻿'<Snippet1>
-' Example of the Random class constructors and Random.NextDouble( ) 
+' Example of the Random class constructors and Random.NextDouble() 
 ' method.
 Imports System.Threading
 
 Module RandomObjectDemo
 
     ' Generate random numbers from the specified Random object.
-    Sub RunIntNDoubleRandoms( randObj As Random )
+    Sub RunIntNDoubleRandoms(randObj As Random)
 
         ' Generate the first six random integers.
         Dim j As Integer
         For j = 0 To 5
-            Console.Write( " {0,10} ", randObj.Next( ) )
+            Console.Write(" {0,10} ", randObj.Next())
         Next j
-        Console.WriteLine( )
+        Console.WriteLine()
             
         ' Generate the first six random doubles.
         For j = 0 To 5
-            Console.Write( " {0:F8} ", randObj.NextDouble( ) )
+            Console.Write(" {0:F8} ", randObj.NextDouble())
         Next j
-        Console.WriteLine( )
+        Console.WriteLine()
     End Sub 
         
     ' Create a Random object with the specified seed.
-    Sub FixedSeedRandoms( seed As Integer )
+    Sub FixedSeedRandoms(seed As Integer)
 
-        Console.WriteLine( vbCrLf & _
+        Console.WriteLine(vbCrLf & _
             "Random numbers from a Random object with " & _
-            "seed = {0}:", seed )
-        Dim fixRand As New Random( seed )
+            "seed = {0}:", seed)
+        Dim fixRand As New Random(seed)
             
-        RunIntNDoubleRandoms( fixRand )
+        RunIntNDoubleRandoms(fixRand)
     End Sub 
         
     ' Create a random object with a timer-generated seed.
-    Sub AutoSeedRandoms( )
+    Sub AutoSeedRandoms()
 
         ' Wait to allow the timer to advance.
-        Thread.Sleep( 1 )
+        Thread.Sleep(1)
             
-        Console.WriteLine( vbCrLf & _
+        Console.WriteLine(vbCrLf & _
             "Random numbers from a Random object " & _ 
-            "with an auto-generated seed:" )
-        Dim autoRand As New Random( )
+            "with an auto-generated seed:")
+        Dim autoRand As New Random()
             
-        RunIntNDoubleRandoms( autoRand )
+        RunIntNDoubleRandoms(autoRand)
     End Sub 
         
-    Sub Main( )
-        Console.WriteLine( _
+    Sub Main()
+        Console.WriteLine(_
             "This example of the Random class constructors " & _
-            "and Random.NextDouble( ) " & vbCrLf & _
-            "generates the following output." & vbCrLf )
-        Console.WriteLine( "Create Random " & _
+            "and Random.NextDouble() " & vbCrLf & _
+            "generates the following output." & vbCrLf)
+        Console.WriteLine("Create Random " & _
             "objects, and then generate and display six " & _
-            "integers and " & vbCrLf & "six doubles from each." )
+            "integers and " & vbCrLf & "six doubles from each.")
             
-        FixedSeedRandoms( 123 )
-        FixedSeedRandoms( 123 )
+        FixedSeedRandoms(123)
+        FixedSeedRandoms(123)
             
-        FixedSeedRandoms( 456 )
-        FixedSeedRandoms( 456 )
+        FixedSeedRandoms(456)
+        FixedSeedRandoms(456)
             
-        AutoSeedRandoms( )
-        AutoSeedRandoms( )
-        AutoSeedRandoms( )
+        AutoSeedRandoms()
+        AutoSeedRandoms()
+        AutoSeedRandoms()
     End Sub
 End Module 
 
-' This example of the Random class constructors and Random.NextDouble( )
-' generates the following output.
+' This example of the Random class constructors and Random.NextDouble()
+' generates an output similar to the following:
 ' 
 ' Create Random objects, and then generate and display six integers and
 ' six doubles from each.

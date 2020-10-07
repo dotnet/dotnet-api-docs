@@ -25,11 +25,10 @@ Module RandomNumbers
       Console.WriteLine() 
    End Sub
 End Module
-' The example displays the following output to the console:
+' The example displays an output similar to the following:
 '       28   35  133  224   58
 '    
 '       28   35  133  224   58
 '    
 '       32  222   43  251   49
 ' </Snippet2>
-
