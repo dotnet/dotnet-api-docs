@@ -76,7 +76,7 @@ class BoxEqualityComparer : IEqualityComparer<Box>
     }
 }
 // The example displays the following output:
-//    Unable to add (4, 3, 4): An item with the same key has already been added. Key: (4, 3, 4)
+//    Unable to add (4, 3, 4): An item with the same key has already been added.
 //
 //    The dictionary contains 2 Box objects.
 // </Snippet1>
