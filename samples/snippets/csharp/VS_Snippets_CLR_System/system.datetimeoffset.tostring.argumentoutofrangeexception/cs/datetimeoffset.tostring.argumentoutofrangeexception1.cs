@@ -23,5 +23,5 @@ public class Example
    }
 }
 // The example displays the following output:
-//    1/1/1867 is earlier than 9/8/1868 or later than 12/31/9999   }
+//    1/1/1867 is earlier than 9/8/1868 or later than 12/31/9999
 // </Snippet1>
