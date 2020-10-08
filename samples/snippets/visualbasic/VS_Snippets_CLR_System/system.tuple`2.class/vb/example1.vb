@@ -37,5 +37,5 @@ Module Example
    End Function
 End Module
 ' The example displays the following output:
-'       Average test score: 88 (n=7)
+'       Average test score: 87.71 (n=7)
 ' </Snippet1>
