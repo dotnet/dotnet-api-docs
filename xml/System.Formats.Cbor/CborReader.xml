@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>A stateful, forward-only reader for CBOR encoded data.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -35,11 +35,15 @@
         <Parameter Name="allowMultipleRootLevelValues" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="conformanceMode">To be added.</param>
-        <param name="allowMultipleRootLevelValues">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="data">The CBOR encoded data to read.</param>
+        <param name="conformanceMode">One of the enumeration values to specify a conformance mode guiding the checks performed on the encoded data.
+              Defaults to <see cref="F:System.Formats.Cbor.CborConformanceMode.Strict" /> conformance mode.</param>
+        <param name="allowMultipleRootLevelValues">
+          <see langword="true" /> to indicate that multiple root-level values are supported by the reader; otherwise, <see langword="false" />.</param>
+        <summary>Initializes a <see cref="T:System.Formats.Cbor.CborReader" /> instance over the specified <paramref name="data" /> with the given configuration.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="conformanceMode" /> is not defined.</exception>
       </Docs>
     </Member>
     <Member MemberName="AllowMultipleRootLevelValues">
@@ -58,8 +62,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether this reader allows multiple root-level CBOR data items.</summary>
+        <value>
+          <see langword="true" /> if this reader allows multiple root-level CBOR data items; <see langword="false" /> otherwise.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -79,8 +84,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the total number of unread bytes in the buffer.</summary>
+        <value>The total number of unread bytes in the buffer.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -100,8 +105,8 @@
         <ReturnType>System.Formats.Cbor.CborConformanceMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the conformance mode used by this reader.</summary>
+        <value>One of the enumeration values that represent the conformance mode used by this reader.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -121,8 +126,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the reader's current level of nestedness in the CBOR document.</summary>
+        <value>A number that represents the current level of nestedness in the CBOR document.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -143,9 +148,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next CBOR token, without advancing the reader.</summary>
+        <returns>An object that represents the current CBOR reader state.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The underlying data is not a well-formed CBOR encoding.</exception>
       </Docs>
     </Member>
     <Member MemberName="PeekTag">
@@ -171,9 +177,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads the next data item as a semantic tag (major type 6), without advancing the reader.</summary>
+        <returns>The decoded value.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Useful in scenarios where the semantic value decoder needs to be determined at runtime.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadBigInteger">
@@ -193,9 +217,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a tagged bignum encoding, as described in RFC7049 section 2.4.2.</summary>
+        <returns>The decoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next date item does not have the correct semantic tag.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+Invalid semantic bignum encoding.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadBoolean">
@@ -215,9 +257,23 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a boolean value (major type 7).</summary>
+        <returns>The decoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next simple value is not a boolean encoding</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadByteString">
@@ -237,9 +293,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads the next data item as a byte string (major type 2).</summary>
+        <returns>The decoded byte array.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The method accepts indefinite length strings, which it will concatenate to a single string.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The next date item does not have the correct major type.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadCborNegativeIntegerRepresentation">
@@ -265,9 +339,29 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads the next data item as a CBOR negative integer representation (major type 1).</summary>
+        <returns>An unsigned integer denoting -1 minus the integer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method supports decoding integers between -18446744073709551616 and -1.
+              Useful for handling values that do not fit in the <xref:System.Int64> type.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.OverflowException">The encoded integer is out of range for <see cref="T:System.UInt32" /></exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadDateTimeOffset">
@@ -287,9 +381,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a tagged date/time string, as described in RFC7049 section 2.4.1.</summary>
+        <returns>The decoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next date item does not have the correct semantic tag.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+Invalid semantic date/time encoding.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadDecimal">
@@ -309,9 +421,28 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a tagged decimal fraction encoding, as described in RFC7049 section 2.4.3.</summary>
+        <returns>The decoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next date item does not have the correct semantic tag.</exception>
+        <exception cref="T:System.OverflowException">Decoded decimal fraction is either too large or too small for a <see cref="T:System.Decimal" /> value.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding. 
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+Invalid semantic decimal fraction encoding.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadDefiniteLengthByteString">
@@ -331,9 +462,23 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a definite-length byte string (major type 2).</summary>
+        <returns>A <see cref="T:System.ReadOnlyMemory`1" /> view of the byte string payload.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The data item is an indefinite-length byte string.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadDefiniteLengthTextStringBytes">
@@ -353,9 +498,23 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a definite-length UTF-8 text string (major type 3).</summary>
+        <returns>A <see cref="T:System.ReadOnlyMemory`1" /> view of the raw UTF-8 payload.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The data item is an indefinite-length text string.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+        
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadDouble">
@@ -375,9 +534,23 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a double-precision floating point number (major type 7).</summary>
+        <returns>The decoded <see cref="T:System.Double" /> value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next simple value is not a floating-point number encoding</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadEncodedValue">
@@ -398,10 +571,15 @@
         <Parameter Name="disableConformanceModeChecks" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disableConformanceModeChecks">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="disableConformanceModeChecks">Disable conformance mode validation for the read value, equivalent to using <see cref="F:System.Formats.Cbor.CborConformanceMode.Lax" />.</param>
+        <summary>Reads the next CBOR data item, returning a <see cref="T:System.ReadOnlyMemory`1" /> view of the encoded value. For indefinite length encodings this includes the break byte.</summary>
+        <returns>A view of the encoded value as a contiguous region of memory.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The data item is not a valid CBOR data item encoding.
+
+-or-
+
+The CBOR encoding is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadEndArray">
@@ -421,8 +599,18 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the end of an array (major type 4).</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The current context is not an array.
+
+-or-
+
+The reader is not at the end of the array.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadEndIndefiniteLengthByteString">
@@ -442,8 +630,14 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Ends reading an indefinite-length byte string (major type 2).</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The current context is not an indefinite-length string.
+
+-or-
+
+The reader is not at the end of the string.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">There was an unexpected end of CBOR encoding data.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadEndIndefiniteLengthTextString">
@@ -463,8 +657,14 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Ends reading an indefinite-length UTF-8 text string (major type 3).</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The current context is not an indefinite-length string.
+
+-or-
+
+The reader is not at the end of the string.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">There was an unexpected end of CBOR encoding data.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadEndMap">
@@ -484,8 +684,22 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the end of a map (major type 5).</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The current context is not a map.
+
+-or-
+
+The reader is not at the end of the map.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadHalf">
@@ -505,9 +719,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a half-precision floating point number (major type 7).</summary>
+        <returns>The decoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next simple value is not a floating-point number encoding.
+
+-or-
+
+The encoded value is a double-precision float.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadInt32">
@@ -527,9 +759,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a signed integer (major types 0,1)</summary>
+        <returns>The decoded integer value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.OverflowException">The encoded integer is out of range for <see cref="T:System.Int32" />.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadInt64">
@@ -549,9 +792,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a signed integer (major types 0,1)</summary>
+        <returns>The decoded integer value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.OverflowException">The encoded integer is out of range for <see cref="T:System.Int64" />.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadNull">
@@ -571,8 +825,22 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next data item as a <see langword="null" /> value (major type 7).</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next simple value is not a <see langword="null" /> value encoding.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadSimpleValue">
@@ -592,9 +860,23 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a CBOR simple value (major type 7).</summary>
+        <returns>The decoded CBOR simple value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next simple value is not a simple value encoding.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadSingle">
@@ -614,9 +896,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a single-precision floating point number (major type 7).</summary>
+        <returns>The decoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next simple value is not a floating-point number encoding.
+
+-or-
+
+The encoded value is a double-precision float</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadStartArray">
@@ -636,9 +936,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as the start of an array (major type 4).</summary>
+        <returns>The length of the definite-length array, or <see langword="null" /> if the array is indefinite-length.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadStartIndefiniteLengthByteString">
@@ -658,8 +968,22 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next data item as the start of an indefinite-length byte string (major type 2).</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next data item is a definite-length encoded string.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadStartIndefiniteLengthTextString">
@@ -679,8 +1003,22 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Reads the next data item as the start of an indefinite-length UTF-8 text string (major type 3).</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next data item is a definite-length encoded string.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadStartMap">
@@ -700,9 +1038,30 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads the next data item as the start of a map (major type 5).</summary>
+        <returns>The number of key-value pairs in a definite-length map, or <see langword="null" /> if the map is indefinite-length.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Map contents are consumed as if they were arrays twice the length of the map's declared size.
+For instance, a map of size `1` containing a key of type int with a value of type string must be consumed by successive calls to <xref:System.Formats.Cbor.CborReader.ReadInt32> and <xref:System.Formats.Cbor.CborReader.ReadTextString>.
+It is up to the caller to keep track of whether the next value is a key or a value.
+Fundamentally, this is a technical restriction stemming from the fact that CBOR allows keys of arbitrary type, for instance a map can contain keys that are maps themselves.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadTag">
@@ -728,9 +1087,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a semantic tag (major type 6).</summary>
+        <returns>The decoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadTextString">
@@ -750,9 +1119,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads the next data item as a UTF-8 text string (major type 3).</summary>
+        <returns>The decoded string.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The method accepts indefinite length strings, which it will concatenate to a single string.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadUInt32">
@@ -778,9 +1165,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as an unsigned integer (major type 0).</summary>
+        <returns>The decoded integer value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.OverflowException">The encoded integer is out of range for <see cref="T:System.UInt32" />.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadUInt64">
@@ -806,9 +1204,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as an unsigned integer (major type 0).</summary>
+        <returns>The decoded integer value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.OverflowException">The encoded integer is out of range for <see cref="T:System.UInt64" />.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadUnixTimeSeconds">
@@ -828,9 +1237,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Reads the next data item as a tagged unix time in seconds, as described in RFC7049 section 2.4.1.</summary>
+        <returns>The decoded value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.
+
+-or-
+
+The next date item does not have the correct semantic tag.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+invalid semantic date/time encoding.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="SkipToParent">
@@ -851,9 +1278,20 @@
         <Parameter Name="disableConformanceModeChecks" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disableConformanceModeChecks">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="disableConformanceModeChecks">
+          <see langword="true" /> to disable conformance mode validation for the skipped values, equivalent to using <see cref="F:System.Formats.Cbor.CborConformanceMode.Lax" />; otherwise, <see langword="false" />.</param>
+        <summary>Reads the remaining contents of the current value context, discarding results and advancing the reader to the next value in the parent context.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The reader is at the root context</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="SkipValue">
@@ -874,9 +1312,20 @@
         <Parameter Name="disableConformanceModeChecks" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disableConformanceModeChecks">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="disableConformanceModeChecks">
+          <see langword="true" /> to disable conformance mode validation for the skipped values, equivalent to using <see cref="F:System.Formats.Cbor.CborConformanceMode.Lax" />; otherwise, <see langword="false" />.</param>
+        <summary>Reads the contents of the next value, discarding the result and advancing the reader.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The reader is not at the start of new value.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryReadByteString">
@@ -899,11 +1348,30 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">The buffer in which to write the read bytes.</param>
+        <param name="bytesWritten">On success, receives the number of bytes written to <paramref name="destination" />.</param>
+        <summary>Reads the next data item as a byte string (major type 2).</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> had sufficient length to receive the value and the reader advances; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The method accepts indefinite length strings, which it will concatenate to a single string.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryReadTextString">
@@ -926,11 +1394,30 @@
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">The buffer in which to write.</param>
+        <param name="charsWritten">On success, receives the number of chars written to <paramref name="destination" />.</param>
+        <summary>Reads the next data item as a UTF-8 text string (major type 3).</summary>
+        <returns>
+          <see langword="true" /> and advances the reader if <paramref name="destination" /> had sufficient length to receive the value, otherwise <see langword="false" /> and the reader does not advance.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The method accepts indefinite length strings, which it will concatenate to a single string.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The next data item does not have the correct major type.</exception>
+        <exception cref="T:System.Formats.Cbor.CborContentException">The next value has an invalid CBOR encoding.
+
+-or-
+
+There was an unexpected end of CBOR encoding data.
+
+-or-
+
+The next value uses a CBOR encoding that is not valid under the current conformance mode.</exception>
       </Docs>
     </Member>
   </Members>
