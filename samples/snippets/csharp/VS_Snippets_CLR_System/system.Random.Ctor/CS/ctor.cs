@@ -1,5 +1,5 @@
 ﻿//<Snippet1>
-// Example of the Random class constructors and Random.NextDouble( )
+// Example of the Random class constructors and Random.NextDouble()
 // method.
 using System;
 using System.Threading;
@@ -7,69 +7,69 @@ using System.Threading;
 public class RandomObjectDemo
 {
     // Generate random numbers from the specified Random object.
-    static void RunIntNDoubleRandoms( Random randObj )
+    static void RunIntNDoubleRandoms(Random randObj)
     {
         // Generate the first six random integers.
-        for( int j = 0; j < 6; j++ )
-            Console.Write( " {0,10} ", randObj.Next( ) );
-        Console.WriteLine( );
+        for(int j = 0; j < 6; j++)
+            Console.Write(" {0,10} ", randObj.Next());
+        Console.WriteLine();
 
         // Generate the first six random doubles.
-        for( int j = 0; j < 6; j++ )
-            Console.Write( " {0:F8} ", randObj.NextDouble( ) );
-        Console.WriteLine( );
+        for(int j = 0; j < 6; j++)
+            Console.Write(" {0:F8} ", randObj.NextDouble());
+        Console.WriteLine();
     }
 
     // Create a Random object with the specified seed.
-    static void FixedSeedRandoms( int seed )
+    static void FixedSeedRandoms(int seed)
     {
         Console.WriteLine(
             "\nRandom numbers from a Random object with " +
-            "seed = {0}:", seed );
-        Random fixRand = new Random( seed );
+            "seed = {0}:", seed);
+        Random fixRand = new Random(seed);
 
-        RunIntNDoubleRandoms( fixRand );
+        RunIntNDoubleRandoms(fixRand);
     }
 
     // Create a random object with a timer-generated seed.
-    static void AutoSeedRandoms( )
+    static void AutoSeedRandoms()
     {
         // Wait to allow the timer to advance.
-        Thread.Sleep( 1 );
+        Thread.Sleep(1);
 
         Console.WriteLine(
             "\nRandom numbers from a Random object " +
-            "with an auto-generated seed:" );
-        Random autoRand = new Random( );
+            "with an auto-generated seed:");
+        Random autoRand = new Random();
 
-        RunIntNDoubleRandoms( autoRand );
+        RunIntNDoubleRandoms(autoRand);
     }
 
-    static void Main( )
+    static void Main()
     {	
         Console.WriteLine(
             "This example of the Random class constructors and " +
-            "Random.NextDouble( ) \n" +
-            "generates the following output.\n" );
+            "Random.NextDouble() \n" +
+            "generates the following output.\n");
         Console.WriteLine(
             "Create Random objects, and then generate and " +
             "display six integers and \nsix doubles from each.");
 
-        FixedSeedRandoms( 123 );
-        FixedSeedRandoms( 123 );
+        FixedSeedRandoms(123);
+        FixedSeedRandoms(123);
 
-        FixedSeedRandoms( 456 );
-        FixedSeedRandoms( 456 );
+        FixedSeedRandoms(456);
+        FixedSeedRandoms(456);
 
-        AutoSeedRandoms( );
-        AutoSeedRandoms( );
-        AutoSeedRandoms( );
+        AutoSeedRandoms();
+        AutoSeedRandoms();
+        AutoSeedRandoms();
     }
 }
 
 /*
-This example of the Random class constructors and Random.NextDouble( )
-generates the following output.
+This example of the Random class constructors and Random.NextDouble()
+generates an output similar to the following:
 
 Create Random objects, and then generate and display six integers and
 six doubles from each.

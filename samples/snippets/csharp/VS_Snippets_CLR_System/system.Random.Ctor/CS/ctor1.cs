@@ -25,7 +25,7 @@ public class RandomNumbers
       Console.WriteLine();
    }
 }
-// The example displays the following output to the console:
+// The example displays an output similar to the following:
 //       28   35  133  224   58
 //
 //       28   35  133  224   58
