@@ -1,32 +1,32 @@
 
 //<Snippet1>
-// Example of the Random class constructors and Random::NextDouble( ) 
+// Example of the Random class constructors and Random::NextDouble() 
 // method.
 using namespace System;
 using namespace System::Threading;
 
 // Generate random numbers from the specified Random object.
-void RunIntNDoubleRandoms( Random^ randObj )
+void RunIntNDoubleRandoms(Random^ randObj)
 {
    
    // Generate the first six random integers.
-   for ( int j = 0; j < 6; j++ )
-      Console::Write( " {0,10} ", randObj->Next() );
+   for (int j = 0; j < 6; j++)
+      Console::Write(" {0,10} ", randObj->Next());
    Console::WriteLine();
    
    // Generate the first six random doubles.
-   for ( int j = 0; j < 6; j++ )
-      Console::Write( " {0:F8} ", randObj->NextDouble() );
+   for (int j = 0; j < 6; j++)
+      Console::Write(" {0:F8} ", randObj->NextDouble());
    Console::WriteLine();
 }
 
 
 // Create a Random object with the specified seed.
-void FixedSeedRandoms( int seed )
+void FixedSeedRandoms(int seed)
 {
-   Console::WriteLine( "\nRandom numbers from a Random object with seed = {0}:", seed );
-   Random^ fixRand = gcnew Random( seed );
-   RunIntNDoubleRandoms( fixRand );
+   Console::WriteLine("\nRandom numbers from a Random object with seed = {0}:", seed);
+   Random^ fixRand = gcnew Random(seed);
+   RunIntNDoubleRandoms(fixRand);
 }
 
 
@@ -35,31 +35,31 @@ void AutoSeedRandoms()
 {
    
    // Wait to allow the timer to advance.
-   Thread::Sleep( 1 );
-   Console::WriteLine( "\nRandom numbers from a Random object "
-   "with an auto-generated seed:" );
+   Thread::Sleep(1);
+   Console::WriteLine("\nRandom numbers from a Random object "
+   "with an auto-generated seed:");
    Random^ autoRand = gcnew Random;
-   RunIntNDoubleRandoms( autoRand );
+   RunIntNDoubleRandoms(autoRand);
 }
 
 int main()
 {
-   Console::WriteLine( "This example of the Random class constructors and Random"
-   "::NextDouble( ) \ngenerates the following output.\n" );
-   Console::WriteLine( "Create Random objects, and then generate and "
-   "display six integers and \nsix doubles from each." );
-   FixedSeedRandoms( 123 );
-   FixedSeedRandoms( 123 );
-   FixedSeedRandoms( 456 );
-   FixedSeedRandoms( 456 );
+   Console::WriteLine("This example of the Random class constructors and Random"
+   "::NextDouble() \ngenerates the following output.\n");
+   Console::WriteLine("Create Random objects, and then generate and "
+   "display six integers and \nsix doubles from each.");
+   FixedSeedRandoms(123);
+   FixedSeedRandoms(123);
+   FixedSeedRandoms(456);
+   FixedSeedRandoms(456);
    AutoSeedRandoms();
    AutoSeedRandoms();
    AutoSeedRandoms();
 }
 
 /*
-This example of the Random class constructors and Random::NextDouble( )
-generates the following output.
+This example of the Random class constructors and Random::NextDouble()
+generates an output similar to the following:
 
 Create Random objects, and then generate and display six integers and
 six doubles from each.
