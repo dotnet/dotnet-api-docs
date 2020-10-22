@@ -16,7 +16,6 @@ public class Example
       // Compare the Tuple objects
       for (int ctr = 0; ctr < scores.Length; ctr++)
       {
-         Tuple<string, Nullable<int>> currentTuple = scores[ctr];
          for (int innerCtr = ctr + 1; innerCtr < scores.Length; innerCtr++)
          {
             Console.WriteLine("{0} = {1}: {2}", 

@@ -33,7 +33,7 @@ namespace SecondAssembly
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void OtherMethod()
         {
-            Console.WriteLine("OtherMehod executing assembly: " + Assembly.GetExecutingAssembly().FullName);
+            Console.WriteLine("OtherMethod executing assembly: " + Assembly.GetExecutingAssembly().FullName);
             Console.WriteLine("OtherMethod called from: " + Assembly.GetCallingAssembly().FullName);
         }
     }
