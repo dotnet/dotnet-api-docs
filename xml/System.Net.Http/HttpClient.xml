@@ -112,37 +112,14 @@ On each platform, <xref:System.Net.Http.HttpClient> tries to use the best availa
 Users can also configure a specific transport for <xref:System.Net.Http.HttpClient> by invoking the <xref:System.Net.Http.HttpClient.%23ctor*> constructor that takes an <xref:System.Net.Http.HttpMessageHandler>.
 
 ### HttpClient and .NET Core
-
 Starting with .NET Core 2.1, the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of `HttpClientHandler` provides the implementation used by higher-level HTTP networking classes such as `HttpClient`. The use of <xref:System.Net.Http.SocketsHttpHandler> offers a number of advantages:
-
 - A significant performance improvement when compared with the previous implementation.
-
 - The elimination of platform dependencies, which simplifies deployment and servicing. For example, `libcurl` is no longer a dependency on .NET Core for macOS and .NET Core for Linux.
-
 - Consistent behavior across all .NET platforms.
 
-If this change is undesirable, you can configure your application to use the older <xref:System.Net.Http.HttpClientHandler?displayProperty=nameWithType> instead in a number of ways:
+### Configuring behavior using Runtime Configuration options
 
-- By calling the <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> method as follows:
-
-   ```csharp
-   AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
-   ```
-
-   ```vb
-   AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", False)
-   ``` 
-- By defining the `System.Net.Http.UseSocketsHttpHandler` switch in the *.netcore.runtimeconfig.json* configuration file:
-
-  ```json
-  "runtimeOptions": {
-    "configProperties": {
-        "System.Net.Http.UseSocketsHttpHandler": false
-    }
-  }
-  ```
-  
-- By defining an environment variable named `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` and setting it to either `false` or 0.
+Certain aspects of <xref:System.Net.Http.HttpClient>'s behavior are customizable through [Run-time configuration options for networking](https://docs.microsoft.com/en-us/dotnet/core/run-time-config/networking), although the behavior of these switches differs through .NET versions. For example, in versions 2.1-3.1 it is possible to configure whether <xref:System.Net.Http.SocketsHttpHandler> is used by default, but that option is no longer available since .NET 5.
 
 ## Examples  
  [!code-csharp[System.Net.Http.HttpClient#1](~/samples/snippets/csharp/VS_Snippets_Misc/system.net.http.httpclient/cs/source.cs#1)]  
