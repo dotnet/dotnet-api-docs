@@ -14,7 +14,6 @@ Module Example
 
       ' Compare the Tuple objects
       For ctr As Integer = 0 To scores.Length - 1
-         Dim currentTuple As Tuple(Of String, Nullable(Of Integer)) = scores(ctr)
          For innerCtr As Integer = ctr + 1 To scores.Length - 1
             Console.WriteLine("{0} = {1}: {2}", 
                               scores(ctr), scores(innerCtr), 
