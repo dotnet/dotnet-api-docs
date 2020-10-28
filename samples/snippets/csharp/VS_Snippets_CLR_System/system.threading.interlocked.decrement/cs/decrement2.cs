@@ -36,7 +36,7 @@ public class Example
                                            midpt++;
                                         }
                                         total++;    
-                                     } while (midpointCount > 0 );
+                                     } while (Volatile.Read(ref midpointCount) > 0);
                                           
                                      Interlocked.Add(ref totalCount, total);
                                      Interlocked.Add(ref totalMidpoint, midpt);

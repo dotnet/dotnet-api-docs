@@ -50,7 +50,7 @@ public class Example
             midpt++;
          }
          total++;    
-      } while (midpointCount < 10000);
+      } while (Volatile.Read(ref midpointCount) < 10000);
       
       Interlocked.Add(ref totalCount, total);
       Interlocked.Add(ref totalMidpoint, midpt);
