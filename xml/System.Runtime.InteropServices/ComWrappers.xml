@@ -34,23 +34,25 @@ The <xref:System.Runtime.InteropServices.ComWrappers> API provides support for t
 
 Traditionally in the runtime, a native proxy to managed object is called a COM Callable Wrapper (CCW), and a managed proxy to a native object is called a Runtime Callable Wrapper (RCW). However, when used here, those terms should not be confused with the built-in features of the same name (that is, [CCW](https://docs.microsoft.com/dotnet/standard/native-interop/com-callable-wrapper) and [RCW](https://docs.microsoft.com/dotnet/standard/native-interop/runtime-callable-wrapper)). Unlike the built-in features, a majority of the responsibility for accurate lifetime management, dispatching methods, and marshalling of arguments and return values is left to the `ComWrappers` implementer.
 
-Minimal support is defined by the following features:
-1. Efficient mapping between a managed object and a native proxy (e.g. CCW).
-2. Efficient mapping between a native `IUnknown` and its managed proxy (e.g. RCW).
-3. Integration with the Garbage Collector through the [`IReferenceTrackerHost`](https://docs.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nn-windows-ui-xaml-hosting-referencetracker-ireferencetrackerhost) interface contract.
-    - Leveraging this is a very advanced scenario.
+"Minimal support" is defined by the following features:
+
+1. Efficient mapping between a managed object and a native proxy (for example, CCW).
+2. Efficient mapping between a native `IUnknown` and its managed proxy (for example, RCW).
+3. Integration with the garbage collector through the <xref:NN:windows.ui.xaml.hosting.referencetracker.IReferenceTrackerHost> interface contract.
+
+   Leveraging this is an advanced scenario.
 
 ### Proxy state
 
-Provided below are descriptions and illustrations of proxy state after their respective creation.
+This section provides descriptions and illustrations of native and managed proxy state after their respective creation.
 
-In the below illustrations, a strong reference is depicted as a solid line (i.e. `===`) and a weak reference is depicted as a dashed line (i.e. `= = =`). The terms "strong" and "weak" reference should be interpreted as "extending lifetime" and "not extending lifetime" as opposed to implying a specific implementation.
+In the following illustrations, a strong reference is depicted as a solid line (`===`) and a weak reference is depicted as a dashed line (`= = =`). The terms "strong reference" and "weak reference" should be interpreted as "extending lifetime" and "not extending lifetime", as opposed to implying a specific implementation.
 
-The state of the managed object and native proxy after a call to [`ComWrappers.GetOrCreateComInterfaceForObject`](https://docs.microsoft.com/dotnet/api/system.runtime.interopservices.comwrappers.getorcreatecominterfaceforobject) is illustrated below.
+The following illustration shows the state of the managed object and native proxy after a call to <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateComInterfaceForObject(System.Object,System.Runtime.InteropServices.CreateComInterfaceFlags)?displayProperty=nameWithType>.
 
 ```
  --------------------                  ----------------------
-|   Manage object    |                |     Native proxy     |
+|   Managed object   |                |     Native proxy     |
 |                    |                | Ref count: 1         |
 |  ----------------  |                |  ------------------  |
 | | Weak reference |=| = = = = = = = >| | Strong reference | |
@@ -59,7 +61,7 @@ The state of the managed object and native proxy after a call to [`ComWrappers.G
  --------------------                  ----------------------
 ```
 
-The state of the native object and  managed proxy after a call to [`ComWrappers.GetOrCreateObjectForComInstance`](https://docs.microsoft.com/dotnet/api/system.runtime.interopservices.comwrappers.getorcreateobjectforcominstance) is illustrated below. The concept of "identity" follows the [rules for `IUnknown`](https://docs.microsoft.com/windows/win32/com/rules-for-implementing-queryinterface#objects-must-have-identity).
+The next illustration shows the state of the native object and managed proxy after a call to <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)?displayProperty=nameWithType>. The concept of "identity" follows the [rules for `IUnknown`](https://docs.microsoft.com/windows/win32/com/rules-for-implementing-queryinterface#objects-must-have-identity).
 
 ```
  ------------------               ------------------
@@ -74,7 +76,7 @@ The state of the native object and  managed proxy after a call to [`ComWrappers.
 |   native object.       |
  ------------------------
 ```
-Observe in the above illustration only weak references exist from the runtime perspective. The `+1` reference count on the native object is assumed to be performed by the managed proxy creator (i.e. `ComWrappers` implementer) to ensure the associated lifetime between the native object and its managed proxy. There is an optional strong reference (i.e. `AddRef()`) mentioned in the managed proxy, which is used to support scenario (3) above - see [`CreateObjectFlags.TrackerObject`](https://docs.microsoft.com/dotnet/api/system.runtime.interopservices.createobjectflags). With this optional strong reference the reference count would be `+2`.
+Observe that only weak references exist from the runtime perspective. The `+1` reference count on the native object is assumed to be performed by the managed proxy creator (that is, the `ComWrappers` implementer) to ensure the associated lifetime between the native object and its managed proxy. There is an optional strong reference (that is, `AddRef()`) mentioned in the managed proxy, which is used to support scenario (3) mentioned earlier. See <xref:System.Runtime.InteropServices.CreateObjectFlags.TrackerObject?displayProperty=nameWithType>. With this optional strong reference, the reference count would be `+2`.
 
  ]]></format>
     </remarks>
