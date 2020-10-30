@@ -365,8 +365,7 @@ public class Test
         client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
         client.DownloadFileAsync (uri, "serverdata.txt");
     }
-
-    //</Snippet19>
+    
     //<Snippet20>
     private static void DownloadFileCallback2 (Object sender, System.ComponentModel.AsyncCompletedEventArgs e)
     {
@@ -382,6 +381,7 @@ public class Test
     }
 
     //</Snippet20>
+    //</Snippet19>
     //<Snippet21>
     // Sample call : DownLoadDataInBackground ("http://www.contoso.com/GameScores.html");
     public static void DownloadDataInBackground (string address)
