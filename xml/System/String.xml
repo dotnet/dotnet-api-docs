@@ -352,7 +352,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
 
 <a name="comparison"></a>
 ### String comparison and sorting
- Conventions for comparing and sorting strings vary from culture to culture. For example, the sort order may be based on phonetics or on the visual representation of characters. In East Asian languages, characters are sorted by the stroke and radical of ideographs. Sorting also depends on the order languages and cultures use for the alphabet. For example, the Danish language has an "Æ" character that it sorts after "Z" in the alphabet. In addition, comparisons can be case-sensitive or case-insensitive, and in some cases casing rules also differ by culture. Ordinal comparison, on the other hand, uses the Unicode code points of individual characters in a string when comparing and sorting strings.
+ Conventions for comparing and sorting strings vary from culture to culture. For example, the sort order may be based on phonetics or on the visual representation of characters. In East Asian languages, characters are sorted by the stroke and radical of ideographs. Sorting also depends on the order languages and cultures use for the alphabet. For example, the Danish language has an "Æ" character that it sorts after "Z" in the alphabet. In addition, comparisons can be case-sensitive or case-insensitive, and casing rules might differ by culture. Ordinal comparison, on the other hand, uses the Unicode code points of individual characters in a string when comparing and sorting strings.
 
  Sort rules determine the alphabetic order of Unicode characters and how two strings compare to each other. For example, the <xref:System.String.Compare%28System.String%2CSystem.String%2CSystem.StringComparison%29?displayProperty=nameWithType> method compares two strings based on the <xref:System.StringComparison> parameter. If the parameter value is <xref:System.StringComparison.CurrentCulture?displayProperty=nameWithType>, the method performs a linguistic comparison that uses the conventions of the current culture; if the parameter value is <xref:System.StringComparison.Ordinal?displayProperty=nameWithType>, the method performs an ordinal comparison. Consequently, as the following example shows, if the current culture is U.S. English, the first call to the <xref:System.String.Compare%28System.String%2CSystem.String%2CSystem.StringComparison%29?displayProperty=nameWithType> method (using culture-sensitive comparison) considers "a" less than "A", but the second call to the same method (using ordinal comparison) considers "a" greater than "A".
 
@@ -386,7 +386,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
 -   For a comparison that involves a security decision (such as whether a username is valid), you should always perform an ordinal test for equality by calling an overload of the <xref:System.String.Equals%2A> method.
 
 > [!NOTE]
->  The culture-sensitive sorting and casing rules used in string comparison depend on the version of the .NET. In the .NET Framework 4.5 and later versions running on the [!INCLUDE[win8](~/includes/win8-md.md)] operating system, sorting, casing, normalization, and Unicode character information conforms to the Unicode 6.0 standard. On other Windows operating systems, it conforms to the Unicode 5.0 standard. On .NET Core, it depends on the version of the Unicode Standard supported by the underlying operating system.
+>  The culture-sensitive sorting and casing rules used in string comparison depend on the version of the .NET. In .NET Framework 4.5 and later versions running on Windows 8 or later operating systems, sorting, casing, normalization, and Unicode character information conforms to the Unicode 6.0 standard. On earlier Windows operating systems, it conforms to the Unicode 5.0 standard. On .NET Core, it depends on the version of the Unicode Standard supported by the underlying operating system.
 
  For more information about word, string, and ordinal sort rules, see the <xref:System.Globalization.CompareOptions?displayProperty=nameWithType> topic. For additional recommendations on when to use each rule, see [Best Practices for Using Strings](/dotnet/standard/base-types/best-practices-strings).
 
@@ -523,7 +523,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
 >  All string modification methods return a new <xref:System.String> object. They don't modify the value of the current instance.
 
 ### Extracting substrings from a string
- The <xref:System.String.Split%2A?displayProperty=nameWithType> method separates a single string into multiple strings. Overloads of the method allow you to specify multiple delimiters, to determine the maximum number of substrings that the method extracts, and to determine whether empty strings (which occur when delimiters are adjacent) are included among the returned strings.
+ The <xref:System.String.Split%2A?displayProperty=nameWithType> method separates a single string into multiple strings. Overloads of the method allow you to specify multiple delimiters, to limit the number of substrings that the method extracts, to trim white space from substrings, and to specify whether empty strings (which occur when delimiters are adjacent) are included among the returned strings.
 
 ### Combining strings
  The following <xref:System.String> methods can be used for string concatenation:
@@ -1403,12 +1403,12 @@ Examples of instantiating strings:
  This property returns the <xref:System.Char> object at the position specified by the `index` parameter. However, a Unicode character might be represented by more than one <xref:System.Char>. Use the <xref:System.Globalization.StringInfo?displayProperty=nameWithType> class to work with Unicode characters instead of <xref:System.Char> objects. For more information, see the "Char Objects and Unicode Characters" section in the <xref:System.String> class overview.
 
  In C#, the <xref:System.String.Chars%2A> property is an indexer. In Visual Basic, it is the default property of the <xref:System.String> class. Each <xref:System.Char> object in the string can be accessed by using code such as the following.
- 
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.chars/cs/chars1.cs" interactive="try-dotnet-method" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.chars/vb/chars1.vb" id="Snippet1":::
 
 
- 
+
 ## Examples
  The following example demonstrates how you can use this indexer in a routine to validate a string.
 
@@ -4213,7 +4213,11 @@ Examples of instantiating strings:
 ## Remarks
  This method performs an ordinal (case-sensitive and culture-insensitive) comparison. The search begins at the first character position of this string and continues through the last character position.
 
- **.NET Framework only**: To determine whether a string contains a specified substring by using something other than ordinal comparison (such as culture-sensitive comparison, or ordinal case-insensitive comparison), you can create a custom method. The following example illustrates one such approach. It defines a <xref:System.String> extension method  that includes a <xref:System.StringComparison> parameter and indicates whether a string contains a substring when using the specified form of string comparison.
+To perform a culture-sensitive or ordinal case-insensitive comparison:
+
+- On .NET Core 2.1 and later versions: Call the <xref:System.String.Contains(System.Char,System.StringComparison)> overload instead.
+
+- On .NET Framework: Create a custom method. The following example illustrates one such approach. It defines a <xref:System.String> extension method  that includes a <xref:System.StringComparison> parameter and indicates whether a string contains a substring when using the specified form of string comparison.
 
  [!code-csharp[System.String.Contains#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.Contains/cs/ContainsExt1.cs#1)]
  [!code-vb[System.String.Contains#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.Contains/vb/ContainsExt1.vb#1)]
@@ -10273,7 +10277,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Equality/CPP/equalityop.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Equality/CS/equalityop.cs" interactive="try-dotnet" id="Snippet1":::
- 
+
  ]]></format>
         </remarks>
       </Docs>
