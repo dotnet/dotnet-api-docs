@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 class HttpClientHandler_Example
 {
@@ -16,7 +17,7 @@ class HttpClientHandler_Example
       HttpClient client = new HttpClient(handler);
 
       // Call asynchronous network methods in a try/catch block to handle exceptions
-      try	
+      try
       {
          HttpResponseMessage response = await client.GetAsync("http://www.contoso.com/");
 
@@ -27,14 +28,14 @@ class HttpClientHandler_Example
       }
       catch(HttpRequestException e)
       {
-          Console.WriteLine("\nException Caught!");	
+          Console.WriteLine("\nException Caught!");
           Console.WriteLine("Message :{0} ",e.Message);
       }
 
       // Need to call dispose on the HttpClient and HttpClientHandler objects
       // when done using them, so the app doesn't leak resources
-      handler.Dispose(true);
-      client.Dispose(true);
+      handler.Dispose();
+      client.Dispose();
    }
-// </Snippet1>			
+// </Snippet1>
 }
