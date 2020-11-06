@@ -1,7 +1,7 @@
-Imports System
+﻿Imports System
 
 Module Program
     Sub Main(args As String())
-        Basic1()
+        Limit.LimitStrings()
     End Sub
 End Module

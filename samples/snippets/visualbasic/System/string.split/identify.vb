@@ -3,7 +3,7 @@ Option Strict On
 
 ' Are String.Split(String[], StringSplitOptions) and 
 ' String.Split(Char[[], StringSplitOptions) ambiguous?
-Module Example
+Module Example1
 
     Private Sub SplitWithCharAndInt()
         ' <Snippet3>

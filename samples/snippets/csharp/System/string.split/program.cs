@@ -12,7 +12,8 @@ namespace Split
         {
             //Intro.Intro1();
             //Intro.Intro2();
-            Intro.Intro3();
+            //Intro.Intro3();
+            Options.ThreeArgs();
         }
     }
 }

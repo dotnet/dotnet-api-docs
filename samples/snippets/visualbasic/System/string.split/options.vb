@@ -1,9 +1,10 @@
 ﻿' Visual Basic .NET Document
 Option Strict On
 
-' <Snippet1>
-Module Example
-    Public Sub Main()
+Module Example2
+
+    Public Sub MainE()
+        ' <Snippet1>
         Dim source As String = "[stop]ONE[stop][stop]TWO[stop][stop][stop]THREE[stop][stop]"
         Dim stringSeparators() As String = {"[stop]"}
         Dim result() As String
@@ -36,19 +37,48 @@ Module Example
             Console.Write("'{0}' ", IIf(String.IsNullOrEmpty(s), "<>", s))
         Next
         Console.WriteLine()
+
+        ' The example displays the following output:
+        '    Splitting the string:
+        '       "[stop]ONE[stop][stop]TWO[stop][stop][stop]THREE[stop][stop]".
+        '    
+        '    Using the delimiter string:
+        '       "[stop]"
+        '    
+        '    Result including all elements (9 elements):
+        '       '<>' 'ONE' '<>' 'TWO' '<>' '<>' 'THREE' '<>' '<>'
+        '    
+        '    Result including non-empty elements (3 elements):
+        '       'ONE' 'TWO' 'THREE'
+        ' </Snippet1>
     End Sub
+
+    Public Sub Main2()
+        ' <Snippet7>
+        Dim separators() As String = {",", ".", "!", "?", ";", ":", " "}
+        Dim value As String = "The handsome, energetic, young dog was playing with his smaller, more lethargic litter mate."
+        Dim words() As String = value.Split(separators, StringSplitOptions.RemoveEmptyEntries)
+        For Each word In words
+            Console.WriteLine(word)
+        Next
+    End Sub
+
+    ' The example displays the following output:
+    '
+    '       The
+    '       handsome
+    '       energetic
+    '       young
+    '       dog
+    '       was
+    '       playing
+    '       with
+    '       his
+    '       smaller
+    '       more
+    '       lethargic
+    '       litter
+    '       mate
+    ' </Snippet7>
 End Module
 
-' The example displays the following output:
-'    Splitting the string:
-'       "[stop]ONE[stop][stop]TWO[stop][stop][stop]THREE[stop][stop]".
-'    
-'    Using the delimiter string:
-'       "[stop]"
-'    
-'    Result including all elements (9 elements):
-'       '<>' 'ONE' '<>' 'TWO' '<>' '<>' 'THREE' '<>' '<>'
-'    
-'    Result including non-empty elements (3 elements):
-'       'ONE' 'TWO' 'THREE'
-' </Snippet1>

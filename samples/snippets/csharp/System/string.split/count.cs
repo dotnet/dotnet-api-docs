@@ -4,45 +4,24 @@ namespace Split
 {
     class Count
     {
-        public static void SplitWithCount()
+        public static void ThreeArgs()
         {
-            // <snippet1>
-            char[] delimiters = new char[] { ' ', ',', '.', ':' };
-            string words = "one two,three:four.";
+            //<snippet1>
+            Console.WriteLine("What's your name?");
+            string name = Console.ReadLine();
 
-            for (int i = 1; i <= 5; i++)
+            string[] subs = name.Split(null, 2);
+
+            string firstName = subs[0];
+            string lastName;
+            if (subs.Length > 1)
             {
-                var split = words.Split(delimiters, i);
-                Console.WriteLine("\ncount = {0,2} ..............", i);
-                foreach (var s in split)
-                {
-                    Console.WriteLine("-{0}-", s);
-                }
+                lastName = subs[1];
             }
 
-            // The example displays the following output:
-            //
-            //       count =  1 ..............
-            //       -one two,three:four.-
-            //       count =  2 ..............
-            //       -one-
-            //       -two,three:four.-
-            //       count =  3 ..............
-            //       -one-
-            //       -two-
-            //       -three:four.-
-            //       count =  4 ..............
-            //       -one-
-            //       -two-
-            //       -three-
-            //       -four.-
-            //       count =  5 ..............
-            //       -one-
-            //       -two-
-            //       -three-
-            //       -four-
-            //       --
-            // </snippet1>
+            // If the user enters "Alex Johnson III":
+            // firstName = "Alex", lastName = "Johnson III"
+            //</snippet1>
         }
     }
 }
