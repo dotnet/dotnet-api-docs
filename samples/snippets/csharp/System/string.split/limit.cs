@@ -2,7 +2,7 @@
 
 namespace Split
 {
-    class Count
+    class Limit
     {
         public static void ThreeArgs()
         {
@@ -20,7 +20,8 @@ namespace Split
             }
 
             // If the user enters "Alex Johnson III":
-            // firstName = "Alex", lastName = "Johnson III"
+            // firstName = "Alex"
+            // lastName = "Johnson III"
             //</snippet1>
         }
     }

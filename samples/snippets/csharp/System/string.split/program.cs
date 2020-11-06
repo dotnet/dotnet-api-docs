@@ -13,7 +13,7 @@ namespace Split
             //Intro.Intro1();
             //Intro.Intro2();
             //Intro.Intro3();
-            Options.ThreeArgs();
+            Limit.ThreeArgs();
         }
     }
 }
