@@ -13,7 +13,7 @@ int main()
 }
 
 /*
-This example produces the following results:
+This example produces an output similar to the following:
 
 TickCount: 101931139
 */
