@@ -1,4 +1,4 @@
-.NET maintains its own table of characters and their corresponding categories, which ensures that a specific version of a .NET implementation running on different platforms returns identical character category information. On .NET Core (all versions) and .NET 5+, character category information is provided by the [Unicode Character Database](https://www.unicode.org/ucd/).
+.NET maintains its own table of characters and their corresponding categories, which ensures that a specific version of a .NET implementation running on different platforms returns identical character category information. On all .NET versions and across all OS platforms, character category information is provided by the [Unicode Character Database](https://www.unicode.org/ucd/).
 
 The following table lists .NET versions and the versions of the Unicode Standard on which their character categories are based.
 
