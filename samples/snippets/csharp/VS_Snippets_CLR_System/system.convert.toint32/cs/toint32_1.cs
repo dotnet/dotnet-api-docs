@@ -94,9 +94,9 @@ public class Example
       //       Converted the Char value 'a' to the Int32 value 97.
       //       Converted the Char value 'z' to the Int32 value 122.
       //       Converted the Char value '' to the Int32 value 7.
-      //       Converted the Char value '?' to the Int32 value 1023.
-      //       Converted the Char value '?' to the Int32 value 32767.
-      //       Converted the Char value '?' to the Int32 value 65534.
+      //       Converted the Char value 'Ͽ' to the Int32 value 1023.
+      //       Converted the Char value '翿' to the Int32 value 32767.
+      //       Converted the Char value '￾' to the Int32 value 65534.
       // </Snippet3>
    }
 

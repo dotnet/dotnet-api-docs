@@ -104,7 +104,7 @@ class BoxSameVolume : EqualityComparer<Box>
         return hCode.GetHashCode();
     }
 }
-/* This example produces the following output:
+/* This example produces an output similar to the following:
  *
       Boxes equality by dimensions:
       Added red, Count = 1, HashCode = 46104728
