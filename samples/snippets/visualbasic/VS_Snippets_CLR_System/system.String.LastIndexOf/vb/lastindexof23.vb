@@ -1,9 +1,9 @@
 ﻿' Visual Basic .NET Document
 Option Strict On
 
-' <Snippet23>
 Module Example
    Public Sub Main()
+      ' <Snippet23>
       Dim position As Integer
       Dim softHyphen As String = ChrW(&h00AD)
       
@@ -48,20 +48,21 @@ Module Example
       If position >= 0 Then
          Console.WriteLine(s2.LastIndexOf(softHyphen + "m", position, position + 1))
       End If
+      
+      ' The example displays the following output:
+      '
+      ' 'm' at position 4
+      ' 5 (4 on .NET Core and .NET Framework)
+      ' 'm' at position 3
+      ' 4 (3 on .NET Core and .NET Framework)
+      ' 'm' at position 4
+      ' 1
+      ' 'm' at position 3
+      ' 1
+      ' 'm' at position 4
+      ' 4
+      ' 'm' at position 3
+      ' 3
+      ' </Snippet23>
    End Sub
 End Module
-' The example displays the following output:
-'       'm' at position 4
-'       4
-'       'm' at position 3
-'       3
-'       'm' at position 4
-'       1
-'       'm' at position 3
-'       1
-'       'm' at position 4
-'       4
-'       'm' at position 3
-'       3
-' </Snippet23>
-

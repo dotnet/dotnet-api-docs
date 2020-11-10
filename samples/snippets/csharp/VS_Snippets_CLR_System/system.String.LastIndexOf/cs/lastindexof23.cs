@@ -1,10 +1,10 @@
-﻿// <Snippet23>
-using System;
+﻿using System;
 
 public class Example
 {
    public static void Main()
    {
+      // <Snippet23>
       int position = 0;
       string s1 = "ani\u00ADmal";
       string s2 = "animal";
@@ -41,19 +41,21 @@ public class Example
       Console.WriteLine("'m' at position {0}", position);
       if (position >= 0)   
          Console.WriteLine(s2.LastIndexOf("\u00ADm", position, position + 1));
+      
+      // The example displays the following output:
+      //
+      // 'm' at position 4
+      // 5 (4 on .NET Core and .NET Framework)
+      // 'm' at position 3
+      // 4 (3 on .NET Core and .NET Framework)
+      // 'm' at position 4
+      // 1
+      // 'm' at position 3
+      // 1
+      // 'm' at position 4
+      // 4
+      // 'm' at position 3
+      // 3
+      // </Snippet23>
    }
 }
-// The example displays the following output:
-//       'm' at position 4
-//       4
-//       'm' at position 3
-//       3
-//       'm' at position 4
-//       1
-//       'm' at position 3
-//       1
-//       'm' at position 4
-//       4
-//       'm' at position 3
-//       3
-// </Snippet23>

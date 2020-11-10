@@ -9074,23 +9074,29 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
       <Docs>
         <param name="value">The string to seek.</param>
         <summary>Reports the zero-based index position of the last occurrence of a specified string within this instance.</summary>
-        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.
 
- The search begins at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined.
+Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.
 
- This method performs a word (case-sensitive and culture-sensitive) search using the current culture.
+The search begins at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined.
 
- Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf%28System.String%29> method always returns <xref:System.String.Length%2A?displayProperty=nameWithType> - 1, which represents the last index position in the current instance. In the following example, the <xref:System.String.LastIndexOf%28System.String%29> method is used to find three substrings (a soft hyphen (U+00AD), a soft hyphen followed by "n", and a soft hyphen followed by "m") in two strings. Only one of the strings contains a soft hyphen. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in each case, because the soft hyphen is an ignorable character, the result is the same as if the soft hyphen had not been included in `value`. When searching for a soft hyphen only, the method returns 6 and 5. These values correspond to the index of the last character in the two strings.
+This method performs a word (case-sensitive and culture-sensitive) search using the current culture.
+
+If `value` is a zero-length string, for example, `String.Empty`, this method returns the length of the current instance (in .NET 5.0 and later) or the last index position of the current instance (in .NET Framework and .NET Core).
+
+Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf%28System.String%29> method returns:
+
+- .NET Framework and .NET Core: <xref:System.String.Length%2A?displayProperty=nameWithType> - 1, which represents the last index position in the current instance.
+- .NET 5.0 and later: <xref:System.String.Length%2A?displayProperty=nameWithType>, which represents an index beyond the last index of the current instance.
+
+In the following example, the <xref:System.String.LastIndexOf%28System.String%29> method is used to find three substrings (a soft hyphen (U+00AD), a soft hyphen followed by "n", and a soft hyphen followed by "m") in two strings. Only one of the strings contains a soft hyphen. If the example is run on .NET Framework 4 or later, in each case, because the soft hyphen is an ignorable character, the result is the same as if the soft hyphen had not been included in `value`. When searching for a soft hyphen only, the method returns the last index in the string (in .NET Framework and .NET Core) or the length of the string (.NET 5.0 and later).
 
  [!code-csharp[System.String.LastIndexOf#21](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof21.cs#21)]
  [!code-vb[System.String.LastIndexOf#21](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof21.vb#21)]
-
-
 
 ## Examples
  The following example removes opening and closing HTML tags from a string if the tags begin and end the string. If a string ends with a closing bracket character (">"), the example uses the <xref:System.String.LastIndexOf%2A> method to locate the start of the end tag.
@@ -9223,7 +9229,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="value">The string to seek.</param>
         <param name="startIndex">The search starting position. The search proceeds from <paramref name="startIndex" /> toward the beginning of this instance.</param>
         <summary>Reports the zero-based index position of the last occurrence of a specified string within this instance. The search starts at a specified character position and proceeds backward toward the beginning of the string.</summary>
-        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the smaller of <paramref name="startIndex" /> and the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is <paramref name="startIndex" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -9234,12 +9240,10 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  This method performs a word (case-sensitive and culture-sensitive) search using the current culture.
 
- Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf%28System.String%2CSystem.Int32%29> method always returns `startIndex`, which is the character position at which the search begins. In the following example, the <xref:System.String.LastIndexOf%28System.String%2CSystem.Int32%29> method is used to find a substring that includes a soft hyphen (U+00AD) and that precedes or includes the final "m" in a string. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, because the soft hyphen in the search string is ignored, calling the method to find a substring that consists of the soft hyphen and "m" returns the position of the "m" in the string, whereas calling it to find a substring that consists of the soft hyphen and "n" returns the position of the "n". When the search string contains only the soft hyphen, the method returns the index of the "m", which represents the value of `startIndex`.
+ Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf%28System.String%2CSystem.Int32%29> method always returns `startIndex`, which is the character position at which the search begins. In the following example, the <xref:System.String.LastIndexOf%28System.String%2CSystem.Int32%29> method is used to find a substring that includes a soft hyphen (U+00AD) and that precedes or includes the final "m" in a string. If the example is run on .NET Framework 4 or later, because the soft hyphen in the search string is ignored, calling the method to find a substring that consists of the soft hyphen and "m" returns the position of the "m" in the string, whereas calling it to find a substring that consists of the soft hyphen and "n" returns the position of the "n". When the search string contains only the soft hyphen, the method returns the index of the "m", which represents the value of `startIndex`.
 
  [!code-csharp[System.String.LastIndexOf#22](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof22.cs#22)]
  [!code-vb[System.String.LastIndexOf#22](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof22.vb#22)]
-
-
 
 ## Examples
  The following example finds the index of all occurrences of a string in target string, working from the end of the target string to the start of the target string.
@@ -9317,18 +9321,23 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="value">The string to seek.</param>
         <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         <summary>Reports the zero-based index of the last occurrence of a specified string within the current <see cref="T:System.String" /> object. A parameter specifies the type of search to use for the specified string.</summary>
-        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.
 
- The `comparisonType` parameter specifies to search for the `value` parameter using the current or invariant culture, using a case-sensitive or case-insensitive search, and using word or ordinal comparison rules.
+Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.
 
- The search begins at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined.
+The `comparisonType` parameter specifies to search for the `value` parameter using:
 
+- The current or invariant culture.
+- A case-sensitive or case-insensitive search.
+- Word or ordinal comparison rules.
 
+The search begins at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined.
+
+If `value` is <xref:System.String.Empty>, the return value is the length of the instance (in .NET 5.0 and later versions) or the last index position in this instance (in .NET Core and .NET Framework).
 
 ## Examples
  The following example demonstrates three overloads of the <xref:System.String.LastIndexOf%2A> method that find the last occurrence of a string within another string using different values of the <xref:System.StringComparison> enumeration.
@@ -9343,9 +9352,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <exception cref="T:System.ArgumentException">
           <paramref name="comparisonType" /> is not a valid <see cref="T:System.StringComparison" /> value.</exception>
         <block subset="none" type="usage">
-          <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="options" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed. If <paramref name="value" /> consists only of one or more ignorable characters, the <see cref="M:System.String.LastIndexOf(System.String,System.StringComparison)" /> method always returns <see cref="P:System.String.Length" /> - 1, which represents the last index position in the current instance.
+          <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="options" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed. If <paramref name="value" /> consists only of one or more ignorable characters, the <see cref="M:System.String.LastIndexOf(System.String,System.StringComparison)" /> method returns the first index that's outside of the current instance (in .NET 5.0 and later) the last index position in the current instance (in .NET Core and .NET Framework).
 
- In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.StringComparison)" /> method is used to find three substrings (a soft hyphen (U+00AD), a soft hyphen followed by "n", and a soft hyphen followed by "m") in two strings. Only one of the strings contains a soft hyphen. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, because the soft hyphen is an ignorable character, a culture-sensitive search returns the same value that it would return if the soft hyphen were not included in the search string. An ordinal search, however, successfully finds the soft hyphen in one string and reports that it is absent from the second string.
+ In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.StringComparison)" /> method is used to find three substrings (a soft hyphen (U+00AD), a soft hyphen followed by "n", and a soft hyphen followed by "m") in two strings. Only one of the strings contains a soft hyphen. If the example is run on .NET Framework 4 or later, because the soft hyphen is an ignorable character, a culture-sensitive search returns the same value that it would return if the soft hyphen were not included in the search string. An ordinal search, however, successfully finds the soft hyphen in one string and reports that it is absent from the second string.
 
  [!code-csharp[System.String.LastIndexOf#26](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof26.cs#26)]
  [!code-vb[System.String.LastIndexOf#26](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof26.vb#26)]</para>
@@ -9480,7 +9489,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="startIndex">The search starting position. The search proceeds from <paramref name="startIndex" /> toward the beginning of this instance.</param>
         <param name="count">The number of character positions to examine.</param>
         <summary>Reports the zero-based index position of the last occurrence of a specified string within this instance. The search starts at a specified character position and proceeds backward toward the beginning of the string for a specified number of character positions.</summary>
-        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the smaller of <paramref name="startIndex" /> and the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is <paramref name="startIndex" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -9491,12 +9500,12 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  This method performs a word (case-sensitive and culture-sensitive) search using the current culture.
 
- Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf%2A> method always returns `startIndex`, which is the character position at which the search begins. In the following example, the <xref:System.String.LastIndexOf%2A> method is used to find the position of a soft hyphen (U+00AD) in the two characters that precede the final "m" of two strings. Only one of the strings contains the required substring. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m".
+ Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf%2A> method always returns `startIndex`, which is the character position at which the search begins.
+
+In the following example, the <xref:System.String.LastIndexOf%2A> method is used to find the position of a soft hyphen (U+00AD) in the two characters that precede the final "m" of two strings. Only one of the strings contains the required substring. If the example is run on .NET Framework 4 or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m".
 
  [!code-csharp[System.String.LastIndexOf#23](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof23.cs#23)]
  [!code-vb[System.String.LastIndexOf#23](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof23.vb#23)]
-
-
 
 ## Examples
  The following example finds the index of all occurrences of a string in substring, working from the end of the substring to the start of the substring.
@@ -9583,7 +9592,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="startIndex">The search starting position. The search proceeds from <paramref name="startIndex" /> toward the beginning of this instance.</param>
         <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         <summary>Reports the zero-based index of the last occurrence of a specified string within the current <see cref="T:System.String" /> object. The search starts at a specified character position and proceeds backward toward the beginning of the string. A parameter specifies the type of comparison to perform when searching for the specified string.</summary>
-        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the smaller of <paramref name="startIndex" /> and the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is <paramref name="startIndex" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -9593,8 +9602,6 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
  The search begins at the `startIndex` character position and proceeds backward until either `value` is found or the first character position has been examined. For example, if `startIndex` is <xref:System.String.Length%2A> - 1, the method searches every character from the last character in the string to the beginning.
 
  The `comparisonType` parameter specifies to search for the `value` parameter using the current or invariant culture, using a case-sensitive or case-insensitive search, and using word or ordinal comparison rules.
-
-
 
 ## Examples
  The following example demonstrates three overloads of the <xref:System.String.LastIndexOf%2A> method that find the last occurrence of a string within another string using different values of the <xref:System.StringComparison> enumeration.
@@ -9616,7 +9623,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <block subset="none" type="usage">
           <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="comparisonType" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed. If <paramref name="value" /> consists only of one or more ignorable characters, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.StringComparison)" /> method always returns <paramref name="startIndex" />, which is the character position at which the search begins.
 
- In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m", starting with the final "m" in two strings. Only one of the strings contains the required substring. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m". The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
+ In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m", starting with the final "m" in two strings. Only one of the strings contains the required substring. If the example is run on .NET Framework 4 or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m". The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
 
  [!code-csharp[System.String.LastIndexOf#25](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof25.cs#25)]
  [!code-vb[System.String.LastIndexOf#25](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof25.vb#25)]</para>
@@ -9674,7 +9681,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="count">The number of character positions to examine.</param>
         <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         <summary>Reports the zero-based index position of the last occurrence of a specified string within this instance. The search starts at a specified character position and proceeds backward toward the beginning of the string for the specified number of character positions. A parameter specifies the type of comparison to perform when searching for the specified string.</summary>
-        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the smaller of <paramref name="startIndex" /> and the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is <paramref name="startIndex" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -9683,9 +9690,11 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  The search begins at the `startIndex` character position and proceeds backward until either `value` is found or `count` character positions have been examined. For example, if `startIndex` is <xref:System.String.Length%2A> - 1, the method searches backward `count` characters from the last character in the string.
 
- The `comparisonType` parameter specifies to search for the `value` parameter using the current or invariant culture, using a case-sensitive or case-insensitive search, and using word or ordinal comparison rules.
+ The `comparisonType` parameter specifies to search for the `value` parameter using:
 
-
+- The current or invariant culture.
+- A case-sensitive or case-insensitive search.
+- Word or ordinal comparison rules.
 
 ## Examples
  The following example demonstrates three overloads of the <xref:System.String.LastIndexOf%2A> method that find the last occurrence of a string within another string using different values of the <xref:System.StringComparison> enumeration.
@@ -9724,7 +9733,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <block subset="none" type="usage">
           <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="comparisonType" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed. If <paramref name="value" /> consists only of one or more ignorable characters, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.Int32,System.StringComparison)" /> method always returns <paramref name="startIndex" />, which is the character position at which the search begins.
 
- In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m" in all but the first character position before the final "m" in two strings. Only one of the strings contains the required substring. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. When it performs an ordinal comparison, however, it finds the substring only in the first string. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m" when it performs a culture-sensitive comparison. The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
+ In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m" in all but the first character position before the final "m" in two strings. Only one of the strings contains the required substring. If the example is run on .NET Framework 4 or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. When it performs an ordinal comparison, however, it finds the substring only in the first string. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m" when it performs a culture-sensitive comparison. The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
 
  [!code-csharp[System.String.LastIndexOf#24](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof24.cs#24)]
  [!code-vb[System.String.LastIndexOf#24](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof24.vb#24)]</para>

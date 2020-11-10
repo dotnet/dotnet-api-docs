@@ -1,10 +1,10 @@
-﻿// <Snippet21>
-using System;
+﻿using System;
 
 public class Example
 {
    public static void Main()
    {
+      // <Snippet21>
       string s1 = "ani\u00ADmal";
       string s2 = "animal";
       
@@ -19,13 +19,15 @@ public class Example
       // Find the index of the last soft hyphen followed by "m".
       Console.WriteLine(s1.LastIndexOf("\u00ADm"));
       Console.WriteLine(s2.LastIndexOf("\u00ADm"));
+      
+      // The example displays the following output:
+      //
+      // 7 (6 on .NET Core and .NET Framework)
+      // 6 (5 on .NET Core and .NET Framework)
+      // 1
+      // 1
+      // 4
+      // 3
+      // </Snippet21>
    }
 }
-// The example displays the following output:
-//       6
-//       5
-//       1
-//       1
-//       4
-//       3
-// </Snippet21>

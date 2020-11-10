@@ -1,9 +1,9 @@
 ﻿' Visual Basic .NET Document
 Option Strict On
 
-' <Snippet26>
 Module Example
    Public Sub Main()
+      ' <Snippet26>
       Dim softHyphen As String = ChrW(&h00AD)
       Dim s1 As String = "ani" + softHyphen + "mal"
       Dim s2 As String = "animal"
@@ -33,21 +33,23 @@ Module Example
       ' Use ordinal comparison to find the last soft hyphen followed by "m".
       Console.WriteLine(s1.LastIndexOf(softHyphen + "m", StringComparison.Ordinal))
       Console.WriteLine(s2.LastIndexOf(softHyphen + "m", StringComparison.Ordinal))
+      
+     ' The example displays the following output:
+     '
+     ' Culture-sensitive comparison:
+     ' 7 (6 on .NET Core and .NET Framework)
+     ' 6 (5 on .NET Core and .NET Framework)
+     ' 1
+     ' 1
+     ' 4
+     ' 3
+     ' Ordinal comparison:
+     ' 3
+     ' -1
+     ' -1
+     ' -1
+     ' 3
+     ' -1
+     ' </Snippet26>
    End Sub
 End Module
-' The example displays the following output:
-'       6
-'       5
-'       1
-'       1
-'       4
-'       3
-'       Ordinal comparison:
-'       3
-'       -1
-'       -1
-'       -1
-'       3
-'       -1
-' </Snippet26>
-
