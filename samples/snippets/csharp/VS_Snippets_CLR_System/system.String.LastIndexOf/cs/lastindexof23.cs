@@ -11,23 +11,27 @@ public class Example
 
         // Find the index of the soft hyphen followed by "n".
         position = s1.LastIndexOf("m");
-        Console.WriteLine("'m' at position {0}", position);
+        Console.WriteLine($"'m' at position {position}");
+
         if (position >= 0)
             Console.WriteLine(s1.LastIndexOf("\u00ADn", position, position + 1));
 
         position = s2.LastIndexOf("m");
-        Console.WriteLine("'m' at position {0}", position);
+        Console.WriteLine($"'m' at position {position}");
+
         if (position >= 0)
             Console.WriteLine(s2.LastIndexOf("\u00ADn", position, position + 1));
 
         // Find the index of the soft hyphen followed by "m".
         position = s1.LastIndexOf("m");
-        Console.WriteLine("'m' at position {0}", position);
+        Console.WriteLine($"'m' at position {position}");
+
         if (position >= 0)
             Console.WriteLine(s1.LastIndexOf("\u00ADm", position, position + 1));
 
         position = s2.LastIndexOf("m");
-        Console.WriteLine("'m' at position {0}", position);
+        Console.WriteLine($"'m' at position {position}");
+
         if (position >= 0)
             Console.WriteLine(s2.LastIndexOf("\u00ADm", position, position + 1));
 

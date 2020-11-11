@@ -11,26 +11,30 @@ Module Example
 
         ' Find the index of the soft hyphen followed by "n".
         position = s1.LastIndexOf("m")
-        Console.WriteLine("'m' at position {0}", position)
+        Console.WriteLine($"'m' at position {position}")
+
         If position >= 0 Then
             Console.WriteLine(s1.LastIndexOf(softHyphen + "n", position))
         End If
 
         position = s2.LastIndexOf("m")
-        Console.WriteLine("'m' at position {0}", position)
+        Console.WriteLine($"'m' at position {position}")
+
         If position >= 0 Then
             Console.WriteLine(s2.LastIndexOf(softHyphen + "n", position))
         End If
 
         ' Find the index of the soft hyphen followed by "m".
         position = s1.LastIndexOf("m")
-        Console.WriteLine("'m' at position {0}", position)
+        Console.WriteLine($"'m' at position {position}")
+
         If position >= 0 Then
             Console.WriteLine(s1.LastIndexOf(softHyphen + "m", position))
         End If
 
         position = s2.LastIndexOf("m")
-        Console.WriteLine("'m' at position {0}", position)
+        Console.WriteLine($"'m' at position {position}")
+
         If position >= 0 Then
             Console.WriteLine(s2.LastIndexOf(softHyphen + "m", position))
         End If
@@ -48,4 +52,3 @@ Module Example
         ' </Snippet22>
     End Sub
 End Module
-
