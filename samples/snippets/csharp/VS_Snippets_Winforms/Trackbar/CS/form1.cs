@@ -108,14 +108,14 @@ namespace TrackBar
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(8, 16);
+            this.label2.Location = new System.Drawing.Point(600, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(120, 16);
             this.label2.TabIndex = 5;
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(600, 16);
+            this.label3.Location = new System.Drawing.Point(8, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(120, 16);
             this.label3.TabIndex = 6;
@@ -154,8 +154,8 @@ namespace TrackBar
         private void showColorValueLabels()
         {
             label1.Text = "Red value is : " + trackBar1.Value.ToString();
-            label3.Text = "Green Value is : " + trackBar2.Value.ToString();
-            label2.Text = "Blue Value is : " + trackBar3.Value.ToString();
+            Label2.Text = "Green Value is : " + trackBar2.Value.ToString();
+            Label3.Text = "Blue Value is : " + trackBar3.Value.ToString();
         }
         private void trackBar_Scroll(object sender, System.EventArgs e)
         {
