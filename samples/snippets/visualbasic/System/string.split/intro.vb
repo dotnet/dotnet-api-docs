@@ -6,7 +6,7 @@
         Dim subs As String() = s.Split()
 
         For Each substring As String In subs
-            Console.WriteLine("Substring: {0}", substring)
+            Console.WriteLine($"Substring: {substring}")
         Next
 
         ' This example produces the following output:
@@ -26,7 +26,7 @@
         Dim subs As String() = s.Split(" "c, "."c)
 
         For Each substring As String In subs
-            Console.WriteLine("Substring: {0}", substring)
+            Console.WriteLine($"Substring: {substring}")
         Next
 
         ' This example produces the following output:
@@ -49,7 +49,7 @@
         Dim subs As String() = s.Split(separators, StringSplitOptions.RemoveEmptyEntries)
 
         For Each substring As String In subs
-            Console.WriteLine("Substring: {0}", substring)
+            Console.WriteLine($"Substring: {substring}")
         Next
 
         ' This example produces the following output:

@@ -7,8 +7,7 @@ namespace Split
         public static void ThreeArgs()
         {
             //<snippet1>
-            Console.WriteLine("What's your name?");
-            string name = Console.ReadLine();
+            string name = "Alex Johnson III";
 
             string[] subs = name.Split(null, 2);
 
@@ -19,7 +18,6 @@ namespace Split
                 lastName = subs[1];
             }
 
-            // If the user enters "Alex Johnson III":
             // firstName = "Alex"
             // lastName = "Johnson III"
             //</snippet1>

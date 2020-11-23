@@ -14,7 +14,7 @@ public class StringSplit2
             Console.WriteLine("\ncount = {0,2} ..............", i);
             foreach (var s in split)
             {
-                Console.WriteLine("-{0}-", s);
+                Console.WriteLine($"-{s}-");
             }
         }
 

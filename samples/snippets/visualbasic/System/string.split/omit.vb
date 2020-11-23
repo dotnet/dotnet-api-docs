@@ -17,7 +17,7 @@ Class Sample
         Console.WriteLine("1) Split a string delimited by characters:" & vbCrLf)
 
         ' Display the original string and delimiter characters.
-        Console.WriteLine("1a )The original string is ""{0}"".", s1)
+        Console.WriteLine("1a) The original string is ""{0}"".", s1)
         Console.WriteLine("The delimiter character is '{0}'." & vbCrLf, charSeparators(0))
 
         ' Split a string delimited by characters and return all elements.
@@ -99,7 +99,7 @@ Class Sample
     '
     '1) Split a string delimited by characters:
     '
-    '1a )The original string is ",ONE,,TWO,,,THREE,,".
+    '1a) The original string is ",ONE,,TWO,,,THREE,,".
     'The delimiter character is ','.
     '
     '1b) Split a string delimited by characters and return all elements:

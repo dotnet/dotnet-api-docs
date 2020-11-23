@@ -23,9 +23,8 @@ namespace Split
             Console.WriteLine("1) Split a string delimited by characters:\n");
 
             // Display the original string and delimiter characters.
-            Console.WriteLine("1a )The original string is \"{0}\".", s1);
-            Console.WriteLine("The delimiter character is '{0}'.\n",
-                               charSeparators[0]);
+            Console.WriteLine($"1a) The original string is \"{s1}\".");
+            Console.WriteLine($"The delimiter character is '{charSeparators[0]}'.\n");
 
             // Split a string delimited by characters and return all elements.
             Console.WriteLine("1b) Split a string delimited by characters and " +
@@ -59,8 +58,8 @@ namespace Split
             Console.WriteLine("2) Split a string delimited by another string:\n");
 
             // Display the original string and delimiter string.
-            Console.WriteLine("2a) The original string is \"{0}\".", s2);
-            Console.WriteLine("The delimiter string is \"{0}\".\n", stringSeparators[0]);
+            Console.WriteLine($"2a) The original string is \"{s2}\".");
+            Console.WriteLine($"The delimiter string is \"{stringSeparators[0]}\".\n");
 
             // Split a string delimited by another string and return all elements.
             Console.WriteLine("2b) Split a string delimited by another string and " +
@@ -91,10 +90,10 @@ namespace Split
             // Display the array of separated strings using a local function
             void Show(string[] entries)
             {
-                Console.WriteLine("The return value contains these {0} elements:", entries.Length);
+                Console.WriteLine($"The return value contains these {entries.Length} elements:");
                 foreach (string entry in entries)
                 {
-                    Console.Write("<{0}>", entry);
+                    Console.Write($"<{entry}>");
                 }
                 Console.Write("\n\n");
             }
@@ -104,7 +103,7 @@ namespace Split
 
             1) Split a string delimited by characters:
 
-            1a )The original string is ",ONE,,TWO,,,THREE,,".
+            1a) The original string is ",ONE,,TWO,,,THREE,,".
             The delimiter character is ','.
 
             1b) Split a string delimited by characters and return all elements:
@@ -156,16 +155,14 @@ namespace Split
             string[] result;
 
             // Display the original string and delimiter string.
-            Console.WriteLine("Splitting the string:\n   \"{0}\".", source);
+            Console.WriteLine($"Splitting the string:\n   \"{source}\".");
             Console.WriteLine();
-            Console.WriteLine("Using the delimiter string:\n   \"{0}\"",
-                              stringSeparators[0]);
+            Console.WriteLine($"Using the delimiter string:\n   \"{stringSeparators[0]}\"");
             Console.WriteLine();
 
             // Split a string delimited by another string and return all elements.
             result = source.Split(stringSeparators, StringSplitOptions.None);
-            Console.WriteLine("Result including all elements ({0} elements):",
-                              result.Length);
+            Console.WriteLine($"Result including all elements ({result.Length} elements):");
             Console.Write("   ");
             foreach (string s in result)
             {
@@ -175,10 +172,8 @@ namespace Split
             Console.WriteLine();
 
             // Split delimited by another string and return all non-empty elements.
-            result = source.Split(stringSeparators,
-                                  StringSplitOptions.RemoveEmptyEntries);
-            Console.WriteLine("Result including non-empty elements ({0} elements):",
-                              result.Length);
+            result = source.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+            Console.WriteLine($"Result including non-empty elements ({result.Length} elements):");
             Console.Write("   ");
             foreach (string s in result)
             {

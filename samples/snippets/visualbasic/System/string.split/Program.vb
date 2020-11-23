@@ -2,6 +2,8 @@
 
 Module Program
     Sub Main(args As String())
-        Limit.LimitStrings()
+        Intro1()
+        Intro2()
+        Intro3()
     End Sub
 End Module

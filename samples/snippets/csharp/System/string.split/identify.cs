@@ -9,7 +9,7 @@ namespace Split
             // <Snippet3>
             string phrase = "The quick  brown fox";
 
-            _ = phrase.Split(default(Char[]), 3, StringSplitOptions.RemoveEmptyEntries);
+            _ = phrase.Split(default(char[]), 3, StringSplitOptions.RemoveEmptyEntries);
 
             _ = phrase.Split((char[])null, 3, StringSplitOptions.RemoveEmptyEntries);
 
@@ -35,7 +35,7 @@ namespace Split
             // <Snippet5>
             string phrase = "The quick  brown fox";
 
-            _ = phrase.Split(default(Char[]), StringSplitOptions.RemoveEmptyEntries);
+            _ = phrase.Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
 
             _ = phrase.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 

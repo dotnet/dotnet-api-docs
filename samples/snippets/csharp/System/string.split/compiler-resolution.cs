@@ -8,7 +8,7 @@ namespace Split
         {
             // <Snippet1>
             string value = "This is a short string.";
-            Char delimiter = 's';
+            char delimiter = 's';
             string[] substrings = value.Split(delimiter);
             foreach (var substring in substrings)
                 Console.WriteLine(substring);
