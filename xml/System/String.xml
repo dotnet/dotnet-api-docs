@@ -53,7 +53,7 @@
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Runtime" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Runtime" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
   </TypeForwardingChain>
   <Base>
@@ -179,7 +179,7 @@ For more information about Unicode, UTF-16, code units, code points, and the <xr
 
 [!INCLUDE[character-categories](~/includes/unicode-categories.md)]
 
- In addition, .NET supports string comparison and sorting based on the Unicode standard. On .NET Core, string comparison and sorting information is provided by [International Components for Unicode](http://site.icu-project.org/) libraries. In versions of .NET Framework through the [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], .NET Framework maintains its own table of string data. This is also true of versions of .NET Framework starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)] running on Windows 7. Starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)] running on Window 8 and later versions of the Windows operating system, the runtime delegates string comparison and sorting operations to the operating system. The following table lists the versions of .NET and the versions of the Unicode Standard on which character comparison and sorting are based.
+ In addition, .NET supports string comparison and sorting based on the Unicode standard. .NET Framework 4 and previous versions maintain their own table of string data. This is also true of versions of .NET Framework starting with .NET Framework 4.5 running on Windows 7. Starting with .NET Framework 4.5 running on Windows 8 and later versions of the Windows operating system, the runtime delegates string comparison and sorting operations to the operating system. On .NET Core and .NET 5+, string comparison and sorting information is provided by [International Components for Unicode](http://site.icu-project.org/) libraries (except on Windows versions prior to Windows 10 May 2019 Update). The following table lists the versions of .NET and the versions of the Unicode Standard on which character comparison and sorting are based.
 
 |.NET version|Version of the Unicode Standard|
 |----------------------------|-------------------------------------|
@@ -189,7 +189,7 @@ For more information about Unicode, UTF-16, code units, code points, and the <xr
 |[!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)]|[The Unicode Standard, Version 5.0.0](https://www.unicode.org/versions/Unicode5.0.0)|
 |[!INCLUDE[net_v45](~/includes/net-v45-md.md)] and later on Windows 7|[The Unicode Standard, Version 5.0.0](https://www.unicode.org/versions/Unicode5.0.0)|
 |[!INCLUDE[net_v45](~/includes/net-v45-md.md)] and later on Windows 8 and later Windows operating systems|[The Unicode Standard, Version 6.3.0](https://www.unicode.org/versions/Unicode6.3.0/)|
-|.NET Core (all versions)|Depends on the version of the Unicode Standard supported by the underlying operating system.|
+|.NET Core and .NET 5+|Depends on the version of the Unicode Standard supported by the underlying operating system.|
 
 <a name="EmbeddedNulls"></a>
 ## Strings and embedded null characters
@@ -286,7 +286,10 @@ For more information about Unicode, UTF-16, code units, code points, and the <xr
 > [!TIP]
 > You should always call a method overload that makes the intent of your method call clear. For example, instead of calling the <xref:System.String.Compare(System.String%2CSystem.String)> method to perform a culture-sensitive comparison of two strings by using the conventions of the current culture, you should call the <xref:System.String.Compare(System.String%2CSystem.String%2CSystem.StringComparison)> method with a value of <xref:System.StringComparison.CurrentCulture?displayProperty=nameWithType> for the `comparisonType` argument. For more information, see [Best Practices for Using Strings](/dotnet/standard/base-types/best-practices-strings).
 
-You can download the [Sorting Weight Tables](https://www.microsoft.com/download/details.aspx?id=10921), a set of text files that contain information on the character weights used in sorting and comparison operations for Windows operating systems, and the [Default Unicode Collation Element Table](https://www.unicode.org/Public/UCA/latest/allkeys.txt), the sort weight table for Linux and macOS.
+You can download the sorting weight tables, a set of text files that contain information on the character weights used in sorting and comparison operations, from the following links:
+
+- Windows (.NET Framework and .NET Core): [Sorting Weight Tables](https://www.microsoft.com/download/details.aspx?id=10921)
+- Windows 10 May 2019 Update or later (.NET 5+) and Linux and macOS (.NET Core and .NET 5+): [Default Unicode Collation Element Table](https://www.unicode.org/Public/UCA/latest/allkeys.txt)
 
 <a name="casing"></a>
 ### Casing
@@ -352,7 +355,7 @@ You can download the [Sorting Weight Tables](https://www.microsoft.com/download/
 
 <a name="comparison"></a>
 ### String comparison and sorting
- Conventions for comparing and sorting strings vary from culture to culture. For example, the sort order may be based on phonetics or on the visual representation of characters. In East Asian languages, characters are sorted by the stroke and radical of ideographs. Sorting also depends on the order languages and cultures use for the alphabet. For example, the Danish language has an "Æ" character that it sorts after "Z" in the alphabet. In addition, comparisons can be case-sensitive or case-insensitive, and in some cases casing rules also differ by culture. Ordinal comparison, on the other hand, uses the Unicode code points of individual characters in a string when comparing and sorting strings.
+ Conventions for comparing and sorting strings vary from culture to culture. For example, the sort order may be based on phonetics or on the visual representation of characters. In East Asian languages, characters are sorted by the stroke and radical of ideographs. Sorting also depends on the order languages and cultures use for the alphabet. For example, the Danish language has an "Æ" character that it sorts after "Z" in the alphabet. In addition, comparisons can be case-sensitive or case-insensitive, and casing rules might differ by culture. Ordinal comparison, on the other hand, uses the Unicode code points of individual characters in a string when comparing and sorting strings.
 
  Sort rules determine the alphabetic order of Unicode characters and how two strings compare to each other. For example, the <xref:System.String.Compare(System.String%2CSystem.String%2CSystem.StringComparison)?displayProperty=nameWithType> method compares two strings based on the <xref:System.StringComparison> parameter. If the parameter value is <xref:System.StringComparison.CurrentCulture?displayProperty=nameWithType>, the method performs a linguistic comparison that uses the conventions of the current culture; if the parameter value is <xref:System.StringComparison.Ordinal?displayProperty=nameWithType>, the method performs an ordinal comparison. Consequently, as the following example shows, if the current culture is U.S. English, the first call to the <xref:System.String.Compare(System.String%2CSystem.String%2CSystem.StringComparison)?displayProperty=nameWithType> method (using culture-sensitive comparison) considers "a" less than "A", but the second call to the same method (using ordinal comparison) considers "a" greater than "A".
 
@@ -528,7 +531,7 @@ The <xref:System.String> class includes the following methods that appear to mod
 
 ### Extract substrings from a string
 
-The <xref:System.String.Split%2A?displayProperty=nameWithType> method separates a single string into multiple strings. Overloads of the method allow you to specify multiple delimiters, to determine the maximum number of substrings that the method extracts, and to determine whether empty strings (which occur when delimiters are adjacent) are included among the returned strings.
+The <xref:System.String.Split%2A?displayProperty=nameWithType> method separates a single string into multiple strings. Overloads of the method allow you to specify multiple delimiters, to limit the number of substrings that the method extracts, to trim white space from substrings, and to specify whether empty strings (which occur when delimiters are adjacent) are included among the returned strings.
 
 ### Combine strings
 
@@ -572,8 +575,8 @@ For more information and an example, see the [Normalization](#Normalization) sec
 
  ]]></format>
     </remarks>
-    <related type="ExternalDocumentation" href="https://www.microsoft.com/download/details.aspx?id=10921">Sorting Weight Tables for Windows operating systems</related>
-    <related type="ExternalDocumentation" href="https://www.unicode.org/Public/UCA/latest/allkeys.txt">Default Unicode Collation Element Table, for Linux and macOS</related>
+    <related type="ExternalDocumentation" href="https://www.microsoft.com/download/details.aspx?id=10921">Sorting Weight Tables for Windows (.NET Framework and .NET Core only)</related>
+    <related type="ExternalDocumentation" href="https://www.unicode.org/Public/UCA/latest/allkeys.txt">Default Unicode Collation Element Tables</related>
     <threadsafe>This type is thread safe.</threadsafe>
     <altmember cref="T:System.IComparable" />
     <altmember cref="T:System.ICloneable" />
@@ -4188,12 +4191,11 @@ The following example demonstrates how you can create an instance of the <xref:S
 ## Remarks
  This method performs an ordinal (case-sensitive and culture-insensitive) comparison. The search begins at the first character position of this string and continues through the last character position.
 
- **.NET Framework only**: To determine whether a string contains a specified substring by using something other than ordinal comparison (such as culture-sensitive comparison, or ordinal case-insensitive comparison), you can create a custom method. The following example illustrates one such approach. It defines a <xref:System.String> extension method  that includes a <xref:System.StringComparison> parameter and indicates whether a string contains a substring when using the specified form of string comparison.
+To perform a culture-sensitive or ordinal case-insensitive comparison:
 
- [!code-csharp[System.String.Contains#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.Contains/cs/ContainsExt1.cs#1)]
- [!code-vb[System.String.Contains#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.Contains/vb/ContainsExt1.vb#1)]
+- On .NET Core 2.1 and later versions: Call the <xref:System.String.Contains(System.Char,System.StringComparison)> overload instead.
 
- The following example then calls the `Contains` extension method to determine whether a substring is found in a string when using ordinal comparison and case-insensitive ordinal comparison.
+- On .NET Framework: Create a custom method. The following example illustrates one such approach. It defines a <xref:System.String> extension method  that includes a <xref:System.StringComparison> parameter and indicates whether a string contains a substring when using the specified form of string comparison.
 
  [!code-csharp[System.String.Contains#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.String.Contains/cs/ContainsExt1.cs#2)]
  [!code-vb[System.String.Contains#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.String.Contains/vb/ContainsExt1.vb#2)]
@@ -5256,14 +5258,14 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 
  In this section:
 
- [Get started with the String.Format method](#Starting)
- [Which method do I call?](#FTaskList)
- [The Format method in brief](#Format_Brief)
- [The Format item](#FormatItem)
- [How arguments are formatted](#HowFormatted)
- [Format items that have the same index](#SameIndex)
- [Formatting and culture](#Format_Culture)
- [Custom formatting operations](#Format_Custom)
+ [Get started with the String.Format method](#Starting)\
+ [Which method do I call?](#FTaskList)\
+ [The Format method in brief](#Format_Brief)\
+ [The Format item](#FormatItem)\
+ [How arguments are formatted](#HowFormatted)\
+ [Format items that have the same index](#SameIndex)\
+ [Formatting and culture](#Format_Culture)\
+ [Custom formatting operations](#Format_Custom)\
  [String.Format Q & A](#QA)
 
 <a name="Starting"></a>
@@ -5365,15 +5367,15 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
 
  A format item has the following elements:
 
- *index*
+ *index*\
  The zero-based index of the argument whose string representation is to be included at this position in the string. If this argument is `null`, an empty string will be included at this position in the string.
 
- *alignment*
+ *alignment*\
  Optional. A signed integer that indicates the total length of the field into which the argument is inserted and whether it is right-aligned (a positive integer) or left-aligned (a negative integer). If you omit *alignment*, the string representation of the corresponding argument is inserted in a field with no leading or trailing spaces.
 
  If the value of *alignment* is less than the length of the argument to be inserted, *alignment* is ignored and the length of the string representation of the argument is used as the field width.
 
- *formatString*
+ *formatString*\
  Optional. A string that specifies the format of the corresponding argument's result string. If you omit *formatString*, the corresponding argument's parameterless `ToString` method is called to produce its string representation. If you specify *formatString*, the argument referenced by the format item must implement the <xref:System.IFormattable> interface. Types that support format strings include:
 
 - All integral and floating-point types. (See [Standard Numeric Format Strings](/dotnet/standard/base-types/standard-numeric-format-strings) and [Custom Numeric Format Strings](/dotnet/standard/base-types/custom-numeric-format-strings).)
@@ -5565,17 +5567,17 @@ The following are some of the examples included in the article:
 
 ### Create a format string
 
-[Inserting a string](#insert-a-string)
-[The format item](#the-format-item)
+[Inserting a string](#insert-a-string)\
+[The format item](#the-format-item)\
 [Format items that have the same index](#format-items-that-have-the-same-index)
 
 ### Control formatted output
 
-[Controlling formatting](#control-formatting)
-[Controlling spacing](#control-spacing)
-[Controlling alignment](#control-alignment)
-[Controlling the number of integral digits](#how-do-i-control-the-number-of-integral-digits)
-[Controlling the number of digits after the decimal separator](#how-do-i-control-the-number-of-digits-after-the-decimal-separator)
+[Controlling formatting](#control-formatting)\
+[Controlling spacing](#control-spacing)\
+[Controlling alignment](#control-alignment)\
+[Controlling the number of integral digits](#how-do-i-control-the-number-of-integral-digits)\
+[Controlling the number of digits after the decimal separator](#how-do-i-control-the-number-of-digits-after-the-decimal-separator)\
 [Including literal braces in a result string](#braces)
 
 ### Make format strings culture-sensitive
@@ -5584,7 +5586,7 @@ The following are some of the examples included in the article:
 
 ### Customize the formatting operation
 
-[A custom formatting operation](#example-a-custom-formatting-operation)
+[A custom formatting operation](#example-a-custom-formatting-operation)\
 [An intercept provider and Roman numeral formatter](#example-an-intercept-provider-and-roman-numeral-formatter)
 
  ]]></format>
@@ -8982,18 +8984,21 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
       <Docs>
         <param name="value">The string to seek.</param>
         <summary>Reports the zero-based index position of the last occurrence of a specified string within this instance.</summary>
-        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.
 
- The search begins at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined.
+Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.
 
- This method performs a word (case-sensitive and culture-sensitive) search using the current culture.
+The search begins at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined.
 
- Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf(System.String)> method always returns <xref:System.String.Length%2A?displayProperty=nameWithType> - 1, which represents the last index position in the current instance. In the following example, the <xref:System.String.LastIndexOf(System.String)> method is used to find three substrings (a soft hyphen (U+00AD), a soft hyphen followed by "n", and a soft hyphen followed by "m") in two strings. Only one of the strings contains a soft hyphen. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in each case, because the soft hyphen is an ignorable character, the result is the same as if the soft hyphen had not been included in `value`. When searching for a soft hyphen only, the method returns 6 and 5. These values correspond to the index of the last character in the two strings.
+This method performs a word (case-sensitive and culture-sensitive) search using the current culture.
+
+Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed.
+
+In the following example, the <xref:System.String.LastIndexOf%28System.String%29> method is used to find two substrings (a soft hyphen followed by "n" and a soft hyphen followed by "m") in two strings. Only one of the strings contains a soft hyphen. If the example is run on .NET Framework 4 or later, in each case, because the soft hyphen is an ignorable character, the result is the same as if the soft hyphen had not been included in `value`.
 
  [!code-csharp[System.String.LastIndexOf#21](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof21.cs#21)]
  [!code-vb[System.String.LastIndexOf#21](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof21.vb#21)]
@@ -9127,7 +9132,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="value">The string to seek.</param>
         <param name="startIndex">The search starting position. The search proceeds from <paramref name="startIndex" /> toward the beginning of this instance.</param>
         <summary>Reports the zero-based index position of the last occurrence of a specified string within this instance. The search starts at a specified character position and proceeds backward toward the beginning of the string.</summary>
-        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the smaller of <paramref name="startIndex" /> and the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -9138,7 +9143,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  This method performs a word (case-sensitive and culture-sensitive) search using the current culture.
 
- Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf(System.String%2CSystem.Int32)> method always returns `startIndex`, which is the character position at which the search begins. In the following example, the <xref:System.String.LastIndexOf(System.String%2CSystem.Int32)> method is used to find a substring that includes a soft hyphen (U+00AD) and that precedes or includes the final "m" in a string. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, because the soft hyphen in the search string is ignored, calling the method to find a substring that consists of the soft hyphen and "m" returns the position of the "m" in the string, whereas calling it to find a substring that consists of the soft hyphen and "n" returns the position of the "n". When the search string contains only the soft hyphen, the method returns the index of the "m", which represents the value of `startIndex`.
+ Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. In the following example, the <xref:System.String.LastIndexOf%28System.String%2CSystem.Int32%29> method is used to find a substring that includes a soft hyphen (U+00AD) and that precedes or includes the final "m" in a string. If the example is run on .NET Framework 4 or later, because the soft hyphen in the search string is ignored, calling the method to find a substring that consists of the soft hyphen and "m" returns the position of the "m" in the string, whereas calling it to find a substring that consists of the soft hyphen and "n" returns the position of the "n".
 
  [!code-csharp[System.String.LastIndexOf#22](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof22.cs#22)]
  [!code-vb[System.String.LastIndexOf#22](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof22.vb#22)]
@@ -9219,16 +9224,21 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="value">The string to seek.</param>
         <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         <summary>Reports the zero-based index of the last occurrence of a specified string within the current <see cref="T:System.String" /> object. A parameter specifies the type of search to use for the specified string.</summary>
-        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.
 
- The `comparisonType` parameter specifies to search for the `value` parameter using the current or invariant culture, using a case-sensitive or case-insensitive search, and using word or ordinal comparison rules.
+Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1.
 
- The search begins at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined.
+The `comparisonType` parameter specifies to search for the `value` parameter using:
+
+- The current or invariant culture.
+- A case-sensitive or case-insensitive search.
+- Word or ordinal comparison rules.
+
+The search begins at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined.
 
 ## Examples
  The following example demonstrates three overloads of the <xref:System.String.LastIndexOf%2A> method that find the last occurrence of a string within another string using different values of the <xref:System.StringComparison> enumeration.
@@ -9243,9 +9253,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <exception cref="T:System.ArgumentException">
           <paramref name="comparisonType" /> is not a valid <see cref="T:System.StringComparison" /> value.</exception>
         <block subset="none" type="usage">
-          <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="options" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed. If <paramref name="value" /> consists only of one or more ignorable characters, the <see cref="M:System.String.LastIndexOf(System.String,System.StringComparison)" /> method always returns <see cref="P:System.String.Length" /> - 1, which represents the last index position in the current instance.
+          <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="options" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed.
 
- In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.StringComparison)" /> method is used to find three substrings (a soft hyphen (U+00AD), a soft hyphen followed by "n", and a soft hyphen followed by "m") in two strings. Only one of the strings contains a soft hyphen. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, because the soft hyphen is an ignorable character, a culture-sensitive search returns the same value that it would return if the soft hyphen were not included in the search string. An ordinal search, however, successfully finds the soft hyphen in one string and reports that it is absent from the second string.
+ In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.StringComparison)" /> method is used to find two substrings (a soft hyphen followed by "n", and a soft hyphen followed by "m") in two strings. Only one of the strings contains a soft hyphen. If the example is run on .NET Framework 4 or later, because the soft hyphen is an ignorable character, a culture-sensitive search returns the same value that it would return if the soft hyphen were not included in the search string. An ordinal search, however, successfully finds the soft hyphen in one string and reports that it is absent from the second string.
 
  [!code-csharp[System.String.LastIndexOf#26](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof26.cs#26)]
  [!code-vb[System.String.LastIndexOf#26](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof26.vb#26)]</para>
@@ -9378,7 +9388,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="startIndex">The search starting position. The search proceeds from <paramref name="startIndex" /> toward the beginning of this instance.</param>
         <param name="count">The number of character positions to examine.</param>
         <summary>Reports the zero-based index position of the last occurrence of a specified string within this instance. The search starts at a specified character position and proceeds backward toward the beginning of the string for a specified number of character positions.</summary>
-        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the smaller of <paramref name="startIndex" /> and the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of <paramref name="value" /> if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -9389,7 +9399,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  This method performs a word (case-sensitive and culture-sensitive) search using the current culture.
 
- Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed. If `value` consists only of one or more ignorable characters, the <xref:System.String.LastIndexOf%2A> method always returns `startIndex`, which is the character position at which the search begins. In the following example, the <xref:System.String.LastIndexOf%2A> method is used to find the position of a soft hyphen (U+00AD) in the two characters that precede the final "m" of two strings. Only one of the strings contains the required substring. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m".
+ Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search, if `value` contains an ignorable character, the result is equivalent to searching with that character removed.
+
+In the following example, the <xref:System.String.LastIndexOf%2A> method is used to find the position of a soft hyphen (U+00AD) followed by an "m" or "n" in two strings. Only one of the strings contains a soft hyphen. In the case of the string that includes the soft hyphen followed by an "m", `LastIndexOf` returns the index of the "m" when searching for the soft hyphen followed by "m".
 
  [!code-csharp[System.String.LastIndexOf#23](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof23.cs#23)]
  [!code-vb[System.String.LastIndexOf#23](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof23.vb#23)]
@@ -9479,7 +9491,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="startIndex">The search starting position. The search proceeds from <paramref name="startIndex" /> toward the beginning of this instance.</param>
         <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         <summary>Reports the zero-based index of the last occurrence of a specified string within the current <see cref="T:System.String" /> object. The search starts at a specified character position and proceeds backward toward the beginning of the string. A parameter specifies the type of comparison to perform when searching for the specified string.</summary>
-        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the smaller of <paramref name="startIndex" /> and the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -9508,9 +9520,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <exception cref="T:System.ArgumentException">
           <paramref name="comparisonType" /> is not a valid <see cref="T:System.StringComparison" /> value.</exception>
         <block subset="none" type="usage">
-          <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="comparisonType" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed. If <paramref name="value" /> consists only of one or more ignorable characters, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.StringComparison)" /> method always returns <paramref name="startIndex" />, which is the character position at which the search begins.
+          <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="comparisonType" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed.
 
- In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m", starting with the final "m" in two strings. Only one of the strings contains the required substring. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m". The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
+ In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m", starting with the final "m" in two strings. Only one of the strings contains the required substring. If the example is run on .NET Framework 4 or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method returns the index of the "m" and not the index of the soft hyphen. The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
 
  [!code-csharp[System.String.LastIndexOf#25](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof25.cs#25)]
  [!code-vb[System.String.LastIndexOf#25](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof25.vb#25)]</para>
@@ -9568,7 +9580,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <param name="count">The number of character positions to examine.</param>
         <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         <summary>Reports the zero-based index position of the last occurrence of a specified string within this instance. The search starts at a specified character position and proceeds backward toward the beginning of the string for the specified number of character positions. A parameter specifies the type of comparison to perform when searching for the specified string.</summary>
-        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />. If <paramref name="value" /> is <see cref="F:System.String.Empty" />, the return value is the smaller of <paramref name="startIndex" /> and the last index position in this instance.</returns>
+        <returns>The zero-based starting index position of the <paramref name="value" /> parameter if that string is found, or -1 if it is not found or if the current instance equals <see cref="F:System.String.Empty" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -9577,7 +9589,11 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  The search begins at the `startIndex` character position and proceeds backward until either `value` is found or `count` character positions have been examined. For example, if `startIndex` is <xref:System.String.Length%2A> - 1, the method searches backward `count` characters from the last character in the string.
 
- The `comparisonType` parameter specifies to search for the `value` parameter using the current or invariant culture, using a case-sensitive or case-insensitive search, and using word or ordinal comparison rules.
+ The `comparisonType` parameter specifies to search for the `value` parameter using:
+
+- The current or invariant culture.
+- A case-sensitive or case-insensitive search.
+- Word or ordinal comparison rules.
 
 ## Examples
  The following example demonstrates three overloads of the <xref:System.String.LastIndexOf%2A> method that find the last occurrence of a string within another string using different values of the <xref:System.StringComparison> enumeration.
@@ -9614,9 +9630,9 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
         <exception cref="T:System.ArgumentException">
           <paramref name="comparisonType" /> is not a valid <see cref="T:System.StringComparison" /> value.</exception>
         <block subset="none" type="usage">
-          <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="comparisonType" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed. If <paramref name="value" /> consists only of one or more ignorable characters, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.Int32,System.StringComparison)" /> method always returns <paramref name="startIndex" />, which is the character position at which the search begins.
+          <para>Character sets include ignorable characters, which are characters that are not considered when performing a linguistic or culture-sensitive comparison. In a culture-sensitive search (that is, if <paramref name="comparisonType" /> is not <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" />), if <paramref name="value" /> contains an ignorable character, the result is equivalent to searching with that character removed.
 
- In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m" in all but the first character position before the final "m" in two strings. Only one of the strings contains the required substring. If the example is run on the [!INCLUDE[netfx40_short](~/includes/netfx40-short-md.md)] or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. When it performs an ordinal comparison, however, it finds the substring only in the first string. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method fails to return the index of the soft hyphen but instead returns the index of the "m" when it performs a culture-sensitive comparison. The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
+ In the following example, the <see cref="M:System.String.LastIndexOf(System.String,System.Int32,System.Int32,System.StringComparison)" /> method is used to find the position of a soft hyphen (U+00AD) followed by an "m" in all but the first character position before the final "m" in two strings. Only one of the strings contains the required substring. If the example is run on .NET Framework 4 or later, in both cases, because the soft hyphen is an ignorable character, the method returns the index of "m" in the string when it performs a culture-sensitive comparison. When it performs an ordinal comparison, however, it finds the substring only in the first string. Note that in the case of the first string, which includes the soft hyphen followed by an "m", the method returns the index of the "m" when it performs a culture-sensitive comparison. The method returns the index of the soft hyphen in the first string only when it performs an ordinal comparison.
 
  [!code-csharp[System.String.LastIndexOf#24](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.LastIndexOf/cs/lastindexof24.cs#24)]
  [!code-vb[System.String.LastIndexOf#24](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.LastIndexOf/vb/lastindexof24.vb#24)]</para>
@@ -11063,84 +11079,34 @@ Because this method returns the modified string, you can chain together successi
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- <xref:System.String.Split%2A> is used to break a delimited string into substrings. You can use either a character array to specify zero, one, or multiple delimiting characters (the <xref:System.String.Split%28System.Char%5B%5D%29> method), or you can use a character array to specify zero, one, or multiple delimiting strings. Overloads of the <xref:System.String.Split%2A> method allow you to limit the number of substrings returned by the method (the <xref:System.String.Split%28System.Char%5B%5D%2CSystem.Int32%29> method), to determine whether empty strings are included in the returned substrings (the <xref:System.String.Split%28System.Char%5B%5D%2CSystem.StringSplitOptions%29> and <xref:System.String.Split%28System.String%5B%5D%2CSystem.StringSplitOptions%29> methods, or to do both (the <xref:System.String.Split%28System.Char%5B%5D%2CSystem.Int32%2CSystem.StringSplitOptions%29> and <xref:System.String.Split%28System.String%5B%5D%2CSystem.Int32%2CSystem.StringSplitOptions%29> methods).
 
-### Alternatives to String.Split
+<xref:System.String.Split%2A> is used to break a delimited string into substrings. You can use either a character array or a string array to specify zero or more delimiting characters or strings. If no delimiting characters are specified, the string is split at white-space characters.
 
- The <xref:System.String.Split%2A> method is not always the best way to break a delimited string into substrings. If you don't want to extract all of the substrings of a delimited string, or if you want to parse a string based on a pattern instead of a set of delimiter characters, consider the following alternatives.
+Overloads of the <xref:System.String.Split%2A> method allow you to limit the number of substrings returned by the method (the <xref:System.String.Split(System.Char%5B%5D%2CSystem.Int32)> method), to specify whether to include empty strings and/or trim substrings in the result (the <xref:System.String.Split(System.Char%5B%5D%2CSystem.StringSplitOptions)> and <xref:System.String.Split(System.String%5B%5D%2CSystem.StringSplitOptions)> methods), or to do both (the <xref:System.String.Split(System.Char%5B%5D%2CSystem.Int32%2CSystem.StringSplitOptions)> and <xref:System.String.Split(System.String%5B%5D%2CSystem.Int32%2CSystem.StringSplitOptions)> methods).
 
-### Regular expressions
- If your strings conform to a fixed pattern, you can use a regular expression to extract and handle their elements. For example, if strings take the form "*number* *operand* *number*" you can use a [regular expression](/dotnet/standard/base-types/regular-expressions) to extract and handle the string's elements. Here's an example:
+> [!TIP]
+> The <xref:System.String.Split%2A> method is not always the best way to break a delimited string into substrings. If you don't want to extract all of the substrings of a delimited string, or if you want to parse a string based on a pattern instead of a set of delimiter characters, consider using regular expressions, or combine one of the search methods that returns the index of a character with the <xref:System.String.Substring%2A> method. For more information, see [Extract substrings from a string](/dotnet/standard/base-types/divide-up-strings).
 
- [!code-csharp-interactive[System.String.Split#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/splitalt1.cs#8)]
- [!code-vb[System.String.Split#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/splitalt1.vb#8)]
+## Example
 
- The regular expression pattern `(\d+)\s+([-+*/])\s+(\d+)` is defined like this:
+The following examples show three different overloads of `String.Split()`. The first example calls the <xref:System.String.Split(System.Char[])> overload and passes in a single delimiter.
 
-|Pattern|Description|
-|-------------|-----------------|
-|`(\d+)`|Match one or more decimal digits. This is the first capturing group.|
-|`\s+`|Match one or more white-space characters.|
-|`([-+*/])`|Match an arithmetic operator sign (+, -, *, or /). This is the second capturing group.|
-|`\s+`|Match one or more white-space characters.|
-|`(\d+)`|Match one or more decimal digits. This is the third capturing group.|
+[!code-csharp-interactive[Intro#1](~/samples/snippets/csharp/system/string.split/intro.cs#1)]
+[!code-vb[Intro#1](~/samples/snippets/visualbasic/system/string.split/intro.vb#1)]
 
- You can also use a regular expression to extract substrings from a string based on a pattern rather than a fixed set of characters. This is a common scenario when either of these conditions occurs:
+As you can see, the period characters (`.`) are included in two of the substrings. If you want to exclude the period characters, you can add the period character as an additional delimiting character. The next example shows how to do this.
 
--   One or more of the delimiter characters does not always serve as a delimiter in the <xref:System.String> instance.
+[!code-csharp-interactive[Intro#2](~/samples/snippets/csharp/system/string.split/intro.cs#2)]
+[!code-vb[Intro#2](~/samples/snippets/visualbasic/system/string.split/intro.vb#2)]
 
--   The sequence and number of delimiter characters is variable or unknown.
+The periods are gone from the substrings, but now two extra empty substrings have been included. These empty substring represent the substring between a word and the period that follows it. To omit empty substrings from the resulting array, you can call the
+<xref:System.String.Split(System.Char[],System.StringSplitOptions)> overload and specify
+<xref:System.StringSplitOptions.RemoveEmptyEntries?displayProperty=nameWithType> for the `options` parameter.
 
- For example, the <xref:System.String.Split%2A> method cannot be used to split the following string, because the number of `\n` (in C#) or `vbCrLf` (in Visual Basic) characters is variable, and they don't always serve as delimiters.
+[!code-csharp-interactive[Intro#3](~/samples/snippets/csharp/system/string.split/intro.cs#3)]
+[!code-vb[Intro#3](~/samples/snippets/visualbasic/system/string.split/intro.vb#3)]
 
-```text
-[This is captured\ntext.]\n\n[\n[This is more captured text.]\n]
-\n[Some more captured text:\n   Option1\n   Option2][Terse text.]
-```
-
- A regular expression can split this string easily, as the following example shows.
-
- [!code-csharp-interactive[System.String.Split#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/splitalt2.cs#9)]
- [!code-vb[System.String.Split#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/splitalt2.vb#9)]
-
- The regular expression pattern `\[([^\[\]]+)\]` is defined like this:
-
-|Pattern|Description|
-|-------------|-----------------|
-|`\[`|Match an opening bracket.|
-|`([^\[\]]+)`|Match any character that is not an opening or a closing bracket one or more times. This is the first capturing group.|
-|`\]`|Match a closing bracket.|
-
- The <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> method is almost identical to <xref:System.String.Split%2A?displayProperty=nameWithType>, except that it splits a string based on a regular expression pattern instead of a fixed character set. For example, the following example uses the <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> method to split a string that contains substrings delimited by various combinations of hyphens and other characters.
-
- [!code-csharp-interactive[System.String.Split#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/splitalt3.cs#10)]
- [!code-vb[System.String.Split#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/splitalt3.vb#10)]
-
- The regular expression pattern `\s-\s?[+*]?\s?-\s` is defined like this:
-
-|Pattern|Description|
-|-------------|-----------------|
-|`\s-`|Match a white-space character followed by a hyphen.|
-|`\s?`|Match zero or one white-space character.|
-|`[+*]?`|Match zero or one occurrence of either the + or * character.|
-|`\s?`|Match zero or one white-space character.|
-|`-\s`|Match a hyphen followed by a white-space character.|
-
-### Search methods and the Substring method
- If you aren't interested in all of the substrings in a string, you might prefer to work with one of the string comparison methods that returns the index at which the match begins. You can then call the <xref:System.String.Substring%2A> method to extract the substring that you want. The string comparison methods include:
-
--   <xref:System.String.IndexOf%2A>, which returns the zero-based index of the first occurrence of a character or string in a string instance.
-
--   <xref:System.String.IndexOfAny%2A>, which returns the zero-based index in the current string instance of the first occurrence of any character in a character array.
-
--   <xref:System.String.LastIndexOf%2A>, which returns the zero-based index of the last occurrence of a character or string in a string instance.
-
--   <xref:System.String.LastIndexOfAny%2A>, which returns a zero-based index in the current string instance of the last occurrence of any character in a character array.
-
- The following example uses the <xref:System.String.IndexOf%2A> method to find the periods in a string. It then uses the <xref:System.String.Substring%2A> method to return full sentences.
-
- [!code-csharp-interactive[System.String.Split#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/splitalt4.cs#11)]
- [!code-vb[System.String.Split#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/splitalt4.vb#11)]
+The sections for the individual overloads of `String.Split()` contain further examples.
 
  ]]></format>
         </remarks>
@@ -11192,63 +11158,77 @@ Because this method returns the modified string, you can chain together successi
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="separator">A character array that delimits the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
-        <summary>Splits a string into substrings that are based on the characters in the separator array.</summary>
+        <param name="separator">An array of delimiting characters, an empty array that contains no delimiters, or <see langword="null" />.</param>
+        <summary>Splits a string into substrings based on specified delimiting characters.</summary>
         <returns>An array whose elements contain the substrings from this instance that are delimited by one or more characters in <paramref name="separator" />. For more information, see the Remarks section.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- When a string is delimited by a known set of characters, you can use the <xref:System.String.Split%28System.Char%5B%5D%29> method to separate it into substrings.
 
-### Return value details
- Delimiter characters are not included in the elements of the returned array. For example, if the separator array includes the character "-" and the value of the current string instance is "aa-bb-cc", the method returns an array that contains three elements: "aa", "bb", and "cc".
+When a string is delimited by a known set of characters, you can use the <xref:System.String.Split(System.Char%5B%5D)> method to separate it into substrings.
 
- If this instance does not contain any of the characters in `separator`, the returned array consists of a single element that contains this instance.
+Delimiter characters are not included in the elements of the returned array. For example, if the separator array includes the character "-" and the value of the current string instance is "aa-bb-cc", the method returns an array that contains three elements: "aa", "bb", and "cc".
 
- Each element of `separator` defines a separate delimiter character. If two delimiters are adjacent, or a delimiter is found at the beginning or end of this instance, the corresponding element in the returned array contains <xref:System.String.Empty?displayProperty=nameWithtype>. Here are some examples:
+If this instance does not contain any of the characters in `separator`, the returned array consists of a single element that contains this instance.
 
-|String value|Separator|Returned array|
-|------------------|---------------|--------------------|
-|"42, 12, 19"|new Char[] {',', ' '} (C#)<br /><br /> Char() = {","c, " "c}) (Visual Basic)|{"42", "", "12", "", "19"}|
-|"42..12..19"|new Char[] {'.'} (C#)<br /><br /> Char() = {"."c} (Visual Basic)|{"42", "", "12", "", "19"}|
-|"Banana"|new Char[] {'.'} (C#)<br /><br /> Char() = {"."c} (Visual Basic)|{"Banana"}|
-|"Darb\nSmarba" (C#)<br /><br /> "Darb" & vbLf & "Smarba" (Visual Basic)|new Char[] {} (C#)<br /><br /> Char() = {} (Visual Basic)|{"Darb", "Smarba"}|
-|"Darb\nSmarba" (C#)<br /><br /> "Darb" & vbLf & "Smarba" (Visual Basic)|null (C#)<br /><br /> Nothing (Visual Basic)|{"Darb", "Smarba"}|
+Each element of `separator` defines a separate delimiter character. If two delimiters are adjacent, or a delimiter is found at the beginning or end of this instance, the corresponding element in the returned array contains <xref:System.String.Empty?displayProperty=nameWithtype>.
+
+The following table shows some examples.
+
+| Language     | String value             | Separator              | Returned array                 |
+|--------------|--------------------------|------------------------|--------------------------------|
+| C#           | "42, 12, 19"             | new Char[] {',', ' '}  | {"42", "", "12", "", "19"}     |
+| Visual Basic | "42, 12, 19"             | Char() = {","c, " "c}) | {"42", "", "12", "", "19"}     |
+| C#           | "42..12..19."            | new Char[] {'.'}       | {"42", "", "12", "", "19", ""} |
+| Visual Basic | "42..12..19."            | Char() = {"."c}        | {"42", "", "12", "", "19", ""} |
+| C#           | "Banana"                 | new Char[] {'.'}       | {"Banana"}                     |
+| Visual Basic | "Banana"                 | Char() = {"."c}        | {"Banana"}                     |
+| C#           | "Darb\nSmarba"           | new Char[] {}          | {"Darb", "Smarba"}             |
+| Visual Basic | "Darb" & vbLf & "Smarba" | Char() = {}            | {"Darb", "Smarba"}             |
+| C#           | "Darb\nSmarba"           | null                   | {"Darb", "Smarba"}             |
+| Visual Basic | "Darb" & vbLf & "Smarba" | Nothing                | {"Darb", "Smarba"}             |
 
 ### The separator array
- Each element of separator defines a separate delimiter that consists of a single character. If the `separator` argument is `null` or contains no characters, the method treats white-space characters as the delimiters. White-space characters are defined by the Unicode standard; they return `true` if they are passed to the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method.
+
+Each element of separator defines a separate delimiter that consists of a single character.
+
+If the `separator` argument is `null` or contains no characters, the method treats white-space characters as the delimiters. White-space characters are defined by the Unicode standard, and the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method returns `true` if a white-space character is passed to it.
 
 ### String.Split(Char[]) and compiler overload resolution
- Although the single parameter for this overload of <xref:System.String.Split%2A?displayProperty=nameWithType> is a character array, you can call it with a single character, as the following example shows.
 
- [!code-csharp-interactive[System.String.Split#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/Split_CompilerResolution1.cs#12)]
- [!code-vb[System.String.Split#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/Split_CompilerResolution1.vb#12)]
+Although the single parameter for this overload of <xref:System.String.Split%2A?displayProperty=nameWithType> is a character array, you can call it with a single character, as the following example shows.
 
- Because the `separator` parameter is decorated  with the <xref:System.ParamArrayAttribute> attribute, compilers will interpret a single character as a single-element character array. This is not the case for other <xref:System.String.Split%2A?displayProperty=nameWithType> overloads that include a `separator` parameter; you must explicitly pass these overloads a character array as the `separator` argument.
+[!code-csharp-interactive[CompilerResolution#1](~/samples/snippets/csharp/system/string.split/compiler-resolution.cs#1)]
+[!code-vb[System.String.Split#12](~/samples/snippets/visualbasic/system/string.split/compiler-resolution.vb#12)]
+
+Because the `separator` parameter is decorated  with the <xref:System.ParamArrayAttribute> attribute, compilers will interpret a single character as a single-element character array. This is not the case for other <xref:System.String.Split%2A?displayProperty=nameWithType> overloads that include a `separator` parameter; you must explicitly pass these overloads a character array as the `separator` argument.
 
 ### Comparison details
- The <xref:System.String.Split%28System.Char%5B%5D%29> method extracts the substrings in this string that are delimited by one or more of the characters in the `separator` array, and returns those substrings as elements of an array.
 
- The <xref:System.String.Split%28System.Char%5B%5D%29> method looks for delimiters by performing comparisons using case-sensitive ordinal sort rules. For more information about word, string, and ordinal sorts, see the <xref:System.Globalization.CompareOptions?displayProperty=nameWithType> enumeration.
+The <xref:System.String.Split(System.Char%5B%5D)> method extracts the substrings in this string that are delimited by one or more of the characters in the `separator` array, and returns those substrings as elements of an array.
 
-### Performance Considerations
- The <xref:System.String.Split%2A> methods allocate memory for the returned array object and a <xref:System.String> object for each array element. If your application requires optimal performance or if managing memory allocation is critical in your application, consider using the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method. You also have the option of using the <xref:System.String.Compare%2A> method to locate a substring within a string.
+The <xref:System.String.Split(System.Char%5B%5D)> method looks for delimiters by performing comparisons using case-sensitive ordinal sort rules. For more information about word, string, and ordinal sorts, see the <xref:System.Globalization.CompareOptions?displayProperty=nameWithType> enumeration.
 
- To split a string at a separator character, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate a separator character in the string. To split a string at a separator string, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate the first character of the separator string. Then use the <xref:System.String.Compare%2A> method to determine whether the characters after that first character are equal to the remaining characters of the separator string.
+### Performance considerations
 
- In addition, if the same set of characters is used to split strings in multiple <xref:System.String.Split%2A> method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
+The <xref:System.String.Split%2A> methods allocate memory for the returned array object and a <xref:System.String> object for each array element. If your application requires optimal performance or if managing memory allocation is critical in your application, consider using the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method. You also have the option of using the <xref:System.String.Compare%2A> method to locate a substring within a string.
+
+To split a string at a separator character, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate a separator character in the string. To split a string at a separator string, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate the first character of the separator string. Then use the <xref:System.String.Compare%2A> method to determine whether the characters after that first character are equal to the remaining characters of the separator string.
+
+In addition, if the same set of characters is used to split strings in multiple <xref:System.String.Split%2A> method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
 
 ## Examples
- The following example demonstrates how to extract individual words from a block of text by treating white space and punctuation marks as delimiters. The character array passed to the `separator` parameter of the <xref:System.String.Split%28System.Char%5B%5D%29?displayProperty=nameWithType> method consists of a space character and a tab character, together with some common punctuation symbols.
 
- [!code-csharp-interactive[System.String.Split#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/split2.cs#2)]
- [!code-vb[System.String.Split#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/split2.vb#2)]
+The following example demonstrates how to extract individual words from a block of text by treating the space character (` `) and tab character (`\t`) as delimiters. The string being split includes both of these characters.
+
+[!code-csharp-interactive[System.String.Split#1](~/samples/snippets/csharp/system/string.split/basic.cs#1)]
+[!code-vb[System.String.Split#1](~/samples/snippets/visualbasic/system/string.split/basic.vb#1)]
 
  ]]></format>
         </remarks>
         <block subset="none" type="usage">
-          <para>In the [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with the .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
+          <para>In [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of white-space characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
         </block>
         <altmember cref="T:System.Char" />
         <altmember cref="M:System.String.Concat(System.Object)" />
@@ -11290,8 +11270,8 @@ Because this method returns the modified string, you can chain together successi
       </Parameters>
       <Docs>
         <param name="separator">A character that delimits the substrings in this string.</param>
-        <param name="options">One of the enumeration values that determines whether the split operation should omit empty substrings from the return value.</param>
-        <summary>Splits a string into substrings based on the provided character separator.</summary>
+        <param name="options">A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.</param>
+        <summary>Splits a string into substrings based on a specified delimiting character and, optionally, options.</summary>
         <returns>An array whose elements contain the substrings from this instance that are delimited by <paramref name="separator" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -11336,9 +11316,9 @@ Because this method returns the modified string, you can chain together successi
         <Parameter Name="count" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="separator">A character array that delimits the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
+        <param name="separator">An array of characters that delimit the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
         <param name="count">The maximum number of substrings to return.</param>
-        <summary>Splits a string into a maximum number of substrings based on the characters in an array. You also specify the maximum number of substrings to return.</summary>
+        <summary>Splits a string into a maximum number of substrings based on specified delimiting characters.</summary>
         <returns>An array whose elements contain the substrings in this instance that are delimited by one or more characters in <paramref name="separator" />. For more information, see the Remarks section.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -11348,46 +11328,48 @@ Because this method returns the modified string, you can chain together successi
 
  If this instance does not contain any of the characters in `separator`, the returned array consists of a single element that contains this instance. If `count` is zero, an empty array is returned.
 
- If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and return `true` if they are passed to the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method.
+ If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method returns `true` if they are passed to it.
 
  Each element of `separator` defines a separate delimiter character. If two delimiters are adjacent, or a delimiter is found at the beginning or end of this instance, the corresponding array element contains <xref:System.String.Empty?displayProperty=nameWithtype>.
 
- If there are more than `count` substrings in this instance, the first `count` minus 1 substrings are returned in the first `count` minus 1 elements of the return value, and the remaining characters in this instance are returned in the last element of the return value.
+ If there are more than `count` substrings in this instance, the first `count - 1` substrings are returned in the first `count - 1` elements of the return value, and the remaining characters in this instance are returned in the last element of the return value.
 
  If `count` is greater than the number of substrings, the available substrings are returned and no exception is thrown.
 
- The following table provides examples.
+The following table shows some examples.
 
-|String value|Separator|Count|Returned array|
-|------------------|---------------|-----------|--------------------|
-|"42, 12, 19"|new Char[] {',', ' '} (C#)<br /><br /> Char() = {","c, " "c} (Visual Basic)|2|{"42", " 12, 19"}|
-|"42..12..19"|new Char[] {'.'} (C#)<br /><br /> Char() = {"."c} (Visual Basic)|4|{"42", "", "12", ".19"}|
-|"Banana"|new Char[] {'.'} (C#)<br /><br /> Char() = {"."c} (Visual Basic)|2|{"Banana"}|
-|"Darb\nSmarba" (C#)<br /><br /> "Darb" & vbLf & "Smarba" (Visual Basic)|new Char[] {} (C#)<br /><br /> Char() = {} (Visual Basic)|1|{"Darb\nSmarba"} (C#)<br /><br /> "Darb" & vbLf & "Smarba" (Visual Basic)|
-|"Darb\nSmarba" (C#)<br /><br /> "Darb" & vbLf & "Smarba" (Visual Basic)|new Char[] null (C#)<br /><br /> Char() = Nothing|2|{"Darb", "Smarba"}|
-|"Darb\nSmarba" (C#)<br /><br /> "Darb" & vbLf & "Smarba" (Visual Basic)|new Char[] null (C#)<br /><br /> Char() = Nothing|100|{"Darb", "Smarba"}|
+| Language     | String value             | Separator              | Returned array                 |
+|--------------|--------------------------|------------------------|--------------------------------|
+| C#           | "42, 12, 19"             | new Char[] {',', ' '}  | {"42", "", "12", "", "19"}     |
+| Visual Basic | "42, 12, 19"             | Char() = {","c, " "c}) | {"42", "", "12", "", "19"}     |
+| C#           | "42..12..19."            | new Char[] {'.'}       | {"42", "", "12", "", "19", ""} |
+| Visual Basic | "42..12..19."            | Char() = {"."c}        | {"42", "", "12", "", "19", ""} |
+| C#           | "Banana"                 | new Char[] {'.'}       | {"Banana"}                     |
+| Visual Basic | "Banana"                 | Char() = {"."c}        | {"Banana"}                     |
+| C#           | "Darb\nSmarba"           | new Char[] {}          | {"Darb", "Smarba"}             |
+| Visual Basic | "Darb" & vbLf & "Smarba" | Char() = {}            | {"Darb", "Smarba"}             |
+| C#           | "Darb\nSmarba"           | null                   | {"Darb", "Smarba"}             |
+| Visual Basic | "Darb" & vbLf & "Smarba" | Nothing                | {"Darb", "Smarba"}             |
 
-### Performance Considerations
+### Performance considerations
  The <xref:System.String.Split%2A> methods allocate memory for the returned array object and a <xref:System.String> object for each array element. If your application requires optimal performance or if managing memory allocation is critical in your application, consider using the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method, and optionally the <xref:System.String.Compare%2A> method, to locate a substring within a string.
 
  If you are splitting a string at a separator character, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate a separator character in the string. If you are splitting a string at a separator string, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate the first character of the separator string. Then use the <xref:System.String.Compare%2A> method to determine whether the characters after that first character are equal to the remaining characters of the separator string.
 
  In addition, if the same set of characters is used to split strings in multiple <xref:System.String.Split%2A> method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
 
-
-
 ## Examples
- The following example demonstrates how `count` affects the number of strings returned by <xref:System.String.Split%2A>.
+ The following example demonstrates how `count` can be used to limit the number of strings returned by <xref:System.String.Split%2A>.
 
- [!code-csharp-interactive[StringSplit2#10](~/samples/snippets/csharp/VS_Snippets_CLR/StringSplit2/CS/StringSplit10.cs#10)]
- [!code-vb[StringSplit2#10](~/samples/snippets/visualbasic/VS_Snippets_CLR/StringSplit2/VB/stringsplit10.vb#10)]
+[!code-csharp-interactive[String.Split#1](~/samples/snippets/csharp/system/string.split/limit.cs#1)]
+[!code-vb[String.Split#1](~/samples/snippets/visualbasic/system/string.split/limit.vb#1)]
 
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="count" /> is negative.</exception>
         <block subset="none" type="usage">
-          <para>In the [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with the .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
+          <para>In [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of white-space characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
         </block>
         <altmember cref="T:System.Char" />
         <altmember cref="T:System.Array" />
@@ -11446,70 +11428,66 @@ Because this method returns the modified string, you can chain together successi
         <Parameter Name="options" Type="System.StringSplitOptions" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="separator">A character array that delimits the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
-        <param name="options">
-          <see cref="F:System.StringSplitOptions.RemoveEmptyEntries" /> to omit empty array elements from the array returned; or <see cref="F:System.StringSplitOptions.None" /> to include empty array elements in the array returned.</param>
-        <summary>Splits a string into substrings based on the characters in an array. You can specify whether the substrings include empty array elements.</summary>
+        <param name="separator">An array of characters that delimit the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
+        <param name="options">A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.</param>
+        <summary>Splits a string into substrings based on specified delimiting characters and options.</summary>
         <returns>An array whose elements contain the substrings in this string that are delimited by one or more characters in <paramref name="separator" />. For more information, see the Remarks section.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-### Return value details
- Delimiter characters (the characters in the `separator` array) are not included in the elements of the returned array. For example, if the `separator` array includes the character "-" and the value of the current string instance is "aa-bb-cc", the method returns an array that contains three elements: "aa", "bb", and "cc".
+Delimiter characters (the characters in the `separator` array) are not included in the elements of the returned array. For example, if the `separator` array includes the character "-" and the value of the current string instance is "aa-bb-cc", the method returns an array that contains three elements: "aa", "bb", and "cc".
 
- If this instance does not contain any of the characters in `separator`, the returned array consists of a single element that contains this instance.
+If this instance does not contain any of the characters in `separator`, the returned array consists of a single element that contains this instance.
 
- If the `options` parameter is <xref:System.StringSplitOptions.RemoveEmptyEntries> and the length of this instance is zero, the method returns an empty array.
+If the `options` parameter is <xref:System.StringSplitOptions.RemoveEmptyEntries> and the length of this instance is zero, the method returns an empty array.
 
- Each element of `separator` defines a separate delimiter that consists of a single character. If the `options` argument is <xref:System.StringSplitOptions.None>, and two delimiters are adjacent or a delimiter is found at the beginning or end of this instance, the corresponding array element contains <xref:System.String.Empty?displayProperty=nameWithType>. For example, if `separator` includes  two elements, "-" and "\_", the value of the string instance is "-\_aa-\_", and the value of   the `options` argument is <xref:System.StringSplitOptions.None>, the method returns a string array with the following five elements:
+Each element of `separator` defines a separate delimiter that consists of a single character. If the `options` argument is <xref:System.StringSplitOptions.None>, and two delimiters are adjacent or a delimiter is found at the beginning or end of this instance, the corresponding array element contains <xref:System.String.Empty?displayProperty=nameWithType>. For example, if `separator` includes two elements, "-" and "\_", the value of the string instance is "-\_aa-\_", and the value of the `options` argument is <xref:System.StringSplitOptions.None>, the method returns a string array with the following five elements:
 
-1.  <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that precedes the "-" character at index 0.
+1. <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that precedes the "-" character at index 0.
 
-2.  <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string between the "-" character at index 0 and the "_" character at index 1.
+2. <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string between the "-" character at index 0 and the "_" character at index 1.
 
-3.  "aa",
+3. "aa".
 
-4.  <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that follows the "_" character at index 4.
+4. <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that follows the "-" character at index 4.
 
-5.  <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that follows the "-" character at index 5.
+5. <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that follows the "_" character at index 5.
 
 ### The separator array
- If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and return `true` if they are passed to the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method.
+ If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method returns `true` if they are passed to it.
 
- If the `separator` parameter in the call to this method overload is `null`, compiler overload resolution fails. To unambiguously identify the called method, your code must indicate the type of the `null`. The following example shows several ways to unambiguously identify this overload.
+ If the `separator` parameter is `null`, compiler overload resolution fails. To unambiguously identify the called method, your code must indicate the type of the `null`. The following example shows several ways to unambiguously identify this overload.
 
- [!code-csharp[System.String.Split#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/split3.cs#5)]
- [!code-vb[System.String.Split#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/split3.vb#5)]
+[!code-csharp-interactive[Identify#5](~/samples/snippets/csharp/system/string.split/identify.cs#5)]
+[!code-vb[System.String.Split#5](~/samples/snippets/visualbasic/system/string.split/identify.vb#5)]
 
 ### Comparison details
  The <xref:System.String.Split%2A> method extracts the substrings in this string that are delimited by one or more of the characters in the `separator` parameter, and returns those substrings as elements of an array.
 
  The <xref:System.String.Split%2A> method looks for delimiters by performing comparisons using case-sensitive ordinal sort rules. For more information about word, string, and ordinal sorts, see the <xref:System.Globalization.CompareOptions?displayProperty=nameWithType> enumeration.
 
-### Performance Considerations
+### Performance considerations
  The <xref:System.String.Split%2A> methods allocate memory for the returned array object and a <xref:System.String> object for each array element. If your application requires optimal performance or if managing memory allocation is critical in your application, consider using the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method, and optionally the <xref:System.String.Compare%2A> method, to locate a substring within a string.
 
  If you are splitting a string at a separator character, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate a separator character in the string. If you are splitting a string at a separator string, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate the first character of the separator string. Then use the <xref:System.String.Compare%2A> method to determine whether the characters after that first character are equal to the remaining characters of the separator string.
 
  In addition, if the same set of characters is used to split strings in multiple <xref:System.String.Split%2A> method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
 
-
-
 ## Examples
  The following example uses the <xref:System.StringSplitOptions> enumeration to include or exclude substrings generated by the <xref:System.String.Split%2A> method.
 
  [!code-cpp[string.split3#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.split3/CPP/omit.cpp#1)]
- [!code-csharp-interactive[string.split3#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.split3/CS/omit.cs#1)]
- [!code-vb[string.split3#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.split3/VB/omit.vb#1)]
+ [!code-csharp-interactive[Options#1](~/samples/snippets/csharp/system/string.split/options.cs#1)]
+ [!code-vb[string.split3#1](~/samples/snippets/visualbasic/system/string.split/omit.vb#1)]
 
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="options" /> is not one of the <see cref="T:System.StringSplitOptions" /> values.</exception>
         <block subset="none" type="usage">
-          <para>In the [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with the .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
+          <para>In [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of white-space characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
         </block>
       </Docs>
     </Member>
@@ -11544,7 +11522,7 @@ Because this method returns the modified string, you can chain together successi
       </Parameters>
       <Docs>
         <param name="separator">A string that delimits the substrings in this string.</param>
-        <param name="options">One of the enumeration values that determines whether the split operation should omit empty substrings from the return value.</param>
+        <param name="options">A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.</param>
         <summary>Splits a string into substrings that are based on the provided string separator.</summary>
         <returns>An array whose elements contain the substrings from this instance that are delimited by <paramref name="separator" />.</returns>
         <remarks>To be added.</remarks>
@@ -11595,45 +11573,45 @@ Because this method returns the modified string, you can chain together successi
         <Parameter Name="options" Type="System.StringSplitOptions" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="separator">A string array that delimits the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
-        <param name="options">
-          <see cref="F:System.StringSplitOptions.RemoveEmptyEntries" /> to omit empty array elements from the array returned; or <see cref="F:System.StringSplitOptions.None" /> to include empty array elements in the array returned.</param>
-        <summary>Splits a string into substrings based on the strings in an array. You can specify whether the substrings include empty array elements.</summary>
+        <param name="separator">An array of strings that delimit the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
+        <param name="options">A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.</param>
+        <summary>Splits a string into substrings based on a specified delimiting string and, optionally, options.</summary>
         <returns>An array whose elements contain the substrings in this string that are delimited by one or more strings in <paramref name="separator" />. For more information, see the Remarks section.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- When a string is delimited by a known set of strings, you can use the <xref:System.String.Split%2A> method to separate it into substrings.
 
-### Return value details
- Delimiter strings are not included in the elements of the returned array. For example, if the `separator` array includes the string "--" and the value of the current string instance is "aa--bb-cc", the method returns an array that contains three elements: "aa", "bb", and "cc".
+When a string is delimited by a known set of strings, you can use the <xref:System.String.Split%2A> method to separate it into substrings.
 
- If this instance does not contain any of the strings in `separator`, the returned array consists of a single element that contains this instance.
+Delimiter strings are not included in the elements of the returned array. For example, if the `separator` array includes the string "--" and the value of the current string instance is "aa--bb--cc", the method returns an array that contains three elements: "aa", "bb", and "cc".
 
- If the `options` parameter is <xref:System.StringSplitOptions.RemoveEmptyEntries> and the length of this instance is zero, the method returns an empty array.
+If this instance does not contain any of the strings in `separator`, the returned array consists of a single element that contains this instance.
 
- Each element of `separator` defines a separate delimiter that consists of one or more characters. If the `options` argument is <xref:System.StringSplitOptions.None>, and two delimiters are adjacent or a delimiter is found at the beginning or end of this instance, the corresponding array element contains <xref:System.String.Empty?displayProperty=nameWithType>. For example, if `separator` includes  two elements, "-" and "\_", the value of the string instance is "-\_aa-\_", and the value of   the `options` argument is <xref:System.StringSplitOptions.None>, the method returns a sting array with the following five elements:
+If the `options` parameter is <xref:System.StringSplitOptions.RemoveEmptyEntries> and the length of this instance is zero, the method returns an empty array.
 
-1.  <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that precedes the "-" substring at index 0.
+Each element of `separator` defines a separate delimiter that consists of one or more characters. If the `options` argument is <xref:System.StringSplitOptions.None>, and two delimiters are adjacent or a delimiter is found at the beginning or end of this instance, the corresponding array element contains <xref:System.String.Empty?displayProperty=nameWithType>. For example, if `separator` includes two elements, "-" and "\_", the value of the string instance is "-\_aa-\_", and the value of the `options` argument is <xref:System.StringSplitOptions.None>, the method returns a sting array with the following five elements:
 
-2.  <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string between the "-" substring at index 0 and the "_" substring at index 1.
+1. <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that precedes the "-" substring at index 0.
 
-3.  "aa",
+2. <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string between the "-" substring at index 0 and the "_" substring at index 1.
 
-4.  <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that follows the "_" substring at index 4.
+3. "aa".
 
-5.  <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that follows the "-" substring at index 5.
+4. <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that follows the "-" substring at index 4.
+
+5. <xref:System.String.Empty?displayProperty=nameWithType>, which represents the empty string that follows the "_" substring at index 5.
 
 ### The separator array
- If any of the elements in `separator` consists of multiple characters, the entire substring is considered a delimiter. For example, if one of the elements in `separator` is "10", attempting to split the string "This10is10a10string." returns the following four-element array: { "This", "is", "a", "string." }.
 
- If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and return `true` if they are passed to the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method.
+If any of the elements in `separator` consists of multiple characters, the entire substring is considered a delimiter. For example, if one of the elements in `separator` is "10", attempting to split the string "This10is10a10string." returns the following four-element array: { "This", "is", "a", "string." }.
+
+If the `separator` parameter is `null` or contains no non-empty strings, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method returns `true` if they are passed to it.
 
  If the `separator` parameter in the call to this method overload is `null`, compiler overload resolution fails. To unambiguously identify the called method, your code must indicate the type of the `null`. The following example shows several ways to unambiguously identify this overload.
 
- [!code-csharp[System.String.Split#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/split3.cs#6)]
- [!code-vb[System.String.Split#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/split3.vb#6)]
+[!code-csharp-interactive[Identify#6](~/samples/snippets/csharp/system/string.split/identify.cs#6)]
+[!code-vb[System.String.Split#6](~/samples/snippets/visualbasic/system/string.split/identify.vb#6)]
 
 ### Comparison details
  The <xref:System.String.Split%2A> method extracts the substrings in this string that are delimited by one or more of the strings in the `separator` parameter, and returns those substrings as elements of an array.
@@ -11655,27 +11633,26 @@ Because this method returns the modified string, you can chain together successi
 
  In addition, if the same set of characters is used to split strings in multiple <xref:System.String.Split%2A> method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
 
-
-
 ## Examples
- The following example illustrates the difference in the arrays returned by calling a string's <xref:System.String.Split%28System.String%5B%5D%2CSystem.StringSplitOptions%29?displayProperty=nameWithType> method with its `options` parameter equal to <xref:System.StringSplitOptions.None?displayProperty=nameWithType> and <xref:System.StringSplitOptions.RemoveEmptyEntries?displayProperty=nameWithType>.
 
- [!code-csharp-interactive[System.String.Split#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/Split.cs#1)]
- [!code-vb[System.String.Split#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/Split.vb#1)]
+The following example illustrates the difference in the arrays returned by calling a string's <xref:System.String.Split(System.String%5B%5D%2CSystem.StringSplitOptions)?displayProperty=nameWithType> method with its `options` parameter equal to <xref:System.StringSplitOptions.None?displayProperty=nameWithType> and <xref:System.StringSplitOptions.RemoveEmptyEntries?displayProperty=nameWithType>.
 
- The following example defines an array of separators that include punctuation and white-space characters. Passing this array along with a value of <xref:System.StringSplitOptions.RemoveEmptyEntries?displayProperty=nameWithType> to the <xref:System.String.Split%28System.String%5B%5D%2CSystem.StringSplitOptions%29> method returns an array that consists of the individual words from the string.
+[!code-csharp-interactive[Options#2](~/samples/snippets/csharp/system/string.split/options.cs#2)]
+[!code-vb[System.String.Split#1](~/samples/snippets/visualbasic/system/string.split/options.vb#1)]
 
- [!code-csharp-interactive[System.String.Split#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/split7.cs#7)]
- [!code-vb[System.String.Split#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/split7.vb#7)]
+The following example defines an array of separators that include punctuation and white-space characters. Passing this array along with a value of <xref:System.StringSplitOptions.RemoveEmptyEntries?displayProperty=nameWithType> to the <xref:System.String.Split(System.String%5B%5D%2CSystem.StringSplitOptions)> method returns an array that consists of the individual words from the string.
 
- Note that the method is called with the `options` argument set to <xref:System.StringSplitOptions.RemoveEmptyEntries?displayProperty=nameWithType>. This prevents the returned array from including <xref:System.String.Empty?displayProperty=nameWithType> values that represent empty substring matches between punctuation marks and white-space characters.
+[!code-csharp-interactive[Options#3](~/samples/snippets/csharp/system/string.split/options.cs#3)]
+[!code-vb[System.String.Split#7](~/samples/snippets/visualbasic/system/string.split/options.vb#7)]
+
+Note that the method is called with the `options` argument set to <xref:System.StringSplitOptions.RemoveEmptyEntries?displayProperty=nameWithType>. This prevents the returned array from including <xref:System.String.Empty?displayProperty=nameWithType> values that represent empty substring matches between punctuation marks and white-space characters.
 
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="options" /> is not one of the <see cref="T:System.StringSplitOptions" /> values.</exception>
         <block subset="none" type="usage">
-          <para>In the [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with the .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
+          <para>In [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of white-space characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
         </block>
       </Docs>
     </Member>
@@ -11711,9 +11688,10 @@ Because this method returns the modified string, you can chain together successi
       <Docs>
         <param name="separator">A character that delimits the substrings in this instance.</param>
         <param name="count">The maximum number of elements expected in the array.</param>
-        <param name="options">One of the enumeration values that determines whether the split operation should omit empty substrings from the return value.</param>
-        <summary>Splits a string into a maximum number substrings based on the provided character separator.</summary>
-        <returns>An array whose elements contain at most <paramref name="count" /> substrings from this instance that are delimited by <paramref name="separator" />.</returns>
+        <param name="options">A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.</param>
+        <summary>Splits a string into a maximum number of substrings based on a specified delimiting character and, optionally, options.
+        Splits a string into a maximum number of substrings based on the provided character separator, optionally omitting empty substrings from the result.</summary>
+        <returns>An array that contains at most <paramref name="count" /> substrings from this instance that are delimited by <paramref name="separator" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -11771,22 +11749,21 @@ If the string has already been split `count` - 1 times, but the end of the strin
         <Parameter Name="options" Type="System.StringSplitOptions" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="separator">A character array that delimits the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
+        <param name="separator">An array of characters that delimit the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
         <param name="count">The maximum number of substrings to return.</param>
-        <param name="options">
-          <see cref="F:System.StringSplitOptions.RemoveEmptyEntries" /> to omit empty array elements from the array returned; or <see cref="F:System.StringSplitOptions.None" /> to include empty array elements in the array returned.</param>
-        <summary>Splits a string into a maximum number of substrings based on the characters in an array.</summary>
-        <returns>An array whose elements contain the substrings in this string that are delimited by one or more characters in <paramref name="separator" />. For more information, see the Remarks section.</returns>
+        <param name="options">A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.</param>
+        <summary>Splits a string into a maximum number of substrings based on specified delimiting characters and, optionally, options.</summary>
+        <returns>An array that contains the substrings in this string that are delimited by one or more characters in <paramref name="separator" />. For more information, see the Remarks section.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
  Delimiter characters are not included in the elements of the returned array.
 
- If this instance does not contain any of the characters in `separator`, or the `count` parameter is 1, the returned array consists of a single element that contains this instance. If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and return `true` if they are passed to the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method. However, if the `separator` parameter in the call to this method overload is `null`, compiler overload resolution fails. To unambiguously identify the called method, your code must indicate the type of the null. The following example shows several ways to unambiguously identify this overload.
+ If this instance does not contain any of the characters in `separator`, or the `count` parameter is 1, the returned array consists of a single element that contains this instance. If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method returns `true` if they are passed to it. However, if the `separator` parameter in the call to this method overload is `null`, compiler overload resolution fails. To unambiguously identify the called method, your code must indicate the type of the null. The following example shows several ways to unambiguously identify this overload.
 
- [!code-csharp[System.String.Split#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/split3.cs#3)]
- [!code-vb[System.String.Split#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/split3.vb#3)]
+[!code-csharp-interactive[Identify#3](~/samples/snippets/csharp/system/string.split/identify.cs#3)]
+[!code-vb[System.String.Split#3](~/samples/snippets/visualbasic/system/string.split/identify.vb#3)]
 
  If the `count` parameter is zero, or the `options` parameter is <xref:System.StringSplitOptions.RemoveEmptyEntries> and the length of this instance is zero, an empty array is returned.
 
@@ -11796,21 +11773,20 @@ If the string has already been split `count` - 1 times, but the end of the strin
 
  If `count` is greater than the number of substrings, the available substrings are returned and no exception is thrown.
 
-### Performance Considerations
+### Performance considerations
  The <xref:System.String.Split%2A> methods allocate memory for the returned array object and a <xref:System.String> object for each array element. If your application requires optimal performance or if managing memory allocation is critical in your application, consider using the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method, and optionally the <xref:System.String.Compare%2A> method, to locate a substring within a string.
 
  If you are splitting a string at a separator character, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate a separator character in the string. If you are splitting a string at a separator string, use the <xref:System.String.IndexOf%2A> or <xref:System.String.IndexOfAny%2A> method to locate the first character of the separator string. Then use the <xref:System.String.Compare%2A> method to determine whether the characters after that first character are equal to the remaining characters of the separator string.
 
  In addition, if the same set of characters is used to split strings in multiple <xref:System.String.Split%2A> method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
 
-
-
 ## Examples
- The following example uses the <xref:System.StringSplitOptions> enumeration to include or exclude substrings generated by the <xref:System.String.Split%2A> method.
 
- [!code-cpp[string.split3#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.split3/CPP/omit.cpp#1)]
- [!code-csharp-interactive[string.split3#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.split3/CS/omit.cs#1)]
- [!code-vb[string.split3#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.split3/VB/omit.vb#1)]
+The following example uses the <xref:System.StringSplitOptions> enumeration to include or exclude substrings generated by the <xref:System.String.Split%2A> method.
+
+[!code-cpp[string.split3#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.split3/CPP/omit.cpp#1)]
+[!code-csharp-interactive[Options#1](~/samples/snippets/csharp/system/string.split/options.cs#1)]
+[!code-vb[string.split3#1](~/samples/snippets/visualbasic/system/string.split/omit.vb#1)]
 
  ]]></format>
         </remarks>
@@ -11819,7 +11795,7 @@ If the string has already been split `count` - 1 times, but the end of the strin
         <exception cref="T:System.ArgumentException">
           <paramref name="options" /> is not one of the <see cref="T:System.StringSplitOptions" /> values.</exception>
         <block subset="none" type="usage">
-          <para>In the [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with the .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
+          <para>In [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of white-space characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
         </block>
       </Docs>
     </Member>
@@ -11856,9 +11832,9 @@ If the string has already been split `count` - 1 times, but the end of the strin
       <Docs>
         <param name="separator">A string that delimits the substrings in this instance.</param>
         <param name="count">The maximum number of elements expected in the array.</param>
-        <param name="options">One of the enumeration values that determines whether the split operation should omit empty substrings from the return value.</param>
-        <summary>Splits a string into a maximum number of substrings based on the provided string separator.</summary>
-        <returns>An array whose elements contain at most <paramref name="count" /> substrings from this instance that are delimited by <paramref name="separator" />.</returns>
+        <param name="options">A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.</param>
+        <summary>Splits a string into a maximum number of substrings based on a specified delimiting string and, optionally, options.</summary>
+        <returns>An array that contains at most <paramref name="count" /> substrings from this instance that are delimited by <paramref name="separator" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -11916,24 +11892,22 @@ If the string has already been split `count` - 1 times, but the end of the strin
         <Parameter Name="options" Type="System.StringSplitOptions" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="separator">A string array that delimits the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
+        <param name="separator">The strings that delimit the substrings in this string, an empty array that contains no delimiters, or <see langword="null" />.</param>
         <param name="count">The maximum number of substrings to return.</param>
-        <param name="options">
-          <see cref="F:System.StringSplitOptions.RemoveEmptyEntries" /> to omit empty array elements from the array returned; or <see cref="F:System.StringSplitOptions.None" /> to include empty array elements in the array returned.</param>
-        <summary>Splits a string into a maximum number of substrings based on the strings in an array. You can specify whether the substrings include empty array elements.</summary>
+        <param name="options">A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.</param>
+        <summary>Splits a string into a maximum number of substrings based on specified delimiting strings and, optionally, options.</summary>
         <returns>An array whose elements contain the substrings in this string that are delimited by one or more strings in <paramref name="separator" />. For more information, see the Remarks section.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-### Return value details
- Delimiter strings are not included in the elements of the returned array.
+Delimiter strings are not included in the elements of the returned array.
 
- If this instance does not contain any of the strings in `separator`, or the `count` parameter is 1, the returned array consists of a single element that contains this instance. If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and return `true` if they are passed to the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method. However, if the `separator` parameter in the call to this method overload is `null`, compiler overload resolution fails. To unambiguously identify the called method, your code must indicate the type of the `null`. The following example shows several ways to unambiguously identify this overload.
+ If this instance does not contain any of the strings in `separator`, or the `count` parameter is 1, the returned array consists of a single element that contains this instance. If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and the <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> method returns `true` if they are passed to it. However, if the `separator` parameter in the call to this method overload is `null`, compiler overload resolution fails. To unambiguously identify the called method, your code must indicate the type of the `null`. The following example shows several ways to unambiguously identify this overload.
 
- [!code-csharp[System.String.Split#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Split/cs/split3.cs#4)]
- [!code-vb[System.String.Split#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Split/vb/split3.vb#4)]
+[!code-csharp-interactive[Identify#4](~/samples/snippets/csharp/system/string.split/identify.cs#4)]
+[!code-vb[System.String.Split#4](~/samples/snippets/visualbasic/system/string.split/identify.vb#4)]
 
  If the `count` parameter is zero, or the `options` parameter is <xref:System.StringSplitOptions.RemoveEmptyEntries> and the length of this instance is zero, an empty array is returned.
 
@@ -11944,7 +11918,8 @@ If the string has already been split `count` - 1 times, but the end of the strin
  If `count` is greater than the number of substrings, the available substrings are returned and no exception is thrown.
 
 ### The separator array
- If any of the elements in `separator` consists of multiple characters, the entire substring is considered a delimiter. For example, if one of the elements in `separator` is "10", attempting to split the string "This10is10a10string." returns this four-element array: { "This", "is", "a", "string." }.
+
+If any of the elements in `separator` consists of multiple characters, the entire substring is considered a delimiter. For example, if one of the elements in `separator` is "10", attempting to split the string "This10is10a10string." returns this four-element array: { "This", "is", "a", "string." }.
 
 ### Comparison details
  The <xref:System.String.Split%2A> method extracts the substrings in this string that are delimited by one or more of the strings in the `separator` parameter, and returns those substrings as elements of an array.
@@ -11966,14 +11941,13 @@ If the string has already been split `count` - 1 times, but the end of the strin
 
  In addition, if the same set of characters is used to split strings in multiple <xref:System.String.Split%2A> method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
 
-
-
 ## Examples
- The following example uses the <xref:System.StringSplitOptions> enumeration to include or exclude substrings generated by the <xref:System.String.Split%2A> method.
 
- [!code-cpp[string.split3#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.split3/CPP/omit.cpp#1)]
- [!code-csharp-interactive[string.split3#1](~/samples/snippets/csharp/VS_Snippets_CLR/string.split3/CS/omit.cs#1)]
- [!code-vb[string.split3#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/string.split3/VB/omit.vb#1)]
+The following example uses the <xref:System.StringSplitOptions> enumeration to include or exclude substrings generated by the <xref:System.String.Split%2A> method.
+
+[!code-cpp[string.split3#1](~/samples/snippets/cpp/VS_Snippets_CLR/string.split3/CPP/omit.cpp#1)]
+[!code-csharp-interactive[Options#1](~/samples/snippets/csharp/system/string.split/options.cs#1)]
+[!code-vb[string.split3#1](~/samples/snippets/visualbasic/system/string.split/omit.vb#1)]
 
  ]]></format>
         </remarks>
@@ -11982,19 +11956,10 @@ If the string has already been split `count` - 1 times, but the end of the strin
         <exception cref="T:System.ArgumentException">
           <paramref name="options" /> is not one of the <see cref="T:System.StringSplitOptions" /> values.</exception>
         <block subset="none" type="usage">
-          <para>In the [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with the .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
+          <para>In [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)] and earlier versions, if the <see cref="M:System.String.Split(System.Char[])" /> method is passed a <paramref name="separator" /> that is <see langword="null" /> or contains no characters, the method uses a slightly different set of white-space characters to split the string than the <see cref="M:System.String.Trim(System.Char[])" /> method does to trim the string. Starting with .NET Framework 4, both methods use an identical set of Unicode white-space characters.</para>
         </block>
       </Docs>
     </Member>
-    <MemberGroup MemberName="StartsWith">
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Docs>
-        <summary>Determines whether the beginning of this string instance matches a specified string.</summary>
-      </Docs>
-    </MemberGroup>
     <Member MemberName="StartsWith">
       <MemberSignature Language="C#" Value="public bool StartsWith (char value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool StartsWith(char value) cil managed" />
