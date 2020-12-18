@@ -330,27 +330,24 @@ Namespace Examples.WebClientSnippets
             '  Let the main application thread resume.
             waiter.Set()
         End Sub
-
 		' </Snippet18>
+
 		' <Snippet19>
-		'  Sample call : DownLoadFileInBackground2 ("http:' www.contoso.com/logs/January.txt")
-		Public Shared Sub DownLoadFileInBackground2(ByVal address As String)
+		' Sample call : DownLoadFileInBackground2 ("http:' www.contoso.com/logs/January.txt")
+		Public Shared Sub DownLoadFileInBackground2(address As String)
 
 			Dim client As WebClient = New WebClient()
 
-			'  Specify that the DownloadFileCallback method gets called
-			'  when the download completes.
+			' Call DownloadFileCallback2 when the download completes.
 			AddHandler client.DownloadFileCompleted, AddressOf DownloadFileCallback2
-			'  Specify a progress notification handler.
-			AddHandler client.DownloadProgressChanged, AddressOf DownloadProgressCallback
-                        Dim uri as Uri = New Uri(address)
+
+			' Specify a progress notification handler here...
+
+            Dim uri as Uri = New Uri(address)
 			client.DownloadFileAsync(uri, "serverdata.txt")
 		End Sub
 
-		' </Snippet19>
-		' <Snippet20>
-        Private Shared Sub DownloadFileCallback2(ByVal sender As Object, _
-   ByVal e As System.ComponentModel.AsyncCompletedEventArgs)
+        Private Shared Sub DownloadFileCallback2(sender As Object, e As AsyncCompletedEventArgs)
             If e.Cancelled = True Then
                 Console.WriteLine("File download cancelled.")
             End If
@@ -359,8 +356,8 @@ Namespace Examples.WebClientSnippets
                 Console.WriteLine(e.Error.ToString())
             End If
         End Sub
+		' </Snippet19>
 
-		' </Snippet20>
 		' <Snippet21>
 		'  Sample call : DownLoadDataInBackground ("http:' www.contoso.com/GameScores.html")
 		Public Shared Sub DownloadDataInBackground(ByVal address As String)
@@ -517,7 +514,7 @@ Namespace Examples.WebClientSnippets
 			Dim client As WebClient = New WebClient()
 			AddHandler client.OpenReadCompleted, AddressOf OpenReadCallback2
                         Dim uri as Uri = New Uri(address)
-			client.OpenReadAsync(uri)                        
+			client.OpenReadAsync(uri)
 		End Sub
 
 		' </Snippet30>
@@ -656,7 +653,7 @@ Namespace Examples.WebClientSnippets
 			Dim data As String = "Time = 12:00am temperature = 50"
 			Dim method As String = "POST"
 			AddHandler client.UploadStringCompleted, AddressOf UploadStringCallback2
-                        Dim uri as Uri = New Uri(address)										
+                        Dim uri as Uri = New Uri(address)
 			client.UploadStringAsync(uri, method, data)
 		End Sub
 		' </Snippet40>
@@ -689,11 +686,35 @@ Namespace Examples.WebClientSnippets
         Private Shared Sub DownloadProgressCallback(ByVal sender As Object, ByVal e As DownloadProgressChangedEventArgs)
 
             '  Displays the operation identifier, and the transfer progress.
-            Console.WriteLine("0}    downloaded 1} of 2} bytes. 3} % complete...", _
+            Console.WriteLine("{0}    downloaded {1} of {2} bytes. {3} % complete...", _
              CStr(e.UserState), e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage)
         End Sub
 		' </Snippet42>
-		'  nothing below this line appears in the docs.
+
+        ' <SnippetDownloadProgressChanged>
+        ' Sample call : DownLoadFileInBackground4 ("http://www.contoso.com/logs/January.txt");
+		Public Shared Sub DownLoadFileInBackground4(ByVal address As String)
+
+			Dim client As WebClient = New WebClient()
+
+			' Specify a DownloadFileCompleted handler here...
+
+			'  Specify a progress notification handler.
+			AddHandler client.DownloadProgressChanged, AddressOf DownloadProgressCallback4
+
+			Dim uri as Uri = New Uri(address)
+			client.DownloadFileAsync(uri, "serverdata.txt")
+
+		End Sub
+
+        Private Shared Sub DownloadProgressCallback4(ByVal sender As Object, ByVal e As DownloadProgressChangedEventArgs)
+            ' Displays the operation identifier, and the transfer progress.
+            Console.WriteLine("{0}    downloaded {1} of {2} bytes. {3} % complete...", _
+            CStr(e.UserState), e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage)
+        End Sub
+        ' </SnippetDownloadProgressChanged>
+
+		' Nothing below this line appears in the docs.
 		' [System.Security.Permissions.FileIOPermissionAttribute(System.Security.Permissions.SecurityAction.Deny, Write=@"c:\whidbeycode\ncl.xml")]
 
 		Public Shared Sub Main(ByVal args() As String)
@@ -724,7 +745,7 @@ Namespace Examples.WebClientSnippets
 			'  DownloadString ("http:' google.com")
 			'   DownloadStringInBackground ("http:' google.com")
 			'   DownloadStringInBackground2 ("http:' google.com")
-			'   System.Threading.Thread.Sleep (1000) 
+			'   System.Threading.Thread.Sleep (1000)
 			'   DownLoadFileInBackground2 ("http:' sharriso1/test/uploadedFiles/onesandtwos.txt")
 			DownLoadFileWithProgressNotify("http:// sharriso1/test/uploadedFiles/onesandtwos.txt")
 			' System.Threading.Thread.Sleep (10000)
