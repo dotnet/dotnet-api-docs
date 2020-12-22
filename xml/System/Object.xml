@@ -523,7 +523,7 @@ The scope of the <xref:System.Object.Finalize%2A?displayProperty=nameWithType> m
 > [!NOTE]
 >  The C# compiler does not allow you to override the <xref:System.Object.Finalize%2A> method. Instead, you provide a finalizer by implementing a [destructor](/dotnet/csharp/programming-guide/classes-and-structs/destructors) for your class. A C# destructor automatically calls the destructor of its base class.  
 >   
->  Visual C++ also provides its own syntax for implementing the <xref:System.Object.Finalize%2A> method. For more information, see the "Destructors and finalizers" section of [How to: Define and Consume Classes and Structs (C++/CLI)](https://msdn.microsoft.com/library/1c03cb0d-1459-4b5e-af65-97d6b3094fd7).  
+>  Visual C++ also provides its own syntax for implementing the <xref:System.Object.Finalize%2A> method. For more information, see the "Destructors and finalizers" section of [How to: Define and Consume Classes and Structs (C++/CLI)](/cpp/dotnet/how-to-define-and-consume-classes-and-structs-cpp-cli?view=msvc-160).  
   
  Because garbage collection is non-deterministic, you do not know precisely when the garbage collector performs finalization. To release resources immediately, you can also choose to implement the [dispose pattern](/dotnet/standard/garbage-collection/implementing-dispose)
 and the <xref:System.IDisposable> interface. The <xref:System.IDisposable.Dispose%2A?displayProperty=nameWithType> implementation can be called by consumers of your class to free unmanaged resources, and you can use the <xref:System.Object.Finalize%2A> method to free unmanaged resources in the event that the <xref:System.IDisposable.Dispose%2A> method is not called.  
@@ -1126,22 +1126,22 @@ and the <xref:System.IDisposable> interface. The <xref:System.IDisposable.Dispos
 ## Notes for the [!INCLUDE[wrt](~/includes/wrt-md.md)]  
  When you call the <xref:System.Object.ToString%2A> method on a class in the [!INCLUDE[wrt](~/includes/wrt-md.md)], it provides the default behavior for classes that don't override <xref:System.Object.ToString%2A>. This is part of the support that the .NET Framework provides for the [!INCLUDE[wrt](~/includes/wrt-md.md)] (see [.NET Framework Support for Windows Store Apps and Windows Runtime](/dotnet/standard/cross-platform/support-for-windows-store-apps-and-windows-runtime)). Classes in the [!INCLUDE[wrt](~/includes/wrt-md.md)] don't inherit <xref:System.Object>, and don't always implement a <xref:System.Object.ToString%2A>. However, they always appear to have <xref:System.Object.ToString%2A>, <xref:System.Object.Equals%28System.Object%29>, and <xref:System.Object.GetHashCode%2A> methods when you use them in your C# or Visual Basic code, and the .NET Framework provides a default behavior for these methods.  
   
- Starting with the [!INCLUDE[net_v451](~/includes/net-v451-md.md)], the common language runtime will use [IStringable.ToString](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.tostring.aspx) on a [!INCLUDE[wrt](~/includes/wrt-md.md)] object before falling back to the default implementation of <xref:System.Object.ToString%2A?displayProperty=nameWithType>.  
+ Starting with the [!INCLUDE[net_v451](~/includes/net-v451-md.md)], the common language runtime will use [IStringable.ToString](/uwp/api/windows.foundation.istringable?view=winrt-19041) on a [!INCLUDE[wrt](~/includes/wrt-md.md)] object before falling back to the default implementation of <xref:System.Object.ToString%2A?displayProperty=nameWithType>.  
   
 > [!NOTE]
 >  [!INCLUDE[wrt](~/includes/wrt-md.md)] classes that are written in C# or Visual Basic can override the <xref:System.Object.ToString%2A> method.  
   
 ### The [!INCLUDE[wrt](~/includes/wrt-md.md)] and the IStringable Interface  
- Starting with [!INCLUDE[win81](~/includes/win81-md.md)], the [!INCLUDE[wrt](~/includes/wrt-md.md)] includes an [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) interface whose single method, [IStringable.ToString](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.tostring.aspx), provides basic formatting support comparable to that provided by <xref:System.Object.ToString%2A?displayProperty=nameWithType>. To prevent ambiguity, you should not implement [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) on managed types.  
+ Starting with [!INCLUDE[win81](~/includes/win81-md.md)], the [!INCLUDE[wrt](~/includes/wrt-md.md)] includes an [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) interface whose single method, [IStringable.ToString](/uwp/api/windows.foundation.istringable?view=winrt-19041), provides basic formatting support comparable to that provided by <xref:System.Object.ToString%2A?displayProperty=nameWithType>. To prevent ambiguity, you should not implement [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) on managed types.  
   
- When managed objects are called by native code or by code written in languages such as JavaScript or C++/CX, they appear to implement [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx). The common language runtime will automatically route calls from [IStringable.ToString](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.tostring.aspx) to <xref:System.Object.ToString%2A?displayProperty=nameWithType> in the event [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) is not implemented on the managed object.  
+ When managed objects are called by native code or by code written in languages such as JavaScript or C++/CX, they appear to implement [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041). The common language runtime will automatically route calls from [IStringable.ToString](/uwp/api/windows.foundation.istringable?view=winrt-19041) to <xref:System.Object.ToString%2A?displayProperty=nameWithType> in the event [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) is not implemented on the managed object.  
   
 > [!WARNING]
->  Because the common language runtime auto-implements [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) for all managed types in [!INCLUDE[win8_appstore_long](~/includes/win8-appstore-long-md.md)] apps, we recommend that you do not provide your own [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) implementation. Implementing [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) may result in unintended behavior when calling `ToString` from the [!INCLUDE[wrt](~/includes/wrt-md.md)], C++/CX, or JavaScript.  
+>  Because the common language runtime auto-implements [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) for all managed types in [!INCLUDE[win8_appstore_long](~/includes/win8-appstore-long-md.md)] apps, we recommend that you do not provide your own [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) implementation. Implementing [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) may result in unintended behavior when calling `ToString` from the [!INCLUDE[wrt](~/includes/wrt-md.md)], C++/CX, or JavaScript.  
   
- If you do choose to implement [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) in a public managed type that is exported in a [!INCLUDE[wrt](~/includes/wrt-md.md)] component, the following restrictions apply:  
+ If you do choose to implement [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) in a public managed type that is exported in a [!INCLUDE[wrt](~/includes/wrt-md.md)] component, the following restrictions apply:  
   
-- You can define the [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) interface only in a "class implements" relationship, as follows:
+- You can define the [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) interface only in a "class implements" relationship, as follows:
 
     ```csharp
     public class NewClass : IStringable
@@ -1151,13 +1151,13 @@ and the <xref:System.IDisposable> interface. The <xref:System.IDisposable.Dispos
     Public Class NewClass : Implements IStringable
     ```
 
--   You cannot implement [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) on an interface.  
+-   You cannot implement [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) on an interface.  
   
--   You cannot declare a parameter to be of type [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx).  
+-   You cannot declare a parameter to be of type [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041).  
   
--   [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) cannot be the return type of a method, property, or field.  
+-   [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) cannot be the return type of a method, property, or field.  
   
--   You cannot hide your [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) implementation from base classes by using a method definition such as the following:  
+-   You cannot hide your [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) implementation from base classes by using a method definition such as the following:  
   
     ```csharp  
   
@@ -1171,9 +1171,9 @@ and the <xref:System.IDisposable> interface. The <xref:System.IDisposable.Dispos
   
     ```  
   
-     Instead, the [IStringable.ToString](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.tostring.aspx) implementation must always override the base class implementation. You can hide a `ToString` implementation only by invoking it on a strongly typed class instance.  
+     Instead, the [IStringable.ToString](/uwp/api/windows.foundation.istringable?view=winrt-19041) implementation must always override the base class implementation. You can hide a `ToString` implementation only by invoking it on a strongly typed class instance.  
   
- Note that under a variety of conditions, calls from native code to a managed type that implements [IStringable](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.aspx) or hides its [ToString](https://msdn.microsoft.com/library/windows/apps/windows.foundation.istringable.tostring.aspx) implementation can produce unexpected behavior.  
+ Note that under a variety of conditions, calls from native code to a managed type that implements [IStringable](/uwp/api/windows.foundation.istringable?view=winrt-19041) or hides its [ToString](/uwp/api/windows.foundation.istringable?view=winrt-19041) implementation can produce unexpected behavior.  
   
  ]]></format>
         </remarks>
