@@ -26,6 +26,7 @@ public class LongToString
       Console.WriteLine(value.ToString("D"));         // Displays -16325091
       Console.WriteLine(value.ToString("F"));         // Displays -16325091.00
       Console.WriteLine(value.ToString("N"));         // Displays -16,325,091.00
+      Console.WriteLine(value.ToString("N0"));         // Displays -16,325,091
       Console.WriteLine(value.ToString("X"));         // Displays FFFFFFFFFF06E61D
       // </Snippet1>
    }
@@ -101,7 +102,7 @@ public class LongToString
                                 CultureInfo.CreateSpecificCulture("es-ES") };
       long positiveNumber = 1679;
       long negativeNumber = -3045;
-      string[] specifiers = {"G", "C", "D8", "E2", "F", "N", "P", "X8"};
+      string[] specifiers = {"G", "C", "D8", "E2", "F", "N", "N0", "P", "X8"};
 
       foreach (string specifier in specifiers)
       {
@@ -139,6 +140,10 @@ public class LongToString
       //    N format using en-US culture:         1,679.00        -3,045.00
       //    N format using fr-FR culture:         1 679,00        -3 045,00
       //    N format using es-ES culture:         1.679,00        -3.045,00
+      //
+      //    N0 format using en-US culture:         1,679           -3,045
+      //    N0 format using fr-FR culture:         1 679           -3 045
+      //    N0 format using es-ES culture:         1.679           -3.045
       //
       //    P format using en-US culture:      167,900.00%     -304,500.00%
       //    P format using fr-FR culture:     167 900,00 %    -304 500,00 %
