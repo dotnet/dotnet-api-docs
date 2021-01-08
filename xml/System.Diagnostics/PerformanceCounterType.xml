@@ -28,84 +28,83 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Specifies the formula used to calculate the <see cref="M:System.Diagnostics.PerformanceCounter.NextValue" /> method for a <see cref="T:System.Diagnostics.PerformanceCounter" /> instance.</summary>
+    <summary>Specifies performance counter types that map directly to native types.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
+      <format type="text/markdown"><![CDATA[
+
 ## Remarks
 
-Some counter types represent raw data, while others represent calculated values that are based on one or more counter samples. The following categories classify the types of counters available.  
-  
-- **Average**: Measures a value over time and displays the average of the last two measurements. Associated with each average counter is a base counter that tracks the number of samples involved.  
-  
-- **Difference**: Subtracts the last measurement from the previous one and displays the difference, if it is positive; if negative, it displays a zero.  
-  
-- **Instantaneous**: Displays the most recent measurement.  
-  
-- **Percentage**: Displays calculated values as a percentage.  
-  
-- **Rate**: Samples an increasing count of events over time and divides the change in count values by the change in time to display a rate of activity.  
-  
-When sampling performance counter data, using a counter type that represents an average can make raw data values meaningful for your use. For example, the raw data counter `NumberOfItems64` can expose data that is fairly random from sample to sample. The formula for an average calculation of the values that the counter returns would be (X 0 +X 1 +…+X n)/n, where each X i is a raw counter sample.  
-  
-Rate counters are similar to average counters, but more useful for situations in which the rate increases as a resource is used. A formula that quickly calculates the average is ((X n -X 0)/(T n -T 0)) / frequency, where each X i is a counter sample and each T i is the time that the corresponding sample was taken. The result is the average usage per second.  
+Some counter types represent raw data, while others represent calculated values that are based on one or more counter samples. The following categories classify the types of counters available.
 
-*Multitimer counters* collect data from more than one instance of a component, such as a processor or disk. 
- 
-*Inverse counters* measure the time that a component is not active and derive the active time from that measurement.  
- 
-   
+- **Average**: Measures a value over time and displays the average of the last two measurements. A base counter that tracks the number of samples involved is associated with each average counter.
+
+- **Difference**: Subtracts the last measurement from the previous one and, if the difference is positive, displays it; if negative, displays a zero.
+
+- **Instantaneous**: Displays the most recent measurement.
+
+- **Percentage**: Displays calculated values as a percentage.
+
+- **Rate**: Samples an increasing count of events over time and divides the change in count values by the change in time to display a rate of activity.
+
+When sampling performance counter data, using a counter type that represents an average can make raw data values meaningful for your use. For example, the raw data counter `NumberOfItems64` can expose data that is fairly random from sample to sample. The formula for an average calculation of the values that the counter returns would be (X 0 +X 1 +…+X n)/n, where each X i is a raw counter sample.
+
+Rate counters are similar to average counters, but more useful for situations in which the rate increases as a resource is used. A formula that quickly calculates the average is ((X n -X 0)/(T n -T 0)) / frequency, where each X i is a counter sample and each T i is the time that the corresponding sample was taken. The result is the average usage per second.
+
+*Multitimer counters* collect data from more than one instance of a component, such as a processor or disk.
+
+*Inverse counters* measure the time that a component is not active and derive the active time from that measurement.
+
 > [!NOTE]
->  Unless otherwise indicated, the time base is seconds.  
-  
- When instrumenting applications (creating and writing custom performance counters), you might be working with performance counter types that rely on an accompanying base counter that is used in the calculations. The base counter must be immediately after its associated counter in the <xref:System.Diagnostics.CounterCreationDataCollection> collection your application uses. The following table lists the base counter types with their corresponding performance counter types.  
-  
-|Base counter type|Performance counter types|  
-|-----------------------|-------------------------------|  
-|`AverageBase`|`AverageTimer32`<br /><br /> `AverageCount64`|  
-|`CounterMultiBase`|`CounterMultiTimer`<br /><br /> `CounterMultiTimerInverse`<br /><br /> `CounterMultiTimer100Ns`<br /><br /> `CounterMultiTimer100NsInverse`|  
-|`RawBase`|`RawFraction`|  
-|`SampleBase`|`SampleFraction`|  
-  
+> Unless otherwise indicated, the time base is seconds.
+
+ When instrumenting applications (creating and writing custom performance counters), you might be working with performance counter types that rely on an accompanying base counter that is used in the calculations. The base counter must be immediately after its associated counter in the <xref:System.Diagnostics.CounterCreationDataCollection> collection your application uses. The following table lists the base counter types with their corresponding performance counter types.
+
+|Base counter type|Performance counter types|
+|-----------------------|-------------------------------|
+|`AverageBase`|`AverageTimer32`<br /><br /> `AverageCount64`|
+|`CounterMultiBase`|`CounterMultiTimer`<br /><br /> `CounterMultiTimerInverse`<br /><br /> `CounterMultiTimer100Ns`<br /><br /> `CounterMultiTimer100NsInverse`|
+|`RawBase`|`RawFraction`|
+|`SampleBase`|`SampleFraction`|
+
 The following are the formulas used by some of the counters that represent calculated values:
 
-- `AverageCount64`: (N1 - N0)/(B1 - B0), where N 1 and N 0 are performance counter readings, and B1 and B0 are their corresponding `AverageBase` values. Thus, the numerator represents the numbers of items processed during the sample interval, and the denominator represents the number of operations completed during the sample interval.   
-  
+- `AverageCount64`: (N1 - N0)/(B1 - B0), where N 1 and N 0 are performance counter readings, and B1 and B0 are their corresponding `AverageBase` values. Thus, the numerator represents the numbers of items processed during the sample interval, and the denominator represents the number of operations completed during the sample interval.
+
 - `AverageTimer32`: ((N1 - N0)/F)/(B1 - B0), where N1 and N0 are performance counter readings, B1 and B0 are their corresponding `AverageBase` values, and F is the number of ticks per second. The value of F is factored into the equation so that the result can be displayed in seconds. Thus, the numerator represents the numbers of ticks counted during the last sample interval, F represents the frequency of the ticks, and the denominator represents the number of operations completed during the last sample interval.
 
-- `CounterDelta32`: N1 - N0, where N1 and N0 are performance counter readings. 
+- `CounterDelta32`: N1 - N0, where N1 and N0 are performance counter readings.
 
-- `CounterDelta64`: N1 - N0, where N1 and N0 are performance counter readings.  
+- `CounterDelta64`: N1 - N0, where N1 and N0 are performance counter readings.
 
-- `CounterMultiTimer`: ((N1 - N0) / (D1 - D0)) x 100 / B, where N1 and N0 are performance counter readings, D1 and D0 are their corresponding time readings in ticks of the system performance timer, and the variable B denotes the base count for the monitored components (using a base counter of type `CounterMultiBase`). Thus, the numerator represents the portions of the sample interval during which the monitored components were active, and the denominator represents the total elapsed time of the sample interval.  
+- `CounterMultiTimer`: ((N1 - N0) / (D1 - D0)) x 100 / B, where N1 and N0 are performance counter readings, D1 and D0 are their corresponding time readings in ticks of the system performance timer, and the variable B denotes the base count for the monitored components (using a base counter of type `CounterMultiBase`). Thus, the numerator represents the portions of the sample interval during which the monitored components were active, and the denominator represents the total elapsed time of the sample interval.
 
 - `CounterMultiTimer100Ns`: ((N1 - N0) / (D1 - D0)) x 100 / B, where N1 and N0 are performance counter readings, D1 and D0 are their corresponding time readings in 100-nanosecond units, and the variable B denotes the base count for the monitored components (using a base counter of type `CounterMultiBase`). Thus, the numerator represents the portions of the sample interval during which the monitored components were active, and the denominator represents the total elapsed time of the sample interval.
 
-- `CounterMultiTimer100NsInverse`: (B - ((N1 - N0) / (D1 - D0))) x 100, where the denominator represents the total elapsed time of the sample interval, the numerator represents the time during the interval when monitored components were inactive, and B represents the number of components being monitored, using a base counter of type `CounterMultiBase`.  
+- `CounterMultiTimer100NsInverse`: (B - ((N1 - N0) / (D1 - D0))) x 100, where the denominator represents the total elapsed time of the sample interval, the numerator represents the time during the interval when monitored components were inactive, and B represents the number of components being monitored, using a base counter of type `CounterMultiBase`.
 
 - `CounterMultiTimerInverse`: (B- ((N1 - N0) / (D1 - D0))) x 100, where the denominator represents the total elapsed time of the sample interval, the numerator represents the time during the interval when monitored components were inactive, and B represents the number of components being monitored, using a base counter of type `CounterMultiBase`.
 
-- `CounterTimer`: (N1 - N0) / (D1 - D0), where N1 and N0 are performance counter readings, and D1 and D0 are their corresponding time readings. Thus, the numerator represents the portions of the sample interval during which the monitored components were active, and the denominator represents the total elapsed time of the sample interval.  
+- `CounterTimer`: (N1 - N0) / (D1 - D0), where N1 and N0 are performance counter readings, and D1 and D0 are their corresponding time readings. Thus, the numerator represents the portions of the sample interval during which the monitored components were active, and the denominator represents the total elapsed time of the sample interval.
 
-- `CounterTimerInverse`: (1- ((N1 - N0) / (D1 - D0))) x 100, where the numerator represents the time during the interval when the monitored components were inactive, and the denominator represents the total elapsed time of the sample interval.  
+- `CounterTimerInverse`: (1- ((N1 - N0) / (D1 - D0))) x 100, where the numerator represents the time during the interval when the monitored components were inactive, and the denominator represents the total elapsed time of the sample interval.
 
 - `CountPerTimeInterval32`: (N1 - N0) / (D1 - D0), where the numerator represents the number of items in the queue, and the denominator represents the time elapsed during the last sample interval.
 
 - `CountPerTimeInterval64`: (N1 - N0) / (D1 - D0), where the numerator represents the number of items in a queue and the denominator represents the time elapsed during the sample interval.
 
-- `ElapsedTime`: (D0 - N0) / F, where D0 represents the current time, N0 represents the time the object was started, and F represents the number of time units that elapse in one second. The value of F is factored into the equation so that the result can be displayed in seconds.  
-  
-- `NumberOfItems32`: None. Does not display an average, but shows the raw data as it is collected. 
+- `ElapsedTime`: (D0 - N0) / F, where D0 represents the current time, N0 represents the time the object was started, and F represents the number of time units that elapse in one second. The value of F is factored into the equation so that the result can be displayed in seconds.
+
+- `NumberOfItems32`: None. Does not display an average, but shows the raw data as it is collected.
 
 - `NumberOfItems64`: None. Does not display an average, but shows the raw data as it is collected.
 
-- `NumberOfItemsHEX32`: None. Does not display an average, but shows the raw data as it is collected.  
+- `NumberOfItemsHEX32`: None. Does not display an average, but shows the raw data as it is collected.
 
-- `NumberOfItemsHEX64`: None. Does not display an average, but shows the raw data as it is collected  
- 
-- `RateOfCountsPerSecond32`: (N1 - N0) / ((D1 - D0) / F), where N1 and N0 are performance counter readings, D1 and D0 are their corresponding time readings, and F represents the number of ticks per second. Thus, the numerator represents the number of operations performed during the last sample interval, the denominator represents the number of ticks elapsed during the last sample interval, and F is the frequency of the ticks. The value of F is factored into the equation so that the result can be displayed in seconds.  
+- `NumberOfItemsHEX64`: None. Does not display an average, but shows the raw data as it is collected
 
-- `RateOfCountsPerSecond64`: (N1 - N0) / ((D1 - D0) / F), where N1 and N0 are performance counter readings, D1 and D0 are their corresponding time readings, and F represents the number of ticks per second. Thus, the numerator represents the number of operations performed during the last sample interval, the denominator represents the number of ticks elapsed during the last sample interval, and F is the frequency of the ticks. The value of F is factored into the equation so that the result can be displayed in seconds.  
+- `RateOfCountsPerSecond32`: (N1 - N0) / ((D1 - D0) / F), where N1 and N0 are performance counter readings, D1 and D0 are their corresponding time readings, and F represents the number of ticks per second. Thus, the numerator represents the number of operations performed during the last sample interval, the denominator represents the number of ticks elapsed during the last sample interval, and F is the frequency of the ticks. The value of F is factored into the equation so that the result can be displayed in seconds.
+
+- `RateOfCountsPerSecond64`: (N1 - N0) / ((D1 - D0) / F), where N1 and N0 are performance counter readings, D1 and D0 are their corresponding time readings, and F represents the number of ticks per second. Thus, the numerator represents the number of operations performed during the last sample interval, the denominator represents the number of ticks elapsed during the last sample interval, and F is the frequency of the ticks. The value of F is factored into the equation so that the result can be displayed in seconds.
 
 - `RawFraction`: (N0 / D0) x 100, where D0 represents a measured attribute (using a base counter of type `RawBase`) and N0 represents one component of that attribute.
 
@@ -115,64 +114,64 @@ The following are the formulas used by some of the counters that represent calcu
 
 - `Timer100Ns`: (N1 - N0) / (D1 - D0) x 100, where the numerator represents the portions of the sample interval during which the monitored components were active, and the denominator represents the total elapsed time of the sample interval.
 
-- `Timer100NsInverse`: (1- ((N1 - N0) / (D1 - D0))) x 100, where the numerator represents the time during the interval when the monitored components were inactive, and the denominator represents the total elapsed time of the sample interval.  
+- `Timer100NsInverse`: (1- ((N1 - N0) / (D1 - D0))) x 100, where the numerator represents the time during the interval when the monitored components were inactive, and the denominator represents the total elapsed time of the sample interval.
 
-## Examples  
- The following examples demonstrate several of the counter types in the <xref:System.Diagnostics.PerformanceCounterType> enumeration.  
-  
- `AverageCount64`  
-  
+## Examples
+ The following examples demonstrate several of the counter types in the <xref:System.Diagnostics.PerformanceCounterType> enumeration.
+
+### AverageCount64
+
  [!code-cpp[PerformanceCounterType.AverageCounter64#1](~/samples/snippets/cpp/VS_Snippets_CLR/PerformanceCounterType.AverageCounter64/CPP/averagecount32.cpp#1)]
  [!code-csharp[PerformanceCounterType.AverageCounter64#1](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.AverageCounter64/CS/averagecount32.cs#1)]
- [!code-vb[PerformanceCounterType.AverageCounter64#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.AverageCounter64/VB/averagecount32.vb#1)]  
-  
- `AverageTimer32`  
-  
+ [!code-vb[PerformanceCounterType.AverageCounter64#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.AverageCounter64/VB/averagecount32.vb#1)]
+
+### AverageTimer32
+
  [!code-cpp[PerformanceCounterType.AverageTimer32#2](~/samples/snippets/cpp/VS_Snippets_CLR/PerformanceCounterType.AverageTimer32/CPP/averagetimer32.cpp#2)]
  [!code-csharp[PerformanceCounterType.AverageTimer32#2](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.AverageTimer32/CS/averagetimer32.cs#2)]
- [!code-vb[PerformanceCounterType.AverageTimer32#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.AverageTimer32/VB/averagetimer32.vb#2)]  
-  
- `ElapsedTime`  
-  
+ [!code-vb[PerformanceCounterType.AverageTimer32#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.AverageTimer32/VB/averagetimer32.vb#2)]
+
+### ElapsedTime
+
  [!code-cpp[PerformanceCounterType.ElapsedTime#2](~/samples/snippets/cpp/VS_Snippets_CLR/PerformanceCounterType.ElapsedTime/CPP/elapsedtime.cpp#2)]
  [!code-csharp[PerformanceCounterType.ElapsedTime#2](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.ElapsedTime/CS/elapsedtime.cs#2)]
- [!code-vb[PerformanceCounterType.ElapsedTime#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.ElapsedTime/VB/elapsedtime.vb#2)]  
-  
- `NumberOfItems32`  
-  
+ [!code-vb[PerformanceCounterType.ElapsedTime#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.ElapsedTime/VB/elapsedtime.vb#2)]
+
+### NumberOfItems32
+
  [!code-cpp[PerformanceCounterType.NumberOfItems32#1](~/samples/snippets/cpp/VS_Snippets_CLR/PerformanceCounterType.NumberOfItems32/CPP/numberofitems32.cpp#1)]
  [!code-csharp[PerformanceCounterType.NumberOfItems32#1](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.NumberOfItems32/CS/numberofitems32.cs#1)]
- [!code-vb[PerformanceCounterType.NumberOfItems32#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.NumberOfItems32/VB/numberofitems32.vb#1)]  
-  
- `NumberOfItems64`  
-  
+ [!code-vb[PerformanceCounterType.NumberOfItems32#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.NumberOfItems32/VB/numberofitems32.vb#1)]
+
+### NumberOfItems64
+
  [!code-cpp[PerformanceCounterType.NumberOfItems64#1](~/samples/snippets/cpp/VS_Snippets_CLR/PerformanceCounterType.NumberOfItems64/CPP/numberofitems64.cpp#1)]
  [!code-csharp[PerformanceCounterType.NumberOfItems64#1](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.NumberOfItems64/CS/numberofitems64.cs#1)]
- [!code-vb[PerformanceCounterType.NumberOfItems64#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.NumberOfItems64/VB/numberofitems64.vb#1)]  
-  
- `SampleFraction`  
-  
+ [!code-vb[PerformanceCounterType.NumberOfItems64#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.NumberOfItems64/VB/numberofitems64.vb#1)]
+
+### SampleFraction
+
  [!code-csharp[PerformanceCounterType.SampleFraction#1](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.SampleFraction/CS/program.cs#1)]
- [!code-vb[PerformanceCounterType.SampleFraction#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.SampleFraction/VB/program.vb#1)]  
-  
- `RateOfCountsPerSecond32`  
-  
+ [!code-vb[PerformanceCounterType.SampleFraction#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.SampleFraction/VB/program.vb#1)]
+
+### RateOfCountsPerSecond32
+
  [!code-cpp[PerformanceCounterType.RateOfCountsPerSecond#1](~/samples/snippets/cpp/VS_Snippets_CLR/PerformanceCounterType.RateOfCountsPerSecond/CPP/rateofcountspersecond32.cpp#1)]
  [!code-csharp[PerformanceCounterType.RateOfCountsPerSecond#1](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.RateOfCountsPerSecond/CS/rateofcountspersecond32.cs#1)]
- [!code-vb[PerformanceCounterType.RateOfCountsPerSecond#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.RateOfCountsPerSecond/VB/rateofcountspersecond32.vb#1)]  
-  
- `RateOfCountsPerSecond64`  
-  
+ [!code-vb[PerformanceCounterType.RateOfCountsPerSecond#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.RateOfCountsPerSecond/VB/rateofcountspersecond32.vb#1)]
+
+### RateOfCountsPerSecond64
+
  [!code-cpp[PerformanceCounterType.RateOfCountsPerSecond64#1](~/samples/snippets/cpp/VS_Snippets_CLR/PerformanceCounterType.RateOfCountsPerSecond64/CPP/rateofcountspersecond64.cpp#1)]
  [!code-csharp[PerformanceCounterType.RateOfCountsPerSecond64#1](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.RateOfCountsPerSecond64/CS/rateofcountspersecond64.cs#1)]
- [!code-vb[PerformanceCounterType.RateOfCountsPerSecond64#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.RateOfCountsPerSecond64/VB/rateofcountspersecond64.vb#1)]  
-  
- `RawFraction`  
-  
+ [!code-vb[PerformanceCounterType.RateOfCountsPerSecond64#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.RateOfCountsPerSecond64/VB/rateofcountspersecond64.vb#1)]
+
+### RawFraction
+
  [!code-cpp[PerformanceCounterType.RawFraction#1](~/samples/snippets/cpp/VS_Snippets_CLR/PerformanceCounterType.RawFraction/CPP/rawfraction.cpp#1)]
  [!code-csharp[PerformanceCounterType.RawFraction#1](~/samples/snippets/csharp/VS_Snippets_CLR/PerformanceCounterType.RawFraction/CS/rawfraction.cs#1)]
- [!code-vb[PerformanceCounterType.RawFraction#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.RawFraction/VB/rawfraction.vb#1)]  
-  
+ [!code-vb[PerformanceCounterType.RawFraction#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/PerformanceCounterType.RawFraction/VB/rawfraction.vb#1)]
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Diagnostics.PerformanceCounter" />
@@ -204,7 +203,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>1073939458</MemberValue>
       <Docs>
-        <summary>A base counter that is used in the calculation of time or count averages, such as <see langword="AverageTimer32" /> and <see langword="AverageCount64" />. Stores the denominator for calculating a counter to present "time per operation" or "count per operation".</summary>
+        <summary>A base counter that is used in the calculation of time or count averages, such as <see cref="F:System.Diagnostics.PerformanceCounterType.AverageTimer32" /> and <see cref="F:System.Diagnostics.PerformanceCounterType.AverageCount64" />. Stores the denominator for calculating a counter to present "time per operation" or "count per operation".</summary>
       </Docs>
     </Member>
     <Member MemberName="AverageCount64">
@@ -320,7 +319,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>4195584</MemberValue>
       <Docs>
-        <summary>A difference counter that shows the change in the measured attribute between the two most recent sample intervals. It is the same as the <see langword="CounterDelta32" /> counter type except that is uses larger fields to accommodate larger values.</summary>
+        <summary>A difference counter that shows the change in the measured attribute between the two most recent sample intervals. It is the same as the <see cref="F:System.Diagnostics.PerformanceCounterType.CounterDelta32" /> counter type except that is uses larger fields to accommodate larger values.</summary>
       </Docs>
     </Member>
     <Member MemberName="CounterMultiBase">
@@ -349,7 +348,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>1107494144</MemberValue>
       <Docs>
-        <summary>A base counter that indicates the number of items sampled. It is used as the denominator in the calculations to get an average among the items sampled when taking timings of multiple, but similar items. Used with <see langword="CounterMultiTimer" />, <see langword="CounterMultiTimerInverse" />, <see langword="CounterMultiTimer100Ns" />, and <see langword="CounterMultiTimer100NsInverse" />.</summary>
+        <summary>A base counter that indicates the number of items sampled. It is used as the denominator in the calculations to get an average among the items sampled when taking timings of multiple, but similar items. Used with <see cref="F:System.Diagnostics.PerformanceCounterType.CounterMultiTimer" />, <see cref="F:System.Diagnostics.PerformanceCounterType.CounterMultiTimerInverse" />, <see cref="F:System.Diagnostics.PerformanceCounterType.CounterMultiTimer100Ns" />, and <see cref="F:System.Diagnostics.PerformanceCounterType.CounterMultiTimer100NsInverse" />.</summary>
       </Docs>
     </Member>
     <Member MemberName="CounterMultiTimer">
@@ -378,7 +377,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>574686464</MemberValue>
       <Docs>
-        <summary>A percentage counter that displays the active time of one or more components as a percentage of the total time of the sample interval. Because the numerator records the active time of components operating simultaneously, the resulting percentage can exceed 100 percent. This counter type differs from <see langword="CounterMultiTimer100Ns" /> in that it measures time in units of ticks of the system performance timer, rather than in 100 nanosecond units. This counter type is a multitimer.</summary>
+        <summary>A percentage counter that displays the active time of one or more components as a percentage of the total time of the sample interval. Because the numerator records the active time of components operating simultaneously, the resulting percentage can exceed 100 percent. This counter type differs from <see cref="F:System.Diagnostics.PerformanceCounterType.CounterMultiTimer100Ns" /> in that it measures time in units of ticks of the system performance timer, rather than in 100 nanosecond units. This counter type is a multitimer.</summary>
       </Docs>
     </Member>
     <Member MemberName="CounterMultiTimer100Ns">
@@ -465,7 +464,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>591463680</MemberValue>
       <Docs>
-        <summary>A percentage counter that shows the active time of one or more components as a percentage of the total time of the sample interval. It derives the active time by measuring the time that the components were not active and subtracting the result from 100 percent by the number of objects monitored. This counter type is an inverse multitimer. It differs from `CounterMultiTimer100NsInverse` in that it measures time in units of ticks of the system performance timer, rather than in 100 nanosecond units.</summary>
+        <summary>A percentage counter that shows the active time of one or more components as a percentage of the total time of the sample interval. It derives the active time by measuring the time that the components were not active and subtracting the result from 100 percent by the number of objects monitored. This counter type is an inverse multitimer. It differs from <see cref="F:System.Diagnostics.PerformanceCounterType.CounterMultiTimer100NsInverse" /> in that it measures time in units of ticks of the system performance timer, rather than in 100 nanosecond units.</summary>
       </Docs>
     </Member>
     <Member MemberName="CounterTimer">
@@ -523,7 +522,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>557909248</MemberValue>
       <Docs>
-        <summary>A percentage counter that displays the average percentage of active time observed during sample interval. The value of these counters is calculated by monitoring the percentage of time that the service was inactive and then subtracting that value from 100 percent. This is an inverse counter type. It is the same as `CounterTimer100NsInv`, except that it measures time in units of ticks of the system performance timer rather than in 100 nanosecond units.</summary>
+        <summary>A percentage counter that displays the average percentage of active time observed during sample interval. The value of these counters is calculated by monitoring the percentage of time that the service was inactive and then subtracting that value from 100 percent. This is an inverse counter type. It measures time in units of ticks of the system performance timer.</summary>
       </Docs>
     </Member>
     <Member MemberName="CountPerTimeInterval32">
@@ -581,7 +580,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>4523264</MemberValue>
       <Docs>
-        <summary>An average counter that monitors the average length of a queue to a resource over time. Counters of this type display the difference between the queue lengths observed during the last two sample intervals, divided by the duration of the interval. This counter type is the same as <see langword="CountPerTimeInterval32" /> except that it uses larger fields to accommodate larger values. This type of counter is typically used to track a high-volume or very large number of items that are queued or waiting.</summary>
+        <summary>An average counter that monitors the average length of a queue to a resource over time. Counters of this type display the difference between the queue lengths observed during the last two sample intervals, divided by the duration of the interval. This counter type is the same as <see cref="F:System.Diagnostics.PerformanceCounterType.CountPerTimeInterval32" /> except that it uses larger fields to accommodate larger values. This type of counter is typically used to track a high-volume or very large number of items that are queued or waiting.</summary>
       </Docs>
     </Member>
     <Member MemberName="ElapsedTime">
@@ -668,7 +667,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>65792</MemberValue>
       <Docs>
-        <summary>An instantaneous counter that shows the most recently observed value. Used, for example, to maintain a simple count of a very large number of items or operations. It is the same as <see langword="NumberOfItems32" /> except that it uses larger fields to accommodate larger values.</summary>
+        <summary>An instantaneous counter that shows the most recently observed value. Used, for example, to maintain a simple count of a very large number of items or operations. It is the same as <see cref="F:System.Diagnostics.PerformanceCounterType.NumberOfItems32" /> except that it uses larger fields to accommodate larger values.</summary>
       </Docs>
     </Member>
     <Member MemberName="NumberOfItemsHEX32">
@@ -726,7 +725,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>256</MemberValue>
       <Docs>
-        <summary>An instantaneous counter that shows the most recently observed value. Used, for example, to maintain a simple count of a very large number of items or operations. It is the same as <see langword="NumberOfItemsHEX32" /> except that it uses larger fields to accommodate larger values.</summary>
+        <summary>An instantaneous counter that shows the most recently observed value. Used, for example, to maintain a simple count of a very large number of items or operations. It is the same as <see cref="F:System.Diagnostics.PerformanceCounterType.NumberOfItemsHEX32" /> except that it uses larger fields to accommodate larger values.</summary>
       </Docs>
     </Member>
     <Member MemberName="RateOfCountsPerSecond32">
@@ -784,7 +783,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>272696576</MemberValue>
       <Docs>
-        <summary>A difference counter that shows the average number of operations completed during each second of the sample interval. Counters of this type measure time in ticks of the system clock. This counter type is the same as the <see langword="RateOfCountsPerSecond32" /> type, but it uses larger fields to accommodate larger values to track a high-volume number of items or operations per second, such as a byte-transmission rate. Counters of this type include System\ File Read Bytes/sec. </summary>
+        <summary>A difference counter that shows the average number of operations completed during each second of the sample interval. Counters of this type measure time in ticks of the system clock. This counter type is the same as the <see cref="F:System.Diagnostics.PerformanceCounterType.RateOfCountsPerSecond32" /> type, but it uses larger fields to accommodate larger values to track a high-volume number of items or operations per second, such as a byte-transmission rate. Counters of this type include System\ File Read Bytes/sec. </summary>
       </Docs>
     </Member>
     <Member MemberName="RawBase">
@@ -813,7 +812,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>1073939459</MemberValue>
       <Docs>
-        <summary>A base counter that stores the denominator of a counter that presents a general arithmetic fraction. Check that this value is greater than zero before using it as the denominator in a <see langword="RawFraction" /> value calculation.</summary>
+        <summary>A base counter that stores the denominator of a counter that presents a general arithmetic fraction. Check that this value is greater than zero before using it as the denominator in a <see cref="F:System.Diagnostics.PerformanceCounterType.RawFraction" /> value calculation.</summary>
       </Docs>
     </Member>
     <Member MemberName="RawFraction">
@@ -871,7 +870,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>1073939457</MemberValue>
       <Docs>
-        <summary>A base counter that stores the number of sampling interrupts taken and is used as a denominator in the sampling fraction. The sampling fraction is the number of samples that were 1 (or <see langword="true" />) for a sample interrupt. Check that this value is greater than zero before using it as the denominator in a calculation of <see langword="SampleFraction" />.</summary>
+        <summary>A base counter that stores the number of sampling interrupts taken and is used as a denominator in the sampling fraction. The sampling fraction is the number of samples that were 1 (or <see langword="true" />) for a sample interrupt. Check that this value is greater than zero before using it as the denominator in a calculation of <see cref="F:System.Diagnostics.PerformanceCounterType.SampleFraction" />.</summary>
       </Docs>
     </Member>
     <Member MemberName="SampleCounter">
@@ -958,7 +957,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>542180608</MemberValue>
       <Docs>
-        <summary>A percentage counter that shows the active time of a component as a percentage of the total elapsed time of the sample interval. It measures time in units of 100 nanoseconds (ns). Counters of this type are designed to measure the activity of one component at a time. Counters of this type include Processor\ % User Time.</summary>
+        <summary>A percentage counter that shows the active time of a component as a percentage of the total elapsed time of the sample interval. It measures time in units of 100 nanoseconds (ns). Counters of this type are designed to measure the activity of one component at a time. Counters of this type include Processor\\% User Time.</summary>
       </Docs>
     </Member>
     <Member MemberName="Timer100NsInverse">
@@ -987,7 +986,7 @@ The following are the formulas used by some of the counters that represent calcu
       </ReturnValue>
       <MemberValue>558957824</MemberValue>
       <Docs>
-        <summary>A percentage counter that shows the average percentage of active time observed during the sample interval. This is an inverse counter. Counters of this type include Processor\ % Processor Time.</summary>
+        <summary>A percentage counter that shows the average percentage of active time observed during the sample interval. This is an inverse counter. Counters of this type include Processor\\% Processor Time.</summary>
       </Docs>
     </Member>
   </Members>
