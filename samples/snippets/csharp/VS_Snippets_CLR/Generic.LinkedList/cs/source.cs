@@ -123,7 +123,7 @@ public class Example
         Console.WriteLine("Test 16: Copy the list to an array:");
         //<Snippet10>
         // Create an array with the same number of
-        // elements as the inked list.
+        // elements as the linked list.
         string[] sArray = new string[sentence.Count];
         sentence.CopyTo(sArray, 0);
 
