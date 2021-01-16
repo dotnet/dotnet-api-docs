@@ -64,32 +64,7 @@ This extension method was added to .NET Core to bring the functionality that was
 
 The following code example creates a new directory inside the user's temporary folder with the specified directory security attributes:
 
-```csharp
-using System.IO;
-using System.Security.AccessControl;
-using System.Security.Principal;
-
-namespace ConsoleApp
-{
-    class Program
-    {
-        static void Main()
-        {
-            DirectorySecurity security = new DirectorySecurity();
-
-            SecurityIdentifier identity = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
-            FileSystemAccessRule accessRule = new FileSystemAccessRule(identity, FileSystemRights.FullControl, AccessControlType.Allow);
-            security.AddAccessRule(accessRule);
-
-            string path = Path.Combine(Path.GetTempPath(), "directoryToCreate");
-
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-
-            dirInfo.Create(security);
-        }
-    }
-}
-```
+[!code-csharp[DirectoryInfoCreateDirectory](~/samples/snippets/csharp/VS_Snippets_CLR/IO.FileSystem.AccessControl/DirectoryInfoCreateDirectory.cs)]
 
           ]]></format>
         </remarks>
@@ -146,34 +121,9 @@ This extension method was added to .NET Core to bring the functionality that was
 
 ## Examples
 
-The following code example creates a new text file (with the default buffer size of 4096) inside the user's temporary folder with the specified file security attributes:
+The following code example creates a new text file inside the user's temporary folder, explicitly specifying all security attributes:
 
-```csharp
-using System.IO;
-using System.Security.AccessControl;
-using System.Security.Principal;
-
-namespace ConsoleApp
-{
-    class Program
-    {
-        static void Main()
-        {
-            FileSecurity security = new FileSecurity();
-
-            SecurityIdentifier identity = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
-            FileSystemAccessRule accessRule = new FileSystemAccessRule(identity, FileSystemRights.FullControl, AccessControlType.Allow);
-            security.AddAccessRule(accessRule);
-
-            string path = Path.Combine(Path.GetTempPath(), "fileToCreate.txt");
-
-            FileInfo fileInfo = new FileInfo(path);
-
-            fileInfo.Create(FileMode.Create, FileSystemRights.FullControl, FileShare.Read, 4096, FileOptions.None, security);
-        }
-    }
-}
-```
+[!code-csharp[FileInfoCreate](~/samples/snippets/csharp/VS_Snippets_CLR/IO.FileSystem.AccessControl/FileInfoCreate.cs)]
 
           ]]></format>
         </remarks>
