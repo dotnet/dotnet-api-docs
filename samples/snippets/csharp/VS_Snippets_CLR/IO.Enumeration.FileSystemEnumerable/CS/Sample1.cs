@@ -6,14 +6,6 @@ namespace MyNamespace
 {
     public class MyClassCS
     {
-
-        static string myTransform(ref FileSystemEntry entry) =>
-            entry.ToFullPath();
-
-        static bool myPredicate(ref FileSystemEntry entry) =>
-            !entry.IsDirectory &&
-            Path.GetExtension(entry.ToFullPath()).Equals(".txt", StringComparison.InvariantCultureIgnoreCase);
-
         static void Main()
         {
             /*
@@ -44,12 +36,12 @@ namespace MyNamespace
                 RecurseSubdirectories = true
             };
 
-            //static string myTransform(ref FileSystemEntry entry) =>
-            //    entry.ToFullPath();
+            static string myTransform(ref FileSystemEntry entry) =>
+               entry.ToFullPath();
 
-            //static bool myPredicate(ref FileSystemEntry entry) =>
-            //    !entry.IsDirectory &&
-            //    Path.GetExtension(entry.ToFullPath()).Equals(".txt", StringComparison.InvariantCultureIgnoreCase);
+            static bool myPredicate(ref FileSystemEntry entry) =>
+               !entry.IsDirectory &&
+               Path.GetExtension(entry.ToFullPath()).Equals(".txt", StringComparison.InvariantCultureIgnoreCase);
 
             var enumeration = new FileSystemEnumerable<string>(pathDir, myTransform, options)
             {
