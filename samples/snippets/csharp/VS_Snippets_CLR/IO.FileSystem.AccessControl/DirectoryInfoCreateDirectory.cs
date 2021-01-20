@@ -14,7 +14,9 @@ namespace MyNamespace
         {
             // Create the file security object
 
-            SecurityIdentifier identity = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
+            SecurityIdentifier identity = new SecurityIdentifier(
+                WellKnownSidType.BuiltinUsersSid, // This maps to "Everyone" user group in Windows
+                null); // null is OK for this particular user group. For others, a non-empty value might be required
             FileSystemAccessRule accessRule = new FileSystemAccessRule(identity, FileSystemRights.FullControl, AccessControlType.Allow);
 
             DirectorySecurity expectedSecurity = new DirectorySecurity();

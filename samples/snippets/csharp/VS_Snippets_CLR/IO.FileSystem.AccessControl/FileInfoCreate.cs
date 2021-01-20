@@ -45,24 +45,7 @@ namespace MyNamespace
                 byte[] writeBuffer = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(text);
 
                 stream.Write(writeBuffer, 0, writeBuffer.Length);
-            } // Dispose flushes
-
-            // Reopen the file in new stream and read the contents to confirm they are correct
-
-            using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                byte[] readBuffer = new byte[1024];
-                var encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true);
-                while (stream.Read(readBuffer, 0, readBuffer.Length) > 0)
-                {
-                    Console.WriteLine(encoding.GetString(readBuffer));
-
-                    /*
-                        Output:
-                            Hello world!
-                    */
-                }
-            }
+            } // Dispose flushes the file to disk
         }
     }
 }
