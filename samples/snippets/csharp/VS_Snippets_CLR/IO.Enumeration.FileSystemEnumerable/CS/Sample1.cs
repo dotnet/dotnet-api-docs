@@ -16,7 +16,7 @@ namespace MyNamespace
                     RecurseSubdirectories = true
                 })
             {
-                // the following predicate will be used to filter the file entries
+                // The following predicate will be used to filter the file entries
                 ShouldIncludePredicate = (ref FileSystemEntry entry) => !entry.IsDirectory && Path.GetExtension(entry.ToFullPath()) == ".tmp"
             };
 
