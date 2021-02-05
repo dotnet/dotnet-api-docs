@@ -1,65 +1,75 @@
-﻿// <Snippet1>
-using System;
+﻿using System;
 using System.IO;
-using System.Security.Permissions;
 
-public class Watcher
+namespace MyNamespace
 {
-    public static void Main()
+    class MyClassCS
     {
-        Run();
-    }
-
-    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-    private static void Run()
-    {
-        string[] args = Environment.GetCommandLineArgs();
-
-        // If a directory is not specified, exit program.
-        if (args.Length != 2)
+        static void Main()
         {
-            // Display the proper way to call the program.
-            Console.WriteLine("Usage: Watcher.exe (directory)");
-            return;
-        }
+            using var watcher = new FileSystemWatcher(@"C:\path\to\folder");
 
-        // Create a new FileSystemWatcher and set its properties.
-        using (FileSystemWatcher watcher = new FileSystemWatcher())
-        {
-            watcher.Path = args[1];
-
-            // Watch for changes in LastAccess and LastWrite times, and
-            // the renaming of files or directories.
-            watcher.NotifyFilter = NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
+            watcher.NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.DirectoryName
                                  | NotifyFilters.FileName
-                                 | NotifyFilters.DirectoryName;
+                                 | NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Security
+                                 | NotifyFilters.Size;
 
-            // Only watch text files.
-            watcher.Filter = "*.txt";
-
-            // Add event handlers.
             watcher.Changed += OnChanged;
-            watcher.Created += OnChanged;
-            watcher.Deleted += OnChanged;
+            watcher.Created += OnCreated;
+            watcher.Deleted += OnDeleted;
             watcher.Renamed += OnRenamed;
+            watcher.Error += OnError;
 
-            // Begin watching.
+            watcher.Filter = "*.txt";
+            watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
 
-            // Wait for the user to quit the program.
-            Console.WriteLine("Press 'q' to quit the sample.");
-            while (Console.Read() != 'q') ;
+            Console.WriteLine("Press enter to exit.");
+            Console.ReadLine();
+        }
+
+        private static void OnChanged(object sender, FileSystemEventArgs e)
+        {
+            if (e.ChangeType != WatcherChangeTypes.Changed)
+            {
+                return;
+            }
+            Console.WriteLine($"Changed: {e.FullPath}");
+        }
+
+        private static void OnCreated(object sender, FileSystemEventArgs e)
+        {
+            string value = $"Created: {e.FullPath}";
+            Console.WriteLine(value);
+        }
+
+        private static void OnDeleted(object sender, FileSystemEventArgs e) =>
+            Console.WriteLine($"Deleted: {e.FullPath}");
+
+        private static void OnRenamed(object sender, RenamedEventArgs e)
+        {
+            Console.WriteLine($"Renamed:");
+            Console.WriteLine($"    Old: {e.OldFullPath}");
+            Console.WriteLine($"    New: {e.FullPath}");
+        }
+
+        private static void OnError(object sender, ErrorEventArgs e) =>
+            PrintException(e.GetException());
+
+        private static void PrintException(Exception? ex)
+        {
+            if (ex != null)
+            {
+                Console.WriteLine($"Message: {ex.Message}");
+                Console.WriteLine("Stacktrace:");
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine();
+                PrintException(ex.InnerException);
+            }
         }
     }
-
-    // Define the event handlers.
-    private static void OnChanged(object source, FileSystemEventArgs e) =>
-        // Specify what is done when a file is changed, created, or deleted.
-        Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-
-    private static void OnRenamed(object source, RenamedEventArgs e) =>
-        // Specify what is done when a file is renamed.
-        Console.WriteLine($"File: {e.OldFullPath} renamed to {e.FullPath}");
 }
-// </Snippet1>
