@@ -14,7 +14,7 @@ public class Example
                            Math.Round(value, MidpointRounding.AwayFromZero));
       // The example displays the following output:
       //       Value      Default    ToEven     AwayFromZero
-      //       12         12         12         12
+      //       12.0       12         12         12
       //       12.1       12         12         12
       //       12.2       12         12         12
       //       12.3       12         12         12
@@ -24,7 +24,7 @@ public class Example
       //       12.7       13         13         13
       //       12.8       13         13         13
       //       12.9       13         13         13
-      //       13         13         13         13
+      //       13.0       13         13         13
       // </Snippet5>
    }
 }

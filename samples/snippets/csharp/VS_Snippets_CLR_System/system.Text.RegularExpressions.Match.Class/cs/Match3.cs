@@ -25,9 +25,9 @@ public class Example
    }
 }
 // The example displays the following output:
-//    'Console.Write' found in the source code at position 115.
+//    'Console.Write' found in the source code at position 112.
 //    'Console.Write' found in the source code at position 184.
-//    'Console.WriteLine' found in the source code at position 211.
+//    'Console.WriteLine' found in the source code at position 207.
 // </Snippet3>
 
 internal class Test

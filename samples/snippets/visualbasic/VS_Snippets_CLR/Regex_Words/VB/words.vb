@@ -44,6 +44,6 @@ End Module
 '          The the quick brown fox  fox jumps over the lazy dog dog.
 '       'The' repeated at positions 0 and 4
 '       'fox' repeated at positions 20 and 25
-'       'dog' repeated at positions 50 and 54
+'       'dog' repeated at positions 49 and 53
 ' </Snippet0>
 
