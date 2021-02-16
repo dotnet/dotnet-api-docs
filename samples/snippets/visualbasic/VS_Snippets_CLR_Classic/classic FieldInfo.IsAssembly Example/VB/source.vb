@@ -7,6 +7,7 @@ Public class Example
     Friend f_Friend As Integer 
     Protected f_Protected As Integer
     Protected Friend f_Protected_Friend As Integer
+    Private Protected f_Private_Protected() As Integer
 
     Public Shared Sub Main()
     
@@ -39,5 +40,6 @@ End Class
 'f_Friend             False    True     False    False    False
 'f_Protected          False    False    True     False    False
 'f_Protected_Friend   False    False    False    True     False
+'f_Private_Protected  False    False    False    False    True
 ' </Snippet1>
 
