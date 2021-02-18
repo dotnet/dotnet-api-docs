@@ -1,3 +1,4 @@
+// <Snippet1>
 #include "pch.h"
 
 using namespace System;
@@ -87,3 +88,4 @@ int main()
 {
     MyClassCPP::Run();
 }
+//</Snippet1>

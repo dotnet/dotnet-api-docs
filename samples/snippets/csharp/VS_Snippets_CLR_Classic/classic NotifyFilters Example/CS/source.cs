@@ -1,4 +1,5 @@
-﻿using System;
+﻿// <Snippet1>
+using System;
 using System.IO;
 
 namespace MyNamespace
@@ -73,3 +74,4 @@ namespace MyNamespace
         }
     }
 }
+// </Snippet1>

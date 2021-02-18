@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿' <Snippet1>
+Imports System.IO
 
 Namespace MyNamespace
 
@@ -69,3 +70,4 @@ Namespace MyNamespace
     End Class
 
 End Namespace
+' </Snippet1>
