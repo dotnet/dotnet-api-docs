@@ -1,70 +1,91 @@
 // <Snippet1>
-#using <System.dll>
+#include "pch.h"
 
 using namespace System;
 using namespace System::IO;
-using namespace System::Security::Permissions;
 
-public ref class Watcher
+class MyClassCPP
 {
-private:
-   // Define the event handlers.
-   static void OnChanged( Object^ /*source*/, FileSystemEventArgs^ e )
-   {
-      // Specify what is done when a file is changed, created, or deleted.
-      Console::WriteLine( "File: {0} {1}", e->FullPath, e->ChangeType );
-   }
-
-   static void OnRenamed( Object^ /*source*/, RenamedEventArgs^ e )
-   {
-      // Specify what is done when a file is renamed.
-      Console::WriteLine( "File: {0} renamed to {1}", e->OldFullPath, e->FullPath );
-   }
-
 public:
-   [PermissionSet(SecurityAction::Demand, Name="FullTrust")]
-   int static run()
-   {
-      array<String^>^args = System::Environment::GetCommandLineArgs();
 
-      // If a directory is not specified, exit program.
-      if ( args->Length != 2 )
-      {
-         // Display the proper way to call the program.
-         Console::WriteLine( "Usage: Watcher.exe (directory)" );
-         return 0;
-      }
+    int static Run()
+    {
+        FileSystemWatcher^ watcher = gcnew FileSystemWatcher("C:\\path\\to\\folder");
 
-      // Create a new FileSystemWatcher and set its properties.
-      FileSystemWatcher^ watcher = gcnew FileSystemWatcher;
-      watcher->Path = args[ 1 ];
+        watcher->NotifyFilter = static_cast<NotifyFilters>(NotifyFilters::Attributes
+                                                         | NotifyFilters::CreationTime
+                                                         | NotifyFilters::DirectoryName
+                                                         | NotifyFilters::FileName
+                                                         | NotifyFilters::LastAccess
+                                                         | NotifyFilters::LastWrite
+                                                         | NotifyFilters::Security
+                                                         | NotifyFilters::Size);
 
-      /* Watch for changes in LastAccess and LastWrite times, and 
-          the renaming of files or directories. */
-      watcher->NotifyFilter = static_cast<NotifyFilters>(NotifyFilters::LastAccess |
-            NotifyFilters::LastWrite | NotifyFilters::FileName | NotifyFilters::DirectoryName);
+        watcher->Changed += gcnew FileSystemEventHandler(MyClassCPP::OnChanged);
+        watcher->Created += gcnew FileSystemEventHandler(MyClassCPP::OnCreated);
+        watcher->Deleted += gcnew FileSystemEventHandler(MyClassCPP::OnDeleted);
+        watcher->Renamed += gcnew RenamedEventHandler(MyClassCPP::OnRenamed);
+        watcher->Error   += gcnew ErrorEventHandler(MyClassCPP::OnError);
 
-      // Only watch text files.
-      watcher->Filter = "*.txt";
+        watcher->Filter = "*.txt";
+        watcher->IncludeSubdirectories = true;
+        watcher->EnableRaisingEvents = true;
 
-      // Add event handlers.
-      watcher->Changed += gcnew FileSystemEventHandler( Watcher::OnChanged );
-      watcher->Created += gcnew FileSystemEventHandler( Watcher::OnChanged );
-      watcher->Deleted += gcnew FileSystemEventHandler( Watcher::OnChanged );
-      watcher->Renamed += gcnew RenamedEventHandler( Watcher::OnRenamed );
+        Console::WriteLine("Press enter to exit.");
+        Console::ReadLine();
 
-      // Begin watching.
-      watcher->EnableRaisingEvents = true;
+        return 0;
+    }
 
-      // Wait for the user to quit the program.
-      Console::WriteLine( "Press \'q\' to quit the sample." );
-      while ( Console::Read() != 'q' );
+private:
 
-      return 0;
-   }
+    static void OnChanged(Object^ sender, FileSystemEventArgs^ e)
+    {
+        if (e->ChangeType != WatcherChangeTypes::Changed)
+        {
+            return;
+        }
+        Console::WriteLine("Changed: {0}", e->FullPath);
+    }
+
+    static void OnCreated(Object^ sender, FileSystemEventArgs^ e)
+    {
+        Console::WriteLine("Created: {0}", e->FullPath);
+    }
+
+    static void OnDeleted(Object^ sender, FileSystemEventArgs^ e)
+    {
+        Console::WriteLine("Deleted: {0}", e->FullPath);
+    }
+
+    static void OnRenamed(Object^ sender, RenamedEventArgs^ e)
+    {
+        Console::WriteLine("Renamed:");
+        Console::WriteLine("    Old: {0}", e->OldFullPath);
+        Console::WriteLine("    New: {0}", e->FullPath);
+    }
+
+    static void OnError(Object^ sender, ErrorEventArgs^ e)
+    {
+        PrintException(e->GetException());
+    }
+
+    static void PrintException(Exception^ ex)
+    {
+        if (ex != nullptr)
+        {
+            Console::WriteLine("Message: {0}", ex->Message);
+            Console::WriteLine("Stacktrace:");
+            Console::WriteLine(ex->StackTrace);
+            Console::WriteLine();
+            PrintException(ex->InnerException);
+        }
+    }
 };
 
-int main() {
-   Watcher::run();
+
+int main()
+{
+    MyClassCPP::Run();
 }
-// </Snippet1>
+//</Snippet1>
