@@ -84,63 +84,11 @@
   <Docs>
     <summary>Provides access to local and remote processes and enables you to start and stop local system processes.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A <xref:System.Diagnostics.Process> component provides access to a process that is running on a computer. A process, in the simplest terms, is a running app. A thread is the basic unit to which the operating system allocates processor time. A thread can execute any part of the code of the process, including parts currently being executed by another thread.  
-  
- The <xref:System.Diagnostics.Process> component is a useful tool for starting, stopping, controlling, and monitoring apps. You can use the <xref:System.Diagnostics.Process> component, to obtain a list of the processes that are running, or you can start a new process. A <xref:System.Diagnostics.Process> component is used to access system processes. After a <xref:System.Diagnostics.Process> component has been initialized, it can be used to obtain information about the running process. Such information includes the set of threads, the loaded modules (.dll and .exe files), and performance information such as the amount of memory the process is using.  
-  
- This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`finally` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.  
-  
-> [!NOTE]
->  32-bit processes cannot access the modules of a 64-bit process. If you try to get information about a 64-bit process from a 32-bit process, you will get a <xref:System.ComponentModel.Win32Exception> exception. A 64-bit process, on the other hand, can access the modules of a 32-bit process.  
-  
- The process component obtains information about a group of properties all at once. After the <xref:System.Diagnostics.Process> component has obtained information about one member of any group, it will cache the values for the other properties in that group and not obtain new information about the other members of the group until you call the <xref:System.Diagnostics.Process.Refresh%2A> method. Therefore, a property value is not guaranteed to be any newer than the last call to the <xref:System.Diagnostics.Process.Refresh%2A> method. The group breakdowns are operating-system dependent.  
-  
- If you have a path variable declared in your system using quotes, you must fully qualify that path when starting any process found in that location. Otherwise, the system will not find the path. For example, if `c:\mypath` is not in your path, and you add it using quotation marks: `path = %path%;"c:\mypath"`, you must fully qualify any process in `c:\mypath` when starting it.  
-  
- A system process is uniquely identified on the system by its process identifier. Like many Windows resources, a process is also identified by its handle, which might not be unique on the computer. A handle is the generic term for an identifier of a resource. The operating system persists the process handle, which is accessed through the <xref:System.Diagnostics.Process.Handle%2A> property of the <xref:System.Diagnostics.Process> component, even when the process has exited. Thus, you can get the process's administrative information, such as the <xref:System.Diagnostics.Process.ExitCode%2A> (usually either zero for success or a nonzero error code) and the <xref:System.Diagnostics.Process.ExitTime%2A>. Handles are an extremely valuable resource, so leaking handles is more virulent than leaking memory.  
-  
-> [!NOTE]
->  This class contains a link demand and an inheritance demand at the class level that applies to all members. A <xref:System.Security.SecurityException> is thrown when either the immediate caller or the derived class does not have full-trust permission. For details about security demands, see [Link Demands](/dotnet/framework/misc/link-demands).  
-  
-<a name="Core"></a>   
-## .NET Core Notes  
- In the .NET Framework, the <xref:System.Diagnostics.Process> class by default uses <xref:System.Console> encodings, which are typically code page encodings, for the input, output, and error streams. For example code, on systems whose culture is English (United States), code page 437 is the default encoding for the <xref:System.Console> class. However, .NET Core may make only a limited subset of these encodings available. If this is the case, it uses <xref:System.Text.Encoding.UTF8%2A?displayProperty=nameWithType> as the default encoding.  
-  
- If a <xref:System.Diagnostics.Process> object depends on specific code page encodings, you can still make them available by doing the following *before* you call any <xref:System.Diagnostics.Process> methods:  
-  
-1.  Add a reference to the System.Text.Encoding.CodePages.dll assembly to your project.  
-  
-2.  Retrieve the <xref:System.Text.EncodingProvider> object from the <xref:System.Text.CodePagesEncodingProvider.Instance%2A?displayProperty=nameWithType> property.  
-  
-3.  Pass the <xref:System.Text.EncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider%2A?displayProperty=nameWithType> method to make the additional encodings supported by the encoding provider available.  
-  
- The <xref:System.Diagnostics.Process> class will then automatically use the default system encoding rather than UTF8, provided that you have registered the encoding provider before calling any <xref:System.Diagnostics.Process> methods.  
-  
-   
-  
-## Examples  
- The following example uses an instance of the <xref:System.Diagnostics.Process> class to start a process.  
-  
- [!code-cpp[Process.Start_instance#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process.Start_instance/CPP/processstart.cpp#1)]
- [!code-csharp[Process.Start_instance#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process.Start_instance/CS/processstart.cs#1)]
- [!code-vb[Process.Start_instance#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process.Start_instance/VB/processstart.vb#1)]  
-  
- The following example uses the <xref:System.Diagnostics.Process> class itself and a static <xref:System.Diagnostics.Process.Start%2A> method to start a process.  
-  
- [!code-cpp[Process.Start_static#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process.Start_static/CPP/processstartstatic.cpp)]
- [!code-csharp[Process.Start_static#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process.Start_static/CS/processstartstatic.cs)]
- [!code-vb[Process.Start_static#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process.Start_static/VB/processstartstatic.vb)]  
-  
- The following F# example defines a `runProc` function that starts a process, captures all output and error information, and records the number of milliseconds that the process has run.  The `runProc` function has three parameters: the name of application to launch, the arguments to supply to the application, and the starting directory.  
-  
- [!code-fsharp[System.Diagnostics.Process#1](~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.diagnostics.process/fs/Start1.fs#1)]  
-  
- The code for the `runProc` function was written by [ImaginaryDevelopment](http://fssnip.net/authors/ImaginaryDevelopment) and is available under the [Microsoft Public License](https://opensource.org/licenses/ms-pl).  
-  
- ]]></format>
+      <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/Process.md)]
+
+      ]]></format>
     </remarks>
     <altmember cref="M:System.Diagnostics.Process.Start" />
     <altmember cref="T:System.Diagnostics.ProcessStartInfo" />
@@ -181,22 +129,11 @@
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.Process" /> class.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If you do not specify the <xref:System.Diagnostics.Process.MachineName%2A> property, the default is the local computer, (".").  
-  
- You have two options for associating a new <xref:System.Diagnostics.Process> component with a process on the computer. The first option is to use the constructor to create the <xref:System.Diagnostics.Process> component, set the appropriate members of the <xref:System.Diagnostics.Process.StartInfo%2A> property and call <xref:System.Diagnostics.Process.Start%2A> to associate the <xref:System.Diagnostics.Process> with a new system process. The second option is to associate the <xref:System.Diagnostics.Process> with a running system process by using <xref:System.Diagnostics.Process.GetProcessById%2A> or one of the <xref:System.Diagnostics.Process.GetProcesses%2A> return values.  
-  
- If you use a `static` overload of the <xref:System.Diagnostics.Process.Start%2A> method to start a new system process, the method creates a new <xref:System.Diagnostics.Process> component and associates it with the process.  
-  
- When the <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A?displayProperty=nameWithType> property is set to its default value, `true`, you can start applications and documents in a way that is similar to using the `Run` dialog box of the Windows `Start` menu. When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A?displayProperty=nameWithType> is `false`, you can start only executables.  
-  
- Any executable file that you can call from the command line can be started in one of two ways: by setting the appropriate members of the <xref:System.Diagnostics.Process.StartInfo%2A> property and calling the <xref:System.Diagnostics.Process.Start%2A> method with no parameters, or by passing the appropriate parameter to the `static`<xref:System.Diagnostics.Process.Start%2A> member.  
-  
- You can create a <xref:System.Diagnostics.Process> component by using the constructor, one of the static <xref:System.Diagnostics.Process.Start%2A> overloads, or any of the <xref:System.Diagnostics.Process.GetProcessById%2A>, <xref:System.Diagnostics.Process.GetProcesses%2A>, or <xref:System.Diagnostics.Process.GetProcessesByName%2A> methods. After you have done so, you have a view into the associated process. This is not a dynamic view that updates itself automatically when the process properties have changed in memory. Instead, you must call <xref:System.Diagnostics.Process.Refresh%2A> for the component to update the <xref:System.Diagnostics.Process> property information in your application.  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/.ctor.md)]
+
+          ]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -253,34 +190,11 @@
         <summary>Gets the base priority of the associated process.</summary>
         <value>The base priority, which is computed from the <see cref="P:System.Diagnostics.Process.PriorityClass" /> of the associated process.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The value returned by this property represents the most recently refreshed base priority of the process. To get the most up to date base priority, you need to call <xref:System.Diagnostics.Process.Refresh> method first.
+          <format type="text/markdown"><![CDATA[
 
- The <xref:System.Diagnostics.Process.BasePriority%2A> of the process is the starting priority for threads created within the associated process. You can view information about the base priority through the System Monitor's Priority Base counter.  
-  
- Based on the time elapsed or other boosts, the operating system can change the base priority when a process should be placed ahead of others.  
-  
- The <xref:System.Diagnostics.Process.BasePriority%2A> property lets you view the starting priority assigned to a process. However, because it is read-only, you cannot use the <xref:System.Diagnostics.Process.BasePriority%2A> to set the priority of the process. To change the priority, use the <xref:System.Diagnostics.Process.PriorityClass%2A> property. The <xref:System.Diagnostics.Process.BasePriority%2A> is viewable using the System Monitor, while the <xref:System.Diagnostics.Process.PriorityClass%2A> is not. Both the <xref:System.Diagnostics.Process.BasePriority%2A> and the <xref:System.Diagnostics.Process.PriorityClass%2A> can be viewed programmatically. The following table shows the relationship between <xref:System.Diagnostics.Process.BasePriority%2A> values and <xref:System.Diagnostics.Process.PriorityClass%2A> values.  
-  
-|BasePriority|PriorityClass|  
-|------------------|-------------------|  
-|4|<xref:System.Diagnostics.ProcessPriorityClass.Idle>|  
-|8|<xref:System.Diagnostics.ProcessPriorityClass.Normal>|  
-|13|<xref:System.Diagnostics.ProcessPriorityClass.High>|  
-|24|<xref:System.Diagnostics.ProcessPriorityClass.RealTime>|  
-  
-   
-  
-## Examples  
- The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.  
-  
- [!code-cpp[Diag_Process_MemoryProperties64#1](~/samples/snippets/cpp/VS_Snippets_CLR/Diag_Process_MemoryProperties64/CPP/source.cpp#1)]
- [!code-csharp[Diag_Process_MemoryProperties64#1](~/samples/snippets/csharp/VS_Snippets_CLR/Diag_Process_MemoryProperties64/CS/source.cs#1)]
- [!code-vb[Diag_Process_MemoryProperties64#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Diag_Process_MemoryProperties64/VB/source.vb#1)]  
-  
- ]]></format>
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/BasePriority.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The process has exited.  
   
@@ -332,42 +246,11 @@
       <Docs>
         <summary>Begins asynchronous read operations on the redirected <see cref="P:System.Diagnostics.Process.StandardError" /> stream of the application.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Diagnostics.Process.StandardError%2A> stream can be read synchronously or asynchronously. Methods such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, and <xref:System.IO.StreamReader.ReadToEnd%2A> perform synchronous read operations on the error output stream of the process. These synchronous read operations do not complete until the associated <xref:System.Diagnostics.Process> writes to its <xref:System.Diagnostics.Process.StandardError%2A> stream, or closes the stream.  
-  
- In contrast, <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> starts asynchronous read operations on the <xref:System.Diagnostics.Process.StandardError%2A> stream. This method enables the designated event handler for the stream output and immediately returns to the caller, which can perform other work while the stream output is directed to the event handler.  
-  
- Follow these steps to perform asynchronous read operations on <xref:System.Diagnostics.Process.StandardError%2A> for a <xref:System.Diagnostics.Process> :  
-  
-1.  Set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false`.  
-  
-2.  Set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardError%2A> to `true`.  
-  
-3.  Add your event handler to the <xref:System.Diagnostics.Process.ErrorDataReceived> event. The event handler must match the <xref:System.Diagnostics.DataReceivedEventHandler?displayProperty=nameWithType> delegate signature.  
-  
-4.  Start the <xref:System.Diagnostics.Process>.  
-  
-5.  Call <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> for the <xref:System.Diagnostics.Process>. This call starts asynchronous read operations on <xref:System.Diagnostics.Process.StandardError%2A>.  
-  
- When asynchronous read operations start, the event handler is called each time the associated <xref:System.Diagnostics.Process> writes a line of text to its <xref:System.Diagnostics.Process.StandardError%2A> stream.  
-  
- You can cancel an asynchronous read operation by calling <xref:System.Diagnostics.Process.CancelErrorRead%2A>. The read operation can be canceled by the caller or by the event handler. After canceling, you can call <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> again to resume asynchronous read operations.  
-  
-> [!NOTE]
->  You cannot mix asynchronous and synchronous read operations on a redirected stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. For example, do not follow <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> with a call to <xref:System.IO.StreamReader.ReadLine%2A> on the <xref:System.Diagnostics.Process.StandardError%2A> stream, or vice versa. However, you can read two different streams in different modes. For example, you can call <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> and then call <xref:System.IO.StreamReader.ReadLine%2A> for the <xref:System.Diagnostics.Process.StandardOutput%2A> stream.  
-  
-   
-  
-## Examples  
- The following example uses the `net view` command to list the available network resources on a remote computer. The user supplies the target computer name as a command-line argument. The user can also supply a file name for error output. The example collects the output of the net command, waits for the process to finish, and then writes the output results to the console. If the user supplies the optional error file, the example writes errors to the file.  
-  
- [!code-cpp[Process_AsyncStreams#2](~/samples/snippets/cpp/VS_Snippets_CLR/process_asyncstreams/CPP/net_async.cpp#2)]
- [!code-csharp[Process_AsyncStreams#2](~/samples/snippets/csharp/VS_Snippets_CLR/process_asyncstreams/CS/net_async.cs#2)]
- [!code-vb[Process_AsyncStreams#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/process_asyncstreams/VB/net_async.vb#2)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/BeginErrorReadLine.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardError" /> property is <see langword="false" />.  
   
@@ -425,44 +308,11 @@
       <Docs>
         <summary>Begins asynchronous read operations on the redirected <see cref="P:System.Diagnostics.Process.StandardOutput" /> stream of the application.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Diagnostics.Process.StandardOutput%2A> stream can be read synchronously or asynchronously. Methods such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, and <xref:System.IO.StreamReader.ReadToEnd%2A> perform synchronous read operations on the output stream of the process. These synchronous read operations do not complete until the associated <xref:System.Diagnostics.Process> writes to its <xref:System.Diagnostics.Process.StandardOutput%2A> stream, or closes the stream.  
-  
- In contrast, <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> starts asynchronous read operations on the <xref:System.Diagnostics.Process.StandardOutput%2A> stream. This method enables a designated event handler for the stream output and immediately returns to the caller, which can perform other work while the stream output is directed to the event handler.  
-  
- Follow these steps to perform asynchronous read operations on <xref:System.Diagnostics.Process.StandardOutput%2A> for a <xref:System.Diagnostics.Process> :  
-  
-1.  Set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false`.  
-  
-2.  Set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput%2A> to `true`.  
-  
-3.  Add your event handler to the <xref:System.Diagnostics.Process.OutputDataReceived> event. The event handler must match the <xref:System.Diagnostics.DataReceivedEventHandler?displayProperty=nameWithType> delegate signature.  
-  
-4.  Start the <xref:System.Diagnostics.Process>.  
-  
-5.  Call <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> for the <xref:System.Diagnostics.Process>. This call starts asynchronous read operations on <xref:System.Diagnostics.Process.StandardOutput%2A>.  
-  
- When asynchronous read operations start, the event handler is called each time the associated <xref:System.Diagnostics.Process> writes a line of text to its <xref:System.Diagnostics.Process.StandardOutput%2A> stream.  
-  
- You can cancel an asynchronous read operation by calling <xref:System.Diagnostics.Process.CancelOutputRead%2A>. The read operation can be canceled by the caller or by the event handler. After canceling, you can call <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> again to resume asynchronous read operations.  
-  
-> [!NOTE]
->  You cannot mix asynchronous and synchronous read operations on a redirected stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. For example, do not follow <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> with a call to <xref:System.IO.StreamReader.ReadLine%2A> on the <xref:System.Diagnostics.Process.StandardOutput%2A> stream, or vice versa. However, you can read two different streams in different modes. For example, you can call <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> and then call <xref:System.IO.StreamReader.ReadLine%2A> for the <xref:System.Diagnostics.Process.StandardError%2A> stream.  
-  
-   
-  
-## Examples  
- The following example illustrates how to perform asynchronous read operations on the redirected <xref:System.Diagnostics.Process.StandardOutput%2A> stream of the `sort` command. The `sort` command is a console application that reads and sorts text input.  
-  
- The example creates an event delegate for the `SortOutputHandler` event handler and associates it with the <xref:System.Diagnostics.Process.OutputDataReceived> event. The event handler receives text lines from the redirected <xref:System.Diagnostics.Process.StandardOutput%2A> stream, formats the text, and writes the text to the screen.  
-  
- [!code-cpp[Process_AsyncStreams#1](~/samples/snippets/cpp/VS_Snippets_CLR/process_asyncstreams/CPP/sort_async.cpp#1)]
- [!code-csharp[Process_AsyncStreams#1](~/samples/snippets/csharp/VS_Snippets_CLR/process_asyncstreams/CS/sort_async.cs#1)]
- [!code-vb[Process_AsyncStreams#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/process_asyncstreams/VB/sort_async.vb#1)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/BeginOutputReadLine.md)]
+
+           ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput" /> property is <see langword="false" />.  
   
@@ -520,44 +370,11 @@
       <Docs>
         <summary>Cancels the asynchronous read operation on the redirected <see cref="P:System.Diagnostics.Process.StandardError" /> stream of an application.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> starts an asynchronous read operation on the <xref:System.Diagnostics.Process.StandardError%2A> stream. <xref:System.Diagnostics.Process.CancelErrorRead%2A> ends the asynchronous read operation.  
-  
- After canceling, you can resume the asynchronous read operation by calling <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> again.  
-  
- When you call <xref:System.Diagnostics.Process.CancelErrorRead%2A>, all in-progress read operations for <xref:System.Diagnostics.Process.StandardError%2A> are completed and then the event handler is disabled. All further redirected output to <xref:System.Diagnostics.Process.StandardError%2A> will be lost. If you re-enable the event handler with a call to <xref:System.Diagnostics.Process.BeginErrorReadLine%2A>, asynchronous read operations resume. If you want to change the event handler before resuming asynchronous read operations, you must remove the existing event handler before adding the new event handler:  
-  
-```csharp  
-// At this point the DataReceivedEventHandler(ErrorHandler1)   
-// has executed a CancelErrorRead.  
-  
-// Remove the prior event handler.  
-process.ErrorDataReceived -=   
-    new DataReceivedEventHandler(ErrorHandler1);  
-  
-// Register a new event handler.  
-process.ErrorDataReceived +=   
-    new DataReceivedEventHandler(ErrorHandler2);  
-  
-// Call the corresponding BeginErrorReadLine.  
-process.BeginErrorReadLine();  
-```  
-  
-> [!NOTE]
->  You cannot mix asynchronous and synchronous read operations on the redirected <xref:System.Diagnostics.Process.StandardError%2A> stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. If you cancel an asynchronous read operation on <xref:System.Diagnostics.Process.StandardError%2A> and then need to read from the stream again, you must use <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> to resume asynchronous read operations. Do not follow <xref:System.Diagnostics.Process.CancelErrorRead%2A> with a call to the synchronous read methods of <xref:System.Diagnostics.Process.StandardError%2A> such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, or <xref:System.IO.StreamReader.ReadToEnd%2A>.  
-  
-   
-  
-## Examples  
- The following example starts the `nmake` command with user supplied arguments. The error and output streams are read asynchronously; the collected text lines are displayed to the console as well as written to a log file. If the command output exceeds a specified number of lines, the asynchronous read operations are canceled.  
-  
- [!code-cpp[Process_AsyncStreams#3](~/samples/snippets/cpp/VS_Snippets_CLR/process_asyncstreams/CPP/nmake_async.cpp#3)]
- [!code-csharp[Process_AsyncStreams#3](~/samples/snippets/csharp/VS_Snippets_CLR/process_asyncstreams/CS/nmake_async.cs#3)]
- [!code-vb[Process_AsyncStreams#3](~/samples/snippets/visualbasic/VS_Snippets_CLR/process_asyncstreams/VB/nmake_async.vb#3)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/CancelErrorRead.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Diagnostics.Process.StandardError" /> stream is not enabled for asynchronous read operations.</exception>
         <altmember cref="M:System.Diagnostics.Process.BeginErrorReadLine" />
@@ -607,44 +424,11 @@ process.BeginErrorReadLine();
       <Docs>
         <summary>Cancels the asynchronous read operation on the redirected <see cref="P:System.Diagnostics.Process.StandardOutput" /> stream of an application.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> starts an asynchronous read operation on the <xref:System.Diagnostics.Process.StandardOutput%2A> stream. <xref:System.Diagnostics.Process.CancelOutputRead%2A> ends the asynchronous read operation.  
-  
- After canceling, you can resume asynchronous read operations by calling <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> again.  
-  
- When you call <xref:System.Diagnostics.Process.CancelOutputRead%2A>, all in-progress read operations for <xref:System.Diagnostics.Process.StandardOutput%2A> are completed and then the event handler is disabled. All further redirected output to <xref:System.Diagnostics.Process.StandardOutput%2A> is saved in a buffer. If you re-enable the event handler with a call to <xref:System.Diagnostics.Process.BeginOutputReadLine%2A>, the saved output is sent to the event handler and asynchronous read operations resume. If you want to change the event handler before resuming asynchronous read operations, you must remove the existing event handler before adding the new event handler:  
-  
-```csharp  
-// At this point the DataReceivedEventHandler(OutputHandler1)   
-// has executed a CancelOutputRead.  
-  
-// Remove the prior event handler.  
-process.OutputDataReceived -=   
-    new DataReceivedEventHandler(OutputHandler1);  
-  
-// Register a new event handler.  
-process.OutputDataReceived +=   
-    new DataReceivedEventHandler(OutputHandler2);  
-  
-// Call the corresponding BeginOutputReadLine.  
-process.BeginOutputReadLine();  
-```  
-  
-> [!NOTE]
->  You cannot mix asynchronous and synchronous read operations on the redirected <xref:System.Diagnostics.Process.StandardOutput%2A> stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. If you cancel an asynchronous read operation on <xref:System.Diagnostics.Process.StandardOutput%2A> and then need to read from the stream again, you must use <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> to resume asynchronous read operations. Do not follow <xref:System.Diagnostics.Process.CancelOutputRead%2A> with a call to the synchronous read methods of <xref:System.Diagnostics.Process.StandardOutput%2A> such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, or <xref:System.IO.StreamReader.ReadToEnd%2A>.  
-  
-   
-  
-## Examples  
- The following example starts the `nmake` command with user supplied arguments. The error and output streams are read asynchronously; the collected text lines are displayed to the console as well as written to a log file. If the command output exceeds a specified number of lines, the asynchronous read operations are canceled.  
-  
- [!code-cpp[Process_AsyncStreams#3](~/samples/snippets/cpp/VS_Snippets_CLR/process_asyncstreams/CPP/nmake_async.cpp#3)]
- [!code-csharp[Process_AsyncStreams#3](~/samples/snippets/csharp/VS_Snippets_CLR/process_asyncstreams/CS/nmake_async.cs#3)]
- [!code-vb[Process_AsyncStreams#3](~/samples/snippets/visualbasic/VS_Snippets_CLR/process_asyncstreams/VB/nmake_async.vb#3)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/CancelOutputRead.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Diagnostics.Process.StandardOutput" /> stream is not enabled for asynchronous read operations.</exception>
         <altmember cref="M:System.Diagnostics.Process.BeginOutputReadLine" />
@@ -695,9 +479,7 @@ process.BeginOutputReadLine();
   
 > [!NOTE]
 >  The <xref:System.Diagnostics.Process.Dispose%2A> method calls <xref:System.Diagnostics.Process.Close%2A>. Placing the <xref:System.Diagnostics.Process> object in a `using` block disposes of resources without the need to call <xref:System.Diagnostics.Process.Close%2A>.  
-  
-   
-  
+
 ## Examples  
  The following example starts an instance of Notepad. It then retrieves the physical memory usage of the associated process at 2-second intervals for a maximum of 10 seconds. The example detects whether the process exits before 10 seconds have elapsed. The example closes the process if it is still running after 10 seconds.  
   
@@ -753,9 +535,7 @@ process.BeginOutputReadLine();
  Data edited by the process or resources allocated to the process can be lost if you call <xref:System.Diagnostics.Process.Kill%2A>. <xref:System.Diagnostics.Process.Kill%2A> causes an abnormal process termination, and should be used only when necessary. <xref:System.Diagnostics.Process.CloseMainWindow%2A> enables an orderly termination of the process and closes all windows, so it is preferable for applications with an interface. If <xref:System.Diagnostics.Process.CloseMainWindow%2A> fails, you can use <xref:System.Diagnostics.Process.Kill%2A> to terminate the process. <xref:System.Diagnostics.Process.Kill%2A> is the only way to terminate processes that do not have graphical interfaces.  
   
  You can call <xref:System.Diagnostics.Process.Kill%2A> and <xref:System.Diagnostics.Process.CloseMainWindow%2A> only for processes that are running on the local computer. You cannot cause processes on remote computers to exit. You can only view information for processes running on remote computers.  
-  
-   
-  
+
 ## Examples  
  The following example starts an instance of Notepad. It then retrieves the physical memory usage of the associated process at 2 second intervals for a maximum of 10 seconds. The example detects whether the process exits before 10 seconds have elapsed. The example closes the process if it is still running after 10 seconds.  
   
@@ -906,29 +686,11 @@ process.BeginOutputReadLine();
         <value>
           <see langword="true" /> if the <see cref="E:System.Diagnostics.Process.Exited" /> event should be raised when the associated process is terminated (through either an exit or a call to <see cref="M:System.Diagnostics.Process.Kill" />); otherwise, <see langword="false" />. The default is <see langword="false" />. Note that the <see cref="E:System.Diagnostics.Process.Exited" /> event is raised even if the value of <see cref="P:System.Diagnostics.Process.EnableRaisingEvents" /> is <see langword="false" /> when the process exits during or before the user performs a <see cref="P:System.Diagnostics.Process.HasExited" /> check.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
-The <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> property suggests whether the component should be notified when the operating system has shut down a process. The <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> property is used in asynchronous processing to notify your application that a process has exited. To force your application to synchronously wait for an exit event (which interrupts processing of the application until the exit event has occurred), use the <xref:System.Diagnostics.Process.WaitForExit%2A> method.
+          <format type="text/markdown"><![CDATA[
 
-> [!NOTE]
-> If you're using Visual Studio and double-click a <xref:System.Diagnostics.Process> component in your project, an <xref:System.Diagnostics.Process.Exited> event delegate and event handler are automatically generated. Additional code sets the <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> property to `false`. You must change this property to `true` for your event handler to execute when the associated process exits.
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/EnableRaisingEvents.md)]
 
-If the component's <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> value is `true`, or when <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> is `false` and a <xref:System.Diagnostics.Process.HasExited%2A> check is invoked by the component, the component can access the administrative information for the associated process, which remains stored by the operating system. Such information includes the <xref:System.Diagnostics.Process.ExitTime%2A> and the <xref:System.Diagnostics.Process.ExitCode%2A>.
-
-After the associated process exits, the <xref:System.Diagnostics.Process.Handle%2A> of the component no longer points to an existing process resource. Instead, it can only be used to access the operating system's information about the process resource. The operating system is aware that there are handles to exited processes that haven't been released by <xref:System.Diagnostics.Process> components, so it keeps the <xref:System.Diagnostics.Process.ExitTime%2A> and <xref:System.Diagnostics.Process.Handle%2A> information in memory.
-
-There's a cost associated with watching for a process to exit. If <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> is `true`, the <xref:System.Diagnostics.Process.Exited> event is raised when the associated process terminates. Your procedures for the <xref:System.Diagnostics.Process.Exited> event run at that time.
-
-Sometimes, your application starts a process but doesn't require notification of its closure. For example, your application can start Notepad to allow the user to perform text editing but make no further use of the Notepad application. You can choose to avoid notification when the process exits because it's not relevant to the continued operation of your application. Setting <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> to `false` can save system resources.
-
-## Examples  
-The following code example creates a process that prints a file. It sets the <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> property to cause the process to raise the <xref:System.Diagnostics.Process.Exited> event when it exits. The <xref:System.Diagnostics.Process.Exited> event handler displays process information.
-
-[!code-csharp[System.Diagnostics.Process.EnableExited#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.Process.EnableExited/CS/processexitedevent.cs#1)]   
-[!code-vb[System.Diagnostics.Process.EnableExited#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.Process.EnableExited/VB/processexitedevent.vb#1)]   
-  
- ]]></format>
+          ]]></format>
         </remarks>
         <altmember cref="M:System.Diagnostics.Process.WaitForExit(System.Int32)" />
         <altmember cref="E:System.Diagnostics.Process.Exited" />
@@ -1042,9 +804,7 @@ The following code example creates a process that prints a file. It sets the <xr
   
 > [!NOTE]
 >  The application that is processing the asynchronous output should call the <xref:System.Diagnostics.Process.WaitForExit> method to ensure that the output buffer has been flushed. Note that specifying a timeout by using the <xref:System.Diagnostics.Process.WaitForExit(System.Int32)> overload does *not* ensure the output buffer has been flushed.
-  
-   
-  
+
 ## Examples  
  The following example uses the `net view` command to list the available network resources on a remote computer. The user supplies the target computer name as a command-line argument. The user can also supply a file name for error output. The example collects the output of the net command, waits for the process to finish, and then writes the output results to the console. If the user supplies the optional error file, the example writes errors to the file.  
   
@@ -1131,9 +891,7 @@ The following code example creates a process that prints a file. It sets the <xr
  You can use the <xref:System.Diagnostics.Process.CloseMainWindow%2A> or the <xref:System.Diagnostics.Process.Kill%2A> method to cause an associated process to exit.  
   
  There are two ways of being notified when the associated process exits: synchronously and asynchronously. Synchronous notification relies on calling the <xref:System.Diagnostics.Process.WaitForExit%2A> method to pause the processing of your application until the associated component exits. Asynchronous notification relies on the <xref:System.Diagnostics.Process.Exited> event. When using asynchronous notification, <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> must be set to `true` for the <xref:System.Diagnostics.Process> component to receive notification that the process has exited.  
-  
-   
-  
+
 ## Examples  
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.  
   
@@ -1217,9 +975,7 @@ The following code example creates a process that prints a file. It sets the <xr
 >  Even if you have a handle to an exited process, you cannot call <xref:System.Diagnostics.Process.Start%2A> again to reconnect to the same process. Calling <xref:System.Diagnostics.Process.Start%2A> automatically releases the associated process and connects to a process with the same file but an entirely new <xref:System.Diagnostics.Process.Handle%2A>.  
   
  For more information about the use of the <xref:System.Diagnostics.Process.Exited> event in Windows Forms applications, see the <xref:System.Diagnostics.Process.SynchronizingObject%2A> property.  
-  
-   
-  
+
 ## Examples  
  The following code example creates a process that prints a file. It raises the <xref:System.Diagnostics.Process.Exited> event when the process exits because the <xref:System.Diagnostics.Process.EnableRaisingEvents%2A> property was set when the process was created. The <xref:System.Diagnostics.Process.Exited> event handler displays process information.  
   
@@ -1287,9 +1043,7 @@ The following code example creates a process that prints a file. It sets the <xr
   
 ## Remarks  
  If the process has not terminated, attempting to retrieve the <xref:System.Diagnostics.Process.ExitTime%2A> property throws an exception. Use <xref:System.Diagnostics.Process.HasExited%2A> before getting the <xref:System.Diagnostics.Process.ExitTime%2A> property to determine whether the associated process has terminated.  
-  
-   
-  
+
 ## Examples  
  The following code example creates a process that prints a file. The process raises the <xref:System.Diagnostics.Process.Exited> event when it exits, and the event handler displays the <xref:System.Diagnostics.Process.ExitTime%2A> property and other process information.  
   
@@ -1345,9 +1099,7 @@ The following code example creates a process that prints a file. It sets the <xr
  Use this method to create a new <xref:System.Diagnostics.Process> instance and associate it with the process resource on the local computer.  
   
  Like the similar <xref:System.Diagnostics.Process.GetProcessById%2A>, <xref:System.Diagnostics.Process.GetProcessesByName%2A>, and <xref:System.Diagnostics.Process.GetProcesses%2A> methods, <xref:System.Diagnostics.Process.GetCurrentProcess%2A> associates an existing resource with a new <xref:System.Diagnostics.Process> component.  
-  
-   
-  
+
 ## Examples  
  The following example retrieves information of the current process, processes running on the local computer, all instances of Notepad running on the local computer, and a specific process on the local computer. It then retrieves information for the same processes on a remote computer.  
   
@@ -1746,9 +1498,7 @@ The following code example creates a process that prints a file. It sets the <xr
  The process name is a friendly name for the process, such as Outlook, that does not include the .exe extension or the path. <xref:System.Diagnostics.Process.GetProcessesByName%2A> is helpful for getting and manipulating all the processes that are associated with the same executable file. For example, you can pass an executable file name as the `processName` parameter, in order to shut down all the running instances of that executable file.  
   
  Although a process <xref:System.Diagnostics.Process.Id%2A> is unique to a single process resource on the system, multiple processes on the local computer can be running the application specified by the `processName` parameter. Therefore, <xref:System.Diagnostics.Process.GetProcessById%2A> returns one process at most, but <xref:System.Diagnostics.Process.GetProcessesByName%2A> returns an array containing all the associated processes. If you need to manipulate the process using standard API calls, you can query each of these processes in turn for its identifier. You cannot access process resources through the process name alone but, once you have retrieved an array of <xref:System.Diagnostics.Process> components that have been associated with the process resources, you can start, terminate, and otherwise manipulate the system resources.  
-  
-   
-  
+
 ## Examples  
  The following example retrieves information of the current process, processes running on the local computer, all instances of Notepad running on the local computer, and a specific process on the local computer. It then retrieves information for the same processes on a remote computer.  
   
@@ -1825,9 +1575,7 @@ The following code example creates a process that prints a file. It sets the <xr
  You can use this overload to get processes on the local computer as well as on a remote computer. Use "." to specify the local computer. Another overload exists that uses the local computer by default.  
   
  You can access processes on remote computers only to view information, such as statistics, about the processes. You cannot close, terminate (using <xref:System.Diagnostics.Process.Kill%2A>), or start processes on remote computers.  
-  
-   
-  
+
 ## Examples  
  The following example retrieves information of the current process, processes running on the local computer, all instances of Notepad running on the local computer, and a specific process on the local computer. It then retrieves information for the same processes on a remote computer.  
   
@@ -2060,9 +1808,7 @@ There are problems accessing the performance counter APIs used to get process in
   
 > [!NOTE]
 >  When standard output has been redirected to asynchronous event handlers, it is possible that output processing will not have completed when this property returns `true`. To ensure that asynchronous event handling has been completed, call the <xref:System.Diagnostics.Process.WaitForExit> overload that takes no parameter before checking <xref:System.Diagnostics.Process.HasExited%2A>.  
-  
-   
-  
+
 ## Examples  
  The following example starts an instance of Notepad. It then retrieves the physical memory usage of the associated process at 2 second intervals for a maximum of 10 seconds. The example detects whether the process exits before 10 seconds have elapsed. The example closes the process if it is still running after 10 seconds.  
   
@@ -2141,9 +1887,7 @@ There are problems accessing the performance counter APIs used to get process in
  Process identifiers can be reused by the system. The <xref:System.Diagnostics.Process.Id%2A> property value is unique only while the associated process is running. After the process has terminated, the system can reuse the <xref:System.Diagnostics.Process.Id%2A> property value for an unrelated process.  
   
  Because the identifier is unique on the system, you can pass it to other threads as an alternative to passing a <xref:System.Diagnostics.Process> instance. This action can save system resources yet guarantee that the process is correctly identified.  
-  
-   
-  
+
 ## Examples  
  The following example demonstrates how to obtain the <xref:System.Diagnostics.Process.Id%2A> for all running instances of an application. The code creates a new instance of Notepad, lists all the instances of Notepad, and then allows the user to enter the <xref:System.Diagnostics.Process.Id%2A> number to remove a specific instance.  
   
@@ -2165,39 +1909,11 @@ There are problems accessing the performance counter APIs used to get process in
       <Docs>
         <summary>Forces termination of the underlying process.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-The `Kill` method forces a termination of the process, while <xref:System.Diagnostics.Process.CloseMainWindow%2A> only requests a termination. 
-When a process with a graphical interface is executing, its message loop is in a wait state. 
-The message loop executes every time a Windows message is sent to the process by the operating system. 
-Calling <xref:System.Diagnostics.Process.CloseMainWindow%2A> sends a request to close the main window, which, in a well-formed application, closes child windows and revokes all running message loops for the application. 
-The request to exit the process by calling <xref:System.Diagnostics.Process.CloseMainWindow%2A> does not force the application to quit.
-The application can ask for user verification before quitting, or it can refuse to quit. 
-To force the application to quit, use the `Kill` method.
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/Kill.md)]
 
-The behavior of <xref:System.Diagnostics.Process.CloseMainWindow%2A> is identical to that of a user closing an application's main window using the system menu.
-Therefore, the request to exit the process by closing the main window does not force the application to quit immediately.
-  
-> [!NOTE]
-> The <xref:System.Diagnostics.Process.Kill%2A> method executes asynchronously. 
-> After calling the `Kill` method, call the <xref:System.Diagnostics.Process.WaitForExit%2A> method to wait for the process to exit, or check the <xref:System.Diagnostics.Process.HasExited%2A> property to determine if the process has exited.
-
-> [!NOTE]
-> The <xref:System.Diagnostics.Process.WaitForExit%2A> method and the <xref:System.Diagnostics.Process.HasExited%2A> property do not reflect the status of descendant processes.
-> When `Kill(entireProcessTree: true)` is used, <xref:System.Diagnostics.Process.WaitForExit%2A> and <xref:System.Diagnostics.Process.HasExited%2A> will indicate that exiting has completed after the given process exits, even if all descendants have not yet exited.
-  
-Data edited by the process or resources allocated to the process can be lost if you call `Kill`. 
-`Kill` causes an abnormal process termination and should be used only when necessary.
-<xref:System.Diagnostics.Process.CloseMainWindow%2A> enables an orderly termination of the process and closes all windows, so it is preferable for applications with an interface. 
-If <xref:System.Diagnostics.Process.CloseMainWindow%2A> fails, you can use `Kill` to terminate the process.
-`Kill` is the only way to terminate processes that do not have graphical interfaces.
-  
-You can call `Kill` and <xref:System.Diagnostics.Process.CloseMainWindow%2A> only for processes that are running on the local computer.
-You cannot cause processes on remote computers to exit. You can only view information for processes running on remote computers.
-  
- ]]></format>
+          ]]></format>
         </remarks>
       </Docs>
     </MemberGroup>
@@ -2398,9 +2114,7 @@ The calling process is a member of the associated process' descendant tree.</exc
   
 > [!NOTE]
 >  When the associated process is executing on the local machine, this property returns a period (".") for the machine name. You should use the <xref:System.Environment.MachineName%2A?displayProperty=nameWithType> property to get the correct machine name.  
-  
-   
-  
+
 ## Examples  
  To use the following example you must first start at least one instance of Notepad on a remote computer. The example requests the name of the remote computer on which Notepad is running, and then displays the respective <xref:System.Diagnostics.Process.ProcessName%2A>, <xref:System.Diagnostics.Process.Id%2A>, and <xref:System.Diagnostics.Process.MachineName%2A> properties for each instance.  
   
@@ -2618,9 +2332,7 @@ The calling process is a member of the associated process' descendant tree.</exc
   
 > [!NOTE]
 >  The main window is the window that currently has the focus; note that this might not be the primary window for the process. You must use the <xref:System.Diagnostics.Process.Refresh%2A> method to refresh the <xref:System.Diagnostics.Process> object to get the most up to date main window handle if it has changed.  
-  
-   
-  
+
 ## Examples  
  The following example starts an instance of Notepad and retrieves the caption of the main window of the process.  
   
@@ -3142,9 +2854,7 @@ The calling process is a member of the associated process' descendant tree.</exc
   
 > [!NOTE]
 >  The application that is processing the asynchronous output should call the <xref:System.Diagnostics.Process.WaitForExit%2A> method to ensure that the output buffer has been flushed.  
-  
-   
-  
+
 ## Examples  
  The following example illustrates how to perform asynchronous read operations on the redirected <xref:System.Diagnostics.Process.StandardOutput%2A> stream of the `ipconfig` command.  
   
@@ -3286,9 +2996,7 @@ The calling process is a member of the associated process' descendant tree.</exc
  The operating system uses the virtual memory paging file in conjunction with physical memory to manage the virtual address space for each process. When pageable memory is not in use, it can be transferred to the virtual memory paging file on disk. To obtain the size of memory used by the operating system for the process, use the <xref:System.Diagnostics.Process.PagedSystemMemorySize64%2A> property.  
   
  This property can be used to monitor memory usage on computers with 32-bit processors or 64-bit processors. The property value is equivalent to the **Page File Bytes** performance counter for the process.  
-  
-   
-  
+
 ## Examples  
  The following code example starts an instance of the Notepad application, and then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays its exit code and peak memory statistics.  
   
@@ -3423,9 +3131,7 @@ The calling process is a member of the associated process' descendant tree.</exc
  The value returned by this property value represents the current size of pageable system memory used by the process, in bytes. System memory is the physical memory used by the operating system, and is divided into paged and nonpaged pools. When pageable memory is not in use, it can be transferred to the virtual memory paging file on disk. To obtain the size of the application memory used by the process, use the <xref:System.Diagnostics.Process.PagedMemorySize64%2A> property.  
   
  This property can be used to monitor memory usage on computers with 32-bit processors or 64-bit processors. The property value is equivalent to the **Pool Paged Bytes** performance counter for the process.  
-  
-   
-  
+
 ## Examples  
  The following code example starts an instance of the Notepad application. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays its exit code and peak memory statistics.  
   
@@ -3568,9 +3274,7 @@ The calling process is a member of the associated process' descendant tree.</exc
  The value returned by this property value represents the maximum size of memory in the virtual memory paging file used by the process since it started, in bytes. The operating system uses the virtual memory paging file in conjunction with physical memory to manage the virtual address space for each process. When pageable memory is not in use, it can be transferred to the virtual memory paging file on disk.  
   
  This property can be used to monitor memory usage on computers with 32-bit processors or 64-bit processors. The property value is equivalent to the **Page File Bytes Peak** performance counter for the process.  
-  
-   
-  
+
 ## Examples  
  The following code example starts an instance of the Notepad application. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays its exit code and peak memory statistics.  
   
@@ -3704,9 +3408,7 @@ The calling process is a member of the associated process' descendant tree.</exc
  The value returned by this property represents the maximum size of virtual memory used by the process since it started, in bytes. The operating system maps the virtual address space for each process either to pages loaded in physical memory, or to pages stored in the virtual memory paging file on disk.  
   
  This property can be used to monitor memory usage on computers with 32-bit processors or 64-bit processors. The property value is equivalent to the **Virtual Bytes Peak** performance counter for the process.  
-  
-   
-  
+
 ## Examples  
  The following code example starts an instance of the Notepad application. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays its exit code and peak memory statistics.  
   
@@ -3854,9 +3556,7 @@ The calling process is a member of the associated process' descendant tree.</exc
  The working set includes both shared and private data. The shared data includes the pages that contain all the instructions that the process executes, including instructions from the process modules and the system libraries.  
   
  This property can be used to monitor memory usage on computers with 32-bit processors or 64-bit processors. The property value is equivalent to the **Working Set Peak** performance counter for the process.  
-  
-   
-  
+
 ## Examples  
  The following code example starts an instance of the Notepad application. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays its exit code and peak memory statistics.  
   
@@ -3996,32 +3696,9 @@ The calling process is a member of the associated process' descendant tree.</exc
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks
- The value returned by this property represents the most recently refreshed priority of the process. To get the most up to date priority, you need to call <xref:System.Diagnostics.Process.Refresh> method first.
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/PriorityClass.md)]
 
- A process priority class encompasses a range of thread priority levels. Threads with different priorities that are running in the process run relative to the priority class of the process. Win32 uses four priority classes with seven base priority levels per class. These process priority classes are captured in the <xref:System.Diagnostics.ProcessPriorityClass> enumeration, which lets you set the process priority to <xref:System.Diagnostics.ProcessPriorityClass.Idle>, <xref:System.Diagnostics.ProcessPriorityClass.Normal>, <xref:System.Diagnostics.ProcessPriorityClass.High>, <xref:System.Diagnostics.ProcessPriorityClass.AboveNormal>, <xref:System.Diagnostics.ProcessPriorityClass.BelowNormal>, or <xref:System.Diagnostics.ProcessPriorityClass.RealTime>. Based on the time elapsed or other boosts, the base priority level can be changed by the operating system when a process needs to be put ahead of others for access to the processor. In addition, you can set the <xref:System.Diagnostics.Process.PriorityBoostEnabled%2A> to temporarily boost the priority level of threads that have been taken out of the wait state. The priority is reset when the process returns to the wait state.  
-  
- The <xref:System.Diagnostics.Process.BasePriority%2A> property lets you view the starting priority that is assigned to a process. However, because it is read-only, you cannot use the <xref:System.Diagnostics.Process.BasePriority%2A> property to set the priority of a process. To change the priority, use the <xref:System.Diagnostics.Process.PriorityClass%2A> property, which gets or sets the overall priority category for the process.  
-  
- The priority class cannot be viewed using System Monitor. The following table shows the relationship between the <xref:System.Diagnostics.Process.BasePriority%2A> and <xref:System.Diagnostics.Process.PriorityClass%2A> values.  
-  
-|BasePriority|PriorityClass|  
-|------------------|-------------------|  
-|4|<xref:System.Diagnostics.ProcessPriorityClass.Idle>|  
-|8|<xref:System.Diagnostics.ProcessPriorityClass.Normal>|  
-|13|<xref:System.Diagnostics.ProcessPriorityClass.High>|  
-|24|<xref:System.Diagnostics.ProcessPriorityClass.RealTime>|  
-  
-   
-  
-## Examples  
- The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.  
-  
- [!code-cpp[Diag_Process_MemoryProperties64#1](~/samples/snippets/cpp/VS_Snippets_CLR/Diag_Process_MemoryProperties64/CPP/source.cpp#1)]
- [!code-csharp[Diag_Process_MemoryProperties64#1](~/samples/snippets/csharp/VS_Snippets_CLR/Diag_Process_MemoryProperties64/CS/source.cs#1)]
- [!code-vb[Diag_Process_MemoryProperties64#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Diag_Process_MemoryProperties64/VB/source.vb#1)]  
-  
- ]]></format>
+          ]]></format>
         </remarks>
         <exception cref="T:System.ComponentModel.Win32Exception">Process priority information could not be set or retrieved from the associated process resource.  
   
@@ -4156,9 +3833,7 @@ The calling process is a member of the associated process' descendant tree.</exc
  The value returned by this property represents the most recently refreshed size of memory used by the process, in bytes, that cannot be shared with other processes. To get the most up to date size, you need to call <xref:System.Diagnostics.Process.Refresh> method first.
   
  This property can be used to monitor memory usage on computers with 32-bit processors or 64-bit processors. The property value is equivalent to the **Private Bytes** performance counter for the process.  
-  
-   
-  
+
 ## Examples  
  The following code example starts an instance of the Notepad application. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays its exit code and peak memory statistics.  
   
@@ -4434,9 +4109,7 @@ The calling process is a member of the associated process' descendant tree.</exc
  After <xref:System.Diagnostics.Process.Refresh%2A> is called, the first request for information about each property causes the process component to obtain a new value from the associated process.  
   
  When a <xref:System.Diagnostics.Process> component is associated with a process resource, the property values of the <xref:System.Diagnostics.Process> are immediately populated according to the status of the associated process. If the information about the associated process subsequently changes, those changes are not reflected in the <xref:System.Diagnostics.Process> component's cached values. The <xref:System.Diagnostics.Process> component is a snapshot of the process resource at the time they are associated. To view the current values for the associated process, call the <xref:System.Diagnostics.Process.Refresh%2A> method.  
-  
-   
-  
+
 ## Examples  
  The following example starts an instance of Notepad. It then retrieves the physical memory usage of the associated process at 2 second intervals for a maximum of 10 seconds. The example detects whether the process exits before 10 seconds have elapsed. The example closes the process if it is still running after 10 seconds.  
   
@@ -4509,9 +4182,7 @@ The calling process is a member of the associated process' descendant tree.</exc
  If a process has a user interface, the <xref:System.Diagnostics.Process.Responding%2A> property contacts the user interface to determine whether the process is responding to user input. If the interface does not respond immediately, the <xref:System.Diagnostics.Process.Responding%2A> property returns `false`. Use this property to determine whether the interface of the associated process has stopped responding.  
   
  If the process does not have a <xref:System.Diagnostics.Process.MainWindowHandle%2A>, this property returns `true`.  
-  
-   
-  
+
 ## Examples  
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.  
   
@@ -4700,47 +4371,9 @@ The calling process is a member of the associated process' descendant tree.</exc
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- When a <xref:System.Diagnostics.Process> writes text to its standard error stream, that text is normally displayed on the console. By redirecting the <xref:System.Diagnostics.Process.StandardError%2A> stream, you can manipulate or suppress the error output of a process. For example, you can filter the text, format it differently, or write the output to both the console and a designated log file.  
-  
-> [!NOTE]
->  To use <xref:System.Diagnostics.Process.StandardError%2A>, you must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A?displayProperty=nameWithType> to `false`, and you must set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardError%2A?displayProperty=nameWithType> to `true`. Otherwise, reading from the <xref:System.Diagnostics.Process.StandardError%2A> stream throws an exception.  
-  
- The redirected <xref:System.Diagnostics.Process.StandardError%2A> stream can be read synchronously or asynchronously. Methods such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, and <xref:System.IO.StreamReader.ReadToEnd%2A> perform synchronous read operations on the error output stream of the process. These synchronous read operations do not complete until the associated <xref:System.Diagnostics.Process> writes to its <xref:System.Diagnostics.Process.StandardError%2A> stream, or closes the stream.  
-  
- In contrast, <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> starts asynchronous read operations on the <xref:System.Diagnostics.Process.StandardError%2A> stream. This method enables a designated event handler for the stream output and immediately returns to the caller, which can perform other work while the stream output is directed to the event handler.  
-  
- Synchronous read operations introduce a dependency between the caller reading from the <xref:System.Diagnostics.Process.StandardError%2A> stream and the child process writing to that stream. These dependencies can result in deadlock conditions. When the caller reads from the redirected stream of a child process, it is dependent on the child. The caller waits on the read operation until the child writes to the stream or closes the stream. When the child process writes enough data to fill its redirected stream, it is dependent on the parent. The child process waits on the next write operation until the parent reads from the full stream or closes the stream. The deadlock condition results when the caller and child process wait on each other to complete an operation, and neither can proceed. You can avoid deadlocks by evaluating dependencies between the caller and child process.  
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/StandardError.md)]
 
-The last two examples in this section use the <xref:System.Diagnostics.Process.Start%2A> method to launch an executable named *Write500Lines.exe*. The following example contains its source code.
-
-[!code-csharp[Executable launched by Process.Start](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/write500lines.cs)]
-[!code-vb[Executable launched by Process.Start](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/write500lines.vb)]
-
-The following example shows how to read from a redirected error stream and wait for the child process to exit. It avoids a deadlock condition by calling `p.StandardError.ReadToEnd` before `p.WaitForExit`. A deadlock condition can result if the parent process calls `p.WaitForExit` before `p.StandardError.ReadToEnd` and the child process writes enough text to fill the redirected stream. The parent process would wait indefinitely for the child process to exit. The child process would wait indefinitely for the parent to read from the full <xref:System.Diagnostics.Process.StandardError%2A> stream.   
-
-[!code-csharp[Reading from the error stream](~/samples/snippets/csharp/api/system.diagnostics/process/standarderror/stderror-sync.cs)]
-[!code-vb[Reading from the error stream](~/samples/snippets/visualbasic/api/system.diagnostics/process/standarderror/stderror-sync.vb)]  
-
-There is a similar issue when you read all text from both the standard output and standard error streams. The following example performs a read operation on both streams. It avoids the deadlock condition by performing asynchronous read operations on the <xref:System.Diagnostics.Process.StandardError%2A> stream. A deadlock condition results if the parent process calls `p.StandardOutput.ReadToEnd` followed by `p.StandardError.ReadToEnd` and the child process writes enough text to fill its error stream. The parent process would wait indefinitely for the child process to close its <xref:System.Diagnostics.Process.StandardOutput%2A> stream. The child process would wait indefinitely for the parent to read from the full <xref:System.Diagnostics.Process.StandardError%2A> stream.  
-[!code-csharp[Reading from both streams](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/stdoutput-async.cs)]
-[!code-vb[Reading from both streams](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/stdoutput-async.vb)]  
-
-You can use asynchronous read operations to avoid these dependencies and their deadlock potential. Alternately, you can avoid the deadlock condition by creating two threads and reading the output of each stream on a separate thread.  
-  
-> [!NOTE]
->  You cannot mix asynchronous and synchronous read operations on a redirected stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. For example, do not follow <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> with a call to <xref:System.IO.StreamReader.ReadLine%2A> on the <xref:System.Diagnostics.Process.StandardError%2A> stream, or vice versa. However, you can read two different streams in different modes. For example, you can call <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> and then call <xref:System.IO.StreamReader.ReadLine%2A> for the <xref:System.Diagnostics.Process.StandardError%2A> stream.  
-  
-   
-  
-## Examples  
- The following example uses the `net use` command together with a user supplied argument to map a network resource. It then reads the standard error stream of the net command and writes it to console.  
-  
- [!code-cpp[Process_StandardError#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process_StandardError/CPP/source.cpp#1)]
- [!code-csharp[Process_StandardError#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process_StandardError/CS/source.cs#1)]
- [!code-vb[Process_StandardError#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process_StandardError/VB/source.vb#1)]  
-  
- ]]></format>
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Diagnostics.Process.StandardError" /> stream has not been defined for redirection; ensure <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardError" /> is set to <see langword="true" /> and <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> is set to <see langword="false" />.  
   
@@ -4812,9 +4445,7 @@ You can use asynchronous read operations to avoid these dependencies and their d
   
 > [!NOTE]
 >  To use <xref:System.Diagnostics.Process.StandardInput%2A>, you must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A?displayProperty=nameWithType> to `false`, and you must set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardInput%2A?displayProperty=nameWithType> to `true`. Otherwise, writing to the <xref:System.Diagnostics.Process.StandardInput%2A> stream throws an exception.  
-  
-   
-  
+
 ## Examples  
  The following example illustrates how to redirect the <xref:System.Diagnostics.Process.StandardInput%2A> stream of a process. The example starts the `sort` command with redirected input. It then prompts the user for text, and passes that to the `sort` process by means of the redirected <xref:System.Diagnostics.Process.StandardInput%2A> stream. The `sort` results are displayed to the user on the console.  
   
@@ -4885,47 +4516,9 @@ You can use asynchronous read operations to avoid these dependencies and their d
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- When a <xref:System.Diagnostics.Process> writes text to its standard stream, that text is normally displayed on the console. By redirecting the <xref:System.Diagnostics.Process.StandardOutput%2A> stream, you can manipulate or suppress the output of a process. For example, you can filter the text, format it differently, or write the output to both the console and a designated log file.  
-  
-> [!NOTE]
->  To use <xref:System.Diagnostics.Process.StandardOutput%2A>, you must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A?displayProperty=nameWithType> to `false`, and you must set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput%2A?displayProperty=nameWithType> to `true`. Otherwise, reading from the <xref:System.Diagnostics.Process.StandardOutput%2A> stream throws an exception.  
-  
- The redirected <xref:System.Diagnostics.Process.StandardOutput%2A> stream can be read synchronously or asynchronously. Methods such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, and <xref:System.IO.StreamReader.ReadToEnd%2A> perform synchronous read operations on the output stream of the process. These synchronous read operations do not complete until the associated <xref:System.Diagnostics.Process> writes to its <xref:System.Diagnostics.Process.StandardOutput%2A> stream, or closes the stream.  
-  
- In contrast, <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> starts asynchronous read operations on the <xref:System.Diagnostics.Process.StandardOutput%2A> stream. This method enables a designated event handler for the stream output and immediately returns to the caller, which can perform other work while the stream output is directed to the event handler.  
-  
- Synchronous read operations introduce a dependency between the caller reading from the <xref:System.Diagnostics.Process.StandardOutput%2A> stream and the child process writing to that stream. These dependencies can result in deadlock conditions. When the caller reads from the redirected stream of a child process, it is dependent on the child. The caller waits on the read operation until the child writes to the stream or closes the stream. When the child process writes enough data to fill its redirected stream, it is dependent on the parent. The child process waits on the next write operation until the parent reads from the full stream or closes the stream. The deadlock condition results when the caller and child process wait on each other to complete an operation, and neither can proceed. You can avoid deadlocks by evaluating dependencies between the caller and child process.  
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/StandardOutput.md)]
 
-The last two examples in this section use the <xref:System.Diagnostics.Process.Start%2A> method to launch an executable named *Write500Lines.exe*. The following example contains its source code.
-
-[!code-csharp[Executable launched by Process.Start](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/write500lines.cs)]
-[!code-vb[Executable launched by Process.Start](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/write500lines.vb)]
-
-The following example shows how to read from a redirected stream and wait for the child process to exit. The example avoids a deadlock condition by calling `p.StandardOutput.ReadToEnd` before `p.WaitForExit`. A deadlock condition can result if the parent process calls `p.WaitForExit` before `p.StandardOutput.ReadToEnd` and the child process writes enough text to fill the redirected stream. The parent process would wait indefinitely for the child process to exit. The child process would wait indefinitely for the parent to read from the full <xref:System.Diagnostics.Process.StandardOutput%2A> stream.  
-
-[!code-csharp[Reading synchronously from a redirected output stream](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/stdoutput-sync.cs)]  
-[!code-vb[Reading synchronously from a redirected output stream](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/stdoutput-sync.vb)]  
-
-There is a similar issue when you read all text from both the standard output and standard error streams. The following example performs a read operation on both streams. It avoids the deadlock condition by performing asynchronous read operations on the <xref:System.Diagnostics.Process.StandardError%2A> stream. A deadlock condition results if the parent process calls `p.StandardOutput.ReadToEnd` followed by `p.StandardError.ReadToEnd` and the child process writes enough text to fill its error stream. The parent process would wait indefinitely for the child process to close its <xref:System.Diagnostics.Process.StandardOutput%2A> stream. The child process would wait indefinitely for the parent to read from the full <xref:System.Diagnostics.Process.StandardError%2A> stream.   
-[!code-csharp[Reading from a redirected output and error stream](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/stdoutput-async.cs)]  
-[!code-vb[Reading from a redirected output and error stream](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/stdoutput-async.vb)]    
-  
- You can use asynchronous read operations to avoid these dependencies and their deadlock potential. Alternately, you can avoid the deadlock condition by creating two threads and reading the output of each stream on a separate thread.  
-  
-> [!NOTE]
->  You cannot mix asynchronous and synchronous read operations on a redirected stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. For example, do not follow <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> with a call to <xref:System.IO.StreamReader.ReadLine%2A> on the <xref:System.Diagnostics.Process.StandardOutput%2A> stream, or vice versa. However, you can read two different streams in different modes. For example, you can call <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> and then call <xref:System.IO.StreamReader.ReadLine%2A> for the <xref:System.Diagnostics.Process.StandardError%2A> stream.  
-  
-   
-  
-## Examples  
- The following example runs the ipconfig.exe command and redirects its standard output to the example's console window.  
-  
- [!code-cpp[Process_StandardOutput#2](~/samples/snippets/cpp/VS_Snippets_CLR/Process_StandardOutput/CPP/process_standardoutput.cpp)]
- [!code-csharp[Process_StandardOutput#2](~/samples/snippets/csharp/VS_Snippets_CLR/Process_StandardOutput/CS/process_standardoutput.cs)]
- [!code-vb[Process_StandardOutput#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process_StandardOutput/VB/process_standardoutput.vb)]  
-  
- ]]></format>
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Diagnostics.Process.StandardOutput" /> stream has not been defined for redirection; ensure <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput" /> is set to <see langword="true" /> and <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> is set to <see langword="false" />.  
   
@@ -4984,43 +4577,11 @@ There is a similar issue when you read all text from both the standard output an
         <returns>
           <see langword="true" /> if a process resource is started; <see langword="false" /> if no new process resource is started (for example, if an existing process is reused).</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this overload to start a process resource and associate it with the current <xref:System.Diagnostics.Process> component. The return value `true` indicates that a new process resource was started. If the process resource specified by the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> member of the <xref:System.Diagnostics.Process.StartInfo%2A> property is already running on the computer, no additional process resource is started. Instead, the running process resource is reused and `false` is returned.  
-  
- You can start a ClickOnce application by specifying the location (for example, a Web address) from which you originally installed the application. Do not start a ClickOnce application by specifying its installed location on your hard drive.  
-  
-> [!NOTE]
->  If you are using Visual Studio, this overload of the <xref:System.Diagnostics.Process.Start%2A> method is the one that you insert into your code after you drag a <xref:System.Diagnostics.Process> component onto the designer. Use the `Properties` window to expand the `StartInfo` category and write the appropriate value into the `FileName` property. Your changes will appear in the form's `InitializeComponent` procedure.  
-  
- This overload of <xref:System.Diagnostics.Process.Start%2A> is not a `static` method. You must call it from an instance of the <xref:System.Diagnostics.Process> class. Before calling <xref:System.Diagnostics.Process.Start%2A>, you must first specify <xref:System.Diagnostics.Process.StartInfo%2A> property information for this <xref:System.Diagnostics.Process> instance, because that information is used to determine the process resource to start.  
-  
- The other overloads of the <xref:System.Diagnostics.Process.Start%2A> method are `static` members. You do not need to create an instance of the <xref:System.Diagnostics.Process> component before you call those overloads of the method. Instead, you can call <xref:System.Diagnostics.Process.Start%2A> for the <xref:System.Diagnostics.Process> class itself, and a new <xref:System.Diagnostics.Process> component is created if the process was started. Or, `null` is returned if a process was reused. The process resource is automatically associated with the new <xref:System.Diagnostics.Process> component that is returned by the <xref:System.Diagnostics.Process.Start%2A> method.  
-  
- The <xref:System.Diagnostics.Process.StartInfo%2A> members can be used to duplicate the functionality of the `Run` dialog box of the Windows `Start` menu. Anything that can be typed into a command line can be started by setting the appropriate values in the <xref:System.Diagnostics.Process.StartInfo%2A> property. The only <xref:System.Diagnostics.Process.StartInfo%2A> property that must be set is the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property. The <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property does not have to be an executable file. It can be of any file type for which the extension has been associated with an application that is installed on the system. For example, the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property can have a .txt extension if you have associated text files with an editor, such as Notepad, or it can have a .doc extension if you have associated .doc files with a word processing tool, such as Microsoft Word.  
-  
- In the command line, you can specify actions to take for certain types of files. For example, you can print documents or edit text files. Specify these actions using the <xref:System.Diagnostics.ProcessStartInfo.Verb%2A> member of the <xref:System.Diagnostics.Process.StartInfo%2A> property. For other types of files, you can specify command-line arguments when you start the file from the `Run` dialog box. For example, you can pass a URL as an argument if you specify your browser as the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A>. These arguments can be specified in the <xref:System.Diagnostics.Process.StartInfo%2A> property's <xref:System.Diagnostics.ProcessStartInfo.Arguments%2A> member.  
-  
- If you have a path variable declared in your system using quotes, you must fully qualify that path when starting any process found in that location. Otherwise, the system will not find the path. For example, if `c:\mypath` is not in your path, and you add it using quotation marks: `path = %path%;"c:\mypath"`, you must fully qualify any process in `c:\mypath` when starting it.  
-  
-> [!NOTE]
->  ASP.NET Web page and server control code executes in the context of the ASP.NET worker process on the Web server.  If you use the <xref:System.Diagnostics.Process.Start%2A> method in an ASP.NET Web page or server control, the new process executes on the Web server with restricted permissions. The process does not start in the same context as the client browser, and does not have access to the user desktop.  
-  
- Whenever you use <xref:System.Diagnostics.Process.Start%2A> to start a process, you might need to close it or you risk losing system resources. Close processes using <xref:System.Diagnostics.Process.CloseMainWindow%2A> or <xref:System.Diagnostics.Process.Kill%2A>. You can check whether a process has already been closed by using its <xref:System.Diagnostics.Process.HasExited%2A> property.  
-  
- A note about apartment states in managed threads is necessary here. When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `true` on the process component's <xref:System.Diagnostics.Process.StartInfo%2A> property, make sure you have set a threading model on your application by setting the attribute `[STAThread]` on the `main()` method. Otherwise, a managed thread can be in an `unknown` state or put in the `MTA` state, the latter of which conflicts with <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> being `true`. Some methods require that the apartment state not be `unknown`. If the state is not explicitly set, when the application encounters such a method, it defaults to `MTA`, and once set, the apartment state cannot be changed. However, `MTA` causes an exception to be thrown when the operating system shell is managing the thread.  
-  
-   
-  
-## Examples  
- The following example uses an instance of the <xref:System.Diagnostics.Process> class to start a process.  
-  
- [!code-cpp[Process.Start_instance#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process.Start_instance/CPP/processstart.cpp#1)]
- [!code-csharp[Process.Start_instance#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process.Start_instance/CS/processstart.cs#1)]
- [!code-vb[Process.Start_instance#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process.Start_instance/VB/processstart.vb#1)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/Start.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">No file name was specified in the <see cref="T:System.Diagnostics.Process" /> component's <see cref="P:System.Diagnostics.Process.StartInfo" />.
 
@@ -5077,45 +4638,11 @@ The <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> member 
         <summary>Starts the process resource that is specified by the parameter containing process start information (for example, the file name of the process to start) and associates the resource with a new <see cref="T:System.Diagnostics.Process" /> component.</summary>
         <returns>A new <see cref="T:System.Diagnostics.Process" /> that is associated with the process resource, or <see langword="null" /> if no process resource is started. Note that a new process that's started alongside already running instances of the same process will be independent from the others. In addition, Start may return a non-null Process with its <see cref="P:System.Diagnostics.Process.HasExited" /> property already set to <see langword="true" />. In this case, the started process may have activated an existing instance of itself and then exited.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this overload to start a process resource by specifying a <xref:System.Diagnostics.ProcessStartInfo> instance. The overload associates the resource with a new <xref:System.Diagnostics.Process> object.  
-  
-> [!NOTE]
->  If the address of the executable file to start is a URL, the process is not started and `null` is returned.  
-  
- This overload lets you start a process without first creating a new <xref:System.Diagnostics.Process> instance. Using this overload with a <xref:System.Diagnostics.ProcessStartInfo> parameter is an alternative to the explicit steps of creating a new <xref:System.Diagnostics.Process> instance, setting its <xref:System.Diagnostics.Process.StartInfo%2A> properties, and calling <xref:System.Diagnostics.Process.Start%2A> for the <xref:System.Diagnostics.Process> instance.  
-  
- Using a <xref:System.Diagnostics.ProcessStartInfo> instance as the parameter lets you call <xref:System.Diagnostics.Process.Start%2A> with the most control over what is passed into the call to start the process. If you need to pass only a file name or a file name and arguments, it is not necessary to create a new <xref:System.Diagnostics.ProcessStartInfo> instance, although that is an option. The only <xref:System.Diagnostics.Process.StartInfo%2A?displayProperty=nameWithType> property that must be set is the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property. The <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property does not need to represent an executable file. It can be of any file type for which the extension has been associated with an application that is installed on the system. For example, the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property can have a .txt extension if you have associated text files with an editor, such as Notepad, or it can have a .doc extension if you have associated .doc files with a word processing tool, such as Microsoft Word.  
-  
- You can start a ClickOnce application by specifying the location (for example, a Web address) from which you originally installed the application. Do not start a ClickOnce application by specifying its installed location on your hard drive.  
-  
- If the <xref:System.Diagnostics.ProcessStartInfo.UserName%2A?displayProperty=nameWithType> and <xref:System.Diagnostics.ProcessStartInfo.Password%2A?displayProperty=nameWithType> properties of the <xref:System.Diagnostics.Process.StartInfo%2A> instance are set, the unmanaged `CreateProcessWithLogonW` function is called, which starts the process in a new window even if the <xref:System.Diagnostics.ProcessStartInfo.CreateNoWindow%2A?displayProperty=nameWithType> property value is `true` or the <xref:System.Diagnostics.ProcessStartInfo.WindowStyle%2A?displayProperty=nameWithType> property value is <xref:System.Diagnostics.ProcessWindowStyle.Hidden?displayProperty=nameWithType>. If the <xref:System.Diagnostics.ProcessStartInfo.Domain%2A?displayProperty=nameWithType> property is `null`, the <xref:System.Diagnostics.ProcessStartInfo.UserName%2A?displayProperty=nameWithType> property must be in UPN format, *user*@*DNS_domain_name*.   
-  
- Unlike the other overloads, the overload of <xref:System.Diagnostics.Process.Start%2A> that has no parameters is not a `static` member. Use that overload when you have already created a <xref:System.Diagnostics.Process> instance and specified start information (including the file name), and you want to start a process resource and associate it with the existing <xref:System.Diagnostics.Process> instance. Use one of the `static` overloads when you want to create a new <xref:System.Diagnostics.Process> component rather than start a process for an existing component. Both this overload and the overload that has no parameters allow you to specify the start information for the process resource by using a <xref:System.Diagnostics.ProcessStartInfo> instance.  
-  
- If you have a path variable declared in your system using quotes, you must fully qualify that path when starting any process found in that location. Otherwise, the system will not find the path. For example, if `c:\mypath` is not in your path, and you add it using quotation marks: `path = %path%;"c:\mypath"`, you must fully qualify any process in `c:\mypath` when starting it.  
-  
-> [!NOTE]
->  ASP.NET Web page and server control code executes in the context of the ASP.NET worker process on the Web server.  If you use the <xref:System.Diagnostics.Process.Start%2A> method in an ASP.NET Web page or server control, the new process executes on the Web server with restricted permissions. The process does not start in the same context as the client browser, and does not have access to the user desktop.  
-  
- Whenever you use <xref:System.Diagnostics.Process.Start%2A> to start a process, you might need to close it or you risk losing system resources. Close processes using <xref:System.Diagnostics.Process.CloseMainWindow%2A> or <xref:System.Diagnostics.Process.Kill%2A>. You can check whether a process has already been closed by using its <xref:System.Diagnostics.Process.HasExited%2A> property.  
-  
- A note about apartment states in managed threads is necessary here. When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `true` on the `startInfo` parameter, make sure you have set a threading model on your application by setting the attribute `[STAThread]` on the `main()` method. Otherwise, a managed thread can be in an `unknown` state or put in the `MTA` state, the latter of which conflicts with <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> being `true`. Some methods require that the apartment state not be `unknown`. If the state is not explicitly set, when the application encounters such a method, it defaults to `MTA`, and once set, the apartment state cannot be changed. However, `MTA` causes an exception to be thrown when the operating system shell is managing the thread.  
-  
-   
-  
-## Examples  
- The following example first spawns an instance of Internet Explorer and displays the contents of the Favorites folder in the browser. It then starts some other instances of Internet Explorer and displays some specific pages or sites. Finally it starts Internet Explorer with the window being minimized while navigating to a specific site.  
-  
- For additional examples of other uses of this method, refer to the individual properties of the <xref:System.Diagnostics.ProcessStartInfo> class.  
-  
- [!code-cpp[Process.Start_static#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process.Start_static/CPP/processstartstatic.cpp)]
- [!code-csharp[Process.Start_static#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process.Start_static/CS/processstartstatic.cs)]
- [!code-vb[Process.Start_static#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process.Start_static/VB/processstartstatic.vb)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/Start_ProcessStartInfo.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">No file name was specified in the <paramref name="startInfo" /> parameter's <see cref="P:System.Diagnostics.ProcessStartInfo.FileName" /> property.  
   
@@ -5184,43 +4711,11 @@ The <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> member 
         <summary>Starts a process resource by specifying the name of a document or application file and associates the resource with a new <see cref="T:System.Diagnostics.Process" /> component.</summary>
         <returns>A new <see cref="T:System.Diagnostics.Process" /> that is associated with the process resource, or <see langword="null" /> if no process resource is started. Note that a new process that's started alongside already running instances of the same process will be independent from the others. In addition, Start may return a non-null Process with its <see cref="P:System.Diagnostics.Process.HasExited" /> property already set to <see langword="true" />. In this case, the started process may have activated an existing instance of itself and then exited.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this overload to start a process resource by specifying its file name. The overload associates the resource with a new <xref:System.Diagnostics.Process> object.  
-  
-> [!NOTE]
->  If the address of the executable file to start is a URL, the process is not started and `null` is returned.  
-  
- This overload lets you start a process without first creating a new <xref:System.Diagnostics.Process> instance. The overload is an alternative to the explicit steps of creating a new <xref:System.Diagnostics.Process> instance, setting the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> member of the <xref:System.Diagnostics.Process.StartInfo%2A> property, and calling <xref:System.Diagnostics.Process.Start%2A> for the <xref:System.Diagnostics.Process> instance.  
-  
- You can start a ClickOnce application by setting the `fileName` parameter to the location (for example, a Web address) from which you originally installed the application. Do not start a ClickOnce application by specifying its installed location on your hard drive.  
-  
- Starting a process by specifying its file name is similar to typing the information in the `Run` dialog box of the Windows `Start` menu. Therefore, the file name does not need to represent an executable file. It can be of any file type for which the extension has been associated with an application installed on the system. For example the file name can have a .txt extension if you have associated text files with an editor, such as Notepad, or it can have a .doc if you have associated .doc files with a word processing tool, such as Microsoft Word. Similarly, in the same way that the `Run` dialog box can accept an executable file name with or without the .exe extension, the .exe extension is optional in the `fileName` parameter. For example, you can set the `fileName` parameter to either "Notepad.exe" or "Notepad".  
-  
- This overload does not allow command-line arguments for the process. If you need to specify one or more command-line arguments for the process, use the <xref:System.Diagnostics.Process.Start%28System.Diagnostics.ProcessStartInfo%29?displayProperty=nameWithType> or <xref:System.Diagnostics.Process.Start%28System.String%2CSystem.String%29?displayProperty=nameWithType> overloads.  
-  
- Unlike the other overloads, the overload of <xref:System.Diagnostics.Process.Start%2A> that has no parameters is not a `static` member. Use that overload when you have already created a <xref:System.Diagnostics.Process> instance and specified start information (including the file name), and you want to start a process resource and associate it with the existing <xref:System.Diagnostics.Process> instance. Use one of the `static` overloads when you want to create a new <xref:System.Diagnostics.Process> component rather than start a process for an existing component. Both this overload and the overload that has no parameters allow you to specify the file name of the process resource to start.  
-  
- If you have a path variable declared in your system using quotes, you must fully qualify that path when starting any process found in that location. Otherwise, the system will not find the path. For example, if `c:\mypath` is not in your path, and you add it using quotation marks: `path = %path%;"c:\mypath"`, you must fully qualify any process in `c:\mypath` when starting it.  
-  
-> [!NOTE]
->  ASP.NET Web page and server control code executes in the context of the ASP.NET worker process on the Web server.  If you use the <xref:System.Diagnostics.Process.Start%2A> method in an ASP.NET Web page or server control, the new process executes on the Web server with restricted permissions. The process does not start in the same context as the client browser, and does not have access to the user desktop.  
-  
- Whenever you use <xref:System.Diagnostics.Process.Start%2A> to start a process, you might need to close it or you risk losing system resources. Close processes using <xref:System.Diagnostics.Process.CloseMainWindow%2A> or <xref:System.Diagnostics.Process.Kill%2A>. You can check whether a process has already been closed by using its <xref:System.Diagnostics.Process.HasExited%2A> property.  
-  
- A note about apartment states in managed threads is necessary here. When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `true` on the process component's <xref:System.Diagnostics.Process.StartInfo%2A> property, make sure you have set a threading model on your application by setting the attribute `[STAThread]` on the `main()` method. Otherwise, a managed thread can be in an `unknown` state or put in the `MTA` state, the latter of which conflicts with <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> being `true`. Some methods require that the apartment state not be `unknown`. If the state is not explicitly set, when the application encounters such a method, it defaults to `MTA`, and once set, the apartment state cannot be changed. However, `MTA` causes an exception to be thrown when the operating system shell is managing the thread.  
-  
-   
-  
-## Examples  
- The following example first spawns an instance of Internet Explorer and displays the contents of the Favorites folder in the browser. It then starts some other instances of Internet Explorer and displays some specific pages or sites. Finally it starts Internet Explorer with the window being minimized while navigating to a specific site.  
-  
- [!code-cpp[Process.Start_static#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process.Start_static/CPP/processstartstatic.cpp)]
- [!code-csharp[Process.Start_static#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process.Start_static/CS/processstartstatic.cs)]
- [!code-vb[Process.Start_static#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process.Start_static/VB/processstartstatic.vb)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/Start_String.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ComponentModel.Win32Exception">An error occurred when opening the associated file.
 
@@ -5306,39 +4801,11 @@ The file specified in the <paramref name="fileName" /> could not be found.</exce
         <summary>Starts a process resource by specifying the name of an application and a set of command-line arguments, and associates the resource with a new <see cref="T:System.Diagnostics.Process" /> component.</summary>
         <returns>A new <see cref="T:System.Diagnostics.Process" /> that is associated with the process resource, or <see langword="null" /> if no process resource is started. Note that a new process that's started alongside already running instances of the same process will be independent from the others. In addition, Start may return a non-null Process with its <see cref="P:System.Diagnostics.Process.HasExited" /> property already set to <see langword="true" />. In this case, the started process may have activated an existing instance of itself and then exited.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this overload to start a process resource by specifying its file name and command-line arguments. The overload associates the resource with a new <xref:System.Diagnostics.Process> object.  
-  
-> [!NOTE]
->  If the address of the executable file to start is a URL, the process is not started and `null` is returned.  
-  
- This overload lets you start a process without first creating a new <xref:System.Diagnostics.Process> instance. The overload is an alternative to the explicit steps of creating a new <xref:System.Diagnostics.Process> instance, setting the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> and <xref:System.Diagnostics.ProcessStartInfo.Arguments%2A> members of the <xref:System.Diagnostics.Process.StartInfo%2A> property, and calling <xref:System.Diagnostics.Process.Start%2A> for the <xref:System.Diagnostics.Process> instance.  
-  
- Starting a process by specifying its file name and arguments is similar to typing the file name and command-line arguments in the `Run` dialog box of the Windows `Start` menu. Therefore, the file name does not need to represent an executable file. It can be of any file type for which the extension has been associated with an application installed on the system. For example the file name can have a .txt extension if you have associated text files with an editor, such as Notepad, or it can have a .doc if you have associated .doc files with a word processing tool, such as Microsoft Word. Similarly, in the same way that the `Run` dialog box can accept an executable file name with or without the .exe extension, the .exe extension is optional in the `fileName` parameter. For example, you can set the `fileName` parameter to either "Notepad.exe" or "Notepad". If the `fileName` parameter represents an executable file, the `arguments` parameter might represent a file to act upon, such as the text file in `Notepad.exe myfile.txt`. If the `fileName` parameter represents a command (.cmd) file, the `arguments` parameter must include either a "`/c`" or "`/k`" argument to specify whether the command window exits or remains after completion.  
-  
- Unlike the other overloads, the overload of <xref:System.Diagnostics.Process.Start%2A> that has no parameters is not a `static` member. Use that overload when you have already created a <xref:System.Diagnostics.Process> instance and specified start information (including the file name), and you want to start a process resource and associate it with the existing <xref:System.Diagnostics.Process> instance. Use one of the `static` overloads when you want to create a new <xref:System.Diagnostics.Process> component rather than start a process for an existing component. Both this overload and the overload that has no parameters allow you to specify the file name of the process resource to start and command-line arguments to pass.  
-  
- If you have a path variable declared in your system using quotes, you must fully qualify that path when starting any process found in that location. Otherwise, the system will not find the path. For example, if `c:\mypath` is not in your path, and you add it using quotation marks: `path = %path%;"c:\mypath"`, you must fully qualify any process in `c:\mypath` when starting it.  
-  
-> [!NOTE]
->  ASP.NET Web page and server control code executes in the context of the ASP.NET worker process on the Web server.  If you use the <xref:System.Diagnostics.Process.Start%2A> method in an ASP.NET Web page or server control, the new process executes on the Web server with restricted permissions. The process does not start in the same context as the client browser, and does not have access to the user desktop.  
-  
- Whenever you use <xref:System.Diagnostics.Process.Start%2A> to start a process, you might need to close it or you risk losing system resources. Close processes using <xref:System.Diagnostics.Process.CloseMainWindow%2A> or <xref:System.Diagnostics.Process.Kill%2A>. You can check whether a process has already been closed by using its <xref:System.Diagnostics.Process.HasExited%2A> property. 
-  
- A note about apartment states in managed threads is necessary here. When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `true` on the process component's <xref:System.Diagnostics.Process.StartInfo%2A> property, make sure you have set a threading model on your application by setting the attribute `[STAThread]` on the `main()` method. Otherwise, a managed thread can be in an `unknown` state or put in the `MTA` state, the latter of which conflicts with <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> being `true`. Some methods require that the apartment state not be `unknown`. If the state is not explicitly set, when the application encounters such a method, it defaults to `MTA`, and once set, the apartment state cannot be changed. However, `MTA` causes an exception to be thrown when the operating system shell is managing the thread.  
-  
-   
-  
-## Examples  
- The following example first spawns an instance of Internet Explorer and displays the contents of the Favorites folder in the browser. It then starts some other instances of Internet Explorer and displays some specific pages or sites. Finally it starts Internet Explorer with the window being minimized while navigating to a specific site.  
-  
- [!code-cpp[Process.Start_static#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process.Start_static/CPP/processstartstatic.cpp)]
- [!code-csharp[Process.Start_static#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process.Start_static/CS/processstartstatic.cs)]
- [!code-vb[Process.Start_static#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process.Start_static/VB/processstartstatic.vb)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/Start_String_String.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="fileName" /> or <paramref name="arguments" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.ComponentModel.Win32Exception">An error occurred when opening the associated file.  
@@ -5413,35 +4880,11 @@ The file specified in the <paramref name="fileName" /> could not be found.
         <summary>Starts a process resource by specifying the name of an application, a user name, a password, and a domain and associates the resource with a new <see cref="T:System.Diagnostics.Process" /> component.</summary>
         <returns>A new <see cref="T:System.Diagnostics.Process" /> that is associated with the process resource, or <see langword="null" /> if no process resource is started. Note that a new process that's started alongside already running instances of the same process will be independent from the others. In addition, Start may return a non-null Process with its <see cref="P:System.Diagnostics.Process.HasExited" /> property already set to <see langword="true" />. In this case, the started process may have activated an existing instance of itself and then exited.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this overload to create a new process and its primary thread by specifying its file name, user name, password, and domain. The new process then runs the specified executable file in the security context of the specified credentials (user, domain, and password).  
-  
-> [!NOTE]
->  When the executable file is located on a remote drive, you must identify the network share by using a uniform resource identifier (URI), not a linked drive letter.  
-  
-> [!NOTE]
->  If the address of the executable file to start is a URL, the process is not started and `null` is returned.  
-  
- This overload lets you start a process without first creating a new <xref:System.Diagnostics.Process> instance. The overload is an alternative to the explicit steps of creating a new <xref:System.Diagnostics.Process> instance, setting the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A>, <xref:System.Diagnostics.ProcessStartInfo.UserName%2A>, <xref:System.Diagnostics.ProcessStartInfo.Password%2A>, and <xref:System.Diagnostics.ProcessStartInfo.Domain%2A> properties of the <xref:System.Diagnostics.Process.StartInfo%2A> property, and calling <xref:System.Diagnostics.Process.Start%2A> for the <xref:System.Diagnostics.Process> instance.  
-  
- Similarly, in the same way that the **Run** dialog box can accept an executable file name with or without the .exe extension, the .exe extension is optional in the `fileName` parameter. For example, you can set the `fileName` parameter to either "Notepad.exe" or "Notepad". If the `fileName` parameter represents an executable file, the `arguments` parameter might represent a file to act upon, such as the text file in `Notepad.exe myfile.txt`.  
-  
-> [!NOTE]
->  The file name must represent an executable file in the <xref:System.Diagnostics.Process.Start%2A> overloads that have `userName`, `password`, and `domain` parameters.  
-  
- Whenever you use <xref:System.Diagnostics.Process.Start%2A> to start a process, you might need to close it or you risk losing system resources. Close processes using <xref:System.Diagnostics.Process.CloseMainWindow%2A> or <xref:System.Diagnostics.Process.Kill%2A>. You can check whether a process has already been closed by using its <xref:System.Diagnostics.Process.HasExited%2A> property. 
-  
-   
-  
-## Examples  
- The following code example shows the use of this overload to start an executable file and also demonstrates the throwing of a <xref:System.ComponentModel.Win32Exception> when an attempt is made to start an application associated with a nonexecutable file.  
-  
- [!code-csharp[System.Diagnostics.Process.Start#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.Process.Start/CS/program.cs#1)]
- [!code-vb[System.Diagnostics.Process.Start#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.Process.Start/VB/program.vb#1)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/Start_String_String_SecureString_String.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">No file name was specified.</exception>
         <exception cref="T:System.ComponentModel.Win32Exception">There was an error in opening the associated file.
@@ -5509,27 +4952,11 @@ The file specified in the <paramref name="fileName" /> could not be found.</exce
         <summary>Starts a process resource by specifying the name of an application, a set of command-line arguments, a user name, a password, and a domain and associates the resource with a new <see cref="T:System.Diagnostics.Process" /> component.</summary>
         <returns>A new <see cref="T:System.Diagnostics.Process" /> that is associated with the process resource, or <see langword="null" /> if no process resource is started. Note that a new process that's started alongside already running instances of the same process will be independent from the others. In addition, Start may return a non-null Process with its <see cref="P:System.Diagnostics.Process.HasExited" /> property already set to <see langword="true" />. In this case, the started process may have activated an existing instance of itself and then exited.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this overload to create a new process and its primary thread by specifying its file name, command-line arguments, user name, password, and domain. The new process then runs the specified executable file in the security context of the specified credentials (user, domain, and password).  
-  
-> [!NOTE]
->  When the executable file is located on a remote drive, you must identify the network share by using a uniform resource identifier (URI), not a linked drive letter.  
-  
-> [!NOTE]
->  If the address of the executable file to start is a URL, the process is not started and `null` is returned.  
-  
- This overload lets you start a process without first creating a new <xref:System.Diagnostics.Process> instance. The overload is an alternative to the explicit steps of creating a new <xref:System.Diagnostics.Process> instance, setting the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A>, <xref:System.Diagnostics.ProcessStartInfo.Arguments%2A>, <xref:System.Diagnostics.ProcessStartInfo.UserName%2A>, <xref:System.Diagnostics.ProcessStartInfo.Password%2A>, and <xref:System.Diagnostics.ProcessStartInfo.Domain%2A> properties of the <xref:System.Diagnostics.Process.StartInfo%2A> property, and calling <xref:System.Diagnostics.Process.Start%2A> for the <xref:System.Diagnostics.Process> instance.  
-  
- Similarly, in the same way that the **Run** dialog box can accept an executable file name with or without the .exe extension, the .exe extension is optional in the `fileName` parameter. For example, you can set the `fileName` parameter to either "Notepad.exe" or "Notepad". If the `fileName` parameter represents an executable file, the `arguments` parameter might represent a file to act upon, such as the text file in `Notepad.exe myfile.txt`.  
-  
-> [!NOTE]
->  The file name must represent an executable file in the <xref:System.Diagnostics.Process.Start%2A> overloads that have `userName`, `password`, and `domain` parameters.  
-  
- Whenever you use <xref:System.Diagnostics.Process.Start%2A> to start a process, you might need to close it or you risk losing system resources. Close processes using <xref:System.Diagnostics.Process.CloseMainWindow%2A> or <xref:System.Diagnostics.Process.Kill%2A>. You can check whether a process has already been closed by using its <xref:System.Diagnostics.Process.HasExited%2A> property. 
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/Start_String_String_String_SecureString_String.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">No file name was specified.</exception>
         <exception cref="T:System.ComponentModel.Win32Exception">An error occurred when opening the associated file.  
@@ -5598,29 +5025,11 @@ The file specified in the <paramref name="fileName" /> could not be found.
         <summary>Gets or sets the properties to pass to the <see cref="M:System.Diagnostics.Process.Start" /> method of the <see cref="T:System.Diagnostics.Process" />.</summary>
         <value>The <see cref="T:System.Diagnostics.ProcessStartInfo" /> that represents the data with which to start the process. These arguments include the name of the executable file or document used to start the process.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Diagnostics.Process.StartInfo%2A> represents the set of parameters to use to start a process. When <xref:System.Diagnostics.Process.Start%2A> is called, the <xref:System.Diagnostics.Process.StartInfo%2A> is used to specify the process to start. The only necessary <xref:System.Diagnostics.Process.StartInfo%2A> member to set is the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property. Starting a process by specifying the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property is similar to typing the information in the **Run** dialog box of the Windows **Start** menu. Therefore, the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property does not need to represent an executable file. It can be of any file type for which the extension has been associated with an application installed on the system. For example the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> can have a .txt extension if you have associated text files with an editor, such as Notepad, or it can have a .doc if you have associated .doc files with a word processing tool, such as Microsoft Word. Similarly, in the same way that the **Run** dialog box can accept an executable file name with or without the .exe extension, the .exe extension is optional in the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> member. For example, you can set the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property to either "Notepad.exe" or "Notepad".  
-  
- You can start a ClickOnce application by setting the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property to the location (for example, a Web address) from which you originally installed the application. Do not start a ClickOnce application by specifying its installed location on your hard drive.  
-  
- If the file name involves a nonexecutable file, such as a .doc file, you can include a verb specifying what action to take on the file. For example, you could set the <xref:System.Diagnostics.ProcessStartInfo.Verb%2A> to "Print" for a file ending in the .doc extension. The file name specified in the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property does not need to have an extension if you manually enter a value for the <xref:System.Diagnostics.ProcessStartInfo.Verb%2A> property. However, if you use the <xref:System.Diagnostics.ProcessStartInfo.Verbs%2A> property to determine what verbs are available, you must include the extension.  
-  
- You can change the parameters specified in the <xref:System.Diagnostics.Process.StartInfo%2A> property up to the time that you call the <xref:System.Diagnostics.Process.Start%2A> method on the process. After you start the process, changing the <xref:System.Diagnostics.Process.StartInfo%2A> values does not affect or restart the associated process. If you call the <xref:System.Diagnostics.Process.Start%28System.Diagnostics.ProcessStartInfo%29> method with the <xref:System.Diagnostics.ProcessStartInfo.UserName%2A?displayProperty=nameWithType> and <xref:System.Diagnostics.ProcessStartInfo.Password%2A?displayProperty=nameWithType> properties set, the unmanaged `CreateProcessWithLogonW` function is called, which starts the process in a new window even if the <xref:System.Diagnostics.ProcessStartInfo.CreateNoWindow%2A> property value is `true` or the <xref:System.Diagnostics.ProcessStartInfo.WindowStyle%2A> property value is <xref:System.Diagnostics.ProcessWindowStyle.Hidden>.  
-  
- You should only access the <xref:System.Diagnostics.Process.StartInfo%2A> property on a <xref:System.Diagnostics.Process> object returned by the <xref:System.Diagnostics.Process.Start%2A> method. For example, you should not access the <xref:System.Diagnostics.Process.StartInfo%2A> property on a <xref:System.Diagnostics.Process> object returned by <xref:System.Diagnostics.Process.GetProcesses%2A>. Otherwise, on .NET Core the <xref:System.Diagnostics.Process.StartInfo%2A> property will throw an <xref:System.InvalidOperationException> and on .NET Framework it will return a dummy <xref:System.Diagnostics.ProcessStartInfo> object.
-  
- When the process is started, the file name is the file that populates the (read-only) <xref:System.Diagnostics.Process.MainModule%2A> property. If you want to retrieve the executable file that is associated with the process after the process has started, use the <xref:System.Diagnostics.Process.MainModule%2A> property. If you want to set the executable file of a <xref:System.Diagnostics.Process> instance for which an associated process has not been started, use the <xref:System.Diagnostics.Process.StartInfo%2A> property's <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> member. Because the members of the <xref:System.Diagnostics.Process.StartInfo%2A> property are arguments that are passed to the <xref:System.Diagnostics.Process.Start%2A> method of a process, changing the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property after the associated process has started will not reset the <xref:System.Diagnostics.Process.MainModule%2A> property. These properties are used only to initialize the associated process.
-  
-## Examples  
- The following example populates a <xref:System.Diagnostics.Process.StartInfo%2A> with the file to execute, the action performed on it and whether it should displays a user interface. For additional examples, refer to the reference pages for properties of the <xref:System.Diagnostics.ProcessStartInfo> class.  
-  
- [!code-cpp[Process.Start_instance#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process.Start_instance/CPP/processstart.cpp#1)]
- [!code-csharp[Process.Start_instance#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process.Start_instance/CS/processstart.cs#1)]
- [!code-vb[Process.Start_instance#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process.Start_instance/VB/processstart.vb#1)]  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/StartInfo.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The value that specifies the <see cref="P:System.Diagnostics.Process.StartInfo" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">.NET 5+ and .NET Core only: The <see cref="M:System.Diagnostics.Process.Start" /> method was not used to start the process.</exception>
@@ -5744,28 +5153,10 @@ The file specified in the <paramref name="fileName" /> could not be found.
         <value>The <see cref="T:System.ComponentModel.ISynchronizeInvoke" /> used to marshal event handler calls that are issued as a result of an <see cref="E:System.Diagnostics.Process.Exited" /> event on the process.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When <xref:System.Diagnostics.EventLog.SynchronizingObject%2A> is `null`, methods that handle the <xref:System.Diagnostics.Process.Exited> event are called on a thread from the system thread pool. For more information about system thread pools, see <xref:System.Threading.ThreadPool>.  
-  
- When the <xref:System.Diagnostics.Process.Exited> event is handled by a visual Windows Forms component, such as a <xref:System.Windows.Forms.Button>, accessing the component through the system thread pool might not work, or might result in an exception. Avoid this by setting <xref:System.Diagnostics.Process.SynchronizingObject%2A> to a Windows Forms component, which causes the methods handling the <xref:System.Diagnostics.Process.Exited> event to be called on the same thread on which the component was created.  
-  
- If the <xref:System.Diagnostics.Process> is used inside Visual Studio 2005 in a Windows Forms designer, <xref:System.Diagnostics.Process.SynchronizingObject%2A> is automatically set to the control that contains the <xref:System.Diagnostics.Process>. For example, if you place a <xref:System.Diagnostics.Process> on a designer for `Form1` (which inherits from <xref:System.Windows.Forms.Form>) the <xref:System.Diagnostics.Process.SynchronizingObject%2A> property of <xref:System.Diagnostics.Process> is set to the instance of `Form1`:  
-  
- [!code-cpp[Process_SynchronizingObject#2](~/samples/snippets/cpp/VS_Snippets_CLR/Process_SynchronizingObject/CPP/remarks.cpp#2)]
- [!code-csharp[Process_SynchronizingObject#2](~/samples/snippets/csharp/VS_Snippets_CLR/Process_SynchronizingObject/CS/remarks.cs#2)]
- [!code-vb[Process_SynchronizingObject#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process_SynchronizingObject/VB/remarks.vb#2)]  
-  
- Typically, this property is set when the component is placed inside a control or form, because those components are bound to a specific thread.  
-  
-   
-  
-## Examples  
- [!code-cpp[Process_SynchronizingObject#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process_SynchronizingObject/CPP/process_synchronizingobject.cpp#1)]
- [!code-csharp[Process_SynchronizingObject#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process_SynchronizingObject/CS/process_synchronizingobject.cs#1)]
- [!code-vb[Process_SynchronizingObject#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Process_SynchronizingObject/VB/process_synchronizingobject.vb#1)]  
-  
- ]]></format>
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/SynchronizingObject.md)]
+
+          ]]></format>
         </remarks>
         <altmember cref="P:System.Diagnostics.Process.SynchronizingObject" />
       </Docs>
@@ -6149,9 +5540,7 @@ The file specified in the <paramref name="fileName" /> could not be found.
  The operating system maps the virtual address space for each process either to pages loaded in physical memory, or to pages stored in the virtual memory paging file on disk.  
   
  This property can be used to monitor memory usage on computers with 32-bit processors or 64-bit processors. The property value is equivalent to the **Virtual Bytes** performance counter for the process.  
-  
-   
-  
+
 ## Examples  
  The following code example starts an instance of the Notepad application. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays its exit code and peak memory statistics.  
   
@@ -6211,28 +5600,11 @@ The file specified in the <paramref name="fileName" /> could not be found.
       <Docs>
         <summary>Instructs the <see cref="T:System.Diagnostics.Process" /> component to wait indefinitely for the associated process to exit.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Diagnostics.Process.WaitForExit> makes the current thread wait until the associated process terminates.  It should be called after all other methods are called on the process. To avoid blocking the current thread, use the <xref:System.Diagnostics.Process.Exited> event.  
-  
- This method instructs the <xref:System.Diagnostics.Process> component to wait an infinite amount of time for the process and event handlers to exit. This can cause an application to stop responding. For example, if you call <xref:System.Diagnostics.Process.CloseMainWindow%2A> for a process that has a user interface, the request to the operating system to terminate the associated process might not be handled if the process is written to never enter its message loop.  
-  
-> [!NOTE]
->  In the .NET Framework 3.5 and earlier versions, the <xref:System.Diagnostics.Process.WaitForExit> overload waited for <xref:System.Int32.MaxValue> milliseconds (approximately 24 days), not indefinitely. Also, previous versions did not wait for the event handlers to exit if the full <xref:System.Int32.MaxValue> time was reached.  
-  
- This overload ensures that all processing has been completed, including the handling of asynchronous events for redirected standard output. You should use this overload after a call to the <xref:System.Diagnostics.Process.WaitForExit%28System.Int32%29> overload when standard output has been redirected to asynchronous event handlers.  
-  
- When an associated process exits (that is, when it is shut down by the operation system through a normal or abnormal termination), the system stores administrative information about the process and returns to the component that had called <xref:System.Diagnostics.Process.WaitForExit>. The <xref:System.Diagnostics.Process> component can then access the information, which includes the <xref:System.Diagnostics.Process.ExitTime%2A>, by using the <xref:System.Diagnostics.Process.Handle%2A> to the exited process.  
-  
- Because the associated process has exited, the <xref:System.Diagnostics.Process.Handle%2A> property of the component no longer points to an existing process resource. Instead, the handle can be used only to access the operating system's information about the process resource. The system is aware of handles to exited processes that have not been released by <xref:System.Diagnostics.Process> components, so it keeps the <xref:System.Diagnostics.Process.ExitTime%2A> and <xref:System.Diagnostics.Process.Handle%2A> information in memory until the <xref:System.Diagnostics.Process> component specifically frees the resources. For this reason, any time you call <xref:System.Diagnostics.Process.Start%2A> for a <xref:System.Diagnostics.Process> instance, call <xref:System.Diagnostics.Process.Close%2A> when the associated process has terminated and you no longer need any administrative information about it. <xref:System.Diagnostics.Process.Close%2A> frees the memory allocated to the exited process.  
-  
-   
-  
-## Examples  
- See the Remarks section of the <xref:System.Diagnostics.Process.StandardError%2A> property reference page.  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/WaitForExit.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ComponentModel.Win32Exception">The wait setting could not be accessed.</exception>
         <exception cref="T:System.SystemException">No process <see cref="P:System.Diagnostics.Process.Id" /> has been set, and a <see cref="P:System.Diagnostics.Process.Handle" /> from which the <see cref="P:System.Diagnostics.Process.Id" /> property can be determined does not exist.  
@@ -6293,28 +5665,11 @@ The file specified in the <paramref name="fileName" /> could not be found.
         <returns>
           <see langword="true" /> if the associated process has exited; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Diagnostics.Process.WaitForExit%28System.Int32%29> makes the current thread wait until the associated process terminates. It should be called after all other methods are called on the process. To avoid blocking the current thread, use the <xref:System.Diagnostics.Process.Exited> event.  
-  
- This method instructs the <xref:System.Diagnostics.Process> component to wait a finite amount of time for the process to exit. If the associated process does not exit by the end of the interval because the request to terminate is denied, `false` is returned to the calling procedure. You can specify <xref:System.Threading.Timeout.Infinite?displayProperty=nameWithType> for `milliseconds`, and <xref:System.Diagnostics.Process.WaitForExit%28System.Int32%29?displayProperty=nameWithType> will behave the same as the <xref:System.Diagnostics.Process.WaitForExit> overload. If you pass 0 (zero) to the method, it returns `true` only if the process has already exited; otherwise, it immediately returns `false`.  
-  
-> [!NOTE]
->  In the .NET Framework 3.5 and earlier versions, if `milliseconds` was -1, the <xref:System.Diagnostics.Process.WaitForExit%28System.Int32%29> overload waited for <xref:System.Int32.MaxValue> milliseconds (approximately 24 days), not indefinitely.  
-  
- When standard output has been redirected to asynchronous event handlers, it is possible that output processing will not have completed when this method returns. To ensure that asynchronous event handling has been completed, call the <xref:System.Diagnostics.Process.WaitForExit> overload that takes no parameter after receiving a `true` from this overload. To help ensure that the <xref:System.Diagnostics.Process.Exited> event is handled correctly in Windows Forms applications, set the <xref:System.Diagnostics.Process.SynchronizingObject%2A> property.  
-  
- When an associated process exits (is shut down by the operating system through a normal or abnormal termination), the system stores administrative information about the process and returns to the component that had called <xref:System.Diagnostics.Process.WaitForExit%28System.Int32%29>. The <xref:System.Diagnostics.Process> component can then access the information, which includes the <xref:System.Diagnostics.Process.ExitTime%2A>, by using the <xref:System.Diagnostics.Process.Handle%2A> to the exited process.  
-  
- Because the associated process has exited, the <xref:System.Diagnostics.Process.Handle%2A> property of the component no longer points to an existing process resource. Instead, the handle can be used only to access the operating system's information about the process resource. The system is aware of handles to exited processes that have not been released by <xref:System.Diagnostics.Process> components, so it keeps the <xref:System.Diagnostics.Process.ExitTime%2A> and <xref:System.Diagnostics.Process.Handle%2A> information in memory until the <xref:System.Diagnostics.Process> component specifically frees the resources. For this reason, any time you call <xref:System.Diagnostics.Process.Start%2A> for a <xref:System.Diagnostics.Process> instance, call <xref:System.Diagnostics.Process.Close%2A> when the associated process has terminated and you no longer need any administrative information about it. <xref:System.Diagnostics.Process.Close%2A> frees the memory allocated to the exited process.  
-  
-   
-  
-## Examples  
- See the code example for the <xref:System.Diagnostics.Process.ExitCode%2A> property.  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.Diagnostics/Process/WaitForExit_Int32.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ComponentModel.Win32Exception">The wait setting could not be accessed.</exception>
         <exception cref="T:System.SystemException">No process <see cref="P:System.Diagnostics.Process.Id" /> has been set, and a <see cref="P:System.Diagnostics.Process.Handle" /> from which the <see cref="P:System.Diagnostics.Process.Id" /> property can be determined does not exist.  
@@ -6589,10 +5944,8 @@ Calling this method will set <xref:System.Diagnostics.Process.EnableRaisingEvent
  
  The working set of a process is the set of memory pages currently visible to the process in physical RAM memory. These pages are resident and available for an application to use without triggering a page fault.  
   
- The working set includes both shared and private data. The shared data includes the pages that contain all the instructions that the process executes, including the process modules and the system libraries.  
-  
-   
-  
+ The working set includes both shared and private data. The shared data includes the pages that contain all the instructions that the process executes, including the process modules and the system libraries.
+
 ## Examples  
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process' exit code.  
   
@@ -6671,9 +6024,7 @@ Calling this method will set <xref:System.Diagnostics.Process.EnableRaisingEvent
  The working set includes both shared and private data. The shared data includes the pages that contain all the instructions that the process executes, including instructions in the process modules and the system libraries.  
   
  This property can be used to monitor memory usage on computers with 32-bit processors or 64-bit processors. The property value is equivalent to the **Working Set** performance counter for the process.  
-  
-   
-  
+
 ## Examples  
  The following code example starts an instance of the Notepad application. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays its exit code and peak memory statistics.  
   
