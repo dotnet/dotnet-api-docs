@@ -2,7 +2,7 @@ The <xref:System.Diagnostics.Process.StandardOutput%2A> stream can be read synch
 
 In contrast, <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> starts asynchronous read operations on the <xref:System.Diagnostics.Process.StandardOutput%2A> stream. This method enables a designated event handler for the stream output and immediately returns to the caller, which can perform other work while the stream output is directed to the event handler.
 
-Follow these steps to perform asynchronous read operations on <xref:System.Diagnostics.Process.StandardOutput%2A> for a <xref:System.Diagnostics.Process> :
+Follow these steps to perform asynchronous read operations on <xref:System.Diagnostics.Process.StandardOutput%2A> for a <xref:System.Diagnostics.Process>:
 
 1.  Set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false`.
 
@@ -20,7 +20,6 @@ You can cancel an asynchronous read operation by calling <xref:System.Diagnostic
 
 > [!NOTE]
 >  You cannot mix asynchronous and synchronous read operations on a redirected stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. For example, do not follow <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> with a call to <xref:System.IO.StreamReader.ReadLine%2A> on the <xref:System.Diagnostics.Process.StandardOutput%2A> stream, or vice versa. However, you can read two different streams in different modes. For example, you can call <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> and then call <xref:System.IO.StreamReader.ReadLine%2A> for the <xref:System.Diagnostics.Process.StandardError%2A> stream.
-
 
 ## Examples
 

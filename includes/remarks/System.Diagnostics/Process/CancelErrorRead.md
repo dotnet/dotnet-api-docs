@@ -19,8 +19,7 @@ process.BeginErrorReadLine();
 ```
 
 > [!NOTE]
->  You cannot mix asynchronous and synchronous read operations on the redirected <xref:System.Diagnostics.Process.StandardError%2A> stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. If you cancel an asynchronous read operation on <xref:System.Diagnostics.Process.StandardError%2A> and then need to read from the stream again, you must use <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> to resume asynchronous read operations. Do not follow <xref:System.Diagnostics.Process.CancelErrorRead%2A> with a call to the synchronous read methods of <xref:System.Diagnostics.Process.StandardError%2A> such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, or <xref:System.IO.StreamReader.ReadToEnd%2A>.
-
+> You cannot mix asynchronous and synchronous read operations on the redirected <xref:System.Diagnostics.Process.StandardError%2A> stream. Once the redirected stream of a <xref:System.Diagnostics.Process> is opened in either asynchronous or synchronous mode, all further read operations on that stream must be in the same mode. If you cancel an asynchronous read operation on <xref:System.Diagnostics.Process.StandardError%2A> and then need to read from the stream again, you must use <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> to resume asynchronous read operations. Do not follow <xref:System.Diagnostics.Process.CancelErrorRead%2A> with a call to the synchronous read methods of <xref:System.Diagnostics.Process.StandardError%2A> such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, or <xref:System.IO.StreamReader.ReadToEnd%2A>.
 
 ## Examples
 

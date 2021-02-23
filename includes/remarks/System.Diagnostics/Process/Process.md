@@ -17,8 +17,8 @@ A system process is uniquely identified on the system by its process identifier.
 > This class contains a link demand and an inheritance demand at the class level that applies to all members. A <xref:System.Security.SecurityException> is thrown when either the immediate caller or the derived class does not have full-trust permission. For details about security demands, see [Link Demands](/dotnet/framework/misc/link-demands).
 
 <a name="Core"></a>
-## [!INCLUDE[net_core](~/includes/net-core-md.md)] Notes
-In the .NET Framework, the <xref:System.Diagnostics.Process> class by default uses <xref:System.Console> encodings, which are typically code page encodings, for the input, output, and error streams. For example code, on systems whose culture is English (United States), code page 437 is the default encoding for the <xref:System.Console> class. However, [!INCLUDE[net_core](~/includes/net-core-md.md)] may make only a limited subset of these encodings available. If this is the case, it uses <xref:System.Text.Encoding.UTF8%2A?displayProperty=nameWithType> as the default encoding.
+## .NET Core notes
+In .NET Framework, the <xref:System.Diagnostics.Process> class by default uses <xref:System.Console> encodings, which are typically code page encodings, for the input, output, and error streams. For example code, on systems whose culture is English (United States), code page 437 is the default encoding for the <xref:System.Console> class. However, .NET Core may make only a limited subset of these encodings available. If this is the case, it uses <xref:System.Text.Encoding.UTF8%2A?displayProperty=nameWithType> as the default encoding.
 
 If a <xref:System.Diagnostics.Process> object depends on specific code page encodings, you can still make them available by doing the following *before* you call any <xref:System.Diagnostics.Process> methods:
 

@@ -7,7 +7,7 @@ Developers usually indicate a successful exit by an <xref:System.Diagnostics.Pro
 If you try to get the <xref:System.Diagnostics.Process.ExitCode%2A> before the process has exited, the attempt throws an exception. Examine the <xref:System.Diagnostics.Process.HasExited%2A> property first to verify whether the associated process has terminated.
 
 > [!NOTE]
->  When standard output has been redirected to asynchronous event handlers, it is possible that output processing will not have completed when <xref:System.Diagnostics.Process.HasExited%2A> returns `true`. To ensure that asynchronous event handling has been completed, call the <xref:System.Diagnostics.Process.WaitForExit> overload that takes no parameter before checking <xref:System.Diagnostics.Process.HasExited%2A>.
+> When standard output has been redirected to asynchronous event handlers, it's possible that output processing will not have completed when <xref:System.Diagnostics.Process.HasExited%2A> returns `true`. To ensure that asynchronous event handling has been completed, call the <xref:System.Diagnostics.Process.WaitForExit> overload that takes no arguments before checking <xref:System.Diagnostics.Process.HasExited%2A>.
 
 You can use the <xref:System.Diagnostics.Process.CloseMainWindow%2A> or the <xref:System.Diagnostics.Process.Kill%2A> method to cause an associated process to exit.
 

@@ -10,8 +10,6 @@ If the <xref:System.Diagnostics.Process> is used inside [!INCLUDE[vsprvslong](~/
 
 Typically, this property is set when the component is placed inside a control or form, because those components are bound to a specific thread.
 
-
-
 ## Examples
 [!code-cpp[Process_SynchronizingObject#1](~/samples/snippets/cpp/VS_Snippets_CLR/Process_SynchronizingObject/CPP/process_synchronizingobject.cpp#1)]
 [!code-csharp[Process_SynchronizingObject#1](~/samples/snippets/csharp/VS_Snippets_CLR/Process_SynchronizingObject/CS/process_synchronizingobject.cs#1)]

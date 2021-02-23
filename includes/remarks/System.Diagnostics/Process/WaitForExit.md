@@ -3,7 +3,7 @@
 This method instructs the <xref:System.Diagnostics.Process> component to wait an infinite amount of time for the process and event handlers to exit. This can cause an application to stop responding. For example, if you call <xref:System.Diagnostics.Process.CloseMainWindow%2A> for a process that has a user interface, the request to the operating system to terminate the associated process might not be handled if the process is written to never enter its message loop.
 
 > [!NOTE]
->  In the [!INCLUDE[net_v35_long](~/includes/net-v35-long-md.md)] and earlier versions, the <xref:System.Diagnostics.Process.WaitForExit> overload waited for <xref:System.Int32.MaxValue> milliseconds (approximately 24 days), not indefinitely. Also, previous versions did not wait for the event handlers to exit if the full <xref:System.Int32.MaxValue> time was reached.
+> In .NET Framework 3.5 and earlier versions, the <xref:System.Diagnostics.Process.WaitForExit> overload waits for <xref:System.Int32.MaxValue> milliseconds (approximately 24 days), not indefinitely. Also, those versions do not wait for the event handlers to exit if the full <xref:System.Int32.MaxValue> time is reached.
 
 This overload ensures that all processing has been completed, including the handling of asynchronous events for redirected standard output. You should use this overload after a call to the <xref:System.Diagnostics.Process.WaitForExit%28System.Int32%29> overload when standard output has been redirected to asynchronous event handlers.
 

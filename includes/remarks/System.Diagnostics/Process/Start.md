@@ -3,7 +3,7 @@ Use this overload to start a process resource and associate it with the current 
 You can start a ClickOnce application by specifying the location (for example, a Web address) from which you originally installed the application. Do not start a ClickOnce application by specifying its installed location on your hard drive.
 
 > [!NOTE]
->  If you are using Visual Studio, this overload of the <xref:System.Diagnostics.Process.Start%2A> method is the one that you insert into your code after you drag a <xref:System.Diagnostics.Process> component onto the designer. Use the `Properties` window to expand the `StartInfo` category and write the appropriate value into the `FileName` property. Your changes will appear in the form's `InitializeComponent` procedure.
+>  If you are using Visual Studio, this overload of the <xref:System.Diagnostics.Process.Start%2A> method is the one that you insert into your code after you drag a <xref:System.Diagnostics.Process> component onto the designer. Use the Properties window to expand the `StartInfo` category and write the appropriate value into the `FileName` property. Your changes will appear in the form's `InitializeComponent` procedure.
 
 This overload of <xref:System.Diagnostics.Process.Start%2A> is not a `static` method. You must call it from an instance of the <xref:System.Diagnostics.Process> class. Before calling <xref:System.Diagnostics.Process.Start%2A>, you must first specify <xref:System.Diagnostics.Process.StartInfo%2A> property information for this <xref:System.Diagnostics.Process> instance, because that information is used to determine the process resource to start.
 
