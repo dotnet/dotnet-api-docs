@@ -140,7 +140,8 @@ class ConsumingEnumerableDemo
                 for (int i = 0; i < 10; i++)
                 {
                     bc.Add(i);
-                    Console.WriteLine($"Producing: {i}")
+                    Console.WriteLine($"Producing: {i}");
+
                     await Task.Delay(100); // sleep 100 ms between adds
                 }
 
