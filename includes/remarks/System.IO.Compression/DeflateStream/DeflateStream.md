@@ -1,4 +1,4 @@
-This class represents the Deflate algorithm, which is an industry-standard algorithm for lossless file compression and decompression. Starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)], the <xref:System.IO.Compression.DeflateStream> class uses the zlib library. As a result, it provides a better compression algorithm and, in most cases, a smaller compressed file than it provides in earlier versions of the .NET Framework.
+This class represents the Deflate algorithm, which is an industry-standard algorithm for lossless file compression and decompression. Starting with the .NET Framework 4.5, the <xref:System.IO.Compression.DeflateStream> class uses the zlib library. As a result, it provides a better compression algorithm and, in most cases, a smaller compressed file than it provides in earlier versions of the .NET Framework.
 
 This class does not inherently provide functionality for adding files to or extracting files from zip archives. To work with zip archives, use the <xref:System.IO.Compression.ZipArchive> and the <xref:System.IO.Compression.ZipArchiveEntry> classes.
 
