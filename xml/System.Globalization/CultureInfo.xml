@@ -153,15 +153,15 @@
 -   Standard cultures with user overrides. The user can use the **Region and Language** application in **Control Panel** to customize an existing culture's property values.  
   
 > [!NOTE]
->  You can use the <xref:System.Globalization.CultureAndRegionInfoBuilder> class to define, save, and register custom cultures that either supplement or replace existing cultures. The <xref:System.Globalization.CultureAndRegionInfoBuilder.Save%2A?displayProperty=nameWithType> method creates a Locale Data Markup Language (LDML) file that can be used to install a custom culture on target systems. For step-by step information on using the <xref:System.Globalization.CultureAndRegionInfoBuilder> class to create a new or replacement culture, see the <xref:System.Globalization.CultureAndRegionInfoBuilder> class topic.  
+>  For .NET Framework, you can use the <xref:System.Globalization.CultureAndRegionInfoBuilder> class to define, save, and register custom cultures that either supplement or replace existing cultures. The <xref:System.Globalization.CultureAndRegionInfoBuilder.Save%2A?displayProperty=nameWithType> method creates a Locale Data Markup Language (LDML) file that can be used to install a custom culture on target systems. For step-by step information on using the <xref:System.Globalization.CultureAndRegionInfoBuilder> class to create a new or replacement culture, see the <xref:System.Globalization.CultureAndRegionInfoBuilder> class topic.  
   
- Because the .NET Framework supports custom cultures, you should consider the following when working with culture-specific data:  
+ Because the .NET supports custom cultures, you should consider the following when working with culture-specific data:  
   
 -   Custom cultures can have values that exceed the ranges of the predefined cultures. For example, some cultures have unusually long month names, unexpected date or time formats, or other unusual data.  
   
 -   When you display culture-specific data in the user interface, you should respect the user's customizations; for example, the user might want a 24-hour clock or a yyyyMMdd date format.  
   
--   Remember that custom cultures override default values. Therefore, you cannot consider culture data to be stable. Country names, number and date formats, and spellings may change in the future. If you want to serialize culture-sensitive data such as date and time strings to be passed to the date and time parsing functions, you should use the invariant culture or a specific .  
+-   Remember that custom cultures override default values. Therefore, you cannot consider culture data to be stable. Country names, number and date formats, and spellings may change in the future. If you want to serialize culture-sensitive data such as date and time strings to be passed to the date and time parsing functions, you should use the invariant culture or a specific culture.  
   
  The <xref:System.Globalization.CultureInfo.CultureTypes%2A> property value of custom cultures installed on a system includes the <xref:System.Globalization.CultureTypes?displayProperty=nameWithType> flag, and custom cultures are assigned an <xref:System.Globalization.CultureInfo.LCID%2A> property value of `LOCALE_CUSTOM_UNSPECIFIED` (0x1000, or 4096). Note that, starting with Windows 10, this value is also assigned to system-defined cultures that lack complete cultural data.  
 
@@ -171,11 +171,13 @@
 
 - In .NET Framework 3.5 and earlier versions, cultural data is provided by both the Windows operating system and the .NET Framework.
 
-- In .NET Framework 4 and later versions, cultural data is provided by the Windows operating system.
+- In .NET Framework 4 and later versions, cultural data is provided by the Windows operating system through [National Language Support (NLS)](https://docs.microsoft.com/en-us/windows/win32/intl/national-language-support).
 
-- In all versions of .NET Core running on Windows, cultural data is provided by the Windows operating system.
+- In .NET 5 (and all versions .NET Core) running on Windows, cultural data is provided by the Windows operating system through [National Language Support (NLS)](https://docs.microsoft.com/en-us/windows/win32/intl/national-language-support).
 
-- In all versions of .NET Core running on Unix platforms, cultural data is provided by the [International Components for Unicode (ICU) Library](http://site.icu-project.org/). The specific version of the ICU Library depends on the individual operating system.
+- In .NET 5 (and all versions of .NET Core) running on Unix platforms, cultural data is provided by the [International Components for Unicode (ICU) Library](http://site.icu-project.org/). The specific version of the ICU Library depends on the individual operating system.
+
+- Starting from .NET 5, cultural data is provided by the [International Components for Unicode (ICU) Library](http://site.icu-project.org/) by default when running on Windows 10 May 2019 Update or later. See the [.NET globalization and ICU](https://docs.microsoft.com/en-us/dotnet/standard/globalization-localization/globalization-icu) article for behavioral differences.
 
 Because of this, a culture available on a particular .NET implementation, platform, or version may not be available on a different .NET implementation, platform, or version.
 
@@ -2064,7 +2066,7 @@ csc /resource:GreetingStrings.resources Example1.cs
 |Vietnamese|vi|en-US|  
 |Vietnamese (Vietnam)|vi-VN|en-US|  
   
- Your application can use <xref:System.Globalization.CultureAndRegionInfoBuilder> to create a replacement for a culture, and that culture can have a console fallback culture of your choosing.  
+ Your .NET Framework application can use <xref:System.Globalization.CultureAndRegionInfoBuilder> to create a replacement for a culture, and that culture can have a console fallback culture of your choosing.  
   
    
   
