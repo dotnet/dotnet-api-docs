@@ -23,7 +23,7 @@ namespace SDKSamples
         // <SnippetKeyGestureGetProperties>
         private void CmdExecutedHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            // This method gets the KeyGestures Associated with a Command 
+            // This method gets the KeyGestures Associated with a Command
             // and displays the Key and ModifierKeys properties.
 
             RoutedCommand cmd = e.Command as RoutedCommand;
@@ -52,11 +52,11 @@ namespace SDKSamples
             // Defining the KeyGesture.
             KeyGesture FindCmdKeyGesture = new KeyGesture(Key.F,
                 (ModifierKeys.Shift | ModifierKeys.Alt));
-          
+
             // Defining the KeyBinding.
             KeyBinding FindKeyBinding = new KeyBinding(
                 ApplicationCommands.Find, FindCmdKeyGesture);
-            
+
             // Binding the KeyBinding to the Root Window.
             this.InputBindings.Add(FindKeyBinding);
             // </SnippetKeyBindingKeyGestureSetProperties>
@@ -130,17 +130,17 @@ namespace SDKSamples
             this.InputBindings.Add(inputBinding);
             // </SnippetInputBindingAddingCommand>
 
-            // <SnippetMouseBindingMouseAction> 
+            // <SnippetMouseBindingMouseAction>
             MouseGesture CutCmdMouseGesture = new MouseGesture(
                 MouseAction.MiddleClick);
 
             MouseBinding CutMouseBinding = new MouseBinding(
-                ApplicationCommands.Cut, 
+                ApplicationCommands.Cut,
                 CutCmdMouseGesture);
-            
+
             // RootWindow is an instance of Window.
             RootWindow.InputBindings.Add(CutMouseBinding);
-            // </SnippetMouseBindingMouseAction> 
+            // </SnippetMouseBindingMouseAction>
 
             // <SnippetMouseBindingGesture>
             MouseGesture NewCmdMouseGesture = new MouseGesture();
@@ -151,7 +151,7 @@ namespace SDKSamples
             NewMouseBinding.Command = ApplicationCommands.New;
             NewMouseBinding.Gesture = NewCmdMouseGesture;
 
-            // RootWindow is an instance of Window. 
+            // RootWindow is an instance of Window.
             RootWindow.InputBindings.Add(NewMouseBinding);
             // </SnippetMouseBindingGesture>
         }
@@ -182,7 +182,7 @@ namespace SDKSamples
                         if (keyGesture != null)
                         {
                             txtGesture.Text += "Key: " + keyGesture.Key.ToString() + "\n";
-                            txtGesture.Text += "Modifers: " + keyGesture.Modifiers.ToString() + "\n";
+                            txtGesture.Text += "Modifiers: " + keyGesture.Modifiers.ToString() + "\n";
                         }
 
                         txtGesture.Text += "\n";
@@ -191,7 +191,7 @@ namespace SDKSamples
                         if (mouseGesture != null)
                         {
                             txtGesture.Text += "Mouse Action: " + mouseGesture.MouseAction.ToString() + "\n";
-                            txtGesture.Text += "Modifers: " + mouseGesture.Modifiers.ToString() + "\n";
+                            txtGesture.Text += "Modifiers: " + mouseGesture.Modifiers.ToString() + "\n";
                         }
                         if (mouseGesture == null)
                         {
@@ -241,9 +241,9 @@ namespace SDKSamples
                 KeyGesture gesture = binding.Gesture as KeyGesture;
                 if (gesture != null)
                 {
-                    txtGesture.Text += gesture.Key.ToString() + 
-                        "   " + 
-                        gesture.Modifiers.ToString() + "   " + 
+                    txtGesture.Text += gesture.Key.ToString() +
+                        "   " +
+                        gesture.Modifiers.ToString() + "   " +
                         ((RoutedCommand)binding.Command).Name + "\n";
                 }
             }
