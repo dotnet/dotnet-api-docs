@@ -255,18 +255,18 @@ Public Class XpsCreate
         ' Get default PrintTicket from printer
         Dim printTicket As PrintTicket = printQueue.DefaultPrintTicket
 
-        Dim printCapabilites As PrintCapabilities = printQueue.GetPrintCapabilities()
+        Dim printCapabilities As PrintCapabilities = printQueue.GetPrintCapabilities()
 
         ' Modify PrintTicket
-        If printCapabilites.CollationCapability.Contains(Collation.Collated) Then
+        If printCapabilities.CollationCapability.Contains(Collation.Collated) Then
             printTicket.Collation = Collation.Collated
         End If
 
-        If printCapabilites.DuplexingCapability.Contains(Duplexing.TwoSidedLongEdge) Then
+        If printCapabilities.DuplexingCapability.Contains(Duplexing.TwoSidedLongEdge) Then
             printTicket.Duplexing = Duplexing.TwoSidedLongEdge
         End If
 
-        If printCapabilites.StaplingCapability.Contains(Stapling.StapleDualLeft) Then
+        If printCapabilities.StaplingCapability.Contains(Stapling.StapleDualLeft) Then
             printTicket.Stapling = Stapling.StapleDualLeft
         End If
 
