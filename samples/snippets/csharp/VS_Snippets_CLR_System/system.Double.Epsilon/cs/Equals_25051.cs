@@ -18,7 +18,7 @@ public class Class1
       // <Snippet1>
       // Initialize two doubles with apparently identical values
       double double1 = .33333;
-      double double2 = 1/3;
+      double double2 = (double) 1/3;
       // Compare them for equality
       Console.WriteLine(double1.Equals(double2));    // displays false
       // </Snippet1>
@@ -48,7 +48,7 @@ public class Class1
       // <Snippet3>
       // Initialize two doubles with apparently identical values
       double double1 = .33333;
-      object double2 = 1/3;
+      object double2 = (double) 1/3;
       // Compare them for equality
       Console.WriteLine(double1.Equals(double2));    // displays false
       // </Snippet3>
