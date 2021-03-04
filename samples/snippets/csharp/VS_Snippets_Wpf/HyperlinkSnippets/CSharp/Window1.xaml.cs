@@ -50,15 +50,15 @@ namespace HyperlinkSnippets
 
                 // After this line executes, the new element "hyperl"
                 // contains the specified Inline element, "runx".  Also, "hyperl" is
-                // inserted at the point indicated by the insertionPosition parameter, 
-                // which in this case indicates the content start position in the Paragraph 
+                // inserted at the point indicated by the insertionPosition parameter,
+                // which in this case indicates the content start position in the Paragraph
                 // element "parx".
                 Hyperlink hyperl = new Hyperlink(runx, parx.ContentStart);
                 // </Snippet_Hyperlink_Const2>
             }
             {
                 // <Snippet_Hyperlink_Const3>
-                // Create a paragraph and three text runs to serve as example content.  
+                // Create a paragraph and three text runs to serve as example content.
                 Paragraph parx = new Paragraph();
                 Run run1 = new Run("Text run 1.");
                 Run run2 = new Run("Text to link.");
@@ -74,7 +74,7 @@ namespace HyperlinkSnippets
                 // After this line executes, the selection of content
                 // indicated by the "start" and "end" parameters will be
                 // enclosed by the new Hyperlink.  In this case, the new Hyperlink
-                // will enclose the entire contents of the text run "run2".  
+                // will enclose the entire contents of the text run "run2".
                 Hyperlink hyperl = new Hyperlink(run2.ContentStart, run2.ContentEnd);
                 // </Snippet_Hyperlink_Const3>
 
@@ -86,7 +86,7 @@ namespace HyperlinkSnippets
         {
             // <Snippet_Hyperlink_NavUri>
             Paragraph parx = new Paragraph();
-            Run run1 = new Run("Text preceeding the hyperlink.");
+            Run run1 = new Run("Text preceding the hyperlink.");
             Run run2 = new Run("Text following the hyperlink.");
             Run run3 = new Run("Link Text.");
 
