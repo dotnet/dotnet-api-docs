@@ -12,7 +12,7 @@ using namespace System::Printing;
 
 public ref class XpsCreate {
 
-private: 
+private:
    literal System::String^ packageWithPrintTicketName = "XpsDocument-withPrintTicket.xps";
    literal System::String^ packageName = "XpsDocument.xps";
    literal System::String^ image1 = "picture.jpg";
@@ -21,20 +21,20 @@ private:
    literal System::String^ font2 = "arial.ttf";
    literal System::String^ fontContentType = "application/vnd.ms-package.obfuscated-opentype";
 
-public: 
+public:
    [STAThread()]
-   static void Main (array<System::String^>^ args) 
+   static void Main (array<System::String^>^ args)
    {
       XpsCreate^ xpsCreate = gcnew XpsCreate();
       xpsCreate->Run();
    };
 
-public: 
+public:
    // -------------------------------- Run -----------------------------------
    /// <summary>
    ///   Creates two XpsDocument packages, the first without a PrintTicket
    ///   and a second with a PrintTicket.</summary>
-   void Run () 
+   void Run ()
    {
       // First, create an XpsDocument without a PrintTicket. - - - - - - - -
 
@@ -93,7 +93,7 @@ public:
       }
    };
 
-private: 
+private:
    //<SnippetXpsCreateAddPkgContent>
    // ------------------------- AddPackageContent ----------------------------
    /// <summary>
@@ -103,7 +103,7 @@ private:
    /// <param name="attachPrintTicket">
    ///   true to include a PrintTicket with the
    ///   document; otherwise, false.</param>
-   void AddPackageContent (XpsDocument^ xpsDocument, bool attachPrintTicket) 
+   void AddPackageContent (XpsDocument^ xpsDocument, bool attachPrintTicket)
    {
       try
       {
@@ -150,7 +150,7 @@ private:
       {
          throw xpsException;
 
-      } 
+      }
    };// end:AddPackageContent()
    //</SnippetXpsCreateAddPkgContent>
 
@@ -161,7 +161,7 @@ private:
    ///   Adds a predefined set of content to a given document writer.</summary>
    /// <param name="fixedDocumentWriter">
    ///   The document writer to add the content to.</param>
-   void AddDocumentContent (IXpsFixedDocumentWriter^ fixedDocumentWriter) 
+   void AddDocumentContent (IXpsFixedDocumentWriter^ fixedDocumentWriter)
    {
       // Collection of image and font resources used on the current page.
       //   Key: "XpsImage", "XpsFont"
@@ -194,14 +194,14 @@ private:
       {
          throw xpsException;
 
-      } 
+      }
    };// end:AddDocumentContent()
    //</SnippetXpsCreateAddDocContent>
 
 
    //<SnippetXpsCreateAddPageResources>
    // -------------------------- AddPageResources ----------------------------
-   Dictionary<System::String^,List<XpsResource^>^>^ AddPageResources (IXpsFixedPageWriter^ fixedPageWriter) 
+   Dictionary<System::String^,List<XpsResource^>^>^ AddPageResources (IXpsFixedPageWriter^ fixedPageWriter)
    {
       // Collection of all resources for this page.
       //   Key: "XpsImage", "XpsFont"
@@ -249,7 +249,7 @@ private:
       {
          throw xpsException;
 
-      } 
+      }
    };// end:AddPageResources()
    //</SnippetXpsCreateAddPageResources>
 
@@ -260,7 +260,7 @@ private:
    ///   Returns a PrintTicket based on the current default printer.</summary>
    /// <returns>
    ///   A PrintTicket for the current local default printer.</returns>
-   PrintTicket^ GetPrintTicketFromPrinter () 
+   PrintTicket^ GetPrintTicketFromPrinter ()
    {
       PrintQueue^ printQueue = nullptr;
 
@@ -282,18 +282,18 @@ private:
       // Get default PrintTicket from printer
       PrintTicket^ printTicket = printQueue->DefaultPrintTicket;
 
-      PrintCapabilities^ printCapabilites = printQueue->GetPrintCapabilities();
+      PrintCapabilities^ printCapabilities = printQueue->GetPrintCapabilities();
 
       // Modify PrintTicket
-      if (printCapabilites->CollationCapability->Contains(Collation::Collated))
+      if (printCapabilities->CollationCapability->Contains(Collation::Collated))
       {
          printTicket->Collation = Collation::Collated;
       }
-      if (printCapabilites->DuplexingCapability->Contains(Duplexing::TwoSidedLongEdge))
+      if (printCapabilities->DuplexingCapability->Contains(Duplexing::TwoSidedLongEdge))
       {
          printTicket->Duplexing = Duplexing::TwoSidedLongEdge;
       }
-      if (printCapabilites->StaplingCapability->Contains(Stapling::StapleDualLeft))
+      if (printCapabilities->StaplingCapability->Contains(Stapling::StapleDualLeft))
       {
          printTicket->Stapling = Stapling::StapleDualLeft;
       }
@@ -304,7 +304,7 @@ private:
 
    //<SnippetXpsCreateWritePageContent>
    // --------------------------- WritePageContent ---------------------------
-   void WritePageContent (System::Xml::XmlWriter^ xmlWriter, System::String^ documentUri, Dictionary<System::String^,List<XpsResource^>^>^ resources) 
+   void WritePageContent (System::Xml::XmlWriter^ xmlWriter, System::String^ documentUri, Dictionary<System::String^,List<XpsResource^>^>^ resources)
    {
       List<XpsResource^>^ xpsImages = resources["XpsImage"];
       List<XpsResource^>^ xpsFonts = resources["XpsFont"];
@@ -367,7 +367,7 @@ private:
 
 
    // ----------------------------- WriteToStream ----------------------------
-   void WriteToStream (System::IO::Stream^ stream, System::String^ resource) 
+   void WriteToStream (System::IO::Stream^ stream, System::String^ resource)
    {
       int bufSize = 0x1000;
       array<System::Byte>^ buf = gcnew array<System::Byte>(bufSize);
