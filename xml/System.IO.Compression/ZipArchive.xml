@@ -34,44 +34,11 @@
   <Docs>
     <summary>Represents a package of compressed files in the zip archive format.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The methods for manipulating zip archives and their file entries are spread across three classes: <xref:System.IO.Compression.ZipFile>, <xref:System.IO.Compression.ZipArchive>, and <xref:System.IO.Compression.ZipArchiveEntry>.  
-  
-|To|Use|  
-|--------|---------|  
-|Create a zip archive from a directory|<xref:System.IO.Compression.ZipFile.CreateFromDirectory%2A?displayProperty=nameWithType>|  
-|Extract the contents of a zip archive to a directory|<xref:System.IO.Compression.ZipFile.ExtractToDirectory%2A?displayProperty=nameWithType>|  
-|Add new files to an existing zip archive|<xref:System.IO.Compression.ZipArchive.CreateEntry%2A?displayProperty=nameWithType>|  
-|Retrieve a file from a zip archive|<xref:System.IO.Compression.ZipArchive.GetEntry%2A?displayProperty=nameWithType>|  
-|Retrieve all the files from a zip archive|<xref:System.IO.Compression.ZipArchive.Entries%2A?displayProperty=nameWithType>|  
-|Open a stream to a single file contained in a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Open%2A?displayProperty=nameWithType>|  
-|Delete a file from a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Delete%2A?displayProperty=nameWithType>|  
-  
- When you create a new entry, the file is compressed and added to the zip package. The <xref:System.IO.Compression.ZipArchive.CreateEntry%2A> method enables you to specify a directory hierarchy when adding the entry. You include the relative path of the new entry within the zip package. For example, creating a new entry with a relative path of `AddedFolder\NewFile.txt` creates a compressed text file in a directory named AddedFolder.  
-  
- If you reference the `System.IO.Compression.FileSystem` assembly in your project, you can access four extension methods (from the <xref:System.IO.Compression.ZipFileExtensions> class) for the <xref:System.IO.Compression.ZipArchive> class: <xref:System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(System.IO.Compression.ZipArchive,System.String,System.String)>, <xref:System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(System.IO.Compression.ZipArchive,System.String,System.String,System.IO.Compression.CompressionLevel)>, <xref:System.IO.Compression.ZipFileExtensions.ExtractToDirectory(System.IO.Compression.ZipArchive,System.String)>, and <xref:System.IO.Compression.ZipFileExtensions.ExtractToDirectory(System.IO.Compression.ZipArchive,System.String,System.Boolean)> (available in .NET Core 2.0 and later versions). These extension methods enable you to compress and decompress the contents of the entry to a file. The `System.IO.Compression.FileSystem` assembly is not available for Windows 8.x Store apps. In Windows 8.x Store apps, you can compress and decompress files by using the <xref:System.IO.Compression.DeflateStream> or <xref:System.IO.Compression.GZipStream> class, or you can use the Windows Runtime types [Compressor](https://go.microsoft.com/fwlink/p/?LinkID=246357) and [Decompressor](https://go.microsoft.com/fwlink/p/?LinkID=246358).  
-  
-   
-  
-## Examples  
- The first example shows how to create a new entry and write to it by using a stream.  
-  
- [!code-csharp[System.IO.Compression.ZipArchiveMode#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/cs/program1.cs#1)]
- [!code-vb[System.IO.Compression.ZipArchiveMode#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/vb/program1.vb#1)]  
-  
- The following example shows how to open a zip archive and iterate through the collection of entries.  
-  
- [!code-csharp[System.IO.Compression.ZipArchive#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchive/cs/program1.cs#1)]
- [!code-vb[System.IO.Compression.ZipArchive#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchive/vb/program1.vb#1)]  
-  
- The third example shows how to use extension methods to create a new entry in a zip archive from an existing file and extract the archive contents. You must reference the `System.IO.Compression.FileSystem` assembly to execute the code.  
-  
- [!code-csharp[System.IO.Compression.ZipArchive#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchive/cs/program3.cs#3)]
- [!code-vb[System.IO.Compression.ZipArchive#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchive/vb/program3.vb#3)]  
-  
- ]]></format>
+      <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/ZipArchive/ZipArchive.md)]
+
+      ]]></format>
     </remarks>
     <altmember cref="T:System.IO.Compression.ZipFile" />
   </Docs>
@@ -275,32 +242,11 @@
         <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
         <summary>Initializes a new instance of the <see cref="T:System.IO.Compression.ZipArchive" /> class on the specified stream for the specified mode, uses the specified encoding for entry names, and optionally leaves the stream open.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the `mode` parameter is set to <xref:System.IO.Compression.ZipArchiveMode.Read>, the stream must support reading. If the `mode` parameter is set to <xref:System.IO.Compression.ZipArchiveMode.Create>, the stream must support writing. If the `mode` parameter is set to <xref:System.IO.Compression.ZipArchiveMode.Update>, the stream must support reading, writing, and seeking.  
-  
- When you open a zip archive file for reading and `entryNameEncoding` is set to `null`, entry names are decoded according to the following rules:  
-  
--   When the language encoding flag (in the general-purpose bit flag of the local file header) is not set, the current system default code page is used to decode the entry name.  
-  
--   When the language encoding flag is set, UTF-8 is used to decode the entry name.  
-  
- When you open a zip archive file for reading and `entryNameEncoding` is set to a value other than `null`, entry names are decoded according to the following rules:  
-  
--   When the language encoding flag is not set, the specified `entryNameEncoding` is used to decode the entry name.  
-  
--   When the language encoding flag is set, UTF-8 is used to decode the entry name.  
-  
- When you write to archive files and `entryNameEncoding` is set to `null`, entry names are encoded according to the following rules:  
-  
--   For entry names that contain characters outside the ASCII range, the language encoding flag is set, and entry names are encoded by using UTF-8.  
-  
--   For entry names that contain only ASCII characters, the language encoding flag is not set, and entry names are encoded by using the current system default code page.  
-  
- When you write to archive files and `entryNameEncoding` is set to a value other than `null`, the specified `entryNameEncoding` is used to encode the entry names into bytes. The language encoding flag (in the general-purpose bit flag of the local file header) is set only when the specified encoding is a UTF-8 encoding.  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/ZipArchive/.ctor_Stream_ZipArchiveMode_Boolean_Encoding.md)]
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The stream is already closed, or the capabilities of the stream do not match the mode.
 
@@ -374,9 +320,7 @@ An encoding other than UTF-8 is specified for the <paramref name="entryNameEncod
  The `entryName` string should reflect the relative path of the entry you want to create within the zip archive. There is no restriction on the string you provide. However, if it is not formatted as a relative path, the entry is created, but you may get an exception when you extract the contents of the zip archive. If an entry with the specified path and name already exists in the archive, a second entry is created with the same path and name.  
   
  The value of the <xref:System.IO.Compression.ZipArchiveEntry.LastWriteTime%2A> property for the new entry is set to the current time. The entry is compressed using the default compression level of the underlying compression algorithm. If you want to specify a different compression level, use the <xref:System.IO.Compression.ZipArchive.CreateEntry%2A> method.  
-  
-   
-  
+
 ## Examples  
  The following example shows how to create an entry and write to it by using a stream.  
   
@@ -435,9 +379,7 @@ An encoding other than UTF-8 is specified for the <paramref name="entryNameEncod
  The `entryName` string should reflect the relative path of the entry you want to create within the zip archive. There is no restriction on the string you provide. However, if it is not formatted as a relative path, the entry is created, but you may get an exception when you extract the contents of the zip archive. If an entry with the specified name already exists in the archive, a second entry is created with the same name.  
   
  The value of the <xref:System.IO.Compression.ZipArchiveEntry.LastWriteTime%2A> property for the new entry is set to the current time. Set the `compressionLevel` parameter to <xref:System.IO.Compression.CompressionLevel.Optimal> if you want the file to be compressed as much as possible. Set the `compressionLevel` parameter to <xref:System.IO.Compression.CompressionLevel.Fastest> only if you are concerned that the compression operation will not complete quickly enough for your scenario.  
-  
-   
-  
+
 ## Examples  
  The following example shows how to create an entry with the optimal compression level. It also writes to the new entry by using a stream.  
   
@@ -598,10 +540,8 @@ An encoding other than UTF-8 is specified for the <paramref name="entryNameEncod
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Use the <xref:System.IO.Compression.ZipArchive.Entries%2A> property to retrieve the entire collection of entries. Use the <xref:System.IO.Compression.ZipArchive.GetEntry%2A> method to retrieve a single entry by name.  
-  
-   
-  
+ Use the <xref:System.IO.Compression.ZipArchive.Entries%2A> property to retrieve the entire collection of entries. Use the <xref:System.IO.Compression.ZipArchive.GetEntry%2A> method to retrieve a single entry by name.
+
 ## Examples  
  The following example shows how to open a zip archive and iterate through the collection of entries.  
   
@@ -654,9 +594,7 @@ An encoding other than UTF-8 is specified for the <paramref name="entryNameEncod
   
 ## Remarks  
  If multiple entries that have the specified name exist in the archive, the first one is returned. The name of the entry is compared to `entryName` using ordinal comparison.  
-  
-   
-  
+
 ## Examples  
  The following example shows how to use the <xref:System.IO.Compression.ZipArchive.GetEntry%2A> method to retrieve an entry.  
   
