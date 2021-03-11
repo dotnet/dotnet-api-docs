@@ -44,7 +44,6 @@ public class Example
 
         // <Snippet12>
         // Indicate the last occurence of 'the'.
-        sentence.RemoveFirst();
         LinkedListNode<string> current = sentence.FindLast("the");
         // </Snippet12>
         IndicateNode(current, "Test 5: Indicate last occurence of 'the':");
