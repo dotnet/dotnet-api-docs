@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace MetadataBuilderSnippets
 {
@@ -7,8 +7,6 @@ namespace MetadataBuilderSnippets
         static void Main(string[] args)
         {
             MetadataBuilderSnippets.Run();
-            Console.WriteLine("End");
-            Console.ReadKey();
         }
     }
 }
