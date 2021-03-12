@@ -15,7 +15,7 @@ Module Example
          ElseIf t.Equals(GetType(Integer))   
             Console.WriteLine("{0} is a 32-bit integer.", value)
          ElseIf t.Equals(GetType(Long))   
-            Console.WriteLine("{0} is a 32-bit integer.", value)
+            Console.WriteLine("{0} is a 64-bit integer.", value)
          ElseIf t.Equals(GetType(Double))
             Console.WriteLine("{0} is a double-precision floating point.", 
                               value)
