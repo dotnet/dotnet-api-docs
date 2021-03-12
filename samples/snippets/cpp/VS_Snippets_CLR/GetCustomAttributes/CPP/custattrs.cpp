@@ -251,8 +251,8 @@ namespace CustAttrs5CS
 
 /*
  * Output:
+ * Parameter args for method ParamArrayAndDesc has the ParamArray attribute.
  * Parameter args for method ParamArrayAndDesc has a description attribute.
  * The description is: "This argument is a ParamArray"
- * Parameter args for method ParamArrayAndDesc has the ParamArray attribute.
  */
 // </Snippet5>
