@@ -280,21 +280,21 @@ public class XpsCreate
         // Get default PrintTicket from printer
         PrintTicket printTicket = printQueue.DefaultPrintTicket;
 
-        PrintCapabilities printCapabilites = printQueue.GetPrintCapabilities();
+        PrintCapabilities printCapabilities = printQueue.GetPrintCapabilities();
 
         // Modify PrintTicket
-        if (printCapabilites.CollationCapability.Contains(Collation.Collated))
+        if (printCapabilities.CollationCapability.Contains(Collation.Collated))
         {
             printTicket.Collation = Collation.Collated;
         }
 
-        if ( printCapabilites.DuplexingCapability.Contains(
+        if ( printCapabilities.DuplexingCapability.Contains(
                 Duplexing.TwoSidedLongEdge) )
         {
             printTicket.Duplexing = Duplexing.TwoSidedLongEdge;
         }
 
-        if (printCapabilites.StaplingCapability.Contains(Stapling.StapleDualLeft))
+        if (printCapabilities.StaplingCapability.Contains(Stapling.StapleDualLeft))
         {
             printTicket.Stapling = Stapling.StapleDualLeft;
         }

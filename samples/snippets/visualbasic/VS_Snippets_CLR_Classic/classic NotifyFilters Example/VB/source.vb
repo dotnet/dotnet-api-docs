@@ -1,67 +1,73 @@
 ﻿' <Snippet1>
 Imports System.IO
-Imports System.Security.Permissions
 
-Public Class Watcher
+Namespace MyNamespace
 
-    Public Shared Sub Main()
+    Class MyClassVB
 
-        Run()
+        Shared Sub Main()
+            Using watcher = New FileSystemWatcher("C:\path\to\folder")
+                watcher.NotifyFilter = NotifyFilters.Attributes Or
+                                       NotifyFilters.CreationTime Or
+                                       NotifyFilters.DirectoryName Or
+                                       NotifyFilters.FileName Or
+                                       NotifyFilters.LastAccess Or
+                                       NotifyFilters.LastWrite Or
+                                       NotifyFilters.Security Or
+                                       NotifyFilters.Size
 
-    End Sub
+                AddHandler watcher.Changed, AddressOf OnChanged
+                AddHandler watcher.Created, AddressOf OnCreated
+                AddHandler watcher.Deleted, AddressOf OnDeleted
+                AddHandler watcher.Renamed, AddressOf OnRenamed
+                AddHandler watcher.Error, AddressOf OnError
 
-    <PermissionSet(SecurityAction.Demand, Name:="FullTrust")>
-    Private Shared Sub Run()
+                watcher.Filter = "*.txt"
+                watcher.IncludeSubdirectories = True
+                watcher.EnableRaisingEvents = True
 
-        Dim args() As String = Environment.GetCommandLineArgs()
+                Console.WriteLine("Press enter to exit.")
+                Console.ReadLine()
+            End Using
+        End Sub
 
-        ' If a directory is not specified, exit the program.
-        If args.Length <> 2 Then
-            ' Display the proper way to call the program.
-            Console.WriteLine("Usage: Watcher.exe (directory)")
-            Return
-        End If
+        Private Shared Sub OnChanged(sender As Object, e As FileSystemEventArgs)
+            If e.ChangeType <> WatcherChangeTypes.Changed Then
+                Return
+            End If
+            Console.WriteLine($"Changed: {e.FullPath}")
+        End Sub
 
-        ' Create a new FileSystemWatcher and set its properties.
-        Using watcher As New FileSystemWatcher()
-            watcher.Path = args(1)
+        Private Shared Sub OnCreated(sender As Object, e As FileSystemEventArgs)
+            Dim value As String = $"Created: {e.FullPath}"
+            Console.WriteLine(value)
+        End Sub
 
-            ' Watch for changes in LastAccess and LastWrite times, and
-            ' the renaming of files or directories. 
-            watcher.NotifyFilter = (NotifyFilters.LastAccess _
-                                 Or NotifyFilters.LastWrite _
-                                 Or NotifyFilters.FileName _
-                                 Or NotifyFilters.DirectoryName)
+        Private Shared Sub OnDeleted(sender As Object, e As FileSystemEventArgs)
+            Console.WriteLine($"Deleted: {e.FullPath}")
+        End Sub
 
-            ' Only watch text files.
-            watcher.Filter = "*.txt"
+        Private Shared Sub OnRenamed(sender As Object, e As RenamedEventArgs)
+            Console.WriteLine($"Renamed:")
+            Console.WriteLine($"    Old: {e.OldFullPath}")
+            Console.WriteLine($"    New: {e.FullPath}")
+        End Sub
 
-            ' Add event handlers.
-            AddHandler watcher.Changed, AddressOf OnChanged
-            AddHandler watcher.Created, AddressOf OnChanged
-            AddHandler watcher.Deleted, AddressOf OnChanged
-            AddHandler watcher.Renamed, AddressOf OnRenamed
+        Private Shared Sub OnError(sender As Object, e As ErrorEventArgs)
+            PrintException(e.GetException())
+        End Sub
 
-            ' Begin watching.
-            watcher.EnableRaisingEvents = True
+        Private Shared Sub PrintException(ex As Exception)
+            If ex IsNot Nothing Then
+                Console.WriteLine($"Message: {ex.Message}")
+                Console.WriteLine("Stacktrace:")
+                Console.WriteLine(ex.StackTrace)
+                Console.WriteLine()
+                PrintException(ex.InnerException)
+            End If
+        End Sub
 
-            ' Wait for the user to quit the program.
-            Console.WriteLine("Press 'q' to quit the sample.")
-            While Chr(Console.Read()) <> "q"c
-            End While
-        End Using
-    End Sub
+    End Class
 
-    ' Define the event handlers.
-    Private Shared Sub OnChanged(source As Object, e As FileSystemEventArgs)
-        ' Specify what is done when a file is changed, created, or deleted.
-        Console.WriteLine($"File: {e.FullPath} {e.ChangeType}")
-    End Sub
-
-    Private Shared Sub OnRenamed(source As Object, e As RenamedEventArgs)
-        ' Specify what is done when a file is renamed.
-        Console.WriteLine($"File: {e.OldFullPath} renamed to {e.FullPath}")
-    End Sub
-
-End Class
+End Namespace
 ' </Snippet1>

@@ -31,7 +31,7 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- <xref:System.Windows.Application> is a class that encapsulates [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] application-specific functionality, including the following:  
+ <xref:System.Windows.Application> is a class that encapsulates WPF application-specific functionality, including the following:  
   
 -   **Application Lifetime**: <xref:System.Windows.Application.Activated>, <xref:System.Windows.Application.Current%2A>, <xref:System.Windows.Application.Deactivated>, <xref:System.Windows.Application.DispatcherUnhandledException>, <xref:System.Windows.Application.Exit>, <xref:System.Windows.Application.Run%2A>, <xref:System.Windows.Application.SessionEnding>, <xref:System.Windows.Application.Shutdown%2A>, <xref:System.Windows.Application.ShutdownMode%2A>, <xref:System.Windows.Application.Startup>.  
   
@@ -43,10 +43,10 @@
   
  <xref:System.Windows.Application> implements the singleton pattern to provide shared access to its window, property, and resource scope services. Consequently, only one instance of the <xref:System.Windows.Application> class can be created per <xref:System.AppDomain>.  
   
- You can implement an <xref:System.Windows.Application> using markup, markup and code-behind, or code. If <xref:System.Windows.Application> is implemented with markup, whether markup or markup and code-behind, the markup file must be configured as an [!INCLUDE[TLA#tla_msbuild](~/includes/tlasharptla-msbuild-md.md)] `ApplicationDefinition` item.  
+ You can implement an <xref:System.Windows.Application> using markup, markup and code-behind, or code. If <xref:System.Windows.Application> is implemented with markup, whether markup or markup and code-behind, the markup file must be configured as an Microsoft build engine (MSBuild) `ApplicationDefinition` item.  
   
 > [!NOTE]
->  A standalone application does not require an <xref:System.Windows.Application> object; it is possible to implement a custom `static` entry point method (`Main`) that opens a window without creating an instance of <xref:System.Windows.Application>. However, [!INCLUDE[TLA#tla_xbap#plural](~/includes/tlasharptla-xbapsharpplural-md.md)] require an <xref:System.Windows.Application> object.  
+>  A standalone application does not require an <xref:System.Windows.Application> object; it is possible to implement a custom `static` entry point method (`Main`) that opens a window without creating an instance of <xref:System.Windows.Application>. However, XAML browser applications (XBAPs) require an <xref:System.Windows.Application> object.  
   
    
   
@@ -146,7 +146,7 @@
   
  Once an application becomes active, <xref:System.Windows.Application.Activated> will not be raised again until the application is deactivated, irrespective of how many windows within an application are activated while the application is active.  
   
- <xref:System.Windows.Application.Activated> is not raised for [!INCLUDE[TLA#tla_xbap#plural](~/includes/tlasharptla-xbapsharpplural-md.md)].  
+ <xref:System.Windows.Application.Activated> is not raised for XAML browser applications (XBAPs).  
   
    
   
@@ -236,7 +236,7 @@
   
  After an application is first activated, it may be deactivated and reactivated many times during its lifetime. If an application's behavior or state depends on its activation state, it can handle both <xref:System.Windows.Application.Deactivated> and <xref:System.Windows.Application.Activated> events to determine which state it's in.  
   
- <xref:System.Windows.Application.Deactivated> is not raised for [!INCLUDE[TLA#tla_xbap#plural](~/includes/tlasharptla-xbapsharpplural-md.md)].  
+ <xref:System.Windows.Application.Deactivated> is not raised for XAML browser applications (XBAPs).  
   
    
   
@@ -301,7 +301,7 @@
   
  You can use this information to determine whether an exception is recoverable or not. A recoverable exception might be a <xref:System.IO.FileNotFoundException>, for example, while an unrecoverable exception might be a <xref:System.StackOverflowException>, for example.  
   
- When you process an unhandled exception from <xref:System.Windows.Application.DispatcherUnhandledException>, and you don't want [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] to continue processing it, you need to set the <xref:System.Windows.Threading.DispatcherUnhandledExceptionEventArgs.Handled%2A> property to `true`.  
+ When you process an unhandled exception from <xref:System.Windows.Application.DispatcherUnhandledException>, and you don't want WPF to continue processing it, you need to set the <xref:System.Windows.Threading.DispatcherUnhandledExceptionEventArgs.Handled%2A> property to `true`.  
   
  Unlike the other events that <xref:System.Windows.Application> raises, <xref:System.Windows.Application.DispatcherUnhandledException> does not have a matching protected virtual implementation (OnDispatcherUnhandledException). Consequently, classes that derive from <xref:System.Windows.Application> must always register an event handler with <xref:System.Windows.Application.DispatcherUnhandledException> to process unhandled exceptions.  
   
@@ -352,13 +352,13 @@
   
  If your application handles the <xref:System.Windows.Application.SessionEnding> event and subsequently cancels it, <xref:System.Windows.Application.Exit> is not raised and the application continues running in accordance with the shutdown mode.  
   
- The exit code can be set from an [!INCLUDE[TLA#tla_xbap](~/includes/tlasharptla-xbap-md.md)], although the value is ignored.  
+ The exit code can be set from an XAML browser application (XBAP), although the value is ignored.  
   
- For [!INCLUDE[TLA2#tla_xbap#plural](~/includes/tla2sharptla-xbapsharpplural-md.md)], <xref:System.Windows.Application.Exit> is raised in the following circumstances:  
+ For XBAPs, <xref:System.Windows.Application.Exit> is raised in the following circumstances:  
   
--   An [!INCLUDE[TLA2#tla_xbap](~/includes/tla2sharptla-xbap-md.md)] is navigated away from.  
+-   An XBAP is navigated away from.  
   
--   In [!INCLUDE[TLA2#tla_ie7](~/includes/tla2sharptla-ie7-md.md)], when the tab that is hosting the [!INCLUDE[TLA2#tla_xbap](~/includes/tla2sharptla-xbap-md.md)] is closed.  
+-   In Internet Explorer 7, when the tab that is hosting the XBAP is closed.  
   
 -   When the browser is closed.  
   
@@ -411,7 +411,7 @@
       </Parameters>
       <Docs>
         <param name="resourceKey">The name of the resource to find.</param>
-        <summary>Searches for a [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] resource, such as a <see cref="T:System.Windows.Style" /> or <see cref="T:System.Windows.Media.Brush" />, with the specified key, and throws an exception if the requested resource is not found (see <see href="/dotnet/framework/wpf/advanced/xaml-resources">XAML Resources</see>).</summary>
+        <summary>Searches for a user interface (UI) resource, such as a <see cref="T:System.Windows.Style" /> or <see cref="T:System.Windows.Media.Brush" />, with the specified key, and throws an exception if the requested resource is not found (see <see href="/dotnet/framework/wpf/advanced/xaml-resources">XAML Resources</see>).</summary>
         <returns>The requested resource object. If the requested resource is not found, a <see cref="T:System.Windows.ResourceReferenceKeyNotFoundException" /> is thrown.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -459,7 +459,7 @@
         <ReturnType>System.Windows.Navigation.FragmentNavigationEventHandler</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Occurs when a navigator in the application begins navigation to a content fragment, Navigation occurs immediately if the desired fragment is in the current content, or after the source [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] content has been loaded if the desired fragment is in different content.</summary>
+        <summary>Occurs when a navigator in the application begins navigation to a content fragment, Navigation occurs immediately if the desired fragment is in the current content, or after the source XAML content has been loaded if the desired fragment is in different content.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -553,11 +553,11 @@
 ## Remarks  
  <xref:System.Windows.Application.GetCookie%2A> retrieves a cookie for the specified <xref:System.Uri>. If the cookie can't be retrieved, a <xref:System.ComponentModel.Win32Exception> is thrown. You need to write the code to parse the cookie string into a list of name/value pairs.  
   
- For an overview of cookies in [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)], see [Navigation Overview](/dotnet/framework/wpf/app-development/navigation-overview).  
+ For an overview of cookies in WPF, see [Navigation Overview](/dotnet/framework/wpf/app-development/navigation-overview).  
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ComponentModel.Win32Exception">A [!INCLUDE[TLA#tla_win32](~/includes/tlasharptla-win32-md.md)] error is raised by the <see langword="InternetGetCookie" /> function (called by <see cref="M:System.Windows.Application.GetCookie(System.Uri)" />) if a problem occurs when attempting to retrieve the specified cookie.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">A Win32 error is raised by the <see langword="InternetGetCookie" /> function (called by <see cref="M:System.Windows.Application.GetCookie(System.Uri)" />) if a problem occurs when attempting to retrieve the specified cookie.</exception>
         <altmember cref="M:System.Windows.Application.SetCookie(System.Uri,System.String)" />
       </Docs>
     </Member>
@@ -699,12 +699,12 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Loads a [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] file that is located at the specified uniform resource identifier (URI).</summary>
+        <summary>Loads a XAML file that is located at the specified uniform resource identifier (URI).</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] file can be an application code file (configured as an [!INCLUDE[TLA#tla_msbuild](~/includes/tlasharptla-msbuild-md.md)] Page item) or an application data file (a resource file, content file, or site-of-origin file; see [WPF Application Resource, Content, and Data Files](/dotnet/framework/wpf/app-development/wpf-application-resource-content-and-data-files)).  
+ The XAML file can be an application code file (configured as an Microsoft build engine (MSBuild) Page item) or an application data file (a resource file, content file, or site-of-origin file; see [WPF Application Resource, Content, and Data Files](/dotnet/framework/wpf/app-development/wpf-application-resource-content-and-data-files)).  
   
 > [!NOTE]
 >  This method is not thread-safe.  
@@ -737,16 +737,16 @@
         <Parameter Name="resourceLocator" Type="System.Uri" />
       </Parameters>
       <Docs>
-        <param name="resourceLocator">A <see cref="T:System.Uri" /> that maps to a relative [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] file.</param>
-        <summary>Loads a [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] file that is located at the specified uniform resource identifier (URI), and converts it to an instance of the object that is specified by the root element of the [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] file.</summary>
+        <param name="resourceLocator">A <see cref="T:System.Uri" /> that maps to a relative XAML file.</param>
+        <summary>Loads a XAML file that is located at the specified uniform resource identifier (URI), and converts it to an instance of the object that is specified by the root element of the XAML file.</summary>
         <returns>An instance of the root element specified by the XAML file loaded.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- You must explicitly convert the return value to the same type as the root element of the [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] file.  
+ You must explicitly convert the return value to the same type as the root element of the XAML file.  
   
- The [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] file can be an application code file (configured as an [!INCLUDE[TLA#tla_msbuild](~/includes/tlasharptla-msbuild-md.md)] Page item) or an application data file (a resource file, content file, or site-of-origin file; see [WPF Application Resource, Content, and Data Files](/dotnet/framework/wpf/app-development/wpf-application-resource-content-and-data-files)).  
+ The XAML file can be an application code file (configured as an Microsoft build engine (MSBuild) Page item) or an application data file (a resource file, content file, or site-of-origin file; see [WPF Application Resource, Content, and Data Files](/dotnet/framework/wpf/app-development/wpf-application-resource-content-and-data-files)).  
   
 > [!NOTE]
 >  This method is not thread-safe.  
@@ -756,7 +756,7 @@
         <exception cref="T:System.ArgumentNullException">
           <paramref name="resourceLocator" /> is null.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="resourceLocator" /> is an absolute URI.</exception>
-        <exception cref="T:System.Exception">The file is not a [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] file.</exception>
+        <exception cref="T:System.Exception">The file is not a XAML file.</exception>
         <altmember cref="M:System.Windows.Application.GetResourceStream(System.Uri)" />
         <altmember cref="M:System.Windows.Application.GetContentStream(System.Uri)" />
         <altmember cref="M:System.Windows.Application.GetRemoteStream(System.Uri)" />
@@ -790,14 +790,14 @@
         <Parameter Name="resourceLocator" Type="System.Uri" />
       </Parameters>
       <Docs>
-        <param name="component">An object of the same type as the root element of the [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] file.</param>
-        <param name="resourceLocator">A <see cref="T:System.Uri" /> that maps to a relative [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] file.</param>
-        <summary>Loads a [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] file that is located at the specified uniform resource identifier (URI) and converts it to an instance of the object that is specified by the root element of the [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] file.</summary>
+        <param name="component">An object of the same type as the root element of the XAML file.</param>
+        <param name="resourceLocator">A <see cref="T:System.Uri" /> that maps to a relative XAML file.</param>
+        <summary>Loads a XAML file that is located at the specified uniform resource identifier (URI) and converts it to an instance of the object that is specified by the root element of the XAML file.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] file can be an application code file (configured as an [!INCLUDE[TLA#tla_msbuild](~/includes/tlasharptla-msbuild-md.md)] Page item) or an application data file (a resource file, content file, or site-of-origin file; see [WPF Application Resource, Content, and Data Files](/dotnet/framework/wpf/app-development/wpf-application-resource-content-and-data-files)).  
+ The XAML file can be an application code file (configured as an Microsoft build engine (MSBuild) Page item) or an application data file (a resource file, content file, or site-of-origin file; see [WPF Application Resource, Content, and Data Files](/dotnet/framework/wpf/app-development/wpf-application-resource-content-and-data-files)).  
   
 > [!NOTE]
 >  This method is not thread-safe.  
@@ -808,7 +808,7 @@
           <paramref name="resourceLocator" /> is null.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="resourceLocator" /> is an absolute URI.</exception>
         <exception cref="T:System.Exception">
-          <paramref name="component" /> is of a type that does not match the root element of the [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] file.</exception>
+          <paramref name="component" /> is of a type that does not match the root element of the XAML file.</exception>
         <altmember cref="M:System.Windows.Application.GetResourceStream(System.Uri)" />
         <altmember cref="M:System.Windows.Application.GetContentStream(System.Uri)" />
         <altmember cref="M:System.Windows.Application.GetRemoteStream(System.Uri)" />
@@ -844,9 +844,9 @@
   
  If the <xref:System.Windows.Application.ShutdownMode%2A> property of the <xref:System.Windows.Application> object is set to <xref:System.Windows.ShutdownMode.OnMainWindowClose>, closing the main window causes the application to shut down.  
   
- It is possible to set the <xref:System.Windows.Application.MainWindow%2A> property from [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)], if an application's main window is not the window that is produced by setting the <xref:System.Windows.Application.StartupUri%2A> property in [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)]. The two limitations of the [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] approach are:  
+ It is possible to set the <xref:System.Windows.Application.MainWindow%2A> property from XAML, if an application's main window is not the window that is produced by setting the <xref:System.Windows.Application.StartupUri%2A> property in XAML. The two limitations of the XAML approach are:  
   
--   You can specify either a [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)]-only <xref:System.Windows.Window> or a [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)]-only <xref:System.Windows.Navigation.NavigationWindow> as the main window.  
+-   You can specify either a XAML-only <xref:System.Windows.Window> or a XAML-only <xref:System.Windows.Navigation.NavigationWindow> as the main window.  
   
 -   You must set the <xref:System.Windows.UIElement.Visibility%2A> property of the window you specify, otherwise it won't be shown.  
   
@@ -865,7 +865,7 @@
  [!code-csharp[ApplicationMainWindowSnippets#GetApplicationMainWindowCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/ApplicationMainWindowSnippets/CSharp/App.xaml.cs#getapplicationmainwindowcode)]
  [!code-vb[ApplicationMainWindowSnippets#GetApplicationMainWindowCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ApplicationMainWindowSnippets/visualbasic/application.xaml.vb#getapplicationmainwindowcode)]  
   
- The following example shows how to set <xref:System.Windows.Application.MainWindow%2A> using [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)].  
+ The following example shows how to set <xref:System.Windows.Application.MainWindow%2A> using XAML.  
   
  [!code-xaml[ApplicationMainWindowSnippets#SetApplicationMainWindowXAML](~/samples/snippets/xaml/VS_Snippets_Wpf/ApplicationMainWindowSnippets/XAML/App.xaml#setapplicationmainwindowxaml)]  
   
@@ -877,7 +877,7 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">
-          <see cref="P:System.Windows.Application.MainWindow" /> is set from an application that's hosted in a browser, such as an [!INCLUDE[TLA#tla_xbap#plural](~/includes/tlasharptla-xbapsharpplural-md.md)].</exception>
+          <see cref="P:System.Windows.Application.MainWindow" /> is set from an application that's hosted in a browser, such as an XAML browser applications (XBAPs).</exception>
         <altmember cref="E:System.Windows.Application.Exit" />
       </Docs>
     </Member>
@@ -1619,13 +1619,13 @@
         <ReturnType>System.Reflection.Assembly</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the <see cref="T:System.Reflection.Assembly" /> that provides the pack uniform resource identifiers (URIs) for resources in a [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] application.</summary>
-        <value>A reference to the <see cref="T:System.Reflection.Assembly" /> that provides the pack uniform resource identifiers (URIs) for resources in a [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] application.</value>
+        <summary>Gets or sets the <see cref="T:System.Reflection.Assembly" /> that provides the pack uniform resource identifiers (URIs) for resources in a WPF application.</summary>
+        <value>A reference to the <see cref="T:System.Reflection.Assembly" /> that provides the pack uniform resource identifiers (URIs) for resources in a WPF application.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- By default, [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] resources are resolved at run time with respect to the entry assembly, which is identified by the value returned from the <xref:System.Reflection.Assembly.GetEntryAssembly%2A> method.  
+ By default, WPF resources are resolved at run time with respect to the entry assembly, which is identified by the value returned from the <xref:System.Reflection.Assembly.GetEntryAssembly%2A> method.  
   
  The entry assembly is the assembly that is returned by <xref:System.Reflection.Assembly.GetEntryAssembly%2A> and could be the following:  
   
@@ -1633,18 +1633,18 @@
   
 -   The first assembly to be executed by calling <xref:System.AppDomain.ExecuteAssembly%2A>.  
   
- In the following cases, however, a [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] assembly cannot get a reference to the entry assembly:  
+ In the following cases, however, a WPF assembly cannot get a reference to the entry assembly:  
   
--   An unmanaged (native) application hosts the [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] assembly.  
+-   An unmanaged (native) application hosts the WPF assembly.  
   
--   A managed application hosts the [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] assembly by loading it into a new application domain using a method other than <xref:System.AppDomain.ExecuteAssembly%2A>.  
+-   A managed application hosts the WPF assembly by loading it into a new application domain using a method other than <xref:System.AppDomain.ExecuteAssembly%2A>.  
   
- In both of these cases, <xref:System.Reflection.Assembly.GetEntryAssembly%2A> returns `null`, and the [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] assembly's resources cannot be resolved. In these cases, <xref:System.Windows.Application.ResourceAssembly%2A> can be set, once only, with a reference to the assembly that should be used to resolve resources.  
+ In both of these cases, <xref:System.Reflection.Assembly.GetEntryAssembly%2A> returns `null`, and the WPF assembly's resources cannot be resolved. In these cases, <xref:System.Windows.Application.ResourceAssembly%2A> can be set, once only, with a reference to the assembly that should be used to resolve resources.  
   
- <xref:System.Windows.Application.ResourceAssembly%2A> can only be set once because it is unlikely that the resource assembly will change after the [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] assembly is loaded.  
+ <xref:System.Windows.Application.ResourceAssembly%2A> can only be set once because it is unlikely that the resource assembly will change after the WPF assembly is loaded.  
   
 > [!NOTE]
->  <xref:System.Windows.Application.ResourceAssembly%2A> cannot be set when a [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] assembly can discover the entry assembly - that is, when <xref:System.Reflection.Assembly.GetEntryAssembly%2A> returns a reference to an assembly rather than `null`.  
+>  <xref:System.Windows.Application.ResourceAssembly%2A> cannot be set when a WPF assembly can discover the entry assembly - that is, when <xref:System.Reflection.Assembly.GetEntryAssembly%2A> returns a reference to an assembly rather than `null`.  
   
  This property is thread safe and is available from any thread.  
   
@@ -1652,7 +1652,7 @@
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">A [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] application has an entry assembly, or <see cref="P:System.Windows.Application.ResourceAssembly" /> has already been set.</exception>
+        <exception cref="T:System.InvalidOperationException">A WPF application has an entry assembly, or <see cref="P:System.Windows.Application.ResourceAssembly" /> has already been set.</exception>
       </Docs>
     </Member>
     <Member MemberName="Resources">
@@ -1695,9 +1695,9 @@
   
 4.  System  
   
- Consequently, [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] elements can bind to application-scope resources. Additionally, if resources change, the resource system ensures that element properties which are bound to those resources are automatically updated to reflect the change.  
+ Consequently, user interface (UI) elements can bind to application-scope resources. Additionally, if resources change, the resource system ensures that element properties which are bound to those resources are automatically updated to reflect the change.  
   
- Application-scope resources provide a simple way to support a consistent theme across your application. You can easily create a theme in [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] by using the `Application.Resources` tag. However, if your application supports multiple themes, which may contain a large number of theme elements, it might be easier to manage them using one <xref:System.Windows.ResourceDictionary> instance for each theme. In this way, a new theme can be applied by setting the Resources property to the appropriate <xref:System.Windows.ResourceDictionary>.  
+ Application-scope resources provide a simple way to support a consistent theme across your application. You can easily create a theme in XAML by using the `Application.Resources` tag. However, if your application supports multiple themes, which may contain a large number of theme elements, it might be easier to manage them using one <xref:System.Windows.ResourceDictionary> instance for each theme. In this way, a new theme can be applied by setting the Resources property to the appropriate <xref:System.Windows.ResourceDictionary>.  
   
  There are two considerations to make when using <xref:System.Windows.Application.Resources%2A>. First, the dictionary *key* is an object, so you need to use exactly the same object instance when both setting and getting a property value (note that the key is case-sensitive when using a string). Second, the dictionary *value* is an object, so you will need to convert the value to the desired type when getting a property value.  
   
@@ -1762,13 +1762,13 @@ This example illustrates how to use XAML together with application-scope resourc
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- <xref:System.Windows.Application.Run%2A> is called to start a [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] application. If you define your <xref:System.Windows.Application> using markup, or markup and code-behind, <xref:System.Windows.Application.Run%2A> will be called implicitly. However, if you define your <xref:System.Windows.Application> using code, you will need to explicitly call <xref:System.Windows.Application.Run%2A>.  
+ <xref:System.Windows.Application.Run%2A> is called to start a WPF application. If you define your <xref:System.Windows.Application> using markup, or markup and code-behind, <xref:System.Windows.Application.Run%2A> will be called implicitly. However, if you define your <xref:System.Windows.Application> using code, you will need to explicitly call <xref:System.Windows.Application.Run%2A>.  
   
  When <xref:System.Windows.Application.Run%2A> is called, <xref:System.Windows.Application> attaches a new <xref:System.Windows.Threading.Dispatcher> instance to the UI thread. Next, the <xref:System.Windows.Threading.Dispatcher> object's <xref:System.Windows.Threading.Dispatcher.Run%2A> method is called, which starts a message pump to process windows messages. Finally, the <xref:System.Windows.Threading.Dispatcher> object calls the <xref:System.Windows.Application> object's the <xref:System.Windows.Application.OnStartup%2A> method to raise the <xref:System.Windows.Application.Startup> event. Consequently, the application execution model has been established by the time you handle <xref:System.Windows.Application.Startup>, at which point the application is considered to be running.  
   
  An application stops running when <xref:System.Windows.Application.Shutdown%2A> is called; the value of the <xref:System.Windows.Application.ShutdownMode%2A> property determines when <xref:System.Windows.Application.Shutdown%2A> is called, and whether it happens automatically or you need to explicitly call it.  
   
- <xref:System.Windows.Application.Run%2A> can be called only from the thread that creates the <xref:System.Windows.Application> object. Also, <xref:System.Windows.Application.Run%2A> cannot be called from a [!INCLUDE[TLA2#tla_xbap](~/includes/tla2sharptla-xbap-md.md)].  
+ <xref:System.Windows.Application.Run%2A> can be called only from the thread that creates the <xref:System.Windows.Application> object. Also, <xref:System.Windows.Application.Run%2A> cannot be called from a XBAP.  
   
    
   
@@ -1781,7 +1781,7 @@ This example illustrates how to use XAML together with application-scope resourc
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">
-          <see cref="M:System.Windows.Application.Run" /> is called from a browser-hosted application (for example, an [!INCLUDE[TLA#tla_xbap](~/includes/tlasharptla-xbap-md.md)]).</exception>
+          <see cref="M:System.Windows.Application.Run" /> is called from a browser-hosted application (for example, an XAML browser application (XBAP)).</exception>
         <altmember cref="M:System.Windows.Application.Run(System.Windows.Window)" />
         <altmember cref="M:System.Windows.Application.Shutdown(System.Int32)" />
         <altmember cref="E:System.Windows.Application.Exit" />
@@ -1842,7 +1842,7 @@ This example illustrates how to use XAML together with application-scope resourc
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">
-          <see cref="M:System.Windows.Application.Run" /> is called from a browser-hosted application (for example, an [!INCLUDE[TLA#tla_xbap](~/includes/tlasharptla-xbap-md.md)]).</exception>
+          <see cref="M:System.Windows.Application.Run" /> is called from a browser-hosted application (for example, an XAML browser application (XBAP)).</exception>
         <altmember cref="M:System.Windows.Application.Shutdown" />
         <altmember cref="M:System.Windows.Application.Shutdown(System.Int32)" />
       </Docs>
@@ -1941,13 +1941,13 @@ This example illustrates how to use XAML together with application-scope resourc
   
  `NAME=VALUE; expires=DAY, DD-MMM-YYYY HH:MM:SS GMT`  
   
- Persistent cookies are stored in the current [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] installation's Temporary Internet Files folder until they expire, in which case they are deleted. You can delete a persistent cookie from your application by setting its expiry date to a date/time value that is in the past.  
+ Persistent cookies are stored in the current Windows installation's Temporary Internet Files folder until they expire, in which case they are deleted. You can delete a persistent cookie from your application by setting its expiry date to a date/time value that is in the past.  
   
- For an overview of cookies in [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)], see [Navigation Overview](/dotnet/framework/wpf/app-development/navigation-overview).  
+ For an overview of cookies in WPF, see [Navigation Overview](/dotnet/framework/wpf/app-development/navigation-overview).  
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ComponentModel.Win32Exception">A [!INCLUDE[TLA#tla_win32](~/includes/tlasharptla-win32-md.md)] error is raised by the <see langword="InternetSetCookie" /> function (called by <see cref="M:System.Windows.Application.SetCookie(System.Uri,System.String)" />) if a problem occurs when attempting to create the specified cookie.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">A Win32 error is raised by the <see langword="InternetSetCookie" /> function (called by <see cref="M:System.Windows.Application.SetCookie(System.Uri,System.String)" />) if a problem occurs when attempting to create the specified cookie.</exception>
         <altmember cref="M:System.Windows.Application.GetCookie(System.Uri)" />
       </Docs>
     </Member>
@@ -2091,7 +2091,7 @@ This example illustrates how to use XAML together with application-scope resourc
   
  The lifetime of some applications may not be dependent on when the main window or last window is closed, or may not be dependent on windows at all. For these scenarios you need to set the <xref:System.Windows.Application.ShutdownMode%2A> property to <xref:System.Windows.ShutdownMode.OnExplicitShutdown>, which requires an explicit <xref:System.Windows.Application.Shutdown%2A> method call to stop the application. Otherwise, the application continues running in the background.  
   
- <xref:System.Windows.Application.ShutdownMode%2A> can be configured declaratively from [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] or programmatically from code.  
+ <xref:System.Windows.Application.ShutdownMode%2A> can be configured declaratively from XAML or programmatically from code.  
   
  This property is available only from the thread that created the <xref:System.Windows.Application> object.  
   
@@ -2141,7 +2141,7 @@ This example illustrates how to use XAML together with application-scope resourc
   
 -   Initializing application-scope properties.  
   
- You can declaratively specify the main window and application-scope resources using [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)] (<xref:System.Windows.Application.StartupUri%2A> and <xref:System.Windows.Application.Resources%2A>, respectively). Sometimes, however, the resources or main window of your application can only be determined programmatically at run time. Additionally, application-scope properties and command-line parameters can only be used programmatically. Programmatic initialization can be performed by handling the <xref:System.Windows.Application.Startup> event, including the following:  
+ You can declaratively specify the main window and application-scope resources using XAML (<xref:System.Windows.Application.StartupUri%2A> and <xref:System.Windows.Application.Resources%2A>, respectively). Sometimes, however, the resources or main window of your application can only be determined programmatically at run time. Additionally, application-scope properties and command-line parameters can only be used programmatically. Programmatic initialization can be performed by handling the <xref:System.Windows.Application.Startup> event, including the following:  
   
 -   Acquire and process command-line parameters, which are available from the <xref:System.Windows.StartupEventArgs.Args%2A> property of the <xref:System.Windows.StartupEventArgs> class that is passed to the <xref:System.Windows.Application.Startup> event handler.  
   
@@ -2154,12 +2154,12 @@ This example illustrates how to use XAML together with application-scope resourc
 > [!NOTE]
 >  Command-line parameters can also be acquired by calling the static <xref:System.Environment.GetCommandLineArgs%2A> method of the <xref:System.Environment> object. However, <xref:System.Environment.GetCommandLineArgs%2A> requires full trust to execute.  
   
- If you set <xref:System.Windows.Application.StartupUri%2A> using [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)], the main window that is created is not available from either the <xref:System.Windows.Application.MainWindow%2A> property or the <xref:System.Windows.Application.Windows%2A> property of the <xref:System.Windows.Application> object until after the <xref:System.Windows.Application.Startup> event is processed. If you need access to the main window during startup, you need to manually create a new window object from your <xref:System.Windows.Application.Startup> event handler.  
+ If you set <xref:System.Windows.Application.StartupUri%2A> using XAML, the main window that is created is not available from either the <xref:System.Windows.Application.MainWindow%2A> property or the <xref:System.Windows.Application.Windows%2A> property of the <xref:System.Windows.Application> object until after the <xref:System.Windows.Application.Startup> event is processed. If you need access to the main window during startup, you need to manually create a new window object from your <xref:System.Windows.Application.Startup> event handler.  
   
 > [!NOTE]
->  If your application uses <xref:System.Net.AuthenticationManager.CredentialPolicy%2A> to specify a credential policy, you need to set <xref:System.Net.AuthenticationManager.CredentialPolicy%2A> after <xref:System.Windows.Application.Startup> is raised; otherwise, [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] sets it to a default internal policy directly after the <xref:System.Windows.Application.Startup> event has been raised.  
+>  If your application uses <xref:System.Net.AuthenticationManager.CredentialPolicy%2A> to specify a credential policy, you need to set <xref:System.Net.AuthenticationManager.CredentialPolicy%2A> after <xref:System.Windows.Application.Startup> is raised; otherwise, WPF sets it to a default internal policy directly after the <xref:System.Windows.Application.Startup> event has been raised.  
   
- The command-line arguments that are passed to the <xref:System.Windows.Application.Startup> event handler are not the same as the [!INCLUDE[TLA#tla_url](~/includes/tlasharptla-url-md.md)] query string parameters that are passed to an [!INCLUDE[TLA#tla_xbap](~/includes/tlasharptla-xbap-md.md)].  
+ The command-line arguments that are passed to the <xref:System.Windows.Application.Startup> event handler are not the same as the URL query string parameters that are passed to an XAML browser application (XBAP).  
   
    
   
@@ -2171,7 +2171,7 @@ This example illustrates how to use XAML together with application-scope resourc
  [!code-csharp[ApplicationStartupSnippets#HandleStartupCODEBEHIND](~/samples/snippets/csharp/VS_Snippets_Wpf/ApplicationStartupSnippets/CSharp/App.xaml.cs#handlestartupcodebehind)]
  [!code-vb[ApplicationStartupSnippets#HandleStartupCODEBEHIND](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ApplicationStartupSnippets/visualbasic/application.xaml.vb#handlestartupcodebehind)]  
   
- [!INCLUDE[TLA#tla_xbap#plural](~/includes/tlasharptla-xbapsharpplural-md.md)] cannot retrieve and process command-line arguments because they are launched with [!INCLUDE[TLA#tla_clickonce](~/includes/tlasharptla-clickonce-md.md)] deployment (see [Deploying a WPF Application (WPF)](/dotnet/framework/wpf/app-development/deploying-a-wpf-application-wpf)). However, they can retrieve and process query string parameters from the URLs that are used to launch them.  
+ XAML browser applications (XBAPs) cannot retrieve and process command-line arguments because they are launched with ClickOnce deployment (see [Deploying a WPF Application (WPF)](/dotnet/framework/wpf/app-development/deploying-a-wpf-application-wpf)). However, they can retrieve and process query string parameters from the URLs that are used to launch them.  
   
  ]]></format>
         </remarks>
@@ -2216,7 +2216,7 @@ This example illustrates how to use XAML together with application-scope resourc
 |<xref:System.Windows.Documents.FlowDocument>|<xref:System.Windows.Navigation.NavigationWindow>|Standalone/browser-hosted|  
 |<xref:System.Windows.Navigation.PageFunction%601>|<xref:System.Windows.Navigation.NavigationWindow>|Standalone/browser-hosted|  
   
- Typically, you set the <xref:System.Windows.Application.StartupUri%2A> property declaratively in [!INCLUDE[TLA#tla_titlexaml](~/includes/tlasharptla-titlexaml-md.md)]. However, you can set <xref:System.Windows.Application.StartupUri%2A> programmatically, such as from a <xref:System.Windows.Application.Startup> event handler, which is useful if for applications that can only load the necessary UI resources at run time. For example, an application might wait until run time to load its resources if the name of the UI resource is stored in a configuration file.  
+ Typically, you set the <xref:System.Windows.Application.StartupUri%2A> property declaratively in XAML. However, you can set <xref:System.Windows.Application.StartupUri%2A> programmatically, such as from a <xref:System.Windows.Application.Startup> event handler, which is useful if for applications that can only load the necessary UI resources at run time. For example, an application might wait until run time to load its resources if the name of the UI resource is stored in a configuration file.  
   
  Whether you set <xref:System.Windows.Application.StartupUri%2A> declaratively or programmatically, the corresponding UI resource is not loaded until after the <xref:System.Windows.Application.Startup> event is handled. Consequently, you won't have access to the resulting window from either the <xref:System.Windows.Application.Windows%2A> property or the <xref:System.Windows.Application.MainWindow%2A> property when handling <xref:System.Windows.Application.Startup>.  
   
@@ -2339,7 +2339,7 @@ This example illustrates how to use XAML together with application-scope resourc
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- A <xref:System.Windows.Window> reference is automatically added to <xref:System.Windows.Application.Windows%2A> as soon as a window is instantiated on the [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] thread; windows that are created by worker threads are not added. A <xref:System.Windows.Window> reference is automatically removed after its <xref:System.Windows.Window.Closing> event has been handled and before its <xref:System.Windows.Window.Closed> event is raised.  
+ A <xref:System.Windows.Window> reference is automatically added to <xref:System.Windows.Application.Windows%2A> as soon as a window is instantiated on the user interface (UI) thread; windows that are created by worker threads are not added. A <xref:System.Windows.Window> reference is automatically removed after its <xref:System.Windows.Window.Closing> event has been handled and before its <xref:System.Windows.Window.Closed> event is raised.  
   
  By default, the first item added to the <xref:System.Windows.Application.Windows%2A> property becomes the <xref:System.Windows.Application.MainWindow%2A>.  
   
@@ -2348,7 +2348,7 @@ This example illustrates how to use XAML together with application-scope resourc
    
   
 ## Examples  
- The following example demonstrates how to enumerate the <xref:System.Windows.Application.Windows%2A> property to build a top-level Windows menu, which is common to [!INCLUDE[TLA#tla_mdi](~/includes/tlasharptla-mdi-md.md)] applications like [!INCLUDE[TLA#tla_xl](~/includes/tlasharptla-xl-md.md)], or multiple-instance Single Document Interface (SDI) applications like [!INCLUDE[TLA#tla_word](~/includes/tlasharptla-word-md.md)].  
+ The following example demonstrates how to enumerate the <xref:System.Windows.Application.Windows%2A> property to build a top-level Windows menu, which is common to multiple-document interface (MDI) applications like Microsoft Excel, or multiple-instance Single Document Interface (SDI) applications like Microsoft Word.  
   
  [!code-csharp[ApplicationWindowsSnippets#WindowMenuItemCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/ApplicationWindowsSnippets/CSharp/WindowMenuItem.cs#windowmenuitemcode)]
  [!code-vb[ApplicationWindowsSnippets#WindowMenuItemCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ApplicationWindowsSnippets/visualbasic/windowmenuitem.vb#windowmenuitemcode)]  

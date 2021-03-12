@@ -63,9 +63,9 @@
   
  <xref:System.Windows.FrameworkElement> extends <xref:System.Windows.UIElement> and adds the following capabilities:  
   
--   **Layout system definition**: <xref:System.Windows.FrameworkElement> provides specific WPF framework-level implementations for certain methods that were defined as virtual members in  <xref:System.Windows.UIElement>. Most notably, <xref:System.Windows.FrameworkElement> seals certain WPF core-level layout overrides, and instead provides a WPF framework-level equivalent that derived classes should override instead. For example, <xref:System.Windows.FrameworkElement> seals <xref:System.Windows.UIElement.ArrangeCore%2A> but provides <xref:System.Windows.FrameworkElement.ArrangeOverride%2A>. These changes reflect the fact that at the WPF framework-level there is a full layout system in place that can render any <xref:System.Windows.FrameworkElement> derived class. At the WPF core level, certain members that will structure a general [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] based layout solution are in place, but the actual engine of the layout system is not defined. For more information, see [Layout](/dotnet/framework/wpf/advanced/layout).  
+-   **Layout system definition**: <xref:System.Windows.FrameworkElement> provides specific WPF framework-level implementations for certain methods that were defined as virtual members in  <xref:System.Windows.UIElement>. Most notably, <xref:System.Windows.FrameworkElement> seals certain WPF core-level layout overrides, and instead provides a WPF framework-level equivalent that derived classes should override instead. For example, <xref:System.Windows.FrameworkElement> seals <xref:System.Windows.UIElement.ArrangeCore%2A> but provides <xref:System.Windows.FrameworkElement.ArrangeOverride%2A>. These changes reflect the fact that at the WPF framework-level there is a full layout system in place that can render any <xref:System.Windows.FrameworkElement> derived class. At the WPF core level, certain members that will structure a general WPF based layout solution are in place, but the actual engine of the layout system is not defined. For more information, see [Layout](/dotnet/framework/wpf/advanced/layout).  
   
--   **The logical tree:** The general [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] programming model is often expressed in terms of being a tree of elements. Support for expressing the tree of elements as a logical tree, and accompanying support for defining that tree in markup is implemented at the <xref:System.Windows.FrameworkElement> level. Note however that <xref:System.Windows.FrameworkElement> deliberately does not define a content model, and leaves that responsibility to derived classes. For more information, see [Trees in WPF](/dotnet/framework/wpf/advanced/trees-in-wpf).  
+-   **The logical tree:** The general WPF programming model is often expressed in terms of being a tree of elements. Support for expressing the tree of elements as a logical tree, and accompanying support for defining that tree in markup is implemented at the <xref:System.Windows.FrameworkElement> level. Note however that <xref:System.Windows.FrameworkElement> deliberately does not define a content model, and leaves that responsibility to derived classes. For more information, see [Trees in WPF](/dotnet/framework/wpf/advanced/trees-in-wpf).  
   
 -   **Object lifetime events:** It is often useful to know when an element is initialized (the constructor is called) or when the element is first loaded into a logical tree. <xref:System.Windows.FrameworkElement> defines several events related to object lifetime that provide useful hooks for code-behind operations that involve elements, such as adding more child elements. For more information, see [Object Lifetime Events](/dotnet/framework/wpf/advanced/object-lifetime-events).  
   
@@ -75,9 +75,9 @@
   
 -   **More animation support:** Some animation support was already defined at the WPF core level, but <xref:System.Windows.FrameworkElement> extends this by implementing <xref:System.Windows.FrameworkElement.BeginStoryboard%2A> and related members.  
   
- As can be seen from the class hierarchy, many [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] classes derive from <xref:System.Windows.FrameworkElement>, either directly or through intermediate base classes such as <xref:System.Windows.Controls.Panel> or <xref:System.Windows.Controls.Control>.  
+ As can be seen from the class hierarchy, many WPF classes derive from <xref:System.Windows.FrameworkElement>, either directly or through intermediate base classes such as <xref:System.Windows.Controls.Panel> or <xref:System.Windows.Controls.Control>.  
   
- If you intend to use <xref:System.Windows.FrameworkElement> as a base class, you might want to first examine the existing derived classes. <xref:System.Windows.FrameworkElement> provides support for a number of basic scenarios, but also lacks a number of features that are desirable for an "element" in the sense of a building block that you use to create [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] in [!INCLUDE[TLA#tla_xaml](~/includes/tlasharptla-xaml-md.md)]. For instance, a <xref:System.Windows.FrameworkElement> does not define any true content model; <xref:System.Windows.FrameworkElement> as a base class does not define a property that can create [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] child elements. In particular, you might want to look at <xref:System.Windows.Controls.Control> and <xref:System.Windows.Controls.ContentControl>.  
+ If you intend to use <xref:System.Windows.FrameworkElement> as a base class, you might want to first examine the existing derived classes. <xref:System.Windows.FrameworkElement> provides support for a number of basic scenarios, but also lacks a number of features that are desirable for an "element" in the sense of a building block that you use to create user interface (UI) in Extensible Application Markup Language (XAML). For instance, a <xref:System.Windows.FrameworkElement> does not define any true content model; <xref:System.Windows.FrameworkElement> as a base class does not define a property that can create XAML child elements. In particular, you might want to look at <xref:System.Windows.Controls.Control> and <xref:System.Windows.Controls.ContentControl>.  
   
  ]]></format>
     </remarks>
@@ -123,7 +123,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the rendered height of this element.</summary>
-        <value>The element's height, as a value in [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]. The default value is 0 (zero).</value>
+        <value>The element's height, as a value in device-independent units (1/96th inch per unit). The default value is 0 (zero).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -132,7 +132,7 @@
   
  Because <xref:System.Windows.FrameworkElement.ActualHeight%2A> is a calculated value, you should be aware that there could be multiple or incremental reported changes to it as a result of various operations by the layout system. The layout system may be calculating required measure space for child elements, constraints by the parent element, and so on.  
   
- Although you cannot set this property from [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)], you can base a <xref:System.Windows.Trigger> upon its value in a style.  
+ Although you cannot set this property from XAML, you can base a <xref:System.Windows.Trigger> upon its value in a style.  
   
 <a name="dependencyPropertyInfo_ActualHeight"></a>   
 ## Dependency Property Information  
@@ -195,7 +195,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the rendered width of this element.</summary>
-        <value>The element's width, as a value in [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]. The default value is 0 (zero).</value>
+        <value>The element's width, as a value in device-independent units (1/96th inch per unit). The default value is 0 (zero).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -204,7 +204,7 @@
   
  Because <xref:System.Windows.FrameworkElement.ActualWidth%2A> is a calculated value, you should be aware that there could be multiple or incremental reported changes to it as a result of various operations by the layout system. The layout system may be calculating required measure space for child elements, constraints by the parent element, and so on.  
   
- Although you cannot set this property from [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)], you can base a <xref:System.Windows.Trigger> upon its value in a style.  
+ Although you cannot set this property from XAML, you can base a <xref:System.Windows.Trigger> upon its value in a style.  
   
 <a name="dependencyPropertyInfo_ActualWidth"></a>   
 ## Dependency Property Information  
@@ -277,7 +277,7 @@
 ## Remarks  
  Use this method for the implementation of collections on objects that represent logical child elements of an element. Collection maintenance for child element collections might be done in property getters or setters, class handling of Changed events, constructors, or within the collection types themselves.  
   
- For control authors, manipulating the logical tree at this level is not the recommended practice, unless none of the content models for available base control classes are appropriate for your control scenario. Consider subclassing at the level of <xref:System.Windows.Controls.ContentControl>, <xref:System.Windows.Controls.ItemsControl>, and <xref:System.Windows.Controls.HeaderedItemsControl>. These classes provide a content model with particular enforcement of logical tree child elements through dedicated APIs, as well as support for other features typically desirable in a [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] control such as styling through templates. For more information on how to use <xref:System.Windows.FrameworkElement.LogicalChildren%2A> and <xref:System.Windows.FrameworkElement.AddLogicalChild%2A>, see [Trees in WPF](/dotnet/framework/wpf/advanced/trees-in-wpf).  
+ For control authors, manipulating the logical tree at this level is not the recommended practice, unless none of the content models for available base control classes are appropriate for your control scenario. Consider subclassing at the level of <xref:System.Windows.Controls.ContentControl>, <xref:System.Windows.Controls.ItemsControl>, and <xref:System.Windows.Controls.HeaderedItemsControl>. These classes provide a content model with particular enforcement of logical tree child elements through dedicated APIs, as well as support for other features typically desirable in a WPF control such as styling through templates. For more information on how to use <xref:System.Windows.FrameworkElement.LogicalChildren%2A> and <xref:System.Windows.FrameworkElement.AddLogicalChild%2A>, see [Trees in WPF](/dotnet/framework/wpf/advanced/trees-in-wpf).  
   
  <xref:System.Windows.FrameworkElement.AddLogicalChild%2A> may throw an exception if called at a time when the logical tree is being iterated by another process.  
   
@@ -824,7 +824,7 @@
         <ReturnType>System.Windows.Controls.ContextMenu</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the context menu element that should appear whenever the context menu is requested through [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] from within this element.</summary>
+        <summary>Gets or sets the context menu element that should appear whenever the context menu is requested through user interface (UI) from within this element.</summary>
         <value>The context menu assigned to this element.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1055,13 +1055,13 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- When you set this property in [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)], the [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] processor relies on type conversion for the <xref:System.Windows.Input.Cursor> class to evaluate the string. The provided string should evaluate to a <xref:System.Windows.Input.CursorType> value. See <xref:System.Windows.Input.Cursor> for details.  
+ When you set this property in XAML, the XAML processor relies on type conversion for the <xref:System.Windows.Input.Cursor> class to evaluate the string. The provided string should evaluate to a <xref:System.Windows.Input.CursorType> value. See <xref:System.Windows.Input.Cursor> for details.  
   
  Whether the cursor as established by this property will or will not display when the mouse pointer is over this element is also dependent on the value of the <xref:System.Windows.FrameworkElement.ForceCursor%2A> property. Also, event-related considerations such as an active drag, mouse capture, text editing modes within controls, and so on, will also affect the cursor with higher priority than the value you specify in this property.  
   
  To revert the behavior of setting this property to the eventual default, set it to `null` again.  
   
- The `null` default really means that determination of the practical cursor value is deferred here and should be obtained from elsewhere. If presented without programmatic values from any source, the default cursor that is visually over a [!INCLUDE[TLA#tla_winclient](~/includes/tlasharptla-winclient-md.md)] application will be an arrow. However, the transient cursor changes are not set to the <xref:System.Windows.FrameworkElement.Cursor%2A> values of the elements when they are passed over. The <xref:System.Windows.FrameworkElement.Cursor%2A> property will only report non null values in cases where it was actually set, for instance through code or a style. Each movement of the mouse over a [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] application raises a <xref:System.Windows.UIElement.QueryCursor> event. The event bubbles, and any element along the route has the opportunity to handle the event and to set the value of the cursor through the arguments of this event. This is the mechanism that produces the visually apparent cursor in most cases. If a <xref:System.Windows.UIElement.QueryCursor> handler returns a cursor result, then the fact that the event is handled and has a changed value in the arguments takes precedence over the value of the <xref:System.Windows.FrameworkElement.Cursor%2A> property at any level, unless <xref:System.Windows.FrameworkElement.ForceCursor%2A> is set.  
+ The `null` default really means that determination of the practical cursor value is deferred here and should be obtained from elsewhere. If presented without programmatic values from any source, the default cursor that is visually over a Windows Presentation Foundation (WPF) application will be an arrow. However, the transient cursor changes are not set to the <xref:System.Windows.FrameworkElement.Cursor%2A> values of the elements when they are passed over. The <xref:System.Windows.FrameworkElement.Cursor%2A> property will only report non null values in cases where it was actually set, for instance through code or a style. Each movement of the mouse over a WPF application raises a <xref:System.Windows.UIElement.QueryCursor> event. The event bubbles, and any element along the route has the opportunity to handle the event and to set the value of the cursor through the arguments of this event. This is the mechanism that produces the visually apparent cursor in most cases. If a <xref:System.Windows.UIElement.QueryCursor> handler returns a cursor result, then the fact that the event is handled and has a changed value in the arguments takes precedence over the value of the <xref:System.Windows.FrameworkElement.Cursor%2A> property at any level, unless <xref:System.Windows.FrameworkElement.ForceCursor%2A> is set.  
   
  If not are not creating a custom cursor, you typically set this property to a static property value of the <xref:System.Windows.Input.Cursors> class. Setting <xref:System.Windows.FrameworkElement.Cursor%2A> in code requires one of the following:  
   
@@ -1328,7 +1328,7 @@
  [!code-csharp[CustomControlNumericUpDown#StaticCtorOfCustomClassCommonTasks](~/samples/snippets/csharp/VS_Snippets_Wpf/CustomControlNumericUpDown/CSharp/CustomControlLibrary/NumericUpDown2.cs)]
  [!code-vb[CustomControlNumericUpDown#StaticCtorOfCustomClassCommonTasks](~/samples/snippets/visualbasic/VS_Snippets_Wpf/CustomControlNumericUpDown/visualbasic/customcontrollibrary/numericupdown2.vb)]  
 
-  The complete source code for this example is available on GitHub for both [C#](https://github.com/dotnet/dotnet-api-docs/tree/master/samples/snippets/csharp/VS_Snippets_Wpf/CustomControlNumericUpDown/CSharp/CustomControlLibrary) and [Visual Basic](https://github.com/dotnet/dotnet-api-docs/tree/master/samples/snippets/visualbasic/VS_Snippets_Wpf/CustomControlNumericUpDown/visualbasic/customcontrollibrary).
+  The complete source code for this example is available on GitHub for both [C#](https://github.com/dotnet/dotnet-api-docs/tree/main/samples/snippets/csharp/VS_Snippets_Wpf/CustomControlNumericUpDown/CSharp/CustomControlLibrary) and [Visual Basic](https://github.com/dotnet/dotnet-api-docs/tree/main/samples/snippets/visualbasic/VS_Snippets_Wpf/CustomControlNumericUpDown/visualbasic/customcontrollibrary).
 
  ]]></format>
         </remarks>
@@ -1520,8 +1520,8 @@
         <ReturnType>System.Windows.FlowDirection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the direction that text and other [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] elements flow within any parent element that controls their layout.</summary>
-        <value>The direction that text and other [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)] elements flow within their parent element, as a value of the enumeration. The default value is <see cref="F:System.Windows.FlowDirection.LeftToRight" />.</value>
+        <summary>Gets or sets the direction that text and other user interface (UI) elements flow within any parent element that controls their layout.</summary>
+        <value>The direction that text and other UI elements flow within their parent element, as a value of the enumeration. The default value is <see cref="F:System.Windows.FlowDirection.LeftToRight" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1530,7 +1530,7 @@
   
  This property is not automatically set as part of any application culture information, because an element might contain content that is not necessarily intended to obey the general flow direction implied by the culture information. For more information on globalization considerations, see [Globalization for WPF](/dotnet/framework/wpf/advanced/globalization-for-wpf).  
   
- This property has a defined [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] property accessor, so it functions as a dependency property. However, it is also registered as attached, so it can also function as an attached property. The attached registration is mainly so that property value inheritance is supported, but the property can also be used as a true attached property. The attached property usage is only relevant if the object you intend to set the flow direction on has a <xref:System.Windows.FrameworkElement> parent element that performs layout upon it, is itself not a <xref:System.Windows.FrameworkElement>, and does not already have a more directly defined `FlowDirection` property. (Some of the flow document classes such as <xref:System.Windows.Documents.Block> and <xref:System.Windows.Documents.Inline> define their own `FlowDirection`, and this property can also set the flow direction. The property value is then read by the eventual content host without requiring attached property usage.)  
+ This property has a defined common language runtime (CLR) property accessor, so it functions as a dependency property. However, it is also registered as attached, so it can also function as an attached property. The attached registration is mainly so that property value inheritance is supported, but the property can also be used as a true attached property. The attached property usage is only relevant if the object you intend to set the flow direction on has a <xref:System.Windows.FrameworkElement> parent element that performs layout upon it, is itself not a <xref:System.Windows.FrameworkElement>, and does not already have a more directly defined `FlowDirection` property. (Some of the flow document classes such as <xref:System.Windows.Documents.Block> and <xref:System.Windows.Documents.Inline> define their own `FlowDirection`, and this property can also set the flow direction. The property value is then read by the eventual content host without requiring attached property usage.)  
   
 <a name="xamlAttributeUsage_FlowDirection"></a>   
 ## XAML Attribute Usage  
@@ -1538,7 +1538,7 @@
   
 <a name="xamlTextUsage_FlowDirection"></a>   
 ## XAML Text Usage  
- This property can also be set on classes that are not <xref:System.Windows.FrameworkElement> derived classes, by the following [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] attached property usage:  
+ This property can also be set on classes that are not <xref:System.Windows.FrameworkElement> derived classes, by the following XAML attached property usage:  
   
  `<` *object* `FrameworkElement.`**FlowDirection**="<xref:System.Windows.FlowDirection>`"/>`  
   
@@ -1680,14 +1680,14 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets a value that indicates whether this <see cref="T:System.Windows.FrameworkElement" /> should force the [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] to render the cursor as declared by the <see cref="P:System.Windows.FrameworkElement.Cursor" /> property.</summary>
+        <summary>Gets or sets a value that indicates whether this <see cref="T:System.Windows.FrameworkElement" /> should force the user interface (UI) to render the cursor as declared by the <see cref="P:System.Windows.FrameworkElement.Cursor" /> property.</summary>
         <value>
           <see langword="true" /> if cursor presentation while over this element is forced to use current <see cref="P:System.Windows.FrameworkElement.Cursor" /> settings for the cursor (including on all child elements); otherwise <see langword="false" />. The default value is <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- If you set this property to `true` you will override the cursor preferences established by child elements. Doing so in general application [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)] might be confusing for the user, particularly if child elements are attempting to specify cursors. Setting <xref:System.Windows.FrameworkElement.ForceCursor%2A> is more appropriate in control subclassing or compositing scenarios.  
+ If you set this property to `true` you will override the cursor preferences established by child elements. Doing so in general application UI might be confusing for the user, particularly if child elements are attempting to specify cursors. Setting <xref:System.Windows.FrameworkElement.ForceCursor%2A> is more appropriate in control subclassing or compositing scenarios.  
   
 <a name="dependencyPropertyInfo_ForceCursor"></a>   
 ## Dependency Property Information  
@@ -1796,7 +1796,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The main purpose of this method is to support attached property syntax for the <xref:System.Windows.FrameworkElement.FlowDirection%2A> property, therefore allowing child elements of a provided <xref:System.Windows.FrameworkElement> to specify flow direction for the arrangement within their parent element. To get the value on the current <xref:System.Windows.FrameworkElement>, use the direct [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] accessor <xref:System.Windows.FrameworkElement.FlowDirection%2A>.  
+ The main purpose of this method is to support attached property syntax for the <xref:System.Windows.FrameworkElement.FlowDirection%2A> property, therefore allowing child elements of a provided <xref:System.Windows.FrameworkElement> to specify flow direction for the arrangement within their parent element. To get the value on the current <xref:System.Windows.FrameworkElement>, use the direct common language runtime (CLR) accessor <xref:System.Windows.FrameworkElement.FlowDirection%2A>.  
   
  ]]></format>
         </remarks>
@@ -1872,7 +1872,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Templates in [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] have a self-contained namescope. This is because templates are re-used, and any name defined in a template cannot remain unique when multiple instances of a control each instantiate its template. Call the <xref:System.Windows.FrameworkElement.GetTemplateChild%2A> method to return references to objects that come from the template after it is instantiated. You cannot use the <xref:System.Windows.FrameworkElement.FindName%2A?displayProperty=nameWithType> method to find items from templates because <xref:System.Windows.FrameworkElement.FindName%2A?displayProperty=nameWithType> acts in a more general scope, and there is no connection between the <xref:System.Windows.Controls.ControlTemplate> class itself and the instantiated template once it is applied.  
+ Templates in WPF have a self-contained namescope. This is because templates are re-used, and any name defined in a template cannot remain unique when multiple instances of a control each instantiate its template. Call the <xref:System.Windows.FrameworkElement.GetTemplateChild%2A> method to return references to objects that come from the template after it is instantiated. You cannot use the <xref:System.Windows.FrameworkElement.FindName%2A?displayProperty=nameWithType> method to find items from templates because <xref:System.Windows.FrameworkElement.FindName%2A?displayProperty=nameWithType> acts in a more general scope, and there is no connection between the <xref:System.Windows.Controls.ControlTemplate> class itself and the instantiated template once it is applied.  
   
  <xref:System.Windows.FrameworkTemplate.FindName%2A?displayProperty=nameWithType> supplies the same function as this method. <xref:System.Windows.FrameworkTemplate.FindName%2A?displayProperty=nameWithType> is public instead of protected, and it uses correct name-scoping considerations that allow it to access the template within an element and find named items within it. Use <xref:System.Windows.FrameworkTemplate.FindName%2A?displayProperty=nameWithType> when you need to get an element outside of its parent control.  
   
@@ -1991,7 +1991,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the suggested height of the element.</summary>
-        <value>The height of the element, in [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]. The default value is <see cref="F:System.Double.NaN" />. This value must be equal to or greater than 0.0.</value>
+        <value>The height of the element, in device-independent units (1/96th inch per unit). The default value is <see cref="F:System.Double.NaN" />. This value must be equal to or greater than 0.0.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2000,7 +2000,7 @@
   
  If this element is a child element within some other element, then setting this property to a value is really only a suggested value. The layout system as well as the particular layout logic of the parent element will use the value as a nonbinding input during the layout process. In practical terms, a <xref:System.Windows.FrameworkElement> is almost always the child element of something else; even when you set the <xref:System.Windows.FrameworkElement.Height%2A> on <xref:System.Windows.Window>. (For <xref:System.Windows.Window>, that value is used when the underlying application model establishes the basic rendering assumptions that create the Hwnd that hosts the application.)  
   
- In addition to acceptable <xref:System.Double> values, this property can also be <xref:System.Double.NaN?displayProperty=nameWithType>. This is how you specify auto sizing behavior in code. In [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] you set the value to the string "Auto" (case insensitive) to enable the auto sizing behavior. Auto sizing behavior implies that the element will fill the height available to it. Note however that specific controls frequently supply default values through their default theme styles that will disable the auto sizing behavior unless it is specifically re-enabled.  
+ In addition to acceptable <xref:System.Double> values, this property can also be <xref:System.Double.NaN?displayProperty=nameWithType>. This is how you specify auto sizing behavior in code. In XAML you set the value to the string "Auto" (case insensitive) to enable the auto sizing behavior. Auto sizing behavior implies that the element will fill the height available to it. Note however that specific controls frequently supply default values through their default theme styles that will disable the auto sizing behavior unless it is specifically re-enabled.  
   
  The return value of this property is always the same as any value that was set to it. In contrast, the value of the <xref:System.Windows.FrameworkElement.ActualHeight%2A> may vary. This can happen either statically because the layout rejected the suggested size for some reason, or momentarily. The layout system itself works asynchronously relative to the property system's set of <xref:System.Windows.FrameworkElement.Height%2A> and may not have processed that particular sizing property change yet.  
   
@@ -2032,12 +2032,12 @@
  *double*  
  <xref:System.Double>  
   
- String representation of a <xref:System.Double> value equal to or greater than 0.0. See Remarks for upper bound information. This value is interpreted as a [!INCLUDE[TLA#tla_dipixel](~/includes/tlasharptla-dipixel-md.md)] measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
+ String representation of a <xref:System.Double> value equal to or greater than 0.0. See Remarks for upper bound information. This value is interpreted as a device-independent unit (1/96th inch) measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
   
  *qualifiedDouble*  
  A *double* value as described above, followed by one of the following unit declaration strings: `px`, `in`, `cm`, `pt`.  
   
- `px` (default) is [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]  
+ `px` (default) is device-independent units (1/96th inch per unit)  
   
  `in` is inches; 1in==96px  
   
@@ -2109,7 +2109,7 @@
 ## Remarks  
  When <xref:System.Windows.FrameworkElement.Height%2A> and <xref:System.Windows.FrameworkElement.Width%2A> properties are explicitly set on an element, these measurements take higher precedent during layout and will cancel the typical effects of setting <xref:System.Windows.FrameworkElement.HorizontalAlignment%2A> to <xref:System.Windows.HorizontalAlignment.Stretch>.  
   
- <xref:System.Windows.FrameworkElement.HorizontalAlignment%2A> is the [!INCLUDE[TLA#tla_net](~/includes/tlasharptla-net-md.md)] property accessor for what is in reality a dependency property. This particular dependency property quite frequently has its apparent "default" value set differently in subclassed elements, particularly controls. This generally occurs in one of two ways: the dependency property is re-registered to a particular subclass, but with different metadata for setting its defaults; or there is a default style being applied that sets that dependency property value differently. For example, the apparent "default" of <xref:System.Windows.FrameworkElement.HorizontalAlignment%2A> for a <xref:System.Windows.Controls.Label> control will be <xref:System.Windows.HorizontalAlignment.Left>, even though <xref:System.Windows.Controls.Label> inherits <xref:System.Windows.FrameworkElement.HorizontalAlignment%2A> direct from <xref:System.Windows.FrameworkElement>. This is because that value was reset within the default style of <xref:System.Windows.Controls.Label>, within the style's control template.  
+ <xref:System.Windows.FrameworkElement.HorizontalAlignment%2A> is the Microsoft .NET property accessor for what is in reality a dependency property. This particular dependency property quite frequently has its apparent "default" value set differently in subclassed elements, particularly controls. This generally occurs in one of two ways: the dependency property is re-registered to a particular subclass, but with different metadata for setting its defaults; or there is a default style being applied that sets that dependency property value differently. For example, the apparent "default" of <xref:System.Windows.FrameworkElement.HorizontalAlignment%2A> for a <xref:System.Windows.Controls.Label> control will be <xref:System.Windows.HorizontalAlignment.Left>, even though <xref:System.Windows.Controls.Label> inherits <xref:System.Windows.FrameworkElement.HorizontalAlignment%2A> direct from <xref:System.Windows.FrameworkElement>. This is because that value was reset within the default style of <xref:System.Windows.Controls.Label>, within the style's control template.  
   
  <xref:System.Windows.Controls.Canvas> does not use <xref:System.Windows.FrameworkElement.HorizontalAlignment%2A> when composing layout, because <xref:System.Windows.Controls.Canvas> is based on absolute positioning.  
   
@@ -2211,7 +2211,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This event will be raised whenever the <xref:System.Windows.FrameworkElement.EndInit%2A> or <xref:System.Windows.FrameworkElement.OnVisualParentChanged%2A> methods are called. Calls to either method could have come from application code, or through the [!INCLUDE[TLA#tla_xaml](~/includes/tlasharptla-xaml-md.md)] processor behavior when a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] page is processed.  
+ This event will be raised whenever the <xref:System.Windows.FrameworkElement.EndInit%2A> or <xref:System.Windows.FrameworkElement.OnVisualParentChanged%2A> methods are called. Calls to either method could have come from application code, or through the Extensible Application Markup Language (XAML) processor behavior when a XAML page is processed.  
   
  Whether you choose to handle <xref:System.Windows.FrameworkElement.Loaded> or <xref:System.Windows.FrameworkElement.Initialized> depends on your requirements. If you do not need to read element properties, intend to reset properties, and do not need any layout information, <xref:System.Windows.FrameworkElement.Initialized> might be the better event to act upon. If you need all properties of the element to be available, and you will be setting properties that are likely to reset the layout, <xref:System.Windows.FrameworkElement.Loaded> might be the better event to act upon. Be careful of reentrancy if your handler resets any properties that are interpreted by the layout system to mean that a new layout pass is required. (You might need to check the <xref:System.Windows.FrameworkPropertyMetadata> values on the property if you are unsure of which properties can require a new layout pass if they are changed.)  
   
@@ -2248,7 +2248,7 @@
 ## Remarks  
  This dependency property inherits property values. If there are child elements without other values for <xref:System.Windows.FrameworkElement.InputScope%2A> established through local values or styles, then the property system will set the value to be the <xref:System.Windows.FrameworkElement.InputScope%2A> value of the nearest ancestor element with this value assigned.  
   
- Although a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] syntax usage is listed and is syntactically allowed, setting this property in [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] is not common.  
+ Although a XAML syntax usage is listed and is syntactically allowed, setting this property in XAML is not common.  
   
 <a name="dependencyPropertyInfo_InputScope"></a>   
 ## Dependency Property Information  
@@ -2314,16 +2314,16 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value that indicates whether this element has been initialized, either during processing by a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] processor, or by explicitly having its <see cref="M:System.Windows.FrameworkElement.EndInit" /> method called.</summary>
+        <summary>Gets a value that indicates whether this element has been initialized, either during processing by a XAML processor, or by explicitly having its <see cref="M:System.Windows.FrameworkElement.EndInit" /> method called.</summary>
         <value>
-          <see langword="true" /> if the element is initialized per the aforementioned [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] processing or method calls; otherwise, <see langword="false" />.</value>
+          <see langword="true" /> if the element is initialized per the aforementioned XAML processing or method calls; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  This property may also be `true` if this element has been moved within the logical tree such that it has a new parent element, and therefore becomes reloaded again.  
   
- This property is useful if you also are using <xref:System.Windows.FrameworkElement.BeginInit%2A> and <xref:System.Windows.FrameworkElement.EndInit%2A>. Elements in the logical tree that is loaded by a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] processor are assured to be initialized. Elements not in the logical tree are initialized when <xref:System.Windows.FrameworkElement.EndInit%2A> is called. In absence of any specific handling of <xref:System.Windows.FrameworkElement.BeginInit%2A> and <xref:System.Windows.FrameworkElement.EndInit%2A>, this will happen as soon as the constructor returns the initialized result.  
+ This property is useful if you also are using <xref:System.Windows.FrameworkElement.BeginInit%2A> and <xref:System.Windows.FrameworkElement.EndInit%2A>. Elements in the logical tree that is loaded by a XAML processor are assured to be initialized. Elements not in the logical tree are initialized when <xref:System.Windows.FrameworkElement.EndInit%2A> is called. In absence of any specific handling of <xref:System.Windows.FrameworkElement.BeginInit%2A> and <xref:System.Windows.FrameworkElement.EndInit%2A>, this will happen as soon as the constructor returns the initialized result.  
   
  ]]></format>
         </remarks>
@@ -2398,7 +2398,7 @@
   
  This dependency property inherits property values. If there are child elements without other values for <xref:System.Windows.FrameworkElement.Language%2A> established through local values or styles, the property system will set the value to be the <xref:System.Windows.FrameworkElement.Language%2A> value of the nearest ancestor element with this value assigned.  
   
- [!INCLUDE[TLA2#tla_xml](~/includes/tla2sharptla-xml-md.md)] defines the general meaning of the `xml:lang` attribute. <xref:System.Windows.FrameworkElement.Language%2A> essentially exposes the meaning of this attribute as a dependency property. <xref:System.Windows.FrameworkElement.Language%2A> can be adjusted programmatically, and can participate in property system value inheritance in a way that parallels how the `xml:lang` attribute can inherit to child element scope in [!INCLUDE[TLA2#tla_xml](~/includes/tla2sharptla-xml-md.md)]. If you set <xref:System.Windows.FrameworkElement.Language%2A>, that value becomes the `xml:lang` and overwrites any previous value. For more information, see [xml:lang Handling in XAML](/dotnet/framework/xaml-services/xml-lang-handling-in-xaml).  
+ XML defines the general meaning of the `xml:lang` attribute. <xref:System.Windows.FrameworkElement.Language%2A> essentially exposes the meaning of this attribute as a dependency property. <xref:System.Windows.FrameworkElement.Language%2A> can be adjusted programmatically, and can participate in property system value inheritance in a way that parallels how the `xml:lang` attribute can inherit to child element scope in XML. If you set <xref:System.Windows.FrameworkElement.Language%2A>, that value becomes the `xml:lang` and overwrites any previous value. For more information, see [xml:lang Handling in XAML](/dotnet/framework/xaml-services/xml-lang-handling-in-xaml).  
   
 <a name="dependencyPropertyInfo_CultureInfo"></a>   
 ## Dependency Property Information  
@@ -2462,7 +2462,7 @@
   
  Setting a transform provides powerful capabilities of scaling and rotating. However, <xref:System.Windows.FrameworkElement.LayoutTransform%2A> ignores <xref:System.Windows.Media.TranslateTransform> operations. This is because the layout system behavior for child elements of a <xref:System.Windows.FrameworkElement> auto-corrects any offsets to the position of a scaled or rotated element into the layout and coordinate system of the parent element.  
   
- <xref:System.Windows.FrameworkElement.LayoutTransform%2A> can lead to poor application performance if you invoke it in a scenario that does not require a full pass by the layout system. When you apply a <xref:System.Windows.FrameworkElement.LayoutTransform%2A> to the <xref:System.Windows.Controls.Panel.Children%2A> collection of the <xref:System.Windows.Controls.Panel>, it triggers a new pass by the layout system and forces all on-screen objects to be remeasured and rearranged. If you are updating the complete application [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)], this functionality might be exactly what you need. However, if you do not need a full layout pass, use the <xref:System.Windows.UIElement.RenderTransform%2A> property, which does not invoke the layout system, and therefore, is typically a better choice for this scenario.  
+ <xref:System.Windows.FrameworkElement.LayoutTransform%2A> can lead to poor application performance if you invoke it in a scenario that does not require a full pass by the layout system. When you apply a <xref:System.Windows.FrameworkElement.LayoutTransform%2A> to the <xref:System.Windows.Controls.Panel.Children%2A> collection of the <xref:System.Windows.Controls.Panel>, it triggers a new pass by the layout system and forces all on-screen objects to be remeasured and rearranged. If you are updating the complete application user interface (UI), this functionality might be exactly what you need. However, if you do not need a full layout pass, use the <xref:System.Windows.UIElement.RenderTransform%2A> property, which does not invoke the layout system, and therefore, is typically a better choice for this scenario.  
   
  Example scenarios where <xref:System.Windows.FrameworkElement.LayoutTransform%2A> would be useful include: rotating elements such as menu components from horizontal to vertical or vice versa, scaling elements (zooming in) on focus, providing editing behavior, etc.  
   
@@ -2644,9 +2644,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The margin is the space between this element and other elements that will be adjacent when layout creates the [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)]. Shared elements might be peer elements (such as other elements in the collection of a common parent control), or might also be this element's parent.  
+ The margin is the space between this element and other elements that will be adjacent when layout creates the user interface (UI). Shared elements might be peer elements (such as other elements in the collection of a common parent control), or might also be this element's parent.  
   
- <xref:System.Windows.FrameworkElement.Margin%2A> is set as a <xref:System.Windows.Thickness> structure rather than as a number so that the margin can be set asymmetrically. The <xref:System.Windows.Thickness> structure itself supports string type conversion so that you can specify an asymmetric <xref:System.Windows.FrameworkElement.Margin%2A> in [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] attribute syntax also.  
+ <xref:System.Windows.FrameworkElement.Margin%2A> is set as a <xref:System.Windows.Thickness> structure rather than as a number so that the margin can be set asymmetrically. The <xref:System.Windows.Thickness> structure itself supports string type conversion so that you can specify an asymmetric <xref:System.Windows.FrameworkElement.Margin%2A> in XAML attribute syntax also.  
   
  A non-zero margin applies space outside the element layout's <xref:System.Windows.FrameworkElement.ActualWidth%2A> and <xref:System.Windows.FrameworkElement.ActualHeight%2A>.  
   
@@ -2691,12 +2691,12 @@
   
  The attribute usage will also accept abbreviated values that apply in the order provided, symmetrically and logically. For instance, `Margin="20"` will be interpreted to mean a <xref:System.Windows.Thickness> with all properties set to 20. `Margin="20,50"` will be interpreted to mean a <xref:System.Windows.Thickness> with <xref:System.Windows.Thickness.Left%2A> and <xref:System.Windows.Thickness.Right%2A> set to 20, and <xref:System.Windows.Thickness.Top%2A> and <xref:System.Windows.Thickness.Bottom%2A> set to 50.  
   
- The default unit for a <xref:System.Windows.Thickness> measure is [!INCLUDE[TLA#tla_dipixel](~/includes/tlasharptla-dipixel-md.md)]. You can also specify other units by appending the unit type strings `cm`, `in`, or `pt` to any measure.  
+ The default unit for a <xref:System.Windows.Thickness> measure is device-independent unit (1/96th inch). You can also specify other units by appending the unit type strings `cm`, `in`, or `pt` to any measure.  
   
- Number values provided as [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] attributes need not specify decimal points (0 is acceptable, does not have to be provided as 0.0). For more information on [!INCLUDE[TLA#tla_xaml](~/includes/tlasharptla-xaml-md.md)] usage, see <xref:System.Windows.Thickness>.  
+ Number values provided as XAML attributes need not specify decimal points (0 is acceptable, does not have to be provided as 0.0). For more information on Extensible Application Markup Language (XAML) usage, see <xref:System.Windows.Thickness>.  
   
  *thicknessReference*  
- An object reference to an existing <xref:System.Windows.Thickness>. This might be a `}`, a , or `}` reference. For more information on [!INCLUDE[TLA#tla_xaml](~/includes/tlasharptla-xaml-md.md)] usage, see <xref:System.Windows.Thickness>.  
+ An object reference to an existing <xref:System.Windows.Thickness>. This might be a `}`, a , or `}` reference. For more information on Extensible Application Markup Language (XAML) usage, see <xref:System.Windows.Thickness>.  
   
 <a name="dependencyPropertyInfo_Margin"></a>   
 ## Dependency Property Information  
@@ -2762,7 +2762,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the maximum height constraint of the element.</summary>
-        <value>The maximum height of the element, in [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]. The default value is <see cref="F:System.Double.PositiveInfinity" />. This value can be any value equal to or greater than 0.0. <see cref="F:System.Double.PositiveInfinity" /> is also valid.</value>
+        <value>The maximum height of the element, in device-independent units (1/96th inch per unit). The default value is <see cref="F:System.Double.PositiveInfinity" />. This value can be any value equal to or greater than 0.0. <see cref="F:System.Double.PositiveInfinity" /> is also valid.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2789,14 +2789,14 @@
  *double*  
  <xref:System.Double>  
   
- String representation of a <xref:System.Double> value equal to or greater than 0.0. This is interpreted as a [!INCLUDE[TLA#tla_dipixel](~/includes/tlasharptla-dipixel-md.md)] measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
+ String representation of a <xref:System.Double> value equal to or greater than 0.0. This is interpreted as a device-independent unit (1/96th inch) measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
   
  The same <xref:System.Double> range restrictions as mentioned in the Property Value section apply, except that you must use [x:Static Markup Extension](/dotnet/framework/xaml-services/x-static-markup-extension) if you need to explicitly set the value to be <xref:System.Double.PositiveInfinity>.  
   
  *qualifiedDouble*  
  A *double* value as described above, followed by one of the following unit declaration strings: `px`, `in`, `cm`, `pt`.  
   
- `px` (default) is [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]  
+ `px` (default) is device-independent units (1/96th inch per unit)  
   
  `in` is inches; 1in==96px  
   
@@ -2867,7 +2867,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the maximum width constraint of the element.</summary>
-        <value>The maximum width of the element, in [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]. The default value is <see cref="F:System.Double.PositiveInfinity" />. This value can be any value equal to or greater than 0.0. <see cref="F:System.Double.PositiveInfinity" /> is also valid.</value>
+        <value>The maximum width of the element, in device-independent units (1/96th inch per unit). The default value is <see cref="F:System.Double.PositiveInfinity" />. This value can be any value equal to or greater than 0.0. <see cref="F:System.Double.PositiveInfinity" /> is also valid.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2894,14 +2894,14 @@
  *double*  
  <xref:System.Double>  
   
- String representation of a <xref:System.Double> value equal to or greater than 0.0. This is interpreted as a [!INCLUDE[TLA#tla_dipixel](~/includes/tlasharptla-dipixel-md.md)] measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
+ String representation of a <xref:System.Double> value equal to or greater than 0.0. This is interpreted as a device-independent unit (1/96th inch) measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
   
  The same <xref:System.Double> range restrictions as mentioned in the Property Value section apply, except that you must use [x:Static Markup Extension](/dotnet/framework/xaml-services/x-static-markup-extension) to set the value to be <xref:System.Double.PositiveInfinity>.  
   
  *qualifiedDouble*  
  A *double* value as described above, followed by one of the following unit declaration strings: `px`, `in`, `cm`, `pt`.  
   
- `px` (default) is [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]  
+ `px` (default) is device-independent units (1/96th inch per unit)  
   
  `in` is inches; 1in==96px  
   
@@ -3005,7 +3005,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Override <xref:System.Windows.FrameworkElement.MeasureOverride%2A> to implement custom layout sizing behavior for your element as it participates in the [!INCLUDE[TLA#tla_winclient](~/includes/tlasharptla-winclient-md.md)] layout system. Your implementation should do the following:  
+ Override <xref:System.Windows.FrameworkElement.MeasureOverride%2A> to implement custom layout sizing behavior for your element as it participates in the Windows Presentation Foundation (WPF) layout system. Your implementation should do the following:  
   
 1.  Iterate your element's particular collection of children that are part of layout, call <xref:System.Windows.UIElement.Measure%2A> on each child element.  
   
@@ -3023,7 +3023,7 @@
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>The following non-compiling code shows this implementation pattern.  <c>VisualChildren</c> represents an enumerable collection property of children that your own element should define. The property can be named anything. <c>VisualChildren</c> is a placeholder name for purposes of this example, <c>VisualChildren</c> is not an API as provided by [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] or a part of a naming pattern. 
+          <para>The following non-compiling code shows this implementation pattern.  <c>VisualChildren</c> represents an enumerable collection property of children that your own element should define. The property can be named anything. <c>VisualChildren</c> is a placeholder name for purposes of this example, <c>VisualChildren</c> is not an API as provided by WPF or a part of a naming pattern. 
   
  [!code-csharp[CorePseudocode#FEMeasureOverride](~/samples/snippets/csharp/VS_Snippets_Wpf/CorePseudocode/CSharp/corepseudocode.cs#femeasureoverride)]
  [!code-vb[CorePseudocode#FEMeasureOverride](~/samples/snippets/visualbasic/VS_Snippets_Wpf/CorePseudocode/visualbasic/corepseudocode.vb#femeasureoverride)]</para>
@@ -3059,7 +3059,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the minimum height constraint of the element.</summary>
-        <value>The minimum height of the element, in [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]. The default value is 0.0. This value can be any value equal to or greater than 0.0. However, <see cref="F:System.Double.PositiveInfinity" /> is NOT valid, nor is <see cref="F:System.Double.NaN" />.</value>
+        <value>The minimum height of the element, in device-independent units (1/96th inch per unit). The default value is 0.0. This value can be any value equal to or greater than 0.0. However, <see cref="F:System.Double.PositiveInfinity" /> is NOT valid, nor is <see cref="F:System.Double.NaN" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3086,14 +3086,14 @@
  *double*  
  <xref:System.Double>  
   
- String representation of a <xref:System.Double> value equal to or greater than 0.0. This is interpreted as a [!INCLUDE[TLA#tla_dipixel](~/includes/tlasharptla-dipixel-md.md)] measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
+ String representation of a <xref:System.Double> value equal to or greater than 0.0. This is interpreted as a device-independent unit (1/96th inch) measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
   
  The same <xref:System.Double> range restrictions as mentioned in the Property Value section apply.  
   
  *qualifiedDouble*  
  A *double* value as described above, followed by one of the following unit declaration strings: `px`, `in`, `cm`, `pt`.  
   
- `px` (default) is [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]  
+ `px` (default) is device-independent units (1/96th inch per unit)  
   
  `in` is inches; 1in==96px  
   
@@ -3164,7 +3164,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the minimum width constraint of the element.</summary>
-        <value>The minimum width of the element, in [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]. The default value is 0.0. This value can be any value equal to or greater than 0.0. However, <see cref="F:System.Double.PositiveInfinity" /> is not valid, nor is <see cref="F:System.Double.NaN" />.</value>
+        <value>The minimum width of the element, in device-independent units (1/96th inch per unit). The default value is 0.0. This value can be any value equal to or greater than 0.0. However, <see cref="F:System.Double.PositiveInfinity" /> is not valid, nor is <see cref="F:System.Double.NaN" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3191,14 +3191,14 @@
  *double*  
  <xref:System.Double>  
   
- String representation of a <xref:System.Double> value equal to or greater than 0.0. This is interpreted as a [!INCLUDE[TLA#tla_dipixel](~/includes/tlasharptla-dipixel-md.md)] measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
+ String representation of a <xref:System.Double> value equal to or greater than 0.0. This is interpreted as a device-independent unit (1/96th inch) measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
   
  The same <xref:System.Double> range restrictions as mentioned in the Property Value section apply.  
   
  *qualifiedDouble*  
  A *double* value as described above, followed by one of the following unit declaration strings: `px`, `in`, `cm`, `pt`.  
   
- `px` (default) is [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]  
+ `px` (default) is device-independent units (1/96th inch per unit)  
   
  `in` is inches; 1in==96px  
   
@@ -3319,19 +3319,19 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the identifying name of the element. The name provides a reference so that code-behind, such as event handler code, can refer to a markup element after it is constructed during processing by a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] processor.</summary>
+        <summary>Gets or sets the identifying name of the element. The name provides a reference so that code-behind, such as event handler code, can refer to a markup element after it is constructed during processing by a XAML processor.</summary>
         <value>The name of the element. The default is an empty string.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The most common usage of this property is to specify a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] element name as an attribute in markup.  
+ The most common usage of this property is to specify a XAML element name as an attribute in markup.  
   
- This property essentially provides a WPF framework-level convenience property to set the [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] [x:Name Directive](/dotnet/framework/xaml-services/x-name-directive).  
+ This property essentially provides a WPF framework-level convenience property to set the XAML [x:Name Directive](/dotnet/framework/xaml-services/x-name-directive).  
   
  Names must be unique within a namescope. For more information, see [WPF XAML Namescopes](/dotnet/framework/wpf/advanced/wpf-xaml-namescopes).  
   
- Getting a <xref:System.Windows.FrameworkElement.Name%2A> if you are creating elements in code is not common. If you have the appropriate reference in code already, you can just call methods and properties on the element reference and will not generally need the <xref:System.Windows.FrameworkElement.Name%2A>. An exception to this is if the <xref:System.Windows.FrameworkElement.Name%2A> string has some overloaded meaning, for instance if it is useful to display that name in [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)]. Setting a <xref:System.Windows.FrameworkElement.Name%2A> from code-behind if the original <xref:System.Windows.FrameworkElement.Name%2A> was set from markup is also not recommended, and changing the property after loading the [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] will not change the original object reference. The object references are created only when the underlying namescopes are explicitly created during parsing. You must specifically call <xref:System.Windows.FrameworkElement.RegisterName%2A> to make an effective change to the <xref:System.Windows.FrameworkElement.Name%2A> property of an already loaded element.  
+ Getting a <xref:System.Windows.FrameworkElement.Name%2A> if you are creating elements in code is not common. If you have the appropriate reference in code already, you can just call methods and properties on the element reference and will not generally need the <xref:System.Windows.FrameworkElement.Name%2A>. An exception to this is if the <xref:System.Windows.FrameworkElement.Name%2A> string has some overloaded meaning, for instance if it is useful to display that name in UI. Setting a <xref:System.Windows.FrameworkElement.Name%2A> from code-behind if the original <xref:System.Windows.FrameworkElement.Name%2A> was set from markup is also not recommended, and changing the property after loading the XAML will not change the original object reference. The object references are created only when the underlying namescopes are explicitly created during parsing. You must specifically call <xref:System.Windows.FrameworkElement.RegisterName%2A> to make an effective change to the <xref:System.Windows.FrameworkElement.Name%2A> property of an already loaded element.  
   
  One notable case where setting <xref:System.Windows.FrameworkElement.Name%2A> from code is important is when registering names for elements that storyboards will run against, so that they can be referenced at run time. Before you can register a name, might also need to instantiate and assign a <xref:System.Windows.NameScope> instance. See the Example section, or [Storyboards Overview](/dotnet/framework/wpf/graphics-multimedia/storyboards-overview).  
   
@@ -3339,9 +3339,9 @@
   
  Typically used root elements (<xref:System.Windows.Window>, <xref:System.Windows.Controls.Page> for example) implement the interface <xref:System.Windows.Markup.INameScope>. Implementations of this interface are expected to enforce that names be unambiguous within their scope. The root elements that define this interface also define the namescope behavior boundaries for all the related APIs.  
   
- The <xref:System.Windows.FrameworkElement.Name%2A> property also serves as an identifier for other processes. For instance, the [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] automation model will use <xref:System.Windows.FrameworkElement.Name%2A> as the AutomationId for clients and providers.  
+ The <xref:System.Windows.FrameworkElement.Name%2A> property also serves as an identifier for other processes. For instance, the WPF automation model will use <xref:System.Windows.FrameworkElement.Name%2A> as the AutomationId for clients and providers.  
   
- The string values used for <xref:System.Windows.FrameworkElement.Name%2A> have some restrictions, as imposed by the underlying [x:Name Directive](/dotnet/framework/xaml-services/x-name-directive) defined by the [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] specification. Most notably, a <xref:System.Windows.FrameworkElement.Name%2A> must start with a letter or the underscore character (_), and must contain only letters, digits, or underscores. For more information, see [WPF XAML Namescopes](/dotnet/framework/wpf/advanced/wpf-xaml-namescopes).  
+ The string values used for <xref:System.Windows.FrameworkElement.Name%2A> have some restrictions, as imposed by the underlying [x:Name Directive](/dotnet/framework/xaml-services/x-name-directive) defined by the XAML specification. Most notably, a <xref:System.Windows.FrameworkElement.Name%2A> must start with a letter or the underscore character (_), and must contain only letters, digits, or underscores. For more information, see [WPF XAML Namescopes](/dotnet/framework/wpf/advanced/wpf-xaml-namescopes).  
   
  <xref:System.Windows.FrameworkElement.Name%2A> is one of the very few dependency properties that cannot be animated (<xref:System.Windows.UIPropertyMetadata.IsAnimationProhibited%2A> is `true` in metadata), because the name itself is vital for targeting an animation. Data binding a <xref:System.Windows.FrameworkElement.Name%2A> is technically possible, but is an extremely uncommon scenario because a data-bound <xref:System.Windows.FrameworkElement.Name%2A> cannot serve the main intended purpose of the property: to provide an identifier connection point for code-behind.  
   
@@ -3463,7 +3463,7 @@
 ## Remarks  
  This method has no default implementation. You should still call the base implementation in case an intermediate class in the inheritance has implemented this method.  
   
- The purpose of this method is somewhat similar to [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] event pattern On* methods: it provides the means to handle the matching event from derived classes with a class handler instead of an instance handler. In this case the matching event is a routed event. The implementation pattern of the On* methods is different for routed events because the routed event may have been raised by a child element, not necessarily the element that will invoke handlers, so your implementation will need to take the event arguments' source properties into account (and should not try to re-raise the event in most cases). Subclasses of <xref:System.Windows.FrameworkElement> could choose to call private class handler methods when the event is received along the route. One potential scenario is to take the arguments of the event and deliberately mark the event as handled.  
+ The purpose of this method is somewhat similar to common language runtime (CLR) event pattern On* methods: it provides the means to handle the matching event from derived classes with a class handler instead of an instance handler. In this case the matching event is a routed event. The implementation pattern of the On* methods is different for routed events because the routed event may have been raised by a child element, not necessarily the element that will invoke handlers, so your implementation will need to take the event arguments' source properties into account (and should not try to re-raise the event in most cases). Subclasses of <xref:System.Windows.FrameworkElement> could choose to call private class handler methods when the event is received along the route. One potential scenario is to take the arguments of the event and deliberately mark the event as handled.  
   
  ]]></format>
         </remarks>
@@ -3498,7 +3498,7 @@
 ## Remarks  
  This method has no default implementation. You should still call the base implementation in case an intermediate class in the inheritance has implemented this method.  
   
- The purpose of this method is somewhat similar to [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] event pattern On* methods: it provides the means to handle the matching event from derived classes with a class handler instead of an instance handler. In this case the matching event is a routed event. The implementation pattern of the On* methods is different for routed events because the routed event may have been raised by a child element, not necessarily the element that will invoke handlers, so your implementation will need to take the event arguments' source properties into account (and should not try to re-raise the event in most cases). Subclasses of <xref:System.Windows.FrameworkElement> could choose to call private class handler methods when the event is received along the route. One potential scenario is to take the arguments of the event and deliberately mark the event as handled.  
+ The purpose of this method is somewhat similar to common language runtime (CLR) event pattern On* methods: it provides the means to handle the matching event from derived classes with a class handler instead of an instance handler. In this case the matching event is a routed event. The implementation pattern of the On* methods is different for routed events because the routed event may have been raised by a child element, not necessarily the element that will invoke handlers, so your implementation will need to take the event arguments' source properties into account (and should not try to re-raise the event in most cases). Subclasses of <xref:System.Windows.FrameworkElement> could choose to call private class handler methods when the event is received along the route. One potential scenario is to take the arguments of the event and deliberately mark the event as handled.  
   
  ]]></format>
         </remarks>
@@ -3570,9 +3570,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This particular On* method is not a class handler hook. Nor does it exactly follow the established [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] On* method convention that the matching event could be suppressed by overriding this method and not calling the base implementation.  
+ This particular On* method is not a class handler hook. Nor does it exactly follow the established common language runtime (CLR) On* method convention that the matching event could be suppressed by overriding this method and not calling the base implementation.  
   
- Note that the <xref:System.Windows.FrameworkElement.IsInitialized%2A> property is read-only, so you cannot set <xref:System.Windows.FrameworkElement.IsInitialized%2A> to force initialization behavior. Setting the initialization state is intended to be done only by the [!INCLUDE[TLA#tla_winclient](~/includes/tlasharptla-winclient-md.md)] framework.  
+ Note that the <xref:System.Windows.FrameworkElement.IsInitialized%2A> property is read-only, so you cannot set <xref:System.Windows.FrameworkElement.IsInitialized%2A> to force initialization behavior. Setting the initialization state is intended to be done only by the Windows Presentation Foundation (WPF) framework.  
   
  ]]></format>
         </remarks>
@@ -3619,7 +3619,7 @@
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>Always call the base implementation, as the first operation in your implementation. Failure to do this will significantly disable the entire [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] property system, which causes incorrect values to be reported. The specific <see cref="T:System.Windows.FrameworkElement" /> implementation is also responsible for maintaining proper state for a variety of properties that affect the visible user interface. These include invalidating the visual tree based on changes to style at appropriate times.</para>
+          <para>Always call the base implementation, as the first operation in your implementation. Failure to do this will significantly disable the entire WPF property system, which causes incorrect values to be reported. The specific <see cref="T:System.Windows.FrameworkElement" /> implementation is also responsible for maintaining proper state for a variety of properties that affect the visible user interface. These include invalidating the visual tree based on changes to style at appropriate times.</para>
         </block>
         <altmember cref="M:System.Windows.DependencyObject.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)" />
         <altmember cref="T:System.Windows.PropertyChangedCallback" />
@@ -3739,7 +3739,7 @@
 ## Remarks  
  This method has no default implementation. You should still call the base implementation in case an intermediate class in the inheritance has implemented this method.  
   
- The purpose of this method is somewhat similar to [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] event pattern On* methods: it provides the means to handle the matching event from derived classes with a class handler instead of an instance handler. In this case the matching event is a routed event. The implementation pattern of the On* methods is different for routed events because the routed event may have been raised by a child element, not necessarily the element that will invoke handlers, so your implementation will need to take the event arguments' source properties into account (and should not try to re-raise the event in most cases). Subclasses of <xref:System.Windows.FrameworkElement> could choose to call private class handler methods when the event is received along the route. One potential scenario is to take the arguments of the event and deliberately mark the event as handled.  
+ The purpose of this method is somewhat similar to common language runtime (CLR) event pattern On* methods: it provides the means to handle the matching event from derived classes with a class handler instead of an instance handler. In this case the matching event is a routed event. The implementation pattern of the On* methods is different for routed events because the routed event may have been raised by a child element, not necessarily the element that will invoke handlers, so your implementation will need to take the event arguments' source properties into account (and should not try to re-raise the event in most cases). Subclasses of <xref:System.Windows.FrameworkElement> could choose to call private class handler methods when the event is received along the route. One potential scenario is to take the arguments of the event and deliberately mark the event as handled.  
   
  ]]></format>
         </remarks>
@@ -3774,7 +3774,7 @@
 ## Remarks  
  This method has no default implementation. You should still call the base implementation in case an intermediate class in the inheritance has implemented this method.  
   
- The purpose of this method is somewhat similar to [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] event pattern On* methods: it provides the means to handle the matching event from derived classes with a class handler instead of an instance handler. In this case the matching event is a routed event. The implementation pattern of the On* methods is different for routed events because the routed event may have been raised by a child element, not necessarily the element that will invoke handlers, so your implementation will need to take the event arguments' source properties into account (and should not try to re-raise the event in most cases). Subclasses of <xref:System.Windows.FrameworkElement> could choose to call private class handler methods when the event is received along the route. One potential scenario is to take the arguments of the event and deliberately mark the event as handled to shorten the route.  
+ The purpose of this method is somewhat similar to common language runtime (CLR) event pattern On* methods: it provides the means to handle the matching event from derived classes with a class handler instead of an instance handler. In this case the matching event is a routed event. The implementation pattern of the On* methods is different for routed events because the routed event may have been raised by a child element, not necessarily the element that will invoke handlers, so your implementation will need to take the event arguments' source properties into account (and should not try to re-raise the event in most cases). Subclasses of <xref:System.Windows.FrameworkElement> could choose to call private class handler methods when the event is received along the route. One potential scenario is to take the arguments of the event and deliberately mark the event as handled to shorten the route.  
   
  ]]></format>
         </remarks>
@@ -3814,7 +3814,7 @@
         <block subset="none" type="overrides">
           <para>The default implementation of this virtual method queries for the new parent, raises various initialization events, and sets internal flags about initialization state of the <see cref="T:System.Windows.FrameworkElement" /> as appropriate. Finally, it calls the successive base implementations as declared by <see cref="T:System.Windows.UIElement" />, which in turn calls its base in <see cref="T:System.Windows.Media.Visual" />. Always call the base implementation to preserve this behavior, otherwise the element tree behavior for this element when declared as a child of another element may not be as expected.  
   
- A few existing [!INCLUDE[TLA#tla_winclient](~/includes/tlasharptla-winclient-md.md)] classes override this method, for example: <see cref="M:System.Windows.Window.OnVisualParentChanged(System.Windows.DependencyObject)" />, <see cref="M:System.Windows.Controls.ListBoxItem.OnVisualParentChanged(System.Windows.DependencyObject)" />. The most common scenario is to enforce that the new parent must be a particular type. This might involve throwing an exception if the new parent failed some manner of type test. A specialized version of this scenario exists in implementations for list items and menu items, which do not make any sense outside a parent visual that owns an appropriate collection to store them in. Note that these cases do not necessarily raise exceptions, because there might be designer scenarios that rely on reparenting elements that are momentarily without their "regular" parents.  
+ A few existing Windows Presentation Foundation (WPF) classes override this method, for example: <see cref="M:System.Windows.Window.OnVisualParentChanged(System.Windows.DependencyObject)" />, <see cref="M:System.Windows.Controls.ListBoxItem.OnVisualParentChanged(System.Windows.DependencyObject)" />. The most common scenario is to enforce that the new parent must be a particular type. This might involve throwing an exception if the new parent failed some manner of type test. A specialized version of this scenario exists in implementations for list items and menu items, which do not make any sense outside a parent visual that owns an appropriate collection to store them in. Note that these cases do not necessarily raise exceptions, because there might be designer scenarios that rely on reparenting elements that are momentarily without their "regular" parents.  
   
  This method is also overridden in certain elements that are typically the root element, such as  <see cref="T:System.Windows.Window" />. Another case is elements that are the apparent root element in markup but which autogenerate a greater infrastructure in a compiled logical tree (such as <see cref="T:System.Windows.Controls.Page" />). The <see cref="T:System.Windows.Window" /> and <see cref="T:System.Windows.Controls.Page" /> implementations deliberately seal the method.</para>
         </block>
@@ -3850,7 +3850,7 @@
  The most common usage of this property is an indirect usage within the setter of a style that is supplying a themed style.  
   
 > [!IMPORTANT]
->  If you set <xref:System.Windows.FrameworkElement.OverridesDefaultStyle%2A> to `true` on a control, you will be suppressing the default control template supplied by the theme styles. That control template typically includes the content presenter and other composited elements that provide basic [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)] functionality and visualization for the control. If you want the control to continue to support the same features as the default theme styles, you must supply an alternate style with a control template that replicates the same structure. For more information, see [Control Authoring Overview](/dotnet/framework/wpf/controls/control-authoring-overview).  
+>  If you set <xref:System.Windows.FrameworkElement.OverridesDefaultStyle%2A> to `true` on a control, you will be suppressing the default control template supplied by the theme styles. That control template typically includes the content presenter and other composited elements that provide basic UI functionality and visualization for the control. If you want the control to continue to support the same features as the default theme styles, you must supply an alternate style with a control template that replicates the same structure. For more information, see [Control Authoring Overview](/dotnet/framework/wpf/controls/control-authoring-overview).  
   
 <a name="dependencyPropertyInfo_OverridesDefaultStyle"></a>   
 ## Dependency Property Information  
@@ -4099,7 +4099,7 @@
 ## Remarks  
  Use this method for the implementation of collections on objects that represent logical children of an element. This might be done in property getters or setters, class handlers of `Changed` events, constructors, or within the collection types themselves.  
   
- For control authors, manipulating the logical tree at this level is not the recommended practice, unless none of the provided base control class' content models are appropriate. Consider subclassing at the level of <xref:System.Windows.Controls.ContentControl>, <xref:System.Windows.Controls.ItemsControl>, and <xref:System.Windows.Controls.HeaderedItemsControl>. These classes provide a content model with particular enforcement of logical children through dedicated APIs, as well as support for other features typically desirable in a [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] control such as styling through templates.  
+ For control authors, manipulating the logical tree at this level is not the recommended practice, unless none of the provided base control class' content models are appropriate. Consider subclassing at the level of <xref:System.Windows.Controls.ContentControl>, <xref:System.Windows.Controls.ItemsControl>, and <xref:System.Windows.Controls.HeaderedItemsControl>. These classes provide a content model with particular enforcement of logical children through dedicated APIs, as well as support for other features typically desirable in a WPF control such as styling through templates.  
   
    
   
@@ -4206,15 +4206,15 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Resource dictionaries that can be defined completely or partially in [!INCLUDE[TLA#tla_xaml](~/includes/tlasharptla-xaml-md.md)] are typically created as a property element, and are typically on the root element for any individual page or for the application. Placing the resource dictionary at this level makes it easier to find from individual child elements in the page (or from any page, in the application case). In most application scenarios, we recommend that styles be defined as object elements within a resource dictionary, or be defined as external resources so that the entire style resource can be self-contained (this approach helps separate designer responsibilities from developer responsibilities by separating the physical files that need to be edited).  
+ Resource dictionaries that can be defined completely or partially in Extensible Application Markup Language (XAML) are typically created as a property element, and are typically on the root element for any individual page or for the application. Placing the resource dictionary at this level makes it easier to find from individual child elements in the page (or from any page, in the application case). In most application scenarios, we recommend that styles be defined as object elements within a resource dictionary, or be defined as external resources so that the entire style resource can be self-contained (this approach helps separate designer responsibilities from developer responsibilities by separating the physical files that need to be edited).  
   
  Note that this property returns only the resource dictionary declared directly within that element. This is different than the actual resource lookup process, where a child element can access any of the resources defined in each parent element, searching recursively upwards.  
   
- Resources can also be referenced by code from within the collection, but be aware that resources created in [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] will definitely not be accessible until after <xref:System.Windows.FrameworkElement.Loaded> is raised by the element that declares the dictionary. In fact, resources are parsed asynchronously and not even the <xref:System.Windows.FrameworkElement.Loaded> event is an assurance that you can reference a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] defined resource. For this reason you should generally only access [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] defined resources as part of run-time code, or through other [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] techniques such as styles or resource extension references for attribute values. When you access resources through code, it is essentially equivalent to a [DynamicResource](/dotnet/framework/wpf/advanced/dynamicresource-markup-extension) reference made from [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)].  
+ Resources can also be referenced by code from within the collection, but be aware that resources created in XAML will definitely not be accessible until after <xref:System.Windows.FrameworkElement.Loaded> is raised by the element that declares the dictionary. In fact, resources are parsed asynchronously and not even the <xref:System.Windows.FrameworkElement.Loaded> event is an assurance that you can reference a XAML defined resource. For this reason you should generally only access XAML defined resources as part of run-time code, or through other XAML techniques such as styles or resource extension references for attribute values. When you access resources through code, it is essentially equivalent to a [DynamicResource](/dotnet/framework/wpf/advanced/dynamicresource-markup-extension) reference made from XAML.  
   
  The underlying <xref:System.Windows.ResourceDictionary> supports the methods required to add, remove or query resources from within the collection by using code. The <xref:System.Windows.FrameworkElement.Resources%2A> property is settable to support the scenario of completely replacing the resources collection of an element to be a new or different <xref:System.Windows.ResourceDictionary>.  
   
- Notice that the [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] syntax shown does not include an element for the <xref:System.Windows.ResourceDictionary>. This is an example of implicit collection syntax; a tag representing the collection element can be omitted. The elements that are added as items to the collection are specified instead. For more information about implicit collections and [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)], see [XAML Syntax In Detail](/dotnet/framework/wpf/advanced/xaml-syntax-in-detail). One case where a <xref:System.Windows.ResourceDictionary> is still specified explicitly as an element is if you are introducing a merged dictionary, in which case there are typically no child elements for that <xref:System.Windows.ResourceDictionary>. For details, see [Merged Resource Dictionaries](/dotnet/framework/wpf/advanced/merged-resource-dictionaries).  
+ Notice that the XAML syntax shown does not include an element for the <xref:System.Windows.ResourceDictionary>. This is an example of implicit collection syntax; a tag representing the collection element can be omitted. The elements that are added as items to the collection are specified instead. For more information about implicit collections and XAML, see [XAML Syntax In Detail](/dotnet/framework/wpf/advanced/xaml-syntax-in-detail). One case where a <xref:System.Windows.ResourceDictionary> is still specified explicitly as an element is if you are introducing a merged dictionary, in which case there are typically no child elements for that <xref:System.Windows.ResourceDictionary>. For details, see [Merged Resource Dictionaries](/dotnet/framework/wpf/advanced/merged-resource-dictionaries).  
   
 <a name="xamlPropertyElementUsage_Resources"></a>   
 ## XAML Property Element Usage  
@@ -4356,7 +4356,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This method supports attached property syntax for the <xref:System.Windows.FrameworkElement.FlowDirection%2A> property, therefore allowing child elements of a provided <xref:System.Windows.FrameworkElement> to specify flow direction for the arrangement within their parent element. To set the value on the current <xref:System.Windows.FrameworkElement>, use the direct [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] accessor <xref:System.Windows.FrameworkElement.FlowDirection%2A>.  
+ This method supports attached property syntax for the <xref:System.Windows.FrameworkElement.FlowDirection%2A> property, therefore allowing child elements of a provided <xref:System.Windows.FrameworkElement> to specify flow direction for the arrangement within their parent element. To set the value on the current <xref:System.Windows.FrameworkElement>, use the direct common language runtime (CLR) accessor <xref:System.Windows.FrameworkElement.FlowDirection%2A>.  
   
  ]]></format>
         </remarks>
@@ -4943,13 +4943,13 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the tool-tip object that is displayed for this element in the [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)].</summary>
+        <summary>Gets or sets the tool-tip object that is displayed for this element in the user interface (UI).</summary>
         <value>The tooltip object.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- If the value of this property is of type <xref:System.Windows.Controls.ToolTip>, then that value is the tool-tip that will be used in the [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)].  If the value is of any other type, then that value will be used as the *content* for a <xref:System.Windows.Controls.ToolTip> provided (constructed) by the system. For more information, see <xref:System.Windows.Controls.ToolTipService>. The service class provides attached properties that can be used to further customize a <xref:System.Windows.Controls.ToolTip>.  
+ If the value of this property is of type <xref:System.Windows.Controls.ToolTip>, then that value is the tool-tip that will be used in the UI.  If the value is of any other type, then that value will be used as the *content* for a <xref:System.Windows.Controls.ToolTip> provided (constructed) by the system. For more information, see <xref:System.Windows.Controls.ToolTipService>. The service class provides attached properties that can be used to further customize a <xref:System.Windows.Controls.ToolTip>.  
   
 <a name="xamlAttributeUsage_ToolTip"></a>   
 ## XAML Attribute Usage  
@@ -4985,7 +4985,7 @@
  A string that becomes the display text for the <xref:System.Windows.FrameworkElement.ToolTip%2A>.  
   
  *toolTipObjectContent*  
- Some object, provided in object element form, that should be used as the content for the <xref:System.Windows.FrameworkElement>. Typically this would be a <xref:System.Windows.FrameworkElement> or some other element that creates layout compositing for the <xref:System.Windows.FrameworkElement.ToolTip%2A>, eventually containing text content within the compositing. In this usage, the <xref:System.Windows.Controls.ToolTip> element is created implicitly from the parsed [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)], and the *toolTipObjectContent* content is set as its <xref:System.Windows.Controls.ContentControl.Content%2A?displayProperty=nameWithType> property.  
+ Some object, provided in object element form, that should be used as the content for the <xref:System.Windows.FrameworkElement>. Typically this would be a <xref:System.Windows.FrameworkElement> or some other element that creates layout compositing for the <xref:System.Windows.FrameworkElement.ToolTip%2A>, eventually containing text content within the compositing. In this usage, the <xref:System.Windows.Controls.ToolTip> element is created implicitly from the parsed XAML, and the *toolTipObjectContent* content is set as its <xref:System.Windows.Controls.ContentControl.Content%2A?displayProperty=nameWithType> property.  
   
  <`ToolTip` .../>  
  See <xref:System.Windows.Controls.ToolTip>.  
@@ -5214,7 +5214,7 @@
 ## Remarks  
   
 > [!NOTE]
->  This property can only be set in [!INCLUDE[TLA#tla_xaml](~/includes/tlasharptla-xaml-md.md)] through the collection syntax shown, or by accessing the collection object and using its various methods such as Add. The property to access the collection object itself is read-only, the collection itself is read-write. The property only exists on root elements; attempting to find it or set it elsewhere will cause an exception to be thrown.  
+>  This property can only be set in Extensible Application Markup Language (XAML) through the collection syntax shown, or by accessing the collection object and using its various methods such as Add. The property to access the collection object itself is read-only, the collection itself is read-write. The property only exists on root elements; attempting to find it or set it elsewhere will cause an exception to be thrown.  
   
  This property does not enable you to examine triggers that exist as part of styles in use on this element. It only reports the collection of triggers that are literally added to the collection, either in markup or code. Elements do not typically have such elements existing by default (through a template for instance); it is more common for triggers that come from control compositing to be established in styles instead.  
   
@@ -5280,7 +5280,7 @@
    
   
 ## Examples  
- The following example is implemented as a button handler, where the button being clicked sets its background to a resource-defined brush obtained by calling <xref:System.Windows.FrameworkElement.TryFindResource%2A> on itself. This walks the element tree and finds the resource (the resource itself is defined in [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] and is not shown).  
+ The following example is implemented as a button handler, where the button being clicked sets its background to a resource-defined brush obtained by calling <xref:System.Windows.FrameworkElement.TryFindResource%2A> on itself. This walks the element tree and finds the resource (the resource itself is defined in XAML and is not shown).  
   
  [!code-csharp[BaseElementsSmorgasbord#FETryFindResource](~/samples/snippets/csharp/VS_Snippets_Wpf/BaseElementsSmorgasbord/CSharp/Page1.xaml.cs#fetryfindresource)]
  [!code-vb[BaseElementsSmorgasbord#FETryFindResource](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BaseElementsSmorgasbord/visualbasic/page1.xaml.vb#fetryfindresource)]  
@@ -5551,7 +5551,7 @@
 ## Remarks  
  When <xref:System.Windows.FrameworkElement.Height%2A> and <xref:System.Windows.FrameworkElement.Width%2A> properties are explicitly set on an element, these measurements take layout precedent and cancel the regular effects of setting this property to <xref:System.Windows.VerticalAlignment.Stretch>.  
   
- <xref:System.Windows.FrameworkElement.VerticalAlignment%2A> is the [!INCLUDE[TLA#tla_net](~/includes/tlasharptla-net-md.md)] property accessor for what is in reality a dependency property. This particular dependency property quite frequently has its apparent "default" value set differently in derived element classes, particularly controls. This generally occurs in one of two ways: the dependency property is re-registered to a particular  derived class, but with different metadata for setting its defaults; or there is a default style being applied that sets that dependency property value differently. For example, the apparent "default" of <xref:System.Windows.FrameworkElement.VerticalAlignment%2A> for a <xref:System.Windows.Controls.ComboBoxItem> control will be <xref:System.Windows.VerticalAlignment.Center>, even though <xref:System.Windows.Controls.ComboBoxItem> inherits <xref:System.Windows.FrameworkElement.VerticalAlignment%2A> direct from <xref:System.Windows.FrameworkElement>. This is because that value was reset within the default style of <xref:System.Windows.Controls.ComboBoxItem>, within the style's control template.  
+ <xref:System.Windows.FrameworkElement.VerticalAlignment%2A> is the Microsoft .NET property accessor for what is in reality a dependency property. This particular dependency property quite frequently has its apparent "default" value set differently in derived element classes, particularly controls. This generally occurs in one of two ways: the dependency property is re-registered to a particular  derived class, but with different metadata for setting its defaults; or there is a default style being applied that sets that dependency property value differently. For example, the apparent "default" of <xref:System.Windows.FrameworkElement.VerticalAlignment%2A> for a <xref:System.Windows.Controls.ComboBoxItem> control will be <xref:System.Windows.VerticalAlignment.Center>, even though <xref:System.Windows.Controls.ComboBoxItem> inherits <xref:System.Windows.FrameworkElement.VerticalAlignment%2A> direct from <xref:System.Windows.FrameworkElement>. This is because that value was reset within the default style of <xref:System.Windows.Controls.ComboBoxItem>, within the style's control template.  
   
  <xref:System.Windows.Controls.Canvas> does not use <xref:System.Windows.FrameworkElement.VerticalAlignment%2A> when composing layout, because <xref:System.Windows.Controls.Canvas> is based on absolute positioning.  
   
@@ -5665,7 +5665,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the width of the element.</summary>
-        <value>The width of the element, in [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]. The default value is <see cref="F:System.Double.NaN" />. This value must be equal to or greater than 0.0. See Remarks for upper bound information.</value>
+        <value>The width of the element, in device-independent units (1/96th inch per unit). The default value is <see cref="F:System.Double.NaN" />. This value must be equal to or greater than 0.0. See Remarks for upper bound information.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -5674,7 +5674,7 @@
   
  The return value of this property is always the same as any value that was set to it. In contrast, the value of the <xref:System.Windows.FrameworkElement.ActualWidth%2A> may vary. The layout may have rejected the suggested size for some reason. Also, the layout system itself works asynchronously relative to the property system set of <xref:System.Windows.FrameworkElement.Width%2A> and may not have processed that particular sizing property change yet.  
   
- In addition to acceptable <xref:System.Double> values, this property can also be <xref:System.Double.NaN?displayProperty=nameWithType>. This is how you specify auto sizing behavior. In [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] you set the value to the string "Auto" (case insensitive) to enable the auto sizing behavior. Auto sizing behavior implies that the element will fill the width available to it. Note however that specific controls frequently supply default values in their default styles that will disable the auto sizing behavior unless it is specifically re-enabled.  
+ In addition to acceptable <xref:System.Double> values, this property can also be <xref:System.Double.NaN?displayProperty=nameWithType>. This is how you specify auto sizing behavior. In XAML you set the value to the string "Auto" (case insensitive) to enable the auto sizing behavior. Auto sizing behavior implies that the element will fill the width available to it. Note however that specific controls frequently supply default values in their default styles that will disable the auto sizing behavior unless it is specifically re-enabled.  
   
  In addition to the validation check, there is a nondeterministic upper value bound for <xref:System.Windows.FrameworkElement.Width%2A> that is enforced by the layout system (this is a very large number, larger than <xref:System.Single.MaxValue?displayProperty=nameWithType> but smaller than <xref:System.Double.MaxValue?displayProperty=nameWithType>). If you exceed this bound, the element will not render, and no exception is thrown. Do not set <xref:System.Windows.FrameworkElement.Width%2A> to a value that is significantly larger than the maximum size of any possible visual display, or you may exceed this nondeterministic upper bound.  
   
@@ -5702,12 +5702,12 @@
  *double*  
  <xref:System.Double>  
   
- String representation of a <xref:System.Double> value equal to or greater than 0.0. See Remarks for upper bound information. This value is interpreted as a [!INCLUDE[TLA#tla_dipixel](~/includes/tlasharptla-dipixel-md.md)] measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
+ String representation of a <xref:System.Double> value equal to or greater than 0.0. See Remarks for upper bound information. This value is interpreted as a device-independent unit (1/96th inch) measurement. Strings need not explicitly include decimal points. For instance a value of `1` is acceptable.  
   
  *qualifiedDouble*  
  A *double* value as described above, followed by one of the following unit declaration strings: `px`, `in`, `cm`, `pt`.  
   
- `px` (default) is [!INCLUDE[TLA#tla_dipixel#plural](~/includes/tlasharptla-dipixelsharpplural-md.md)]  
+ `px` (default) is device-independent units (1/96th inch per unit)  
   
  `in` is inches; 1in==96px  
   

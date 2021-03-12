@@ -8,6 +8,7 @@ public class Example
     internal int f_internal;
     protected int f_protected;
     protected internal int f_protected_public;
+    private protected int f_private_protected;
 
     public static void Main()
     {
@@ -39,5 +40,6 @@ f_public             True     False    False    False    False
 f_internal           False    True     False    False    False
 f_protected          False    False    True     False    False
 f_protected_public   False    False    False    True     False
+f_private_protected  False    False    False    False    True
  */
 // </Snippet1>

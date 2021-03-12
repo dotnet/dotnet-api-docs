@@ -20,12 +20,12 @@ Public Class Temperature
     
     ' Define the is greater than operator.
     Public Shared Operator >  (operand1 As Temperature, operand2 As Temperature) As Boolean
-       Return operand1.CompareTo(operand2) = 1
+       Return operand1.CompareTo(operand2) > 0
     End Operator
     
     ' Define the is less than operator.
     Public Shared Operator <  (operand1 As Temperature, operand2 As Temperature) As Boolean
-       Return operand1.CompareTo(operand2) = -1
+       Return operand1.CompareTo(operand2) < 0
     End Operator
 
     ' Define the is greater than or equal to operator.
