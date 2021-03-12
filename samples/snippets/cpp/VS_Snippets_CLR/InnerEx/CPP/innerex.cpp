@@ -48,5 +48,6 @@ int main()
 //    In catch block of Main method.
 //    Caught: Error in CatchInner caused by calling the ThrowInner method.
 //    Inner exception: AppException: Exception in ThrowInner method.
+//       at Example.ThrowInner()
 //       at Example.CatchInner()
 //</Snippet1>
