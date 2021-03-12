@@ -230,16 +230,16 @@ namespace CustAttrs5CS
 
                   // Check for the ParamArray attribute.
                   if ( attr->GetType() == ParamArrayAttribute::typeid )
-                                    Console::WriteLine( "Parameter {0} "
-                  "has the ParamArray attribute.", pInfo[ 0 ]->Name );
+                                    Console::WriteLine( "Parameter {0} for method {1} "
+                  "has the ParamArray attribute.", pInfo[ 0 ]->Name, mInfo->Name );
                   // Check for the Description attribute.
                   else
 
                   // Check for the Description attribute.
                   if ( attr->GetType() == DescriptionAttribute::typeid )
                   {
-                     Console::WriteLine( "Parameter {0} "
-                     "has a description attribute.", pInfo[ 0 ]->Name );
+                     Console::WriteLine( "Parameter {0} for method {1} "
+                     "has a description attribute.", pInfo[ 0 ]->Name, mInfo->Name );
                      Console::WriteLine( "The description is: \"{0}\"", (dynamic_cast<DescriptionAttribute^>(attr))->Description );
                   }
                }
@@ -251,8 +251,8 @@ namespace CustAttrs5CS
 
 /*
  * Output:
- * Parameter args has the ParamArray attribute.
- * Parameter args has a description attribute.
+ * Parameter args for method ParamArrayAndDesc has the ParamArray attribute.
+ * Parameter args for method ParamArrayAndDesc has a description attribute.
  * The description is: "This argument is a ParamArray"
  */
 // </Snippet5>
