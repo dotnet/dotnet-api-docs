@@ -30,11 +30,11 @@ Module Example
    End Sub
 End Module
 ' The example displays the following output:
-'       D: Tuesday, July 09, 2013
-'       F: Tuesday, July 09, 2013 12:00:00 AM
-'       f: Tuesday, July 09, 2013 12:00 AM
-'       
+'       D: Tuesday, July 9, 2013
+'       F: Tuesday, July 9, 2013 12:00:00 AM
+'       f: Tuesday, July 9, 2013 12:00 AM
+'
 '       D: Tu 09-Jul-2013
-'       F: Tuesday, July 09, 2013 12:00:00 AM
+'       F: Tuesday, July 9, 2013 12:00:00 AM
 '       f: Tu 09-Jul-2013 12:00 AM
 ' </Snippet13>

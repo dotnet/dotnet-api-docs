@@ -66,7 +66,13 @@
 
 For more information on file path formats on Windows, see [File path formats on Windows systems](/dotnet/standard/io/file-path-formats).
 
- Most members of the `Path` class do not interact with the file system and do not verify the existence of the file specified by a path string. `Path` class members that modify a path string, such as <xref:System.IO.Path.ChangeExtension%2A>, have no effect on names of files in the file system. `Path` members do, however, validate the contents of a specified path string, and throw an <xref:System.ArgumentException> exception if the string contains characters that are not valid in path strings, as defined in the characters returned from the <xref:System.IO.Path.GetInvalidPathChars%2A> method. For example, on Windows-based desktop platforms, invalid path characters might include quote ("), less than (\<), greater than (>), pipe (&#124;), backspace (\b), null (\0), and Unicode characters 16 through 18 and 20 through 25.  
+ Most members of the `Path` class do not interact with the file system and do not verify the existence of the file specified by a path string. `Path` class members that modify a path string, such as <xref:System.IO.Path.ChangeExtension%2A>, have no effect on names of files in the file system.
+ 
+ Some `Path` members do validate the contents of a specified path string, and throw an <xref:System.ArgumentException> if the string contains characters that are not valid in path strings, as defined in the characters returned from the <xref:System.IO.Path.GetInvalidPathChars%2A> method. For example, on Windows-based desktop platforms, invalid path characters might include quote ("), less than (\<), greater than (>), pipe (&#124;), backspace (\b), null (\0), and Unicode characters 16 through 18 and 20 through 25. This validation behavior varies between .NET versions:
+ 
+ - On .NET Framework and .NET Core versions older than 2.1: All `Path` members that take a path as an argument throw an <xref:System.ArgumentException> if they detect invalid path characters.
+ 
+ - On .NET Core 2.1 and later versions: <xref:System.IO.Path.GetFullPath%2A> is the only member that throws an <xref:System.ArgumentException> if the string contains invalid path characters.
   
  The members of the `Path` class enable you to quickly and easily perform common operations such as determining whether a file name extension is part of a path, and combining two strings into one path name.  
   
@@ -207,7 +213,7 @@ The following example displays <xref:System.IO.Path> field values on Windows and
         <Parameter Name="extension" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">The path information to modify. The path cannot contain any of the characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</param>
+        <param name="path">The path information to modify.</param>
         <param name="extension">The new extension (with or without a leading period). Specify <see langword="null" /> to remove an existing extension from <paramref name="path" />.</param>
         <summary>Changes the extension of a path string.</summary>
         <returns>The modified path information.  
@@ -233,8 +239,6 @@ The following example displays <xref:System.IO.Path> field values on Windows and
   
  For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).  
   
-   
-  
 ## Examples  
  The following example demonstrates a use of the `ChangeExtension` method.  
   
@@ -244,8 +248,7 @@ The following example displays <xref:System.IO.Path> field values on Windows and
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <related type="Article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
@@ -340,7 +343,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
   
  The parameters are not parsed if they have white space.  
   
- Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
+ .NET Framework and .NET Core versions older than 2.1: Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
   
 ## Examples  
  The following example combines an array of strings into a path.  
@@ -350,7 +353,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">One of the strings in the array contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: One of the strings in the array contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <exception cref="T:System.ArgumentNullException">One of the strings in the array is <see langword="null" />.</exception>
         <related type="Article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
       </Docs>
@@ -412,7 +415,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
   
  The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \file.txt "), the <xref:System.IO.Path.Combine%2A> method appends `path2` to `path1` instead of returning only `path2`.  
   
- Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
+ .NET Framework and .NET Core versions older than 2.1: Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
   
  For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).  
   
@@ -427,8 +430,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path1" /> or <paramref name="path2" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path1" /> or <paramref name="path2" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="path1" /> or <paramref name="path2" /> is <see langword="null" />.</exception>
         <related type="Article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
@@ -498,7 +500,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
   
  The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \file.txt "), the <xref:System.IO.Path.Combine%2A> method appends `path2` to `path1`.  
   
- Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
+ .NET Framework and .NET Core versions older than 2.1: Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
   
    
   
@@ -510,8 +512,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path1" />, <paramref name="path2" />, or <paramref name="path3" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path1" />, <paramref name="path2" />, or <paramref name="path3" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="path1" />, <paramref name="path2" />, or <paramref name="path3" /> is <see langword="null" />.</exception>
         <related type="Article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
@@ -578,7 +579,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
   
  The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \file.txt "), the <xref:System.IO.Path.Combine%2A> method appends `path2` to `path1`.  
   
- Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
+ .NET Framework and .NET Core versions older than 2.1: Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.  
   
    
   
@@ -590,8 +591,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path1" />, <paramref name="path2" />, <paramref name="path3" />, or <paramref name="path4" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path1" />, <paramref name="path2" />, <paramref name="path3" />, or <paramref name="path4" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="path1" />, <paramref name="path2" />, <paramref name="path3" />, or <paramref name="path4" /> is <see langword="null" />.</exception>
         <related type="Article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
@@ -870,7 +870,7 @@ For a list of common I/O tasks, see [Common I/O tasks](/dotnet/standard/io/commo
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="path" /> parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: The <paramref name="path" /> parameter contains invalid characters, is empty, or contains only white spaces.</exception>
         <exception cref="T:System.IO.PathTooLongException">
           <block subset="none" type="note">
             <para>  
@@ -992,8 +992,7 @@ This method obtains the extension of `path` by searching `path` for a period (.)
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <related type="Article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
@@ -1112,8 +1111,7 @@ For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/commo
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <related type="Article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
@@ -1221,8 +1219,7 @@ For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/commo
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <related type="Article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
@@ -1311,10 +1308,10 @@ For more information on file path formats on Windows, see [File path formats on 
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="path" /> is a zero-length string, contains only white space, or contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.  
-  
- -or-  
-  
+          <paramref name="path" /> is a zero-length string, contains only white space, or contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.
+
+-or-
+
  The system could not retrieve the absolute path.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permissions.</exception>
         <exception cref="T:System.ArgumentNullException">
@@ -1389,7 +1386,7 @@ The following example defines a variable, `basePath`, to represent an applicatio
 
 -or-
 
-<paramref name="path" /> or <paramref name="basePath" /> contains invalid path characters, such as U+0000.</exception>
+<paramref name="path" /> or <paramref name="basePath" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetInvalidFileNameChars">
@@ -1493,10 +1490,8 @@ The following example defines a variable, `basePath`, to represent an applicatio
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The array returned from this method is not guaranteed to contain the complete set of characters that are invalid in file and directory names. The full set of invalid characters can vary by file system. For example, on Windows-based desktop platforms, invalid path characters might include ASCII/Unicode characters 1 through 31, as well as quote ("), less than (\<), greater than (>), pipe (&#124;), backspace (\b), null (\0) and tab (\t).  
-  
-   
-  
+ The array returned from this method is not guaranteed to contain the complete set of characters that are invalid in file and directory names. The full set of invalid characters can vary by file system. For example, on Windows-based desktop platforms, invalid path characters might include ASCII/Unicode characters 1 through 31, as well as pipe (&#124;) and null (\0).
+
 ## Examples  
  The following example demonstrates the <xref:System.IO.Path.GetInvalidFileNameChars%2A> method and the <xref:System.IO.Path.GetInvalidPathChars%2A> method to retrieve invalid characters.  
   
@@ -1679,7 +1674,7 @@ The following example demonstrates a use of the `GetPathRoot` method.
 
           ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">.NET Framework only: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.
 
 -or-
 
@@ -2070,8 +2065,7 @@ A trailing period in `path` is not considered an extension.
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <related type="article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
@@ -2127,13 +2121,12 @@ A trailing period in `path` is not considered an extension.
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The array returned from this method is not guaranteed to contain the complete set of characters that are invalid in file and directory names. The full set of invalid characters can vary by file system. For example, on Windows-based desktop platforms, invalid path characters might include ASCII/Unicode characters 1 through 31, as well as quote ("), less than (\<), greater than (>), pipe (&#124;), backspace (\b), null (\0) and tab (\t).  
+
+The array returned from this method is not guaranteed to contain the complete set of characters that are invalid in file and directory names. The full set of invalid characters can vary by file system. Refer to the <xref:System.IO.Path.GetInvalidPathChars> remarks to learn what the set of characters returned by this field is.
   
 > [!CAUTION]
 >  Do not use <xref:System.IO.Path.InvalidPathChars> if you think your code might execute in the same application domain as untrusted code. <xref:System.IO.Path.InvalidPathChars> is an array, so its elements can be overwritten. If untrusted code overwrites elements of <xref:System.IO.Path.InvalidPathChars>, it might cause your code to malfunction in ways that could be exploited.  
-  
-   
-  
+
 ## Examples  
  The following example demonstrates the use of the `InvalidPathChars` property.  
   
@@ -2382,8 +2375,7 @@ Note that rooted paths can be either absolute (that is, fully qualified) or rela
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
+        <exception cref="T:System.ArgumentException">.NET Framework and .NET Core versions older than 2.1: <paramref name="path" /> contains one or more of the invalid characters defined in <see cref="M:System.IO.Path.GetInvalidPathChars" />.</exception>
         <related type="article" href="/dotnet/standard/io/file-path-formats">File path formats on Windows systems</related>
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>

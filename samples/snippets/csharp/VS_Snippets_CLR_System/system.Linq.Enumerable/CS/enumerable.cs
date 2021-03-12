@@ -694,7 +694,7 @@ namespace SequenceExamples
             Console.WriteLine("The name chosen at random is '{0}'.", name);
 
             /*
-             This code produces the following sample output:
+             This code produces output similar to the following:
 
              The name chosen at random is 'Ito, Shu'.
             */

@@ -20,6 +20,6 @@ public class Example
    }
 }
 // The example displays the following output:
-//       Before modifying DateSeparator property: 18/08/2013 00:00
-//       After modifying the DateSeparator property: 18-08-2013 00:00
+//       Before modifying DateSeparator property: 28/08/2013 00:00
+//       After modifying the DateSeparator property: 28-08-2013 00:00
 // </Snippet12>
