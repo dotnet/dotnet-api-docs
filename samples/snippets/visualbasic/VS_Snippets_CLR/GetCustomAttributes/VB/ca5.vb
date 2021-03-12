@@ -26,15 +26,15 @@ Module DemoModule
                 ' Convert the attribute to access its data.
                 Dim paAttr As ParamArrayAttribute = _
                     CType(attr, ParamArrayAttribute)
-                Console.WriteLine("Parameter {0} has the " + _
-                    "ParamArray attribute.", pInfo(0).Name)
+                Console.WriteLine("Parameter {0} for method {1} has the " + _
+                    "ParamArray attribute.", pInfo(0).Name, mInfo.Name)
             ' Check for the Description attribute.
             ElseIf TypeOf attr Is DescriptionAttribute Then
                 ' Convert the attribute to access its data.
                 Dim descAttr As DescriptionAttribute = _
                     CType(attr, DescriptionAttribute)
-                Console.WriteLine("Parameter {0} has a description " + _
-                    "attribute. The description is:", pInfo(0).Name)
+                Console.WriteLine("Parameter {0} for method {1} has a description " + _
+                    "attribute. The description is:", pInfo(0).Name, mInfo.Name)
                 Console.WriteLine(descAttr.Description)
             End If
         Next
@@ -42,7 +42,7 @@ Module DemoModule
 End Module
 
 ' Output:
-' Parameter args has the ParamArray attribute.
-' Parameter args has a description attribute. The description is:
+' Parameter args for method ParamArrayAndDesc has the ParamArray attribute.
+' Parameter args for method ParamArrayAndDesc has a description attribute. The description is:
 ' This argument is a ParamArray
 ' </Snippet5>
