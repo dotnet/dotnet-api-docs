@@ -12,8 +12,8 @@
     void CheckBrowserCaps()
     {
         String labelText = "";
-        System.Web.HttpBrowserCapabilities myBrowserCaps = Request.Browser;
-        if (((System.Web.Configuration.HttpCapabilitiesBase)myBrowserCaps).IsMobileDevice)
+        System.Web.HttpBrowserCapabilitiesBase myBrowserCaps = Request.Browser;
+        if (myBrowserCaps.IsMobileDevice)
         {
             labelText = "Browser is a mobile device.";
         }

@@ -16,6 +16,6 @@ public class Example
 //       E --> E (Same Character)
 //       6 --> 6 (Same Character)
 //       , --> , (Same Character)
-//       ? --> ?
+//       ж --> Ж
 //       ä --> Ä
 // </Snippet1>

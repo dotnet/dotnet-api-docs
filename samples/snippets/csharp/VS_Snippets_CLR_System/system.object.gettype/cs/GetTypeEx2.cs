@@ -16,7 +16,7 @@ public class Example
          else if (t.Equals(typeof(int)))
             Console.WriteLine("{0} is a 32-bit integer.", value);
          else if (t.Equals(typeof(long)))
-            Console.WriteLine("{0} is a 32-bit integer.", value);
+            Console.WriteLine("{0} is a 64-bit integer.", value);
          else if (t.Equals(typeof(double)))
             Console.WriteLine("{0} is a double-precision floating point.",
                               value);
