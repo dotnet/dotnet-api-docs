@@ -23,15 +23,8 @@ Class Program
 
     End Sub
 End Class
-'This sample produces the following output when run on .NET Framework:
-'AesManaged
-'        Legal min key size = 128
-'        Legal max key size = 256
-'        Legal min block size = 128
-'        Legal max block size = 128
-'
-'This sample produces the following output when run on .NET Core:
-'AesManaged
+'This sample produces the following output:
+'Aes
 '        Legal min key size = 128
 '        Legal max key size = 256
 '        Legal min block size = 128
