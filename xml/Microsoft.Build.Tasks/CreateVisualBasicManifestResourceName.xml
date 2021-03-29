@@ -3,8 +3,8 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit CreateVisualBasicManifestResourceName extends Microsoft.Build.Tasks.CreateManifestResourceName" />
   <TypeSignature Language="DocId" Value="T:Microsoft.Build.Tasks.CreateVisualBasicManifestResourceName" />
   <TypeSignature Language="VB.NET" Value="Public Class CreateVisualBasicManifestResourceName&#xA;Inherits CreateManifestResourceName" />
-  <TypeSignature Language="C++ CLI" Value="public ref class CreateVisualBasicManifestResourceName : Microsoft::Build::Tasks::CreateManifestResourceName" />
   <TypeSignature Language="F#" Value="type CreateVisualBasicManifestResourceName = class&#xA;    inherit CreateManifestResourceName" />
+  <TypeSignature Language="C++ CLI" Value="public ref class CreateVisualBasicManifestResourceName : Microsoft::Build::Tasks::CreateManifestResourceName" />
   <AssemblyInfo>
     <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -17,12 +17,19 @@
     <AssemblyName>Microsoft.Build.Tasks.v3.5</AssemblyName>
     <AssemblyVersion>3.5.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+    <AssemblyVersion>15.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
   <Base>
     <BaseTypeName>Microsoft.Build.Tasks.CreateManifestResourceName</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Creates a Visual Basic-style manifest name from a given resource file name.</summary>
+    <summary>
+            Base class for task that determines the appropriate manifest resource name to 
+            assign to a given resx or other resource.
+            </summary>
     <remarks>To be added.</remarks>
     <forInternalUseOnly />
   </Docs>
@@ -46,9 +53,14 @@
         <AssemblyName>Microsoft.Build.Tasks.v3.5</AssemblyName>
         <AssemblyVersion>3.5.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters />
@@ -63,8 +75,8 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance string CreateManifestName(string fileName, string linkFileName, string rootNamespace, string dependentUponFileName, class System.IO.Stream binaryStream) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Build.Tasks.CreateVisualBasicManifestResourceName.CreateManifestName(System.String,System.String,System.String,System.String,System.IO.Stream)" />
       <MemberSignature Language="VB.NET" Value="Protected Overrides Function CreateManifestName (fileName As String, linkFileName As String, rootNamespace As String, dependentUponFileName As String, binaryStream As Stream) As String" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::String ^ CreateManifestName(System::String ^ fileName, System::String ^ linkFileName, System::String ^ rootNamespace, System::String ^ dependentUponFileName, System::IO::Stream ^ binaryStream);" />
       <MemberSignature Language="F#" Value="override this.CreateManifestName : string * string * string * string * System.IO.Stream -&gt; string" Usage="createVisualBasicManifestResourceName.CreateManifestName (fileName, linkFileName, rootNamespace, dependentUponFileName, binaryStream)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::String ^ CreateManifestName(System::String ^ fileName, System::String ^ linkFileName, System::String ^ rootNamespace, System::String ^ dependentUponFileName, System::IO::Stream ^ binaryStream);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -77,6 +89,10 @@
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v3.5</AssemblyName>
         <AssemblyVersion>3.5.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -89,13 +105,16 @@
         <Parameter Name="binaryStream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the resource file from which to create the Visual Basic manifest name.</param>
-        <param name="linkFileName">The name of the link file.</param>
-        <param name="rootNamespace">The root namespace of the resource file, typically taken from the project file. May be <see langword="null" />.</param>
-        <param name="dependentUponFileName">The file name of the parent of the resource file (usually a .vb file). May be <see langword="null" />.</param>
-        <param name="binaryStream">File contents binary stream. May be <see langword="null" />.</param>
-        <summary>Returns the Visual Basic-style manifest resource name that corresponds to the specified resource file.</summary>
-        <returns>The manifest resource name that corresponds to the specified resource file.</returns>
+        <param name="fileName">The file name of the dependent (usually a .resx)</param>
+        <param name="linkFileName">The file name of the dependent (usually a .resx)</param>
+        <param name="rootNamespace">The root namespace (usually from the project file). May be null</param>
+        <param name="dependentUponFileName">The file name of the parent of this dependency (usually a .vb file). May be null</param>
+        <param name="binaryStream">File contents binary stream, may be null</param>
+        <summary>
+            Utility function for creating a VB-style manifest name from 
+            a resource name. 
+            </summary>
+        <returns>Returns the manifest name</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -105,8 +124,8 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance bool IsSourceFile(string fileName) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Build.Tasks.CreateVisualBasicManifestResourceName.IsSourceFile(System.String)" />
       <MemberSignature Language="VB.NET" Value="Protected Overrides Function IsSourceFile (fileName As String) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override bool IsSourceFile(System::String ^ fileName);" />
       <MemberSignature Language="F#" Value="override this.IsSourceFile : string -&gt; bool" Usage="createVisualBasicManifestResourceName.IsSourceFile fileName" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override bool IsSourceFile(System::String ^ fileName);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -120,6 +139,10 @@
         <AssemblyName>Microsoft.Build.Tasks.v3.5</AssemblyName>
         <AssemblyVersion>3.5.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -127,12 +150,34 @@
         <Parameter Name="fileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the file to examine.</param>
-        <summary>Indicates whether the specified file is a Visual Basic source file.</summary>
-        <returns>
-          <see langword="true" /> if the specified file is a Visual Basic source file; otherwise, <see langword="false" />.</returns>
+        <param name="fileName">Name of the candidate source file.</param>
+        <summary>
+            Return 'true' if this is a VB source file.
+            </summary>
+        <returns>True, if this is a validate source file.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
+      </Docs>
+    </Member>
+    <Member MemberName="SourceFileExtension">
+      <MemberSignature Language="C#" Value="protected override string SourceFileExtension { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string SourceFileExtension" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.CreateVisualBasicManifestResourceName.SourceFileExtension" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides ReadOnly Property SourceFileExtension As String" />
+      <MemberSignature Language="F#" Value="member this.SourceFileExtension : string" Usage="Microsoft.Build.Tasks.CreateVisualBasicManifestResourceName.SourceFileExtension" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual property System::String ^ SourceFileExtension { System::String ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -1,19 +1,27 @@
 <Type Name="Rune" FullName="System.Text.Rune">
-  <TypeSignature Language="C#" Value="public struct Rune : IComparable&lt;System.Text.Rune&gt;, IEquatable&lt;System.Text.Rune&gt;" />
-  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Rune extends System.ValueType implements class System.IComparable`1&lt;valuetype System.Text.Rune&gt;, class System.IEquatable`1&lt;valuetype System.Text.Rune&gt;" />
+  <TypeSignature Language="C#" Value="public struct Rune : IComparable, IComparable&lt;System.Text.Rune&gt;, IEquatable&lt;System.Text.Rune&gt;" FrameworkAlternate="net-5.0" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Rune extends System.ValueType implements class System.IComparable, class System.IComparable`1&lt;valuetype System.Text.Rune&gt;, class System.IEquatable`1&lt;valuetype System.Text.Rune&gt;" FrameworkAlternate="net-5.0" />
   <TypeSignature Language="DocId" Value="T:System.Text.Rune" />
-  <TypeSignature Language="VB.NET" Value="Public Structure Rune&#xA;Implements IComparable(Of Rune), IEquatable(Of Rune)" />
-  <TypeSignature Language="C++ CLI" Value="public value class Rune : IComparable&lt;System::Text::Rune&gt;, IEquatable&lt;System::Text::Rune&gt;" />
+  <TypeSignature Language="VB.NET" Value="Public Structure Rune&#xA;Implements IComparable, IComparable(Of Rune), IEquatable(Of Rune)" FrameworkAlternate="net-5.0" />
   <TypeSignature Language="F#" Value="type Rune = struct" />
+  <TypeSignature Language="C++ CLI" Value="public value class Rune : IComparable, IComparable&lt;System::Text::Rune&gt;, IEquatable&lt;System::Text::Rune&gt;" FrameworkAlternate="net-5.0" />
+  <TypeSignature Language="C#" Value="public struct Rune : IComparable&lt;System.Text.Rune&gt;, IEquatable&lt;System.Text.Rune&gt;" FrameworkAlternate="netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Rune extends System.ValueType implements class System.IComparable`1&lt;valuetype System.Text.Rune&gt;, class System.IEquatable`1&lt;valuetype System.Text.Rune&gt;" FrameworkAlternate="netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="VB.NET" Value="Public Structure Rune&#xA;Implements IComparable(Of Rune), IEquatable(Of Rune)" FrameworkAlternate="netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="C++ CLI" Value="public value class Rune : IComparable&lt;System::Text::Rune&gt;, IEquatable&lt;System::Text::Rune&gt;" FrameworkAlternate="netcore-3.0;netcore-3.1" />
   <AssemblyInfo>
     <AssemblyName>System.Runtime</AssemblyName>
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces>
+    <Interface FrameworkAlternate="net-5.0">
+      <InterfaceName>System.IComparable</InterfaceName>
+    </Interface>
     <Interface>
       <InterfaceName>System.IComparable&lt;System.Text.Rune&gt;</InterfaceName>
     </Interface>
@@ -23,7 +31,8 @@
   </Interfaces>
   <Attributes>
     <Attribute>
-      <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -33,7 +42,200 @@
 
 ## Remarks
 
-This type's constructors and conversion operators validate the input, so consumers can call the APIs assuming that the underlying <xref:System.Text.Rune> instance is well-formed.
+A <xref:System.Text.Rune> instance represents a Unicode scalar value, which means any code point excluding the surrogate range (U+D800..U+DFFF). The type's constructors and conversion operators validate the input, so consumers can call the APIs assuming that the underlying <xref:System.Text.Rune> instance is well formed.
+
+If you aren't familiar with the terms Unicode scalar value, code point, surrogate range, and well-formed, see [Introduction to character encoding in .NET](/dotnet/standard/base-types/character-encoding-introduction).
+
+The following sections explain:
+
+* [When to use the Rune type](#when-to-use-the-rune-type)
+* [When not to use the Rune type](#when-not-to-use-rune)
+* [How to instantiate a Rune](#how-to-instantiate-a-rune)
+* [How to query properties of a Rune instance](#query-properties-of-a-rune)
+* [Convert a `Rune` to UTF-8 or UTF-16](#convert-a-rune-to-utf-8-or-utf-16)
+* [Rune in .NET vs. other languages](#rune-in-net-vs-other-languages)
+
+### When to use the Rune type
+
+Consider using the `Rune` type if your code:
+
+* Calls APIs that require Unicode scalar values
+* Explicitly handles surrogate pairs
+
+#### APIs that require Unicode scalar values
+
+If your code iterates through the `char` instances in a `string` or a `ReadOnlySpan<char>`, some of the `char` methods won't work correctly on `char` instances that are in the surrogate range. For example, the following APIs require a scalar value `char` to work correctly:
+
+* <xref:System.Char.GetNumericValue%2A?displayProperty=nameWithType>
+* <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsDigit%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsLetter%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsLetterOrDigit%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsLower%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsNumber%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsPunctuation%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsSymbol%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsUpper%2A?displayProperty=nameWithType>
+
+The following example shows code that won't work correctly if any of the `char` instances are surrogate code points:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInString.cs" id="SnippetBadExample":::
+
+Here's equivalent code that works with a `ReadOnlySpan<char>`:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInSpan.cs" id="SnippetBadExample":::
+
+The preceding code works correctly with some languages such as English:
+
+```csharp
+CountLettersInString("Hello")
+// Returns 5
+```
+
+But it won't work correctly for languages outside the Basic Multilingual Plane, such as Osage:
+
+```csharp
+CountLettersInString("𐓏𐓘𐓻𐓘𐓻𐓟 𐒻𐓟")
+// Returns 0
+```
+
+The reason this method returns incorrect results for Osage text is that the `char` instances for Osage letters are surrogate code points. No single surrogate code point has enough information to determine if it's a letter.
+
+If you change this code to use `Rune` instead of `char`, the method works correctly with code points outside the Basic Multilingual Plane:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInString.cs" id="SnippetGoodExample":::
+
+Here's equivalent code that works with a `ReadOnlySpan<char>`:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/CountLettersInSpan.cs" id="SnippetGoodExample":::
+
+The preceding code counts Osage letters correctly:
+
+```csharp
+CountLettersInString("𐓏𐓘𐓻𐓘𐓻𐓟 𐒻𐓟")
+// Returns 8
+```
+
+#### Code that explicitly handles surrogate pairs
+
+Consider using the `Rune` type if your code calls APIs that explicitly operate on surrogate code points, such as the following methods:
+
+* <xref:System.Char.IsSurrogate%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsSurrogatePair%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsHighSurrogate%2A?displayProperty=nameWithType>
+* <xref:System.Char.IsLowSurrogate%2A?displayProperty=nameWithType>
+* <xref:System.Char.ConvertFromUtf32%2A?displayProperty=nameWithType>
+* <xref:System.Char.ConvertToUtf32%2A?displayProperty=nameWithType>
+
+For example, the following method has special logic to deal with surrogate `char` pairs:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/WorkWithSurrogates.cs" id="SnippetUseChar":::
+
+Such code is simpler if it uses `Rune`, as in the following example:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/WorkWithSurrogates.cs" id="SnippetUseRune":::
+
+### When not to use `Rune`
+
+You don't need to use the `Rune` type if your code:
+
+* Looks for exact `char` matches
+* Splits a string on a known char value
+
+Using the `Rune` type may return incorrect results if your code:
+
+* Counts the number of display characters in a `string`
+
+#### Look for exact `char` matches
+
+The following code iterates through a `string` looking for specific characters, returning the index of the first match. There's no need to change this code to use `Rune`, as the code is looking for characters that are represented by a single `char`.
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/FindFirstLetter.cs" id="SnippetExample":::
+
+#### Split a string on a known `char`
+
+It's common to call `string.Split` and use delimiters such as `' '` (space) or `','` (comma), as in the following example:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/SplitStringOnChar.cs" id="SnippetExample":::
+
+There is no need to use `Rune` here, because the code is looking for characters that are represented by a single `char`.
+
+#### Count the number of display characters in a `string`
+
+The number of `Rune` instances in a string might not match the number of user-perceivable characters shown when displaying the string.
+
+Since `Rune` instances represent Unicode scalar values, components that follow the [Unicode text segmentation guidelines](https://www.unicode.org/reports/tr29/) can use `Rune` as a building block for counting display characters.
+
+The <xref:System.Globalization.StringInfo> type can be used to count display characters, but in implementations of .NET other than .NET 5 it doesn't count correctly in all scenarios.
+
+For more information, see [Grapheme clusters](/dotnet/standard/base-types/character-encoding-introduction#grapheme-clusters).
+
+### How to instantiate a `Rune`
+
+There are several ways to get a `Rune` instance. You can use a constructor to create a `Rune` directly from:
+
+* A code point.
+
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetCodePoint":::
+
+* A single `char`.
+
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetChar":::
+
+* A surrogate `char` pair.
+
+  :::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetSurrogate":::
+
+All of the constructors throw an `ArgumentException` if the input doesn't represent a valid Unicode scalar value.
+
+There are <xref:System.Text.Rune.TryCreate%2A?displayProperty=nameWithType> methods available for callers who don't want exceptions to be thrown on failure.
+
+`Rune` instances can also be read from existing input sequences. For instance, given a `ReadOnlySpan<char>` that represents UTF-16 data, the <xref:System.Text.Rune.DecodeFromUtf16%2A?displayProperty=nameWithType> method returns the first `Rune` instance at the beginning of the input span. The <xref:System.Text.Rune.DecodeFromUtf8%2A?displayProperty=nameWithType> method operates similarly, accepting a `ReadOnlySpan<byte>` parameter that represents UTF-8 data. There are equivalent methods to read from the end of the span instead of the beginning of the span.
+
+### Query properties of a `Rune`
+
+To get the integer code point value of a `Rune` instance, use the <xref:System.Text.Rune.Value?displayProperty=nameWithType> property.
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/InstantiateRunes.cs" id="SnippetValue":::
+
+Many of the static APIs available on the `char` type are also available on the `Rune` type. For instance, <xref:System.Text.Rune.IsWhiteSpace%2A?displayProperty=nameWithType> and <xref:System.Text.Rune.GetUnicodeCategory%2A?displayProperty=nameWithType> are equivalents to <xref:System.Char.IsWhiteSpace%2A?displayProperty=nameWithType> and <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType> methods. The `Rune` methods correctly handle surrogate pairs.
+
+The following example code takes a `ReadOnlySpan<char>` as input and trims from both the start and the end of the span every `Rune` that isn't a letter or a digit.
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/TrimNonLettersAndNonDigits.cs" id="SnippetExample":::
+
+There are some API differences between `char` and `Rune`. For example:
+
+* There is no `Rune` equivalent  to <xref:System.Char.IsSurrogate(System.Char)?displayProperty=nameWithType>, since `Rune` instances by definition can never be surrogate code points.
+* The <xref:System.Text.Rune.GetUnicodeCategory%2A?displayProperty=nameWithType> doesn't always return the same result as <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType>. It does return the same value as <xref:System.Globalization.CharUnicodeInfo.GetUnicodeCategory%2A?displayProperty=nameWithType>. For more information, see the **Remarks** on <xref:System.Char.GetUnicodeCategory%2A?displayProperty=nameWithType>.
+
+### Convert a `Rune` to UTF-8 or UTF-16
+
+Since a `Rune` is a Unicode scalar value, it can be converted to UTF-8, UTF-16, or UTF-32 encoding. The `Rune` type has built-in support for conversion to UTF-8 and UTF-16.
+
+The <xref:System.Text.Rune.EncodeToUtf16%2A?displayProperty=nameWithType> converts a `Rune` instance to `char` instances. To query the number of `char` instances that would result from converting a `Rune` instance to UTF-16, use the <xref:System.Text.Rune.Utf16SequenceLength?displayProperty=nameWithType> property. Similar methods exist for UTF-8 conversion.
+
+The following example converts a `Rune` instance to a `char` array. The code assumes you have a `Rune` instance in the `rune` variable:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf16CharArray":::
+
+Since a `string` is a sequence of UTF-16 chars, the following example also converts a `Rune` instance to UTF-16:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf16String":::
+
+The following example converts a `Rune` instance to a `UTF-8` byte array:
+
+:::code language="csharp" source="~/snippets/System.Text/Rune/csharp/EncodeRune.cs" id="SnippetUtf8ByteArray":::
+
+The <xref:System.Text.Rune.EncodeToUtf16%2A?displayProperty=nameWithType> and <xref:System.Text.Rune.EncodeToUtf8%2A?displayProperty=nameWithType> methods return the actual number of elements written. They throw an exception if the destination buffer is too short to contain the result. There are non-throwing <xref:System.Text.Rune.TryEncodeToUtf8%2A> and <xref:System.Text.Rune.EncodeToUtf16%2A> methods as well for callers who want to avoid exceptions.
+
+### Rune in .NET vs. other languages
+
+The term "rune" is not defined in the Unicode Standard. The term dates back to [the creation of UTF-8](https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt). Rob Pike and Ken Thompson were looking for a term to describe what would eventually become known as a code point. [They settled on the term "rune"](https://twitter.com/rob_pike/status/732353233474064384), and Rob Pike's later influence over the Go programming language helped popularize the term.
+
+However, the .NET `Rune` type is not the equivalent of the Go `rune` type. In Go, the `rune` type is an [alias for `int32`](https://blog.golang.org/strings). A Go rune is intended to represent a Unicode code point, but it can be any 32-bit value, including surrogate code points and values that are not legal Unicode code points.
+
+For similar types in other programming languages, see [Rust's primitive `char` type](https://doc.rust-lang.org/std/primitive.char.html) or [Swift's `Unicode.Scalar` type](https://developer.apple.com/documentation/swift/unicode/scalar), both of which represent Unicode scalar values. They provide functionality similar to .NET's `Rune` type, and they disallow instantiation of values that are not legal Unicode scalar values.
 
           ]]></format>
     </remarks>
@@ -44,13 +246,14 @@ This type's constructors and conversion operators validate the input, so consume
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(char ch) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.#ctor(System.Char)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (ch As Char)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; Rune(char ch);" />
       <MemberSignature Language="F#" Value="new System.Text.Rune : char -&gt; System.Text.Rune" Usage="new System.Text.Rune ch" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Rune(char ch);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="ch" Type="System.Char" />
@@ -68,13 +271,14 @@ This type's constructors and conversion operators validate the input, so consume
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(int32 value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.#ctor(System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (value As Integer)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; Rune(int value);" />
       <MemberSignature Language="F#" Value="new System.Text.Rune : int -&gt; System.Text.Rune" Usage="new System.Text.Rune value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Rune(int value);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="value" Type="System.Int32" />
@@ -92,17 +296,19 @@ This type's constructors and conversion operators validate the input, so consume
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(unsigned int32 value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.#ctor(System.UInt32)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (value As UInteger)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; Rune(System::UInt32 value);" />
       <MemberSignature Language="F#" Value="new System.Text.Rune : uint32 -&gt; System.Text.Rune" Usage="new System.Text.Rune value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Rune(System::UInt32 value);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
@@ -121,13 +327,14 @@ This type's constructors and conversion operators validate the input, so consume
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(char highSurrogate, char lowSurrogate) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.#ctor(System.Char,System.Char)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (highSurrogate As Char, lowSurrogate As Char)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; Rune(char highSurrogate, char lowSurrogate);" />
       <MemberSignature Language="F#" Value="new System.Text.Rune : char * char -&gt; System.Text.Rune" Usage="new System.Text.Rune (highSurrogate, lowSurrogate)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Rune(char highSurrogate, char lowSurrogate);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="highSurrogate" Type="System.Char" />
@@ -151,8 +358,8 @@ This type's constructors and conversion operators validate the input, so consume
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance int32 CompareTo(valuetype System.Text.Rune other) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.CompareTo(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Function CompareTo (other As Rune) As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual int CompareTo(System::Text::Rune other);" />
       <MemberSignature Language="F#" Value="abstract member CompareTo : System.Text.Rune -&gt; int&#xA;override this.CompareTo : System.Text.Rune -&gt; int" Usage="rune.CompareTo other" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual int CompareTo(System::Text::Rune other);" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.IComparable`1.CompareTo(`0)</InterfaceMember>
@@ -161,6 +368,7 @@ This type's constructors and conversion operators validate the input, so consume
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -182,13 +390,14 @@ This type's constructors and conversion operators validate the input, so consume
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Buffers.OperationStatus DecodeFromUtf16(valuetype System.ReadOnlySpan`1&lt;char&gt; source, [out] valuetype System.Text.Rune&amp; result, [out] int32&amp; charsConsumed) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.DecodeFromUtf16(System.ReadOnlySpan{System.Char},System.Text.Rune@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecodeFromUtf16 (source As ReadOnlySpan(Of Char), ByRef result As Rune, ByRef charsConsumed As Integer) As OperationStatus" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeFromUtf16(ReadOnlySpan&lt;char&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % charsConsumed);" />
       <MemberSignature Language="F#" Value="static member DecodeFromUtf16 : ReadOnlySpan&lt;char&gt; * Rune * int -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeFromUtf16 (source, result, charsConsumed)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeFromUtf16(ReadOnlySpan&lt;char&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % charsConsumed);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.OperationStatus</ReturnType>
@@ -226,13 +435,14 @@ The general convention is to call this method in a loop, slicing the `source` bu
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Buffers.OperationStatus DecodeFromUtf8(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; source, [out] valuetype System.Text.Rune&amp; result, [out] int32&amp; bytesConsumed) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.DecodeFromUtf8(System.ReadOnlySpan{System.Byte},System.Text.Rune@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecodeFromUtf8 (source As ReadOnlySpan(Of Byte), ByRef result As Rune, ByRef bytesConsumed As Integer) As OperationStatus" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeFromUtf8(ReadOnlySpan&lt;System::Byte&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % bytesConsumed);" />
       <MemberSignature Language="F#" Value="static member DecodeFromUtf8 : ReadOnlySpan&lt;byte&gt; * Rune * int -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeFromUtf8 (source, result, bytesConsumed)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeFromUtf8(ReadOnlySpan&lt;System::Byte&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % bytesConsumed);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.OperationStatus</ReturnType>
@@ -270,13 +480,14 @@ The general convention is to call this method in a loop, slicing the `source` bu
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Buffers.OperationStatus DecodeLastFromUtf16(valuetype System.ReadOnlySpan`1&lt;char&gt; source, [out] valuetype System.Text.Rune&amp; result, [out] int32&amp; charsConsumed) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.DecodeLastFromUtf16(System.ReadOnlySpan{System.Char},System.Text.Rune@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecodeLastFromUtf16 (source As ReadOnlySpan(Of Char), ByRef result As Rune, ByRef charsConsumed As Integer) As OperationStatus" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeLastFromUtf16(ReadOnlySpan&lt;char&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % charsConsumed);" />
       <MemberSignature Language="F#" Value="static member DecodeLastFromUtf16 : ReadOnlySpan&lt;char&gt; * Rune * int -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeLastFromUtf16 (source, result, charsConsumed)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeLastFromUtf16(ReadOnlySpan&lt;char&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % result, [Runtime::InteropServices::Out] int % charsConsumed);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.OperationStatus</ReturnType>
@@ -314,13 +525,14 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf16(System.Rea
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Buffers.OperationStatus DecodeLastFromUtf8(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; source, [out] valuetype System.Text.Rune&amp; value, [out] int32&amp; bytesConsumed) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.DecodeLastFromUtf8(System.ReadOnlySpan{System.Byte},System.Text.Rune@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function DecodeLastFromUtf8 (source As ReadOnlySpan(Of Byte), ByRef value As Rune, ByRef bytesConsumed As Integer) As OperationStatus" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeLastFromUtf8(ReadOnlySpan&lt;System::Byte&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % value, [Runtime::InteropServices::Out] int % bytesConsumed);" />
       <MemberSignature Language="F#" Value="static member DecodeLastFromUtf8 : ReadOnlySpan&lt;byte&gt; * Rune * int -&gt; System.Buffers.OperationStatus" Usage="System.Text.Rune.DecodeLastFromUtf8 (source, value, bytesConsumed)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Buffers::OperationStatus DecodeLastFromUtf8(ReadOnlySpan&lt;System::Byte&gt; source, [Runtime::InteropServices::Out] System::Text::Rune % value, [Runtime::InteropServices::Out] int % bytesConsumed);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.OperationStatus</ReturnType>
@@ -341,7 +553,7 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf16(System.Rea
 <see cref="F:System.Buffers.OperationStatus.NeedMoreData" /> if the source buffer is empty or contains only a standalone UTF-8 high surrogate character. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="bytesConsumed" /> contains the length of the input buffer.
             
 <see cref="F:System.Buffers.OperationStatus.InvalidData" /> if the source buffer ends with an ill-formed UTF-8 encoded scalar value. <paramref name="result" /> then contains <see cref="P:System.Text.Rune.ReplacementChar" />, and <paramref name="bytesConsumed" /> contains the number of <see cref="T:System.Byte" /> values used in the input buffer to encode the ill-formed sequence.
-      .</returns>
+        </returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -358,13 +570,14 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.Read
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance int32 EncodeToUtf16(valuetype System.Span`1&lt;char&gt; destination) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.EncodeToUtf16(System.Span{System.Char})" />
       <MemberSignature Language="VB.NET" Value="Public Function EncodeToUtf16 (destination As Span(Of Char)) As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; int EncodeToUtf16(Span&lt;char&gt; destination);" />
       <MemberSignature Language="F#" Value="member this.EncodeToUtf16 : Span&lt;char&gt; -&gt; int" Usage="rune.EncodeToUtf16 destination" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int EncodeToUtf16(Span&lt;char&gt; destination);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -386,13 +599,14 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.Read
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance int32 EncodeToUtf8(valuetype System.Span`1&lt;unsigned int8&gt; destination) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.EncodeToUtf8(System.Span{System.Byte})" />
       <MemberSignature Language="VB.NET" Value="Public Function EncodeToUtf8 (destination As Span(Of Byte)) As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; int EncodeToUtf8(Span&lt;System::Byte&gt; destination);" />
       <MemberSignature Language="F#" Value="member this.EncodeToUtf8 : Span&lt;byte&gt; -&gt; int" Usage="rune.EncodeToUtf8 destination" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int EncodeToUtf8(Span&lt;System::Byte&gt; destination);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -410,17 +624,18 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.Read
       </Docs>
     </Member>
     <Member MemberName="Equals">
-      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" />
+      <MemberSignature Language="C#" Value="public override bool Equals (object? obj);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.Equals(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function Equals (obj As Object) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Equals(System::Object ^ obj);" />
       <MemberSignature Language="F#" Value="override this.Equals : obj -&gt; bool" Usage="rune.Equals obj" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Equals(System::Object ^ obj);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -441,8 +656,8 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.Read
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool Equals(valuetype System.Text.Rune other) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.Equals(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Function Equals (other As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool Equals(System::Text::Rune other);" />
       <MemberSignature Language="F#" Value="override this.Equals : System.Text.Rune -&gt; bool" Usage="rune.Equals other" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool Equals(System::Text::Rune other);" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.IEquatable`1.Equals(`0)</InterfaceMember>
@@ -451,6 +666,7 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.Read
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -471,13 +687,14 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.Read
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetHashCode() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.GetHashCode" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function GetHashCode () As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int GetHashCode();" />
       <MemberSignature Language="F#" Value="override this.GetHashCode : unit -&gt; int" Usage="rune.GetHashCode " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int GetHashCode();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -494,13 +711,14 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.Read
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig float64 GetNumericValue(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.GetNumericValue(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetNumericValue (value As Rune) As Double" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static double GetNumericValue(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member GetNumericValue : System.Text.Rune -&gt; double" Usage="System.Text.Rune.GetNumericValue value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static double GetNumericValue(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -528,13 +746,14 @@ This method has behavior equivalent to <xref:System.Globalization.CharUnicodeInf
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Text.Rune GetRuneAt(string input, int32 index) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.GetRuneAt(System.String,System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetRuneAt (input As String, index As Integer) As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune GetRuneAt(System::String ^ input, int index);" />
       <MemberSignature Language="F#" Value="static member GetRuneAt : string * int -&gt; System.Text.Rune" Usage="System.Text.Rune.GetRuneAt (input, index)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune GetRuneAt(System::String ^ input, int index);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -548,7 +767,15 @@ This method has behavior equivalent to <xref:System.Globalization.CharUnicodeInf
         <param name="index">The starting position in <paramref name="input" /> at which to create the rune.</param>
         <summary>Gets the <see cref="T:System.Text.Rune" /> that begins at a specified position in a string.</summary>
         <returns>The rune obtained from <paramref name="input" /> at the specified <paramref name="index" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Throws an exception if `input` is `null`, `index` is out of range, or `index` does not reference the start of a valid scalar value within `input`.
+
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="input" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
@@ -562,13 +789,14 @@ This method has behavior equivalent to <xref:System.Globalization.CharUnicodeInf
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Globalization.UnicodeCategory GetUnicodeCategory(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.GetUnicodeCategory(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetUnicodeCategory (value As Rune) As UnicodeCategory" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Globalization::UnicodeCategory GetUnicodeCategory(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member GetUnicodeCategory : System.Text.Rune -&gt; System.Globalization.UnicodeCategory" Usage="System.Text.Rune.GetUnicodeCategory value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Globalization::UnicodeCategory GetUnicodeCategory(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Globalization.UnicodeCategory</ReturnType>
@@ -596,13 +824,14 @@ This method has behavior equivalent to <xref:System.Globalization.CharUnicodeInf
       <MemberSignature Language="ILAsm" Value=".property instance bool IsAscii" />
       <MemberSignature Language="DocId" Value="P:System.Text.Rune.IsAscii" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsAscii As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsAscii { bool get(); };" />
       <MemberSignature Language="F#" Value="member this.IsAscii : bool" Usage="System.Text.Rune.IsAscii" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsAscii { bool get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -619,13 +848,14 @@ This method has behavior equivalent to <xref:System.Globalization.CharUnicodeInf
       <MemberSignature Language="ILAsm" Value=".property instance bool IsBmp" />
       <MemberSignature Language="DocId" Value="P:System.Text.Rune.IsBmp" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsBmp As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsBmp { bool get(); };" />
       <MemberSignature Language="F#" Value="member this.IsBmp : bool" Usage="System.Text.Rune.IsBmp" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsBmp { bool get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -642,13 +872,14 @@ This method has behavior equivalent to <xref:System.Globalization.CharUnicodeInf
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsControl(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsControl(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsControl (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsControl(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsControl : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsControl value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsControl(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -681,13 +912,14 @@ For more information, see <xref:System.Char.IsControl%2A?displayProperty=nameWit
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsDigit(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsDigit(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsDigit (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsDigit(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsDigit : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsDigit value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsDigit(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -718,13 +950,14 @@ For more information, see <xref:System.Char.IsDigit%2A?displayProperty=nameWithT
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsLetter(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsLetter(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsLetter (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsLetter(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsLetter : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsLetter value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsLetter(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -755,13 +988,14 @@ For more information, see <xref:System.Char.IsLetter%2A?displayProperty=nameWith
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsLetterOrDigit(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsLetterOrDigit(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsLetterOrDigit (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsLetterOrDigit(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsLetterOrDigit : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsLetterOrDigit value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsLetterOrDigit(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -792,13 +1026,14 @@ For more information, see <xref:System.Char.IsLetterOrDigit%2A?displayProperty=n
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsLower(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsLower(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsLower (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsLower(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsLower : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsLower value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsLower(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -830,13 +1065,14 @@ For more information, see <xref:System.Char.IsLower%2A?displayProperty=nameWithT
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsNumber(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsNumber(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsNumber (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsNumber(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsNumber : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsNumber value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsNumber(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -867,13 +1103,14 @@ For more information, see <xref:System.Char.IsNumber%2A?displayProperty=nameWith
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsPunctuation(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsPunctuation(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsPunctuation (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsPunctuation(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsPunctuation : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsPunctuation value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsPunctuation(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -904,13 +1141,14 @@ For more information, see <xref:System.Char.IsPunctuation%2A?displayProperty=nam
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsSeparator(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsSeparator(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsSeparator (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsSeparator(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsSeparator : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsSeparator value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsSeparator(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -941,13 +1179,14 @@ For more information, see <xref:System.Char.IsSeparator%2A?displayProperty=nameW
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsSymbol(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsSymbol(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsSymbol (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsSymbol(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsSymbol : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsSymbol value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsSymbol(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -978,13 +1217,14 @@ For more information, see <xref:System.Char.IsSymbol%2A?displayProperty=nameWith
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsUpper(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsUpper(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsUpper (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsUpper(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsUpper : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsUpper value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsUpper(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1015,13 +1255,14 @@ For more information, see <xref:System.Char.IsUpper%2A?displayProperty=nameWithT
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsValid(int32 value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsValid(System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsValid (value As Integer) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsValid(int value);" />
       <MemberSignature Language="F#" Value="static member IsValid : int -&gt; bool" Usage="System.Text.Rune.IsValid value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsValid(int value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1042,17 +1283,19 @@ For more information, see <xref:System.Char.IsUpper%2A?displayProperty=nameWithT
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsValid(unsigned int32 value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsValid(System.UInt32)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsValid (value As UInteger) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsValid(System::UInt32 value);" />
       <MemberSignature Language="F#" Value="static member IsValid : uint32 -&gt; bool" Usage="System.Text.Rune.IsValid value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsValid(System::UInt32 value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1074,13 +1317,14 @@ For more information, see <xref:System.Char.IsUpper%2A?displayProperty=nameWithT
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsWhiteSpace(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.IsWhiteSpace(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsWhiteSpace (value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsWhiteSpace(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member IsWhiteSpace : System.Text.Rune -&gt; bool" Usage="System.Text.Rune.IsWhiteSpace value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsWhiteSpace(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1111,13 +1355,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(valuetype System.Text.Rune left, valuetype System.Text.Rune right) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_Equality(System.Text.Rune,System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Operator == (left As Rune, right As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator ==(System::Text::Rune left, System::Text::Rune right);" />
       <MemberSignature Language="F#" Value="static member ( = ) : System.Text.Rune * System.Text.Rune -&gt; bool" Usage="left = right" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator ==(System::Text::Rune left, System::Text::Rune right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1140,13 +1385,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype System.Text.Rune op_Explicit(char ch) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_Explicit(System.Char)~System.Text.Rune" />
       <MemberSignature Language="VB.NET" Value="Public Shared Narrowing Operator CType (ch As Char) As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static explicit operator System::Text::Rune(char ch);" />
       <MemberSignature Language="F#" Value="static member op_Explicit : char -&gt; System.Text.Rune" Usage="System.Text.Rune.op_Explicit ch" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static explicit operator System::Text::Rune(char ch);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1169,13 +1415,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype System.Text.Rune op_Explicit(int32 value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_Explicit(System.Int32)~System.Text.Rune" />
       <MemberSignature Language="VB.NET" Value="Public Shared Narrowing Operator CType (value As Integer) As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static explicit operator System::Text::Rune(int value);" />
       <MemberSignature Language="F#" Value="static member op_Explicit : int -&gt; System.Text.Rune" Usage="System.Text.Rune.op_Explicit value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static explicit operator System::Text::Rune(int value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1198,17 +1445,19 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype System.Text.Rune op_Explicit(unsigned int32 value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_Explicit(System.UInt32)~System.Text.Rune" />
       <MemberSignature Language="VB.NET" Value="Public Shared Narrowing Operator CType (value As UInteger) As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static explicit operator System::Text::Rune(System::UInt32 value);" />
       <MemberSignature Language="F#" Value="static member op_Explicit : uint32 -&gt; System.Text.Rune" Usage="System.Text.Rune.op_Explicit value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static explicit operator System::Text::Rune(System::UInt32 value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1232,13 +1481,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_GreaterThan(valuetype System.Text.Rune left, valuetype System.Text.Rune right) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_GreaterThan(System.Text.Rune,System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Operator &gt; (left As Rune, right As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator &gt;(System::Text::Rune left, System::Text::Rune right);" />
       <MemberSignature Language="F#" Value="static member ( &gt; ) : System.Text.Rune * System.Text.Rune -&gt; bool" Usage="left &gt; right" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator &gt;(System::Text::Rune left, System::Text::Rune right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1261,13 +1511,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_GreaterThanOrEqual(valuetype System.Text.Rune left, valuetype System.Text.Rune right) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_GreaterThanOrEqual(System.Text.Rune,System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Operator &gt;= (left As Rune, right As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator &gt;=(System::Text::Rune left, System::Text::Rune right);" />
       <MemberSignature Language="F#" Value="static member ( &gt;= ) : System.Text.Rune * System.Text.Rune -&gt; bool" Usage="left &gt;= right" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator &gt;=(System::Text::Rune left, System::Text::Rune right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1290,13 +1541,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(valuetype System.Text.Rune left, valuetype System.Text.Rune right) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_Inequality(System.Text.Rune,System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Operator != (left As Rune, right As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator !=(System::Text::Rune left, System::Text::Rune right);" />
       <MemberSignature Language="F#" Value="static member op_Inequality : System.Text.Rune * System.Text.Rune -&gt; bool" Usage="System.Text.Rune.op_Inequality (left, right)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator !=(System::Text::Rune left, System::Text::Rune right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1319,13 +1571,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_LessThan(valuetype System.Text.Rune left, valuetype System.Text.Rune right) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_LessThan(System.Text.Rune,System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Operator &lt; (left As Rune, right As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator &lt;(System::Text::Rune left, System::Text::Rune right);" />
       <MemberSignature Language="F#" Value="static member ( &lt; ) : System.Text.Rune * System.Text.Rune -&gt; bool" Usage="left &lt; right" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator &lt;(System::Text::Rune left, System::Text::Rune right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1348,13 +1601,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_LessThanOrEqual(valuetype System.Text.Rune left, valuetype System.Text.Rune right) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.op_LessThanOrEqual(System.Text.Rune,System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Operator &lt;= (left As Rune, right As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator &lt;=(System::Text::Rune left, System::Text::Rune right);" />
       <MemberSignature Language="F#" Value="static member ( &lt;= ) : System.Text.Rune * System.Text.Rune -&gt; bool" Usage="left &lt;= right" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator &lt;=(System::Text::Rune left, System::Text::Rune right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1377,13 +1631,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".property instance int32 Plane" />
       <MemberSignature Language="DocId" Value="P:System.Text.Rune.Plane" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Plane As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Plane { int get(); };" />
       <MemberSignature Language="F#" Value="member this.Plane : int" Usage="System.Text.Rune.Plane" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Plane { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -1399,13 +1654,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".property valuetype System.Text.Rune ReplacementChar" />
       <MemberSignature Language="DocId" Value="P:System.Text.Rune.ReplacementChar" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property ReplacementChar As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Text::Rune ReplacementChar { System::Text::Rune get(); };" />
       <MemberSignature Language="F#" Value="member this.ReplacementChar : System.Text.Rune" Usage="System.Text.Rune.ReplacementChar" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Text::Rune ReplacementChar { System::Text::Rune get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1416,18 +1672,58 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="System.IComparable.CompareTo">
+      <MemberSignature Language="C#" Value="int IComparable.CompareTo (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance int32 System.IComparable.CompareTo(object obj) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.Rune.System#IComparable#CompareTo(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Function CompareTo (obj As Object) As Integer Implements IComparable.CompareTo" />
+      <MemberSignature Language="F#" Value="abstract member System.IComparable.CompareTo : obj -&gt; int&#xA;override this.System.IComparable.CompareTo : obj -&gt; int" Usage="rune.System.IComparable.CompareTo obj" />
+      <MemberSignature Language="C++ CLI" Value=" virtual int System.IComparable.CompareTo(System::Object ^ obj) = IComparable::CompareTo;" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.IComparable.CompareTo(System.Object)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" Index="0" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="other">The object to compare with the current instance.</param>
+        <param name="obj">To be added.</param>
+        <summary>Compares the current instance to the specified object.</summary>
+        <returns>A signed integer indicating the position of this instance in the sort order in relation to <paramref name="other" />: <br />- Less than zero: This instance precedes <paramref name="other" />. 
+<br />- Zero: The instance has the same position in the sort order as <paramref name="other" />.
+<br />- Greater than zero: This instance follows <paramref name="other" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This member is an explicit interface member implementation. It can be used only when the <xref:System.Text.Rune> instance is cast to an <xref:System.IComparable> interface.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="ToLower">
       <MemberSignature Language="C#" Value="public static System.Text.Rune ToLower (System.Text.Rune value, System.Globalization.CultureInfo culture);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Text.Rune ToLower(valuetype System.Text.Rune value, class System.Globalization.CultureInfo culture) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.ToLower(System.Text.Rune,System.Globalization.CultureInfo)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function ToLower (value As Rune, culture As CultureInfo) As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune ToLower(System::Text::Rune value, System::Globalization::CultureInfo ^ culture);" />
       <MemberSignature Language="F#" Value="static member ToLower : System.Text.Rune * System.Globalization.CultureInfo -&gt; System.Text.Rune" Usage="System.Text.Rune.ToLower (value, culture)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune ToLower(System::Text::Rune value, System::Globalization::CultureInfo ^ culture);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1449,13 +1745,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Text.Rune ToLowerInvariant(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.ToLowerInvariant(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function ToLowerInvariant (value As Rune) As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune ToLowerInvariant(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member ToLowerInvariant : System.Text.Rune -&gt; System.Text.Rune" Usage="System.Text.Rune.ToLowerInvariant value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune ToLowerInvariant(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1475,13 +1772,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.ToString" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function ToString () As String" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::String ^ ToString();" />
       <MemberSignature Language="F#" Value="override this.ToString : unit -&gt; string" Usage="rune.ToString " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::String ^ ToString();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -1498,13 +1796,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Text.Rune ToUpper(valuetype System.Text.Rune value, class System.Globalization.CultureInfo culture) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.ToUpper(System.Text.Rune,System.Globalization.CultureInfo)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function ToUpper (value As Rune, culture As CultureInfo) As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune ToUpper(System::Text::Rune value, System::Globalization::CultureInfo ^ culture);" />
       <MemberSignature Language="F#" Value="static member ToUpper : System.Text.Rune * System.Globalization.CultureInfo -&gt; System.Text.Rune" Usage="System.Text.Rune.ToUpper (value, culture)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune ToUpper(System::Text::Rune value, System::Globalization::CultureInfo ^ culture);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1526,13 +1825,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Text.Rune ToUpperInvariant(valuetype System.Text.Rune value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.ToUpperInvariant(System.Text.Rune)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function ToUpperInvariant (value As Rune) As Rune" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune ToUpperInvariant(System::Text::Rune value);" />
       <MemberSignature Language="F#" Value="static member ToUpperInvariant : System.Text.Rune -&gt; System.Text.Rune" Usage="System.Text.Rune.ToUpperInvariant value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::Rune ToUpperInvariant(System::Text::Rune value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Rune</ReturnType>
@@ -1552,13 +1852,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryCreate(char ch, [out] valuetype System.Text.Rune&amp; result) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryCreate(System.Char,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryCreate (ch As Char, ByRef result As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(char ch, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
       <MemberSignature Language="F#" Value="static member TryCreate : char * Rune -&gt; bool" Usage="System.Text.Rune.TryCreate (ch, result)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(char ch, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1581,13 +1882,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryCreate(int32 value, [out] valuetype System.Text.Rune&amp; result) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryCreate(System.Int32,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryCreate (value As Integer, ByRef result As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(int value, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
       <MemberSignature Language="F#" Value="static member TryCreate : int * Rune -&gt; bool" Usage="System.Text.Rune.TryCreate (value, result)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(int value, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1610,17 +1912,19 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryCreate(unsigned int32 value, [out] valuetype System.Text.Rune&amp; result) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryCreate(System.UInt32,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryCreate (value As UInteger, ByRef result As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(System::UInt32 value, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
       <MemberSignature Language="F#" Value="static member TryCreate : uint32 * Rune -&gt; bool" Usage="System.Text.Rune.TryCreate (value, result)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(System::UInt32 value, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName>System.CLSCompliant(false)</AttributeName>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1644,13 +1948,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryCreate(char highSurrogate, char lowSurrogate, [out] valuetype System.Text.Rune&amp; result) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryCreate(System.Char,System.Char,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryCreate (highSurrogate As Char, lowSurrogate As Char, ByRef result As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(char highSurrogate, char lowSurrogate, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
       <MemberSignature Language="F#" Value="static member TryCreate : char * char * Rune -&gt; bool" Usage="System.Text.Rune.TryCreate (highSurrogate, lowSurrogate, result)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryCreate(char highSurrogate, char lowSurrogate, [Runtime::InteropServices::Out] System::Text::Rune % result);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1675,13 +1980,14 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEncodeToUtf16(valuetype System.Span`1&lt;char&gt; destination, [out] int32&amp; charsWritten) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryEncodeToUtf16(System.Span{System.Char},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEncodeToUtf16 (destination As Span(Of Char), ByRef charsWritten As Integer) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncodeToUtf16(Span&lt;char&gt; destination, [Runtime::InteropServices::Out] int % charsWritten);" />
       <MemberSignature Language="F#" Value="member this.TryEncodeToUtf16 : Span&lt;char&gt; * int -&gt; bool" Usage="rune.TryEncodeToUtf16 (destination, charsWritten)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncodeToUtf16(Span&lt;char&gt; destination, [Runtime::InteropServices::Out] int % charsWritten);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1712,13 +2018,14 @@ The <xref:System.Text.Rune.Utf16SequenceLength> property can be queried ahead of
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEncodeToUtf8(valuetype System.Span`1&lt;unsigned int8&gt; destination, [out] int32&amp; bytesWritten) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryEncodeToUtf8(System.Span{System.Byte},System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEncodeToUtf8 (destination As Span(Of Byte), ByRef bytesWritten As Integer) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncodeToUtf8(Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
       <MemberSignature Language="F#" Value="member this.TryEncodeToUtf8 : Span&lt;byte&gt; * int -&gt; bool" Usage="rune.TryEncodeToUtf8 (destination, bytesWritten)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEncodeToUtf8(Span&lt;System::Byte&gt; destination, [Runtime::InteropServices::Out] int % bytesWritten);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1749,13 +2056,14 @@ The <xref:System.Text.Rune.Utf8SequenceLength> property can be queried ahead of 
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryGetRuneAt(string input, int32 index, [out] valuetype System.Text.Rune&amp; value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.Rune.TryGetRuneAt(System.String,System.Int32,System.Text.Rune@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryGetRuneAt (input As String, index As Integer, ByRef value As Rune) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryGetRuneAt(System::String ^ input, int index, [Runtime::InteropServices::Out] System::Text::Rune % value);" />
       <MemberSignature Language="F#" Value="static member TryGetRuneAt : string * int * Rune -&gt; bool" Usage="System.Text.Rune.TryGetRuneAt (input, index, value)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryGetRuneAt(System::String ^ input, int index, [Runtime::InteropServices::Out] System::Text::Rune % value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1772,7 +2080,15 @@ The <xref:System.Text.Rune.Utf8SequenceLength> property can be queried ahead of 
         <summary>Attempts to get the <see cref="T:System.Text.Rune" /> that begins at a specified position in a string, and return a value that indicates whether the operation succeeded.</summary>
         <returns>
           <see langword="true" /> if a scalar value was successfully extracted from the specified index; <see langword="false" /> if a value could not be extracted because of invalid data.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Throws an exception if `input` is `null` or `index` is out of range.
+
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="input" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
@@ -1784,13 +2100,14 @@ The <xref:System.Text.Rune.Utf8SequenceLength> property can be queried ahead of 
       <MemberSignature Language="ILAsm" Value=".property instance int32 Utf16SequenceLength" />
       <MemberSignature Language="DocId" Value="P:System.Text.Rune.Utf16SequenceLength" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Utf16SequenceLength As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Utf16SequenceLength { int get(); };" />
       <MemberSignature Language="F#" Value="member this.Utf16SequenceLength : int" Usage="System.Text.Rune.Utf16SequenceLength" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Utf16SequenceLength { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -1814,13 +2131,14 @@ The return value will be 1 or 2.
       <MemberSignature Language="ILAsm" Value=".property instance int32 Utf8SequenceLength" />
       <MemberSignature Language="DocId" Value="P:System.Text.Rune.Utf8SequenceLength" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Utf8SequenceLength As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Utf8SequenceLength { int get(); };" />
       <MemberSignature Language="F#" Value="member this.Utf8SequenceLength : int" Usage="System.Text.Rune.Utf8SequenceLength" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Utf8SequenceLength { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -1844,13 +2162,14 @@ The return value will be 1 through 4, inclusive.
       <MemberSignature Language="ILAsm" Value=".property instance int32 Value" />
       <MemberSignature Language="DocId" Value="P:System.Text.Rune.Value" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Value As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Value { int get(); };" />
       <MemberSignature Language="F#" Value="member this.Value : int" Usage="System.Text.Rune.Value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Value { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>

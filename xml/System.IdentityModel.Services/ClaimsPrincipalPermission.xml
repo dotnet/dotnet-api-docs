@@ -3,8 +3,8 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable sealed beforefieldinit ClaimsPrincipalPermission extends System.Object implements class System.Security.IPermission, class System.Security.ISecurityEncodable, class System.Security.Permissions.IUnrestrictedPermission" />
   <TypeSignature Language="DocId" Value="T:System.IdentityModel.Services.ClaimsPrincipalPermission" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class ClaimsPrincipalPermission&#xA;Implements IPermission, IUnrestrictedPermission" />
-  <TypeSignature Language="C++ CLI" Value="public ref class ClaimsPrincipalPermission sealed : System::Security::IPermission, System::Security::Permissions::IUnrestrictedPermission" />
   <TypeSignature Language="F#" Value="type ClaimsPrincipalPermission = class&#xA;    interface IPermission&#xA;    interface ISecurityEncodable&#xA;    interface IUnrestrictedPermission" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ClaimsPrincipalPermission sealed : System::Security::IPermission, System::Security::Permissions::IUnrestrictedPermission" />
   <AssemblyInfo>
     <AssemblyName>System.IdentityModel.Services</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -25,7 +25,8 @@
   </Interfaces>
   <Attributes>
     <Attribute>
-      <AttributeName>System.Serializable</AttributeName>
+      <AttributeName Language="C#">[System.Serializable]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Serializable&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -37,7 +38,7 @@
  The <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> class provides the capability to perform imperative access checks by using the <xref:System.Security.Claims.ClaimsAuthorizationManager> that is configured for an application. By invoking the <xref:System.IdentityModel.Services.ClaimsPrincipalPermission.Demand%2A> method or the static <xref:System.IdentityModel.Services.ClaimsPrincipalPermission.CheckAccess%2A> method, you can provide protection to resources from within the execution path of your code according to the authorization policy defined for your claims authentication manager. Declarative access checks can be performed by using the <xref:System.IdentityModel.Services.ClaimsPrincipalPermissionAttribute> class.  
   
 > [!IMPORTANT]
->  The <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> class uses the claims authorization manager configured by the <xref:System.IdentityModel.Configuration.IdentityConfiguration> that is set under the <xref:System.IdentityModel.Services.FederatedAuthentication.FederationConfiguration%2A?displayProperty=nameWithType> property. This is true in all cases, even in scenarios where WS-Federation is not used; for example, active (WCF) Web applications and Console applications. You can specify the claims authorization manager either in configuration or programmatically. To specify the claims authorization manager in a configuration file, set the [&lt;claimsAuthorizationManager&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/claimsauthorizationmanager.md) element under an [&lt;identityConfiguration&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/identityconfiguration.md) element and ensure that this identity configuration is referenced by the [&lt;federationConfiguration&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/federationconfiguration.md) element that is loaded by the runtime (for example, by setting the `identityConfigurationName` attribute). To set the claims authorization manager programmatically, provide a handler for the <xref:System.IdentityModel.Services.FederatedAuthentication.FederationConfigurationCreated?displayProperty=nameWithType> event.  
+>  The <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> class uses the claims authorization manager configured by the <xref:System.IdentityModel.Configuration.IdentityConfiguration> that is set under the <xref:System.IdentityModel.Services.FederatedAuthentication.FederationConfiguration%2A?displayProperty=nameWithType> property. This is true in all cases, even in scenarios where WS-Federation is not used; for example, active (WCF) Web applications and Console applications. You can specify the claims authorization manager either in configuration or programmatically. To specify the claims authorization manager in a configuration file, set the [&lt;claimsAuthorizationManager&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/claimsauthorizationmanager) element under an [&lt;identityConfiguration&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/identityconfiguration) element and ensure that this identity configuration is referenced by the [&lt;federationConfiguration&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/federationconfiguration) element that is loaded by the runtime (for example, by setting the `identityConfigurationName` attribute). To set the claims authorization manager programmatically, provide a handler for the <xref:System.IdentityModel.Services.FederatedAuthentication.FederationConfigurationCreated?displayProperty=nameWithType> event.  
   
  On one level, the functionality provided by <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> is similar to the role-based access checks (RBAC) provided through the <xref:System.Security.Permissions.PrincipalPermission> class; however, the <xref:System.Security.Claims.ClaimsAuthorizationManager> class performs checks based on the claims presented by the active principal. This enables far more granularity than is available through pure RBAC, where many permissions are typically collected under a single role. Perhaps, more importantly, claims-based authorization enables better separation of business logic and authorization policy because permission can be demanded for a specific action on a resource in code and back-end policy can be used to configure which claims the presenting entity must possess in order to satisfy the demand. Like RBAC, <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> performs a user-based access check, that is, unlike code access security implemented by classes that derive from the <xref:System.Security.CodeAccessPermission> class and use a stack walk to ensure that all callers of the code have been granted a permission, <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> performs its check only on the current principal.  
   
@@ -54,7 +55,7 @@
   
  [!code-csharp[WifCppWithCam#1](~/samples/snippets/csharp/VS_Snippets_Misc/wifcppwithcam/cs/wifcppwithcam/program.cs#1)]  
   
- The following XML shows the minimum configuration required to use a custom claims authorization manager with the <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> class. You must, at a minimum, declare both the `system.identityModel` and the `system.identityModel.services` sections in the `<configSection>` element and then specify your authorization manager in a [&lt;claimsAuthorizationManager&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/claimsauthorizationmanager.md) element under the default identity configuration. This will ensure that your authorization manager is referenced from the default federation configuration. Alternatively, you can specify the name of the identity configuration under which your authorization manager is specified in the `identityConfigurationName` attribute of the [&lt;federationConfiguration&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/federationconfiguration.md) element.  
+ The following XML shows the minimum configuration required to use a custom claims authorization manager with the <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> class. You must, at a minimum, declare both the `system.identityModel` and the `system.identityModel.services` sections in the `<configSection>` element and then specify your authorization manager in a [&lt;claimsAuthorizationManager&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/claimsauthorizationmanager) element under the default identity configuration. This will ensure that your authorization manager is referenced from the default federation configuration. Alternatively, you can specify the name of the identity configuration under which your authorization manager is specified in the `identityConfigurationName` attribute of the [&lt;federationConfiguration&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/federationconfiguration) element.  
   
 ```xml  
 <?xml version="1.0" encoding="utf-8" ?>  
@@ -83,7 +84,7 @@
     <altmember cref="T:System.IdentityModel.Services.ClaimsPrincipalPermissionAttribute" />
     <altmember cref="P:System.IdentityModel.Services.FederatedAuthentication.FederationConfiguration" />
     <altmember cref="T:System.Security.Claims.ClaimsAuthorizationManager" />
-    <related type="Article" href="~/docs/framework/configure-apps/file-schema/windows-identity-foundation/federationconfiguration.md">&lt;federationConfiguration&gt;</related>
+    <related type="Article" href="/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/federationconfiguration">&lt;federationConfiguration&gt;</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -91,8 +92,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string resource, string action) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.#ctor(System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (resource As String, action As String)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; ClaimsPrincipalPermission(System::String ^ resource, System::String ^ action);" />
       <MemberSignature Language="F#" Value="new System.IdentityModel.Services.ClaimsPrincipalPermission : string * string -&gt; System.IdentityModel.Services.ClaimsPrincipalPermission" Usage="new System.IdentityModel.Services.ClaimsPrincipalPermission (resource, action)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ClaimsPrincipalPermission(System::String ^ resource, System::String ^ action);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IdentityModel.Services</AssemblyName>
@@ -127,8 +128,8 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CheckAccess(string resource, string action) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.CheckAccess(System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub CheckAccess (resource As String, action As String)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void CheckAccess(System::String ^ resource, System::String ^ action);" />
       <MemberSignature Language="F#" Value="static member CheckAccess : string * string -&gt; unit" Usage="System.IdentityModel.Services.ClaimsPrincipalPermission.CheckAccess (resource, action)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void CheckAccess(System::String ^ resource, System::String ^ action);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IdentityModel.Services</AssemblyName>
@@ -136,7 +137,8 @@
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName>System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Justification="It is expected that the runtime’s behavior would rely on changing data")</AttributeName>
+          <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Justification="It is expected that the runtime’s behavior would rely on changing data")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Justification="It is expected that the runtime’s behavior would rely on changing data")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -180,8 +182,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Security.IPermission Copy() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.Copy" />
       <MemberSignature Language="VB.NET" Value="Public Function Copy () As IPermission" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::IPermission ^ Copy();" />
       <MemberSignature Language="F#" Value="abstract member Copy : unit -&gt; System.Security.IPermission&#xA;override this.Copy : unit -&gt; System.Security.IPermission" Usage="claimsPrincipalPermission.Copy " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::IPermission ^ Copy();" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.Security.IPermission.Copy</InterfaceMember>
@@ -192,7 +194,8 @@
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName>System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Justification="It is expected that the runtime’s behavior would rely on changing data")</AttributeName>
+          <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Justification="It is expected that the runtime’s behavior would rely on changing data")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Justification="It is expected that the runtime’s behavior would rely on changing data")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -210,8 +213,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Demand() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.Demand" />
       <MemberSignature Language="VB.NET" Value="Public Sub Demand ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Demand();" />
       <MemberSignature Language="F#" Value="abstract member Demand : unit -&gt; unit&#xA;override this.Demand : unit -&gt; unit" Usage="claimsPrincipalPermission.Demand " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Demand();" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.Security.IPermission.Demand</InterfaceMember>
@@ -258,8 +261,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void FromXml(class System.Security.SecurityElement element) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.FromXml(System.Security.SecurityElement)" />
       <MemberSignature Language="VB.NET" Value="Public Sub FromXml (element As SecurityElement)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void FromXml(System::Security::SecurityElement ^ element);" />
       <MemberSignature Language="F#" Value="abstract member FromXml : System.Security.SecurityElement -&gt; unit&#xA;override this.FromXml : System.Security.SecurityElement -&gt; unit" Usage="claimsPrincipalPermission.FromXml element" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void FromXml(System::Security::SecurityElement ^ element);" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.Security.ISecurityEncodable.FromXml(System.Security.SecurityElement)</InterfaceMember>
@@ -295,8 +298,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Security.IPermission Intersect(class System.Security.IPermission target) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.Intersect(System.Security.IPermission)" />
       <MemberSignature Language="VB.NET" Value="Public Function Intersect (target As IPermission) As IPermission" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::IPermission ^ Intersect(System::Security::IPermission ^ target);" />
       <MemberSignature Language="F#" Value="abstract member Intersect : System.Security.IPermission -&gt; System.Security.IPermission&#xA;override this.Intersect : System.Security.IPermission -&gt; System.Security.IPermission" Usage="claimsPrincipalPermission.Intersect target" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::IPermission ^ Intersect(System::Security::IPermission ^ target);" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.Security.IPermission.Intersect(System.Security.IPermission)</InterfaceMember>
@@ -330,8 +333,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool IsSubsetOf(class System.Security.IPermission target) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.IsSubsetOf(System.Security.IPermission)" />
       <MemberSignature Language="VB.NET" Value="Public Function IsSubsetOf (target As IPermission) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool IsSubsetOf(System::Security::IPermission ^ target);" />
       <MemberSignature Language="F#" Value="abstract member IsSubsetOf : System.Security.IPermission -&gt; bool&#xA;override this.IsSubsetOf : System.Security.IPermission -&gt; bool" Usage="claimsPrincipalPermission.IsSubsetOf target" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool IsSubsetOf(System::Security::IPermission ^ target);" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.Security.IPermission.IsSubsetOf(System.Security.IPermission)</InterfaceMember>
@@ -366,8 +369,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool IsUnrestricted() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.IsUnrestricted" />
       <MemberSignature Language="VB.NET" Value="Public Function IsUnrestricted () As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool IsUnrestricted();" />
       <MemberSignature Language="F#" Value="abstract member IsUnrestricted : unit -&gt; bool&#xA;override this.IsUnrestricted : unit -&gt; bool" Usage="claimsPrincipalPermission.IsUnrestricted " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool IsUnrestricted();" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.Security.Permissions.IUnrestrictedPermission.IsUnrestricted</InterfaceMember>
@@ -392,8 +395,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Security.SecurityElement ToXml() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.ToXml" />
       <MemberSignature Language="VB.NET" Value="Public Function ToXml () As SecurityElement" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::SecurityElement ^ ToXml();" />
       <MemberSignature Language="F#" Value="abstract member ToXml : unit -&gt; System.Security.SecurityElement&#xA;override this.ToXml : unit -&gt; System.Security.SecurityElement" Usage="claimsPrincipalPermission.ToXml " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::SecurityElement ^ ToXml();" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.Security.ISecurityEncodable.ToXml</InterfaceMember>
@@ -424,8 +427,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Security.IPermission Union(class System.Security.IPermission target) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IdentityModel.Services.ClaimsPrincipalPermission.Union(System.Security.IPermission)" />
       <MemberSignature Language="VB.NET" Value="Public Function Union (target As IPermission) As IPermission" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::IPermission ^ Union(System::Security::IPermission ^ target);" />
       <MemberSignature Language="F#" Value="abstract member Union : System.Security.IPermission -&gt; System.Security.IPermission&#xA;override this.Union : System.Security.IPermission -&gt; System.Security.IPermission" Usage="claimsPrincipalPermission.Union target" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::IPermission ^ Union(System::Security::IPermission ^ target);" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.Security.IPermission.Union(System.Security.IPermission)</InterfaceMember>

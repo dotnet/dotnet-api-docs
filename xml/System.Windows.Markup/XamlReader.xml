@@ -3,12 +3,13 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit XamlReader extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Windows.Markup.XamlReader" />
   <TypeSignature Language="VB.NET" Value="Public Class XamlReader" />
-  <TypeSignature Language="C++ CLI" Value="public ref class XamlReader" />
   <TypeSignature Language="F#" Value="type XamlReader = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class XamlReader" />
   <AssemblyInfo>
     <AssemblyName>PresentationFramework</AssemblyName>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -22,7 +23,7 @@
 ## Remarks  
  The synchronous <xref:System.Windows.Markup.XamlReader.Load%2A> methods are static, but the asynchronous <xref:System.Windows.Markup.XamlReader.LoadAsync%2A> methods are not static and require an instance of the <xref:System.Windows.Markup.XamlReader> class to use.  
   
- The output of the `Load` methods is a single object, which represents the root object of a created object tree or object graph. Object graphs that are created by <xref:System.Windows.Markup.XamlReader> are typically added to the existing object tree of a WPF application at run time. Otherwise the new object graph is considered disconnected for purposes of the WPF application model. This means that it does not render, and cannot be accessed using any of the object tree techniques as applied to the WPF application's main object tree (for example, the APIs <xref:System.Windows.FrameworkElement.FindName%2A>, <xref:System.Windows.LogicalTreeHelper>, <xref:System.Windows.Media.VisualTreeHelper>). For more information on object tree concepts, see [Trees in WPF](~/docs/framework/wpf/advanced/trees-in-wpf.md).  
+ The output of the `Load` methods is a single object, which represents the root object of a created object tree or object graph. Object graphs that are created by <xref:System.Windows.Markup.XamlReader> are typically added to the existing object tree of a WPF application at run time. Otherwise the new object graph is considered disconnected for purposes of the WPF application model. This means that it does not render, and cannot be accessed using any of the object tree techniques as applied to the WPF application's main object tree (for example, the APIs <xref:System.Windows.FrameworkElement.FindName%2A>, <xref:System.Windows.LogicalTreeHelper>, <xref:System.Windows.Media.VisualTreeHelper>). For more information on object tree concepts, see [Trees in WPF](/dotnet/framework/wpf/advanced/trees-in-wpf).  
   
  <xref:System.Windows.Markup.XamlReader> supports the following primary scenarios:  
   
@@ -40,14 +41,14 @@
 ## Code Access Security, Loose XAML, and XamlReader  
  XAML is a markup language that directly represents object instantiation and execution. Therefore, elements created in XAML have the same ability to interact with system resources (network access, file system IO, for example) as the equivalent generated code does.  
   
- [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] supports the [!INCLUDE[TLA2#tla_net](~/includes/tla2sharptla-net-md.md)] security framework [!INCLUDE[TLA#tla_cas](~/includes/tlasharptla-cas-md.md)]. This means that [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] content running in the internet zone has reduced execution permissions. "Loose XAML" (pages of noncompiled XAML interpreted at load time by a XAML viewer) and [!INCLUDE[TLA#tla_xbap](~/includes/tlasharptla-xbap-md.md)] are usually run in this internet zone and use the same permission set.  However, XAML loaded in to a fully trusted application has the same access to the system resources as the hosting application does. For more information, see [WPF Partial Trust Security](~/docs/framework/wpf/wpf-partial-trust-security.md).  
+ WPF supports the .NET security framework Code Access Security (CAS). This means that WPF content running in the internet zone has reduced execution permissions. "Loose XAML" (pages of noncompiled XAML interpreted at load time by a XAML viewer) and XAML browser application (XBAP) are usually run in this internet zone and use the same permission set.  However, XAML loaded in to a fully trusted application has the same access to the system resources as the hosting application does. For more information, see [WPF Partial Trust Security](/dotnet/framework/wpf/wpf-partial-trust-security).  
   
  The implications of these statements for <xref:System.Windows.Markup.XamlReader> is that your application design must make trust decisions about the XAML you decide to load. If you are loading XAML that is not trusted, consider implementing your own sandboxing technique for how you load the resulting object graph.  
   
  <xref:System.Windows.Markup.XamlReader> can also be called by partial trust code. In this case, Internet security zone is applied for code access security. If anything in the loaded XAML is invalid under Internet security zone, a XAML parse exception is thrown. Under XBAP and other cases that are partial trust at the platform level, where <xref:System.Windows.Markup.XamlReader> is part of the execution, you get the same exception behavior as with explicit partial trust calls.  
   
 ## WPF XAML, XAML Readers/Writers, and XAML Language Versioning  
- XAML2009 includes language features such as [x:Reference](~/docs/framework/xaml-services/x-reference-markup-extension.md) and [x:FactoryMethod](~/docs/framework/xaml-services/x-factorymethod-directive.md). You can use signatures of `Load` or `Parse` to load XAML that uses these features. However, those language features are not supported for XAML that needs to be markup compiled (such as XAML for the **Page** build action in a WPF application, or any XAML that involves the markup compile task in the build actions).  
+ XAML2009 includes language features such as [x:Reference](/dotnet/framework/xaml-services/x-reference-markup-extension) and [x:FactoryMethod](/dotnet/framework/xaml-services/x-factorymethod-directive). You can use signatures of `Load` or `Parse` to load XAML that uses these features. However, those language features are not supported for XAML that needs to be markup compiled (such as XAML for the **Page** build action in a WPF application, or any XAML that involves the markup compile task in the build actions).  
   
  WPF types and the WPF technology in general support concepts that rely on access to WPF internals. For instance, how WPF implements dependency properties relies on internal techniques for efficient type-member lookup. Access to these internals is enabled by the XAML reading and writing APIs provided in <xref:System.Windows.Markup.XamlWriter> and <xref:System.Windows.Markup.XamlReader> from the <xref:System.Windows.Markup> namespace and PresentationFramework assembly. However, the lower-level XAML readers and XAML writers from the System.Xaml assembly (classes based on <xref:System.Xaml.XamlReader?displayProperty=nameWithType>, <xref:System.Xaml.XamlWriter?displayProperty=nameWithType>) do not have access to the WPF internals. There is no dependency from System.Xaml to any WPF-specific assembly. Without access to the WPF internals, System.Xaml readers and writers cannot correctly load or save all WPF types, or types based on WPF types. In particular, the System.Xaml readers and writers do not understand concepts such as the WPF dependency property backing property store, or all the specifics of how WPF uses styles, resource dictionaries and templates. Therefore you have a choice to make:  
   
@@ -56,9 +57,9 @@
 -   If you are not relying on any WPF types or the BAML form of XAML, and are not using another specific technology's XAML reader or XAML writer implementation for reasons that are specific to that framework, use the System.Xaml XAML readers and XAML writers.  
   
 ## System.Xaml Backing Implementation in .NET 4  
- <xref:System.Windows.Markup.XamlReader> is the callable API surface for the WPF framework-level XAML parser. The same underlying XAML parser also performs the run-time XAML loading and parsing for WPF applications that target [!INCLUDE[net_v30_short](~/includes/net-v30-short-md.md)] and [!INCLUDE[net_v35_short](~/includes/net-v35-short-md.md)].  
+ <xref:System.Windows.Markup.XamlReader> is the callable API surface for the WPF framework-level XAML parser. The same underlying XAML parser also performs the run-time XAML loading and parsing for WPF applications that target .NET Framework 3.0 and .NET Framework 3.5.  
   
- If you are targeting [!INCLUDE[net_v40_short](~/includes/net-v40-short-md.md)], the external API is the same, but parts of the implementation are built on the [!INCLUDE[net_v40_short](~/includes/net-v40-short-md.md)] general XAML implementation in the System.Xaml assembly, which improves many of the technical and reporting aspects of parsing XAML. Targeting [!INCLUDE[net_v40_short](~/includes/net-v40-short-md.md)] necessarily entails including System.Xaml as a reference, and details of implementation such as the exceptions reported may come from System.Xaml defined types.  
+ If you are targeting .NET Framework 4, the external API is the same, but parts of the implementation are built on the .NET Framework 4 general XAML implementation in the System.Xaml assembly, which improves many of the technical and reporting aspects of parsing XAML. Targeting .NET Framework 4 necessarily entails including System.Xaml as a reference, and details of implementation such as the exceptions reported may come from System.Xaml defined types.  
   
 ## Examples  
  The following example converts a <xref:System.Windows.Controls.Button> into a string using the <xref:System.Windows.Markup.XamlWriter> class.  The string is then loaded back into a <xref:System.Windows.Controls.Button> using the static <xref:System.Windows.Markup.XamlReader.Load%2A> method on the <xref:System.Windows.Markup.XamlReader> class.  
@@ -82,6 +83,7 @@
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -94,13 +96,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CancelAsync() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.CancelAsync" />
       <MemberSignature Language="VB.NET" Value="Public Sub CancelAsync ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void CancelAsync();" />
       <MemberSignature Language="F#" Value="member this.CancelAsync : unit -&gt; unit" Usage="xamlReader.CancelAsync " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void CancelAsync();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -123,12 +126,13 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Xaml.XamlSchemaContext GetWpfSchemaContext() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.GetWpfSchemaContext" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetWpfSchemaContext () As XamlSchemaContext" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Xaml::XamlSchemaContext ^ GetWpfSchemaContext();" />
       <MemberSignature Language="F#" Value="static member GetWpfSchemaContext : unit -&gt; System.Xaml.XamlSchemaContext" Usage="System.Windows.Markup.XamlReader.GetWpfSchemaContext " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Xaml::XamlSchemaContext ^ GetWpfSchemaContext();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Xaml.XamlSchemaContext</ReturnType>
@@ -154,13 +158,14 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.IO.Stream stream) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.IO.Stream)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Load (stream As Stream) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::IO::Stream ^ stream);" />
       <MemberSignature Language="F#" Value="static member Load : System.IO.Stream -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load stream" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::IO::Stream ^ stream);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -193,18 +198,19 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.Xaml.XamlReader reader) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.Xaml.XamlReader)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Load (reader As XamlReader) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::Xaml::XamlReader ^ reader);" />
       <MemberSignature Language="F#" Value="static member Load : System.Xaml.XamlReader -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load reader" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::Xaml::XamlReader ^ reader);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="reader" Type="System.Xaml.XamlReader" Index="0" FrameworkAlternate="netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="reader" Type="System.Xaml.XamlReader" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       </Parameters>
       <Docs>
         <param name="reader">A <see cref="T:System.Xaml.XamlReader" /> object. This is expected to be initialized with input XAML.</param>
@@ -227,13 +233,14 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.Xml.XmlReader reader) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.Xml.XmlReader)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Load (reader As XmlReader) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::Xml::XmlReader ^ reader);" />
       <MemberSignature Language="F#" Value="static member Load : System.Xml.XmlReader -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load reader" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::Xml::XmlReader ^ reader);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -262,17 +269,45 @@
       </Docs>
     </Member>
     <Member MemberName="Load">
+      <MemberSignature Language="C#" Value="public static object Load (System.IO.Stream stream, bool useRestrictiveXamlReader);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.IO.Stream stream, bool useRestrictiveXamlReader) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.IO.Stream,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Load (stream As Stream, useRestrictiveXamlReader As Boolean) As Object" />
+      <MemberSignature Language="F#" Value="static member Load : System.IO.Stream * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load (stream, useRestrictiveXamlReader)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::IO::Stream ^ stream, bool useRestrictiveXamlReader);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>PresentationFramework</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="stream">To be added.</param>
+        <param name="useRestrictiveXamlReader">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Load">
       <MemberSignature Language="C#" Value="public static object Load (System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.IO.Stream stream, class System.Windows.Markup.ParserContext parserContext) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.IO.Stream,System.Windows.Markup.ParserContext)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Load (stream As Stream, parserContext As ParserContext) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::IO::Stream ^ stream, System::Windows::Markup::ParserContext ^ parserContext);" />
       <MemberSignature Language="F#" Value="static member Load : System.IO.Stream * System.Windows.Markup.ParserContext -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load (stream, parserContext)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::IO::Stream ^ stream, System::Windows::Markup::ParserContext ^ parserContext);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -296,6 +331,62 @@
         <altmember cref="T:System.Windows.Markup.XamlWriter" />
       </Docs>
     </Member>
+    <Member MemberName="Load">
+      <MemberSignature Language="C#" Value="public static object Load (System.Xml.XmlReader reader, bool useRestrictiveXamlReader);" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.Xml.XmlReader reader, bool useRestrictiveXamlReader) cil managed" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.Xml.XmlReader,System.Boolean)" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Load (reader As XmlReader, useRestrictiveXamlReader As Boolean) As Object" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="F#" Value="static member Load : System.Xml.XmlReader * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load (reader, useRestrictiveXamlReader)" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::Xml::XmlReader ^ reader, bool useRestrictiveXamlReader);" FrameworkAlternate="net-5.0" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>PresentationFramework</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType FrameworkAlternate="net-5.0">System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="reader" Type="System.Xml.XmlReader" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="reader">To be added.</param>
+        <param name="useRestrictiveXamlReader">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Load">
+      <MemberSignature Language="C#" Value="public static object Load (System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader);" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.IO.Stream stream, class System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader) cil managed" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.IO.Stream,System.Windows.Markup.ParserContext,System.Boolean)" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Load (stream As Stream, parserContext As ParserContext, useRestrictiveXamlReader As Boolean) As Object" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="F#" Value="static member Load : System.IO.Stream * System.Windows.Markup.ParserContext * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load (stream, parserContext, useRestrictiveXamlReader)" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::IO::Stream ^ stream, System::Windows::Markup::ParserContext ^ parserContext, bool useRestrictiveXamlReader);" FrameworkAlternate="net-5.0" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>PresentationFramework</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType FrameworkAlternate="net-5.0">System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="net-5.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="stream">To be added.</param>
+        <param name="parserContext">To be added.</param>
+        <param name="useRestrictiveXamlReader">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <MemberGroup MemberName="LoadAsync">
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
@@ -310,13 +401,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object LoadAsync(class System.IO.Stream stream) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.LoadAsync(System.IO.Stream)" />
       <MemberSignature Language="VB.NET" Value="Public Function LoadAsync (stream As Stream) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::IO::Stream ^ stream);" />
       <MemberSignature Language="F#" Value="member this.LoadAsync : System.IO.Stream -&gt; obj" Usage="xamlReader.LoadAsync stream" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::IO::Stream ^ stream);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -353,13 +445,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object LoadAsync(class System.Xml.XmlReader reader) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.LoadAsync(System.Xml.XmlReader)" />
       <MemberSignature Language="VB.NET" Value="Public Function LoadAsync (reader As XmlReader) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::Xml::XmlReader ^ reader);" />
       <MemberSignature Language="F#" Value="member this.LoadAsync : System.Xml.XmlReader -&gt; obj" Usage="xamlReader.LoadAsync reader" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::Xml::XmlReader ^ reader);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -392,17 +485,45 @@
       </Docs>
     </Member>
     <Member MemberName="LoadAsync">
+      <MemberSignature Language="C#" Value="public object LoadAsync (System.IO.Stream stream, bool useRestrictiveXamlReader);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object LoadAsync(class System.IO.Stream stream, bool useRestrictiveXamlReader) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.LoadAsync(System.IO.Stream,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Function LoadAsync (stream As Stream, useRestrictiveXamlReader As Boolean) As Object" />
+      <MemberSignature Language="F#" Value="member this.LoadAsync : System.IO.Stream * bool -&gt; obj" Usage="xamlReader.LoadAsync (stream, useRestrictiveXamlReader)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::IO::Stream ^ stream, bool useRestrictiveXamlReader);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>PresentationFramework</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="stream">To be added.</param>
+        <param name="useRestrictiveXamlReader">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadAsync">
       <MemberSignature Language="C#" Value="public object LoadAsync (System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object LoadAsync(class System.IO.Stream stream, class System.Windows.Markup.ParserContext parserContext) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.LoadAsync(System.IO.Stream,System.Windows.Markup.ParserContext)" />
       <MemberSignature Language="VB.NET" Value="Public Function LoadAsync (stream As Stream, parserContext As ParserContext) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::IO::Stream ^ stream, System::Windows::Markup::ParserContext ^ parserContext);" />
       <MemberSignature Language="F#" Value="member this.LoadAsync : System.IO.Stream * System.Windows.Markup.ParserContext -&gt; obj" Usage="xamlReader.LoadAsync (stream, parserContext)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::IO::Stream ^ stream, System::Windows::Markup::ParserContext ^ parserContext);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -436,19 +557,76 @@
         <altmember cref="T:System.Windows.Markup.XamlWriter" />
       </Docs>
     </Member>
+    <Member MemberName="LoadAsync">
+      <MemberSignature Language="C#" Value="public object LoadAsync (System.Xml.XmlReader reader, bool useRestrictiveXamlReader);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object LoadAsync(class System.Xml.XmlReader reader, bool useRestrictiveXamlReader) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.LoadAsync(System.Xml.XmlReader,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Function LoadAsync (reader As XmlReader, useRestrictiveXamlReader As Boolean) As Object" />
+      <MemberSignature Language="F#" Value="member this.LoadAsync : System.Xml.XmlReader * bool -&gt; obj" Usage="xamlReader.LoadAsync (reader, useRestrictiveXamlReader)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::Xml::XmlReader ^ reader, bool useRestrictiveXamlReader);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>PresentationFramework</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="reader" Type="System.Xml.XmlReader" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="reader">To be added.</param>
+        <param name="useRestrictiveXamlReader">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadAsync">
+      <MemberSignature Language="C#" Value="public object LoadAsync (System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object LoadAsync(class System.IO.Stream stream, class System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.LoadAsync(System.IO.Stream,System.Windows.Markup.ParserContext,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Function LoadAsync (stream As Stream, parserContext As ParserContext, useRestrictiveXamlReader As Boolean) As Object" />
+      <MemberSignature Language="F#" Value="member this.LoadAsync : System.IO.Stream * System.Windows.Markup.ParserContext * bool -&gt; obj" Usage="xamlReader.LoadAsync (stream, parserContext, useRestrictiveXamlReader)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ LoadAsync(System::IO::Stream ^ stream, System::Windows::Markup::ParserContext ^ parserContext, bool useRestrictiveXamlReader);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>PresentationFramework</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="net-5.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="stream">To be added.</param>
+        <param name="parserContext">To be added.</param>
+        <param name="useRestrictiveXamlReader">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="LoadCompleted">
       <MemberSignature Language="C#" Value="public event System.ComponentModel.AsyncCompletedEventHandler LoadCompleted;" />
       <MemberSignature Language="ILAsm" Value=".event class System.ComponentModel.AsyncCompletedEventHandler LoadCompleted" />
       <MemberSignature Language="DocId" Value="E:System.Windows.Markup.XamlReader.LoadCompleted" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event LoadCompleted As AsyncCompletedEventHandler " FrameworkAlternate="netcore-3.0;netcore-3.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::ComponentModel::AsyncCompletedEventHandler ^ LoadCompleted;" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event LoadCompleted As AsyncCompletedEventHandler " FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2" />
       <MemberSignature Language="F#" Value="member this.LoadCompleted : System.ComponentModel.AsyncCompletedEventHandler " Usage="member this.LoadCompleted : System.ComponentModel.AsyncCompletedEventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::ComponentModel::AsyncCompletedEventHandler ^ LoadCompleted;" />
       <MemberSignature Language="VB.NET" Value="Public Event LoadCompleted As AsyncCompletedEventHandler " FrameworkAlternate="netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ComponentModel.AsyncCompletedEventHandler</ReturnType>
@@ -480,13 +658,14 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Parse(string xamlText) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Parse(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Parse (xamlText As String) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Parse(System::String ^ xamlText);" />
       <MemberSignature Language="F#" Value="static member Parse : string -&gt; obj" Usage="System.Windows.Markup.XamlReader.Parse xamlText" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Parse(System::String ^ xamlText);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -509,17 +688,45 @@
       </Docs>
     </Member>
     <Member MemberName="Parse">
+      <MemberSignature Language="C#" Value="public static object Parse (string xamlText, bool useRestrictiveXamlReader);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Parse(string xamlText, bool useRestrictiveXamlReader) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Parse(System.String,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Parse (xamlText As String, useRestrictiveXamlReader As Boolean) As Object" />
+      <MemberSignature Language="F#" Value="static member Parse : string * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Parse (xamlText, useRestrictiveXamlReader)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Parse(System::String ^ xamlText, bool useRestrictiveXamlReader);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>PresentationFramework</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="xamlText" Type="System.String" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="xamlText">To be added.</param>
+        <param name="useRestrictiveXamlReader">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Parse">
       <MemberSignature Language="C#" Value="public static object Parse (string xamlText, System.Windows.Markup.ParserContext parserContext);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Parse(string xamlText, class System.Windows.Markup.ParserContext parserContext) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Parse(System.String,System.Windows.Markup.ParserContext)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Parse (xamlText As String, parserContext As ParserContext) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Parse(System::String ^ xamlText, System::Windows::Markup::ParserContext ^ parserContext);" />
       <MemberSignature Language="F#" Value="static member Parse : string * System.Windows.Markup.ParserContext -&gt; obj" Usage="System.Windows.Markup.XamlReader.Parse (xamlText, parserContext)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Parse(System::String ^ xamlText, System::Windows::Markup::ParserContext ^ parserContext);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -541,6 +748,35 @@
   
  ]]></format>
         </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Parse">
+      <MemberSignature Language="C#" Value="public static object Parse (string xamlText, System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Parse(string xamlText, class System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Parse(System.String,System.Windows.Markup.ParserContext,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Parse (xamlText As String, parserContext As ParserContext, useRestrictiveXamlReader As Boolean) As Object" />
+      <MemberSignature Language="F#" Value="static member Parse : string * System.Windows.Markup.ParserContext * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Parse (xamlText, parserContext, useRestrictiveXamlReader)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Parse(System::String ^ xamlText, System::Windows::Markup::ParserContext ^ parserContext, bool useRestrictiveXamlReader);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>PresentationFramework</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="xamlText" Type="System.String" Index="0" FrameworkAlternate="net-5.0" />
+        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="net-5.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="net-5.0" />
+      </Parameters>
+      <Docs>
+        <param name="xamlText">To be added.</param>
+        <param name="parserContext">To be added.</param>
+        <param name="useRestrictiveXamlReader">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

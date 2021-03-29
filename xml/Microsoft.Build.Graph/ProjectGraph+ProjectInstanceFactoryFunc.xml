@@ -1,0 +1,48 @@
+<Type Name="ProjectGraph+ProjectInstanceFactoryFunc" FullName="Microsoft.Build.Graph.ProjectGraph+ProjectInstanceFactoryFunc">
+  <TypeSignature Language="C#" Value="public delegate Microsoft.Build.Execution.ProjectInstance ProjectGraph.ProjectInstanceFactoryFunc(string projectPath, Dictionary&lt;string,string&gt; globalProperties, ProjectCollection projectCollection);" />
+  <TypeSignature Language="ILAsm" Value=".class nested public auto ansi sealed ProjectGraph/ProjectInstanceFactoryFunc extends System.MulticastDelegate" />
+  <TypeSignature Language="DocId" Value="T:Microsoft.Build.Graph.ProjectGraph.ProjectInstanceFactoryFunc" />
+  <TypeSignature Language="VB.NET" Value="Public Delegate Function ProjectGraph.ProjectInstanceFactoryFunc(projectPath As String, globalProperties As Dictionary(Of String, String), projectCollection As ProjectCollection) As ProjectInstance " />
+  <TypeSignature Language="F#" Value="type ProjectGraph.ProjectInstanceFactoryFunc = delegate of string * Dictionary&lt;string, string&gt; * ProjectCollection -&gt; ProjectInstance" />
+  <TypeSignature Language="C++ CLI" Value="public: delegate Microsoft::Build::Execution::ProjectInstance ^ ProjectGraph::ProjectInstanceFactoryFunc(System::String ^ projectPath, Dictionary&lt;System::String ^, System::String ^&gt; ^ globalProperties, ProjectCollection ^ projectCollection);" />
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Build</AssemblyName>
+    <AssemblyVersion>15.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="projectPath" Type="System.String" />
+    <Parameter Name="globalProperties" Type="System.Collections.Generic.Dictionary&lt;System.String,System.String&gt;" />
+    <Parameter Name="projectCollection" Type="Microsoft.Build.Evaluation.ProjectCollection" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>Microsoft.Build.Execution.ProjectInstance</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="projectPath">The path to the project file to parse.</param>
+    <param name="globalProperties">The global properties to be used for creating the ProjectInstance.</param>
+    <param name="projectCollection">The <see cref="T:Microsoft.Build.Evaluation.ProjectCollection" /> context for parsing.</param>
+    <summary>
+                A callback used for constructing a <see cref="T:Microsoft.Build.Execution.ProjectInstance" /> for a specific
+                <see cref="T:Microsoft.Build.Graph.ProjectGraphEntryPoint" /> instance.
+            </summary>
+    <returns>A <see cref="T:Microsoft.Build.Execution.ProjectInstance" /> instance. This value must not be null.</returns>
+    <remarks>
+                The default version of this delegate used by ProjectGraph simply calls the
+                ProjectInstance constructor with information from the parameters. This delegate
+                is provided as a hook to allow scenarios like creating a <see cref="T:Microsoft.Build.Evaluation.Project" />
+                instance before converting it to a ProjectInstance for use by the ProjectGraph.
+                The returned ProjectInstance will be stored and provided with the ProjectGraph.
+                If this callback chooses to generate an immutable ProjectInstance, e.g. by
+                using <see cref="M:Microsoft.Build.Evaluation.Project.CreateProjectInstance" /> with the flag
+                <see cref="F:Microsoft.Build.Execution.ProjectInstanceSettings.Immutable" />, the resulting ProjectGraph
+                nodes might not be buildable.
+                To avoid corruption of the graph and subsequent builds based on the graph:
+                - all callback parameters must be utilized for creating the ProjectInstance, without any mutations
+                - the project instance should not be mutated in any way, its state should be a
+                full fidelity representation of the project file
+            </remarks>
+  </Docs>
+</Type>

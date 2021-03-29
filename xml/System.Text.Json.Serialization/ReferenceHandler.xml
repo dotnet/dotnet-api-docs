@@ -1,0 +1,115 @@
+<Type Name="ReferenceHandler" FullName="System.Text.Json.Serialization.ReferenceHandler">
+  <TypeSignature Language="C#" Value="public abstract class ReferenceHandler" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit ReferenceHandler extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.Text.Json.Serialization.ReferenceHandler" />
+  <TypeSignature Language="VB.NET" Value="Public MustInherit Class ReferenceHandler" />
+  <TypeSignature Language="F#" Value="type ReferenceHandler = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ReferenceHandler abstract" />
+  <AssemblyInfo>
+    <AssemblyName>System.Text.Json</AssemblyName>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>This class defines how the <see cref="T:System.Text.Json.JsonSerializer" /> deals with references on serialization and deserialization.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected ReferenceHandler ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.Json.Serialization.ReferenceHandler.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; ReferenceHandler();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Json</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Initializes a new instance of the <see cref="T:System.Text.Json.Serialization.ReferenceHandler" /> class.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateResolver">
+      <MemberSignature Language="C#" Value="public abstract System.Text.Json.Serialization.ReferenceResolver CreateResolver ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Text.Json.Serialization.ReferenceResolver CreateResolver() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.Json.Serialization.ReferenceHandler.CreateResolver" />
+      <MemberSignature Language="VB.NET" Value="Public MustOverride Function CreateResolver () As ReferenceResolver" />
+      <MemberSignature Language="F#" Value="abstract member CreateResolver : unit -&gt; System.Text.Json.Serialization.ReferenceResolver" Usage="referenceHandler.CreateResolver " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; abstract System::Text::Json::Serialization::ReferenceResolver ^ CreateResolver();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Json</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.Json.Serialization.ReferenceResolver</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Returns the <see cref="T:System.Text.Json.Serialization.ReferenceResolver" /> used for each serialization call.</summary>
+        <returns>The resolver to use for serialization and deserialization.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Preserve">
+      <MemberSignature Language="C#" Value="public static System.Text.Json.Serialization.ReferenceHandler Preserve { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property class System.Text.Json.Serialization.ReferenceHandler Preserve" />
+      <MemberSignature Language="DocId" Value="P:System.Text.Json.Serialization.ReferenceHandler.Preserve" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Preserve As ReferenceHandler" />
+      <MemberSignature Language="F#" Value="member this.Preserve : System.Text.Json.Serialization.ReferenceHandler" Usage="System.Text.Json.Serialization.ReferenceHandler.Preserve" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Text::Json::Serialization::ReferenceHandler ^ Preserve { System::Text::Json::Serialization::ReferenceHandler ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Json</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.Json.Serialization.ReferenceHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Metadata properties will be honored when deserializing JSON objects and arrays into reference types and written when serializing reference types. This is necessary to create round-trippable JSON from objects that contain cycles or duplicate references.</summary>
+        <value>To be added.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+* On Serialize:
+
+  * When writing complex reference types, the serializer also writes metadata properties (`$id`, `$values`, and `$ref`) within them.
+  * The output JSON will contain an extra `$id` property for every object, and for every enumerable type the JSON array emitted will be nested within a JSON object containing an `$id` and `$values` property.
+  * <xref:System.Object.ReferenceEquals(System.Object,System.Object)> is used to determine whether objects are identical.
+  * When an object is identical to a previously serialized one, a pointer (`$ref`) to the identifier (`$id`) of such object is written instead.
+  * No metadata properties are written for value types.
+
+* On Deserialize:
+
+  * The metadata properties within the JSON that are used to preserve duplicated references and cycles will be honored as long as they are well-formed.\*
+  * For JSON objects that don't contain any metadata properties, the deserialization behavior is identical to not using `Preserve`.
+  * For value types, the `$id` metadata property is ignored. A <xref:System.Text.Json.JsonException> is thrown if a `$ref` metadata property is found within the JSON object.
+  * For enumerable value types, the `$values` metadata property is ignored.
+ 
+\* For the metadata properties within the JSON to be considered well-formed, they must follow these rules:
+
+* The `$id` metadata property must be the first property in the JSON object.
+* A JSON object that contains a `$ref` metadata property must not contain any other properties.
+* The value of the `$ref` metadata property must refer to an `$id` that has appeared earlier in the JSON.
+* The value of the `$id` and `$ref` metadata properties must be a JSON string.
+* For enumerable types, such as <xref:System.Collections.Generic.List%601>, the JSON array must be nested within a JSON object containing an `$id` and `$values` metadata property, in that order.
+* For enumerable types, the `$values` metadata property must be a JSON array.
+* The `$values` metadata property is only valid when referring to enumerable types.
+
+If the JSON is not well-formed, a <xref:System.Text.Json.JsonException> is thrown.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

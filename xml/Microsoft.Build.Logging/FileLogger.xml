@@ -3,26 +3,29 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit FileLogger extends Microsoft.Build.Logging.ConsoleLogger" />
   <TypeSignature Language="DocId" Value="T:Microsoft.Build.Logging.FileLogger" />
   <TypeSignature Language="VB.NET" Value="Public Class FileLogger&#xA;Inherits ConsoleLogger" />
-  <TypeSignature Language="C++ CLI" Value="public ref class FileLogger : Microsoft::Build::Logging::ConsoleLogger" />
   <TypeSignature Language="F#" Value="type FileLogger = class&#xA;    inherit ConsoleLogger" />
+  <TypeSignature Language="C++ CLI" Value="public ref class FileLogger : Microsoft::Build::Logging::ConsoleLogger" />
   <AssemblyInfo>
     <AssemblyName>Microsoft.Build</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>15.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Microsoft.Build.Logging.ConsoleLogger</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>A specialization of the ConsoleLogger that logs to a file instead of the console.</summary>
+    <summary>
+            A specialization of the ConsoleLogger that logs to a file instead of the console.
+            The output in terms of what is written and how it looks is identical. For example you can 
+            log verbosely to a file using the FileLogger while simultaneously logging only high priority events
+            to the console using a ConsoleLogger.
+            </summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The output in terms of what is written and how it looks is identical. For example you can log verbosely to a file using the FileLogger while simultaneously logging only high priority events to the console using a ConsoleLogger.  
-  
- ]]></format>
-    </remarks>
+            It's unfortunate that this is derived from ConsoleLogger, which is itself a facade; it makes things more
+            complex -- for example, there is parameter parsing in this class, plus in BaseConsoleLogger. However we have
+            to derive FileLogger from ConsoleLogger because it shipped that way in Whidbey.
+            </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -35,10 +38,13 @@
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>Creates a file logger.</summary>
+        <summary>
+            Default constructor.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -56,12 +62,13 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Initialize(class Microsoft.Build.Framework.IEventSource eventSource) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Build.Logging.FileLogger.Initialize(Microsoft.Build.Framework.IEventSource)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Sub Initialize (eventSource As IEventSource)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Initialize(Microsoft::Build::Framework::IEventSource ^ eventSource);" />
       <MemberSignature Language="F#" Value="override this.Initialize : Microsoft.Build.Framework.IEventSource -&gt; unit" Usage="fileLogger.Initialize eventSource" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Initialize(Microsoft::Build::Framework::IEventSource ^ eventSource);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -70,8 +77,11 @@
         <Parameter Name="eventSource" Type="Microsoft.Build.Framework.IEventSource" />
       </Parameters>
       <Docs>
-        <param name="eventSource">The available events.</param>
-        <summary>Signs up the console file logger for the given build events.</summary>
+        <param name="eventSource">Available events.</param>
+        <summary>
+            Signs up the console file logger for all build events.
+            This is the backward-compatible overload.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -80,16 +90,18 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Initialize(class Microsoft.Build.Framework.IEventSource eventSource, int32 nodeCount) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Build.Logging.FileLogger.Initialize(Microsoft.Build.Framework.IEventSource,System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Sub Initialize (eventSource As IEventSource, nodeCount As Integer)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Initialize(Microsoft::Build::Framework::IEventSource ^ eventSource, int nodeCount);" />
       <MemberSignature Language="F#" Value="override this.Initialize : Microsoft.Build.Framework.IEventSource * int -&gt; unit" Usage="fileLogger.Initialize (eventSource, nodeCount)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Initialize(Microsoft::Build::Framework::IEventSource ^ eventSource, int nodeCount);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -102,7 +114,9 @@
       <Docs>
         <param name="eventSource">The event source.</param>
         <param name="nodeCount">The node count.</param>
-        <summary>Initializes a file logger in a multiprocessor environment.</summary>
+        <summary>
+            Multiproc aware initialization
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -111,19 +125,22 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Shutdown() cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Build.Logging.FileLogger.Shutdown" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Sub Shutdown ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Shutdown();" />
       <MemberSignature Language="F#" Value="override this.Shutdown : unit -&gt; unit" Usage="fileLogger.Shutdown " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Shutdown();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Called when the build is finished.</summary>
+        <summary>
+            Shutdown method implementation of ILogger - we need to flush and close our logfile.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   

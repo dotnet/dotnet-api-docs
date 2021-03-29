@@ -3,8 +3,8 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit ProfileOptimization extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Runtime.ProfileOptimization" />
   <TypeSignature Language="VB.NET" Value="Public Class ProfileOptimization" />
-  <TypeSignature Language="C++ CLI" Value="public ref class ProfileOptimization abstract sealed" />
   <TypeSignature Language="F#" Value="type ProfileOptimization = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ProfileOptimization abstract sealed" />
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -14,6 +14,14 @@
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
   </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Runtime" ToVersion="0.0.0.0" FrameworkAlternate="net-5.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
@@ -47,8 +55,8 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void SetProfileRoot(string directoryPath) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.ProfileOptimization.SetProfileRoot(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub SetProfileRoot (directoryPath As String)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void SetProfileRoot(System::String ^ directoryPath);" />
       <MemberSignature Language="F#" Value="static member SetProfileRoot : string -&gt; unit" Usage="System.Runtime.ProfileOptimization.SetProfileRoot directoryPath" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void SetProfileRoot(System::String ^ directoryPath);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -59,9 +67,14 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
-          <AttributeName>System.Security.SecurityCritical</AttributeName>
+          <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -88,12 +101,13 @@
       </Docs>
     </Member>
     <Member MemberName="StartProfile">
-      <MemberSignature Language="C#" Value="public static void StartProfile (string profile);" />
+      <MemberSignature Language="C#" Value="public static void StartProfile (string? profile);" FrameworkAlternate="net-5.0" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void StartProfile(string profile) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.ProfileOptimization.StartProfile(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub StartProfile (profile As String)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void StartProfile(System::String ^ profile);" />
       <MemberSignature Language="F#" Value="static member StartProfile : string -&gt; unit" Usage="System.Runtime.ProfileOptimization.StartProfile profile" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void StartProfile(System::String ^ profile);" />
+      <MemberSignature Language="C#" Value="public static void StartProfile (string profile);" FrameworkAlternate="netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -104,9 +118,14 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
-          <AttributeName>System.Security.SecurityCritical</AttributeName>
+          <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -127,6 +146,8 @@
  Only methods that are actually called are recorded, regardless of whether they were compiled on the background thread or on the main application thread. A method is compiled on the main application thread if the application needs to call it before the background thread has compiled it.  
   
  The code that performs the recording tracks the rate at which methods are compiled, including methods that are compiled on both the background thread and on the main thread. When the rate falls below a predetermined level, recording stops. Recording also stops if the rate of JIT compilation exceeds a predetermined upper limit.  
+  
+ Calling this method stops any previous recording in progress. Calling this method with a null profile file name stops any recording in progress and does not start a new recording.
   
  If the <xref:System.Runtime.ProfileOptimization.SetProfileRoot%2A> method has not been called for the current application domain, or if the computer does not have multiple cores, the <xref:System.Runtime.ProfileOptimization.StartProfile%2A> method has no effect.  
   
