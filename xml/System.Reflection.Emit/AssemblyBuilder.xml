@@ -66,52 +66,44 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- A dynamic assembly is an assembly that is created using the Reflection Emit APIs. The dynamic modules in the assembly are saved when the dynamic assembly is saved using the <xref:System.Reflection.Emit.AssemblyBuilder.Save%2A> method. To generate an executable, the <xref:System.Reflection.Emit.AssemblyBuilder.SetEntryPoint%2A> method must be called to identify the method that is the entry point to the assembly. Assemblies are saved as DLLs by default, unless the <xref:System.Reflection.Emit.AssemblyBuilder.SetEntryPoint%2A> method requests the generation of a console application or a Windows-based application.  
-  
- If a dynamic assembly contains more than one dynamic module, the assembly's manifest file name should match the module's name that is specified as the first argument to the <xref:System.Reflection.Emit.AssemblyBuilder.DefineDynamicModule%2A> method.  
-  
- Some methods on the base <xref:System.Reflection.Assembly> class, such as `GetModules` and `GetLoadedModules`, will not work correctly when called from <xref:System.Reflection.Emit.AssemblyBuilder> objects. You can load the defined dynamic assembly and call the methods on the loaded assembly. For example, to ensure that resource modules are included in the returned module list, call `GetModules` on the loaded <xref:System.Reflection.Assembly> object.  
-  
- The signing of a dynamic assembly using <xref:System.Reflection.AssemblyName.KeyPair%2A> is not effective until the assembly is saved to disk. So, strong names will not work with transient dynamic assemblies.  
-  
- To get an <xref:System.Reflection.Emit.AssemblyBuilder> object, use the <xref:System.AppDomain.DefineDynamicAssembly%2A?displayProperty=nameWithType> method.  
-  
-## Reflection emit dynamic assembly scenarios  
- The following are some things to consider when using the <xref:System.Reflection.Emit.AssemblyBuilder> class to create dynamic assemblies.  
-  
-### Dynamic modules  
- Reflection emit supports the creation of dynamic modules defined in dynamic assemblies. A dynamic module created in a dynamic assembly can be transient or persistable.  
-  
-### Restrictions on type references  
- Assemblies can reference types defined in another assembly. A transient dynamic assembly can safely reference types defined in another transient dynamic assembly, a persistable dynamic assembly, or a static assembly. However, the common language runtime does not allow a persistable dynamic module to reference a type defined in a transient dynamic module. This is because when the persisted dynamic module is loaded after being saved to disk, the runtime cannot resolve the references to types defined in the transient dynamic module.  
-  
-### Restrictions on emitting to remote application domains  
- Some scenarios require a dynamic assembly to be created and executed in a remote application domain. Reflection emit does not allow a dynamic assembly to be emitted directly to a remote application domain. The solution is to emit the dynamic assembly in the current application domain, save the emitted dynamic assembly to disk, and then load the dynamic assembly into the remote application domain.  
-  
-### Dynamic assembly access modes  
- Dynamic assemblies can be created using one of the following access modes:  
+A dynamic assembly is an assembly that is created using the Reflection Emit APIs. You can use <xref:System.Reflection.Emit.AssemblyBuilder> to generate dynamic assemblies in memory and execute their code during the same application run. A dynamic assembly can reference types defined in another dynamic or static assembly.
+
+Some methods on the base <xref:System.Reflection.Assembly> class, such as `GetModules` and `GetLoadedModules`, will not work correctly when called from <xref:System.Reflection.Emit.AssemblyBuilder> objects. You can load the defined dynamic assembly and call the methods on the loaded assembly. For example, to ensure that resource modules are included in the returned module list, call `GetModules` on the loaded <xref:System.Reflection.Assembly> object.  
+ 
+To get an <xref:System.Reflection.Emit.AssemblyBuilder> object, use the <xref:System.Reflection.Emit.AssemblyBuilder.DefineDynamicAssembly%2A?displayProperty=nameWithType> method.
+ 
+Dynamic assemblies can be created using one of the following access modes:  
   
 -   <xref:System.Reflection.Emit.AssemblyBuilderAccess.Run?displayProperty=nameWithType>  
   
-     The dynamic assembly represented by an <xref:System.Reflection.Emit.AssemblyBuilder> object is transient. The dynamic assembly can only be used to execute the emitted code.  
+     The dynamic assembly represented by an <xref:System.Reflection.Emit.AssemblyBuilder> can be used to execute the emitted code.
   
--   <xref:System.Reflection.Emit.AssemblyBuilderAccess.Save?displayProperty=nameWithType>  
+-   <xref:System.Reflection.Emit.AssemblyBuilderAccess.RunAndCollect?displayProperty=nameWithType>  
   
-     The dynamic assembly represented by an <xref:System.Reflection.Emit.AssemblyBuilder> object is persistable but cannot be executed until the saved portable executable (PE) file has been loaded from disk.  
+     The dynamic assembly represented by an <xref:System.Reflection.Emit.AssemblyBuilder> can be used to execute the emitted code and is automatically reclaimed by garbage collector.  
+
   
--   <xref:System.Reflection.Emit.AssemblyBuilderAccess.RunAndSave?displayProperty=nameWithType>  
+The access mode must be specified by providing the appropriate <xref:System.Reflection.Emit.AssemblyBuilderAccess> value in the call to the <xref:System.Reflection.Emit.AssemblyBuilder.DefineDynamicAssembly%2A?displayProperty=nameWithType> method when the dynamic assembly is defined and cannot be changed later. The runtime uses the access mode of a dynamic assembly to optimize the assembly's internal representation.
+ 
+In .NET Framework, it is possible to save dynamic assemblies to files. This feature is not available in .NET Core and .NET 5. See <xref:System.Reflection.Metadata.Ecma335.MetadataBuilder> for an alternative way to generate assembly files.
   
-     The dynamic assembly represented by an <xref:System.Reflection.Emit.AssemblyBuilder> object is persistable, but can also be executed before and/or after the assembly is saved to disk.  
-  
- The access mode must be specified by providing the appropriate <xref:System.Reflection.Emit.AssemblyBuilderAccess> value in the call to the <xref:System.Reflection.Emit.AssemblyBuilder.DefineDynamicAssembly%2A?displayProperty=nameWithType> method when the dynamic assembly is defined and cannot be changed later. The runtime uses the access mode of a dynamic assembly to optimize the assembly's internal representation.  
-  
-   
+In .NET Framework, a dynamic assembly can consist of one more dynamic modules. If a dynamic assembly contains more than one dynamic module, the assembly's manifest file name should match the module's name that is specified as the first argument to the <xref:System.Reflection.Emit.AssemblyBuilder.DefineDynamicModule%2A> method. In .NET Core and .NET 5, a dynamic assembly can only consist of one dynamic module. 
+
+### Persistable dynamic assemblies in .NET Framework
+In .NET Framework, dynamic assemblies and modules could be saved to files. To support this feature, <xref:System.Reflection.Emit.AssemblyBuilderAccess> enumeration declares additional values, <xref:System.Reflection.Emit.AssemblyBuilderAccess.Run> and <xref:System.Reflection.Emit.AssemblyBuilderAccess.RunAndSave>. The dynamic assembly created using one of these access modes is called a persistable assembly, while the regular memory-only assembly is called transient.
+ 
+The dynamic modules in the persistable dynamic assembly are saved when the dynamic assembly is saved using the <xref:System.Reflection.Emit.AssemblyBuilder.Save%2A> method. To generate an executable, the <xref:System.Reflection.Emit.AssemblyBuilder.SetEntryPoint%2A> method must be called to identify the method that is the entry point to the assembly. Assemblies are saved as DLLs by default, unless the <xref:System.Reflection.Emit.AssemblyBuilder.SetEntryPoint%2A> method requests the generation of a console application or a Windows-based application.
+
+The signing of a dynamic assembly using <xref:System.Reflection.AssemblyName.KeyPair%2A> is not effective until the assembly is saved to disk. So, strong names will not work with transient dynamic assemblies. 
+
+Dynamic assemblies can reference types defined in another assembly. A transient dynamic assembly can safely reference types defined in another transient dynamic assembly, a persistable dynamic assembly, or a static assembly. However, the common language runtime does not allow a persistable dynamic module to reference a type defined in a transient dynamic module. This is because when the persisted dynamic module is loaded after being saved to disk, the runtime cannot resolve the references to types defined in the transient dynamic module.
+
+### Restrictions on emitting to remote application domains in .NET Framework
+ Some scenarios require a dynamic assembly to be created and executed in a remote application domain. Reflection emit does not allow a dynamic assembly to be emitted directly to a remote application domain. The solution is to emit the dynamic assembly in the current application domain, save the emitted dynamic assembly to disk, and then load the dynamic assembly into the remote application domain. The remoting and application domains are supported only in .NET Framework. 
   
 ## Examples  
- The following code example shows how to define a dynamic assembly with one module. The module in the example assembly contains one type, `MyDynamicType`, which has a private field, a property that gets and sets the private field, constructors that initialize the private field, and a method that multiplies a user-supplied number by the private field value and returns the result.  
-  
- <xref:System.Reflection.Emit.AssemblyBuilderAccess.RunAndSave?displayProperty=nameWithType> is specified when the assembly is created. The assembly code is used immediately, and the assembly is also saved to disk so that it can be examined with [Ildasm.exe (IL Disassembler)](/dotnet/framework/tools/ildasm-exe-il-disassembler) or used in another program.  
-  
+ The following code example shows how to define and use a dynamic assembly. The example assembly contains one type, `MyDynamicType`, which has a private field, a property that gets and sets the private field, constructors that initialize the private field, and a method that multiplies a user-supplied number by the private field value and returns the result.
+ 
  [!code-cpp[AssemblyBuilderClass#1](~/samples/snippets/cpp/VS_Snippets_CLR/AssemblyBuilderClass/cpp/24895.cpp#1)]
  [!code-csharp[AssemblyBuilderClass#1](~/samples/snippets/csharp/VS_Snippets_CLR/AssemblyBuilderClass/cs/24895.cs#1)]
  [!code-vb[AssemblyBuilderClass#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/AssemblyBuilderClass/vb/24895.vb#1)]  
@@ -2789,7 +2781,11 @@
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
+## Remarks 
+
+> [!NOTE]
+> Saving a dynamic assembly to disk is only supported in .NET Framework.
+
  This method saves all non-transient dynamic modules defined in this dynamic assembly. Transient dynamic modules are not saved. The assembly file name can be the same as the name of one of the modules. If so, the assembly manifest is stored within that module. `assemblyFileName` can be different from the names of all of the modules contained within the assembly. If so, the assembly file contains only the assembly manifest.  
   
  For each <xref:System.Resources.ResourceWriter> obtained using <xref:System.Reflection.Emit.AssemblyBuilder.DefineResource%2A>, this method writes the .resources file and calls <xref:System.Resources.ResourceWriter.Close%2A> to close the stream.  
@@ -2881,6 +2877,10 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
+
+> [!NOTE]
+> Saving a dynamic assembly to disk is only supported in .NET Framework.
+
  If `imageFileMachine` and `portableExecutableKind` are incompatible, `imageFileMachine` takes precedence over `portableExecutableKind`. No exception is thrown. For example, if you specify <xref:System.Reflection.ImageFileMachine.I386?displayProperty=nameWithType> with <xref:System.Reflection.PortableExecutableKinds.PE32Plus?displayProperty=nameWithType>, <xref:System.Reflection.PortableExecutableKinds.PE32Plus?displayProperty=nameWithType> is ignored.  
   
  This method saves all non-transient dynamic modules defined in this dynamic assembly. Transient dynamic modules are not saved. The assembly file name can be the same as the name of one of the module. If so, the assembly manifest is stored within that module. `assemblyFileName` can be different from the names of all of the modules contained within the assembly. If so, the assembly file contains only the assembly manifest.  
@@ -3415,3 +3415,4 @@
     </Member>
   </Members>
 </Type>
+
