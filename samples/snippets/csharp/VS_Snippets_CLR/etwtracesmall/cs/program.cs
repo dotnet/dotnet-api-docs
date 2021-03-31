@@ -20,7 +20,6 @@ namespace Demo1
     {
         static void Main(string[] args)
         {
-            string name = MyCompanyEventSource.GetName(typeof(MyCompanyEventSource));
             MyCompanyEventSource.Log.Startup();
             // ...
             MyCompanyEventSource.Log.OpenFileStart("SomeFile");
