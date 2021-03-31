@@ -1,4 +1,4 @@
-﻿'<Snippet1>
+'<Snippet1>
 Imports System.Reflection
 Imports System.Reflection.Emit
 
@@ -6,13 +6,11 @@ Class DemoAssemblyBuilder
 
     Public Shared Sub Main()
 
-        ' An assembly consists of one or more modules, each of which
-        ' contains zero or more types. This code creates a single-module
-        ' assembly, the most common case. The module contains one type,
-        ' named "MyDynamicType", that has a private field, a property 
-        ' that gets and sets the private field, constructors that 
+        ' This code creates an assembly that contains one type,
+        ' named "MyDynamicType", that has a private field, a property
+        ' that gets and sets the private field, constructors that
         ' initialize the private field, and a method that multiplies
-        ' a user-supplied number by the private field value and returns 
+        ' a user-supplied number by the private field value and returns
         ' the result. The code might look like this in Visual Basic:
         '
         'Public Class MyDynamicType
@@ -42,15 +40,13 @@ Class DemoAssemblyBuilder
       
         Dim aName As New AssemblyName("DynamicAssemblyExample")
         Dim ab As AssemblyBuilder = _
-            AppDomain.CurrentDomain.DefineDynamicAssembly( _
+            AssemblyBuilder.DefineDynamicAssembly( _
                 aName, _
-                AssemblyBuilderAccess.RunAndSave)
+                AssemblyBuilderAccess.Run)
 
-        ' For a single-module assembly, the module name is usually
-        ' the assembly name plus an extension.
+        ' The module name is usually the same as the assembly name.
         Dim mb As ModuleBuilder = ab.DefineDynamicModule( _
-            aName.Name, _
-            aName.Name & ".dll")
+            aName.Name)
       
         Dim tb As TypeBuilder = _
             mb.DefineType("MyDynamicType", TypeAttributes.Public)
@@ -184,14 +180,6 @@ Class DemoAssemblyBuilder
 
         ' Finish the type.
         Dim t As Type = tb.CreateType()
-     
-        ' The following line saves the single-module assembly. This
-        ' requires AssemblyBuilderAccess to include Save. You can now
-        ' type "ildasm MyDynamicAsm.dll" at the command prompt, and 
-        ' examine the assembly. You can also write a program that has
-        ' a reference to the assembly, and use the MyDynamicType type.
-        ' 
-        ab.Save(aName.Name & ".dll") 
 
         ' Because AssemblyBuilderAccess includes Run, the code can be
         ' executed immediately. Start by getting reflection objects for
