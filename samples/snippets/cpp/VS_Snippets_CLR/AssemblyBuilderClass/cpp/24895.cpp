@@ -5,12 +5,10 @@ using namespace System::Reflection::Emit;
 
 void main()
 {
-    // An assembly consists of one or more modules, each of which
-    // contains zero or more types. This code creates a single-module
-    // assembly, the most common case. The module contains one type,
-    // named "MyDynamicType", that has a private field, a property 
-    // that gets and sets the private field, constructors that 
-    // initialize the private field, and a method that multiplies 
+    // This code creates an assembly that contains one type,
+    // named "MyDynamicType", that has a private field, a property
+    // that gets and sets the private field, constructors that
+    // initialize the private field, and a method that multiplies
     // a user-supplied number by the private field value and returns
     // the result. In Visual C++ the type might look like this:
     /*
@@ -38,14 +36,13 @@ void main()
       
     AssemblyName^ aName = gcnew AssemblyName("DynamicAssemblyExample");
     AssemblyBuilder^ ab = 
-        AppDomain::CurrentDomain->DefineDynamicAssembly(
+        AssemblyBuilder::DefineDynamicAssembly(
             aName, 
-            AssemblyBuilderAccess::RunAndSave);
+            AssemblyBuilderAccess::Run);
 
-    // For a single-module assembly, the module name is usually
-    // the assembly name plus an extension.
+    // The module name is usually the same as the assembly name
     ModuleBuilder^ mb = 
-        ab->DefineDynamicModule(aName->Name, aName->Name + ".dll");
+        ab->DefineDynamicModule(aName->Name);
       
     TypeBuilder^ tb = mb->DefineType(
         "MyDynamicType", 
@@ -180,14 +177,6 @@ void main()
 
     // Finish the type->
     Type^ t = tb->CreateType();
-     
-    // The following line saves the single-module assembly. This
-    // requires AssemblyBuilderAccess to include Save. You can now
-    // type "ildasm MyDynamicAsm.dll" at the command prompt, and 
-    // examine the assembly. You can also write a program that has
-    // a reference to the assembly, and use the MyDynamicType type.
-    // 
-    ab->Save(aName->Name + ".dll");
 
     // Because AssemblyBuilderAccess includes Run, the code can be
     // executed immediately. Start by getting reflection objects for
@@ -231,5 +220,3 @@ o1->MyMethod(22): 2794
 o2->Number: 5280
  */
 //</Snippet1>
-
-
