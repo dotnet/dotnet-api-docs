@@ -242,7 +242,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
       <Docs>
         <param name="socketType">One of the <see cref="T:System.Net.Sockets.SocketType" /> values.</param>
         <param name="protocolType">One of the <see cref="T:System.Net.Sockets.ProtocolType" /> values.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Net.Sockets.Socket" /> class using the specified socket type and protocol. This constructor is designed to prefer dual-stack sockets.</summary>
+        <summary>Initializes a new instance of the <see cref="T:System.Net.Sockets.Socket" /> class using the specified socket type and protocol. If the operating system supports IPv6, this constructor creates a dual-mode socket; otherwise, it creates an IPv4 socket.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2739,9 +2739,9 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
       </Parameters>
       <Docs>
         <param name="fileName">A string that contains the path and name of the file to be sent. This parameter can be <see langword="null" />.</param>
-        <param name="preBuffer">A <see cref="T:System.Byte" /> array that contains data to be sent before the file is sent. This parameter can be <see langword="null" />.</param>
-        <param name="postBuffer">A <see cref="T:System.Byte" /> array that contains data to be sent after the file is sent. This parameter can be <see langword="null" />.</param>
-        <param name="flags">A bitwise combination of <see cref="T:System.Net.Sockets.TransmitFileOptions" /> values.</param>
+        <param name="preBuffer">The data to be sent before the file is sent. This parameter can be <see langword="null" />.</param>
+        <param name="postBuffer">The data to be sent after the file is sent. This parameter can be <see langword="null" />.</param>
+        <param name="flags">A bitwise combination of the enumeration values.</param>
         <param name="callback">An <see cref="T:System.AsyncCallback" /> delegate to be invoked when this operation completes. This parameter can be <see langword="null" />.</param>
         <param name="state">A user-defined object that contains state information for this request. This parameter can be <see langword="null" />.</param>
         <summary>Sends a file and buffers of data asynchronously to a connected <see cref="T:System.Net.Sockets.Socket" /> object.</summary>
@@ -2771,9 +2771,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).  
   
 > [!NOTE]
->  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.  
-  
-   
+>  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
   
 ## Examples  
  The following code example creates and connects a socket for asynchronous communication and begins sending the file "text.txt" asynchronously to the remote host. In this example, a `preBuffer` and a `postBuffer` of data is created to send with the file and the default <xref:System.Net.Sockets.TransmitFileOptions> value is used. The callback delegate calls <xref:System.Net.Sockets.Socket.EndSendFile%2A> to complete the transmission.  
@@ -3510,9 +3508,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 >  If the socket has been previously disconnected, then you cannot use this method to restore the connection. Use one of the asynchronous <xref:System.Net.Sockets.Socket.BeginConnect%2A> methods to reconnect. This is a limitation of the underlying provider.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).  
-  
-   
+>  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example connects to a remote endpoint and then verifies the connection.  
@@ -3527,7 +3523,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.ArgumentOutOfRangeException">The port number is not valid.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
-        <exception cref="T:System.NotSupportedException">This method is valid for sockets in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
+        <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
         <exception cref="T:System.ArgumentException">The length of <paramref name="address" /> is zero.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Sockets.Socket" /> has been placed in a listening state by calling <see cref="M:System.Net.Sockets.Socket.Listen(System.Int32)" />.</exception>
       </Docs>
@@ -3577,24 +3573,22 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- If you are using a connection-oriented protocol such as TCP, the <xref:System.Net.Sockets.Socket.Connect%2A> method synchronously establishes a network connection between <xref:System.Net.Sockets.Socket.LocalEndPoint%2A> and the specified remote host. If you are using a connectionless protocol, <xref:System.Net.Sockets.Socket.Connect%2A> establishes a default remote host. After you call <xref:System.Net.Sockets.Socket.Connect%2A> you can send data to the remote device with the <xref:System.Net.Sockets.Socket.Send%2A> method, or receive data from the remote device with the <xref:System.Net.Sockets.Socket.Receive%2A> method.  
+ If you're using a connection-oriented protocol such as TCP, the <xref:System.Net.Sockets.Socket.Connect%2A> method synchronously establishes a network connection between <xref:System.Net.Sockets.Socket.LocalEndPoint%2A> and the specified remote host. If you are using a connectionless protocol, <xref:System.Net.Sockets.Socket.Connect%2A> establishes a default remote host. After you call <xref:System.Net.Sockets.Socket.Connect%2A> you can send data to the remote device with the <xref:System.Net.Sockets.Socket.Send%2A> method, or receive data from the remote device with the <xref:System.Net.Sockets.Socket.Receive%2A> method.  
   
- If you are using a connectionless protocol such as UDP, you do not have to call <xref:System.Net.Sockets.Socket.Connect%2A> before sending and receiving data. You can use <xref:System.Net.Sockets.Socket.SendTo%2A> and <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> to synchronously communicate with a remote host. If you do call <xref:System.Net.Sockets.Socket.Connect%2A> any datagrams that arrive from an address other than the specified default will be discarded. If you want to set your default remote host to a broadcast address, you must first call the <xref:System.Net.Sockets.Socket.SetSocketOption%2A> method and set the socket option to <xref:System.Net.Sockets.SocketOptionName.Broadcast?displayProperty=nameWithType>, or <xref:System.Net.Sockets.Socket.Connect%2A> will throw a <xref:System.Net.Sockets.SocketException>. If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.  
+ If you're using a connectionless protocol such as UDP, you do not have to call <xref:System.Net.Sockets.Socket.Connect%2A> before sending and receiving data. You can use <xref:System.Net.Sockets.Socket.SendTo%2A> and <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> to synchronously communicate with a remote host. If you do call <xref:System.Net.Sockets.Socket.Connect%2A> any datagrams that arrive from an address other than the specified default will be discarded. If you want to set your default remote host to a broadcast address, you must first call the <xref:System.Net.Sockets.Socket.SetSocketOption%2A> method and set the socket option to <xref:System.Net.Sockets.SocketOptionName.Broadcast?displayProperty=nameWithType>, or <xref:System.Net.Sockets.Socket.Connect%2A> will throw a <xref:System.Net.Sockets.SocketException>. If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.  
   
- <xref:System.Net.Sockets.Socket.Connect%2A> method will block, unless you specifically set the <xref:System.Net.Sockets.Socket.Blocking%2A> property to `false` prior to calling <xref:System.Net.Sockets.Socket.Connect%2A>. If you are using a connection-oriented protocol like TCP and you do disable blocking, <xref:System.Net.Sockets.Socket.Connect%2A> will throw a <xref:System.Net.Sockets.SocketException> because it needs time to make the connection. Connectionless protocols will not throw an exception because they simply establish a default remote host. You can use <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error. If the error returned WSAEWOULDBLOCK, the remote host connection has been initiated by a connection-oriented <xref:System.Net.Sockets.Socket>, but has not yet completed successfully. Use the <xref:System.Net.Sockets.Socket.Poll%2A> method to determine when the <xref:System.Net.Sockets.Socket> is finished connecting.  
+ The <xref:System.Net.Sockets.Socket.Connect%2A> method will block, unless you specifically set the <xref:System.Net.Sockets.Socket.Blocking%2A> property to `false` prior to calling <xref:System.Net.Sockets.Socket.Connect%2A>. If you're using a connection-oriented protocol like TCP and you do disable blocking, <xref:System.Net.Sockets.Socket.Connect%2A> will throw a <xref:System.Net.Sockets.SocketException> because it needs time to make the connection. Connectionless protocols will not throw an exception because they simply establish a default remote host. You can use <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error. If the error returned WSAEWOULDBLOCK, the remote host connection has been initiated by a connection-oriented <xref:System.Net.Sockets.Socket>, but has not yet completed successfully. Use the <xref:System.Net.Sockets.Socket.Poll%2A> method to determine when the <xref:System.Net.Sockets.Socket> is finished connecting.  
   
  If IPv6 is enabled and the <xref:System.Net.Sockets.Socket.Connect%28System.String%2CSystem.Int32%29> method is called to connect to a host that resolves to both IPv6 and IPv4 addresses, the connection to the IPv6 address will be attempted first before the IPv4 address. This may have the effect of delaying the time to establish the connection if the host is not listening on the IPv6 address.  
   
 > [!NOTE]
->  If you are using a connection-oriented protocol and did not call <xref:System.Net.Sockets.Socket.Bind%2A> before calling <xref:System.Net.Sockets.Socket.Connect%2A>, the underlying service provider will assign the local network address and port number. If you are using a connectionless protocol, the service provider will not assign a local network address and port number until you complete a send or receive operation. If you want to change the default remote host, call <xref:System.Net.Sockets.Socket.Connect%2A> again with the desired endpoint.  
+>  If you're using a connection-oriented protocol and did not call <xref:System.Net.Sockets.Socket.Bind%2A> before calling <xref:System.Net.Sockets.Socket.Connect%2A>, the underlying service provider will assign the local network address and port number. If you are using a connectionless protocol, the service provider will not assign a local network address and port number until you complete a send or receive operation. If you want to change the default remote host, call <xref:System.Net.Sockets.Socket.Connect%2A> again with the desired endpoint.  
   
 > [!NOTE]
 >  If the socket has been previously disconnected, then you cannot use this method to restore the connection. Use one of the asynchronous <xref:System.Net.Sockets.Socket.BeginConnect%2A> methods to reconnect. This is a limitation of the underlying provider.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).  
-  
-   
+>  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example connects to a remote endpoint and then verifies the connection.  
@@ -3609,7 +3603,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.ArgumentOutOfRangeException">The port number is not valid.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
-        <exception cref="T:System.NotSupportedException">This method is valid for sockets in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
+        <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Sockets.Socket" /> has been placed in a listening state by calling <see cref="M:System.Net.Sockets.Socket.Listen(System.Int32)" />.</exception>
       </Docs>
     </Member>
@@ -4169,9 +4163,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 ## Remarks  
  Datagrams require fragmentation when their size exceeds the Maximum Transfer Unit (MTU) of the transmission medium. Datagrams may be fragmented by the sending host (all Internet Protocol versions) or an intermediate router (Internet Protocol Version 4 only). If a datagram must be fragmented, and the <xref:System.Net.Sockets.Socket.DontFragment%2A> option is set, the datagram is discarded, and an Internet Control Message Protocol (ICMP) error message is sent back to the sender of the datagram.  
   
- Setting this property on a Transmission Control Protocol (TCP) socket will have no effect.  
-  
-   
+ Setting this property on a Transmission Control Protocol (TCP) socket has no effect.
   
 ## Examples  
  The following code example demonstrates the use of the <xref:System.Net.Sockets.Socket.DontFragment%2A> property.  
@@ -4181,7 +4173,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.NotSupportedException">This property can be set only for sockets in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
+        <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> family.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
       </Docs>
@@ -4221,9 +4213,9 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
       <Docs>
         <summary>Gets or sets a value that specifies whether the <see cref="T:System.Net.Sockets.Socket" /> is a dual-mode socket used for both IPv4 and IPv6.</summary>
         <value>
-          <see langword="true" /> if the <see cref="T:System.Net.Sockets.Socket" /> is a dual-mode socket; otherwise, <see langword="false" />. The default is <see langword="true" /> if the socket was created by calling the <see cref="M:System.Net.Sockets.Socket.#ctor(System.Net.Sockets.SocketType,System.Net.Sockets.ProtocolType)" /> constructor and the operating system supports dual-stack sockets; otherwise, the default is <see langword="false" />.</value>
+          <see langword="true" /> if the <see cref="T:System.Net.Sockets.Socket" /> is a dual-mode socket; otherwise, <see langword="false" />. The default is <see langword="true" /> if the socket was created by calling the <see cref="M:System.Net.Sockets.Socket.#ctor(System.Net.Sockets.SocketType,System.Net.Sockets.ProtocolType)" /> constructor and the operating system supports IPv6; otherwise, the default is <see langword="false" />.</value>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.NotSupportedException">The <see cref="T:System.Net.Sockets.AddressFamily" /> of the socket is not <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" />.</exception>
+        <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> address family.</exception>
       </Docs>
     </Member>
     <Member MemberName="DuplicateAndClose">
@@ -6481,9 +6473,7 @@ The maximum length of the pending connections queue is determined automatically.
 ## Remarks  
  Multicast is a scalable method for many-to-many communication on the Internet. A process subscribes to a multicast address; then, any packets sent by a subscribed process are received by every other process subscribed to the multicast address.  
   
- Setting this property on a Transmission Control Protocol (TCP) socket will have no effect.  
-  
-   
+ Setting this property on a Transmission Control Protocol (TCP) socket has no effect.
   
 ## Examples  
  The following code example demonstrates the use of the <xref:System.Net.Sockets.Socket.MulticastLoopback%2A> property.  
@@ -6495,6 +6485,7 @@ The maximum length of the pending connections queue is determined automatically.
         </remarks>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.NotSupportedException">The <see cref="T:System.Net.Sockets.Socket" /> is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
       </Docs>
     </Member>
     <Member MemberName="NoDelay">
@@ -10195,10 +10186,10 @@ This member outputs trace information when you enable network tracing in your ap
         <Parameter Name="flags" Type="System.Net.Sockets.TransmitFileOptions" Index="3" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="fileName">A <see cref="T:System.String" /> that contains the path and name of the file to be sent. This parameter can be <see langword="null" />.</param>
-        <param name="preBuffer">A <see cref="T:System.Byte" /> array that contains data to be sent before the file is sent. This parameter can be <see langword="null" />.</param>
-        <param name="postBuffer">A <see cref="T:System.Byte" /> array that contains data to be sent after the file is sent. This parameter can be <see langword="null" />.</param>
-        <param name="flags">One or more of <see cref="T:System.Net.Sockets.TransmitFileOptions" /> values.</param>
+        <param name="fileName">The path and name of the file to be sent. This parameter can be <see langword="null" />.</param>
+        <param name="preBuffer">The data to be sent before the file is sent. This parameter can be <see langword="null" />.</param>
+        <param name="postBuffer">The data to be sent after the file is sent. This parameter can be <see langword="null" />.</param>
+        <param name="flags">A bitwise combination of the enumeration values that specifies how the file is transferred.</param>
         <summary>Sends the file <paramref name="fileName" /> and buffers of data to a connected <see cref="T:System.Net.Sockets.Socket" /> object using the specified <see cref="T:System.Net.Sockets.TransmitFileOptions" /> value.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -10220,9 +10211,7 @@ This member outputs trace information when you enable network tracing in your ap
 >  If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.  
   
 > [!NOTE]
->  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).  
-  
-   
+>  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
   
 ## Examples  
  The following code example creates and connects a socket. The file "test.txt" is located in the root directory of the local machine. In this example, we create a prebuffer and postbuffer of data and send them to the remote host with the file. The default <xref:System.Net.Sockets.TransmitFileOptions> are used.  
@@ -10326,7 +10315,11 @@ This member outputs trace information when you enable network tracing in your ap
         </remarks>
         <exception cref="T:System.IO.FileNotFoundException">The file specified in the <see cref="P:System.Net.Sockets.SendPacketsElement.FilePath" /> property was not found.</exception>
         <exception cref="T:System.InvalidOperationException">A socket operation was already in progress using the <see cref="T:System.Net.Sockets.SocketAsyncEventArgs" /> object specified in the <paramref name="e" /> parameter.</exception>
-        <exception cref="T:System.NotSupportedException">Windows XP or later is required for this method. This exception also occurs if the <see cref="T:System.Net.Sockets.Socket" /> is not connected to a remote host.</exception>
+        <exception cref="T:System.NotSupportedException">The operating system is not Windows XP or later.
+
+-or-
+
+The <see cref="T:System.Net.Sockets.Socket" /> is not connected to a remote host.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">A connectionless <see cref="T:System.Net.Sockets.Socket" /> is being used and the file being sent exceeds the maximum packet size of the underlying transport.</exception>
         <altmember cref="T:System.Net.Sockets.SocketAsyncEventArgs" />
@@ -10936,7 +10929,7 @@ This member outputs trace information when you enable network tracing in your ap
       </Parameters>
       <Docs>
         <param name="level">The IP protection level to set on this socket.</param>
-        <summary>Set the IP protection level on a socket.</summary>
+        <summary>Sets the IP protection level on a socket.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -10953,8 +10946,8 @@ This member outputs trace information when you enable network tracing in your ap
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="level" /> parameter cannot be <see cref="F:System.Net.Sockets.IPProtectionLevel.Unspecified" />. The IP protection level cannot be set to unspecified.</exception>
-        <exception cref="T:System.NotSupportedException">The <see cref="T:System.Net.Sockets.AddressFamily" /> of the socket must be either <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" />.</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="level" /> argument is set to <see cref="F:System.Net.Sockets.IPProtectionLevel.Unspecified" />.</exception>
+        <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> address families.</exception>
         <altmember cref="P:System.Net.IPAddress.IsIPv6Teredo" />
         <altmember cref="T:System.Net.Sockets.IPProtectionLevel" />
         <altmember cref="F:System.Net.Sockets.SocketOptionName.IPProtectionLevel" />
@@ -11788,9 +11781,7 @@ Call IDisposable.Dispose when you are finished using the <xref:System.Net.Socket
   
  Setting this property on a Transmission Control Protocol (TCP) socket is ignored by the TCP/IP stack if a successful connection has been established using the socket.  
   
- If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.  
-  
-   
+ If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. After you have obtained this code, refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.
   
 ## Examples  
  The following code example demonstrates the use of the <xref:System.Net.Sockets.Socket.Ttl%2A> property.  
@@ -11800,8 +11791,8 @@ Call IDisposable.Dispose when you are finished using the <xref:System.Net.Socket
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException">The TTL value can't be set to a negative number.</exception>
-        <exception cref="T:System.NotSupportedException">This property can be set only for sockets in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">The TTL value is a negative number.</exception>
+        <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket. This error is also returned when an attempt was made to set TTL to a value higher than 255.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
       </Docs>
