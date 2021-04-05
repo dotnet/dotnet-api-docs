@@ -46,8 +46,14 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- Ordinarily, types and members with `internal` or `private protected` scope (in C#) and `Friend` and `Private Protected` scope (in Visual Basic) are visible only in the assembly in which they are defined. The <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute> attribute makes them also visible to the types in a specified assembly, which is known as a friend assembly. This only applies to `internal` (`Friend` in VB) or `private protected`(`Private Protected` in VB) methods only, but not `private` ones.
+## Remarks
+
+ Ordinarily, types and members with [`internal` scope in C#](/dotnet/csharp/language-reference/keywords/internal) or [`Friend` scope in Visual Basic](/dotnet/visual-basic/language-reference/modifiers/friend) are visible only in the assembly in which they are defined. Types and members with [`protected internal`](/dotnet/csharp/language-reference/keywords/protected-internal) scope ([`Protected Friend`](/dotnet/visual-basic/language-reference/modifiers/protected-friend) scope in Visual Basic) are visible only in their own assembly or to types that derive from their containing class. Types and members with [`private protected`](/dotnet/csharp/language-reference/keywords/private-protected) scope ([`Private Protected`](/dotnet/visual-basic/language-reference/modifiers/private-protected) scope in Visual Basic) are visible in the containing class or in types that derive from their containing class within the current assembly
+ 
+ The <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute> attribute makes these types and members also visible to the types in a specified assembly, which is known as a friend assembly. This applies only to `internal` (`Friend` in Visual Basic), `protected internal`(`Protected Friend` in Visual Basic), and `private protected` (`Private Protected` in Visual Basic) members, but not `private` ones.
+ 
+ > [!NOTE]
+ > In the case of `private protected` (`Private Protected` in Visual Basic) members, the <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute> attribute extends accessibility only to types that derive from the *containing class* of the member.
   
  The attribute is applied at the assembly level. This means that it can be included at the beginning of a source code file, or it can be included in the AssemblyInfo file in a Visual Studio project. You can use the attribute to specify a single friend assembly that can access the internal types and members of the current assembly. You can define multiple friend assemblies in two ways. They can appear as individual assembly-level attributes, as the following example illustrates.  
   
@@ -67,14 +73,10 @@
   
  Do not include values for the <xref:System.Reflection.AssemblyName.CultureInfo%2A>, <xref:System.Reflection.AssemblyName.Version%2A>, or <xref:System.Reflection.AssemblyName.ProcessorArchitecture%2A> field in the argument; the Visual Basic, C#, and C++ compilers treat this as a compiler error. If you use a compiler that does not treat it as an error (such as the [IL Assembler (ILAsm.exe)](/dotnet/framework/tools/ilasm-exe-il-assembler)) and the assemblies are strong-named, a <xref:System.MethodAccessException> exception is thrown the first time the specified friend assembly accesses the assembly that contains the <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute> attribute.  
   
- For more information about how to use this attribute, see the following topics:  
-  
--   [Friend Assemblies (C++)](/cpp/dotnet/friend-assemblies-cpp)  
-  
--   [Friend assemblies](/dotnet/standard/assembly/friend)  
+ For more information about how to use this attribute, see [Friend assemblies](/dotnet/standard/assembly/friend) and [C++ friend assemblies](/cpp/dotnet/friend-assemblies-cpp).
   
 <a name="Key"></a>   
-## Getting the full public key  
+## Get the full public key  
  You can use the [Strong Name Tool (Sn.exe)](/dotnet/framework/tools/sn-exe-strong-name-tool) to retrieve the full public key from a strong-named key (.snk) file. To do this, you perform the following steps:  
   
 1.  Extract the public key from the strong-named key file to a separate file:  
@@ -87,13 +89,11 @@
   
 3.  Copy and paste the full public key value into your source code.  
   
-## Compiling the friend assembly with C#  
+## Compile the friend assembly with C#  
  If you use the C# compiler to compile the friend assembly, you must explicitly specify the name of the output file (.exe or .dll) by using the **/out** compiler option. This is required because the compiler has not yet generated the name for the assembly it is building at the time it is binding to external references. The **/out** compiler option is optional for the Visual Basic compiler, and the corresponding **-out** or **-o** compiler option should not be used when compiling friend assemblies with the F# compiler.  
   
-## Compiling the friend assembly with C++  
- In C++, in order to make the internal members enabled by the <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute> attribute accessible to a friend assembly, you must use the `as_friend` attribute in the C++  directive. For more information, see [Friend Assemblies (C++)](/cpp/dotnet/friend-assemblies-cpp).  
-  
-   
+## Compile the friend assembly with C++  
+ In C++, in order to make the internal members enabled by the <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute> attribute accessible to a friend assembly, you must use the `as_friend` attribute in the C++  directive. For more information, see [Friend Assemblies (C++)](/cpp/dotnet/friend-assemblies-cpp).
   
 ## Examples  
  **Signed assemblies**  
@@ -171,7 +171,7 @@
  Both the current assembly and the friend assembly must be unsigned, or both must be signed with a strong name. (For more information about strong-named assemblies, see [Create and use strong-named assemblies](/dotnet/standard/assembly/create-use-strong-named).) If both are unsigned, the `assemblyName` argument consists of the name of the friend assembly, specified without a directory path or file extension. If both are signed, `assemblyName` consists of the name of the friend assembly without its directory path or file name extension, along with its full public key (but not its public key token). The other components of a strong name, such as those that provide culture, version, or processor architecture information, cannot be specified in the `assemblyName` argument.  
   
 > [!IMPORTANT]
->  If you use the C# compiler to compile the friend assembly, you must explicitly specify the name of the output file (.exe or .dll) by using the **/out** compiler option. This is required because the compiler has not yet generated the name for the assembly it is building at the time it is binding to external references. The **/out** compiler option is optional for the Visual Basic compiler, and the corresponding **-out** or **-o** compiler option should not be used when compiling friend assemblies with the F# compiler.  
+> If you use the C# compiler to compile the friend assembly, you must explicitly specify the name of the output file (.exe or .dll) by using the **/out** compiler option. This is required because the compiler has not yet generated the name for the assembly it is building at the time it is binding to external references. The **/out** compiler option is optional for the Visual Basic compiler, and the corresponding **-out** or **-o** compiler option should not be used when compiling friend assemblies with the F# compiler.  
   
  You can use [Sn.exe (Strong Name Tool)](/dotnet/framework/tools/sn-exe-strong-name-tool) to retrieve the full public key from a strong-named key (.snk) file. To do this, you perform the following steps:  
   
@@ -185,13 +185,11 @@
   
 3.  Copy and paste the full public key value into your source code.  
   
- For more information about how to use the <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute> attribute, see the following topics:  
+ For more information about how to use the <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute> attribute, see the following articles:  
   
 -   [Friend Assemblies (C++)](/cpp/dotnet/friend-assemblies-cpp)  
   
--   [Friend assemblies](/dotnet/standard/assembly/friend)  
-  
-   
+-   [Friend assemblies](/dotnet/standard/assembly/friend)
   
 ## Examples  
  **Signed assemblies**  
