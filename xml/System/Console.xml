@@ -93,25 +93,25 @@
 ## Unicode Support for the Console
  In general, the console reads input and writes output by using the current console code page, which the system locale defines by default. A code page can handle only a subset of available Unicode characters, so if you try to display characters that are not mapped by a particular code page, the console won't be able to display all characters or represent them accurately. The following example illustrates this problem. It tries to display the characters of the Cyrillic alphabet from U+0410 to U+044F to the console. If you run the example on a system that uses console code page 437, each character is replaced by a question mark (?), because Cyrillic characters do not map to the characters in code page 437.
 
- [!code-csharp[System.Console.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class/cs/unicode1.cs#1)]
- [!code-vb[System.Console.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class/vb/unicode1.vb#1)]
- [!code-fsharp[System.Console.Class#1](~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class/fs/unicode1.fs#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class/cs/unicode1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class/vb/unicode1.vb" id="Snippet1":::
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class/fs/unicode1.fs" id="Snippet1":::
 
  In addition to supporting code pages, the <xref:System.Console> class supports UTF-8 encoding with the <xref:System.Text.UTF8Encoding> class. Beginning with the .NET Framework 4.5, the <xref:System.Console> class also supports UTF-16 encoding with the <xref:System.Text.UnicodeEncoding> class. To display Unicode characters to the console. you set the <xref:System.Console.OutputEncoding%2A> property to either <xref:System.Text.UTF8Encoding> or  <xref:System.Text.UnicodeEncoding>.
 
  Support for Unicode characters requires the encoder to recognize a particular Unicode character, and also requires a font that has the glyphs needed to render that character. To successfully display Unicode characters to the console, the console font must be set to a non-raster or TrueType font such as Consolas or Lucida Console. The following example shows how you can programmatically change the font from a raster font to Lucida Console.
 
- [!code-csharp[System.Console.Class.Unsafe#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class.unsafe/cs/setfont1.cs#3)]
- [!code-vb[System.Console.Class.Unsafe#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class.unsafe/vb/setfont1.vb#3)]
- [!code-fsharp[System.Console.Class.Unsafe#3](~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class.unsafe/fs/setfont1.fs#3)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class.unsafe/cs/setfont1.cs" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class.unsafe/vb/setfont1.vb" id="Snippet3":::
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class.unsafe/fs/setfont1.fs" id="Snippet3":::
 
  However, TrueType fonts can display only a subset of glyphs. For example, the Lucida Console font displays only 643 of the approximately 64,000 available characters from U+0021 to U+FB02. To see which characters a particular font supports, open the **Fonts** applet in Control Panel, choose the **Find a character** option, and choose the font whose character set you'd like to examine in the **Font** list of the **Character Map** window.
 
  Windows uses font linking to display glyphs that are not available in a particular font. For information about font linking to display additional character sets, see [Globalization Step-by-Step: Fonts](https://go.microsoft.com/fwlink/?LinkId=229111). Linked fonts are defined in the HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink subkey of the registry. Each entry associated with this subkey corresponds to the name of a base font, and its value is a string array that defines the font files and the fonts that are linked to the base font. Each member of the array defines a linked font and takes the form *font-file-name*,*font-name*. The following example illustrates how you can programmatically define a linked font named SimSun found in a font file named simsun.ttc that displays Simplified Han characters.
 
- [!code-csharp[System.Console.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class/cs/fontlink1.cs#2)]
- [!code-vb[System.Console.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class/vb/fontlink1.vb#2)]
- [!code-fsharp[System.Console.Class#2](~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class/fs/fontlink1.fs#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class/cs/fontlink1.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class/vb/fontlink1.vb" id="Snippet2":::
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class/fs/fontlink1.fs" id="Snippet2":::
 
  Unicode support for the console has the following limitations:
 
@@ -125,9 +125,9 @@
 
 -   Combining character sequences (that is, characters that consist of a base character and one or more combining characters) are displayed as separate characters. To work around this limitation, you can normalize the string to be displayed by calling the <xref:System.String.Normalize%2A?displayProperty=nameWithType> method before sending output to the console. In the following example, a string that contains the combining character sequence U+0061 U+0308 is displayed to the console as two characters before the output string is normalized, and as a single character after the <xref:System.String.Normalize%2A?displayProperty=nameWithType> method is called.
 
-     [!code-csharp[System.Console.Class#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class/cs/normalize1.cs#5)]
-     [!code-vb[System.Console.Class#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class/vb/normalize1.vb#5)]
-     [!code-fsharp[System.Console.Class#5](~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class/fs/normalize1.fs#5)]
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class/cs/normalize1.cs" id="Snippet5":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class/vb/normalize1.vb" id="Snippet5":::
+     :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class/fs/normalize1.fs" id="Snippet5":::
 
      Note that normalization is a viable solution only if the Unicode standard for the character includes a pre-composed form that corresponds to a particular combining character sequence.
 
@@ -135,9 +135,9 @@
 
  The following example displays a range of Unicode characters to the console. The example accepts three command-line parameters: the start of the range to display, the end of the range to display, and whether to use the current console encoding (`false`) or UTF-16 encoding (`true`). It assumes that the console is using a TrueType font.
 
- [!code-csharp[System.Console.Class#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class/cs/example3.cs#4)]
- [!code-vb[System.Console.Class#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class/vb/example3.vb#4)]
- [!code-fsharp[System.Console.Class#4](~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class/fs/example3.fs#4)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.class/cs/example3.cs" id="Snippet4":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.class/vb/example3.vb" id="Snippet4":::
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.console.class/fs/example3.fs" id="Snippet4":::
 
 <a name="Operations"></a>
 ## Common Operations
@@ -188,10 +188,10 @@
 ## Examples
  The following example demonstrates how to read data from, and write data to, the standard input and output streams. Note that these streams can be redirected by using the <xref:System.Console.SetIn%2A> and <xref:System.Console.SetOut%2A> methods.
 
- [!code-cpp[Classic Console Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic Console Example/CPP/source.cpp#1)]
- [!code-csharp[Classic Console Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic Console Example/CS/source.cs#1)]
- [!code-vb[Classic Console Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic Console Example/VB/source.vb#1)]
- [!code-fsharp[Classic Console Example#1](~/samples/snippets/fsharp/VS_Snippets_CLR_Classic/classic Console Example/FS/source.fs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic Console Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic Console Example/CS/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic Console Example/VB/source.vb" id="Snippet1":::
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR_Classic/classic Console Example/FS/source.fs" id="Snippet1":::
 
  ]]></format>
     </remarks>
@@ -251,8 +251,8 @@
 ## Remarks
  A change to the <xref:System.Console.BackgroundColor%2A> property affects only output that is written to individual character cells after the background color is changed. To change the background color of the console window as a whole, set the <xref:System.Console.BackgroundColor%2A> property and call the <xref:System.Console.Clear%2A> method. The following example provides an illustration.
 
- [!code-csharp[System.Console.BackgroundColor#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.backgroundcolor/cs/backgroundcolor1.cs#1)]
- [!code-vb[System.Console.BackgroundColor#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.backgroundcolor/vb/backgroundcolor1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.backgroundcolor/cs/backgroundcolor1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.backgroundcolor/vb/backgroundcolor1.vb" id="Snippet1":::
 
  A get operation for a Windows-based application, in which a console does not exist, returns <xref:System.ConsoleColor.Black?displayProperty=nameWithType>.
 
@@ -261,8 +261,8 @@
 ## Examples
  The following example saves the values of the <xref:System.ConsoleColor> enumeration to an array and stores the current values of the <xref:System.Console.BackgroundColor%2A> and <xref:System.Console.ForegroundColor%2A> properties to variables. It then changes the foreground color to each color in the <xref:System.ConsoleColor> enumeration except to the color that matches the current background, and it changes the background color to each color in the <xref:System.ConsoleColor> enumeration except to the color that matches the current foreground. (If the foreground color is the same as the background color, the text isn't visible.) Finally, it calls the <xref:System.Console.ResetColor%2A> method to restore the original console colors.
 
- [!code-csharp[System.ConsoleColor#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.consolecolor/cs/foregroundcolor3.cs#1)]
- [!code-vb[System.ConsoleColor#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.consolecolor/vb/foregroundcolor3.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.consolecolor/cs/foregroundcolor3.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.consolecolor/vb/foregroundcolor3.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -336,9 +336,9 @@
 ## Examples
  The following example demonstrates the <xref:System.Console.Beep%2A> method. The example accepts a number from 1 through 9 as a command line argument, and plays the beep that number of times.
 
- [!code-cpp[console.beep#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.beep/CPP/beep.cpp#1)]
- [!code-csharp[console.beep#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.beep/CS/beep.cs#1)]
- [!code-vb[console.beep#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.beep/VB/beep.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.beep/CPP/beep.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.beep/CS/beep.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.beep/VB/beep.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -407,9 +407,9 @@
 ## Examples
  This example demonstrates the <xref:System.Console.Beep%2A> method by playing the first few notes of a song through the console speaker.
 
- [!code-cpp[console.beep2#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.beep2/CPP/b2.cpp#1)]
- [!code-csharp[console.beep2#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.beep2/CS/b2.cs#1)]
- [!code-vb[console.beep2#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.beep2/VB/b2.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.beep2/CPP/b2.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.beep2/CS/b2.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.beep2/VB/b2.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -487,9 +487,9 @@
 ## Examples
  This example demonstrates the <xref:System.Console.BufferHeight%2A> and <xref:System.Console.BufferWidth%2A> properties. The example reports the dimensions of an operating system window set to a buffer size of 300 rows and 85 columns.
 
- [!code-cpp[console.bufferHW#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.bufferHW/CPP/hw.cpp#1)]
- [!code-csharp[console.bufferHW#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.bufferHW/CS/hw.cs#1)]
- [!code-vb[console.bufferHW#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.bufferHW/VB/hw.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.bufferHW/CPP/hw.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.bufferHW/CS/hw.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.bufferHW/VB/hw.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -569,9 +569,9 @@
 ## Examples
  This example demonstrates the <xref:System.Console.BufferHeight%2A> and <xref:System.Console.BufferWidth%2A> properties. The example reports the dimensions of an operating system window set to a buffer size of 300 rows and 85 columns.
 
- [!code-cpp[console.bufferHW#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.bufferHW/CPP/hw.cpp#1)]
- [!code-csharp[console.bufferHW#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.bufferHW/CS/hw.cs#1)]
- [!code-vb[console.bufferHW#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.bufferHW/VB/hw.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.bufferHW/CPP/hw.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.bufferHW/CS/hw.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.bufferHW/VB/hw.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -658,9 +658,9 @@
 ## Examples
  The following example demonstrates how the <xref:System.Console.CancelKeyPress> event is used. When you press Ctrl+C, the read operation is interrupted and the `myHandler` event handler is invoked. Upon entry to the event handler, the <xref:System.ConsoleCancelEventArgs.Cancel%2A?displayProperty=nameWithType> property is `false`, which means that the current process will terminate when the event handler terminates. However, the event handler sets the <xref:System.ConsoleCancelEventArgs.Cancel%2A?displayProperty=nameWithType> property to `true`, which means that the process will not terminate and the read operation will resume.
 
- [!code-cpp[console.cancelkeypress#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.cancelkeypress/cpp/ckp.cpp#1)]
- [!code-csharp[console.cancelkeypress#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.cancelkeypress/cs/ckp.cs#1)]
- [!code-vb[console.cancelkeypress#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cancelkeypress/vb/ckp.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.cancelkeypress/cpp/ckp.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.cancelkeypress/cs/ckp.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cancelkeypress/vb/ckp.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -770,16 +770,16 @@
 ## Examples
  The following example uses the <xref:System.Console.Clear%2A> method to clear the console before it executes a loop, prompts the user to select a foreground and background color and to enter a string to display. If the user chooses not to exit the program, the console's original foreground and background colors are restored and the <xref:System.Console.Clear%2A> method is called again before re-executing the loop.
 
- [!code-csharp[System.Console.Clear#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.clear/cs/clear1.cs#1)]
- [!code-vb[System.Console.Clear#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.clear/vb/clear1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.clear/cs/clear1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.clear/vb/clear1.vb" id="Snippet1":::
 
  The example relies on a `GetKeyPress` method to validate the user's selection of a foreground and background color.
 
  This example demonstrates the <xref:System.Console.CursorLeft%2A> and <xref:System.Console.CursorTop%2A> properties, and the <xref:System.Console.SetCursorPosition%2A> and <xref:System.Console.Clear%2A> methods. The example positions the cursor, which determines where the next write will occur, to draw a 5 character by 5 character rectangle using a combination of "+", "&#124;", and "-" strings. Note that the rectangle could be drawn with fewer steps using a combination of other strings.
 
- [!code-cpp[console.cursorLTS#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorLTS/CPP/lts.cpp#1)]
- [!code-csharp[console.cursorLTS#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorLTS/CS/lts.cs#1)]
- [!code-vb[console.cursorLTS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorLTS/VB/lts.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorLTS/CPP/lts.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorLTS/CS/lts.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorLTS/VB/lts.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -839,9 +839,9 @@
 ## Examples
  This example demonstrates the <xref:System.Console.CursorLeft%2A> and <xref:System.Console.CursorTop%2A> properties, and the <xref:System.Console.SetCursorPosition%2A> and <xref:System.Console.Clear%2A> methods. The example positions the cursor, which determines where the next write will occur, to draw a 5 character by 5 character rectangle using a combination of "+", "&#124;", and "-" strings. Note that the rectangle could be drawn with fewer steps using a combination of other strings.
 
- [!code-cpp[console.cursorLTS#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorLTS/CPP/lts.cpp#1)]
- [!code-csharp[console.cursorLTS#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorLTS/CS/lts.cs#1)]
- [!code-vb[console.cursorLTS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorLTS/VB/lts.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorLTS/CPP/lts.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorLTS/CS/lts.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorLTS/VB/lts.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -916,9 +916,9 @@
 ## Examples
  This example demonstrates the <xref:System.Console.CursorSize%2A> property. The example increases the size of the cursor each time any console key is pressed, then restores the cursor to its original size before terminating.
 
- [!code-cpp[console.cursorsize#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorsize/CPP/csize.cpp#1)]
- [!code-csharp[console.cursorsize#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorsize/CS/csize.cs#1)]
- [!code-vb[console.cursorsize#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorsize/VB/csize.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorsize/CPP/csize.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorsize/CS/csize.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorsize/VB/csize.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -981,9 +981,9 @@
 ## Examples
  This example demonstrates the <xref:System.Console.CursorLeft%2A> and <xref:System.Console.CursorTop%2A> properties, and the <xref:System.Console.SetCursorPosition%2A> and <xref:System.Console.Clear%2A> methods. The example positions the cursor, which determines where the next write will occur, to draw a 5 character by 5 character rectangle using a combination of "+", "&#124;", and "-" strings. Note that the rectangle could be drawn with fewer steps using a combination of other strings.
 
- [!code-cpp[console.cursorLTS#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorLTS/CPP/lts.cpp#1)]
- [!code-csharp[console.cursorLTS#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorLTS/CS/lts.cs#1)]
- [!code-vb[console.cursorLTS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorLTS/VB/lts.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorLTS/CPP/lts.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorLTS/CS/lts.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorLTS/VB/lts.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1054,9 +1054,9 @@
 ## Examples
  This example demonstrates the <xref:System.Console.CursorVisible%2A> property. The example makes the cursor visible if the first column of input is a '+' character or invisible if the input is a '-' character.
 
- [!code-cpp[console.cursorvis#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorvis/CPP/vis.cpp#1)]
- [!code-csharp[console.cursorvis#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorvis/CS/vis.cs#1)]
- [!code-vb[console.cursorvis#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorvis/VB/vis.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorvis/CPP/vis.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorvis/CS/vis.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorvis/VB/vis.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1113,22 +1113,22 @@
 
  In console applications whose informational output is often redirected to a file, the standard error stream available through the <xref:System.Console.Error%2A> property can be used to display information to the console even if output is redirected. The following example displays product tables for 10 numbers at a time starting with 1. After every set of 10 numbers, the <xref:System.Console.Error%2A> property is used to ask the user whether to display the next set. If the standard output is redirected to a file, the user is still asked whether the routine should generate the next set of products.
 
- [!code-csharp[System.Console.Error#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.error/cs/error1.cs#1)]
- [!code-vb[System.Console.Error#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.error/vb/error1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.error/cs/error1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.error/vb/error1.vb" id="Snippet1":::
 
 
 
 ## Examples
  The following example is a command line utility named ExpandTabs that replaces tab characters in a text file with four spaces, the value defined by the `tabSize` variable. It redirects the standard input and output streams to files, but uses the <xref:System.Console.Error%2A> property to write the standard error stream to the console. It can be launched from the command line by supplying the name of the file that contains tab characters and the name of the output file.
 
- [!code-cpp[Console-EXPANDTABSEX#1](~/samples/snippets/cpp/VS_Snippets_CLR/Console-EXPANDTABSEX/CPP/expandtabsex.cpp#1)]
- [!code-csharp[Console-EXPANDTABSEX#1](~/samples/snippets/csharp/VS_Snippets_CLR/Console-EXPANDTABSEX/CS/expandtabsex.cs#1)]
- [!code-vb[Console-EXPANDTABSEX#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Console-EXPANDTABSEX/VB/expandtabsex.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/Console-EXPANDTABSEX/CPP/expandtabsex.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/Console-EXPANDTABSEX/CS/expandtabsex.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/Console-EXPANDTABSEX/VB/expandtabsex.vb" id="Snippet1":::
 
  The following example is a simple text file viewer that displays the contents of one or more text files to the console. If there are no command line arguments, or if any files passed as command line arguments do not exist, the example calls the <xref:System.Console.SetError%2A> method to redirect error information to a file, calls the <xref:System.Console.OpenStandardError%2A> method in the process of reacquiring the standard error stream, and indicates that error information was written to a file.
 
- [!code-csharp[System.Console.OpenStandardError#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.openstandarderror/cs/viewtextfile.cs#1)]
- [!code-vb[System.Console.OpenStandardError#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.openstandarderror/vb/viewtextfile.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.openstandarderror/cs/viewtextfile.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.openstandarderror/vb/viewtextfile.vb" id="Snippet1":::
 
  Note that the <xref:System.IO.StreamWriter.AutoFlush%2A?displayProperty=nameWithType> property is set to `true` before reacquiring the error stream. This ensures that output will be sent to the console immediately rather than buffered.
 
@@ -1198,13 +1198,13 @@
 ## Examples
  The following example checks whether the console's background color is black and, if it is, it changes the background color to red and the foreground color to black.
 
- [!code-csharp[System.ConsoleColor#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.consolecolor/cs/Example2.cs#2)]
- [!code-vb[System.ConsoleColor#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.consolecolor/vb/Example2.vb#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.consolecolor/cs/Example2.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.consolecolor/vb/Example2.vb" id="Snippet2":::
 
  The following example saves the values of the <xref:System.ConsoleColor> enumeration to an array and stores the current values of the <xref:System.Console.BackgroundColor%2A> and <xref:System.Console.ForegroundColor%2A> properties to variables. It then changes the foreground color to each color in the <xref:System.ConsoleColor> enumeration except to the color that matches the current background, and it changes the background color to each color in the <xref:System.ConsoleColor> enumeration except to the color that matches the current foreground. (If the foreground color is the same as the background color, the text isn't visible.) Finally, it calls the <xref:System.Console.ResetColor%2A> method to restore the original console colors.
 
- [!code-csharp[System.ConsoleColor#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.consolecolor/cs/foregroundcolor3.cs#1)]
- [!code-vb[System.ConsoleColor#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.consolecolor/vb/foregroundcolor3.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.consolecolor/cs/foregroundcolor3.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.consolecolor/vb/foregroundcolor3.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1318,9 +1318,9 @@ Columns are numbered from left to right starting at 0. Rows are numbered from to
 ## Examples
  The following sample illustrates the use of the `In` property.
 
- [!code-cpp[consolein#1](~/samples/snippets/cpp/VS_Snippets_CLR/consolein/CPP/consolein.cpp#1)]
- [!code-csharp[consolein#1](~/samples/snippets/csharp/VS_Snippets_CLR/consolein/CS/consolein.cs#1)]
- [!code-vb[consolein#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/consolein/VB/consolein.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/consolein/CPP/consolein.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/consolein/CS/consolein.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/consolein/VB/consolein.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1582,9 +1582,9 @@ Columns are numbered from left to right starting at 0. Rows are numbered from to
 ## Examples
  The following example demonstrates how to use the <xref:System.Console.KeyAvailable%2A> property to create a loop that runs until a key is pressed.
 
- [!code-cpp[console.keyavailable#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.keyavailable/CPP/ka.cpp#1)]
- [!code-csharp[console.keyavailable#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.keyavailable/CS/ka.cs#1)]
- [!code-vb[console.keyavailable#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.keyavailable/VB/ka.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.keyavailable/CPP/ka.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.keyavailable/CS/ka.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.keyavailable/VB/ka.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1991,8 +1991,8 @@ Columns are numbered from left to right starting at 0. Rows are numbered from to
 ## Examples
  The following example is a simple text file viewer that displays the contents of one or more text files to the console. If there are no command line arguments, or if any files passed as command line arguments do not exist, the example calls the <xref:System.Console.SetError%2A> method to redirect error information to a file, calls the <xref:System.Console.OpenStandardError%2A> method in the process of reacquiring the standard error stream, and indicates that error information was written to a file.
 
- [!code-csharp[System.Console.OpenStandardError#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.openstandarderror/cs/viewtextfile.cs#1)]
- [!code-vb[System.Console.OpenStandardError#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.openstandarderror/vb/viewtextfile.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.openstandarderror/cs/viewtextfile.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.openstandarderror/vb/viewtextfile.vb" id="Snippet1":::
 
  Note that the <xref:System.IO.StreamWriter.AutoFlush%2A?displayProperty=nameWithType> property is set to `true` before reacquiring the error stream. This ensures that output will be sent to the console immediately rather than buffered.
 
@@ -2117,9 +2117,9 @@ This method can be used to reacquire the standard input stream after it has been
 
 The following example illustrates the use of the `OpenStandardInput` method.
 
-[!code-cpp[System.Console.OpenStandartInput#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.OpenStandartInput/CPP/decode.cpp#1)]
-[!code-csharp[System.Console.OpenStandartInput#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.OpenStandartInput/CS/decode.cs#1)]
-[!code-vb[System.Console.OpenStandartInput#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.OpenStandartInput/VB/decode.vb#1)]
+:::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.OpenStandartInput/CPP/decode.cpp" id="Snippet1":::
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.OpenStandartInput/CS/decode.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.OpenStandartInput/VB/decode.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2243,9 +2243,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the <xref:System.Console.OpenStandardOutput%2A> method. It replaces four consecutive space characters in a string with a tab character. To run it, you must supply two command-line arguments. The first is the name of an existing text file to redirect the standard input stream to. The second is the name of a file to redirect the standard output stream to. This file need not exist. If it does, its contents will be overwritten.
 
- [!code-cpp[System.Console-INSERTTABS#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp#1)]
- [!code-csharp[System.Console-INSERTTABS#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs#1)]
- [!code-vb[System.Console-INSERTTABS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2302,9 +2302,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the <xref:System.Console.OpenStandardOutput%2A> method. It replaces four consecutive space characters in a string with a tab character. To run it, you must supply two command line arguments. The first is the name of an existing text file to redirect the standard input stream to. The second is the name of a file to redirect the standard output stream to. This file need not exist. If it does, its contents will be overwritten.
 
- [!code-cpp[System.Console-INSERTTABS#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp#1)]
- [!code-csharp[System.Console-INSERTTABS#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs#1)]
- [!code-vb[System.Console-INSERTTABS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2368,8 +2368,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example uses the <xref:System.Console.Out%2A> property to display an array containing the names of files in the application's current directory to the standard output device. It then sets the standard output to a file named Files.txt and lists the array elements to the file. Finally, it sets the output to the standard output stream and again displays the array elements to the standard output device.
 
- [!code-csharp[System.Console.Out#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.out/cs/out1.cs#1)]
- [!code-vb[System.Console.Out#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.out/vb/out1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.out/cs/out1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.out/vb/out1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2510,9 +2510,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example demonstrates the <xref:System.Console.Read%2A> method.
 
- [!code-cpp[console.read#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.read/CPP/read.cpp#1)]
- [!code-csharp[console.read#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.read/CS/read.cs#1)]
- [!code-vb[console.read#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.read/VB/read.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.read/CPP/read.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.read/CS/read.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.read/VB/read.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2587,16 +2587,16 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  One of the most common uses of the <xref:System.Console.ReadKey> method is to halt program execution until the user presses a key and the app either terminates or displays an additional window of information. The following example uses the  <xref:System.Console.ReadKey> method to wait for the user to press the Enter key before terminating the app.
 
- [!code-csharp[System.Console.ReadKey#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Console.ReadKey/cs/ReadKey1.cs#1)]
- [!code-vb[System.Console.ReadKey#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Console.ReadKey/vb/ReadKey1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Console.ReadKey/cs/ReadKey1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Console.ReadKey/vb/ReadKey1.vb" id="Snippet1":::
 
  Note that this overload of the <xref:System.Console.ReadKey%2A> method by default echoes any displayable keys that the user presses to the console. To suppress them, call the  <xref:System.Console.ReadKey%2A> method with an `intercept` argument of `true`.
 
  The following example uses the <xref:System.Console.ReadKey> method to display information about which key the user pressed.
 
- [!code-cpp[console.readkey1#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.readkey1/CPP/rk.cpp#1)]
- [!code-csharp[console.readkey1#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.readkey1/CS/rk.cs#1)]
- [!code-vb[console.readkey1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.readkey1/VB/rk.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.readkey1/CPP/rk.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.readkey1/CS/rk.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.readkey1/VB/rk.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2671,14 +2671,14 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  One of the most common uses of the <xref:System.Console.ReadKey%2A> method is to halt program execution until the user presses a key and the app either terminates or displays an additional window of information. The following example uses the  <xref:System.Console.ReadKey%28System.Boolean%29> method to wait for the user to press the Enter key before terminating the app. Note that, if the user presses any other key, it is not echoed to the console.
 
- [!code-csharp[System.Console.ReadKey#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Console.ReadKey/cs/ReadKey2.cs#2)]
- [!code-vb[System.Console.ReadKey#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Console.ReadKey/vb/ReadKey2.vb#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Console.ReadKey/cs/ReadKey2.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Console.ReadKey/vb/ReadKey2.vb" id="Snippet2":::
 
  The following example uses the <xref:System.Console.ReadKey%28System.Boolean%29> method to display information about the key pressed by a user without echoing that key to the console.
 
- [!code-cpp[console.readkey2#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.readkey2/CPP/rkbool.cpp#1)]
- [!code-csharp[console.readkey2#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.readkey2/CS/rkbool.cs#1)]
- [!code-vb[console.readkey2#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.readkey2/VB/rkbool.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.readkey2/CPP/rkbool.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.readkey2/CS/rkbool.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.readkey2/VB/rkbool.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2741,9 +2741,9 @@ This method can be used to reacquire the standard output stream after it has bee
 
      One of the most common uses of the <xref:System.Console.ReadLine%2A> method is to pause program execution before clearing the console and displaying new information to it, or to prompt the user to press the Enter key before terminating the application. The following example illustrates this.
 
-     [!code-cpp[System.Console.ReadLine#6](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.ReadLine/cpp/ReadLineSimple.cpp#6)]
-     [!code-csharp[System.Console.ReadLine#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.ReadLine/cs/ReadLineSimple.cs#6)]
-     [!code-vb[System.Console.ReadLine#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.ReadLine/vb/ReadLineSimple.vb#6)]
+     :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.ReadLine/cpp/ReadLineSimple.cpp" id="Snippet6":::
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.ReadLine/cs/ReadLineSimple.cs" id="Snippet6":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.ReadLine/vb/ReadLineSimple.vb" id="Snippet6":::
 
 -   If standard input is redirected to a file, the <xref:System.Console.ReadLine%2A> method reads a line of text from a file. For example, the following is a text file named ReadLine1.txt:
 
@@ -2758,8 +2758,8 @@ This method can be used to reacquire the standard output stream after it has bee
 
      The following example uses the <xref:System.Console.ReadLine%2A> method to read input that is redirected from a file. The read operation terminates when the  method returns `null`, which indicates that no lines remain to be read.
 
-     [!code-csharp[System.Console.ReadLine#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.ReadLine/cs/ReadLine3.cs#3)]
-     [!code-vb[System.Console.ReadLine#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.ReadLine/vb/ReadLine3.vb#3)]
+     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.ReadLine/cs/ReadLine3.cs" id="Snippet3":::
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.ReadLine/vb/ReadLine3.vb" id="Snippet3":::
 
      After compiling the example to an executable named ReadLine1.exe, you can run it from the command line with the syntax
 
@@ -2777,18 +2777,18 @@ This method can be used to reacquire the standard output stream after it has bee
 
  If the Ctrl+Z character is pressed when the method is reading input from the console, the method returns `null`. This enables the user to prevent further keyboard input when the <xref:System.Console.ReadLine%2A> method is called in a loop. The following example illustrates this scenario.
 
- [!code-cpp[System.Console.ReadLine#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.ReadLine/cpp/readline2.cpp#1)]
- [!code-csharp[System.Console.ReadLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.ReadLine/cs/ReadLine2.cs#1)]
- [!code-vb[System.Console.ReadLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.ReadLine/vb/ReadLine2.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.ReadLine/cpp/readline2.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.ReadLine/cs/ReadLine2.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.ReadLine/vb/ReadLine2.vb" id="Snippet1":::
 
 
 
 ## Examples
  The following example requires two command line arguments: the name of an existing text file, and the name of a file to write the output to. It opens the existing text file and redirects the standard input from the keyboard to that file. It also redirects the standard output from the console to the output file. It then uses the <xref:System.Console.ReadLine%2A?displayProperty=nameWithType> method to read each line in the file, replaces every sequence of four spaces with a tab character, and uses the <xref:System.Console.WriteLine%2A?displayProperty=nameWithType> method to write the result to the output file.
 
- [!code-cpp[System.Console-INSERTTABS#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp#1)]
- [!code-csharp[System.Console-INSERTTABS#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs#1)]
- [!code-vb[System.Console-INSERTTABS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2854,8 +2854,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example saves the values of the <xref:System.ConsoleColor> enumeration to an array and stores the current values of the <xref:System.Console.BackgroundColor%2A> and <xref:System.Console.ForegroundColor%2A> properties to variables. It then changes the foreground color to each color in the <xref:System.ConsoleColor> enumeration except to the color that matches the current background, and it changes the background color to each color in the <xref:System.ConsoleColor> enumeration except to the color that matches the current foreground. (If the foreground color is the same as the background color, the text isn't visible.) Finally, it calls the <xref:System.Console.ResetColor%2A> method to restore the original console colors.
 
- [!code-csharp[System.ConsoleColor#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.consolecolor/cs/foregroundcolor3.cs#1)]
- [!code-vb[System.ConsoleColor#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.consolecolor/vb/foregroundcolor3.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.consolecolor/cs/foregroundcolor3.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.consolecolor/vb/foregroundcolor3.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -2917,10 +2917,10 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example demonstrates the <xref:System.Console.WindowLeft%2A>, <xref:System.Console.WindowTop%2A>, <xref:System.Console.WindowWidth%2A>, <xref:System.Console.WindowHeight%2A>, <xref:System.Console.BufferWidth%2A>, <xref:System.Console.BufferHeight%2A>, and <xref:System.Console.CursorVisible%2A> properties; and the <xref:System.Console.SetWindowPosition%2A>, <xref:System.Console.SetBufferSize%2A>, and <xref:System.Console.ReadKey%2A> methods. The example draws a grid pattern in the screen buffer based on the screen buffer width. Then the example moves the console window in response to which of the UP ARROW, DOWN ARROW, LEFT ARROW, or RIGHT ARROW console keys is pressed. The grid pattern helps you see the movement of the console window relative to the screen buffer.
 
- [!code-cpp[console.windowLT#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.windowLT/CPP/wlt.cpp#1)]
- [!code-csharp[console.windowLT#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.windowLT/CS/wlt.cs#1)]
- [!code-vb[console.windowLT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.windowLT/VB/wlt.vb#1)]
- [!code-fsharp[console.windowLT#1](~/samples/snippets/fsharp/VS_Snippets_CLR/console.windowLT/FS/wlt.fs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.windowLT/CPP/wlt.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.windowLT/CS/wlt.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.windowLT/VB/wlt.vb" id="Snippet1":::
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR/console.windowLT/FS/wlt.fs" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3004,9 +3004,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  This example demonstrates the <xref:System.Console.CursorLeft%2A> and <xref:System.Console.CursorTop%2A> properties, and the <xref:System.Console.SetCursorPosition%2A> and <xref:System.Console.Clear%2A> methods. The example positions the cursor, which determines where the next write will occur, to draw a 5 character by 5 character rectangle using a combination of "+", "&#124;", and "-" strings. Note that the rectangle could be drawn with fewer steps using a combination of other strings.
 
- [!code-cpp[console.cursorLTS#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorLTS/CPP/lts.cpp#1)]
- [!code-csharp[console.cursorLTS#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorLTS/CS/lts.cs#1)]
- [!code-vb[console.cursorLTS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorLTS/VB/lts.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.cursorLTS/CPP/lts.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.cursorLTS/CS/lts.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.cursorLTS/VB/lts.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3080,9 +3080,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example shows how to redirect the standard error stream to a file.
 
- [!code-cpp[System.Console.SetError#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.SetError/cpp/seterror1.cpp#1)]
- [!code-csharp[System.Console.SetError#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.SetError/cs/SetError1.cs#1)]
- [!code-vb[System.Console.SetError#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.SetError/vb/SetError1.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.SetError/cpp/seterror1.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.SetError/cs/SetError1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.SetError/vb/SetError1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3153,9 +3153,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the <xref:System.Console.SetIn%2A> method. It replaces four consecutive space characters in a string with a tab character. To run it, you must supply two command line arguments. The first is the name of an existing text file to redirect the standard input stream to. The second is the name of a file to redirect the standard output stream to. This file need not exist. If it does, its contents will be overwritten.
 
- [!code-cpp[System.Console-INSERTTABS#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp#1)]
- [!code-csharp[System.Console-INSERTTABS#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs#1)]
- [!code-vb[System.Console-INSERTTABS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3217,18 +3217,18 @@ This method can be used to reacquire the standard output stream after it has bee
 
  A <xref:System.IO.StreamWriter> that encapsulates a <xref:System.IO.FileStream> can be used to send output to a file. For example:
 
- [!code-cpp[System.Console.SetOut#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.console.setout/cpp/source.cpp#1)]
- [!code-csharp[System.Console.SetOut#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.setout/cs/source.cs#1)]
- [!code-vb[System.Console.SetOut#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.setout/vb/source.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.console.setout/cpp/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.setout/cs/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.setout/vb/source.vb" id="Snippet1":::
 
  The actual object returned by <xref:System.Console.Out%2A> may be a synchronized wrapper around the provided text writer.
 
 ## Examples
  The following example illustrates the use of the <xref:System.Console.SetOut%2A> method. It replaces four consecutive space characters in a string with a tab character. To run it, you must supply two command line arguments. The first is the name of an existing text file to redirect the standard input stream to. The second is the name of a file to redirect the standard output stream to. This file need not exist. If it does, its contents will be overwritten.
 
- [!code-cpp[System.Console-INSERTTABS#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp#1)]
- [!code-csharp[System.Console-INSERTTABS#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs#1)]
- [!code-vb[System.Console-INSERTTABS#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CPP/inserttabs.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-INSERTTABS/CS/inserttabs.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-INSERTTABS/VB/inserttabs.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3300,10 +3300,10 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example demonstrates the <xref:System.Console.WindowLeft%2A>, <xref:System.Console.WindowTop%2A>, <xref:System.Console.WindowWidth%2A>, <xref:System.Console.WindowHeight%2A>, <xref:System.Console.BufferWidth%2A>, <xref:System.Console.BufferHeight%2A>, and <xref:System.Console.CursorVisible%2A> properties; and the <xref:System.Console.SetWindowPosition%2A>, <xref:System.Console.SetBufferSize%2A>, and <xref:System.Console.ReadKey%2A> methods. The example draws a grid pattern in the screen buffer based on the screen buffer width. Then the example moves the console window in response to which of the UP ARROW, DOWN ARROW, LEFT ARROW, or RIGHT ARROW console keys is pressed. The grid pattern helps you see the movement of the console window relative to the screen buffer.
 
- [!code-cpp[console.windowLT#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.windowLT/CPP/wlt.cpp#1)]
- [!code-csharp[console.windowLT#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.windowLT/CS/wlt.cs#1)]
- [!code-vb[console.windowLT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.windowLT/VB/wlt.vb#1)]
- [!code-fsharp[console.windowLT#1](~/samples/snippets/fsharp/VS_Snippets_CLR/console.windowLT/FS/wlt.fs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.windowLT/CPP/wlt.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.windowLT/CS/wlt.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.windowLT/VB/wlt.vb" id="Snippet1":::
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR/console.windowLT/FS/wlt.fs" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3378,9 +3378,9 @@ This method can be used to reacquire the standard output stream after it has bee
 
  The example reports the dimensions of a console window set to 85 columns and 43 rows, then waits for a key to be pressed. When any key is pressed, the dimensions of the console window are halved, the new dimensions are reported, and the example waits for another key press. Finally, when any key is pressed, the console window is restored to its original dimensions and the example terminates.
 
- [!code-cpp[console.setwindowsize#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.setwindowsize/CPP/sws.cpp#1)]
- [!code-csharp[console.setwindowsize#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.setwindowsize/CS/sws.cs#1)]
- [!code-vb[console.setwindowsize#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.setwindowsize/VB/sws.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.setwindowsize/CPP/sws.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.setwindowsize/CS/sws.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.setwindowsize/VB/sws.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3456,9 +3456,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  This example demonstrates the <xref:System.Console.Title%2A> property. The example displays the current title of the operating system window, waits for a key press, then displays a new title.
 
- [!code-cpp[console.title#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.title/CPP/mytitle.cpp#1)]
- [!code-csharp[console.title#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.title/CS/mytitle.cs#1)]
- [!code-vb[console.title#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.title/VB/mytitle.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.title/CPP/mytitle.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.title/CS/mytitle.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.title/VB/mytitle.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3531,9 +3531,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example demonstrates the <xref:System.Console.TreatControlCAsInput%2A> property.
 
- [!code-cpp[console.readkey1#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.readkey1/CPP/rk.cpp#1)]
- [!code-csharp[console.readkey1#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.readkey1/CS/rk.cs#1)]
- [!code-vb[console.readkey1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.readkey1/VB/rk.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.readkey1/CPP/rk.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.readkey1/CS/rk.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.readkey1/VB/rk.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3607,9 +3607,9 @@ This method can be used to reacquire the standard output stream after it has bee
 
  The example reports the dimensions of a console window set to 85 columns and 43 rows, then waits for a key press. When any key is pressed, the dimensions of the console window are halved, the new dimensions are reported, and the example waits for another key press. Finally, when any key is pressed the console window is restored to its original dimensions and the example terminates.
 
- [!code-cpp[console.setwindowsize#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.setwindowsize/CPP/sws.cpp#1)]
- [!code-csharp[console.setwindowsize#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.setwindowsize/CS/sws.cs#1)]
- [!code-vb[console.setwindowsize#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.setwindowsize/VB/sws.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.setwindowsize/CPP/sws.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.setwindowsize/CS/sws.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.setwindowsize/VB/sws.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3690,9 +3690,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example opens an 80-column console window and defines a buffer area that is 120 columns wide. It displays information on window and buffer size, and then waits for the user to press either the LEFT ARROW key or the RIGHT ARROW key. In the former case, it decrements the value of the <xref:System.Console.WindowLeft%2A> property by one if the result is a legal value. In the latter case, it increases the value of the <xref:System.Console.WindowLeft%2A> property by one if the result would be legal. Note that the example does not have to handle an <xref:System.ArgumentOutOfRangeException>, because it checks that the value to be assigned to the <xref:System.Console.WindowLeft%2A> property is not negative and does not cause the sum of the <xref:System.Console.WindowLeft%2A> and <xref:System.Console.WindowWidth%2A> properties to exceed the <xref:System.Console.BufferWidth%2A> property value.
 
- [!code-cpp[System.Console.WindowLeft#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.console.windowleft/cpp/windowleft1.cpp#1)]
- [!code-csharp[System.Console.WindowLeft#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.windowleft/cs/windowleft1.cs#1)]
- [!code-vb[System.Console.WindowLeft#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.windowleft/vb/windowleft1.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.console.windowleft/cpp/windowleft1.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.windowleft/cs/windowleft1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.windowleft/vb/windowleft1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3765,10 +3765,10 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example demonstrates the <xref:System.Console.WindowLeft%2A>, <xref:System.Console.WindowTop%2A>, <xref:System.Console.WindowWidth%2A>, <xref:System.Console.WindowHeight%2A>, <xref:System.Console.BufferWidth%2A>, <xref:System.Console.BufferHeight%2A>, and <xref:System.Console.CursorVisible%2A> properties; and the <xref:System.Console.SetWindowPosition%2A>, <xref:System.Console.SetBufferSize%2A>, and <xref:System.Console.ReadKey%2A> methods. The example draws a grid pattern in the screen buffer based on the screen buffer width. Then the example moves the console window in response to which of the UP ARROW, DOWN ARROW, LEFT ARROW, or RIGHT ARROW console keys is pressed. The grid pattern helps you see the movement of the console window relative to the screen buffer.
 
- [!code-cpp[console.windowLT#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.windowLT/CPP/wlt.cpp#1)]
- [!code-csharp[console.windowLT#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.windowLT/CS/wlt.cs#1)]
- [!code-vb[console.windowLT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.windowLT/VB/wlt.vb#1)]
- [!code-fsharp[console.windowLT#1](~/samples/snippets/fsharp/VS_Snippets_CLR/console.windowLT/FS/wlt.fs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.windowLT/CPP/wlt.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.windowLT/CS/wlt.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.windowLT/VB/wlt.vb" id="Snippet1":::
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR/console.windowLT/FS/wlt.fs" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3845,9 +3845,9 @@ This method can be used to reacquire the standard output stream after it has bee
 
  The example reports the dimensions of a console window set to 85 columns and 43 rows, then waits for a key press. When any key is pressed, the dimensions of the console window are halved, the new dimensions are reported, and the example waits for another key press. Finally, when any key is pressed the console window is restored to its original dimensions and the example terminates.
 
- [!code-cpp[console.setwindowsize#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.setwindowsize/CPP/sws.cpp#1)]
- [!code-csharp[console.setwindowsize#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.setwindowsize/CS/sws.cs#1)]
- [!code-vb[console.setwindowsize#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.setwindowsize/VB/sws.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.setwindowsize/CPP/sws.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.setwindowsize/CS/sws.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.setwindowsize/VB/sws.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3922,9 +3922,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -3977,9 +3977,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4082,9 +4082,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4142,9 +4142,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4202,9 +4202,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4262,9 +4262,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4323,9 +4323,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4383,9 +4383,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4444,9 +4444,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4510,9 +4510,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4576,9 +4576,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4655,15 +4655,15 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example uses the `WriteLine` method to demonstrate the standard formatting specifiers for numbers, dates, and enumerations.
 
- [!code-cpp[console.writelineFmt1#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp#1)]
- [!code-csharp[console.writelineFmt1#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs#1)]
- [!code-vb[console.writelineFmt1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb" id="Snippet1":::
 
  The following example illustrates the use of the <xref:System.Console.Write%2A> method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -4754,15 +4754,15 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example defines a `Person` class with a number of properties that provide information about a person. Its `GetDescription` method returns an array that contains all of the property values except one. The example then uses the array returned by the  `GetDescription` method  to display the values of the Person object.
 
- [!code-csharp[System.Console.Write#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.write/cs/WriteParams1.cs#1)]
- [!code-vb[System.Console.Write#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.write/vb/WriteParams1.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.write/cs/WriteParams1.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.write/vb/WriteParams1.vb" id="Snippet1":::
 
  Note that the example calls the <xref:System.Console.Write%28System.String%2CSystem.Object%5B%5D%29> method rather than the <xref:System.Console.WriteLine%28System.String%2CSystem.Object%5B%5D%29> method because it attempts to display the value of the `Person.Remarks` property on the same line. To do this, it examines the value of the <xref:System.Console.CursorLeft%2A> and <xref:System.Console.WindowWidth%2A> properties to determine whether there is enough space for the remark to fit.  If there is, it displays the line. If not, it writes a line, indents three spaces, and displays the remark.
 
  The following example is identical to the first, except that it supplies a five-item list as the `arg` argument instead of a parameter array.
 
- [!code-csharp[System.Console.Write#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.write/cs/WriteParams2.cs#2)]
- [!code-vb[System.Console.Write#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.write/vb/WriteParams2.vb#2)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.console.write/cs/WriteParams2.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.console.write/vb/WriteParams2.vb" id="Snippet2":::
 
  ]]></format>
         </remarks>
@@ -4910,15 +4910,15 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example uses the `WriteLine` method to demonstrate the standard formatting specifiers for numbers, dates, and enumerations.
 
- [!code-cpp[console.writelineFmt1#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp#1)]
- [!code-csharp[console.writelineFmt1#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs#1)]
- [!code-vb[console.writelineFmt1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb" id="Snippet1":::
 
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5004,15 +5004,15 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example uses the `WriteLine` method to demonstrate the standard formatting specifiers for numbers, dates, and enumerations.
 
- [!code-cpp[console.writelineFmt1#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp#1)]
- [!code-csharp[console.writelineFmt1#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs#1)]
- [!code-vb[console.writelineFmt1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb" id="Snippet1":::
 
  The following example illustrates the use of the `Write` method.
 
- [!code-cpp[System.Console-REFORMAT#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp#1)]
- [!code-csharp[System.Console-REFORMAT#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs#1)]
- [!code-vb[System.Console-REFORMAT#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console-REFORMAT/CPP/reformat.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console-REFORMAT/CS/reformat.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console-REFORMAT/VB/reformat.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5107,7 +5107,7 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of variable parameters with the <xref:System.Console.Write%28System.String%2CSystem.Object%2CSystem.Object%2CSystem.Object%2CSystem.Object%29> method. The method is called with a composite format string and five format items.
 
- [!code-cpp[System.Console.Write#3](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.console.write/cpp/con_write.cpp#3)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.console.write/cpp/con_write.cpp" id="Snippet3":::
 
  ]]></format>
         </remarks>
@@ -5187,9 +5187,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The example changes the line terminator from its default value of "\r\n" or `vbCrLf` to "\r\n\r\n" or `vbCrLf` + `vbCrLf`. It then calls the <xref:System.Console.WriteLine> and <xref:System.Console.WriteLine%28System.String%29> methods to display output to the console.
 
- [!code-cpp[System.Console.WriteLine#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/newline1.cpp#2)]
- [!code-csharp-interactive[System.Console.WriteLine#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/newline1.cs#2)]
- [!code-vb[System.Console.WriteLine#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/newline1.vb#2)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/newline1.cpp" id="Snippet2":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/newline1.cs" interactive="try-dotnet-method" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/newline1.vb" id="Snippet2":::
 
  ]]></format>
         </remarks>
@@ -5251,9 +5251,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example generates ten random integers and uses the <xref:System.Console.WriteLine%28System.Boolean%29?displayProperty=nameWithType> method to indicate whether they are even.
 
- [!code-cpp[System.Console.WriteLine#4](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/writeline_boolean1.cpp#4)]
- [!code-csharp-interactive[System.Console.WriteLine#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/writeline_boolean1.cs#4)]
- [!code-vb[System.Console.WriteLine#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/writeline_boolean1.vb#4)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/writeline_boolean1.cpp" id="Snippet4":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/writeline_boolean1.cs" interactive="try-dotnet-method" id="Snippet4":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/writeline_boolean1.vb" id="Snippet4":::
 
  ]]></format>
         </remarks>
@@ -5311,8 +5311,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5424,8 +5424,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5485,8 +5485,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5546,8 +5546,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5607,8 +5607,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5669,9 +5669,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example uses the <xref:System.Console.WriteLine%28System.Object%29> method to display each value in an object array to the console.
 
- [!code-cpp[System.Console.WriteLine#3](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/writeline_obj1.cpp#3)]
- [!code-csharp-interactive[System.Console.WriteLine#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/writeline_obj1.cs#3)]
- [!code-vb[System.Console.WriteLine#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/writeline_obj1.vb#3)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/writeline_obj1.cpp" id="Snippet3":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/writeline_obj1.cs" interactive="try-dotnet-method" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/writeline_obj1.vb" id="Snippet3":::
 
  ]]></format>
         </remarks>
@@ -5731,8 +5731,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5793,9 +5793,9 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The example changes the line terminator from its default value of "\r\n" or `vbCrLf` to "\r\n\r\n" or `vbCrLf` + `vbCrLf`. It then calls the <xref:System.Console.WriteLine> and <xref:System.Console.WriteLine%28System.String%29> methods to display output to the console.
 
- [!code-cpp[System.Console.WriteLine#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/newline1.cpp#2)]
- [!code-csharp-interactive[System.Console.WriteLine#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/newline1.cs#2)]
- [!code-vb[System.Console.WriteLine#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/newline1.vb#2)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/newline1.cpp" id="Snippet2":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/newline1.cs" interactive="try-dotnet-method" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/newline1.vb" id="Snippet2":::
 
  ]]></format>
         </remarks>
@@ -5861,8 +5861,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -5928,8 +5928,8 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -6008,13 +6008,13 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example calls the <xref:System.Console.WriteLine%28System.String%2CSystem.Object%29> method to display five randomly generated <xref:System.Boolean> values.
 
- [!code-csharp-interactive[System.Console.WriteLine#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/WriteLine6.cs#6)]
- [!code-vb[System.Console.WriteLine#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/WriteLine6.vb#6)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/WriteLine6.cs" interactive="try-dotnet-method" id="Snippet6":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/WriteLine6.vb" id="Snippet6":::
 
  The following example calls the <xref:System.Console.WriteLine%28System.String%2CSystem.Object%29> method to display the current date.   Note that the format item in the `format` argument uses the "D" [standard date and time format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) to display the date in the long date format of the current culture.
 
- [!code-csharp[System.Console.WriteLine#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/WriteLine7.cs#7)]
- [!code-vb[System.Console.WriteLine#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/WriteLine7.vb#7)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/WriteLine7.cs" id="Snippet7":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/WriteLine7.vb" id="Snippet7":::
 
  ]]></format>
         </remarks>
@@ -6105,14 +6105,14 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example demonstrates the standard formatting specifiers for numbers, dates, and enumerations.
 
- [!code-cpp[console.writelineFmt1#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp#1)]
- [!code-csharp[console.writelineFmt1#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs#1)]
- [!code-vb[console.writelineFmt1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb" id="Snippet1":::
 
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -6264,14 +6264,14 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example demonstrates the standard formatting specifiers for numbers, dates, and enumerations.
 
- [!code-cpp[console.writelineFmt1#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp#1)]
- [!code-csharp[console.writelineFmt1#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs#1)]
- [!code-vb[console.writelineFmt1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb" id="Snippet1":::
 
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -6359,14 +6359,14 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example demonstrates the standard formatting specifiers for numbers, dates, and enumerations.
 
- [!code-cpp[console.writelineFmt1#1](~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp#1)]
- [!code-csharp[console.writelineFmt1#1](~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs#1)]
- [!code-vb[console.writelineFmt1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/console.writelineFmt1/cpp/wl.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/console.writelineFmt1/cs/wl.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/console.writelineFmt1/vb/wl.vb" id="Snippet1":::
 
  The following example is a tip calculator that calculates an 18% tip and uses the <xref:System.Console.WriteLine%2A> method to display the amount of the original charge, the amount of the tip, and the total amount. The example is a console application that requires the user to supply the amount of the original charge as a command-line parameter.
 
- [!code-csharp[System.Console.WriteLine#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs#1)]
- [!code-vb[System.Console.WriteLine#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb#1)]
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Console.WriteLine/CS/tipcalc.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Console.WriteLine/VB/tipcalc.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -6463,7 +6463,7 @@ This method can be used to reacquire the standard output stream after it has bee
 ## Examples
  The following example illustrates the use of variable arguments with the <xref:System.Console.WriteLine%28System.String%2CSystem.Object%2CSystem.Object%2CSystem.Object%2CSystem.Object%29> method. The method is called with a composite format string and five format items.
 
- [!code-cpp[System.Console.WriteLine#5](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/writeline_vararg.cpp#5)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Console.WriteLine/CPP/writeline_vararg.cpp" id="Snippet5":::
 
  ]]></format>
         </remarks>
