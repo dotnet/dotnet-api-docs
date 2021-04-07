@@ -4,5 +4,5 @@ The <xref:System.IO.Compression.ZipArchiveEntry.Name%2A> property contains the p
 
 The following example shows how to retrieve entries from a zip archive and evaluate the properties of the entries. It uses the <xref:System.IO.Compression.ZipArchiveEntry.Name%2A> property to display the name of the entry, and the <xref:System.IO.Compression.ZipArchiveEntry.Length%2A> and <xref:System.IO.Compression.ZipArchiveEntry.CompressedLength%2A> properties to calculate how much the file was compressed.
 
-[!code-csharp[System.IO.Compression.ZipArchiveEntry#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchiveentry/cs/program1.cs#1)]
-[!code-vb[System.IO.Compression.ZipArchiveEntry#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchiveentry/vb/program1.vb#1)]
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchiveentry/cs/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchiveentry/vb/program1.vb" id="Snippet1":::
