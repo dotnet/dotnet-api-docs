@@ -11,5 +11,5 @@ The compression functionality in <xref:System.IO.Compression.DeflateStream> and 
 
 The following example shows how to use the <xref:System.IO.Compression.DeflateStream> class to compress and decompress a directory of files.
 
-[!code-csharp[IO.Compression.Deflate1#1](~/samples/snippets/csharp/VS_Snippets_CLR/IO.Compression.Deflate1/CS/deflatetest.cs#1)]
-[!code-vb[IO.Compression.Deflate1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/IO.Compression.Deflate1/VB/deflatetest.vb#1)]
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/IO.Compression.Deflate1/CS/deflatetest.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/IO.Compression.Deflate1/VB/deflatetest.vb" id="Snippet1":::
