@@ -14,5 +14,5 @@ If a stream is closed or you pass an invalid argument, exceptions are thrown imm
 
 The following code example shows how to use the <xref:System.IO.Compression.GZipStream> class to compress and decompress a file.
 
-[!code-csharp[IO.Compression.GZip1#1](~/samples/snippets/csharp/VS_Snippets_CLR/IO.Compression.GZip1/CS/gziptest.cs#1)]
-[!code-vb[IO.Compression.GZip1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/IO.Compression.GZip1/VB/gziptest.vb#1)]
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/IO.Compression.GZip1/CS/gziptest.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/IO.Compression.GZip1/VB/gziptest.vb" id="Snippet1":::
