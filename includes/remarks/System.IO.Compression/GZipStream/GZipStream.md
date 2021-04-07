@@ -10,5 +10,5 @@ The compression functionality in <xref:System.IO.Compression.DeflateStream> and 
 
 The following example shows how to use the <xref:System.IO.Compression.GZipStream> class to compress and decompress a directory of files.
 
-[!code-csharp[IO.Compression.GZip1#1](~/samples/snippets/csharp/VS_Snippets_CLR/IO.Compression.GZip1/CS/gziptest.cs#1)]
-[!code-vb[IO.Compression.GZip1#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/IO.Compression.GZip1/VB/gziptest.vb#1)]
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/IO.Compression.GZip1/CS/gziptest.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/IO.Compression.GZip1/VB/gziptest.vb" id="Snippet1":::
