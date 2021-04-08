@@ -20,6 +20,6 @@ The following methods of the <xref:System.IO.Compression.DeflateStream>, <xref:S
 
 The following example shows how to set the compression level when creating a zip archive by using the <xref:System.IO.Compression.ZipFile> class.
 
-[!code-csharp[System.IO.Compression.ZipFile#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.zipfile/cs/program3.cs#3)]
-[!code-vb[System.IO.Compression.ZipFile#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.zipfile/vb/program3.vb#3)]
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.zipfile/cs/program3.cs" id="Snippet3":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.zipfile/vb/program3.vb" id="Snippet3":::
 
