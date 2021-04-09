@@ -15,6 +15,7 @@
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
@@ -27,8 +28,9 @@
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Runtime" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0" />
+    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Runtime" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
   </TypeForwardingChain>
   <TypeParameters>
     <TypeParameter Name="T">
@@ -64,30 +66,30 @@
 ## Examples  
  The following example illustrates the observer design pattern. It defines a `Location` class that contains latitude and longitude information.  
   
- [!code-csharp[System.IObserver.Class#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs#5)]
- [!code-vb[System.IObserver.Class#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb#5)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs" id="Snippet5":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb" id="Snippet5":::  
   
  The `LocationTracker` class provides the <xref:System.IObservable%601> implementation. Its `TrackLocation` method is passed a nullable `Location` object that contains the latitude and longitude data. If the `Location` value is not `null`, the `TrackLocation` method calls the <xref:System.IObserver%601.OnNext%2A> method of each observer.  
   
- [!code-csharp[System.IObserver.Class#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs#6)]
- [!code-vb[System.IObserver.Class#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb#6)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs" id="Snippet6":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb" id="Snippet6":::  
   
  If the `Location` value is `null`, the `TrackLocation` method instantiates a `LocationUnknownException` object, which is shown in the following example. It then calls each observer's <xref:System.IObserver%601.OnError%2A> method and passes it the `LocationUnknownException` object. Note that `LocationUnknownException` derives from <xref:System.Exception>, but does not add any new members.  
   
- [!code-csharp[System.IObserver.Class#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs#7)]
- [!code-vb[System.IObserver.Class#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb#7)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs" id="Snippet7":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb" id="Snippet7":::  
   
  Observers register to receive notifications from a `TrackLocation` object by calling its <xref:System.IObservable%601.Subscribe%2A?displayProperty=nameWithType> method, which assigns a reference to the observer object to a private generic <xref:System.Collections.Generic.List%601> object. The method returns an `Unsubscriber` object, which is an <xref:System.IDisposable> implementation that enables observers to stop receiving notifications. The `LocationTracker` class also includes an `EndTransmission` method. When no further location data is available, the method calls each observer's <xref:System.IObserver%601.OnCompleted%2A> method and then clears the internal list of observers.  
   
  In this example, the `LocationReporter` class provides the <xref:System.IObserver%601> implementation. It displays information about the current location to the console. Its constructor includes a `name` parameter, which enables the `LocationReporter` instance to identify itself in its string output. It also includes a `Subscribe` method, which wraps a call to the provider's <xref:System.IObservable%601.Subscribe%2A> method. This allows the method to assign the returned <xref:System.IDisposable> reference to a private variable. The `LocationReporter` class also includes an `Unsubscribe` method, which calls the <xref:System.IDisposable.Dispose%2A?displayProperty=nameWithType> method of the object that is returned by the <xref:System.IObservable%601.Subscribe%2A?displayProperty=nameWithType> method. The following code defines the `LocationReporter` class.  
   
- [!code-csharp[System.IObserver.Class#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/observer.cs#8)]
- [!code-vb[System.IObserver.Class#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/observer.vb#8)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/observer.cs" id="Snippet8":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/observer.vb" id="Snippet8":::  
   
  The following code then instantiates the provider and the observer.  
   
- [!code-csharp[System.IObserver.Class#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/program.cs#9)]
- [!code-vb[System.IObserver.Class#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/module1.vb#9)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/program.cs" id="Snippet9":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/module1.vb" id="Snippet9":::  
   
  ]]></format>
     </remarks>
@@ -113,6 +115,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -151,8 +154,8 @@
 ## Examples  
  The following example illustrates the <xref:System.IObservable%601.Subscribe%2A> method for an application that reports latitude and longitude information. It defines an <xref:System.Collections.Generic.IList%601> collection object that stores references to all observers. It also returns a private class named `Unsubscriber` that implements the <xref:System.IDisposable> interface and enables subscribers to stop receiving event notifications.  See the Example section of the <xref:System.IObservable%601> topic for the complete example.  
   
- [!code-csharp[System.IObserver.Class#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs#13)]
- [!code-vb[System.IObserver.Class#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb#13)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs" id="Snippet13":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb" id="Snippet13":::  
   
  ]]></format>
         </remarks>
