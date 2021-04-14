@@ -4683,16 +4683,17 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
   
  If you call the <xref:System.Net.Sockets.Socket.%23ctor%2A> constructor multiple times with the same byte array as the argument for each call, you will create multiple managed <xref:System.Net.Sockets.Socket> instances with the same underlying socket. This practice is strongly discouraged.  
   
- If the process creating the socket uses asynchronous methods (<xref:System.Net.Sockets.Socket.BeginReceive%2A> or <xref:System.Net.Sockets.Socket.BeginSend%2A>), the process must first set the <xref:System.Net.Sockets.Socket.UseOnlyOverlappedIO%2A> property to true; otherwise, the socket is bound to the completion port of the creating process, which may cause an <xref:System.ArgumentNullException> to be thrown on the target process.  
+On .NET Framework, if the process creating the socket uses asynchronous methods (<xref:System.Net.Sockets.Socket.BeginReceive%2A> or <xref:System.Net.Sockets.Socket.BeginSend%2A>), the process must first set the <xref:System.Net.Sockets.Socket.UseOnlyOverlappedIO%2A> property to `true`. Otherwise, the socket is bound to the completion port of the creating process, which may cause an <xref:System.ArgumentNullException> to be thrown on the target process. On .NET 5+, socket duplication doesn't work with [I/O completion ports](/windows/win32/fileio/i-o-completion-ports).
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.PlatformNotSupportedException">.NET Core on any OS and .NET 5+ on Unix-based OS only: The current platform is not supported.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">
-          <paramref name="targetProcessID" /> is not a valid process id.  
-  
- -or-  
-  
- Duplication of the socket reference failed.</exception>
+          <paramref name="targetProcessID" /> is not a valid process id.
+
+-or-
+
+Duplication of the socket reference failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="EnableBroadcast">
@@ -12844,15 +12845,18 @@ Call IDisposable.Dispose when you are finished using the <xref:System.Net.Socket
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Specifies whether the socket should only use Overlapped I/O mode.</summary>
+        <summary>Gets or sets a value that specifies whether the socket should only use Overlapped I/O mode. On .NET 5+ (including .NET Core versions), the value is always <see langword="false" />.</summary>
         <value>
-          <see langword="true" /> if the <see cref="T:System.Net.Sockets.Socket" /> uses only overlapped I/O; otherwise, <see langword="false" />. The default is <see langword="false" />.</value>
+          <see langword="true" /> on .NET Framework if the <see cref="T:System.Net.Sockets.Socket" /> uses only overlapped I/O; otherwise, <see langword="false" />. The default is <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- Set this property to `true` for a <xref:System.Net.Sockets.Socket> you intend to call <xref:System.Net.Sockets.Socket.DuplicateAndClose%2A>. Otherwise, the Framework may assign a completion port to the socket, which would prohibit the use of <xref:System.Net.Sockets.Socket.DuplicateAndClose%2A>.  
-  
+## Remarks
+
+.NET Framework only: Set this property to `true` for a <xref:System.Net.Sockets.Socket> you intend to call <xref:System.Net.Sockets.Socket.DuplicateAndClose%2A> on. Otherwise, the Framework may assign a completion port to the socket, which would prohibit the use of <xref:System.Net.Sockets.Socket.DuplicateAndClose%2A>.
+
+On .NET 5+ (include .NET Core) versions, the value of this property is always `false`, and you cannot change its value.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The socket has been bound to a completion port.</exception>
