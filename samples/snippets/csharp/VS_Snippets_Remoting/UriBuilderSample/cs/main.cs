@@ -17,6 +17,8 @@ namespace ConsoleApplication1
 			string queryToAppend = "param2=1234";
 
 			if (baseUri.Query != null && baseUri.Query.Length > 1)
+			    // Note: In .NET Core and .NET 5+, you can simplify by removing
+				// the call to Substring(), which removes the leading "?" character.
 				baseUri.Query = baseUri.Query.Substring(1) + "&" + queryToAppend; 
 			else
 				baseUri.Query = queryToAppend; 
