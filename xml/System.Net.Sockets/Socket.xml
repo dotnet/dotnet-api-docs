@@ -4678,12 +4678,17 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- The target process should use <xref:System.Net.Sockets.Socket.%23ctor%2A> to create the duplicate socket instance.  
-  
- If you call the <xref:System.Net.Sockets.Socket.%23ctor%2A> constructor multiple times with the same byte array as the argument for each call, you will create multiple managed <xref:System.Net.Sockets.Socket> instances with the same underlying socket. This practice is strongly discouraged.  
-  
-On .NET Framework, if the process creating the socket uses asynchronous methods (<xref:System.Net.Sockets.Socket.BeginReceive%2A> or <xref:System.Net.Sockets.Socket.BeginSend%2A>), the process must first set the <xref:System.Net.Sockets.Socket.UseOnlyOverlappedIO%2A> property to `true`. Otherwise, the socket is bound to the completion port of the creating process, which may cause an <xref:System.ArgumentNullException> to be thrown on the target process. On .NET 5+, socket duplication doesn't work with [I/O completion ports](/windows/win32/fileio/i-o-completion-ports).
+## Remarks
+
+The target process should use <xref:System.Net.Sockets.Socket.%23ctor%2A> to create the duplicate socket instance.
+
+If you call the <xref:System.Net.Sockets.Socket.%23ctor%2A> constructor multiple times with the same byte array as the argument for each call, you will create multiple managed <xref:System.Net.Sockets.Socket> instances with the same underlying socket. This practice is strongly discouraged.
+
+On .NET Framework, if the process creating the socket uses asynchronous methods, the process must first set the <xref:System.Net.Sockets.Socket.UseOnlyOverlappedIO> property to `true`. Otherwise, the asynchronous method will bind the socket to an [I/O completion port](/windows/win32/fileio/i-o-completion-ports) of the creating process, which may cause an <xref:System.ArgumentNullException> to be thrown in the target process.
+
+On .NET Core 1.0-3.1, this method is unsupported.
+
+On .NET 5+, `DuplicateAndClose` has limited support on Windows. Unlike on .NET Framework, the <xref:System.Net.Sockets.Socket.UseOnlyOverlappedIO> property is a NOP and the process creating the socket must not call any asynchronous methods on the socket. A call to an asynchronous operation will always bind it to an [I/O completion port](/windows/win32/fileio/i-o-completion-ports) of the creating process, which may cause an <xref:System.ArgumentNullException> to be thrown in the target process.
   
  ]]></format>
         </remarks>
