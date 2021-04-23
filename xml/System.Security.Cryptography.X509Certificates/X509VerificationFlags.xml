@@ -42,20 +42,20 @@
   <Docs>
     <summary>Specifies conditions under which verification of certificates in the X509 chain should be conducted.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
  These flags indicate the conditions under which chain verification should occur. For example, if an application does not require certificates time values in a chain to be valid, the IgnoreNotTimeValid flag can be used.
 
- Note that the behavior of certificate validation in .NET Core aims to standardize its behavior according to the underlying win32 implementation APIs (i.e. CertVerifyCertificateChainPolicy in wincrypt.h), even on other platforms. Therefore, AllowUnknownCertificateAuthority not only allows for an untrusted roots, but also permits partial chains on all platforms.
- 
-## Examples  
- The following example opens the current user's personal certificate store, allows the user to select a certificate, then writes certificate and certificate chain information to the console. The output depends on the certificate you select.  
-  
+ The behavior of this class on all platforms follows that of .NET Framework implementation, which is based on the wincrypt APIs.
+
+## Examples
+ The following example opens the current user's personal certificate store, allows the user to select a certificate, then writes certificate and certificate chain information to the console. The output depends on the certificate you select.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/x509chaintest/CPP/x509chaintest.cpp" id="Snippet3":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/x509chaintest/CS/x509chaintest.cs" id="Snippet3":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/x509chaintest/vb/x509chaintest.vb" id="Snippet3":::  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/x509chaintest/vb/x509chaintest.vb" id="Snippet3":::
+
  ]]></format>
     </remarks>
   </Docs>
@@ -131,7 +131,9 @@
       </ReturnValue>
       <MemberValue>16</MemberValue>
       <Docs>
-        <summary>Ignore that the chain cannot be verified due to an unknown certificate authority (CA), or a partial chain. Note that ignoring partial chain skips verification that the signing authority of the certificate under validation was actually signed by one of the known CAs, so this must be performed separately if desired.</summary>
+        <summary>Ignore that the chain cannot be verified due to an unknown certificate authority (CA) and ignore partial chains.
+
+        Ignoring partial chains effectively results in the <xref:System.Security.Cryptography.X509Certificates.X509Chain.Build%2A> method returning <see langword="true" /> no matter if the signing CA for the certificate under validation is in a trust store or not. Validation of completed chains (with an unknown CA) should be performed by ensuring that <see cref="F:System.Security.Cryptography.X509Certificates.X509VerificationFlags.PartialChain" /> is not returned in the chain <xref:System.Security.Cryptography.X509Certificates.X509ChainStatus.Status>, or validate the issuer fingerprint manually.</summary>
       </Docs>
     </Member>
     <Member MemberName="IgnoreCertificateAuthorityRevocationUnknown">
