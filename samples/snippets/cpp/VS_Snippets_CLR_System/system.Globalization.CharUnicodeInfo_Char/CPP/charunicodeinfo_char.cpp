@@ -41,14 +41,14 @@ This code produces the following output.  Some characters might not display at t
 
                                         c  Num   Dig   Dec   UnicodeCategory
 U+0061 LATIN SMALL LETTER A             a   -1    -1    -1   LowercaseLetter
-U+0393 GREEK CAPITAL LETTER GAMMA       \u0393   -1    -1    -1   UppercaseLetter
+U+0393 GREEK CAPITAL LETTER GAMMA       Γ   -1    -1    -1   UppercaseLetter
 U+0039 DIGIT NINE                       9   9     9     9    DecimalDigitNumber
-U+00B2 SUPERSCRIPT TWO                  \u00B2   2     2     2    OtherNumber
-U+00BC VULGAR FRACTION ONE QUARTER      \u00BC   0.25  -1    -1   OtherNumber
-U+0BEF TAMIL DIGIT NINE                 \u0BEF   9     9     9    DecimalDigitNumber
-U+0BF0 TAMIL NUMBER TEN                 \u0BF0   10    -1    -1   OtherNumber
-U+0F33 TIBETAN DIGIT HALF ZERO          \u0F33   -0.5  -1    -1   OtherNumber
-U+2788 CIRCLED SANS-SERIF DIGIT NINE    \u2788   9     9     -1   OtherNumber
+U+00B2 SUPERSCRIPT TWO                  ²   2     2     -1   OtherNumber
+U+00BC VULGAR FRACTION ONE QUARTER      ¼   0.25  -1    -1   OtherNumber
+U+0BEF TAMIL DIGIT NINE                 ௯   9     9     9    DecimalDigitNumber
+U+0BF0 TAMIL NUMBER TEN                 ௰   10    -1    -1   OtherNumber
+U+0F33 TIBETAN DIGIT HALF ZERO          ༳   -0.5  -1    -1   OtherNumber
+U+2788 CIRCLED SANS-SERIF DIGIT NINE    ➈   9     9     -1   OtherNumber
 
 */
 // </snippet1>
