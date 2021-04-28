@@ -27,7 +27,7 @@ namespace StreamReadWrite
             string line = "";
             using (StreamReader sr = new StreamReader("CDriveDirs.txt"))
             {
-                while ((line = sr.ReadLine()) != null)
+                while (sr.EndOfStream)
                 {
                     Console.WriteLine(line);
                 }
