@@ -15,7 +15,7 @@ public class Example
 
    static void ShowThreadInfo(String s)
    {
-      Console.WriteLine("{0} Thread ID: {1}",
+      Console.WriteLine("{0} thread ID: {1}",
                         s, Thread.CurrentThread.ManagedThreadId);
    }
 }
