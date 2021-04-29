@@ -1753,13 +1753,20 @@ To identify the operating system platform, for example, Linux or Windows, you ca
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of processors on the current machine.</summary>
-        <value>The 32-bit signed integer that specifies the number of processors on the current machine. There is no default. If the current machine contains multiple processor groups, this property returns the number of logical processors that are available for use by the common language runtime (CLR).</value>
+        <summary>Gets the number of processors available to the current process.</summary>
+        <value>The 32-bit signed integer that specifies the number of processors that are available.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- For more information about processor groups and logical processors, see [Processor Groups](/windows/win32/procthread/processor-groups).
+On Linux and macOS systems for all .NET versions and on Windows systems starting with .NET 6, this API returns the minimum of:
+- The number of logical processors on the machine.
+- If the process is running with CPU affinity, the number of processors that the process is affinitized to.
+- If the process is running with a CPU utilization limit, the CPU utilization limit rounded up to the next whole number.
+
+The value returned by this API is fixed at .NET runtime startup for the process lifetime. It does not reflect changes in the environment settings while the process is running.
+
+For more information about processor groups and logical processors, see [Processor Groups](/windows/win32/procthread/processor-groups).
 
 ## Examples
  The following example demonstrates the <xref:System.Environment.ProcessorCount%2A> property.
