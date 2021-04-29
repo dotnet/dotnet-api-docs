@@ -81,18 +81,18 @@ Module modMain
                               number)
          End Try
       Next
+      '       -1 is outside the range of the Char data type.
+      '       0 converts to ' '.
+      '       40 converts to '('.
+      '       160 converts to ' '.
+      '       255 converts to 'ÿ'.
+      '       1028 converts to 'Є'.
+      '       2011 converts to 'ߛ'.
+      '       30001 converts to '由'.
+      '       207154 is outside the range of the Char data type.
+      '       2147483647 is outside the range of the Char data type.   
+      ' </Snippet3>
    End Sub
-   '       -1 is outside the range of the Char data type.
-   '       0 converts to ' '.
-   '       40 converts to '('.
-   '       160 converts to ' '.
-   '       255 converts to 'ÿ'.
-   '       1028 converts to 'Є'.
-   '       2011 converts to 'ߛ'.
-   '       30001 converts to '由'.
-   '       207154 is outside the range of the Char data type.
-   '       2147483647 is outside the range of the Char data type.
-   ' </Snippet3>
 
    Private Sub ConvertSByte()
       ' <Snippet4>
