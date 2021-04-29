@@ -5,7 +5,7 @@ class Program
     static void Main()
     {
         string contentLength = "Content-Length: 132";
-        var length = GetContentLength(contentLength.ToCharArray());	
+        var length = GetContentLength(contentLength);	
         Console.WriteLine($"Content length: {length}"); 
     }
 
