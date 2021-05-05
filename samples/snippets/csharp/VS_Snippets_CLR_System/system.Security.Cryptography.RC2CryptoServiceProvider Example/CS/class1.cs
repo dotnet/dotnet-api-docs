@@ -40,7 +40,7 @@ namespace RC2CryptoServiceProvider_Examples
             byte[] encrypted = msEncrypt.ToArray();
 
             ///////////////////////////////////////////////////////
-            // This is where the data could be transmitted or saved.          
+            // This is where the data could be transmitted or saved.
             ///////////////////////////////////////////////////////
 
             //Get a decryptor that uses the same key and IV as the encryptor.
@@ -55,13 +55,13 @@ namespace RC2CryptoServiceProvider_Examples
             // and place them in a StringBuilder class.
 
             StringBuilder roundtrip = new StringBuilder();
-            
+
             int b = 0;
 
             do
             {
                 b = csDecrypt.ReadByte();
-                
+
                 if (b != -1)
                 {
                     roundtrip.Append((char)b);
@@ -71,8 +71,6 @@ namespace RC2CryptoServiceProvider_Examples
             // Display the original data and the decrypted data.
             Console.WriteLine("Original:   {0}", original);
             Console.WriteLine("Round Trip: {0}", roundtrip);
-
-            Console.ReadLine();
         }
     }
 }
