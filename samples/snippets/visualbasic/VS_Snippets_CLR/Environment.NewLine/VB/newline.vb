@@ -3,8 +3,7 @@
 Class Sample
    Public Shared Sub Main()
       Console.WriteLine()
-      Console.WriteLine("NewLine: {0}  first line{0}  second line{0}  third line", _
-                             Environment.NewLine)
+      Console.WriteLine($"NewLine:{Environment.NewLine}  first line{Environment.NewLine}  second line")
    End Sub
 End Class
 '
@@ -13,6 +12,5 @@ End Class
 'NewLine:
 '  first line
 '  second line
-'  third line
 '
 '</snippet1>
