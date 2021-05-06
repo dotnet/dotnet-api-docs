@@ -1,4 +1,4 @@
-﻿'<snippet1>
+'<snippet1>
 ' Sample for the Environment.NewLine property
 Class Sample
    Public Shared Sub Main()
@@ -6,6 +6,7 @@ Class Sample
       Console.WriteLine($"NewLine:{Environment.NewLine}  first line{Environment.NewLine}  second line")
    End Sub
 End Class
+
 'This example produces the following results:
 '
 'NewLine:
