@@ -38,7 +38,7 @@ Module Crypto
         Dim encrypted As Byte() = msEncrypt.ToArray()
 
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''
-        ' This is where the data could be transmitted or saved.          
+        ' This is where the data could be transmitted or saved.
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
         'Get a decryptor that uses the same key and IV as the encryptor.
@@ -66,8 +66,6 @@ Module Crypto
         ' Display the original data and the decrypted data.
         Console.WriteLine("Original:   {0}", original)
         Console.WriteLine("Round Trip: {0}", roundtrip)
-
-        Console.ReadLine()
 
     End Sub
 End Module
