@@ -13,6 +13,6 @@ public class Example
    }
 }
 // The example displays the following output:
-//       |(2, 3)| = 3.60555127546399
+//       |(2, 3)| = 3.61
 //       Equal to Magnitude: True
 // </Snippet1>
