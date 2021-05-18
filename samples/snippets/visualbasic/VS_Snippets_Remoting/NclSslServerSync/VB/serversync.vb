@@ -122,8 +122,9 @@ Namespace Examples.System.Net
         '<snippet4>
         Private Shared Sub DisplaySecurityServices(stream As SslStream)
             Console.WriteLine("Is authenticated: {0} as server? {1}", stream.IsAuthenticated, stream.IsServer)
-            Console.WriteLine("IsSigned: {0}", stream.IsSigned)
-            Console.WriteLine("Is Encrypted: {0}", stream.IsEncrypted)
+            Console.WriteLine("Is signed: {0}", stream.IsSigned)
+            Console.WriteLine("Is encrypted: {0}", stream.IsEncrypted)
+            Console.WriteLine("Is mutually authenticated: {0}", stream.IsMutuallyAuthenticated)
         End Sub
         ' </snippet4>
 
