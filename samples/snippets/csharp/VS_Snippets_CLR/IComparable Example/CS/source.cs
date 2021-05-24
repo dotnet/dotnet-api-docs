@@ -23,7 +23,8 @@ public class Temperature : IComparable
         {
             return this.temperatureF;
         }
-        set {
+        set 
+        {
             this.temperatureF = value;
         }
     }
