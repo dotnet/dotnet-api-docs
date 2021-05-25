@@ -12,6 +12,17 @@ public enum PhoneService
    Other = 16
 }
 
+[Flags]
+public enum ReadablePhoneService    // Numeric literal syntax improvements in C# v7.0
+{                                   // unused by code but see notes below
+   None     = 0b0000_0000,
+   LandLine = 0b0000_0001,
+   Cell     = 0b0000_0010,
+   Fax      = 0b0000_0100,
+   Internet = 0b0000_1000,
+   Other    = 0b0001_0000,
+}
+
 public class Example
 {
    public static void Main()
