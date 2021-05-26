@@ -195,7 +195,7 @@ namespace Microsoft.Samples.PointExamples
             Point pointResult = new Point(10, 5);
 
             // Offset Point X value by 20 and Y value by 30.
-            // point1 is now equal to (30,35)
+            // pointResult is now equal to (30,35)
             pointResult.Offset(20, 30);
 
             return pointResult;
