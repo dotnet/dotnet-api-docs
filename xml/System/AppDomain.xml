@@ -9022,17 +9022,16 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- In the .NET Framework version 2.0 there is a thread dedicated to unloading application domains. This improves reliability, especially when the .NET Framework is hosted. When a thread calls <xref:System.AppDomain.Unload%2A>, the target domain is marked for unloading. The dedicated thread attempts to unload the domain, and all threads in the domain are aborted. If a thread does not abort, for example because it is executing unmanaged code, or because it is executing a `finally` block, then after a period of time a <xref:System.CannotUnloadAppDomainException> is thrown in the thread that originally called <xref:System.AppDomain.Unload%2A>. If the thread that could not be aborted eventually ends, the target domain is not unloaded. Thus, in the .NET Framework version 2.0 `domain` is not guaranteed to unload, because it might not be possible to terminate executing threads.  
+ In .NET Framework version 2.0 and later, there is a thread dedicated to unloading application domains. This improves reliability, especially when .NET Framework is hosted. When a thread calls <xref:System.AppDomain.Unload%2A>, the target domain is marked for unloading. The dedicated thread attempts to unload the domain, and all threads in the domain are aborted. If a thread does not abort, for example because it is executing unmanaged code, or because it is executing a `finally` block, then after a period of time, a <xref:System.CannotUnloadAppDomainException> is thrown in the thread that originally called <xref:System.AppDomain.Unload%2A>. If the thread that could not be aborted eventually ends, the target domain is not unloaded. Thus, in .NET Framework version 2.0 and later, `domain` is not guaranteed to unload, because it might not be possible to terminate executing threads.  
   
 > [!NOTE]
 >  In some cases, calling <xref:System.AppDomain.Unload%2A> causes an immediate <xref:System.CannotUnloadAppDomainException>, for example if it is called in a finalizer.  
   
  The threads in `domain` are terminated using the <xref:System.Threading.Thread.Abort%2A> method, which throws a <xref:System.Threading.ThreadAbortException> in the thread. Although the thread should terminate promptly, it can continue executing for an unpredictable amount of time in a `finally` clause.  
   
-## Version Compatibility  
- In the .NET Framework version 1.0 and 1.1 if the thread that calls <xref:System.AppDomain.Unload%2A> is running in `domain`, another thread is started to perform the unload operation. If `domain` cannot be unloaded, a <xref:System.CannotUnloadAppDomainException> is thrown in that thread, not in the original thread that called <xref:System.AppDomain.Unload%2A>. However, if the thread that calls <xref:System.AppDomain.Unload%2A> is running outside `domain`, that thread receives the exception.  
-  
-   
+## Version compatibility
+
+In .NET Framework version 1.0 and 1.1, if the thread that calls <xref:System.AppDomain.Unload%2A> is running in `domain`, another thread is started to perform the unload operation. If `domain` cannot be unloaded, a <xref:System.CannotUnloadAppDomainException> is thrown in that thread, not in the original thread that called <xref:System.AppDomain.Unload%2A>. However, if the thread that calls <xref:System.AppDomain.Unload%2A> is running outside `domain`, that thread receives the exception.
   
 ## Examples  
  The following code example shows how to unload an application domain.  
@@ -9046,7 +9045,11 @@
         <exception cref="T:System.ArgumentNullException">
           <paramref name="domain" /> is <see langword="null" />.</exception>
         <exception cref="T:System.CannotUnloadAppDomainException">
-          <paramref name="domain" /> could not be unloaded.</exception>
+.NET 6+ only: In all cases.
+
+-or-
+
+<paramref name="domain" /> could not be unloaded.</exception>
         <exception cref="T:System.Exception">An error occurred during the unload process.</exception>
       </Docs>
     </Member>
