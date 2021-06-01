@@ -76,15 +76,16 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- Application domains, which are represented by <xref:System.AppDomain> objects, help provide isolation, unloading, and security boundaries for executing managed code.  
+## Remarks
+
+Application domains, which are represented by <xref:System.AppDomain> objects, help provide isolation, unloading, and security boundaries for executing managed code.  
   
--   Use application domains to isolate tasks that might bring down a process. If the state of the <xref:System.AppDomain> that's executing a task becomes unstable, the <xref:System.AppDomain> can be unloaded without affecting the process. This is important when a process must run for long periods without restarting. You can also use application domains to isolate tasks that should not share data.  
+- Use application domains to isolate tasks that might bring down a process. If the state of the <xref:System.AppDomain> that's executing a task becomes unstable, the <xref:System.AppDomain> can be unloaded without affecting the process. This is important when a process must run for long periods without restarting. You can also use application domains to isolate tasks that should not share data.  
   
--   If an assembly is loaded into the default application domain, it cannot be unloaded from memory while the process is running. However, if you open a second application domain to load and execute the assembly, the assembly is unloaded when that application domain is unloaded. Use this technique to minimize the working set of long-running processes that occasionally use large DLLs.  
+- If an assembly is loaded into the default application domain, it cannot be unloaded from memory while the process is running. However, if you open a second application domain to load and execute the assembly, the assembly is unloaded when that application domain is unloaded. Use this technique to minimize the working set of long-running processes that occasionally use large DLLs.  
   
  > [!NOTE]
- >  On .NET Core, the <xref:System.AppDomain> implementation is limited by design and does not provide isolation, unloading, or security boundaries. For .NET Core, there is exactly one <xref:System.AppDomain>. Isolation and unloading are provided through <xref:System.Runtime.Loader.AssemblyLoadContext>. Security boundaries should be provided by process boundaries and appropriate remoting techniques.
+ > On .NET Core, the <xref:System.AppDomain> implementation is limited by design and does not provide isolation, unloading, or security boundaries. For .NET Core, there is exactly one <xref:System.AppDomain>. Isolation and unloading are provided through <xref:System.Runtime.Loader.AssemblyLoadContext>. Security boundaries should be provided by process boundaries and appropriate remoting techniques.
  
  Multiple application domains can run in a single process; however, there is not a one-to-one correlation between application domains and threads. Several threads can belong to a single application domain, and while a given thread is not confined to a single application domain, at any given time, a thread executes in a single application domain.  
   
@@ -99,10 +100,8 @@
  You should never create a remotable wrapper for an <xref:System.AppDomain> object. Doing so could publish a remote reference to that <xref:System.AppDomain>, exposing methods such as <xref:System.AppDomain.CreateInstance%2A> to remote access and effectively destroying code access security for that <xref:System.AppDomain>. Malicious clients connecting to the remoted <xref:System.AppDomain> could obtain access to any resource the <xref:System.AppDomain> itself has access to. Do not create remotable wrappers for any type that extends <xref:System.MarshalByRefObject> and that implements methods that could be used by malicious clients to bypass the security system.  
   
 > [!CAUTION]
->  The default value for the <xref:System.AppDomainSetup.DisallowCodeDownload%2A?displayProperty=nameWithType> property is `false`. This setting is unsafe for services. To prevent services from downloading partially trusted code, set this property to `true`.  
-  
-   
-  
+> The default value for the <xref:System.AppDomainSetup.DisallowCodeDownload%2A?displayProperty=nameWithType> property is `false`. This setting is unsafe for services. To prevent services from downloading partially trusted code, set this property to `true`.
+
 ## Examples  
  This example shows how to create a new <xref:System.AppDomain>, instantiate a type in that new <xref:System.AppDomain>, and communicate with that type's object. In addition, this example shows how to unload the <xref:System.AppDomain> causing the object to be garbage collected.  
   
@@ -994,12 +993,11 @@
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- The `friendlyName` parameter is intended to identify the domain in a manner that is meaningful to humans. This string should be suitable for display in user interfaces.  
+## Remarks
+
+The `friendlyName` parameter is intended to identify the domain in a manner that is meaningful to humans. This string should be suitable for display in user interfaces.  
   
- This method overload uses the <xref:System.AppDomainSetup> information from the default application domain.  
-  
-   
+This method overload uses the <xref:System.AppDomainSetup> information from the default application domain.
   
 ## Examples  
  The following sample demonstrates, in general, how to create a domain using one of the <xref:System.AppDomain.CreateDomain%2A> overloads.  
@@ -1012,7 +1010,8 @@
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="friendlyName" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">Method not supported on .NET Core.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
+        <related type="Article" href="/dotnet/core/porting/net-framework-tech-unavailable#application-domains">Unavailable technologies on .NET Core/5+: Application domains</related>
         <altmember cref="P:System.AppDomain.FriendlyName" />
       </Docs>
     </Member>
@@ -9021,14 +9020,15 @@
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- In .NET Framework version 2.0 and later, there is a thread dedicated to unloading application domains. This improves reliability, especially when .NET Framework is hosted. When a thread calls <xref:System.AppDomain.Unload%2A>, the target domain is marked for unloading. The dedicated thread attempts to unload the domain, and all threads in the domain are aborted. If a thread does not abort, for example because it is executing unmanaged code, or because it is executing a `finally` block, then after a period of time, a <xref:System.CannotUnloadAppDomainException> is thrown in the thread that originally called <xref:System.AppDomain.Unload%2A>. If the thread that could not be aborted eventually ends, the target domain is not unloaded. Thus, in .NET Framework version 2.0 and later, `domain` is not guaranteed to unload, because it might not be possible to terminate executing threads.  
-  
+## Remarks
+
+In .NET Framework version 2.0 and later, there is a thread dedicated to unloading application domains. This improves reliability, especially when .NET Framework is hosted. When a thread calls <xref:System.AppDomain.Unload%2A>, the target domain is marked for unloading. The dedicated thread attempts to unload the domain, and all threads in the domain are aborted. If a thread does not abort, for example because it is executing unmanaged code, or because it is executing a `finally` block, then after a period of time, a <xref:System.CannotUnloadAppDomainException> is thrown in the thread that originally called <xref:System.AppDomain.Unload%2A>. If the thread that could not be aborted eventually ends, the target domain is not unloaded. Thus, in .NET Framework version 2.0 and later, `domain` is not guaranteed to unload, because it might not be possible to terminate executing threads.
+
 > [!NOTE]
->  In some cases, calling <xref:System.AppDomain.Unload%2A> causes an immediate <xref:System.CannotUnloadAppDomainException>, for example if it is called in a finalizer.  
-  
- The threads in `domain` are terminated using the <xref:System.Threading.Thread.Abort%2A> method, which throws a <xref:System.Threading.ThreadAbortException> in the thread. Although the thread should terminate promptly, it can continue executing for an unpredictable amount of time in a `finally` clause.  
-  
+>  In some cases, calling <xref:System.AppDomain.Unload%2A> causes an immediate <xref:System.CannotUnloadAppDomainException>, for example if it is called in a finalizer.
+
+The threads in `domain` are terminated using the <xref:System.Threading.Thread.Abort%2A> method, which throws a <xref:System.Threading.ThreadAbortException> in the thread. Although the thread should terminate promptly, it can continue executing for an unpredictable amount of time in a `finally` clause.
+
 ## Version compatibility
 
 In .NET Framework version 1.0 and 1.1, if the thread that calls <xref:System.AppDomain.Unload%2A> is running in `domain`, another thread is started to perform the unload operation. If `domain` cannot be unloaded, a <xref:System.CannotUnloadAppDomainException> is thrown in that thread, not in the original thread that called <xref:System.AppDomain.Unload%2A>. However, if the thread that calls <xref:System.AppDomain.Unload%2A> is running outside `domain`, that thread receives the exception.
@@ -9051,6 +9051,7 @@ In .NET Framework version 1.0 and 1.1, if the thread that calls <xref:System.App
 
 <paramref name="domain" /> could not be unloaded.</exception>
         <exception cref="T:System.Exception">An error occurred during the unload process.</exception>
+        <related type="Article" href="/dotnet/core/porting/net-framework-tech-unavailable#application-domains">Unavailable technologies on .NET Core/5+: Application domains</related>
       </Docs>
     </Member>
   </Members>
