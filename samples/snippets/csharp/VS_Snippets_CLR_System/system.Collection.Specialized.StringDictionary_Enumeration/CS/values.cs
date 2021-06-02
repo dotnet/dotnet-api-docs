@@ -23,7 +23,7 @@ public class SamplesStringDictionary
     }
 }
 // This code produces the following output.
-// VALUE
+// VALUES
 // verde
 // rojo
 // azul

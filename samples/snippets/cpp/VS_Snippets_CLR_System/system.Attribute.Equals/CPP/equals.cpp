@@ -54,13 +54,13 @@ public ref class TestClass
    public:
       // Assign an ArgumentID attribute to each parameter.
       // Assign an ArgumentUsage attribute to each parameter.
-      void TestMethod( [ArgumentID][ArgumentUsage("Must pass an array here.")]array<String^>^strArray, 
+      void TestMethod( [ArgumentID][ArgumentUsage("Must pass an array here.")]array<String^>^strArray,
                        [ArgumentID][ArgumentUsage("Can pass param list or array here.")]array<String^>^strList ){}
 };
 
 int main()
 {
-      // Get the class type, and then get the MethodInfo object 
+      // Get the class type, and then get the MethodInfo object
       // for TestMethod to access its metadata.
       Type^ clsType = TestClass::typeid;
       MethodInfo^ mInfo = clsType->GetMethod( "TestMethod" );
@@ -105,19 +105,19 @@ int main()
       }
 }
 /*
-The example displays the following output:
+The example displays an output similar to the following:
       Compare a usage attribute instance to another instance of the same attribute:
          "ArgumentUsageAttribute:Must pass an array here." ==
          "ArgumentUsageAttribute:Must pass an array here." ? True
-      
+
       Compare a usage attribute to another usage attribute:
          "ArgumentUsageAttribute:Must pass an array here." ==
          "ArgumentUsageAttribute:Can pass param list or array here." ? False
-      
+
       Compare an ID attribute instance to another instance of the same attribute:
          "ArgumentIDAttribute.22d1a176-4aca-427b-8230-0c1563e13187" ==
          "ArgumentIDAttribute.7fa94bba-c290-48e1-a0de-e22f6c1e64f1" ? False
-      
+
       Compare an ID attribute to another ID attribute:
          "ArgumentIDAttribute.22d1a176-4aca-427b-8230-0c1563e13187" ==
          "ArgumentIDAttribute.b9eea70d-9c0f-459e-a984-19c46b6c8789" ? False
