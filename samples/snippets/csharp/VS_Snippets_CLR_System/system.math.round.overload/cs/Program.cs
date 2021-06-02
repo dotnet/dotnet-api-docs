@@ -6,7 +6,7 @@ namespace Rounding
     {
         static void Main(string[] args)
         {
-            Midpoint.Example2();
+            MPR.DecimalExample();
         }
     }
 }
