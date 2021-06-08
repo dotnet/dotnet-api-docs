@@ -27,8 +27,8 @@ End Class
 'This code produces the following output.  The question marks take the place of native script characters.
 '
 ' CULTURE    PROPERTY VALUE
-'  en-US     MMMM, yyyy
-'  ja-JP     yyyy'?'M'?'
+'  en-US     MMMM yyyy
+'  ja-JP     yyyy年M月
 '  fr-FR     MMMM yyyy
 '
 ' </snippet1>

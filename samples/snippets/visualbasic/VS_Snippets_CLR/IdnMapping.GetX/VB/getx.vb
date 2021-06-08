@@ -6,16 +6,16 @@
 Imports System.Globalization
 
 Class Sample
-    Public Shared Sub Main() 
+    Public Shared Sub Main()
 
-'   Define a domain name consisting of the labels: GREEK SMALL LETTER 
-'   PI (U+03C0); IDEOGRAPHIC FULL STOP (U+3002); GREEK SMALL LETTER 
+'   Define a domain name consisting of the labels: GREEK SMALL LETTER
+'   PI (U+03C0); IDEOGRAPHIC FULL STOP (U+3002); GREEK SMALL LETTER
 '   THETA (U+03B8); FULLWIDTH FULL STOP (U+FF0E); and "com".
 
         Dim name As String = "π。θ．com"
         Dim international As String
         Dim nonInternational As String
-        
+
         Dim msg1 As String = "the original non-internationalized " & vbCrLf & "domain name:"
         Dim msg2 As String = "Allow unassigned characters?:     {0}"
         Dim msg3 As String = "Use non-internationalized rules?: {0}"
@@ -29,11 +29,10 @@ Class Sample
                              "Note that the reconstituted string contains standard label " & _
                              "separators (U+002e)."
         ' ----------------------------------------------------------------------------
-        Console.Clear()
         CodePoints(name, msg1)
         ' ----------------------------------------------------------------------------
         Dim idn As New IdnMapping()
-        
+
         Console.WriteLine(msg2, idn.AllowUnassigned)
         Console.WriteLine(msg3, idn.UseStd3AsciiRules)
         Console.WriteLine()
@@ -49,9 +48,9 @@ Class Sample
         CodePoints(nonInternational, msg8)
         Console.WriteLine(msg9)
     End Sub
-    
+
     ' ----------------------------------------------------------------------------
-    Shared Sub CodePoints(ByVal value As String, ByVal title As String) 
+    Shared Sub CodePoints(ByVal value As String, ByVal title As String)
         Console.WriteLine("Display the Unicode code points of {0}", title)
         Dim c As Char
         For Each c In  value
@@ -59,7 +58,7 @@ Class Sample
         Next c
         Console.WriteLine()
         Console.WriteLine()
-    
+
     End Sub
 End Class
 '
