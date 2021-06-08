@@ -51,19 +51,28 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Specifies how mathematical rounding methods should process a number that is midway between two numbers.</summary>
+    <summary>Specifies the strategy that mathematical rounding methods should use to round a number.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
+      <format type="text/markdown"><![CDATA[
 ## Remarks
-Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?displayProperty=nameWithType> to provide more control of the rounding process.  
 
-### Round to nearest  
- A round-to-nearest operation takes an original number with an implicit or specified precision; examines the next digit, which is at that precision plus one; and returns the nearest number with the same precision as the original number. For positive numbers, if the next digit is from 0 through 4, the nearest number is toward negative infinity. If the next digit is from 6 through 9, the nearest number is toward positive infinity. For negative numbers, if the next digit is from 0 through 4, the nearest number is toward positive infinity. If the next digit is from 6 through 9, the nearest number is toward negative infinity.  
-  
- In the previous cases, the `MidpointRounding.AwayFromZero` and `MidpointRounding.ToEven` do not affect the result of the rounding operation. However, if the next digit is 5, which is the midpoint between two possible results, and all remaining digits are zero or there are no remaining digits, the nearest number is ambiguous. In this case, the round-to-nearest modes in `MidpointRounding` enable you to specify whether the rounding operation returns the nearest number away from zero or the nearest even number.  
-  
- The following table demonstrates the results of rounding some negative and positive numbers in conjunction with round-to-nearest modes. The precision used to round the numbers is zero, which means the number after the decimal point affects the rounding operation. For example, for the number -2.5, the digit after the decimal point is 5. Because that digit is the midpoint, you can use a `MidpointRounding` value to determine the result of rounding. If `AwayFromZero` is specified, -3 is returned because it is the nearest number away from zero with a precision of zero. If `ToEven` is specified, -2 is returned because it is the nearest even number with a precision of zero.  
-  
+Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?displayProperty=nameWithType>, <xref:System.MathF.Round%2A?displayProperty=nameWithType>, and <xref:System.Decimal.Round%2A?displayProperty=nameWithType> to provide more control of the rounding process.
+
+There are two overall rounding strategies, round to nearest and directing rounding, and each enumeration field participates in exactly one of these strategies.
+
+### Round to nearest
+
+Fields:
+
+- <xref:System.MidpointRounding.AwayFromZero>
+- <xref:System.MidpointRounding.ToEven>
+
+A round-to-nearest operation takes an original number with an implicit or specified precision; examines the next digit, which is at that precision plus one; and returns the nearest number with the same precision as the original number. For positive numbers, if the next digit is from 0 through 4, the nearest number is toward negative infinity. If the next digit is from 6 through 9, the nearest number is toward positive infinity. For negative numbers, if the next digit is from 0 through 4, the nearest number is toward positive infinity. If the next digit is from 6 through 9, the nearest number is toward negative infinity.
+
+If the next digit is from 0 through 4 or 6 through 9, the `MidpointRounding.AwayFromZero` and `MidpointRounding.ToEven` do not affect the result of the rounding operation. However, if the next digit is 5, which is the midpoint between two possible results, and all remaining digits are zero or there are no remaining digits, the nearest number is ambiguous. In this case, the round-to-nearest modes in `MidpointRounding` enable you to specify whether the rounding operation returns the nearest number away from zero or the nearest even number.
+
+The following table demonstrates the results of rounding some negative and positive numbers in conjunction with round-to-nearest modes. The precision used to round the numbers is zero, which means the number after the decimal point affects the rounding operation. For example, for the number -2.5, the digit after the decimal point is 5. Because that digit is the midpoint, you can use a `MidpointRounding` value to determine the result of rounding. If `AwayFromZero` is specified, -3 is returned because it is the nearest number away from zero with a precision of zero. If `ToEven` is specified, -2 is returned because it is the nearest even number with a precision of zero.
+
 |Original number|AwayFromZero|ToEven|  
 |---------------------|------------------|------------|  
 |3.5|4|4|  
@@ -75,10 +84,17 @@ Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?
 |-2.8|-3|-3|  
 |-3.5|-4|-4|  
   
-## Directed rounding  
- A directed rounding operation takes an original number with an implicit or specified precision and returns the next number closest to some predefined one with the same precision as the original number. Directed modes on `MidpointRounding` control toward which predefined number the rounding is performed.    
-  
- The following table demonstrates the results of rounding some negative and positive numbers in conjunction with directed rounding modes. The precision used to round the numbers is zero, which means the number before the decimal point is affected by the rounding operation.
+## Directed rounding
+
+Fields:
+
+- <xref:System.MidpointRounding.ToNegativeInfinity>
+- <xref:System.MidpointRounding.ToPositiveInfinity>
+- <xref:System.MidpointRounding.ToZero>
+
+A directed-rounding operation takes an original number with an implicit or specified precision and returns the next closest number in a specific direction with the same precision as the original number. Directed modes on `MidpointRounding` control toward which predefined number the rounding is performed.
+
+The following table demonstrates the results of rounding some negative and positive numbers in conjunction with directed-rounding modes. The precision used to round the numbers is zero, which means the number before the decimal point is affected by the rounding operation.
   
 |Original number|ToNegativeInfinity|ToPositiveInfinity|ToZero|  
 |---------------------|------------------|------------|------|  
@@ -88,14 +104,13 @@ Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?
 |-2.1|-3|-2|-2|  
 |-2.5|-3|-2|-2|  
 |-2.8|-3|-2|-2|  
-   
   
-## Examples  
- The following example demonstrates the <xref:System.Math.Round%2A?displayProperty=nameWithType> method in conjunction with the `MidpointRounding` enumeration:
-  
- :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/math.midpointrounding/cpp/mpr.cpp" id="Snippet1":::
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/math.midpointrounding/CS/mpr.cs" interactive="try-dotnet-method" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/math.midpointrounding/VB/mpr.vb" id="Snippet1":::
+## Examples
+
+The following example demonstrates the <xref:System.Math.Round%2A?displayProperty=nameWithType> method in conjunction with the `MidpointRounding` enumeration:
+
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.math.round.overload/cs/mpr.cs" interactive="try-dotnet-method" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.math.round.overload/vb/mpr.vb" id="Snippet1":::
 
  ]]></format>
     </remarks>
@@ -139,7 +154,7 @@ Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?
       </ReturnValue>
       <MemberValue>1</MemberValue>
       <Docs>
-        <summary>Round to nearest mode: when a number is halfway between two others, it is rounded toward the nearest number that is away from zero.</summary>
+        <summary>The strategy of rounding to the nearest number, and when a number is halfway between two others, it's rounded toward the nearest number that's away from zero.</summary>
       </Docs>
     </Member>
     <Member MemberName="ToEven">
@@ -180,7 +195,7 @@ Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?
       </ReturnValue>
       <MemberValue>0</MemberValue>
       <Docs>
-        <summary>Round to nearest mode: when a number is halfway between two others, it is rounded toward the nearest even number.</summary>
+        <summary>The strategy of rounding to the nearest number, and when a number is halfway between two others, it's rounded toward the nearest even number.</summary>
       </Docs>
     </Member>
     <Member MemberName="ToNegativeInfinity">
@@ -215,7 +230,7 @@ Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?
       </ReturnValue>
       <MemberValue>3</MemberValue>
       <Docs>
-        <summary>Directed mode: the number is rounded down, with the result closest to and no greater than the infinitely precise result.</summary>
+        <summary>The strategy of downwards-directed rounding, with the result closest to and no greater than the infinitely precise result.</summary>
       </Docs>
     </Member>
     <Member MemberName="ToPositiveInfinity">
@@ -250,7 +265,7 @@ Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?
       </ReturnValue>
       <MemberValue>4</MemberValue>
       <Docs>
-        <summary>Directed mode: the number is rounded up, with the result closest to and no less than the infinitely precise result.</summary>
+        <summary>The strategy of upwards-directed rounding, with the result closest to and no less than the infinitely precise result.</summary>
       </Docs>
     </Member>
     <Member MemberName="ToZero">
@@ -285,7 +300,7 @@ Use `MidpointRounding` with appropriate overloads of <xref:System.Math.Round%2A?
       </ReturnValue>
       <MemberValue>2</MemberValue>
       <Docs>
-        <summary>Directed mode: the number is rounded toward zero, with the result closest to and no greater in magnitude than the infinitely precise result.</summary>
+        <summary>The strategy of directed rounding toward zero, with the result closest to and no greater in magnitude than the infinitely precise result.</summary>
       </Docs>
     </Member>
   </Members>
