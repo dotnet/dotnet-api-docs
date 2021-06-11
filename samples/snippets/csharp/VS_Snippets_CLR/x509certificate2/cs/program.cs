@@ -180,7 +180,7 @@ namespace X509CertEncrypt
                 byte[] LenK = new byte[4];
                 byte[] LenIV = new byte[4];
 
-                // Consruct the file name for the decrypted file.
+                // Construct the file name for the decrypted file.
                 string outFile = decrFolder + inFile.Substring(0, inFile.LastIndexOf(".")) + ".txt";
 
                 // Use FileStream objects to read the encrypted
