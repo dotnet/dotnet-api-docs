@@ -31,7 +31,7 @@ namespace SequenceExamples
 
             // Create a Lookup to organize the packages. Use the first character of Company as the key value.
             // Select Company appended to TrackingNumber for each element value in the Lookup.
-            Lookup<char, string> lookup = (Lookup<char, string>)packages.ToLookup(p => Convert.ToChar(p.Company.Substring(0, 1)),
+            Lookup<char, string> lookup = (Lookup<char, string>)packages.ToLookup(p => p.Company[0],
                                                             p => p.Company + " " + p.TrackingNumber);
 
             // <Snippet5>
