@@ -14,7 +14,7 @@ Public Class Form1
 
         'This call is required by the Windows Form Designer.
         InitializeComponent()
-        InitalizeComboBoxAndTextBoxes()
+        InitializeComboBoxAndTextBoxes()
         'Add any initialization after the InitializeComponent() call
 
     End Sub
@@ -63,7 +63,7 @@ Public Class Form1
     Friend WithEvents textbox1 As System.Windows.Forms.TextBox
 
 
-    Private Sub InitalizeComboBoxAndTextBoxes()
+    Private Sub InitializeComboBoxAndTextBoxes()
         Me.comboBox1 = New System.Windows.Forms.ComboBox
         Me.comboBox1.Location = New Point(25, 150)
         Me.comboBox1.Width = 150

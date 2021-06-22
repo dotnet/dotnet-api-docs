@@ -65,7 +65,7 @@ public class Form1:
 	}
 
 	// <snippet1>
-	// Initalize the NofifyIcon object's shortcut menu.
+	// Initialize the NofifyIcon object's shortcut menu.
 	private void InitializeContextMenu()
 	{
 		MenuItem[] menuList = new MenuItem[]{new MenuItem("Sign In"),

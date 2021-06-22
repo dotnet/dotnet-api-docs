@@ -48,7 +48,7 @@ namespace SdkSample
             // initialize list of elements closing on the outer element end
             InitializeElementsClosingOnParentElementEnd();
 
-            // initalize list of elements that close when a new element starts
+            // Initialize list of elements that close when a new element starts
             InitializeElementsClosingOnNewElementStart();
 
             // Initialize character entities

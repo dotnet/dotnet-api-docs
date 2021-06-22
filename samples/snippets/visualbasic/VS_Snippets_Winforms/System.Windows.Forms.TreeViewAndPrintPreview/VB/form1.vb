@@ -155,7 +155,7 @@ Public Class Form1
     ' Declare a PrintDocument object named document.
     Private WithEvents document As New System.Drawing.Printing.PrintDocument
 
-    ' Initalize the dialog.
+    ' Initialize the dialog.
     Private Sub InitializePrintPreviewDialog()
 
         ' Create a new PrintPreviewDialog using constructor.
