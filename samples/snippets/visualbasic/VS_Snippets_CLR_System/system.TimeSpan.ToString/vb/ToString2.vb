@@ -24,11 +24,11 @@ Module ToString
       span = New TimeSpan(0, 0, 0, 0, 250)
       Console.WriteLine(FormatTimeSpan(span, True))
       
-      ' Initalize a time span to 99 days, 23 hours, 59 minutes, and 59.9999999 seconds.
+      ' Initialize a time span to 99 days, 23 hours, 59 minutes, and 59.9999999 seconds.
       span = New TimeSpan(99, 23, 59, 59, 999)
       Console.WriteLine(FormatTimeSpan(span, False))
 
-      ' Initalize a timespan to 25 milliseconds.
+      ' Initialize a timespan to 25 milliseconds.
       span = New TimeSpan(0, 0, 0, 0, 25)
       Console.WriteLine(FormatTimeSpan(span, False))
    End Sub
