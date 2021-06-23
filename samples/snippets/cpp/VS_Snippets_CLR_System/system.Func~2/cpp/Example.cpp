@@ -8,17 +8,17 @@ using namespace System::Collections::Generic;
 delegate String ^ MyDel(String ^);
 
 // Create wrapper class and function that takes in a string and converts it to uppercase
-ref class A {
+ref class DelegateWrapper {
 public:
     String ^ capitalize(String ^ s) {
         return s->ToUpper();
     }
 };
 
-int main(int argc, char *argv[]) {
+int main() {
     // Declare delegate
-    A ^ a = gcnew A;
-    MyDel ^ DelInst = gcnew MyDel(a, &A::capitalize);
+    DelegateWrapper ^ delegateWrapper = gcnew DelegateWrapper;
+    MyDel ^ DelInst = gcnew MyDel(delegateWrapper, &DelegateWrapper::capitalize);
 
     // Cast into Func
     Func<String ^, String ^> ^ selector = reinterpret_cast<Func<String ^, String ^> ^>(DelInst);
