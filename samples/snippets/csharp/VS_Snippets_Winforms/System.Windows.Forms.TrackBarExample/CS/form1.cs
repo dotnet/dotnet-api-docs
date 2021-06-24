@@ -78,7 +78,7 @@ public class Form1:
 	//Declare a new TrackBar object.
 	internal System.Windows.Forms.TrackBar TrackBar1;
 
-	// Initalize the TrackBar and add it to the form.
+	// Initialize the TrackBar and add it to the form.
 	private void InitializeTrackBar()
 	{
 		this.TrackBar1 = new System.Windows.Forms.TrackBar();
