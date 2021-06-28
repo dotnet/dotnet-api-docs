@@ -10,7 +10,7 @@ delegate String ^ MyDel(String ^);
 // Create wrapper class and function that takes in a string and converts it to uppercase
 ref class DelegateWrapper {
 public:
-    String ^ capitalize(String ^ s) {
+    String ^ ToUpper(String ^ s) {
         return s->ToUpper();
     }
 };
@@ -18,7 +18,7 @@ public:
 int main() {
     // Declare delegate
     DelegateWrapper ^ delegateWrapper = gcnew DelegateWrapper;
-    MyDel ^ DelInst = gcnew MyDel(delegateWrapper, &DelegateWrapper::capitalize);
+    MyDel ^ DelInst = gcnew MyDel(delegateWrapper, &DelegateWrapper::ToUpper);
 
     // Cast into Func
     Func<String ^, String ^> ^ selector = reinterpret_cast<Func<String ^, String ^> ^>(DelInst);
