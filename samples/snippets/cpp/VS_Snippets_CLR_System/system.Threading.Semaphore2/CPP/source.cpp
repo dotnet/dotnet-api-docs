@@ -25,6 +25,7 @@ public:
       
       // Create and start five numbered threads.
       //
+      List<Thread> tl = new List<Thread>();   
       for ( int i = 1; i <= 5; i++ )
       {
          Thread^ t = gcnew Thread(
@@ -33,6 +34,7 @@ public:
          // Start the thread, passing the number.
          //
          t->Start( i );
+         t1->Add( t );
       }
       
       // Wait for half a second, to allow all the
@@ -48,6 +50,11 @@ public:
       //
       Console::WriteLine( L"Main thread calls Release(3)." );
       _pool->Release( 3 );
+       
+       foreach (var t in tl)
+       {
+           t.Join();
+       }
 
       Console::WriteLine( L"Main thread exits." );
    }
