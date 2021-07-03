@@ -104,7 +104,7 @@ public class Example
         IList<string> ilistValues = openWith.Values;
 
         // The elements of the list are strongly typed with the
-        // type that was specified for the SorteList values.
+        // type that was specified for the SortedList values.
         Console.WriteLine();
         foreach( string s in ilistValues )
         {
