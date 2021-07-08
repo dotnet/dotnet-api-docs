@@ -2961,7 +2961,7 @@ namespace SequenceExamples
                 // as the element values of the Lookup.
                 ILookup<char, string> lookup =
                     packages
-                    .ToLookup(p => Convert.ToChar(p.Company.Substring(0, 1)),
+                    .ToLookup(p => p.Company[0],
                               p => p.Company + " " + p.TrackingNumber);
 
                 // Iterate through each IGrouping in the Lookup.
