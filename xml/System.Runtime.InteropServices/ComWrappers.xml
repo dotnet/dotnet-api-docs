@@ -27,8 +27,8 @@
   <Docs>
     <summary>Class for managing wrappers of COM IUnknown types.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
+      <format type="text/markdown"><![CDATA[
+
 ## Remarks
 
 The <xref:System.Runtime.InteropServices.ComWrappers> API provides support for the `IUnknown` ABI, independent of the built-in COM interoperability support. The `ComWrappers` API exposes the minimal runtime support that's needed for developers to replace the built-in version in an efficient manner.
@@ -134,7 +134,7 @@ Observe that only weak references exist from the runtime perspective. The `+1` r
 ## Remarks
 
 All memory returned from this function must either be unmanaged memory or pinned managed memory, or have been allocated with the <xref:System.Runtime.CompilerServices.RuntimeHelpers.AllocateTypeAssociatedMemory(System.Type,System.Int32)> API.
- 
+
 If the interface entries cannot be created and a negative `count` or `null` and a non-zero `count` are returned, the call to <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateComInterfaceForObject(System.Object,System.Runtime.InteropServices.CreateComInterfaceFlags)> will throw a <xref:System.ArgumentException>.
 
           ]]></format>
@@ -339,13 +339,26 @@ If the `wrapper` instance already has an associated external object a <xref:Syst
         <Parameter Name="inner" Type="System.IntPtr" Index="3" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="externalComObject">To be added.</param>
-        <param name="flags">To be added.</param>
-        <param name="wrapper">To be added.</param>
-        <param name="inner">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="externalComObject">Object to import for usage into the .NET runtime.</param>
+        <param name="flags">Flags used to describe the external object.</param>
+        <param name="wrapper">The <see cref="T:System.Object" /> to be used as the wrapper for the external object</param>
+        <param name="inner">Inner for COM aggregation scenarios</param>
+        <summary>Get the currently registered managed object or uses the supplied managed object and registers it.</summary>
+        <returns>Returns a managed object associated with the supplied external COM object.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method override is for registering an aggregated COM instance with its associated inner. The inner
+will be released when the associated wrapper is eventually freed. Note that it will be released on a thread
+in an unknown apartment state. If the supplied inner is not known to be a free-threaded instance then
+it is advised to not supply the inner.
+
+If the `wrapper` instance already has an associated external object a <xref:System.NotSupportedException> will be thrown.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="RegisterForMarshalling">
