@@ -125,7 +125,10 @@ const IID IID_IOld = {0x9B2BAADD,0x0705,0x11D3,{0xA0,0xCD,0x00,0xC0,0x4F,0xA3,0x
  <xref:System.Runtime.InteropServices.ICustomMarshaler.GetNativeDataSize%2A?displayProperty=nameWithType>  
   
  Returns the size of the unmanaged data to be marshaled.  
-  
+
+> [!NOTE]
+>  If a custom marshaler calls any methods that set the last P/Invoke error when marshaling from native to managed or when calling the cleanup methods, the value returned by <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error?displayProperty=nameWithType> and <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError?displayProperty=nameWithType> will represent the call in the marshaling or cleanup calls. This can cause errors to be missed when using custom marshalers with P/Invokes with `SetLastError=true`. To preserve the last P/Invoke error, use the <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError?displayProperty=nameWithType> and <xref:System.Runtime.InteropServices.Marshal.SetLastPInvokeError?displayProperty=nameWithType> methods in the <xref:System.Runtime.InteropServices.ICustomMarshaler> implementation.
+
 ## Implementing the GetInstance Method  
  In addition to implementing the <xref:System.Runtime.InteropServices.ICustomMarshaler> interface, custom marshalers must implement a `static` method called `GetInstance` that accepts a <xref:System.String> as a parameter and has a return type of <xref:System.Runtime.InteropServices.ICustomMarshaler>. This `static` method is called by the common language runtime's COM interop layer to instantiate an instance of the custom marshaler. The string that is passed to `GetInstance` is a cookie that the method can use to customize the returned custom marshaler. The following example shows a minimal, but complete, <xref:System.Runtime.InteropServices.ICustomMarshaler> implementation. 
   
