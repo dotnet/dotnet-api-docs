@@ -42,7 +42,6 @@
 
       ]]></format>
     </remarks>
-    <related type="Article" href="/visualstudio/ide/how-to-add-or-remove-references-by-using-the-reference-manager">How to: Add or Remove References By Using the Reference Manager</related>
   </Docs>
   <Members>
     <MemberGroup MemberName="CreateFromDirectory">
@@ -407,11 +406,7 @@ An I/O error occurred while opening a file to be archived.</exception>
           <paramref name="destinationDirectoryName" /> or <paramref name="sourceArchiveFileName" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.PathTooLongException">The specified path in <paramref name="destinationDirectoryName" /> or <paramref name="sourceArchiveFileName" /> exceeds the system-defined maximum length.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive).</exception>
-        <exception cref="T:System.IO.IOException">The directory specified by <paramref name="destinationDirectoryName" /> already exists.  
-  
- -or-  
-  
- The name of an entry in the archive is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.  
+        <exception cref="T:System.IO.IOException">The name of an entry in the archive is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.  
   
  -or-  
   
@@ -419,7 +414,7 @@ An I/O error occurred while opening a file to be archived.</exception>
   
  -or-  
   
- An archive entry to extract has the same name as an entry that has already been extracted from the same archive.</exception>
+ An archive entry to extract has the same name as an entry that has already been extracted or that exists in <paramref name="destinationDirectoryName" />.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission to access the archive or the destination directory.</exception>
         <exception cref="T:System.NotSupportedException">
           <paramref name="destinationDirectoryName" /> or <paramref name="sourceArchiveFileName" /> contains an invalid format.</exception>
@@ -477,15 +472,14 @@ An I/O error occurred while opening a file to be archived.</exception>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If `overwriteFiles` is `false`, the specified directory must not exist; otherwise, this method will only create the specified directory and all subdirectories if necessary. The parent directory must exists regardless.
- 
- If there is an error while extracting the archive, the archive will remain partially extracted.
-  
- Each entry will be extracted such that the extracted file has the same relative path to the `destinationDirectoryName` as the entry has to the archive.
- 
- The `sourceArchiveFileName` and `destinationDirectoryName` parameters accept both relative and absolute paths. A relative path is interpreted as relative to the current working directory.
- 
- If a file to be archived has an invalid last modified time, the first date and time representable in the Zip timestamp format (midnight on January 1, 1980) will be used.
+
+If there is an error while extracting the archive, the archive will remain partially extracted.
+
+Each entry will be extracted such that the extracted file has the same relative path to the `destinationDirectoryName` as the entry has to the archive.
+
+The `sourceArchiveFileName` and `destinationDirectoryName` parameters accept both relative and absolute paths. A relative path is interpreted as relative to the current working directory.
+
+If a file to be archived has an invalid last modified time, the first date and time representable in the Zip timestamp format (midnight on January 1, 1980) will be used.
 
           ]]></format>
         </remarks>
@@ -497,7 +491,7 @@ An I/O error occurred while opening a file to be archived.</exception>
           <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> specifies a path, a file name, or both that exceed the system-defined maximum length. </exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The path specified by <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is invalid (for example, it is on an unmapped drive).</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="overwriteFiles" /> is <see langword="false" /> and the directory specified by <paramref name="destinationDirectoryName" /> already exists.
+          <paramref name="overwriteFiles" /> is <see langword="false" /> and <paramref name="destinationDirectoryName" /> already contains a file with the same name as a file that's being extracted.
 
 -or-
 
@@ -513,7 +507,7 @@ Extracting a <see cref="T:System.IO.Compression.ZipArchiveEntry" /> would result
 
 -or-
 
-A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has the same name as an already extracted entry from the same archive.</exception>
+A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has the same name as an entry from the same archive that's already been extracted.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
         <exception cref="T:System.NotSupportedException">
           <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is in an invalid format. </exception>
@@ -576,21 +570,20 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- This method creates the specified directory and all subdirectories. The destination directory cannot already exist. Exceptions related to validating the paths in the `destinationDirectoryName` or `sourceArchiveFileName` parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted. Each extracted file has the same relative path to the directory specified by `destinationDirectoryName` as its source entry has to the root of the archive.  
-  
- If `entryNameEncoding` is set to a value other than `null`, entry names are decoded according to the following rules:  
-  
--   For entry names where the language encoding flag (in the general-purpose bit flag of the local file header) is not set, the entry names are decoded by using the specified encoding.  
-  
--   For entries where the language encoding flag is set, the entry names are decoded by using UTF-8.  
-  
- If `entryNameEncoding` is set to `null`, entry names are decoded according to the following rules:  
-  
--   For entries where the language encoding flag (in the general-purpose bit flag of the local file header) is not set, entry names are decoded by using the current system default code page.  
-  
--   For entries where the language encoding flag is set, the entry names are decoded by using UTF-8.  
-  
+## Remarks
+
+This method creates the specified directory and all subdirectories, if necessary. Exceptions related to validating the paths in the `destinationDirectoryName` or `sourceArchiveFileName` parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted. Each extracted file has the same relative path to the directory specified by `destinationDirectoryName` as its source entry has to the root of the archive.
+
+If `entryNameEncoding` is set to a value other than `null`, entry names are decoded according to the following rules:
+
+- For entry names where the language encoding flag (in the general-purpose bit flag of the local file header) is not set, the entry names are decoded by using the specified encoding.  
+- For entries where the language encoding flag is set, the entry names are decoded by using UTF-8.
+
+If `entryNameEncoding` is set to `null`, entry names are decoded according to the following rules:
+
+- For entries where the language encoding flag (in the general-purpose bit flag of the local file header) is not set, entry names are decoded by using the current system default code page.
+- For entries where the language encoding flag is set, the entry names are decoded by using UTF-8.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -603,11 +596,7 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
           <paramref name="destinationDirectoryName" /> or <paramref name="sourceArchiveFileName" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.PathTooLongException">The specified path in <paramref name="destinationDirectoryName" /> or <paramref name="sourceArchiveFileName" /> exceeds the system-defined maximum length.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive).</exception>
-        <exception cref="T:System.IO.IOException">The directory specified by <paramref name="destinationDirectoryName" /> already exists.  
-  
- -or-  
-  
- The name of an entry in the archive is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.  
+        <exception cref="T:System.IO.IOException">The name of an entry in the archive is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.  
   
  -or-  
   
@@ -615,7 +604,7 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
   
  -or-  
   
- An archive entry to extract has the same name as an entry that has already been extracted from the same archive.</exception>
+ An archive entry to extract has the same name as an entry that has already been extracted or that exists in <paramref name="destinationDirectoryName" />.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission to access the archive or the destination directory.</exception>
         <exception cref="T:System.NotSupportedException">
           <paramref name="destinationDirectoryName" /> or <paramref name="sourceArchiveFileName" /> contains an invalid format.</exception>
@@ -676,7 +665,6 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If `overwriteFiles` is `false`, the specified directory must not exist; otherwise, this method will only create the specified directory and all subdirectories if necessary. The parent directory must exists regardless.
 
  If there is an error while extracting the archive, the archive will remain partially extracted.
 
@@ -700,7 +688,7 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
           <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> specifies a path, a file name, or both that exceed the system-defined maximum length. </exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The path specified by <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is invalid (for example, it is on an unmapped drive).</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="overwriteFiles" /> is <see langword="false" /> and the directory specified by <paramref name="destinationDirectoryName" /> already exists.
+          <paramref name="overwriteFiles" /> is <see langword="false" /> and an archive entry to extract has the same name as a file that already exists in <paramref name="destinationDirectoryName" />.
 
 -or-
 
