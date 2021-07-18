@@ -11,7 +11,7 @@ public class Example
       {
          int number;
 
-         bool success = int.TryParse(value, out number);   
+         bool success = int.TryParse(value, out number);
          if (success)
          {
             Console.WriteLine($"Converted '{value}' to {number}.");
