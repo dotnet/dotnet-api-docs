@@ -657,13 +657,18 @@ On Unix platforms that do not support creation or birth time, this property retu
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the extension part of the file name, including the leading dot '.', or an empty string if no extension is present.</summary>
+        <summary>Gets the extension part of the file name, including the leading dot <c>'.'</c> - or an empty string if no extension is present - or the file's <see cref="Name"/> if dot-prefixed with no other dots present.</summary>
         <value>A string containing the <see cref="T:System.IO.FileSystemInfo" /> extension.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The `Extension` property returns the <xref:System.IO.FileSystemInfo> extension, including the period (.). For example, for a file c:\NewFile.txt, this property returns ".txt".  
+ The `Extension` property returns the <xref:System.IO.FileSystemInfo> extension, which starts at, and includes, the last (`'.'`) dot in the file's full-name. For example:
+* For a file `c:\NewFile.txt`, this property returns `".txt"`.
+* For a file `c:\.gitignore`, this property returns `".gitignore"`.
+* For a file `c:\noextension`, this property returns an empty string `""`.
+* For a file `c:\a.b.c`, this property returns `".c"`.
+* Note that when a `FileInfo` is constructed from a file path with a trailing dot then those dots will be trimmed, so `new FileInfo("foo.bar.").Extension` will return `".bar"`.
   
  The following table lists examples of other typical or related I/O tasks.  
   
