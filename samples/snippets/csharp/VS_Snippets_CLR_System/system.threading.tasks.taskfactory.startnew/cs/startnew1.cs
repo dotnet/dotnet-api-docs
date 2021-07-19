@@ -33,7 +33,7 @@ public class Example
       // Handle only non-control characters.
       if (! Char.IsControl(value, 0)) {
          foreach (var ch in value)
-            hexString += String.Format("0x{0} ", Convert.ToUInt16(ch));
+            hexString += $"0x{(ushort)ch} ";
       }   
       return hexString.Trim();
    }

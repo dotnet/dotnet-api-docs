@@ -11,7 +11,7 @@ public class Example
       char[] chars = new char[nChars];
       ushort codePoint = 0x0410;
       for (int ctr = 0; ctr < chars.Length; ctr++) {
-        chars[ctr] = Convert.ToChar(codePoint);
+        chars[ctr] = (char)codePoint;
         codePoint++;
       }
 

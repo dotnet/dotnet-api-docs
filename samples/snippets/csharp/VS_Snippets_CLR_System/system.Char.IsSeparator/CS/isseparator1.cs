@@ -5,11 +5,11 @@ public class Class1
 {
    public static void Main()
    {
-      for (int ctr = Convert.ToInt32(Char.MinValue); ctr <= Convert.ToInt32(Char.MaxValue); ctr++)
+      for (int ctr = (int)(Char.MinValue); ctr <= (int)(Char.MaxValue); ctr++)
       {
-         char ch = (Char) ctr;
+         char ch = (Char) tr;
          if (Char.IsSeparator(ch))
-            Console.WriteLine(@"\u{0:X4} ({1})", (int) ch, Char.GetUnicodeCategory(ch).ToString());
+            Console.WriteLine(@"\u{(int)ch:X4} ({Char.GetUnicodeCategory(ch)})");
       }
    }
 }

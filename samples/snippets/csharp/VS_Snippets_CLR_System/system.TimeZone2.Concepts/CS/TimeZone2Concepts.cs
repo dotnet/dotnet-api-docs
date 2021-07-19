@@ -248,7 +248,7 @@ public class TZExamples
             Console.WriteLine("{0}.) {1} hours, {2} minutes", ctr, offsets[ctr].Hours, offsets[ctr].Minutes);
          }
          Console.Write("> ");
-         int selection = Convert.ToInt32(Console.ReadLine());
+         int selection = int.Parse(Console.ReadLine());
          
          // Convert local time to UTC, and set Kind property to DateTimeKind.Utc
          utcDate = DateTime.SpecifyKind(inputDate - offsets[selection], DateTimeKind.Utc);
