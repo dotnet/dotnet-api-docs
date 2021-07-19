@@ -7,7 +7,7 @@ public class Class1
    {
       for (int ctr = (int)(Char.MinValue); ctr <= (int)(Char.MaxValue); ctr++)
       {
-         char ch = (Char) tr;
+         char ch = (Char)ctr;
          if (Char.IsSeparator(ch))
             Console.WriteLine(@"\u{(int)ch:X4} ({Char.GetUnicodeCategory(ch)})");
       }
