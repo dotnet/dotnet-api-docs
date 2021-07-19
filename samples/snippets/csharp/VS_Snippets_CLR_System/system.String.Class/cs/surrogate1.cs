@@ -7,7 +7,7 @@ public class Example
       // <Snippet3>
       string surrogate = "\uD800\uDC03";
       for (int ctr = 0; ctr < surrogate.Length; ctr++) 
-         Console.Write($"U+{surrogate[ctr]:X2} ");
+         Console.Write($"U+{(ushort)surrogate[ctr]:X2} ");
 
       Console.WriteLine();
       Console.WriteLine("   Is Surrogate Pair: {0}", 
