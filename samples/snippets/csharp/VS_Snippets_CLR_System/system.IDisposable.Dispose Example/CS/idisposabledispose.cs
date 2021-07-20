@@ -31,7 +31,7 @@ public class DisposeExample
         // A derived class should not be able to override this method.
         public void Dispose()
         {
-            Dispose(true);
+            Dispose(disposing: true);
             // This object will be cleaned up by the Dispose method.
             // Therefore, you should call GC.SuppressFinalize to
             // take this object off the finalization queue
@@ -85,9 +85,9 @@ public class DisposeExample
         ~MyResource()
         {
             // Do not re-create Dispose clean-up code here.
-            // Calling Dispose(false) is optimal in terms of
+            // Calling Dispose(disposing: false) is optimal in terms of
             // readability and maintainability.
-            Dispose(false);
+            Dispose(disposing: false);
         }
     }
     public static void Main()

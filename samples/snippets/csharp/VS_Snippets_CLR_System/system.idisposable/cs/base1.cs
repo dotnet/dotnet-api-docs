@@ -13,7 +13,7 @@ class BaseClass : IDisposable
    // Public implementation of Dispose pattern callable by consumers.
    public void Dispose()
    {
-      Dispose(true);
+      Dispose(disposing: true);
       GC.SuppressFinalize(this);
    }
 

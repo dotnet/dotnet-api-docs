@@ -48,8 +48,7 @@ public class ConsoleMonitor : IDisposable
       else {
          Console.Error.WriteLine("Object finalization.");
       }
-      // Call Dispose with disposing = false.
-      Dispose(false);
+      Dispose(disposing: false);
    }
 
    public void Write()
@@ -65,7 +64,7 @@ public class ConsoleMonitor : IDisposable
       uint written = 0;
       WriteConsole(handle, output, (uint) output.Length, out written, IntPtr.Zero);
 
-      Dispose(true);
+      Dispose(disposing: true);
       GC.SuppressFinalize(this);
    }
 
