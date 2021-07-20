@@ -66,11 +66,11 @@ Public Module App
    End Sub
 End Module
 
-' A custom class that implements IEnumerable(T). When you implement IEnumerable(T), 
+' A custom class that implements IEnumerable(T). When you implement IEnumerable(T),
 ' you must also implement IEnumerable and IEnumerator(T).
 Public Class StreamReaderEnumerable : Implements IEnumerable(Of String)
     Private _filePath As String
-    
+
     Public Sub New(filePath As String)
         _filePath = filePath
     End Sub
@@ -88,19 +88,19 @@ Public Class StreamReaderEnumerable : Implements IEnumerable(Of String)
     End Function
 End Class
 
-' When you implement IEnumerable(T), you must also implement IEnumerator(T), 
+' When you implement IEnumerable(T), you must also implement IEnumerator(T),
 ' which will walk through the contents of the file one line at a time.
 ' Implementing IEnumerator(T) requires that you implement IEnumerator and IDisposable.
 Public Class StreamReaderEnumerator : Implements IEnumerator(Of String)
     Private _sr As StreamReader
-    
+
     Public Sub New(filePath As String)
         _sr = New StreamReader(filePath)
     End Sub
 
     Private _current As String
 
-    ' Implement the IEnumerator(T).Current Publicly, but implement 
+    ' Implement the IEnumerator(T).Current Publicly, but implement
     ' IEnumerator.Current, which is also required, privately.
     Public ReadOnly Property Current As String _
           Implements IEnumerator(Of String).Current
@@ -140,7 +140,7 @@ Public Class StreamReaderEnumerator : Implements IEnumerator(Of String)
     Private disposedValue As Boolean = False
     Public Sub Dispose() _
           Implements IDisposable.Dispose
-        Dispose(True)
+        Dispose(disposing:=True)
         GC.SuppressFinalize(Me)
     End Sub
 
@@ -161,7 +161,7 @@ Public Class StreamReaderEnumerator : Implements IEnumerator(Of String)
     End Sub
 
     Protected Overrides Sub Finalize()
-        Dispose(False)
+        Dispose(disposing:=False)
     End Sub
 End Class
 ' This example displays output similar to the following:

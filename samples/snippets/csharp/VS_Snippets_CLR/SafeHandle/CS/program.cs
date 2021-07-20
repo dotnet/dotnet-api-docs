@@ -116,7 +116,7 @@ namespace SafeHandleDemo
 
         public void Dispose()  // Follow the Dispose pattern - public nonvirtual.
         {
-            Dispose(true);
+            Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
