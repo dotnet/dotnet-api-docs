@@ -26,7 +26,7 @@ public class Example
 
       bool NextBoolean()
       {
-         return Convert.ToBoolean(rnd.Next(0, 2));
+         return rnd.Next(0, 2) == 1;
       }
 
       // The example displays output like the following:

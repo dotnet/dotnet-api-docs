@@ -72,10 +72,9 @@ public class StringParsing
       bool success = Int64.TryParse(stringToConvert, styles,
                                    provider, out long number);
       if (success)
-         Console.WriteLine("Converted '{0}' to {1}.", stringToConvert, number);
+         Console.WriteLine($"Converted '{stringToConvert}' to {number}.");
       else
-         Console.WriteLine("Attempted conversion of '{0}' failed.",
-                           Convert.ToString(stringToConvert));
+         Console.WriteLine($"Attempted conversion of '{stringToConvert}' failed.");
    }
 }
 // The example displays the following output to the console:

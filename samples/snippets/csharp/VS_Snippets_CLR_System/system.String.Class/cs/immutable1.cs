@@ -13,7 +13,7 @@ public class Example
                                          false, Encoding.Unicode);
 
       for (int ctr = 0; ctr <= 1000; ctr++) {
-         sb.Append(Convert.ToChar(rnd.Next(1, 0x0530))); 
+         sb.Append((char)rnd.Next(1, 0x0530));
          if (sb.Length % 60 == 0)
             sb.AppendLine();          
       }                    

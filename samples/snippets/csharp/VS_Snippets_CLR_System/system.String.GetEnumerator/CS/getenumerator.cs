@@ -22,8 +22,8 @@ class Example
       int punctuation = 0;
 
       foreach (var ch in phrase) {
-         Console.Write("'{0}' ", ! Char.IsControl(ch) ? ch.ToString() : 
-                                     "0x" + Convert.ToUInt16(ch).ToString("X4"));
+         Console.Write(Char.IsControl(ch) ? $"{ch}" : $"0x{(ushort)ch:X4}");
+
          if (Char.IsLetterOrDigit(ch)) 
             alphanumeric++;
          else if (Char.IsControl(ch)) 
