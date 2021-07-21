@@ -87,7 +87,7 @@ public sealed class SharedMemory : ISerializable, IDisposable
     public void Dispose()
     {
         GC.SuppressFinalize(this);
-        Dispose(true);
+        Dispose(disposing: true);
     }
 
     private void Dispose(Boolean disposing)
@@ -100,7 +100,7 @@ public sealed class SharedMemory : ISerializable, IDisposable
 
     ~SharedMemory()
     {
-        Dispose(false);
+        Dispose(disposing: false);
     }
 
     // Private helper methods.
