@@ -563,15 +563,23 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns a reference to the element of the <see cref="T:System.Span`1" /> at index zero.</summary>
-        <returns>A reference to the element of the <see cref="T:System.Span`1" /> at index zero, or <see langword="null" /> if <see cref="P:System.Span`1.IsEmpty" /> is  <see langword="true" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
+        <summary>Returns a reference to an object of type T that can be used for pinning.
+        
+This method is intended to support .NET compilers and is not intended to be called by user code.</summary>
+        <returns>A reference to the element of the span at index 0, or <see langword="null" /> if the span is empty.</returns>
+        <remarks><format type="text/markdown"><![CDATA[
 
-The `GetPinnableReference` method returns a [ref struct](/dotnet/csharp/language-reference/builtin-types/struct#ref-struct). It can be used for pinning a <xref:System.Span%601> in memory. It is required to support the use of a <xref:System.Span%601> within a [fixed](/dotnet/csharp/language-reference/keywords/fixed-statement) statement.
+## Remarks
+ Applications should not directly call `GetPinnableReference`. Instead, callers should use their language's normal pinning syntax, such as C\#'s `fixed` statement.
 
-       ]]></format>
-        </remarks>
+ If pinning a `Span<char>`, the resulting `char*` __is not__ assumed to be null-terminated. This behavior is different from pinning a `string`, where the resulting `char*` is guaranteed to be null-terminated.
+
+## Examples
+ The following example demonstrates creating an integer array, pinning it, and writing each element to the console.
+
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.span.getpinnablereference/cs/getpinnablereference1.cs" id="Snippet1":::
+
+ ]]></format></remarks>
       </Docs>
     </Member>
     <Member MemberName="IsEmpty">
