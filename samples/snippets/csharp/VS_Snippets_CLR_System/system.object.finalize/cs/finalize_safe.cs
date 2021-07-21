@@ -123,7 +123,7 @@ public class FileAssociationInfo : IDisposable
 
    public void Dispose()
    {
-      Dispose(true);
+      Dispose(disposing: true);
       GC.SuppressFinalize(this);
    }
 
