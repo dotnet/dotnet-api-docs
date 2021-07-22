@@ -63,7 +63,7 @@ public class Example
    {
       string hexString = "";
       foreach (var ch in s)
-         hexString += String.Format("{0:X4} ", Convert.ToUInt16(ch));
+         hexString += $"{(ushort)ch:X4} ";
 
       return hexString;
    }

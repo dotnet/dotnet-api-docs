@@ -13,7 +13,7 @@ public class Example
       } 
 
       foreach (var ch in s)
-         Console.Write("{0:X4} ", Convert.ToUInt16(ch));
+         Console.Write($"{(ushort)ch:X4} ");
       Console.WriteLine();
       
       fixed(char* chPtr = chars) {
@@ -21,7 +21,7 @@ public class Example
       }
       
       foreach (var ch in s)
-         Console.Write("{0:X4} ", Convert.ToUInt16(ch));
+         Console.Write($"{(ushort)ch:X4} ");
       Console.WriteLine();    
    }
 }
