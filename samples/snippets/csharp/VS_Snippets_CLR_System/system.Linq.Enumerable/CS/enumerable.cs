@@ -341,7 +341,7 @@ namespace SequenceExamples
             // <Snippet16>
             string[] numbers = { "10007", "37", "299846234235" };
 
-            double average = numbers.Average(num => Convert.ToInt64(num));
+            double average = numbers.Average(num => long.Parse(num));
 
             Console.WriteLine("The average is {0}.", average);
 

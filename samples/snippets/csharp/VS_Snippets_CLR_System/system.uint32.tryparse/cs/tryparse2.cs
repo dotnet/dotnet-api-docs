@@ -48,10 +48,9 @@ public class Example
       bool result = UInt32.TryParse(stringToConvert, styles, 
                                    CultureInfo.InvariantCulture, out number);
       if (result)
-         Console.WriteLine("Converted '{0}' to {1}.", stringToConvert, number);
+         Console.WriteLine($"Converted '{stringToConvert}' to {number}.");
       else
-         Console.WriteLine("Attempted conversion of '{0}' failed.", 
-                           Convert.ToString(stringToConvert));
+         Console.WriteLine($"Attempted conversion of '{stringToConvert}' failed.");
    }
 }
 // The example displays the following output:

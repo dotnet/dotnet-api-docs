@@ -8,8 +8,8 @@ public class Example
       Random rnd = new Random();
       // Generate five random Boolean values.
       for (int ctr = 1; ctr <= 5; ctr++) {
-         Boolean bln = Convert.ToBoolean(rnd.Next(0, 2));
-         Console.WriteLine("True or False: {0}", bln);
+         bool bln = rnd.Next(0, 2) == 1;
+         Console.WriteLine($"True or False: {bln}");
       }
 
       // The example displays an output similar to the following:

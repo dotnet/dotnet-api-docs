@@ -17,7 +17,7 @@ public class Example
       List<string> alphabet = new List<string>();
       int charValue = upper ? 65 : 97;
       for (int ctr = 0; ctr <= 25; ctr++)
-         alphabet.Add(Convert.ToChar(charValue + ctr).ToString());
+         alphabet.Add(((char)(charValue + ctr)).ToString());
       return alphabet; 
    }
 }
