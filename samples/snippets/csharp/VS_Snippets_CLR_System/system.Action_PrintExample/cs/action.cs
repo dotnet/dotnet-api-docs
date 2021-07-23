@@ -6,7 +6,7 @@ class Program
     static void Main()
     {
         //<snippet01>
-        List<String> names = new List<String>();
+        List<string> names = new List<string>();
         names.Add("Bruce");
         names.Add("Alfred");
         names.Add("Tim");
@@ -17,7 +17,7 @@ class Program
 
         // The following demonstrates the anonymous method feature of C#
         // to display the contents of the list to the console.
-        names.ForEach(delegate(String name)
+        names.ForEach(delegate(string name)
         {
             Console.WriteLine(name);
         });
