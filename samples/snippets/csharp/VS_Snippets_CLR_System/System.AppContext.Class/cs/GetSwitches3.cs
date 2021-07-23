@@ -22,7 +22,7 @@ public class Example
 
             ConfigurationSection sec = config.GetSection("runtime");
             if (sec != null) {
-                    string rawXml = sec.SectionInformation.GetRawXml();
+               string rawXml = sec.SectionInformation.GetRawXml();
                if (string.IsNullOrEmpty(rawXml)) return;
 
                var doc = new XmlDocument();
@@ -34,7 +34,7 @@ public class Example
                      if (node.Name.Equals(SettingName, StringComparison.Ordinal)) {
                         // Get attribute value
                         XmlAttribute attr = node.Attributes["value"];
-                                string[] nameValuePair = attr.Value.Split('=');
+                        string[] nameValuePair = attr.Value.Split('=');
                         // Determine whether the switch we want is present.
                         if (SwitchName.Equals(nameValuePair[0], StringComparison.Ordinal)) {
                            bool tempFlag = false;
