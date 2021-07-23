@@ -5,7 +5,7 @@ public class Example
 {
    public static void Main()
    {
-        // Initialize array of characters from a to z.
+      // Initialize array of characters from a to z.
       char[] chars = new char[26];
       for (int ctr = 0; ctr < 26; ctr++)
          chars[ctr] = (char) (ctr + 0x0061);
