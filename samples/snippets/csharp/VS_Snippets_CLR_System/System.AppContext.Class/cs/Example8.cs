@@ -26,8 +26,8 @@ namespace App
    {
       public static void Main()
       {
-            string value = "The archaeologist";
-            string substring = "archæ";
+         string value = "The archaeologist";
+         string substring = "archæ";
          int position = StringLibrary.SubstringStartsAt(value, substring);
          if (position >= 0)
             Console.WriteLine("'{0}' found in '{1}' starting at position {2}",
