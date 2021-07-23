@@ -147,26 +147,8 @@
 
 <a name="Custom"></a>
 ## Custom cultures
- In addition to the predefined cultures supported by the operating system and .NET, .NET supports three types of custom cultures:
 
-- New cultures that supplement the cultures available in the operating system or .NET. For example, an application could install a <xref:System.Globalization.CultureInfo> object that represents the `fj-FJ` (or Fijan (Fiji)) culture on a system.
-
-- Replacement cultures whose properties are different from the properties of the standard cultures supported by the operating system and .NET.
-
-- Standard cultures with user overrides. The user can use the **Region and Language** application in **Control Panel** to customize an existing culture's property values.
-
-> [!NOTE]
-> You can use the <xref:System.Globalization.CultureAndRegionInfoBuilder> class to define, save, and register custom cultures that either supplement or replace existing cultures. The <xref:System.Globalization.CultureAndRegionInfoBuilder.Save%2A?displayProperty=nameWithType> method creates a Locale Data Markup Language (LDML) file that can be used to install a custom culture on target systems. For step-by step information on using the <xref:System.Globalization.CultureAndRegionInfoBuilder> class to create a new or replacement culture, see <xref:System.Globalization.CultureAndRegionInfoBuilder>.
-
- Because .NET supports custom cultures, consider the following when working with culture-specific data:
-
-- Custom cultures can have values that exceed the ranges of the predefined cultures. For example, some cultures have unusually long month names, unexpected date or time formats, or other unusual data.
-
-- When you display culture-specific data in the user interface, you should respect the user's customizations; for example, the user might want a 24-hour clock or a yyyyMMdd date format.
-
-- Remember that custom cultures override default values. Therefore, you cannot consider culture data to be stable. Country names, number and date formats, and spellings may change in the future. If you want to serialize culture-sensitive data such as date and time strings to be passed to the date and time parsing functions, you should use the invariant culture or a specific ???.
-
- The <xref:System.Globalization.CultureInfo.CultureTypes%2A> property value of custom cultures installed on a system includes the <xref:System.Globalization.CultureTypes?displayProperty=nameWithType> flag, and custom cultures are assigned an <xref:System.Globalization.CultureInfo.LCID%2A> property value of `LOCALE_CUSTOM_UNSPECIFIED` (0x1000, or 4096). Note that, starting with Windows 10, this value is also assigned to system-defined cultures that lack complete cultural data.
+On Windows, you can create custom locales. For more information, see [Custom locales](/windows/win32/intl/custom-locales).
 
 ## CultureInfo and cultural data
 
@@ -2398,7 +2380,7 @@ Setting `predefinedOnly` to `true` will ensure a culture is created only if the 
 ## Remarks
 
 > [!NOTE]
-> This method and the <xref:System.Globalization.CultureInfo.IetfLanguageTag%2A> property are deprecated. Instead of using these elements, the application should use a new <xref:System.Globalization.CultureInfo> object and calls to the <xref:System.Globalization.CultureInfo.Name%2A> property. IETF tags and names are identical.
+> This method and the <xref:System.Globalization.CultureInfo.IetfLanguageTag%2A> property are deprecated. Instead of using these APIs, we recommend using the <xref:System.Globalization.CultureInfo.%23ctor%2A> constructors, <xref:System.Globalization.CultureInfo.GetCultureInfo%2A?displayProperty=nameWithType>, and the <xref:System.Globalization.CultureInfo.Name> property. IETF tags and names are identical.
 
  The RFC 4646 standard that is maintained by the Internet Engineering Task Force (IETF) defines an IETF language tag, which provides a uniform means of identifying a language. The format of an IETF language tag is the same as the culture name returned by the <xref:System.Globalization.CultureInfo.Name%2A> property, but does not identify a culture uniquely. Different cultures share the same IETF language tag if those cultures have identical linguistic characteristics. The linguistic characteristics of a culture are contained in the <xref:System.Globalization.TextInfo> object associated with a <xref:System.Globalization.CultureInfo> object.
 
@@ -2684,7 +2666,7 @@ Setting `predefinedOnly` to `true` will ensure a culture is created only if the 
 ## Remarks
 
 > [!NOTE]
-> This property and the <xref:System.Globalization.CultureInfo.GetCultureInfoByIetfLanguageTag%2A> method are deprecated. Instead, you should use a the <xref:System.Globalization.CultureInfo.Name%2A?displayProperty=nameWithType> property. IETF tags and names are identical.
+> This property (and the <xref:System.Globalization.CultureInfo.GetCultureInfoByIetfLanguageTag%2A> method) is deprecated. Instead, you should use the <xref:System.Globalization.CultureInfo.Name%2A?displayProperty=nameWithType> property. IETF tags and names are identical.
 
  The RFC 4646 standard that is maintained by the Internet Engineering Task Force (IETF) defines an IETF language tag, which provides a uniform means of identifying a language. The format of an IETF language tag is similar to the culture name returned by the <xref:System.Globalization.CultureInfo.Name%2A> property, but does not identify a culture uniquely. That is, different cultures share the same IETF language tag if those cultures have identical linguistic characteristics. The linguistic characteristics of a culture are contained in the <xref:System.Globalization.TextInfo> object associated with a <xref:System.Globalization.CultureInfo> object.
 
@@ -3328,8 +3310,6 @@ For a list of predefined culture names and identifiers that the <xref:System.Glo
 ## Remarks
  Your application changes the calendar used by the current <xref:System.Globalization.CultureInfo> by setting the <xref:System.Globalization.DateTimeFormatInfo.Calendar%2A> property of <xref:System.Globalization.CultureInfo.DateTimeFormat%2A>, which is an instance of the <xref:System.Globalization.DateTimeFormatInfo> class. The new calendar must be one of the calendars listed in <xref:System.Globalization.CultureInfo.OptionalCalendars%2A>. <xref:System.Globalization.CultureInfo.DateTimeFormat%2A> also includes other properties that customize the date and time formatting associated with that <xref:System.Globalization.DateTimeFormatInfo.Calendar%2A>.
 
-
-
 ## Examples
  The following code example demonstrates how to determine the <xref:System.Globalization.GregorianCalendar> versions supported by the culture.
 
@@ -3396,8 +3376,6 @@ For a list of predefined culture names and identifiers that the <xref:System.Glo
  The cultures have a hierarchy in which the parent of a specific culture is a neutral culture, the parent of a neutral culture is the <xref:System.Globalization.CultureInfo.InvariantCulture%2A>, and the parent of the <xref:System.Globalization.CultureInfo.InvariantCulture%2A> is the invariant culture itself. The parent culture encompasses only the set of information that is common among its children.
 
  If the resources for the specific culture are not available in the system, the resources for the neutral culture are used. If the resources for the neutral culture are not available, the resources embedded in the main assembly are used. For more information on the resource fallback process, see [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps).
-
-
 
 ## Examples
  The following code example determines the parent culture of each specific culture using the Chinese language.
