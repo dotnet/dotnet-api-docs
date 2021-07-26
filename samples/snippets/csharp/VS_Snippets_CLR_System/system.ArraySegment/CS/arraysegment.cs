@@ -1,4 +1,4 @@
-﻿// The following code example passes an ArraySegment to a method.
+// The following code example passes an ArraySegment to a method.
 
 // <Snippet1>
 using System;
@@ -15,14 +15,14 @@ public class SamplesArray  {
       PrintIndexAndValues( myArr );
 
       // Define an array segment that contains the entire array.
-      ArraySegment<String> myArrSegAll = new ArraySegment<String>( myArr );
+      ArraySegment<string> myArrSegAll = new ArraySegment<string>( myArr );
 
       // Display the contents of the ArraySegment.
       Console.WriteLine( "The first array segment (with all the array's elements) contains:" );
       PrintIndexAndValues( myArrSegAll );
 
       // Define an array segment that contains the middle five values of the array.
-      ArraySegment<String> myArrSegMid = new ArraySegment<String>( myArr, 2, 5 );
+      ArraySegment<string> myArrSegMid = new ArraySegment<string>( myArr, 2, 5 );
 
       // Display the contents of the ArraySegment.
       Console.WriteLine( "The second array segment (with the middle five elements) contains:" );
@@ -37,7 +37,7 @@ public class SamplesArray  {
       PrintIndexAndValues( myArrSegMid );
    }
 
-   public static void PrintIndexAndValues( ArraySegment<String> arrSeg )  {
+   public static void PrintIndexAndValues( ArraySegment<string> arrSeg )  {
       for ( int i = arrSeg.Offset; i < (arrSeg.Offset + arrSeg.Count); i++ )  {
          Console.WriteLine( "   [{0}] : {1}", i, arrSeg.Array[i] );
       }

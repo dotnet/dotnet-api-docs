@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Collections.Generic;
 
@@ -10,10 +10,10 @@ public class Example
                          "Ebenezer", "Francis", "Gilbert",
                          "Henry", "Irving", "John", "Karl",
                          "Lucian", "Michael" };
-      var partNames = new ArraySegment<String>(names, 2, 5);
+      var partNames = new ArraySegment<string>(names, 2, 5);
 
-      // Cast the ArraySegment object to an IList<String> and enumerate it.
-      var list = (IList<String>) partNames;
+      // Cast the ArraySegment object to an IList<string> and enumerate it.
+      var list = (IList<string>) partNames;
       for (int ctr = 0; ctr <= list.Count - 1; ctr++)
          Console.WriteLine(list[ctr]);
    }

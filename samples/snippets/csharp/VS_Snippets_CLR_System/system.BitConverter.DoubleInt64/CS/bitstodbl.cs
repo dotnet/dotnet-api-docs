@@ -1,4 +1,4 @@
-﻿//<Snippet1>
+//<Snippet1>
 // Example of the BitConverter.Int64BitsToDouble method.
 using System;
 
@@ -14,7 +14,7 @@ class Int64BitsToDoubleDemo
 
         // Display the argument in hexadecimal.
         Console.WriteLine( formatter,
-            String.Format( "0x{0:X16}", argument ), doubleValue );
+            string.Format( "0x{0:X16}", argument ), doubleValue );
     }
 
     public static void Main( )
