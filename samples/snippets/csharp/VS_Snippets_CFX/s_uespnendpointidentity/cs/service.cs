@@ -1,4 +1,4 @@
-﻿namespace ServerInitiatedNego
+namespace ServerInitiatedNego
 {
     using System;
     using System.Collections.Generic;
@@ -41,7 +41,7 @@
                 sid.IsWellKnown(WellKnownSidType.LocalServiceSid))
             {
                 identity = EndpointIdentity.CreateSpnIdentity(
-                    String.Format(CultureInfo.InvariantCulture, "host/{0}", GetMachineName()));
+                    string.Format(CultureInfo.InvariantCulture, "host/{0}", GetMachineName()));
             }
             else
             {
@@ -80,7 +80,7 @@
 
             SpnEndpointIdentity identity = null;
 
-            identity = new SpnEndpointIdentity(String.Format(CultureInfo.InvariantCulture, "host/{0}", GetMachineName()));
+            identity = new SpnEndpointIdentity(string.Format(CultureInfo.InvariantCulture, "host/{0}", GetMachineName()));
 
             return identity;
         }

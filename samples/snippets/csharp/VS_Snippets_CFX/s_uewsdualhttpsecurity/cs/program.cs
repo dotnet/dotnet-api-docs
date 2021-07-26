@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
@@ -29,7 +29,7 @@ namespace CS
                 new WSDualHttpBinding(WSDualHttpSecurityMode.Message);
             // </Snippet3>
 
-            /*            String clientBaseAddress = "http://localhost:8080/Discovery/" + Guid.NewGuid().ToString();
+            /*            string clientBaseAddress = "http://localhost:8080/Discovery/" + Guid.NewGuid().ToString();
                         Uri clientBaseAddressUri = new Uri(clientBaseAddress);
                         WSDualHttpBinding bindingClientBaseAddress =
                             new WSDualHttpBinding(clientBaseAddressUri);
