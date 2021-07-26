@@ -1,4 +1,4 @@
-﻿// <Snippet5>
+// <Snippet5>
 using System;
 
 public class Example
@@ -10,7 +10,7 @@ public class Example
       for (int ctr = 0; ctr < 26; ctr++)
          chars[ctr] = (char) (ctr + 0x0061);
 
-      Object obj = Activator.CreateInstance(typeof(String),
+      Object obj = Activator.CreateInstance(typeof(string),
                                             new Object[] { chars, 13, 10 } );
       Console.WriteLine(obj);
    }

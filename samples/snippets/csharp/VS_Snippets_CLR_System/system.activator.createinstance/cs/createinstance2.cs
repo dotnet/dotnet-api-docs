@@ -1,4 +1,4 @@
-﻿// <Snippet4>
+// <Snippet4>
 using System;
 
 public class Example
@@ -12,13 +12,13 @@ public class Example
 
       for (int ctr = 0; ctr <= arguments.GetUpperBound(0); ctr++) {
          object[] args = arguments[ctr];
-         object result = Activator.CreateInstance(typeof(String), args);
+         object result = Activator.CreateInstance(typeof(string), args);
          Console.WriteLine("{0}: {1}", result.GetType().Name, result);
       }
    }
 }
 // The example displays the following output:
-//    String: abcdef
-//    String: bcde
-//    String: bbbbbbbbbbbbbbbbbbbb
+//    string: abcdef
+//    string: bcde
+//    string: bbbbbbbbbbbbbbbbbbbb
 // </Snippet4>

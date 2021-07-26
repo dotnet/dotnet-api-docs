@@ -1,4 +1,4 @@
-﻿// <Snippet3>
+// <Snippet3>
 using System;
 using System.Configuration;
 using System.Globalization;
@@ -6,8 +6,8 @@ using System.Xml;
 
 public class Example
 {
-   private const String SettingName = "AppContextSwitchOverrides";
-   private const String SwitchName = "Switch.Application.Utilities.SwitchName";
+   private const string SettingName = "AppContextSwitchOverrides";
+   private const string SwitchName = "Switch.Application.Utilities.SwitchName";
 
    public static void Main()
    {
@@ -22,8 +22,8 @@ public class Example
 
             ConfigurationSection sec = config.GetSection("runtime");
             if (sec != null) {
-               String rawXml = sec.SectionInformation.GetRawXml();
-               if (String.IsNullOrEmpty(rawXml)) return;
+               string rawXml = sec.SectionInformation.GetRawXml();
+               if (string.IsNullOrEmpty(rawXml)) return;
 
                var doc = new XmlDocument();
                doc.LoadXml(rawXml);
