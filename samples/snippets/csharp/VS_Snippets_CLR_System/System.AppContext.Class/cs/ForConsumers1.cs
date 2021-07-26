@@ -14,8 +14,8 @@ public class Example
 }
 // The example displays the following output:
 //    Unhandled Exception: System.ArgumentException: The path is not of a legal form.
-//       at System.IO.Path.NewNormalizePathLimitedChecks(string path, int maxPathLength, Boolean expandShortPaths)
-//       at System.IO.Path.NormalizePath(string path, Boolean fullCheck, int maxPathLength, Boolean expandShortPaths)
-//       at System.IO.Path.InternalGetDirectoryName(string path)
+//       at System.IO.Path.NewNormalizePathLimitedChecks(String path, Int32 maxPathLength, Boolean expandShortPaths)
+//       at System.IO.Path.NormalizePath(String path, Boolean fullCheck, Int32 maxPathLength, Boolean expandShortPaths)
+//       at System.IO.Path.InternalGetDirectoryName(String path)
 //       at Example.Main()
 // </Snippet10>
