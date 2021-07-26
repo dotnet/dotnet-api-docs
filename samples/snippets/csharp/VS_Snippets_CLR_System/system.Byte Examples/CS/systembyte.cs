@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace SystemByte_Examples
 {
@@ -12,7 +12,7 @@ namespace SystemByte_Examples
          SystemByteExamples sbe = new SystemByteExamples();
          int numberToSet;
          Byte compareByte;
-//         String stringToConvert;
+//         string stringToConvert;
 
          numberToSet = 120;
 //         stringToConvert = "200";

@@ -1,4 +1,4 @@
-﻿// <Snippet10>
+// <Snippet10>
 using System;
 using System.IO;
 using System.Threading;
@@ -10,7 +10,7 @@ public class Example
       // Initialize flag variables.
       bool isRedirected = false;
       bool isBoth = false;
-      String fileName = "";
+      string fileName = "";
       StreamWriter sw = null;
 
       // Get any command line arguments.
@@ -18,7 +18,7 @@ public class Example
       // Handle any arguments.
       if (args.Length > 1) {
          for (int ctr = 1; ctr < args.Length; ctr++) {
-            String arg = args[ctr];
+            string arg = args[ctr];
             if (arg.StartsWith("/") || arg.StartsWith("-")) {
                switch (arg.Substring(1).ToLower())
                {
@@ -35,7 +35,7 @@ public class Example
                      isBoth = true;
                      break;
                   default:
-                     ShowSyntax(String.Format("The {0} switch is not supported",
+                     ShowSyntax(string.Format("The {0} switch is not supported",
                                               args[ctr]));
                      return;
                }
@@ -55,17 +55,17 @@ public class Example
          if (!isBoth)
             Console.SetOut(sw);
       }
-      String msg = String.Format("Application began at {0}", DateTime.Now);
+      string msg = string.Format("Application began at {0}", DateTime.Now);
       Console.WriteLine(msg);
       if (isBoth) sw.WriteLine(msg);
       Thread.Sleep(5000);
-      msg = String.Format("Application ended normally at {0}", DateTime.Now);
+      msg = string.Format("Application ended normally at {0}", DateTime.Now);
       Console.WriteLine(msg);
       if (isBoth) sw.WriteLine(msg);
       if (isRedirected) sw.Close();
    }
 
-   private static void ShowSyntax(String errMsg)
+   private static void ShowSyntax(string errMsg)
    {
       Console.WriteLine(errMsg);
       Console.WriteLine("\nSyntax: Example [[/f <filename> [/b]]\n");

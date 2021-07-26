@@ -1,4 +1,4 @@
-﻿//<Snippet2>
+//<Snippet2>
 // Example of the Buffer.SetByte method.
 using System;
 
@@ -9,7 +9,7 @@ class SetByteDemo
     {
         // Get the array element width; format the formatting string.
         int elemWidth = Buffer.ByteLength( arr ) / arr.Length;
-        string format = String.Format( " {{0:X{0}}}", 2 * elemWidth );
+        string format = string.Format( " {{0:X{0}}}", 2 * elemWidth );
 
         // Display the array elements from right to left.
         Console.Write( "{0,7}:", name );

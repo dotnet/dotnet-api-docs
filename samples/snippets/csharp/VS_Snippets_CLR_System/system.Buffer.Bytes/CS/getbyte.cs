@@ -1,4 +1,4 @@
-﻿//<Snippet3>
+//<Snippet3>
 // Example of the Buffer.GetByte method.
 using System;
 
@@ -11,7 +11,7 @@ class GetByteDemo
     {
         // Get the array element width; format the formatting string.
         int elemWidth = Buffer.ByteLength( arr ) / arr.Length;
-        string format = String.Format( " {{0:X{0}}}", 2 * elemWidth );
+        string format = string.Format( " {{0:X{0}}}", 2 * elemWidth );
 
         // Display the array elements from right to left.
         Console.Write( "{0,5}:", name );
@@ -26,7 +26,7 @@ class GetByteDemo
 
         // Display the array name, index, and byte to be viewed.
         Console.WriteLine( formatter, name, index, value,
-            String.Format( "0x{0:X2}", value ) );
+            string.Format( "0x{0:X2}", value ) );
     }
 
     public static void Main( )

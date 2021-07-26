@@ -1,4 +1,4 @@
-﻿// <Snippet9>
+// <Snippet9>
 using System;
 
 public class Example
@@ -9,7 +9,7 @@ public class Example
       foreach (var value in values) {
          bool success, result;
          int number;
-         success = Int32.TryParse(value, out number);
+         success = int.TryParse(value, out number);
          if (success) {
             // The method throws no exceptions.
             result = Convert.ToBoolean(number);

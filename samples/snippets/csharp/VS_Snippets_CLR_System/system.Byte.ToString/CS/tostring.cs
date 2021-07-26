@@ -1,4 +1,4 @@
-﻿//<Snippet1>
+//<Snippet1>
 // Example for the Byte.ToString( ) methods.
 using System;
 using System.Globalization;
@@ -48,9 +48,9 @@ class ByteToStringDemo
     {
         Console.WriteLine( "This example of\n" +
             "   Byte.ToString( ),\n" +
-            "   Byte.ToString( String ),\n" +
+            "   Byte.ToString( string ),\n" +
             "   Byte.ToString( IFormatProvider ), and\n" +
-            "   Byte.ToString( String, IFormatProvider )\n" +
+            "   Byte.ToString( string, IFormatProvider )\n" +
             "generates the following output when formatting " +
             "Byte values \nwith combinations of format " +
             "strings and IFormatProvider." );
@@ -62,9 +62,9 @@ class ByteToStringDemo
 /*
 This example of
    Byte.ToString( ),
-   Byte.ToString( String ),
+   Byte.ToString( string ),
    Byte.ToString( IFormatProvider ), and
-   Byte.ToString( String, IFormatProvider )
+   Byte.ToString( string, IFormatProvider )
 generates the following output when formatting Byte values
 with combinations of format strings and IFormatProvider.
 

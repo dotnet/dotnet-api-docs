@@ -1,11 +1,11 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 
 public class Example
 {
    public static void Main()
    {
-      string[] values = { null, String.Empty, "True", "False",
+      string[] values = { null, string.Empty, "True", "False",
                           "true", "false", "    true    ",
                            "TrUe", "fAlSe", "fa lse", "0",
                           "1", "-1", "string" };
