@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel;
@@ -12,7 +12,7 @@ namespace SqlPersistenceProviderFactorySnippets
         //Constructors
         void Container0()
         {
-            //Constructor: SqlPersistenceProviderFactory(String, Boolean, TimeSpan)
+            //Constructor: SqlPersistenceProviderFactory(string, Boolean, TimeSpan)
             //<snippet0>
             SqlPersistenceProviderFactory factory = new SqlPersistenceProviderFactory(
                 DataBaseConstants.ConnectionString,
@@ -22,7 +22,7 @@ namespace SqlPersistenceProviderFactorySnippets
         }
         void Container1()
         {
-            //Constructor: SqlPersistenceProviderFactory(String, Boolean)
+            //Constructor: SqlPersistenceProviderFactory(string, Boolean)
             //<snippet1>
             SqlPersistenceProviderFactory factory = new SqlPersistenceProviderFactory(
                 DataBaseConstants.ConnectionString,
@@ -31,7 +31,7 @@ namespace SqlPersistenceProviderFactorySnippets
         }
         void Container2()
         {
-            //Constructor: SqlPersistenceProviderFactory(String)
+            //Constructor: SqlPersistenceProviderFactory(string)
             //<snippet2>
             SqlPersistenceProviderFactory factory = new SqlPersistenceProviderFactory(
                  DataBaseConstants.ConnectionString);
@@ -56,7 +56,7 @@ namespace SqlPersistenceProviderFactorySnippets
             //<snippet4>
             SqlPersistenceProviderFactory factory = new SqlPersistenceProviderFactory(
                  DataBaseConstants.ConnectionString);
-            String databaseConnectionString = factory.ConnectionString;
+            string databaseConnectionString = factory.ConnectionString;
             //</snippet4>
         }
         void Container5()
@@ -93,7 +93,7 @@ namespace SqlPersistenceProviderFactorySnippets
 
         class DataBaseConstants
         {
-            public static String ConnectionString = "";
+            public static string ConnectionString = "";
         }
     }
 }
