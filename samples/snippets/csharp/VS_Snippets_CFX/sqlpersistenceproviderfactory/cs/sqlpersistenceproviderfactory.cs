@@ -12,7 +12,7 @@ namespace SqlPersistenceProviderFactorySnippets
         //Constructors
         void Container0()
         {
-            //Constructor: SqlPersistenceProviderFactory(string, Boolean, TimeSpan)
+            //Constructor: SqlPersistenceProviderFactory(String, Boolean, TimeSpan)
             //<snippet0>
             SqlPersistenceProviderFactory factory = new SqlPersistenceProviderFactory(
                 DataBaseConstants.ConnectionString,
@@ -22,7 +22,7 @@ namespace SqlPersistenceProviderFactorySnippets
         }
         void Container1()
         {
-            //Constructor: SqlPersistenceProviderFactory(string, Boolean)
+            //Constructor: SqlPersistenceProviderFactory(String, Boolean)
             //<snippet1>
             SqlPersistenceProviderFactory factory = new SqlPersistenceProviderFactory(
                 DataBaseConstants.ConnectionString,
@@ -31,7 +31,7 @@ namespace SqlPersistenceProviderFactorySnippets
         }
         void Container2()
         {
-            //Constructor: SqlPersistenceProviderFactory(string)
+            //Constructor: SqlPersistenceProviderFactory(String)
             //<snippet2>
             SqlPersistenceProviderFactory factory = new SqlPersistenceProviderFactory(
                  DataBaseConstants.ConnectionString);
