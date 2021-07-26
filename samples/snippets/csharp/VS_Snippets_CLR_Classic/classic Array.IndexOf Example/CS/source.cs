@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 public class Example
 {
@@ -16,7 +16,7 @@ public class Example
          Console.WriteLine("   [{0,2}]: {1}", i, strings[i]);
 
       // Search for the first occurrence of the duplicated value.
-      String searchString = "the";
+      string searchString = "the";
       int index = Array.IndexOf(strings, searchString);
       Console.WriteLine("The first occurrence of \"{0}\" is at index {1}.",
                         searchString, index);

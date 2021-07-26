@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 
 public class SamplesArray2
 {
     public static void Main()
     {
         // <Snippet2>
-        // Creates and initializes a new three-dimensional Array of type Int32.
-        Array myArr = Array.CreateInstance(typeof(Int32), 2, 3, 4);
+        // Creates and initializes a new three-dimensional Array of type int.
+        Array myArr = Array.CreateInstance(typeof(int), 2, 3, 4);
         for (int i = myArr.GetLowerBound(0); i <= myArr.GetUpperBound(0); i++)
         {
             for (int j = myArr.GetLowerBound(1); j <= myArr.GetUpperBound(1); j++)
