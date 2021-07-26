@@ -18,7 +18,7 @@ public class Example
    }
 }
 // The example displays the following output:
-//    string: abcdef
-//    string: bcde
-//    string: bbbbbbbbbbbbbbbbbbbb
+//    String: abcdef
+//    String: bcde
+//    String: bbbbbbbbbbbbbbbbbbbb
 // </Snippet4>
