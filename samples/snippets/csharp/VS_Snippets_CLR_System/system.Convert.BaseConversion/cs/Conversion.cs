@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 public class Class1
 {
@@ -300,7 +300,7 @@ public class Class1
    {
       // <Snippet13>
       // Create a hexadecimal value out of range of the UInt32 type.
-      string value = Convert.ToString(Int32.MinValue, 16);
+      string value = Convert.ToString(int.MinValue, 16);
       // Convert it back to a number.
       try
       {
@@ -319,7 +319,7 @@ public class Class1
    {
       // <Snippet14>
       // Create a negative hexadecimal value out of range of the UInt32 type.
-      int sourceNumber = Int32.MinValue;
+      int sourceNumber = int.MinValue;
       bool isSigned = Math.Sign((int)sourceNumber.GetType().GetField("MinValue").GetValue(null)) == -1;
       string value = Convert.ToString(sourceNumber, 16);
       UInt32 targetNumber;

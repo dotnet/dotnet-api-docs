@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Text;
 
@@ -13,7 +13,7 @@ public class ConsoleKeyExample
          input = Console.ReadKey(true);
 
          StringBuilder output = new StringBuilder(
-                       String.Format("You pressed {0}", input.Key.ToString()));
+                       string.Format("You pressed {0}", input.Key.ToString()));
          bool modifiers = false;
 
          if ((input.Modifiers & ConsoleModifiers.Alt) == ConsoleModifiers.Alt) {

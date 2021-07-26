@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -10,7 +10,7 @@ public class Example
       Console.WindowWidth = Console.BufferWidth;
       Console.TreatControlCAsInput = true;
 
-      string inputString = String.Empty;
+      string inputString = string.Empty;
       ConsoleKeyInfo keyInfo;
 
       Console.WriteLine("Enter a string. Press <Enter> or Esc to exit.");
@@ -37,7 +37,7 @@ public class Example
                inputString = inputString.Substring(0, oldLength - 1);
                Console.CursorLeft = 0;
                Console.CursorTop = Console.CursorTop - extraRows;
-               Console.Write(inputString + new String(' ', oldLength - inputString.Length));
+               Console.Write(inputString + new string(' ', oldLength - inputString.Length));
                Console.CursorLeft = cursorCol;
             }
             continue;
@@ -49,7 +49,7 @@ public class Example
          inputString += keyInfo.KeyChar;
       } while (keyInfo.Key != ConsoleKey.Enter);
       Console.WriteLine("\n\nYou entered:\n    {0}",
-                        String.IsNullOrEmpty(inputString) ? "<nothing>" : inputString);
+                        string.IsNullOrEmpty(inputString) ? "<nothing>" : inputString);
    }
 }
 // </Snippet1>

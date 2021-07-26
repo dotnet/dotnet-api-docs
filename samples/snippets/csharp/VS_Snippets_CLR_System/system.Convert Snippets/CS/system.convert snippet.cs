@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace BasicSnippetC {
 
@@ -19,7 +19,7 @@ namespace BasicSnippetC {
 			snippet.ConvertLongs(longVal);
 
 			string stringVal;
-			System.Console.WriteLine("Enter the String value: ");
+			System.Console.WriteLine("Enter the string value: ");
 			stringVal = System.Console.ReadLine();
 			snippet.ConvertStrings(stringVal);
 
@@ -213,7 +213,7 @@ namespace BasicSnippetC {
 					"Overflow in long-to-char conversion.");
 			}
 			
-			// A conversion from Char to long cannot overflow.
+			// A conversion from char to long cannot overflow.
 			longVal = System.Convert.ToInt64(charVal);
 			System.Console.WriteLine("{0} as an Int64 is {1}",
 				charVal, longVal);
@@ -298,11 +298,11 @@ namespace BasicSnippetC {
 				boolVal = System.Convert.ToBoolean(stringVal);
 				if (boolVal) {
 					System.Console.WriteLine(
-						"String was equal to System.Boolean.TrueString.");
+						"string was equal to System.Boolean.TrueString.");
 				}
 				else {
 					System.Console.WriteLine(
-						"String was equal to System.Boolean.FalseString.");
+						"string was equal to System.Boolean.FalseString.");
 				}
 			}
 			catch (System.FormatException){
@@ -434,14 +434,14 @@ namespace BasicSnippetC {
 		public void ConvertCharDecimal(char charVal) {
 			Decimal decimalVal = 0;
 			
-			// Char to decimal conversion is not supported and will always
+			// char to decimal conversion is not supported and will always
 			// throw an InvalidCastException.
 			try {
 				decimalVal = System.Convert.ToDecimal(charVal);
 			}
 			catch (System.InvalidCastException) {
 				System.Console.WriteLine(
-					"Char-to-Decimal conversion is not supported " +
+					"char-to-Decimal conversion is not supported " +
 					"by the .NET Framework.");
 			}
 
@@ -451,7 +451,7 @@ namespace BasicSnippetC {
 			}
 			catch (System.InvalidCastException) {
 				System.Console.WriteLine(
-					"Decimal-to-Char conversion is not supported " +
+					"Decimal-to-char conversion is not supported " +
 					"by the .NET Framework.");
 			}
 		}

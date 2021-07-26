@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace UUCodeC
 {
@@ -148,7 +148,7 @@ namespace UUCodeC
             return;
          }
          catch (System.ArgumentOutOfRangeException) {
-            System.Console.WriteLine("Char Array is not large enough.");
+            System.Console.WriteLine("char Array is not large enough.");
             return;
          }
 
@@ -199,7 +199,7 @@ namespace UUCodeC
             return;
          }
          catch ( System.FormatException ) {
-            System.Console.WriteLine("Base 64 Char Array length is not " +
+            System.Console.WriteLine("Base 64 char Array length is not " +
                "4 or is not an even multiple of 4." );
             return;
          }

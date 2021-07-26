@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 
 public class Example
@@ -12,7 +12,7 @@ public class Example
 
       Console.WriteLine("About to call Console.ReadLine in a loop.");
       Console.WriteLine("----");
-      String s;
+      string s;
       int ctr = 0;
       do {
          ctr++;
