@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 using System.IO;
 
@@ -8,7 +8,7 @@ public class Example
    {
       StreamWriter sw = new StreamWriter(@".\chars2.txt");
       int utf32 = 0x1D160;
-      string surrogate = Char.ConvertFromUtf32(utf32);
+      string surrogate = char.ConvertFromUtf32(utf32);
       sw.WriteLine("U+{0:X6} UTF-32 = {1} ({2}) UTF-16",
                    utf32, surrogate, ShowCodePoints(surrogate));
       sw.Close();
@@ -18,7 +18,7 @@ public class Example
    {
       string retval = null;
       foreach (var ch in value)
-         retval += String.Format("U+{0:X4} ", Convert.ToUInt16(ch));
+         retval += string.Format("U+{0:X4} ", Convert.ToUInt16(ch));
 
       return retval.Trim();
    }

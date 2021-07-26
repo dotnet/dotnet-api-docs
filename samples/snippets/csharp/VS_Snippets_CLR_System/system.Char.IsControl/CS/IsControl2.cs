@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 
 public class ControlChar
@@ -8,7 +8,7 @@ public class ControlChar
       string sentence = "This is a " + Environment.NewLine + "two-line sentence.";
       for (int ctr = 0; ctr < sentence.Length; ctr++)
       {
-         if (Char.IsControl(sentence, ctr))
+         if (char.IsControl(sentence, ctr))
            Console.WriteLine("Control character \\U{0} found in position {1}.",
              Convert.ToInt32(sentence[ctr]).ToString("X4"), ctr);
       }

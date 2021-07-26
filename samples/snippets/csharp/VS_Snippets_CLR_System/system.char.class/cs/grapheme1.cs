@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.IO;
 
@@ -8,7 +8,7 @@ public class Example
    {
       StreamWriter sw = new StreamWriter("chars1.txt");
       char[] chars = { '\u0061', '\u0308' };
-      string strng = new String(chars);
+      string strng = new string(chars);
       sw.WriteLine(strng);
       sw.Close();
    }

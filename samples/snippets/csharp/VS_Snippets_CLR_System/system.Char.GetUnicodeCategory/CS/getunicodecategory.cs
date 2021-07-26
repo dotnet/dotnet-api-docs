@@ -1,4 +1,4 @@
-﻿// <snippet1>
+// <snippet1>
 using System;
 
 public class GetUnicodeCategorySample {
@@ -6,9 +6,9 @@ public class GetUnicodeCategorySample {
 		char ch2 = '2';
 		string str = "Upper Case";
 
-		Console.WriteLine(Char.GetUnicodeCategory('a'));		// Output: "LowercaseLetter"
-		Console.WriteLine(Char.GetUnicodeCategory(ch2));		// Output: "DecimalDigitNumber"
-		Console.WriteLine(Char.GetUnicodeCategory(str, 6));		// Output: "UppercaseLetter"
+		Console.WriteLine(char.GetUnicodeCategory('a'));		// Output: "LowercaseLetter"
+		Console.WriteLine(char.GetUnicodeCategory(ch2));		// Output: "DecimalDigitNumber"
+		Console.WriteLine(char.GetUnicodeCategory(str, 6));		// Output: "UppercaseLetter"
 	}
 }
 // </snippet1>
