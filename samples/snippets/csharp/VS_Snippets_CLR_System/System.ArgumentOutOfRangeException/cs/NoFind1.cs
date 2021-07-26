@@ -23,7 +23,7 @@ public class Example
 //
 //    Unhandled Exception: System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
 //    Parameter name: startIndex
-//       at System.String.Substring(int startIndex, int length)
-//       at Example.GetSecondWord(string s)
+//       at System.String.Substring(Int32 startIndex, Int32 length)
+//       at Example.GetSecondWord(String s)
 //       at Example.Main()
 // </Snippet17>
