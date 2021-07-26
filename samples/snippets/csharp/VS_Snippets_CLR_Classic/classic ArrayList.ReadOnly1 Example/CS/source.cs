@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesArrayList  {
@@ -21,10 +21,10 @@
        // Displays the contents of both collections.
        Console.WriteLine( "\nInitially," );
        Console.WriteLine( "The original ArrayList myAL contains:" );
-       foreach ( String myStr in myAL )
+       foreach ( string myStr in myAL )
           Console.WriteLine( "   {0}", myStr );
        Console.WriteLine( "The read-only ArrayList myReadOnlyAL contains:" );
-       foreach ( String myStr in myReadOnlyAL )
+       foreach ( string myStr in myReadOnlyAL )
           Console.WriteLine( "   {0}", myStr );
 
        // Adding an element to a read-only ArrayList throws an exception.
@@ -41,10 +41,10 @@
        // Displays the contents of both collections again.
        Console.WriteLine( "\nAfter adding a new element to the original ArrayList," );
        Console.WriteLine( "The original ArrayList myAL contains:" );
-       foreach ( String myStr in myAL )
+       foreach ( string myStr in myAL )
           Console.WriteLine( "   {0}", myStr );
        Console.WriteLine( "The read-only ArrayList myReadOnlyAL contains:" );
-       foreach ( String myStr in myReadOnlyAL )
+       foreach ( string myStr in myReadOnlyAL )
           Console.WriteLine( "   {0}", myStr );
     }
  }

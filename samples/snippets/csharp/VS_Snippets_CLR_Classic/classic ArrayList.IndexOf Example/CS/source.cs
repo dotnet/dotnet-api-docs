@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Collections;
 public class SamplesArrayList
@@ -27,7 +27,7 @@ public class SamplesArrayList
         PrintIndexAndValues( myAL );
 
         // Search for the first occurrence of the duplicated value.
-        String myString = "the";
+        string myString = "the";
         int myIndex = myAL.IndexOf( myString );
         Console.WriteLine( "The first occurrence of \"{0}\" is at index {1}.", myString, myIndex );
 

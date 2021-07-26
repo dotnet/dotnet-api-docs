@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example {
@@ -7,7 +7,7 @@ public class Example {
         Console.Write("Hello ");
         Console.WriteLine("World!");
         Console.Write("Enter your name: ");
-        String name = Console.ReadLine();
+        string name = Console.ReadLine();
         Console.Write("Good day, ");
         Console.Write(name);
         Console.WriteLine("!");
