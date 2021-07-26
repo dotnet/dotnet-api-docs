@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 public class Example
 {
@@ -13,10 +13,10 @@ public class Example
    {
       // <Snippet1>
       int utf32 = 0x10107;      // AEGEAN NUMBER ONE
-      string surrogate = Char.ConvertFromUtf32(utf32);
+      string surrogate = char.ConvertFromUtf32(utf32);
       foreach (var ch in surrogate)
          Console.WriteLine("U+{0:X4}: {1}", Convert.ToUInt16(ch),
-                                          Char.IsNumber(ch));
+                                          char.IsNumber(ch));
 
       // The example displays the following output:
       //       U+D800: False
@@ -28,11 +28,11 @@ public class Example
    {
       // <Snippet2>
       int utf32 = 0x10107;      // AEGEAN NUMBER ONE
-      string surrogate = Char.ConvertFromUtf32(utf32);
+      string surrogate = char.ConvertFromUtf32(utf32);
       for (int ctr = 0; ctr < surrogate.Length; ctr++)
          Console.WriteLine("U+{0:X4} at position {1}: {2}",
                            Convert.ToUInt16(surrogate[ctr]), ctr,
-                           Char.IsNumber(surrogate, ctr));
+                           char.IsNumber(surrogate, ctr));
       // The example displays the following output:
       //       U+D800 at position 0: True
       //       U+DD07 at position 1: False

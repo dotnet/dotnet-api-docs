@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -7,8 +7,8 @@ public class Example
    {
       char[] chars = { 'e', 'E', '6', ',', 'ж', 'ä' };
       foreach (var ch in chars)
-          Console.WriteLine("{0} --> {1} {2}", ch, Char.ToUpper(ch),
-                            ch == Char.ToUpper(ch) ? "(Same Character)" : "" );
+          Console.WriteLine("{0} --> {1} {2}", ch, char.ToUpper(ch),
+                            ch == char.ToUpper(ch) ? "(Same Character)" : "" );
    }
 }
 // The example displays the following output:

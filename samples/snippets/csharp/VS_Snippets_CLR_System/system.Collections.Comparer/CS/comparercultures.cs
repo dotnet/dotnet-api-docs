@@ -1,4 +1,4 @@
-﻿// The following code example shows how Compare returns different values depending on the culture associated with the Comparer.
+// The following code example shows how Compare returns different values depending on the culture associated with the Comparer.
 
 // <snippet1>
 using System;
@@ -10,8 +10,8 @@ public class SamplesComparer  {
    public static void Main()  {
 
       // Creates the strings to compare.
-      String str1 = "llegar";
-      String str2 = "lugar";
+      string str1 = "llegar";
+      string str2 = "lugar";
       Console.WriteLine( "Comparing \"{0}\" and \"{1}\" ...", str1, str2 );
 
       // Uses the DefaultInvariant Comparer.
