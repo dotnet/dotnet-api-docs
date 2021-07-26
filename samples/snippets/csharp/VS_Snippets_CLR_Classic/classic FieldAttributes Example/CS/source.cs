@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Reflection;
 
@@ -6,14 +6,14 @@ public class Demo
 {
     // Make three fields:
     // The first field is private.
-    private string m_field = "String A";
+    private string m_field = "string A";
 
     // The second field is public.
-    public string Field = "String B";
+    public string Field = "string B";
 
     // The third field is public const (hence also literal and static),
     // with a default value.
-    public const string FieldC = "String C";
+    public const string FieldC = "string C";
 }
 
 public class Myfieldattributes
@@ -53,8 +53,8 @@ public class Myfieldattributes
 /* This code example produces the following output:
 
 Reflection.FieldAttributes
-m_field = "String A"; attributes: Private
-Field = "String B"; attributes: Public
-FieldC = "String C"; attributes: Public, Static, Literal, HasDefault
+m_field = "string A"; attributes: Private
+Field = "string B"; attributes: Public
+FieldC = "string C"; attributes: Public, Static, Literal, HasDefault
  */
 // </Snippet1>

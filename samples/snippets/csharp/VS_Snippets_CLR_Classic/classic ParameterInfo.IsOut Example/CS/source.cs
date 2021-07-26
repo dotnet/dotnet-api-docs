@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Reflection;
 
@@ -40,7 +40,7 @@ using System.Reflection;
 
  Reflection.ParameterInfo
 
- Mymethodbase = Void mymethod (Int32, System.String ByRef, System.String ByRef)
+ Mymethodbase = Void mymethod (int, System.String ByRef, System.String ByRef)
  For parameter # 0, the IsOut is - False
  For parameter # 1, the IsOut is - True
  For parameter # 2, the IsOut is - False

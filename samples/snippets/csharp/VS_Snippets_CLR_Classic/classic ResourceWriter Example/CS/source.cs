@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Resources;
 
@@ -9,11 +9,11 @@ public class WriteResources {
       IResourceWriter writer = new ResourceWriter("myResources.resources");
 
       // Adds resources to the resource writer.
-      writer.AddResource("String 1", "First String");
+      writer.AddResource("string 1", "First string");
 
-      writer.AddResource("String 2", "Second String");
+      writer.AddResource("string 2", "Second string");
 
-      writer.AddResource("String 3", "Third String");
+      writer.AddResource("string 3", "Third string");
 
       // Writes the resources to the file or stream, and closes it.
       writer.Close();
