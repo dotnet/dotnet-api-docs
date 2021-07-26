@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 
 namespace Microsoft.ServiceModel.Samples
@@ -133,7 +133,7 @@ namespace Microsoft.ServiceModel.Samples
             }
             else
             {
-                TimeSpan maxWait = TimeSpan.FromMilliseconds(Int32.MaxValue);
+                TimeSpan maxWait = TimeSpan.FromMilliseconds(int.MaxValue);
 
                 while (timeout > maxWait)
                 {

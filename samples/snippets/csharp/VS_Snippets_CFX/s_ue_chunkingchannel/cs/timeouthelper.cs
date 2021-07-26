@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 
 namespace Microsoft.Samples.ChannelHelpers
@@ -145,7 +145,7 @@ namespace Microsoft.Samples.ChannelHelpers
             }
             else
             {
-                TimeSpan maxWait = TimeSpan.FromMilliseconds(Int32.MaxValue);
+                TimeSpan maxWait = TimeSpan.FromMilliseconds(int.MaxValue);
 
                 while (timeout > maxWait)
                 {

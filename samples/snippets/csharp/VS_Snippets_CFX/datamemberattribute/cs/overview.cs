@@ -1,4 +1,4 @@
-﻿//<snippet0>
+//<snippet0>
 using System;
 using System.Collections;
 using System.IO;
@@ -107,7 +107,7 @@ public class Test
         // Deserialize the data and read it from the instance.
         Person deserializedPerson = (Person)ser.ReadObject(fs);
         fs.Close();
-        Console.WriteLine(String.Format("{0} {1}, ID: {2}",
+        Console.WriteLine(string.Format("{0} {1}, ID: {2}",
         deserializedPerson.FirstName, deserializedPerson.LastName,
         deserializedPerson.IdNumber));
     }

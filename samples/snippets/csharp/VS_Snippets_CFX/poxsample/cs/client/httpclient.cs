@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.ServiceModel;
@@ -20,7 +20,7 @@ namespace Microsoft.ServiceModel.Samples
 
         public Message Request( Uri requestUri, string httpMethod )
         {
-            Message request = Message.CreateMessage( MessageVersion.None, String.Empty );
+            Message request = Message.CreateMessage( MessageVersion.None, string.Empty );
             request.Headers.To = requestUri;
 
             HttpRequestMessageProperty property = new HttpRequestMessageProperty();
@@ -32,7 +32,7 @@ namespace Microsoft.ServiceModel.Samples
 
         public Message Request( Uri requestUri, string httpMethod, object entityBody )
         {
-            Message request = Message.CreateMessage( MessageVersion.None, String.Empty, entityBody );
+            Message request = Message.CreateMessage( MessageVersion.None, string.Empty, entityBody );
             request.Headers.To = requestUri;
 
             HttpRequestMessageProperty property = new HttpRequestMessageProperty();

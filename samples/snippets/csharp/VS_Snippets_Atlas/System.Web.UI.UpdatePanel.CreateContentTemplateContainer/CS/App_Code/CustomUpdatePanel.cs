@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 using System.Web;
 using System.Web.UI;
@@ -12,8 +12,8 @@ namespace SamplesCS
         {
         }
 
-        private String _groupingText;
-        public String GroupingText
+        private string _groupingText;
+        public string GroupingText
         {
             get { return _groupingText; }
             set { _groupingText = value; }
@@ -27,7 +27,7 @@ namespace SamplesCS
         }
         private sealed class MyContentTemplateContainer : Control
         {
-            private String _displayText;
+            private string _displayText;
             public MyContentTemplateContainer(string groupingText)
             {
                 _displayText = groupingText;

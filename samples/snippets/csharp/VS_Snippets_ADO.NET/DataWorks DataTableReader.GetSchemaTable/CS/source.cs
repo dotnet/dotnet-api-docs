@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -59,13 +59,13 @@ class Class1
         }
     }
 
-    private static SqlDataAdapter SetupDataAdapter(String sqlString)
+    private static SqlDataAdapter SetupDataAdapter(string sqlString)
     {
         // Assuming all the default settings, create a
         // SqlDataAdapter working with the AdventureWorks
         // sample database that's available with
         // SQL Server.
-        String connectionString =
+        string connectionString =
             "Data source=(local);initial catalog=AdventureWorks;" +
             "Integrated Security=True";
         return new SqlDataAdapter(sqlString, connectionString);

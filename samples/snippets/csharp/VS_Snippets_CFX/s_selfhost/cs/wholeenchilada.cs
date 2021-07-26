@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 
 //<snippet14>
@@ -26,7 +26,7 @@ namespace Microsoft.ServiceModel.Samples
 		// <Snippet41>
 		protected override
 				ServiceDescription
-				CreateDescription (out System.Collections.Generic.IDictionary<String, ContractDescription> id )
+				CreateDescription (out System.Collections.Generic.IDictionary<string, ContractDescription> id )
 		{
 			id = null;
 			return new ServiceDescription();

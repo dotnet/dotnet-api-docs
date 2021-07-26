@@ -1,4 +1,4 @@
-﻿//  S_UEEndpointIdentity
+//  S_UEEndpointIdentity
 //
 using System;
 using System.IdentityModel.Claims;
@@ -273,12 +273,12 @@ namespace CreateRSAIdentity
                 //Create a service endpoint and change its identity to the DNS for an X509 Certificate.
                 ServiceEndpoint ep = serviceHost.AddServiceEndpoint(typeof(ICalculator),
                                                                     wsAnonbinding,
-                                                                    String.Empty);
+                                                                    string.Empty);
                 EndpointAddress epa = new EndpointAddress(dnsrelativeAddress, EndpointIdentity.CreateDnsIdentity("identity.com"));
                 ep.Address = epa;
 
                 //Create a service endpoint and change its identity to the X509 certificate's RSA key value.
-                ServiceEndpoint ep3 = serviceHost.AddServiceEndpoint(typeof(ICalculator), wsAnonbinding, String.Empty);
+                ServiceEndpoint ep3 = serviceHost.AddServiceEndpoint(typeof(ICalculator), wsAnonbinding, string.Empty);
                 EndpointAddress epa3 = new EndpointAddress(rsarelativeAddress, EndpointIdentity.CreateRsaIdentity(servercert));
                 ep3.Address = epa3;
              //</snippet41>
@@ -1055,7 +1055,7 @@ namespace TestPrincipalPermission
             [PrincipalPermission(SecurityAction.Demand, Role = "everyone")]
             public string Method1()
             {
-                return String.Format("Hello, \"{0}\"", Thread.CurrentPrincipal.Identity.Name);
+                return string.Format("Hello, \"{0}\"", Thread.CurrentPrincipal.Identity.Name);
             }
         }
 

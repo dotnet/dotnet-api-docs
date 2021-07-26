@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -52,8 +52,8 @@ public class Form1 : Form {
       PrintDataView(dv);
 
       // Removing Sort and RpwFilter to ilustrate RowStateFilter. DataView should contain all 10 rows back in the original order
-      dv.Sort = String.Empty;
-      dv.RowFilter = String.Empty;
+      dv.Sort = string.Empty;
+      dv.RowFilter = string.Empty;
 
       // Show only Unchanged rows or last 5 rows
       dv.RowStateFilter = DataViewRowState.Unchanged;

@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Data.SqlClient;
 using System.Data;
@@ -29,7 +29,7 @@ class Class1
         {
             while (reader.Read())
             {
-                String productName = null;
+                string productName = null;
                 try
                 {
                     // Get the name of the file.
@@ -54,7 +54,7 @@ class Class1
                         using (Bitmap productImage = new
                                    Bitmap(new MemoryStream(buffer)))
                         {
-                            String fileName = "C:\\" + productName;
+                            string fileName = "C:\\" + productName;
                             // Save in gif format.
                             productImage.Save(fileName, ImageFormat.Gif);
                             Console.WriteLine("Successfully created " + fileName);
@@ -71,12 +71,12 @@ class Class1
         Console.ReadLine();
     }
 
-    static private SqlDataAdapter SetupDataAdapter(String sqlString)
+    static private SqlDataAdapter SetupDataAdapter(string sqlString)
     {
         // Assuming all the default settings, create a SqlDataAdapter
         // working with the AdventureWorks sample database that's
         // available with SQL Server.
-        String connectionString =
+        string connectionString =
             "Data Source=(local);Initial Catalog=AdventureWorks;" +
             "Integrated Security=true";
         return new SqlDataAdapter(sqlString, connectionString);

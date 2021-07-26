@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -43,22 +43,22 @@ namespace Microsoft.ServiceModel.Samples
             //based on the incoming HTTP verb.
             if (requestProperties != null)
             {
-                if (String.Equals("GET", requestProperties.Method,
+                if (string.Equals("GET", requestProperties.Method,
                     StringComparison.OrdinalIgnoreCase))
                 {
                     response = GetCustomer(request);
                 }
-                else if (String.Equals("POST", requestProperties.Method,
+                else if (string.Equals("POST", requestProperties.Method,
                     StringComparison.OrdinalIgnoreCase))
                 {
                     response = UpdateCustomer(request);
                 }
-                else if (String.Equals("PUT", requestProperties.Method,
+                else if (string.Equals("PUT", requestProperties.Method,
                     StringComparison.OrdinalIgnoreCase))
                 {
                     response = AddCustomer(request);
                 }
-                else if (String.Equals("DELETE", requestProperties.Method,
+                else if (string.Equals("DELETE", requestProperties.Method,
                     StringComparison.OrdinalIgnoreCase))
                 {
                     response = DeleteCustomer(request);
@@ -69,7 +69,7 @@ namespace Microsoft.ServiceModel.Samples
                     //construct a response message and use the HttpResponseMessageProperty to
                     //set the HTTP status code to 405 (Method Not Allowed) which indicates the client 
                     //used an HTTP verb not supported by the server.
-                    response = Message.CreateMessage(MessageVersion.None, String.Empty, String.Empty);
+                    response = Message.CreateMessage(MessageVersion.None, string.Empty, string.Empty);
 
                     HttpResponseMessageProperty responseProperty = new HttpResponseMessageProperty();
                     responseProperty.StatusCode = HttpStatusCode.MethodNotAllowed;
@@ -124,7 +124,7 @@ namespace Microsoft.ServiceModel.Samples
             if (customer == null)
             {
                 responseProperties.StatusCode = HttpStatusCode.NotFound;
-                response = Message.CreateMessage(message.Version, message.Headers.Action, String.Empty);
+                response = Message.CreateMessage(message.Version, message.Headers.Action, string.Empty);
             }
             else
             {
@@ -169,7 +169,7 @@ namespace Microsoft.ServiceModel.Samples
             }
 
             responseProperties.SuppressEntityBody = true;
-            response = Message.CreateMessage(message.Version, message.Headers.Action, String.Empty);
+            response = Message.CreateMessage(message.Version, message.Headers.Action, string.Empty);
             response.Properties[HttpResponseMessageProperty.Name] = responseProperties;
 
             return response;
@@ -201,7 +201,7 @@ namespace Microsoft.ServiceModel.Samples
             }
 
             responseProperties.SuppressEntityBody = true;
-            response = Message.CreateMessage(message.Version, message.Headers.Action, String.Empty);
+            response = Message.CreateMessage(message.Version, message.Headers.Action, string.Empty);
             response.Properties[HttpResponseMessageProperty.Name] = responseProperties;
 
             return response;
@@ -232,7 +232,7 @@ namespace Microsoft.ServiceModel.Samples
             }
 
             responseProperties.SuppressEntityBody = true;
-            response = Message.CreateMessage(message.Version, message.Headers.Action, String.Empty);
+            response = Message.CreateMessage(message.Version, message.Headers.Action, string.Empty);
             response.Properties[HttpResponseMessageProperty.Name] = responseProperties;
 
             return response;

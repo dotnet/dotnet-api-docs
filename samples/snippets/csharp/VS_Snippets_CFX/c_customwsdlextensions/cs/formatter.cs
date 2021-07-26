@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,14 +30,14 @@ namespace Microsoft.WCF.Documentation
 
       CodeCommentStatementCollection collection = new CodeCommentStatementCollection();
 			collection.Add(new CodeCommentStatement("From WsdlDocumentation:", true));
-			collection.Add(new CodeCommentStatement(String.Empty, true));
+			collection.Add(new CodeCommentStatement(string.Empty, true));
 
 			foreach (string line in WordWrap(text, 80))
 			{
 				collection.Add(new CodeCommentStatement(line, true));
 			}
 
-			collection.Add(new CodeCommentStatement(String.Empty, true));
+			collection.Add(new CodeCommentStatement(string.Empty, true));
 			return collection;
 		}
 

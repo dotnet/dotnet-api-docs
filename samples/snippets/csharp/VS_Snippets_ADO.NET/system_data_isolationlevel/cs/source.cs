@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Data.SqlClient;
 using System.Data;
@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace CSDataIsolationLevel {
 
    // Use the delegate to call the different threads.
-   public delegate void AsyncAccessDatabase(String connString, IsolationLevel level);
+   public delegate void AsyncAccessDatabase(string connString, IsolationLevel level);
 
    static class DirtyReadThreads {
-      public static void DirtyReadFirstThread(String connStrig, IsolationLevel level) {
+      public static void DirtyReadFirstThread(string connStrig, IsolationLevel level) {
          Console.WriteLine("Begin the DirtyReadFirstThread.....");
 
          using (SqlConnection conn = new SqlConnection(connStrig)) {
-            String cmdText = @"Use DbDataIsolationLevel;
+            string cmdText = @"Use DbDataIsolationLevel;
 
                     Update dbo.Products set Quantity=Quantity+100 where ProductId=1;
                     WaitFor Delay '00:00:06';";
@@ -36,11 +36,11 @@ namespace CSDataIsolationLevel {
          Console.WriteLine("Exit from the DirtyReadFirstThread.....");
       }
 
-      public static void DirtyReadSecondThread(String connStrig, IsolationLevel level) {
+      public static void DirtyReadSecondThread(string connStrig, IsolationLevel level) {
          Console.WriteLine("Begin the DirtyReadSecondThread.....");
 
          using (SqlConnection conn = new SqlConnection(connStrig)) {
-            String cmdText = @"Use DbDataIsolationLevel;
+            string cmdText = @"Use DbDataIsolationLevel;
 
                     WaitFor Delay '00:00:03';
 
@@ -65,11 +65,11 @@ namespace CSDataIsolationLevel {
    }
 
    static class NonrepeatableReadThreads {
-      public static void NonrepeatableReadFirstThread(String connStrig, IsolationLevel level) {
+      public static void NonrepeatableReadFirstThread(string connStrig, IsolationLevel level) {
          Console.WriteLine("Begin the NonrepeatableReadFirstThread.....");
 
          using (SqlConnection conn = new SqlConnection(connStrig)) {
-            String cmdText = @"Use DbDataIsolationLevel;
+            string cmdText = @"Use DbDataIsolationLevel;
 
                     Select ProductId,ProductName,Quantity,Price
                     from dbo.Products
@@ -104,11 +104,11 @@ namespace CSDataIsolationLevel {
          Console.WriteLine("Exit from the NonrepeatableReadFirstThread.....");
       }
 
-      public static void NonrepeatableReadSecondThread(String connStrig, IsolationLevel level) {
+      public static void NonrepeatableReadSecondThread(string connStrig, IsolationLevel level) {
          Console.WriteLine("Begin the NonrepeatableReadSecondThread.....");
 
          using (SqlConnection conn = new SqlConnection(connStrig)) {
-            String cmdText = @"Use DbDataIsolationLevel;
+            string cmdText = @"Use DbDataIsolationLevel;
 
                     WaitFor Delay '00:00:03';
 
@@ -130,11 +130,11 @@ namespace CSDataIsolationLevel {
    }
 
    static class PhantomReadThreads {
-      public static void PhantomReadFirstThread(String connStrig, IsolationLevel level) {
+      public static void PhantomReadFirstThread(string connStrig, IsolationLevel level) {
          Console.WriteLine("Begin the PhantomReadFirstThread.....");
 
          using (SqlConnection conn = new SqlConnection(connStrig)) {
-            String cmdText = @"Use DbDataIsolationLevel;
+            string cmdText = @"Use DbDataIsolationLevel;
 
                     Select ProductId,ProductName,Quantity,Price
                     from dbo.Products
@@ -168,11 +168,11 @@ namespace CSDataIsolationLevel {
          Console.WriteLine("Exit from the PhantomReadFirstThread.....");
       }
 
-      public static void PhantomReadSecondThread(String connStrig, IsolationLevel level) {
+      public static void PhantomReadSecondThread(string connStrig, IsolationLevel level) {
          Console.WriteLine("Begin the PhantomReadSecondThread.....");
 
          using (SqlConnection conn = new SqlConnection(connStrig)) {
-            String cmdText = @"Use DbDataIsolationLevel;
+            string cmdText = @"Use DbDataIsolationLevel;
 
                     WaitFor Delay '00:00:03';
 
@@ -199,7 +199,7 @@ namespace CSDataIsolationLevel {
    // 2. Non-repeatable reads;
    // 3. Phantoms.
    static class TransactionIsolationLevels {
-      public static void DemonstrateIsolationLevel(String connString, IsolationLevel level) {
+      public static void DemonstrateIsolationLevel(string connString, IsolationLevel level) {
          // Before connect the database, recreate the table.
          OperateDatabase.CreateTable(connString);
          DemonstrateIsolationLevel(connString, level, DirtyReadThreads.DirtyReadFirstThread, DirtyReadThreads.DirtyReadSecondThread);
@@ -216,7 +216,7 @@ namespace CSDataIsolationLevel {
       }
 
       // Demonstrates if the specific transaction allows the specific behaviors.
-      public static void DemonstrateIsolationLevel(String connString, IsolationLevel level,
+      public static void DemonstrateIsolationLevel(string connString, IsolationLevel level,
           AsyncAccessDatabase firstThread, AsyncAccessDatabase secondThread) {
          Task[] tasks ={
                             Task.Factory.StartNew(()=>firstThread(connString, level)),
@@ -227,11 +227,11 @@ namespace CSDataIsolationLevel {
       }
 
       static class ExchangeValuesThreads {
-         public static void ExchangeValuesFirstThread(String connStrig, IsolationLevel level) {
+         public static void ExchangeValuesFirstThread(string connStrig, IsolationLevel level) {
             Console.WriteLine("Begin the ExchangeValuesFirstThread.....");
 
             using (SqlConnection conn = new SqlConnection(connStrig)) {
-               String cmdText = @"Use DbDataIsolationLevel;
+               string cmdText = @"Use DbDataIsolationLevel;
 
                     Declare @price money;
                     select @price=Price from dbo.Products where ProductId=2;
@@ -255,11 +255,11 @@ namespace CSDataIsolationLevel {
             Console.WriteLine("Exit from the ExchangeValuesFirstThread.....");
          }
 
-         public static void ExchangeValuesSecondThread(String connStrig, IsolationLevel level) {
+         public static void ExchangeValuesSecondThread(string connStrig, IsolationLevel level) {
             Console.WriteLine("Begin the ExchangeValuesSecondThread.....");
 
             using (SqlConnection conn = new SqlConnection(connStrig)) {
-               String cmdText = @"Use DbDataIsolationLevel;
+               string cmdText = @"Use DbDataIsolationLevel;
 
                     WaitFor Delay '00:00:03';
 
@@ -284,7 +284,7 @@ namespace CSDataIsolationLevel {
       }
 
       // Demonstrates the difference between the Serializable and Snapshot transaction
-      public static void DemonstrateBetweenSnapshotAndSerializable(String connString) {
+      public static void DemonstrateBetweenSnapshotAndSerializable(string connString) {
          OperateDatabase.CreateTable(connString);
 
          Console.WriteLine("Exchange Vaules in the Snapshot transaction:");
@@ -302,9 +302,9 @@ namespace CSDataIsolationLevel {
          DisplayData(connString);
       }
 
-      public static void DisplayData(String connString) {
+      public static void DisplayData(string connString) {
          using (SqlConnection conn = new SqlConnection(connString)) {
-            String cmdText = @"Use DbDataIsolationLevel;
+            string cmdText = @"Use DbDataIsolationLevel;
 
                     Select ProductId,ProductName,Quantity,Price
                     from dbo.Products";
@@ -340,9 +340,9 @@ namespace CSDataIsolationLevel {
 
    // This class includes database operations. If there's no database 'DbDataIsolationLevel', create the database.
    static class OperateDatabase {
-      public static Boolean CreateDatabase(String connString) {
+      public static Boolean CreateDatabase(string connString) {
          using (SqlConnection conn = new SqlConnection(connString)) {
-            String cmdText = @"Use Master;
+            string cmdText = @"Use Master;
 
                                      if Db_Id('DbDataIsolationLevel') is null
                                       create Database [DbDataIsolationLevel];";
@@ -359,9 +359,9 @@ namespace CSDataIsolationLevel {
       }
 
       // If there's no table [dbo].[Products] in DbDataIsolationLevel, create the table; or recreate it.
-      public static Boolean CreateTable(String connString) {
+      public static Boolean CreateTable(string connString) {
          using (SqlConnection conn = new SqlConnection(connString)) {
-            String cmdText = @"Use DbDataIsolationLevel
+            string cmdText = @"Use DbDataIsolationLevel
 
                                     if Object_ID('[dbo].[Products]') is not null
                                     drop table [dbo].[Products]
@@ -384,9 +384,9 @@ namespace CSDataIsolationLevel {
       }
 
       // Insert some rows into [dbo].[Products] table.
-      public static Boolean InsertRows(String connString) {
+      public static Boolean InsertRows(string connString) {
          using (SqlConnection conn = new SqlConnection(connString)) {
-            String cmdText = @"Use DbDataIsolationLevel
+            string cmdText = @"Use DbDataIsolationLevel
 
                     INSERT [dbo].[Products] ([ProductName], [Quantity], [Price]) VALUES (N'Blue Bike', 365,1075.00)
                     INSERT [dbo].[Products] ([ProductName], [Quantity], [Price]) VALUES (N'Red Bike', 159, 1299.00)
@@ -401,9 +401,9 @@ namespace CSDataIsolationLevel {
       }
 
       // Turn on or off 'ALLOW_SNAPSHOT_ISOLATION'
-      public static Boolean SetSnapshot(String connString, Boolean isOpen) {
+      public static Boolean SetSnapshot(string connString, Boolean isOpen) {
          using (SqlConnection conn = new SqlConnection(connString)) {
-            String cmdText = null;
+            string cmdText = null;
 
             if (isOpen)
                cmdText = @"ALTER DATABASE DbDataIsolationLevel SET ALLOW_SNAPSHOT_ISOLATION ON";
@@ -421,7 +421,7 @@ namespace CSDataIsolationLevel {
    }
    class Program {
       static void Main(string[] args) {
-         String connString = "Data Source=(local);Initial Catalog=master;Integrated Security=True;Asynchronous Processing=true;";
+         string connString = "Data Source=(local);Initial Catalog=master;Integrated Security=True;Asynchronous Processing=true;";
 
          OperateDatabase.CreateDatabase(connString);
          Console.WriteLine();

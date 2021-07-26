@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -13,7 +13,7 @@ class Class1
     // <Snippet1>
     static public int AddProductCategory(string newName, string connString)
     {
-        Int32 newProdID = 0;
+        int newProdID = 0;
         string sql =
             "INSERT INTO Production.ProductCategory (Name) VALUES (@Name); "
             + "SELECT CAST(scope_identity() AS int)";
@@ -25,7 +25,7 @@ class Class1
             try
             {
                 conn.Open();
-                newProdID = (Int32)cmd.ExecuteScalar();
+                newProdID = (int)cmd.ExecuteScalar();
             }
             catch (Exception ex)
             {

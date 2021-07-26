@@ -1,4 +1,4 @@
-﻿// S_UENetTcpBinding/CS/source.cs Snippet for
+// S_UENetTcpBinding/CS/source.cs Snippet for
 // System.ServiceModel.TcpBinding
 
 //<snippet0>
@@ -14,10 +14,10 @@ namespace TcpService
 {
     class Test
     {
-        //static string addressTCP = String.Format("net.tcp://{0}:8036/NetTcpSecurity",
+        //static string addressTCP = string.Format("net.tcp://{0}:8036/NetTcpSecurity",
         //    System.Net.Dns.GetHostEntry("").HostName);
 
-        //static string addressHTTP = String.Format("http://{0}:8036/HttpCertificate",
+        //static string addressHTTP = string.Format("http://{0}:8036/HttpCertificate",
         //    System.Net.Dns.GetHostEntry("").HostName);
 
         static void Main(string[] args)
@@ -68,7 +68,7 @@ namespace TcpService
         private void TcpTransportCert()
         {
             // This string uses a function to prepend the computer name at run time.
-            string addressTCP = String.Format(
+            string addressTCP = string.Format(
                 "net.tcp://{0}:8036/NetTcpSecurity/Transport/Certificate",
                 System.Net.Dns.GetHostEntry("").HostName);
 
@@ -200,7 +200,7 @@ namespace TcpService
         {
             //<snippet2>
             // This string uses a function to prepend the computer name at run time.
-            string addressTCP = String.Format(
+            string addressTCP = string.Format(
                 "net.tcp://{0}:8036/NetTcpSecurity/Message/Certficate",
                 System.Net.Dns.GetHostEntry("").HostName);
 

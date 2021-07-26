@@ -1,4 +1,4 @@
-﻿//  client.cs, snippet for S_UEEnvelopeVersion Copyright (c) Microsoft
+//  client.cs, snippet for S_UEEnvelopeVersion Copyright (c) Microsoft
 //  Corporation.  All Rights Reserved.
 
 using System;
@@ -296,7 +296,7 @@ namespace UE.ServiceModel.Samples
             binding.HostNameComparisonMode = HostNameComparisonMode.StrongWildcard;
             binding.Security.Mode = BasicHttpSecurityMode.None;
 
-            String url = "http://localhost:8000/servicemodelsamples/service/calc";
+            string url = "http://localhost:8000/servicemodelsamples/service/calc";
             EndpointAddress address = new EndpointAddress(url);
             ChannelFactory<ICalculator> channelFactory = new ChannelFactory<ICalculator>(binding, address);
             ICalculator channel = channelFactory.CreateChannel();

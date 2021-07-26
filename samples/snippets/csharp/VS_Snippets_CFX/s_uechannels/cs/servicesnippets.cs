@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
@@ -143,7 +143,7 @@ namespace UE.Samples.Channel
             HttpTransportBindingElement element = new HttpTransportBindingElement();
             BindingParameterCollection parameters = new BindingParameterCollection();
             Uri baseAddress = new Uri("http://localhost:8000/ChannelApp");
-            String relAddress = "http://localhost:8000/ChannelApp/service";
+            string relAddress = "http://localhost:8000/ChannelApp/service";
             BindingContext context = new BindingContext(binding, parameters, baseAddress, relAddress, ListenUriMode.Explicit);
 
             IChannelListener<IReplyChannel> listener = element.BuildChannelListener<IReplyChannel>(context);
@@ -174,7 +174,7 @@ namespace UE.Samples.Channel
             HttpTransportBindingElement element = new HttpTransportBindingElement();
             BindingParameterCollection parameters = new BindingParameterCollection();
             Uri baseAddress = new Uri("http://localhost:8000/ChannelApp");
-            String relAddress = "http://localhost:8000/ChannelApp/service";
+            string relAddress = "http://localhost:8000/ChannelApp/service";
             BindingContext context = new BindingContext(binding, parameters, baseAddress, relAddress, ListenUriMode.Explicit);
 
             bool bFlag = element.CanBuildChannelListener<IReplyChannel>(context);
@@ -189,7 +189,7 @@ namespace UE.Samples.Channel
             BindingParameterCollection parameters = new BindingParameterCollection();
             parameters.Add(new ServiceCredentials());
             Uri baseAddress = new Uri("http://localhost:8000/ChannelApp");
-            String relAddress = "http://localhost:8000/ChannelApp/service";
+            string relAddress = "http://localhost:8000/ChannelApp/service";
             BindingContext context = new BindingContext(binding, parameters, baseAddress, relAddress, ListenUriMode.Explicit);
 
             ServiceCredentials serviceCredentials = element.GetProperty<ServiceCredentials>(context);

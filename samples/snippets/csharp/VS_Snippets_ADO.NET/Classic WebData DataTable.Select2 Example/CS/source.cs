@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Data;
 
@@ -6,8 +6,8 @@ public class A {
 
    public static void Main() {
       DataTable table = new DataTable("Orders");
-      table.Columns.Add("OrderID", typeof(Int32));
-      table.Columns.Add("OrderQuantity", typeof(Int32));
+      table.Columns.Add("OrderID", typeof(int));
+      table.Columns.Add("OrderQuantity", typeof(int));
       table.Columns.Add("CompanyName", typeof(string));
       table.Columns.Add("Date", typeof(DateTime));
 

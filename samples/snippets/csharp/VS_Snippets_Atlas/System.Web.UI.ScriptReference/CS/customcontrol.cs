@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 using System.Drawing;
 using System.Web.UI;
@@ -55,7 +55,7 @@ namespace SampleControl
 
                 UpdatePanel updatePanel = (UpdatePanel)FindControl(UpdatePanelID);
 
-                string script = String.Format(
+                string script = string.Format(
                    CultureInfo.InvariantCulture,
                    @"
 Sys.Application.add_load(function(sender, args) {{

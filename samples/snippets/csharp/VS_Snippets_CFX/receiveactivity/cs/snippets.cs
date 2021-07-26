@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IdentityModel;
 using System.IdentityModel.Claims;
 using System.Runtime.Serialization;
@@ -156,7 +156,7 @@ namespace ReceiveActivitySnippets
         }
         void Container12()
         {
-            //ReceiveActivity.ReceiveActivity(String)
+            //ReceiveActivity.ReceiveActivity(string)
             //<snippet12>
             ReceiveActivity receiveActivity1 = new ReceiveActivity("receiveActivity1");
             //</snippet12>
@@ -166,7 +166,7 @@ namespace ReceiveActivitySnippets
             //ReceiveActivity.GetContext(Activity, ContextToken)
             //<snippet13>
             ReceiveActivity receiveActivity1 = new ReceiveActivity();
-            Dictionary<XmlQualifiedName, String> context = (Dictionary<XmlQualifiedName, String>)ReceiveActivity.GetContext(receiveActivity1, receiveActivity1.ContextToken);
+            Dictionary<XmlQualifiedName, string> context = (Dictionary<XmlQualifiedName, string>)ReceiveActivity.GetContext(receiveActivity1, receiveActivity1.ContextToken);
             //</snippet13>
         }
 
@@ -174,11 +174,11 @@ namespace ReceiveActivitySnippets
 
         void Container15()
         {
-            //ReceiveActivity.GetContext(Activity, String, String)
+            //ReceiveActivity.GetContext(Activity, string, string)
             //<snippet15>
             ReceiveActivity receiveActivity1 = new ReceiveActivity();
-            Dictionary<XmlQualifiedName, String> context =
-                (Dictionary<XmlQualifiedName, String>)ReceiveActivity.GetContext(
+            Dictionary<XmlQualifiedName, string> context =
+                (Dictionary<XmlQualifiedName, string>)ReceiveActivity.GetContext(
                 receiveActivity1,
                 "ContextToken1",
                 "ReceiveActivity1");
@@ -189,8 +189,8 @@ namespace ReceiveActivitySnippets
             //ReceiveActivity.GetRootContext
             //<snippet16>
             ReceiveActivity receiveActivity1 = new ReceiveActivity();
-            Dictionary<XmlQualifiedName, String> context =
-                (Dictionary<XmlQualifiedName, String>)ReceiveActivity.GetRootContext(receiveActivity1);
+            Dictionary<XmlQualifiedName, string> context =
+                (Dictionary<XmlQualifiedName, string>)ReceiveActivity.GetRootContext(receiveActivity1);
             //</snippet16>
         }
 

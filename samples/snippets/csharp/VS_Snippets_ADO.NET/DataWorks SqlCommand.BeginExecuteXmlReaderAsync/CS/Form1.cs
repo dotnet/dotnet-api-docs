@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -62,7 +62,7 @@ namespace Microsoft.AdoDotNet.CodeSamples
                 // Skip past items that are not from the correct table.
                 if (reader.LocalName.ToString() == "Production.Product")
                 {
-                    this.listBox1.Items.Add(String.Format("{0}: {1:C}",
+                    this.listBox1.Items.Add(string.Format("{0}: {1:C}",
                         reader["Name"], Convert.ToDecimal(reader["ListPrice"])));
                 }
             }
@@ -167,7 +167,7 @@ namespace Microsoft.AdoDotNet.CodeSamples
                 // You can create the delegate instance as you
                 // invoke it, like this:
                 this.Invoke(new DisplayInfoDelegate(DisplayStatus),
-                String.Format("Ready(last error: {0}", ex.Message));
+                string.Format("Ready(last error: {0}", ex.Message));
             }
             finally
             {

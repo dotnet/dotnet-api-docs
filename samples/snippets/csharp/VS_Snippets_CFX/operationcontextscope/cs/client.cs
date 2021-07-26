@@ -1,4 +1,4 @@
-﻿// <snippet3>
+// <snippet3>
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -91,7 +91,7 @@ public class Client : ISampleServiceCallback
     Console.ForegroundColor = ConsoleColor.Blue;
     foreach (MessageHeaderInfo h in headers)
     {
-      if (!h.Actor.Equals(String.Empty))
+      if (!h.Actor.Equals(string.Empty))
         Console.WriteLine("\t" + h.Actor);
       Console.ForegroundColor = ConsoleColor.White;
       Console.WriteLine("\t" + h.Name);

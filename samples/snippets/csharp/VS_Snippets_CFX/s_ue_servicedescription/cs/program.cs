@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -132,7 +132,7 @@ namespace ServiceDescriptionSnippet
             // we have not specified them
             CalculatorService svcObj = new CalculatorService();
             ServiceDescription sd3 = ServiceDescription.GetService(svcObj);
-            String serviceName = sd3.Name;
+            string serviceName = sd3.Name;
             Console.WriteLine("Service name: {0}", serviceName);
             // </Snippet9>
 

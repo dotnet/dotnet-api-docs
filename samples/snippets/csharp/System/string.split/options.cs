@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Split
 {
@@ -7,7 +7,7 @@ namespace Split
         public static void Main3()
         {
             //<snippet1>
-            // This example demonstrates the String.Split() methods that use
+            // This example demonstrates the string.Split() methods that use
             // the StringSplitOptions enumeration.
             string s1 = ",ONE,,TWO,,,THREE,,";
             string s2 = "[stop]" +
@@ -166,7 +166,7 @@ namespace Split
             Console.Write("   ");
             foreach (string s in result)
             {
-                Console.Write("'{0}' ", String.IsNullOrEmpty(s) ? "<>" : s);
+                Console.Write("'{0}' ", string.IsNullOrEmpty(s) ? "<>" : s);
             }
             Console.WriteLine();
             Console.WriteLine();
@@ -177,7 +177,7 @@ namespace Split
             Console.Write("   ");
             foreach (string s in result)
             {
-                Console.Write("'{0}' ", String.IsNullOrEmpty(s) ? "<>" : s);
+                Console.Write("'{0}' ", string.IsNullOrEmpty(s) ? "<>" : s);
             }
             Console.WriteLine();
 

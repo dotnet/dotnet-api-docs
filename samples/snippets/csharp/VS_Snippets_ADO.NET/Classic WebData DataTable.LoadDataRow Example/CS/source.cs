@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Data;
 
@@ -29,7 +29,7 @@ class MyDataSet {
       row = dt.LoadDataRow(newRow, true);
 
       foreach (DataRow dr in dt.Rows) {
-         Console.WriteLine(String.Format("Row: {0}, {1}, {2}", dr["col1"], dr["col2"], dr["col3"]));
+         Console.WriteLine(string.Format("Row: {0}, {1}, {2}", dr["col1"], dr["col2"], dr["col3"]));
       }
 
       dt.EndLoadData();

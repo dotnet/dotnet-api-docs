@@ -1,4 +1,4 @@
-﻿// <snippet1>
+// <snippet1>
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -23,8 +23,8 @@ namespace Microsoft.WCF.Documentation
   [MessageContract]
   public class HelloResponseMessage
   {
-    private string localResponse = String.Empty;
-    private string extra = String.Empty;
+    private string localResponse = string.Empty;
+    private string extra = string.Empty;
 
     [MessageBodyMember(
       Name = "ResponseToGreeting",
@@ -106,7 +106,7 @@ namespace Microsoft.WCF.Documentation
       Console.WriteLine("Caller sent: " + msg.Greeting);
       HelloResponseMessage responseMsg = new HelloResponseMessage();
       responseMsg.Response = "Service received: " + msg.Greeting;
-      responseMsg.ExtraValues = String.Format("Served by object {0}.", this.GetHashCode().ToString());
+      responseMsg.ExtraValues = string.Format("Served by object {0}.", this.GetHashCode().ToString());
       Console.WriteLine("Returned response message.");
       return responseMsg;
     }

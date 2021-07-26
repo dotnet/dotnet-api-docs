@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -30,7 +30,7 @@ class Program
                     // Call Read before accessing data.
                     while (reader.Read())
                     {
-                        Console.WriteLine(String.Format("{0}, {1}",
+                        Console.WriteLine(string.Format("{0}, {1}",
                             reader[0], reader[1]));
                     }
 

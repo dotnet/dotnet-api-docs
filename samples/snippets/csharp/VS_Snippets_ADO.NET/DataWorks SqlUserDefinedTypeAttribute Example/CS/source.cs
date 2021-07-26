@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlTypes;
 using Microsoft.SqlServer.Server;
@@ -13,8 +13,8 @@ public struct Point : INullable
 {
 //</Snippet1>
     private bool is_Null;
-    private Int32 _x;
-    private Int32 _y;
+    private int _x;
+    private int _y;
 
     public bool IsNull
     {
@@ -65,8 +65,8 @@ public struct Point : INullable
         // Parse input string to separate out points.
         Point pt = new Point();
         string[] xy = s.Value.Split(",".ToCharArray());
-        pt.X = Int32.Parse(xy[0]);
-        pt.Y = Int32.Parse(xy[1]);
+        pt.X = int.Parse(xy[0]);
+        pt.Y = int.Parse(xy[1]);
 
         // Call ValidatePoint to enforce validation
         // for string conversions.
@@ -76,7 +76,7 @@ public struct Point : INullable
     }
 
     // X and Y coordinates exposed as properties.
-    public Int32 X
+    public int X
     {
         get
         {
@@ -85,7 +85,7 @@ public struct Point : INullable
         // Call ValidatePoint to ensure valid range of Point values.
         set
         {
-            Int32 temp = _x;
+            int temp = _x;
             _x = value;
             if (!ValidatePoint())
             {
@@ -95,7 +95,7 @@ public struct Point : INullable
         }
     }
 
-    public Int32 Y
+    public int Y
     {
         get
         {
@@ -103,7 +103,7 @@ public struct Point : INullable
         }
         set
         {
-            Int32 temp = _y;
+            int temp = _y;
             _y = value;
             if (!ValidatePoint())
             {

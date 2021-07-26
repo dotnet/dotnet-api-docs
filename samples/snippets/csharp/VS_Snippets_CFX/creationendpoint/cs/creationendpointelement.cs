@@ -1,4 +1,4 @@
-﻿//----------------------------------------------------------------
+//----------------------------------------------------------------
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //----------------------------------------------------------------
 using System;
@@ -22,7 +22,7 @@ namespace Microsoft.Samples.WF.CreationEndpoint
             get
             {
                 ConfigurationPropertyCollection properties = base.Properties;
-                properties.Add(new ConfigurationProperty("name", typeof(String), null, ConfigurationPropertyOptions.IsRequired));
+                properties.Add(new ConfigurationProperty("name", typeof(string), null, ConfigurationPropertyOptions.IsRequired));
                 return properties;
             }
         }

@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Data;
 
@@ -62,7 +62,7 @@ class Program {
       DataTable orderTable = new DataTable("Order");
 
       // Define one column.
-      DataColumn colId = new DataColumn("OrderId", typeof(String));
+      DataColumn colId = new DataColumn("OrderId", typeof(string));
       orderTable.Columns.Add(colId);
 
       DataColumn colDate = new DataColumn("OrderDate", typeof(DateTime));
@@ -79,11 +79,11 @@ class Program {
 
       // Define all the columns once.
       DataColumn[] cols ={
-                                  new DataColumn("OrderDetailId",typeof(Int32)),
-                                  new DataColumn("OrderId",typeof(String)),
-                                  new DataColumn("Product",typeof(String)),
+                                  new DataColumn("OrderDetailId",typeof(int)),
+                                  new DataColumn("OrderId",typeof(string)),
+                                  new DataColumn("Product",typeof(string)),
                                   new DataColumn("UnitPrice",typeof(Decimal)),
-                                  new DataColumn("OrderQty",typeof(Int32)),
+                                  new DataColumn("OrderQty",typeof(int)),
                                   new DataColumn("LineTotal",typeof(Decimal),"UnitPrice*OrderQty")
                               };
 

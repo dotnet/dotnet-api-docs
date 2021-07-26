@@ -1,4 +1,4 @@
-﻿
+
 //  Snippet file for S_UEBinding
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 //  Change ICalculator to CalculatorService.
@@ -29,7 +29,7 @@ namespace UE.ServiceModel.Samples
             BasicHttpBinding binding = new BasicHttpBinding();
             binding.Name = "binding1";
 
-            String url = "http://localhost:8000/servicemodelsamples/service/calc";
+            string url = "http://localhost:8000/servicemodelsamples/service/calc";
             EndpointAddress address = new EndpointAddress(url);
             ChannelFactory<ICalculator> channelFactory = new ChannelFactory<ICalculator>(binding, address);
             ICalculator channel = channelFactory.CreateChannel();

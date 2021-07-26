@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Workflow.Runtime;
@@ -26,7 +26,7 @@ namespace ChannelManagerServiceSnippets
             string contextFileName;
             WorkflowRuntime workflowRuntime = new WorkflowRuntime();
             LocalServiceHost localServiceHost = null;
-            String contextFileExtension = null;
+            string contextFileExtension = null;
             //ChannelManagerService.ChannelManagerService(IList)
             //<snippet1>
             contextFileName = localServiceHost.Description.ServiceType.Name + contextFileExtension;

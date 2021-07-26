@@ -1,4 +1,4 @@
-﻿// Snippet for System.ServiceModel.Description.PolicyConversionContext
+// Snippet for System.ServiceModel.Description.PolicyConversionContext
 // Snippet 0
 // Snippet 1 public class MyBindingElement : BindingElement,IPolicyExporter
 // Snippet 2 implement
@@ -21,8 +21,8 @@ using System.ServiceModel.Channels;
 //
     class Program
     {
-      string name1 = String.Empty;
-      string ns1 = String.Empty;
+      string name1 = string.Empty;
+      string ns1 = string.Empty;
 // <snippet0>
         public void ImportPolicy(MetadataImporter importer,
             PolicyConversionContext context)

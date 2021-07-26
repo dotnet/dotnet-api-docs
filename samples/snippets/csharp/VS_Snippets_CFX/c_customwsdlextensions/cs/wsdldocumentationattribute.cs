@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -102,7 +102,7 @@ namespace Microsoft.WCF.Documentation
                         // This.Text returns the string for the operation-level attributes.
                         // Set the doc element; if this isn't done first, there is no XmlElement in the
                         // DocumentElement property.
-                        operation.Documentation = String.Empty;
+                        operation.Documentation = string.Empty;
 
                         // Operation C# triple comments.
                         XmlDocument opOwner = operation.DocumentationElement.OwnerDocument;

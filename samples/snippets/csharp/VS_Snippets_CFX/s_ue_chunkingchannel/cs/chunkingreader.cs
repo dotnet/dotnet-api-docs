@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 
 using System;
@@ -109,7 +109,7 @@ namespace Microsoft.Samples.Channels.ChunkingChannel
             {
                 //caller should not tell us to buffer another chunk
                 QuotaExceededException qeException = new QuotaExceededException(
-                    String.Format("Number of buffered chunks exceeded MaxBufferedChunks setting which is {0}. Consider increasing the setting or processing received data faster", this.bufferedChunks.MaxLength));
+                    string.Format("Number of buffered chunks exceeded MaxBufferedChunks setting which is {0}. Consider increasing the setting or processing received data faster", this.bufferedChunks.MaxLength));
                 throw new CommunicationException("Quota error while receiving message", qeException);
             }
         }
@@ -130,7 +130,7 @@ namespace Microsoft.Samples.Channels.ChunkingChannel
                 Console.WriteLine(" < Received chunk {0} of message {1}", chunkNum, this.messageId);
                 if (chunkNum != nextChunkNum)
                 {
-                    throw new CommunicationException(String.Format("Received chunk number {0} but expected chunk number {1}", chunkNum, nextChunkNum));
+                    throw new CommunicationException(string.Format("Received chunk number {0} but expected chunk number {1}", chunkNum, nextChunkNum));
                 }
                 this.isLastChunk = (chunk.Headers.FindHeader(ChunkingUtils.ChunkingEndHeader, ChunkingUtils.ChunkNs) > -1);
                 this.innerReader = chunk.GetReaderAtBodyContents();
@@ -151,7 +151,7 @@ namespace Microsoft.Samples.Channels.ChunkingChannel
             }
             else
             {
-                throw new TimeoutException(String.Format("ChunkingReader timed out while waiting for chunk message number {0}", nextChunkNum));
+                throw new TimeoutException(string.Format("ChunkingReader timed out while waiting for chunk message number {0}", nextChunkNum));
             }
         }
         #endregion

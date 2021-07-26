@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -174,7 +174,7 @@ namespace Microsoft.AdoDotNet.CodeSamples
                 // You can create the delegate instance as you
                 // invoke it, like this:
                 this.Invoke(new DisplayInfoDelegate(DisplayStatus),
-                    String.Format("Ready(last error: {0}", ex.Message));
+                    string.Format("Ready(last error: {0}", ex.Message));
             }
             finally
             {

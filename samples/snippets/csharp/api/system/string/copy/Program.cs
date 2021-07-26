@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 
 namespace copy
@@ -43,7 +43,7 @@ namespace copy
                 if (span.Length == 0) return Span<char>.Empty;
 
                 span[0] = ';';
-                span[2] = Char.ToLower(span[2]);
+                span[2] = char.ToLower(span[2]);
                 return span;
             }
         }
@@ -71,11 +71,11 @@ namespace copy
                 Marshal.FreeHGlobal(ptr);
             }
             Console.WriteLine($"Original string: {original}");
-            Console.WriteLine($"String from interop: '{result}'");
+            Console.WriteLine($"string from interop: '{result}'");
         }
         // The example displays the following output:
         //    Original string: This is a single sentence.
-        //    String from interop: 'Uijt!jt!b!tjohmf!tfoufodf/'      
+        //    string from interop: 'Uijt!jt!b!tjohmf!tfoufodf/'      
         // </Snippet3>
     }
 }

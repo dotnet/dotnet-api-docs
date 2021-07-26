@@ -1,4 +1,4 @@
-﻿//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Copyright (c) Microsoft Corporation. All rights reserved.
 
 using System;
 
@@ -26,7 +26,7 @@ namespace Microsoft.WebProgrammingModel.Samples
 
         public override string ToString()
         {
-            return String.Format("{0} {1} {2}", Name, Address, Uri);
+            return string.Format("{0} {1} {2}", Name, Address, Uri);
         }
     }
 }

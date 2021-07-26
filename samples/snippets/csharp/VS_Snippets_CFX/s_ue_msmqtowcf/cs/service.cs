@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 
 using System;
@@ -57,7 +57,7 @@ namespace Microsoft.ServiceModel.Samples
                 MsmqIntegrationBindingElement msmqBindingElement = new MsmqIntegrationBindingElement();
                 // </Snippet1>
 
-                String strScheme = msmqBindingElement.Scheme;
+                string strScheme = msmqBindingElement.Scheme;
                 Console.WriteLine("Scheme = " + strScheme);
                 // </Snippet2>
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
@@ -15,7 +15,7 @@ namespace Microsoft.ServiceModel.Samples
 
         public override string ToString()
         {
-            return String.Format( "Customer (Name={0}, Address={1})", Name, Address);
+            return string.Format( "Customer (Name={0}, Address={1})", Name, Address);
         }
     }
 }

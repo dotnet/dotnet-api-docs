@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 //  Snippet for CustomAuthentication
 //	07/17/06 a-arhu new IssuerBasedValidator(); // must use default constructor (issuer);
@@ -60,7 +60,7 @@ namespace Microsoft.ServiceModel.Samples
 					return;
 			}
 			throw new SecurityTokenValidationException(
-				String.Format("The certificate '{0}' failed validation", certificate));
+				string.Format("The certificate '{0}' failed validation", certificate));
 		}
 	}
 
@@ -163,10 +163,10 @@ namespace Microsoft.ServiceModel.Samples
 				matches = store.Certificates.Find(findType, key, false);
 				if (matches.Count > 1)
 					throw new InvalidOperationException(
-						String.Format("More than one certificate with key '{0}' found in the store.", key));
+						string.Format("More than one certificate with key '{0}' found in the store.", key));
 				if (matches.Count == 0)
 					throw new InvalidOperationException(
-						String.Format("No certificates with key '{0}' found in the store.", key));
+						string.Format("No certificates with key '{0}' found in the store.", key));
 				result = matches[0];
 			}
 			finally

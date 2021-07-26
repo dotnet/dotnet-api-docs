@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.Design;
 using System.Workflow.ComponentModel;
 using System.Workflow.ComponentModel.Design;
@@ -8,7 +8,7 @@ namespace FreeformActivityDesignerSnippets
     //<snippet0>
     class ProcessActvityDesigner : FreeformActivityDesigner
     {
-        private ConnectionPoint GetConnectionPoint(Activity activity, Int32 connectorIndex, DesignerEdges edge)
+        private ConnectionPoint GetConnectionPoint(Activity activity, int connectorIndex, DesignerEdges edge)
         {
             ActivityDesigner designer = null;
 

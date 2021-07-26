@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Workflow.Activities;
@@ -96,7 +96,7 @@ namespace OperationInfoSnippets
             //OperationInfo.ToString
             //<snippet9>
             OperationInfo info = new OperationInfo();
-            String infoString = info.ToString();
+            string infoString = info.ToString();
             //</snippet9>
         }
     }

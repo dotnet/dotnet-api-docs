@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace SystemDateTimeReference
@@ -19,9 +19,9 @@ namespace SystemDateTimeReference
                 System.Globalization.CultureInfo.CreateSpecificCulture("en-GB");
 
             var date1 = new DateTime(2013, 6, 1, 12, 32, 30);
-            var badFormats = new List<String>();
+            var badFormats = new List<string>();
 
-            Console.WriteLine($"{"Date String",-37} {"Date",-19}\n");
+            Console.WriteLine($"{"Date string",-37} {"Date",-19}\n");
             foreach (var dateString in date1.GetDateTimeFormats())
             {
                 DateTime parsedDate;

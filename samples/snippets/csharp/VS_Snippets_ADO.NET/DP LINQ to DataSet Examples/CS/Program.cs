@@ -1,4 +1,4 @@
-﻿// <SnippetImportsUsing>
+// <SnippetImportsUsing>
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -281,7 +281,7 @@ namespace LINQtoDataSetSamples
             var query =
                 contacts.SelectMany(
                     contact => orders.Where(order =>
-                        (contact.Field<Int32>("ContactID") == order.Field<Int32>("ContactID"))
+                        (contact.Field<int>("ContactID") == order.Field<int>("ContactID"))
                             && order.Field<decimal>("TotalDue") < 500.00M)
                         .Select(order => new
                         {
@@ -357,7 +357,7 @@ namespace LINQtoDataSetSamples
             var query =
                 contacts.SelectMany(
                     contact => orders.Where(order =>
-                        (contact.Field<Int32>("ContactID") == order.Field<Int32>("ContactID"))
+                        (contact.Field<int>("ContactID") == order.Field<int>("ContactID"))
                             && order.Field<DateTime>("OrderDate") >= new DateTime(2002, 10, 1))
                         .Select(order => new
                         {
@@ -1131,7 +1131,7 @@ namespace LINQtoDataSetSamples
             Console.WriteLine("Unique contacts:");
             foreach (DataRow uniqueContact in uniqueContacts)
             {
-                Console.WriteLine(uniqueContact.Field<Int32>("ContactID"));
+                Console.WriteLine(uniqueContact.Field<int>("ContactID"));
             }
             //</SnippetDistinctRows>
         }
@@ -1734,7 +1734,7 @@ namespace LINQtoDataSetSamples
 
             var query =
                 from order in orders.AsEnumerable()
-                group order by order.Field<Int32>("ContactID") into g
+                group order by order.Field<int>("ContactID") into g
                 select new
                 {
                     Category = g.Key,
@@ -1783,7 +1783,7 @@ namespace LINQtoDataSetSamples
 
             var query =
                 from order in orders.AsEnumerable()
-                group order by order.Field<Int32>("ContactID") into g
+                group order by order.Field<int>("ContactID") into g
                 select new
                 {
                     Category = g.Key,
@@ -1814,7 +1814,7 @@ namespace LINQtoDataSetSamples
 
             var query =
                 from order in orders.AsEnumerable()
-                group order by order.Field<Int32>("ContactID") into g
+                group order by order.Field<int>("ContactID") into g
                 let minTotalDue = g.Min(order => order.Field<decimal>("TotalDue"))
                 select new
                 {
@@ -1831,7 +1831,7 @@ namespace LINQtoDataSetSamples
                 {
                     Console.WriteLine("Mininum TotalDue {0} for SalesOrderID {1}: ",
                         order.Field<decimal>("TotalDue"),
-                        order.Field<Int32>("SalesOrderID"));
+                        order.Field<int>("SalesOrderID"));
                 }
                 Console.WriteLine("");
             }
@@ -1873,7 +1873,7 @@ namespace LINQtoDataSetSamples
 
             var query =
                 from order in orders.AsEnumerable()
-                group order by order.Field<Int32>("ContactID") into g
+                group order by order.Field<int>("ContactID") into g
                 select new
                 {
                     Category = g.Key,
@@ -1905,7 +1905,7 @@ namespace LINQtoDataSetSamples
 
             var query =
                 from order in orders.AsEnumerable()
-                group order by order.Field<Int32>("ContactID") into g
+                group order by order.Field<int>("ContactID") into g
                 let averageTotalDue = g.Average(order => order.Field<decimal>("TotalDue"))
                 select new
                 {
@@ -1922,7 +1922,7 @@ namespace LINQtoDataSetSamples
                 {
                     Console.WriteLine("Average total due for SalesOrderID {1} is: {0}",
                         order.Field<decimal>("TotalDue"),
-                        order.Field<Int32>("SalesOrderID"));
+                        order.Field<int>("SalesOrderID"));
                 }
                 Console.WriteLine("");
             }
@@ -1964,7 +1964,7 @@ namespace LINQtoDataSetSamples
 
             var query =
                 from order in orders.AsEnumerable()
-                group order by order.Field<Int32>("ContactID") into g
+                group order by order.Field<int>("ContactID") into g
                 select new
                 {
                     Category = g.Key,
@@ -1995,7 +1995,7 @@ namespace LINQtoDataSetSamples
 
             var query =
                 from order in orders.AsEnumerable()
-                group order by order.Field<Int32>("ContactID") into g
+                group order by order.Field<int>("ContactID") into g
                 let maxTotalDue = g.Max(order => order.Field<decimal>("TotalDue"))
                 select new
                 {
@@ -2012,7 +2012,7 @@ namespace LINQtoDataSetSamples
                 {
                     Console.WriteLine("MaxTotalDue {0} for SalesOrderID {1}: ",
                         order.Field<decimal>("TotalDue"),
-                        order.Field<Int32>("SalesOrderID"));
+                        order.Field<int>("SalesOrderID"));
                 }
             }
             //</SnippetMaxElements_MQ>
@@ -2081,12 +2081,12 @@ namespace LINQtoDataSetSamples
 
             var query =
                 contacts.AsEnumerable().Join(orders.AsEnumerable(),
-                order => order.Field<Int32>("ContactID"),
-                contact => contact.Field<Int32>("ContactID"),
+                order => order.Field<int>("ContactID"),
+                contact => contact.Field<int>("ContactID"),
                 (contact, order) => new
                 {
-                    ContactID = contact.Field<Int32>("ContactID"),
-                    SalesOrderID = order.Field<Int32>("SalesOrderID"),
+                    ContactID = contact.Field<int>("ContactID"),
+                    SalesOrderID = order.Field<int>("SalesOrderID"),
                     FirstName = contact.Field<string>("FirstName"),
                     Lastname = contact.Field<string>("Lastname"),
                     TotalDue = order.Field<decimal>("TotalDue")
@@ -2123,12 +2123,12 @@ namespace LINQtoDataSetSamples
             DataTable orders = ds.Tables["SalesOrderHeader"];
 
             var query = contacts.AsEnumerable().Join(orders.AsEnumerable(),
-                order => order.Field<Int32>("ContactID"),
-                contact => contact.Field<Int32>("ContactID"),
+                order => order.Field<int>("ContactID"),
+                contact => contact.Field<int>("ContactID"),
                 (contact, order) => new
                 {
-                    ContactID = contact.Field<Int32>("ContactID"),
-                    SalesOrderID = order.Field<Int32>("SalesOrderID"),
+                    ContactID = contact.Field<int>("ContactID"),
+                    SalesOrderID = order.Field<int>("SalesOrderID"),
                     FirstName = contact.Field<string>("FirstName"),
                     Lastname = contact.Field<string>("Lastname"),
                     TotalDue = order.Field<decimal>("TotalDue")
@@ -2209,12 +2209,12 @@ namespace LINQtoDataSetSamples
             var query =
                 from contact in contacts.AsEnumerable()
                 join order in orders.AsEnumerable()
-                on contact.Field<Int32>("ContactID") equals
-                order.Field<Int32>("ContactID")
+                on contact.Field<int>("ContactID") equals
+                order.Field<int>("ContactID")
                 select new
                 {
-                    ContactID = contact.Field<Int32>("ContactID"),
-                    SalesOrderID = order.Field<Int32>("SalesOrderID"),
+                    ContactID = contact.Field<int>("ContactID"),
+                    SalesOrderID = order.Field<int>("SalesOrderID"),
                     FirstName = contact.Field<string>("FirstName"),
                     Lastname = contact.Field<string>("Lastname"),
                     TotalDue = order.Field<decimal>("TotalDue")
@@ -2256,7 +2256,7 @@ namespace LINQtoDataSetSamples
             var query =
                 from contact in contacts.AsEnumerable()
                 from order in orders.AsEnumerable()
-                where contact.Field<Int32>("ContactID") == order.Field<Int32>("ContactID") &&
+                where contact.Field<int>("ContactID") == order.Field<int>("ContactID") &&
                     order.Field<bool>("OnlineOrderFlag") == true
                 select new
                 {
@@ -2317,7 +2317,7 @@ namespace LINQtoDataSetSamples
             foreach (DataRow contact in contacts2.AsEnumerable())
             {
                 Console.WriteLine("ID:{0} Name: {1}, {2}",
-                    contact.Field<Int32>("ContactID"),
+                    contact.Field<int>("ContactID"),
                     contact.Field<string>("LastName"),
                     contact.Field<string>("FirstName"));
             }

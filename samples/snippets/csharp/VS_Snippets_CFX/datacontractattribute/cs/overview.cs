@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
@@ -94,7 +94,7 @@ namespace DataContractAttributeExample
             // Deserialize the data and read it from the instance.
             Person newPerson = (Person)ser.ReadObject(reader);
             Console.WriteLine("Reading this object:");
-            Console.WriteLine(String.Format("{0}, ID: {1}",
+            Console.WriteLine(string.Format("{0}, ID: {1}",
             newPerson.Name, newPerson.ID));
             fs.Close();
         }

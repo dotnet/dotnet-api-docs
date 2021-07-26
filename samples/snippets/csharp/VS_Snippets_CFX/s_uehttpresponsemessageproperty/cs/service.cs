@@ -1,4 +1,4 @@
-﻿// S_UEHttpResponseMessageProperty/cs/Service.cs snippet file
+// S_UEHttpResponseMessageProperty/cs/Service.cs snippet file
 // based on
 // \dd\Indigo_WAP\ndp\indigo\samples\internal\ChannelSDK\Samples\AlternateChannelDispatcher\Service\Service.cs:
 //
@@ -37,7 +37,7 @@ namespace Microsoft.ServiceModel.Samples
 	    // </Snippet1>
 
 	    // <Snippet2>
-	    String name = HttpResponseMessageProperty.Name;
+	    string name = HttpResponseMessageProperty.Name;
 	    // </Snippet2>
 
 	    // <Snippet3>

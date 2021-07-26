@@ -1,4 +1,4 @@
-﻿//<snippet0>
+//<snippet0>
 using System;
 using System.IdentityModel.Selectors;
 using System.Security.Permissions;
@@ -190,9 +190,9 @@ namespace Microsoft.ServiceModel.Samples
             get { return (string)base["creditCardNumber"]; }
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
-                    value = String.Empty;
+                    value = string.Empty;
                 }
                 base["creditCardNumber"] = value;
             }

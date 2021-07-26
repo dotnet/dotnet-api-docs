@@ -1,4 +1,4 @@
-﻿//<snippet0>
+//<snippet0>
 using System.Security.Permissions;
 using System;
 using System.Collections.Generic;
@@ -146,7 +146,7 @@ namespace TestPrincipalPermission
             [PrincipalPermission(SecurityAction.Demand, Role = "everyone")]
             public string Method1()
             {
-                return String.Format("Hello, \"{0}\"", Thread.CurrentPrincipal.Identity.Name);
+                return string.Format("Hello, \"{0}\"", Thread.CurrentPrincipal.Identity.Name);
             }
         }
 
@@ -213,7 +213,7 @@ namespace CustomMode
             [PrincipalPermission(SecurityAction.Demand, Role = "everyone")]
             public string Method1(string request)
             {
-                return String.Format("Hello, \"{0}\"", Thread.CurrentPrincipal.Identity.Name);
+                return string.Format("Hello, \"{0}\"", Thread.CurrentPrincipal.Identity.Name);
             }
         }
 

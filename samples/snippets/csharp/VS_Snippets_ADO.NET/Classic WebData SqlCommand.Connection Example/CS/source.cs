@@ -1,4 +1,4 @@
-﻿
+
 
 using System;
 using System.Data;
@@ -32,7 +32,7 @@ namespace SqlCommandCS
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Console.WriteLine(String.Format("{0}, {1}",
+                    Console.WriteLine(string.Format("{0}, {1}",
                         reader[0], reader[1]));
                 }
             }

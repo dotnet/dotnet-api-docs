@@ -1,4 +1,4 @@
-﻿
+
 
 using System;
 using System.Data;
@@ -26,7 +26,7 @@ class Program
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                Console.WriteLine(String.Format("{0}", reader[0]));
+                Console.WriteLine(string.Format("{0}", reader[0]));
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Data;
 using System.Data.SqlTypes;
@@ -30,7 +30,7 @@ static void Main(string [] args)
 
     temp.Read(r);
 
-    Console.WriteLine("String value: " + temp.StringValue);
+    Console.WriteLine("string value: " + temp.StringValue);
     Console.WriteLine("Double value: " + temp.DoubleValue);
 
     r.Close();
@@ -67,7 +67,7 @@ public void Read(System.IO.BinaryReader r)
     }
 
     // Build the string from the array of characters.
-    stringValue = new String(chars, 0, stringEnd);
+    stringValue = new string(chars, 0, stringEnd);
 
     // Read the double value from the binary stream.
     doubleValue = r.ReadDouble();

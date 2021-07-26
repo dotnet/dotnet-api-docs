@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 
 using System;
@@ -29,7 +29,7 @@ namespace Microsoft.ServiceModel.Samples
 
         public override string ToString()
         {
-            String displayString = "Order LineItem: " + Quantity + " of " + ProductId + " @unit price: $" + UnitCost + "\n";
+            string displayString = "Order LineItem: " + Quantity + " of " + ProductId + " @unit price: $" + UnitCost + "\n";
             return displayString;
         }
 

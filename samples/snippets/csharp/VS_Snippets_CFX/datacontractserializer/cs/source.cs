@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom;
 using System.Reflection;
 using System.IO;
@@ -113,7 +113,7 @@ namespace DataContractSerializerExample
                 (Person)ser.ReadObject(reader, true);
             reader.Close();
             fs.Close();
-            Console.WriteLine(String.Format("{0} {1}, ID: {2}",
+            Console.WriteLine(string.Format("{0} {1}, ID: {2}",
             deserializedPerson.FirstName, deserializedPerson.LastName,
             deserializedPerson.ID));
         }

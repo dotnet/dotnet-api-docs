@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -8,12 +8,12 @@ class Program
     {
         string connectionString = GetConnectionString();
         string demo = @"<StoreSurvey xmlns=""http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey""><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1974</YearOpened><Specialty>Road</Specialty><SquareFeet>38000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey>";
-        Int32 id = 3;
+        int id = 3;
         UpdateDemographics(id, demo, connectionString);
         Console.ReadLine();
     }
     // <Snippet1>
-    private static void UpdateDemographics(Int32 customerID,
+    private static void UpdateDemographics(int customerID,
         string demoXml, string connectionString)
     {
         // Update the demographics for a store, which is stored
@@ -34,7 +34,7 @@ class Program
             try
             {
                 connection.Open();
-                Int32 rowsAffected = command.ExecuteNonQuery();
+                int rowsAffected = command.ExecuteNonQuery();
                 Console.WriteLine("RowsAffected: {0}", rowsAffected);
             }
             catch (Exception ex)

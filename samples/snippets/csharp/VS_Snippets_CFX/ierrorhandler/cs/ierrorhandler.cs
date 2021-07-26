@@ -1,4 +1,4 @@
-﻿// <snippet5>
+// <snippet5>
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -88,7 +88,7 @@ namespace Microsoft.WCF.Documentation
         foreach (OperationDescription opDesc in se.Contract.Operations)
         {
           if (opDesc.Faults.Count == 0)
-            throw new InvalidOperationException(String.Format(
+            throw new InvalidOperationException(string.Format(
               "EnforceGreetingFaultBehavior requires a "
               + "FaultContractAttribute(typeof(GreetingFault)) in each operation contract.  "
               + "The \"{0}\" operation contains no FaultContractAttribute.",

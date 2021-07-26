@@ -1,4 +1,4 @@
-﻿//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Copyright (c) Microsoft Corporation. All rights reserved.
 
 using System;
 using System.Runtime.Serialization;
@@ -16,7 +16,7 @@ namespace Microsoft.Syndication.Samples
 
         public override string ToString()
         {
-            return String.Format("DataContractExtension: Key={0}, Value={1}", Key, Value);
+            return string.Format("DataContractExtension: Key={0}, Value={1}", Key, Value);
         }
     }
 
@@ -29,7 +29,7 @@ namespace Microsoft.Syndication.Samples
 
         public override string ToString()
         {
-            return String.Format("XmlSerializerExtension: Key={0}, Value={1}", Key, Value);
+            return string.Format("XmlSerializerExtension: Key={0}, Value={1}", Key, Value);
         }
     }
 }

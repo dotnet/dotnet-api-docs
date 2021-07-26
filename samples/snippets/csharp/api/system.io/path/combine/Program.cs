@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 
 class Program
@@ -7,11 +7,11 @@ class Program
     {
         Console.WriteLine("Path.Combine(String[])");
         Combine1();
-        Console.WriteLine("\nPath.Combine(String,String)");
+        Console.WriteLine("\nPath.Combine(string,string)");
         Combine2();
-        Console.WriteLine("\nPath.Combine(String,String,String)");
+        Console.WriteLine("\nPath.Combine(string,string,string)");
         Combine3();
-        Console.WriteLine("\nPath.Combine(String,String,String,String)");
+        Console.WriteLine("\nPath.Combine(string,string,string,string)");
         Combine4();
     }
 

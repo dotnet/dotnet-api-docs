@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Activities;
 using System.Activities.Statements;
@@ -69,7 +69,7 @@ namespace WorkflowConsoleApplication1
                 while (!validEntry)
                 {
                     int Guess;
-                    if (!Int32.TryParse(Console.ReadLine(), out Guess))
+                    if (!int.TryParse(Console.ReadLine(), out Guess))
                     {
                         Console.WriteLine("Please enter an integer.");
                     }

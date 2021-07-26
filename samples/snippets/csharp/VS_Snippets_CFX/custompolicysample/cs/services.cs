@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Text;
@@ -39,7 +39,7 @@ namespace Microsoft.WCF.Documentation
 
     public string GetSessionID()
     {
-      return String.Format(
+      return string.Format(
         "{0}\r\n{1}\r\n",
         OperationContext.Current.SessionId,
         "objectID: " + this.objectID);

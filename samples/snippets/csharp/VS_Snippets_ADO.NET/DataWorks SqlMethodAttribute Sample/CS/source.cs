@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlTypes;
 using Microsoft.SqlServer.Server;
@@ -12,13 +12,13 @@ public struct Point : INullable
 {
 
     private bool is_Null;
-    private Int32 _x;
-    private Int32 _y;
+    private int _x;
+    private int _y;
 
 // <Snippet1>
 // Distance from Point to the specified x and y values method.
 [SqlMethod(OnNullCall = false, IsMutator=false, InvokeIfReceiverIsNull=false)]
-public Double DistanceFromXY(Int32 iX, Int32 iY)
+public Double DistanceFromXY(int iX, int iY)
 {
    return Math.Sqrt(Math.Pow(iX - _x, 2.0) + Math.Pow(iY - _y, 2.0));
 }
@@ -73,8 +73,8 @@ public Double DistanceFromXY(Int32 iX, Int32 iY)
         // Parse input string to separate out points.
         Point pt = new Point();
         string[] xy = s.Value.Split(",".ToCharArray());
-        pt.X = Int32.Parse(xy[0]);
-        pt.Y = Int32.Parse(xy[1]);
+        pt.X = int.Parse(xy[0]);
+        pt.Y = int.Parse(xy[1]);
 
         // Call ValidatePoint to enforce validation
         // for string conversions.
@@ -84,7 +84,7 @@ public Double DistanceFromXY(Int32 iX, Int32 iY)
     }
 
     // X and Y coordinates exposed as properties.
-    public Int32 X
+    public int X
     {
         get
         {
@@ -93,7 +93,7 @@ public Double DistanceFromXY(Int32 iX, Int32 iY)
         // Call ValidatePoint to ensure valid range of Point values.
         set
         {
-            Int32 temp = _x;
+            int temp = _x;
             _x = value;
             if (!ValidatePoint())
             {
@@ -103,7 +103,7 @@ public Double DistanceFromXY(Int32 iX, Int32 iY)
         }
     }
 
-    public Int32 Y
+    public int Y
     {
         get
         {
@@ -111,7 +111,7 @@ public Double DistanceFromXY(Int32 iX, Int32 iY)
         }
         set
         {
-            Int32 temp = _y;
+            int temp = _y;
             _y = value;
             if (!ValidatePoint())
             {

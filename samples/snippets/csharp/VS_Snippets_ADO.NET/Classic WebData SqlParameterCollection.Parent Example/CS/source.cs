@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 class Program
@@ -43,7 +43,7 @@ class Program
                 string parameterList = "";
                 for (int i = 0; i < paramCollection.Count; i++)
                 {
-                    parameterList += String.Format("  {0}, {1}, {2}\n",
+                    parameterList += string.Format("  {0}, {1}, {2}\n",
                         paramCollection[i], paramCollection[i].DbType,
                         paramCollection[i].Direction);
                 }
@@ -52,8 +52,8 @@ class Program
                 // Execute the stored procedure; retrieve
                 // and display the output parameter value.
                 command.ExecuteNonQuery();
-                Console.WriteLine((String)(paramSummary.Value));
-                return (String)(paramSummary.Value);
+                Console.WriteLine((string)(paramSummary.Value));
+                return (string)(paramSummary.Value);
             }
             catch (Exception ex)
             {

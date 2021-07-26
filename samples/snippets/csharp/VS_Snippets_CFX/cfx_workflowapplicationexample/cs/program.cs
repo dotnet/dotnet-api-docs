@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Activities;
 using System.Activities.Statements;
@@ -1553,7 +1553,7 @@ namespace WorkflowApplicationExample
             //<snippet45>
             Variable<List<string>> items = new Variable<List<string>>
             {
-                Default = new VisualBasicValue<List<string>>("New List(Of String)()")
+                Default = new VisualBasicValue<List<string>>("New List(Of string)()")
             };
 
             DelegateInArgument<string> item = new DelegateInArgument<string>();
@@ -1708,7 +1708,7 @@ namespace WorkflowApplicationExample
                     new Assign
                     {
                         To = new OutArgument<List<string>>(items),
-                        Value = new InArgument<List<string>>(new VisualBasicValue<List<string>>("New List(Of String)"))
+                        Value = new InArgument<List<string>>(new VisualBasicValue<List<string>>("New List(Of string)"))
                     },
                     //</snippet60>
                     new While((env) => items.Get(env).Count < 5)

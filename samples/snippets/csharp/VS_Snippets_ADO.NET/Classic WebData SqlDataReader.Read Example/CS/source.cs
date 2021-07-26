@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -39,7 +39,7 @@ class Program
 
     private static void ReadSingleRow(IDataRecord record)
     {
-        Console.WriteLine(String.Format("{0}, {1}", record[0], record[1]));
+        Console.WriteLine(string.Format("{0}, {1}", record[0], record[1]));
     }
 }
 // </Snippet1>

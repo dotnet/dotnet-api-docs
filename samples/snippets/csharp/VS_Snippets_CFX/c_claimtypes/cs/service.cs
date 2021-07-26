@@ -1,4 +1,4 @@
-﻿
+
 //  <snippet1>
 
 using System;
@@ -27,7 +27,7 @@ namespace Microsoft.ServiceModel.Samples.SupportingTokens
             string userName;
             string certificateSubjectName;
             GetCallerIdentities(OperationContext.Current.ServiceSecurityContext, out userName, out certificateSubjectName);
-            return String.Format("Hello {0}, {1}", userName, certificateSubjectName);
+            return string.Format("Hello {0}, {1}", userName, certificateSubjectName);
         }
 
         public void Dispose()
