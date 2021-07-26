@@ -1,4 +1,4 @@
-﻿//<snippet1>
+//<snippet1>
 using System;
 using System.IO;
 using System.Collections;
@@ -20,7 +20,7 @@ public class App
 	{
 		// Check the memory before the iterator is used.
 		long memoryBefore = GC.GetTotalMemory(true);
-      IEnumerable<String> stringsFound;
+      IEnumerable<string> stringsFound;
 		// Open a file with the StreamReaderEnumerable and check for a string.
       try {
          stringsFound =

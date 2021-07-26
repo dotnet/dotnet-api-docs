@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Collections.Generic;
 
@@ -24,7 +24,7 @@ class Example
                         boxes.Count);
    }
 
-   private static void AddBox(Dictionary<Box, String> dict, Box box, String name)
+   private static void AddBox(Dictionary<Box, string> dict, Box box, string name)
    {
       try {
          dict.Add(box, name);
@@ -48,9 +48,9 @@ public class Box
     public int Length { get; set; }
     public int Width { get; set; }
 
-    public override String ToString()
+    public override string ToString()
     {
-       return String.Format("({0}, {1}, {2})", Height, Length, Width);
+       return string.Format("({0}, {1}, {2})", Height, Length, Width);
     }
 }
 

@@ -1,10 +1,10 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Collections.Generic;
 
 class Program
 {
-    static Dictionary<Box, String> boxes;
+    static Dictionary<Box, string> boxes;
 
     static void Main()
     {
