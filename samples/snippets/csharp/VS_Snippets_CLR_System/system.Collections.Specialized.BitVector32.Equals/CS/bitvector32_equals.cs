@@ -1,4 +1,4 @@
-﻿// The following code example compares a BitVector32 with another BitVector32 and with an Int32.
+// The following code example compares a BitVector32 with another BitVector32 and with an int.
 
 // <snippet1>
 using System;
@@ -41,15 +41,15 @@ public class SamplesBitVector32  {
          Console.WriteLine( "   myBV({0}) does not equal myBVsect({1}).", myBV.Data, myBVsect.Data );
       Console.WriteLine();
 
-      // Compare myBV with an Int32.
-      Console.WriteLine( "Comparing myBV with an Int32: " );
-      Int32 myInt32 = 123;
-      // Using Equals will fail because Int32 is not compatible with BitVector32.
+      // Compare myBV with an int.
+      Console.WriteLine( "Comparing myBV with an int: " );
+      int myInt32 = 123;
+      // Using Equals will fail because int is not compatible with BitVector32.
       if ( myBV.Equals( myInt32 ) )
          Console.WriteLine( "   Using BitVector32.Equals, myBV({0}) equals myInt32({1}).", myBV.Data, myInt32 );
       else
          Console.WriteLine( "   Using BitVector32.Equals, myBV({0}) does not equal myInt32({1}).", myBV.Data, myInt32 );
-      // To compare a BitVector32 with an Int32, use the "==" operator.
+      // To compare a BitVector32 with an int, use the "==" operator.
       if ( myBV.Data == myInt32 )
          Console.WriteLine( "   Using the \"==\" operator, myBV.Data({0}) equals myInt32({1}).", myBV.Data, myInt32 );
       else
@@ -68,7 +68,7 @@ myBV                 : BitVector32{00000000000000000000000001111011}
 myBVsect with values : BitVector32{00000000000000000000000001111011}
    myBV(123) equals myBVsect(123).
 
-Comparing myBV with an Int32:
+Comparing myBV with an int:
    Using BitVector32.Equals, myBV(123) does not equal myInt32(123).
    Using the "==" operator, myBV.Data(123) equals myInt32(123).
 

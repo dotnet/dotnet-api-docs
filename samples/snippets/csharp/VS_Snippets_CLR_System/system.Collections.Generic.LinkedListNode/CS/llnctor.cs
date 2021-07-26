@@ -1,4 +1,4 @@
-﻿// The following code example creates a LinkedList node, adds it to a LinkedList, and tracks the values of its properties as the LinkedList changes.
+// The following code example creates a LinkedList node, adds it to a LinkedList, and tracks the values of its properties as the LinkedList changes.
 
 // <snippet1>
 using System;
@@ -8,13 +8,13 @@ public class GenericCollection  {
 
    public static void Main()  {
 
-      // Create a new LinkedListNode of type String and displays its properties.
-      LinkedListNode<String> lln = new LinkedListNode<String>( "orange" );
+      // Create a new LinkedListNode of type string and displays its properties.
+      LinkedListNode<string> lln = new LinkedListNode<string>( "orange" );
       Console.WriteLine( "After creating the node ...." );
       DisplayProperties( lln );
 
       // Create a new LinkedList.
-      LinkedList<String> ll = new LinkedList<String>();
+      LinkedList<string> ll = new LinkedList<string>();
 
       // Add the "orange" node and display its properties.
       ll.AddLast( lln );
@@ -28,7 +28,7 @@ public class GenericCollection  {
       DisplayProperties( lln );
    }
 
-   public static void DisplayProperties( LinkedListNode<String> lln )  {
+   public static void DisplayProperties( LinkedListNode<string> lln )  {
       if ( lln.List == null )
          Console.WriteLine( "   Node is not linked." );
       else

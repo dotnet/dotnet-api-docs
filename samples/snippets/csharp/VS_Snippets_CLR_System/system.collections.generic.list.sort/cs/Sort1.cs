@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 public class Example
@@ -8,7 +8,7 @@ public class Example
       // <Snippet2>
       String[] names = { "Samuel", "Dakota", "Koani", "Saya", "Vanya", "Jody",
                          "Yiska", "Yuma", "Jody", "Nikita" };
-      var nameList = new List<String>();
+      var nameList = new List<string>();
       nameList.AddRange(names);
       Console.WriteLine("List in unsorted order: ");
       foreach (var name in nameList)

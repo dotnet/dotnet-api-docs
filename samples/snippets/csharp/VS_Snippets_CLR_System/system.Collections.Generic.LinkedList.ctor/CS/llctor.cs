@@ -1,4 +1,4 @@
-﻿// The following code example creates and initializes a LinkedList of type String and then displays its contents.
+// The following code example creates and initializes a LinkedList of type string and then displays its contents.
 
 // <snippet1>
 using System;
@@ -10,7 +10,7 @@ public class GenericCollection
     public static void Main()
     {
         // Create and initialize a new LinkedList.
-        LinkedList<String> ll = new LinkedList<String>();
+        LinkedList<string> ll = new LinkedList<string>();
         ll.AddLast("red");
         ll.AddLast("orange");
         ll.AddLast("yellow");
@@ -23,7 +23,7 @@ public class GenericCollection
             Console.WriteLine("The last item in the list is {0}.", ll.Last.Value);
 
             Console.WriteLine("The LinkedList contains:");
-            foreach (String s in ll)
+            foreach (string s in ll)
                 Console.WriteLine("   {0}", s);
         }
         else

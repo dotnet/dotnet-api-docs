@@ -1,4 +1,4 @@
-﻿// The following example uses BaseAdd to create a new NameObjectCollectionBase with elements from another dictionary.
+// The following example uses BaseAdd to create a new NameObjectCollectionBase with elements from another dictionary.
 // For an expanded version of this example, see the NameObjectCollectionBase class topic.
 
 // <snippet1>
@@ -22,7 +22,7 @@ public class MyCollection : NameObjectCollectionBase  {
    // Adds elements from an IDictionary into the new collection.
    public MyCollection( IDictionary d )  {
       foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
+         this.BaseAdd( (string) de.Key, de.Value );
       }
    }
 }

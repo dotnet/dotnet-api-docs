@@ -1,4 +1,4 @@
-﻿// The following example uses BaseGetKey and BaseGet to get specific keys and values.
+// The following example uses BaseGetKey and BaseGet to get specific keys and values.
 // For an expanded version of this example, see the NameObjectCollectionBase class topic.
 
 // <snippet1>
@@ -20,7 +20,7 @@ public class MyCollection : NameObjectCollectionBase  {
    }
 
    // Gets or sets the value associated with the specified key.
-   public Object this[ String key ]  {
+   public Object this[ string key ]  {
       get  {
          return( this.BaseGet( key ) );
       }
@@ -32,7 +32,7 @@ public class MyCollection : NameObjectCollectionBase  {
    // Adds elements from an IDictionary into the new collection.
    public MyCollection( IDictionary d )  {
       foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
+         this.BaseAdd( (string) de.Key, de.Value );
       }
    }
 }

@@ -1,10 +1,10 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 using System.Collections.Generic;
 
 public class Employee : IComparable
 {
-   public String Name { get; set; }
+   public string Name { get; set; }
    public int Id { get; set; }
 
    public int CompareTo(Object o )
@@ -19,9 +19,9 @@ public class Employee : IComparable
 
 public class EmployeeSearch
 {
-   String _s;
+   string _s;
 
-   public EmployeeSearch(String s)
+   public EmployeeSearch(string s)
    {
       _s = s;
    }
