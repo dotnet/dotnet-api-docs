@@ -1,4 +1,4 @@
-﻿// The following example shows how to implement and use the NameObjectCollectionBase class.
+// The following example shows how to implement and use the NameObjectCollectionBase class.
 
 // <snippet1>
 using System;
@@ -14,7 +14,7 @@ public class MyCollection : NameObjectCollectionBase
    // Adds elements from an IDictionary into the new collection.
    public MyCollection( IDictionary d, Boolean bReadOnly )  {
       foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
+         this.BaseAdd( (string) de.Key, de.Value );
       }
       this.IsReadOnly = bReadOnly;
    }
@@ -28,7 +28,7 @@ public class MyCollection : NameObjectCollectionBase
    }
 
    // Gets or sets the value associated with the specified key.
-   public Object this[ String key ]  {
+   public Object this[ string key ]  {
       get  {
          return( this.BaseGet( key ) );
       }
@@ -37,7 +37,7 @@ public class MyCollection : NameObjectCollectionBase
       }
    }
 
-   // Gets a String array that contains all the keys in the collection.
+   // Gets a string array that contains all the keys in the collection.
    public String[] AllKeys  {
       get  {
          return( this.BaseGetAllKeys() );
@@ -51,7 +51,7 @@ public class MyCollection : NameObjectCollectionBase
       }
    }
 
-   // Gets a String array that contains all the values in the collection.
+   // Gets a string array that contains all the values in the collection.
    public String[] AllStringValues  {
       get  {
          return( (String[]) this.BaseGetAllValues( typeof( string ) ));
@@ -66,12 +66,12 @@ public class MyCollection : NameObjectCollectionBase
    }
 
    // Adds an entry to the collection.
-   public void Add( String key, Object value )  {
+   public void Add( string key, Object value )  {
       this.BaseAdd( key, value );
    }
 
    // Removes an entry with the specified key from the collection.
-   public void Remove( String key )  {
+   public void Remove( string key )  {
       this.BaseRemove( key );
    }
 
@@ -144,7 +144,7 @@ public class SamplesNameObjectCollectionBase  {
 
    // Prints the keys and values using AllKeys.
    public static void PrintKeysAndValues2( MyCollection myCol )  {
-      foreach ( String s in myCol.AllKeys )  {
+      foreach ( string s in myCol.AllKeys )  {
          Console.WriteLine( "{0}, {1}", s, myCol[s] );
       }
    }
@@ -155,7 +155,7 @@ public class SamplesNameObjectCollectionBase  {
 This code produces the following output.
 
 System.NotSupportedException: Collection is read-only.
-   at System.Collections.Specialized.NameObjectCollectionBase.BaseAdd(String name, Object value)
+   at System.Collections.Specialized.NameObjectCollectionBase.BaseAdd(string name, Object value)
    at SamplesNameObjectCollectionBase.Main()
 Read-Only Collection:
 [0] : red, apple

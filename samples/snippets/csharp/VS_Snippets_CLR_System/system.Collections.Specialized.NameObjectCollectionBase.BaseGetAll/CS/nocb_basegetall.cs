@@ -1,4 +1,4 @@
-﻿// The following example uses BaseGetAllKeys and BaseGetAllValues to get an array of the keys or an array of the values.
+// The following example uses BaseGetAllKeys and BaseGetAllValues to get an array of the keys or an array of the values.
 // For an expanded version of this example, see the NameObjectCollectionBase class topic.
 
 // <snippet1>
@@ -22,11 +22,11 @@ public class MyCollection : NameObjectCollectionBase  {
    // Adds elements from an IDictionary into the new collection.
    public MyCollection( IDictionary d )  {
       foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
+         this.BaseAdd( (string) de.Key, de.Value );
       }
    }
 
-   // Gets a String array that contains all the keys in the collection.
+   // Gets a string array that contains all the keys in the collection.
    public String[] AllKeys  {
       get  {
          return( this.BaseGetAllKeys() );
@@ -40,7 +40,7 @@ public class MyCollection : NameObjectCollectionBase  {
       }
    }
 
-   // Gets a String array that contains all the values in the collection.
+   // Gets a string array that contains all the values in the collection.
    public String[] AllStringValues  {
       get  {
          return( (String[]) this.BaseGetAllValues( typeof(System.String) ) );
@@ -63,7 +63,7 @@ public class SamplesNameObjectCollectionBase  {
 
       // Displays the list of keys.
       Console.WriteLine( "The list of keys:" );
-      foreach ( String s in myCol.AllKeys )  {
+      foreach ( string s in myCol.AllKeys )  {
          Console.WriteLine( "   {0}", s );
       }
 
@@ -73,9 +73,9 @@ public class SamplesNameObjectCollectionBase  {
          Console.WriteLine( "   {0}", o.ToString() );
       }
 
-      // Displays the list of values of type String.
-      Console.WriteLine( "The list of values (String):" );
-      foreach ( String s in myCol.AllValues )  {
+      // Displays the list of values of type string.
+      Console.WriteLine( "The list of values (string):" );
+      foreach ( string s in myCol.AllValues )  {
          Console.WriteLine( "   {0}", s );
       }
    }
@@ -103,7 +103,7 @@ The list of values (Object):
    apple
    banana
    pear
-The list of values (String):
+The list of values (string):
    apple
    banana
    pear

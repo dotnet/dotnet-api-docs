@@ -1,4 +1,4 @@
-﻿// The following example uses BaseHasKeys to determine if the collection contains keys that are not a null reference.
+// The following example uses BaseHasKeys to determine if the collection contains keys that are not a null reference.
 // For an expanded version of this example, see the NameObjectCollectionBase class topic.
 
 // <snippet1>
@@ -24,7 +24,7 @@ public class MyCollection : NameObjectCollectionBase  {
    }
 
    // Adds an entry to the collection.
-   public void Add( String key, Object value )  {
+   public void Add( string key, Object value )  {
       this.BaseAdd( key, value );
    }
 
