@@ -1,11 +1,11 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
 {
    public static void Main()
    {
-      // Create a Char array for the modern Cyrillic alphabet,
+      // Create a char array for the modern Cyrillic alphabet,
       // from U+0410 to U+044F.
       int nChars = 0x044F - 0x0410 + 1;
       char[] chars = new char[nChars];

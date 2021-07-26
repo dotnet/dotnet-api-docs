@@ -1,4 +1,4 @@
-﻿// The following code example demonstrates several of the properties and methods of NameValueCollection.
+// The following code example demonstrates several of the properties and methods of NameValueCollection.
 
 // <snippet1>
 using System;
@@ -31,7 +31,7 @@ public class SamplesNameValueCollection  {
       String[] myStrArr = new String[myCol.Count];
       myCol.CopyTo( myStrArr, 0 );
       Console.WriteLine( "The string array contains:" );
-      foreach ( String s in myStrArr )
+      foreach ( string s in myStrArr )
          Console.WriteLine( "   {0}", s );
       Console.WriteLine();
 
@@ -48,7 +48,7 @@ public class SamplesNameValueCollection  {
 
    public static void PrintKeysAndValues( NameValueCollection myCol )  {
       Console.WriteLine( "   KEY        VALUE" );
-      foreach ( String s in myCol.AllKeys )
+      foreach ( string s in myCol.AllKeys )
          Console.WriteLine( "   {0,-10} {1}", s, myCol[s] );
       Console.WriteLine();
    }

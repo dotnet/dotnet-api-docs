@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -15,7 +15,7 @@ public class Example
          ConsoleColor newForeColor = ConsoleColor.White;
          ConsoleColor newBackColor = ConsoleColor.Black;
 
-         Char foreColorSelection = GetKeyPress("Select Text Color (B for Blue, R for Red, Y for Yellow): ",
+         char foreColorSelection = GetKeyPress("Select Text Color (B for Blue, R for Red, Y for Yellow): ",
                                               new Char[] { 'B', 'R', 'Y' } );
          switch (foreColorSelection) {
             case 'B':
@@ -31,7 +31,7 @@ public class Example
                newForeColor = ConsoleColor.DarkYellow;
                break;
          }
-         Char backColorSelection = GetKeyPress("Select Background Color (W for White, G for Green, M for Magenta): ",
+         char backColorSelection = GetKeyPress("Select Background Color (W for White, G for Green, M for Magenta): ",
                                               new Char[] { 'W', 'G', 'M' });
          switch (backColorSelection) {
             case 'W':
@@ -50,13 +50,13 @@ public class Example
 
          Console.WriteLine();
          Console.Write("Enter a message to display: ");
-         String textToDisplay = Console.ReadLine();
+         string textToDisplay = Console.ReadLine();
          Console.WriteLine();
          Console.ForegroundColor = newForeColor;
          Console.BackgroundColor = newBackColor;
          Console.WriteLine(textToDisplay);
          Console.WriteLine();
-         if (Char.ToUpper(GetKeyPress("Display another message (Y/N): ", new Char[] { 'Y', 'N' } )) == 'N')
+         if (char.ToUpper(GetKeyPress("Display another message (Y/N): ", new Char[] { 'Y', 'N' } )) == 'N')
             continueFlag = false;
 
          // Restore the default settings and clear the screen.
@@ -66,7 +66,7 @@ public class Example
       } while (continueFlag);
    }
 
-   private static Char GetKeyPress(String msg, Char[] validChars)
+   private static char GetKeyPress(string msg, Char[] validChars)
    {
       ConsoleKeyInfo keyPressed;
       bool valid = false;
@@ -76,7 +76,7 @@ public class Example
          Console.Write(msg);
          keyPressed = Console.ReadKey();
          Console.WriteLine();
-         if (Array.Exists(validChars, ch => ch.Equals(Char.ToUpper(keyPressed.KeyChar))))
+         if (Array.Exists(validChars, ch => ch.Equals(char.ToUpper(keyPressed.KeyChar))))
             valid = true;
       } while (! valid);
       return keyPressed.KeyChar;
