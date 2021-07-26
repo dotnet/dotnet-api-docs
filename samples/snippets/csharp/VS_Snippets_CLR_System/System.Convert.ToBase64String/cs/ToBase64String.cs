@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 
 public class Example
@@ -22,7 +22,7 @@ public class Example
       }
 
       // Encode the byte array using Base64 encoding
-      String base64 = Convert.ToBase64String(bytes);
+      string base64 = Convert.ToBase64String(bytes);
       Console.WriteLine("The encoded string: ");
       for (int ctr = 0; ctr <= base64.Length / 50; ctr++)
          Console.WriteLine(base64.Substring(ctr * 50,

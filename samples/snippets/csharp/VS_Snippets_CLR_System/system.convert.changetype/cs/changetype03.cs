@@ -1,4 +1,4 @@
-﻿// <Snippet3>
+// <Snippet3>
 using System;
 using System.Globalization;
 
@@ -48,7 +48,7 @@ public class Temperature : IConvertible
    public byte ToByte(IFormatProvider provider)
    {
       if (m_Temp < Byte.MinValue || m_Temp > Byte.MaxValue)
-         throw new OverflowException(String.Format("{0} is out of range of the Byte type.",
+         throw new OverflowException(string.Format("{0} is out of range of the Byte type.",
                                                    this.m_Temp));
       else
          return Decimal.ToByte(this.m_Temp);
@@ -56,7 +56,7 @@ public class Temperature : IConvertible
 
    public char ToChar(IFormatProvider provider)
    {
-      throw new InvalidCastException("Temperature to Char conversion is not supported.");
+      throw new InvalidCastException("Temperature to char conversion is not supported.");
    }
 
    public DateTime ToDateTime(IFormatProvider provider)
@@ -77,7 +77,7 @@ public class Temperature : IConvertible
    public short ToInt16(IFormatProvider provider)
    {
       if (this.m_Temp < Int16.MinValue || this.m_Temp > Int16.MaxValue)
-         throw new OverflowException(String.Format("{0} is out of range of the Int16 type.",
+         throw new OverflowException(string.Format("{0} is out of range of the Int16 type.",
                                                    this.m_Temp));
       else
          return Decimal.ToInt16(this.m_Temp);
@@ -85,8 +85,8 @@ public class Temperature : IConvertible
 
    public int ToInt32(IFormatProvider provider)
       {
-      if (this.m_Temp < Int32.MinValue || this.m_Temp > Int32.MaxValue)
-         throw new OverflowException(String.Format("{0} is out of range of the Int32 type.",
+      if (this.m_Temp < int.MinValue || this.m_Temp > int.MaxValue)
+         throw new OverflowException(string.Format("{0} is out of range of the int type.",
                                                    this.m_Temp));
       else
          return Decimal.ToInt32(this.m_Temp);
@@ -95,7 +95,7 @@ public class Temperature : IConvertible
    public long ToInt64(IFormatProvider provider)
    {
       if (this.m_Temp < Int64.MinValue || this.m_Temp > Int64.MaxValue)
-         throw new OverflowException(String.Format("{0} is out of range of the Int64 type.",
+         throw new OverflowException(string.Format("{0} is out of range of the Int64 type.",
                                                    this.m_Temp));
       else
          return Decimal.ToInt64(this.m_Temp);
@@ -104,7 +104,7 @@ public class Temperature : IConvertible
    public sbyte ToSByte(IFormatProvider provider)
    {
       if (this.m_Temp < SByte.MinValue || this.m_Temp > SByte.MaxValue)
-         throw new OverflowException(String.Format("{0} is out of range of the SByte type.",
+         throw new OverflowException(string.Format("{0} is out of range of the SByte type.",
                                                    this.m_Temp));
       else
          return Decimal.ToSByte(this.m_Temp);
@@ -146,7 +146,7 @@ public class Temperature : IConvertible
             if (typeof(Temperature).Equals(conversionType))
                return this;
             else
-               throw new InvalidCastException(String.Format("Conversion to a {0} is not supported.",
+               throw new InvalidCastException(string.Format("Conversion to a {0} is not supported.",
                                                             conversionType.Name));
          case TypeCode.SByte:
             return this.ToSByte(null);
@@ -161,14 +161,14 @@ public class Temperature : IConvertible
          case TypeCode.UInt64:
             return this.ToUInt64(null);
          default:
-            throw new InvalidCastException(String.Format("Conversion to {0} is not supported.", conversionType.Name));
+            throw new InvalidCastException(string.Format("Conversion to {0} is not supported.", conversionType.Name));
       }
    }
 
    public ushort ToUInt16(IFormatProvider provider)
    {
       if (this.m_Temp < UInt16.MinValue || this.m_Temp > UInt16.MaxValue)
-         throw new OverflowException(String.Format("{0} is out of range of the UInt16 type.",
+         throw new OverflowException(string.Format("{0} is out of range of the UInt16 type.",
                                                    this.m_Temp));
       else
          return Decimal.ToUInt16(this.m_Temp);
@@ -177,7 +177,7 @@ public class Temperature : IConvertible
    public uint ToUInt32(IFormatProvider provider)
    {
       if (this.m_Temp < UInt32.MinValue || this.m_Temp > UInt32.MaxValue)
-         throw new OverflowException(String.Format("{0} is out of range of the UInt32 type.",
+         throw new OverflowException(string.Format("{0} is out of range of the UInt32 type.",
                                                    this.m_Temp));
       else
          return Decimal.ToUInt32(this.m_Temp);
@@ -186,7 +186,7 @@ public class Temperature : IConvertible
    public ulong ToUInt64(IFormatProvider provider)
    {
       if (this.m_Temp < UInt64.MinValue || this.m_Temp > UInt64.MaxValue)
-         throw new OverflowException(String.Format("{0} is out of range of the UInt64 type.",
+         throw new OverflowException(string.Format("{0} is out of range of the UInt64 type.",
                                                    this.m_Temp));
       else
          return Decimal.ToUInt64(this.m_Temp);
@@ -200,10 +200,10 @@ public class Example
    public static void Main()
    {
       Temperature cool = new Temperature(5);
-      Type[] targetTypes = { typeof(SByte), typeof(Int16), typeof(Int32),
+      Type[] targetTypes = { typeof(SByte), typeof(Int16), typeof(int),
                              typeof(Int64), typeof(Byte), typeof(UInt16),
                              typeof(UInt32), typeof(UInt64), typeof(Decimal),
-                             typeof(Single), typeof(Double), typeof(String) };
+                             typeof(Single), typeof(Double), typeof(string) };
       CultureInfo provider = new CultureInfo("fr-FR");
 
       foreach (Type targetType in targetTypes)
@@ -228,7 +228,7 @@ public class Example
 // The example dosplays the following output:
 //       Converted Temperature 5.00°C to SByte 5.
 //       Converted Temperature 5.00°C to Int16 5.
-//       Converted Temperature 5.00°C to Int32 5.
+//       Converted Temperature 5.00°C to int 5.
 //       Converted Temperature 5.00°C to Int64 5.
 //       Converted Temperature 5.00°C to Byte 5.
 //       Converted Temperature 5.00°C to UInt16 5.
@@ -237,5 +237,5 @@ public class Example
 //       Converted Temperature 5.00°C to Decimal 5.
 //       Converted Temperature 5.00°C to Single 5.
 //       Converted Temperature 5.00°C to Double 5.
-//       Converted Temperature 5.00°C to String 5,00°C.
+//       Converted Temperature 5.00°C to string 5,00°C.
 // </Snippet4>
