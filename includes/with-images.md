@@ -6,7 +6,7 @@ The LM75 is a temperature sensor, Delta-Sigma analog-to-digital converter, and d
 
 - LM75 [datasheet](https://cdn.datasheetspdf.com/pdf-down/L/M/7/LM75_NationalSemiconductor.pdf)
 
-![sensor](media/sensor.jpg)
+![sensor](../media/sensor.jpg)
 
 ### Usage
 
@@ -24,7 +24,7 @@ using(Lm75 sensor = new Lm75(device))
 
 #### Circuit
 
-![circuit](media/LM75_circuit_bb.png)
+![circuit](../media/LM75_circuit_bb.png)
 
 * SCL - SCL
 * SDA - SDA
