@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Reflection;
 
@@ -41,7 +41,7 @@ class parminfo
  Reflection.ParameterInfo
 
  Mymethodbase
- = Void mymethod (Int32, System.String ByRef, System.String ByRef)
+ = Void mymethod (int, System.String ByRef, System.String ByRef)
  For parameter # 0, the Name is - int1m
  For parameter # 1, the Name is - str2m
  For parameter # 2, the Name is - str3m

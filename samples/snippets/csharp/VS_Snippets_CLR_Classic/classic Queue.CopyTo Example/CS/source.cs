@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesQueue  {
@@ -15,7 +15,7 @@
        mySourceQ.Enqueue( "barn" );
 
        // Creates and initializes the one-dimensional target Array.
-       Array myTargetArray=Array.CreateInstance( typeof(String), 15 );
+       Array myTargetArray=Array.CreateInstance( typeof(string), 15 );
        myTargetArray.SetValue( "The", 0 );
        myTargetArray.SetValue( "quick", 1 );
        myTargetArray.SetValue( "brown", 2 );
