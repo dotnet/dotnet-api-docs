@@ -1,12 +1,12 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  public class SamplesArray  {
 
     public static void Main()  {
 
-       // Creates and initializes a multidimensional Array of type String.
+       // Creates and initializes a multidimensional Array of type string.
        int[] myLengthsArray = new int[4] { 2, 3, 4, 5 };
-       Array my4DArray=Array.CreateInstance( typeof(String), myLengthsArray );
+       Array my4DArray=Array.CreateInstance( typeof(string), myLengthsArray );
        for ( int i = my4DArray.GetLowerBound(0); i <= my4DArray.GetUpperBound(0); i++ )
           for ( int j = my4DArray.GetLowerBound(1); j <= my4DArray.GetUpperBound(1); j++ )
              for ( int k = my4DArray.GetLowerBound(2); k <= my4DArray.GetUpperBound(2); k++ )

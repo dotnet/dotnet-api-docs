@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 public class SamplesArray  {
 
    public static void Main()  {
 
       // <Snippet1>
       // Creates and initializes a new Array with three elements of the same value.
-      Array myArray=Array.CreateInstance( typeof(String), 12 );
+      Array myArray=Array.CreateInstance( typeof(string), 12 );
       myArray.SetValue( "the", 0 );
       myArray.SetValue( "quick", 1 );
       myArray.SetValue( "brown", 2 );
@@ -24,7 +24,7 @@ public class SamplesArray  {
       PrintIndexAndValues( myArray );
 
       // Searches for the last occurrence of the duplicated value.
-      String myString = "the";
+      string myString = "the";
       int myIndex = Array.LastIndexOf( myArray, myString );
       Console.WriteLine( "The last occurrence of \"{0}\" is at index {1}.", myString, myIndex );
 
