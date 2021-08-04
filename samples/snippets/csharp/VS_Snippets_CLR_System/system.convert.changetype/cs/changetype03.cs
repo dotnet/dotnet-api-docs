@@ -228,7 +228,7 @@ public class Example
 // The example dosplays the following output:
 //       Converted Temperature 5.00°C to SByte 5.
 //       Converted Temperature 5.00°C to Int16 5.
-//       Converted Temperature 5.00°C to int 5.
+//       Converted Temperature 5.00°C to Int32 5.
 //       Converted Temperature 5.00°C to Int64 5.
 //       Converted Temperature 5.00°C to Byte 5.
 //       Converted Temperature 5.00°C to UInt16 5.
@@ -237,5 +237,5 @@ public class Example
 //       Converted Temperature 5.00°C to Decimal 5.
 //       Converted Temperature 5.00°C to Single 5.
 //       Converted Temperature 5.00°C to Double 5.
-//       Converted Temperature 5.00°C to string 5,00°C.
+//       Converted Temperature 5.00°C to String 5,00°C.
 // </Snippet4>
