@@ -1,4 +1,4 @@
-﻿// <Snippet19>
+// <Snippet19>
 using System;
 using System.Collections.Generic;
 
@@ -6,17 +6,17 @@ public class Example
 {
    public static void Main()
    {
-      String sentence = "This is a simple, short sentence.";
+      string sentence = "This is a simple, short sentence.";
       Console.WriteLine("Words in '{0}':", sentence);
       foreach (var word in FindWords(sentence))
          Console.WriteLine("   '{0}'", word);
    }
 
-   static String[] FindWords(String s)
+   static String[] FindWords(string s)
    {
       int start = 0, end = 0;
       Char[] delimiters = { ' ', '.', ',', ';', ':', '(', ')' };
-      var words = new List<String>();
+      var words = new List<string>();
 
       while (end >= 0) {
          end = s.IndexOfAny(delimiters, start);
