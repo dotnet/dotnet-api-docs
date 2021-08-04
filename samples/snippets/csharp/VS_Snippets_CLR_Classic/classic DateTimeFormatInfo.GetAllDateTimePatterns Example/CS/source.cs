@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Globalization;
  public class SamplesDateTimeFormatInfo  {
@@ -41,7 +41,7 @@
 
     public static void PrintIndexAndValues( String[] myArray )  {
        int i = 0;
-       foreach ( String s in myArray )
+       foreach ( string s in myArray )
           Console.WriteLine( "\t[{0}]:\t{1}", i++, s );
        Console.WriteLine();
     }
