@@ -298,11 +298,11 @@ namespace BasicSnippetC {
 				boolVal = System.Convert.ToBoolean(stringVal);
 				if (boolVal) {
 					System.Console.WriteLine(
-						"string was equal to System.Boolean.TrueString.");
+						"String was equal to System.Boolean.TrueString.");
 				}
 				else {
 					System.Console.WriteLine(
-						"string was equal to System.Boolean.FalseString.");
+						"String was equal to System.Boolean.FalseString.");
 				}
 			}
 			catch (System.FormatException){
@@ -434,14 +434,14 @@ namespace BasicSnippetC {
 		public void ConvertCharDecimal(char charVal) {
 			Decimal decimalVal = 0;
 			
-			// char to decimal conversion is not supported and will always
+			// Char to decimal conversion is not supported and will always
 			// throw an InvalidCastException.
 			try {
 				decimalVal = System.Convert.ToDecimal(charVal);
 			}
 			catch (System.InvalidCastException) {
 				System.Console.WriteLine(
-					"char-to-Decimal conversion is not supported " +
+					"Char-to-Decimal conversion is not supported " +
 					"by the .NET Framework.");
 			}
 
@@ -451,7 +451,7 @@ namespace BasicSnippetC {
 			}
 			catch (System.InvalidCastException) {
 				System.Console.WriteLine(
-					"Decimal-to-char conversion is not supported " +
+					"Decimal-to-Char conversion is not supported " +
 					"by the .NET Framework.");
 			}
 		}
