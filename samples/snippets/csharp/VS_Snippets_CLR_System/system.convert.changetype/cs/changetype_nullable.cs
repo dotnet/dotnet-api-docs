@@ -17,6 +17,6 @@ public class Example
    }
 }
 // The example displays the following output:
-//    12893 (int)--> 12893 (Double)
-//    16.3478 (Single)--> 16 (int)
+//    12893 (Int32)--> 12893 (Double)
+//    16.3478 (Single)--> 16 (Int32)
 // </Snippet7>
