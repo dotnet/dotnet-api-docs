@@ -6,7 +6,7 @@ using System.Reflection;
 
 public static class StringLibrary
 {
-   public static int SubstringStartsAt(String fullString, String substr)
+   public static int SubstringStartsAt(string fullString, string substr)
    {
       return fullString.IndexOf(substr, StringComparison.Ordinal);
    }
@@ -22,8 +22,8 @@ namespace App
    {
       public static void Main()
       {
-         String value = "The archaeologist";
-         String substring = "archæ";
+         string value = "The archaeologist";
+         string substring = "archæ";
          int position = StringLibrary.SubstringStartsAt(value, substring);
          if (position >= 0)
             Console.WriteLine("'{0}' found in '{1}' starting at position {2}",
