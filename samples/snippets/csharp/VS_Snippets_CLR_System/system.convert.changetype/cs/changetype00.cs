@@ -58,12 +58,12 @@ public class Example
 // The example displays the following output:
 //    103.5 (Double) --> 103.5 (Object).
 //    103.5 (Double) --> True (Boolean).
-//    Cannot convert a Double to a char
+//    Cannot convert a Double to a Char
 //    103.5 (Double) --> 104 (SByte).
 //    103.5 (Double) --> 104 (Byte).
 //    103.5 (Double) --> 104 (Int16).
 //    103.5 (Double) --> 104 (UInt16).
-//    103.5 (Double) --> 104 (int).
+//    103.5 (Double) --> 104 (Int32).
 //    103.5 (Double) --> 104 (UInt32).
 //    103.5 (Double) --> 104 (Int64).
 //    103.5 (Double) --> 104 (UInt64).
@@ -72,16 +72,16 @@ public class Example
 //    103.5 (Double) --> 103.5 (Decimal).
 //    Cannot convert a Double to a DateTime
 //       Returning a fr-FR numeric format provider.
-//    103.5 (Double) --> 103,5 (string).
+//    103.5 (Double) --> 103,5 (String).
 //
 //    12/26/2010 2:34:00 PM (DateTime) --> 12/26/2010 2:34:00 PM (Object).
 //    Cannot convert a DateTime to a Boolean
-//    Cannot convert a DateTime to a char
+//    Cannot convert a DateTime to a Char
 //    Cannot convert a DateTime to a SByte
 //    Cannot convert a DateTime to a Byte
 //    Cannot convert a DateTime to a Int16
 //    Cannot convert a DateTime to a UInt16
-//    Cannot convert a DateTime to a int
+//    Cannot convert a DateTime to a Int32
 //    Cannot convert a DateTime to a UInt32
 //    Cannot convert a DateTime to a Int64
 //    Cannot convert a DateTime to a UInt64
@@ -90,5 +90,5 @@ public class Example
 //    Cannot convert a DateTime to a Decimal
 //    12/26/2010 2:34:00 PM (DateTime) --> 12/26/2010 2:34:00 PM (DateTime).
 //       Returning an en-US date/time format provider.
-//    12/26/2010 2:34:00 PM (DateTime) --> 12/26/2010 2:34:00 PM (string).
+//    12/26/2010 2:34:00 PM (DateTime) --> 12/26/2010 2:34:00 PM (String).
 // </Snippet1>
