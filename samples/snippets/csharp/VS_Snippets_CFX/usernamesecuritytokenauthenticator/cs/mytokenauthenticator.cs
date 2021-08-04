@@ -1,4 +1,4 @@
-﻿
+
 //  Copyright (c) Microsoft Corporation.  All Rights Reserved.
 // <snippet0>
 using System;
@@ -66,7 +66,7 @@ namespace Microsoft.ServiceModel.Samples
 
     class UnconditionalPolicy : IAuthorizationPolicy
     {
-        String id = Guid.NewGuid().ToString();
+        string id = Guid.NewGuid().ToString();
         ClaimSet issuer;
         ClaimSet issuance;
         DateTime expirationTime;
