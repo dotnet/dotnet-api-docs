@@ -1,4 +1,4 @@
-﻿#define TRACE
+#define TRACE
 
 using System;
 using System.Data;
@@ -16,7 +16,7 @@ public class Form1: Form
         int value = 0;
         int newValue = 1;
         try {
-            value = Int32.Parse(userInput);
+            value = int.Parse(userInput);
         }
         // <Snippet1>
         catch (Exception) {

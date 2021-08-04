@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
 
@@ -25,7 +25,7 @@
        Console.WriteLine( "The key \"{0}\" is {1}.", myKey, mySL.ContainsKey( myKey ) ? "in the SortedList" : "NOT in the SortedList" );
 
        // Searches for a specific value.
-       String myValue = "three";
+       string myValue = "three";
        Console.WriteLine( "The value \"{0}\" is {1}.", myValue, mySL.ContainsValue( myValue ) ? "in the SortedList" : "NOT in the SortedList" );
        myValue = "nine";
        Console.WriteLine( "The value \"{0}\" is {1}.", myValue, mySL.ContainsValue( myValue ) ? "in the SortedList" : "NOT in the SortedList" );

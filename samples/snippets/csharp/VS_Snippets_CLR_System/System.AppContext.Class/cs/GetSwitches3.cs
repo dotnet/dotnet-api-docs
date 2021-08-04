@@ -34,11 +34,11 @@ public class Example
                      if (node.Name.Equals(SettingName, StringComparison.Ordinal)) {
                         // Get attribute value
                         XmlAttribute attr = node.Attributes["value"];
-                        String[] nameValuePair = attr.Value.Split('=');
+                        string[] nameValuePair = attr.Value.Split('=');
                         // Determine whether the switch we want is present.
                         if (SwitchName.Equals(nameValuePair[0], StringComparison.Ordinal)) {
                            bool tempFlag = false;
-                           if (Boolean.TryParse(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nameValuePair[1]),
+                           if (bool.TryParse(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nameValuePair[1]),
                                                 out tempFlag))
                               AppContext.SetSwitch(nameValuePair[0], tempFlag);
                         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel;
@@ -56,7 +56,7 @@ namespace SqlPersistenceProviderFactorySnippets
             //<snippet4>
             SqlPersistenceProviderFactory factory = new SqlPersistenceProviderFactory(
                  DataBaseConstants.ConnectionString);
-            String databaseConnectionString = factory.ConnectionString;
+            string databaseConnectionString = factory.ConnectionString;
             //</snippet4>
         }
         void Container5()
@@ -93,7 +93,7 @@ namespace SqlPersistenceProviderFactorySnippets
 
         class DataBaseConstants
         {
-            public static String ConnectionString = "";
+            public static string ConnectionString = "";
         }
     }
 }
