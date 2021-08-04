@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -20,8 +20,8 @@ public class Example
 
    private static string GetBinaryString(Byte value)
    {
-      String retVal = Convert.ToString(value, 2);
-      return new String('0', 8 - retVal.Length) + retVal;
+      string retVal = Convert.ToString(value, 2);
+      return new string('0', 8 - retVal.Length) + retVal;
    }
 }
 // The example displays the following output:

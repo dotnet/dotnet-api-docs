@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 
 public class StringLib
@@ -31,7 +31,7 @@ public class StringLib
          else
             newWords[ctr] = words[ctr];	
       }	
-      return String.Join(" ", newWords); 			
+      return string.Join(" ", newWords); 			
    }
 }
 // Attempting to load the StringLib.dll assembly produces the following output:
