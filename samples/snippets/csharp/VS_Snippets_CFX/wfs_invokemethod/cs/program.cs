@@ -1,4 +1,4 @@
-﻿//----------------------------------------------------------------
+//----------------------------------------------------------------
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //----------------------------------------------------------------
 
@@ -215,7 +215,7 @@ namespace Microsoft.Samples.InvokeMethodUsage
                         MethodName = "WriteLine",
                         Parameters =
                         {
-                            new InArgument<string>(ctx => String.Format("....the stored value is {0}", resultValue.Get(ctx))),
+                            new InArgument<string>(ctx => string.Format("....the stored value is {0}", resultValue.Get(ctx))),
                         }
                     },
 //</Snippet4>

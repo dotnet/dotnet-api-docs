@@ -1,4 +1,4 @@
-﻿// <Snippet4>
+// <Snippet4>
 using System;
 
 public class TestLambdaExpression
@@ -12,7 +12,7 @@ public class TestLambdaExpression
                                            => CopyStrings(s1, s2, pos, num);
       copyOperation(ordinals, copiedOrdinals, 3, 5);
       foreach (string ordinal in copiedOrdinals)
-         Console.WriteLine(String.IsNullOrEmpty(ordinal) ? "<None>" : ordinal);
+         Console.WriteLine(string.IsNullOrEmpty(ordinal) ? "<None>" : ordinal);
    }
 
    private static void CopyStrings(string[] source, string[] target,
@@ -22,7 +22,7 @@ public class TestLambdaExpression
          throw new IndexOutOfRangeException("The source and target arrays must have the same number of elements.");
 
       for (int ctr = startPos; ctr <= startPos + number - 1; ctr++)
-         target[ctr] = String.Copy(source[ctr]);
+         target[ctr] = string.Copy(source[ctr]);
    }
 }
 // </Snippet4>

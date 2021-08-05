@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 
 public class Example
@@ -19,10 +19,10 @@ public class Example
          Console.WriteLine("Not all elements end with an integer.");
    }
 
-   private static bool EndsWithANumber(String value)
+   private static bool EndsWithANumber(string value)
    {
       int s;
-      return Int32.TryParse(value.Substring(value.Length - 1), out s);
+      return int.TryParse(value.Substring(value.Length - 1), out s);
    }
 }
 // The example displays the following output:

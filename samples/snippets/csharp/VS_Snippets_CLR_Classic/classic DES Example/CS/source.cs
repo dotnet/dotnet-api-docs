@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Security.Cryptography;
@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 public class Form1: Form
 {
 // <Snippet1>
-private static void EncryptData(String inName, String outName, byte[] desKey, byte[] desIV)
+private static void EncryptData(string inName, string outName, byte[] desKey, byte[] desIV)
  {
      //Create the file streams to handle the input and output files.
      FileStream fin = new FileStream(inName, FileMode.Open, FileAccess.Read);
