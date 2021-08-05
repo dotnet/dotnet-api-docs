@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Reflection;
 
@@ -41,7 +41,7 @@
 
 Reflection.Parameterinfo
 
-Mymethodbase = Void mymethod(Int32, System.String ByRef, System.String ByRef)
+Mymethodbase = Void mymethod(int, System.String ByRef, System.String ByRef)
 For parameter # 0, the ParameterType is - System.Int32
 For parameter # 1, the ParameterType is - System.String&
 For parameter # 2, the ParameterType is - System.String&

@@ -1,11 +1,11 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  public class SamplesArray  {
 
     public static void Main()  {
 
        // Creates and initializes a new Array.
-       Array myArray=Array.CreateInstance( typeof(String), 9 );
+       Array myArray=Array.CreateInstance( typeof(string), 9 );
        myArray.SetValue( "The", 0 );
        myArray.SetValue( "QUICK", 1 );
        myArray.SetValue( "BROWN", 2 );

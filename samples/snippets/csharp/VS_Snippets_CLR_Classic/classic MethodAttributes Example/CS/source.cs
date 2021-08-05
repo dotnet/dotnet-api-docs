@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Reflection;
 
@@ -37,7 +37,7 @@ class AttributesSample
         FieldInfo[] fields = attribType.GetFields(BindingFlags.Public | BindingFlags.Static);
         for (int i = 0; i < fields.Length; i++)
         {
-            int fieldvalue = (Int32)fields[i].GetValue(null);
+            int fieldvalue = (int)fields[i].GetValue(null);
             if ((fieldvalue & iAttribValue) == fieldvalue)
             {
                 Console.WriteLine(fields[i].Name);

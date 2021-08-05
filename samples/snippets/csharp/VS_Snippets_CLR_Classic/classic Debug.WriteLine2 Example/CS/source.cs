@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -11,7 +11,7 @@ public class Form1: Form
  // Create a TraceSwitch.
  static TraceSwitch generalSwitch = new TraceSwitch("General", "Entire Application");
 
- static public void MyErrorMethod(String category) {
+ static public void MyErrorMethod(string category) {
     // Write the message if the TraceSwitch level is set to Error or higher.
     if(generalSwitch.TraceError)
        Debug.Write("My error message. ");

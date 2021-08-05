@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Reflection;
 
@@ -6,10 +6,10 @@ namespace Ambiguity
 {
     class Myambiguous
     {
-        //The first overload is typed to an Int32
-        public static void Mymethod(Int32 number)
+        //The first overload is typed to an int
+        public static void Mymethod(int number)
         {
-           Console.WriteLine("I am from 'Int32' method");
+           Console.WriteLine("I am from 'int' method");
         }
 
         //The second overload is typed to a string
@@ -23,15 +23,15 @@ namespace Ambiguity
             try
             {
                 //The following does not cause as exception
-                Mymethod(2);    // goes to Mymethod(Int32)
+                Mymethod(2);    // goes to Mymethod(int)
                 Mymethod("3");  // goes to Mymethod(string)
 
                 Type Mytype = Type.GetType("Ambiguity.Myambiguous");
 
-                MethodInfo Mymethodinfo32 = Mytype.GetMethod("Mymethod", new Type[]{typeof(Int32)});
+                MethodInfo Mymethodinfo32 = Mytype.GetMethod("Mymethod", new Type[]{typeof(int)});
                 MethodInfo Mymethodinfostr = Mytype.GetMethod("Mymethod", new Type[]{typeof(System.String)});
 
-                //Invoke a method, utilizing a Int32 integer
+                //Invoke a method, utilizing a int integer
                 Mymethodinfo32.Invoke(null, new Object[]{2});
 
                 //Invoke the method utilizing a string
@@ -55,9 +55,9 @@ namespace Ambiguity
 
 //This code produces the following output:
 //
-// I am from 'Int32' method
+// I am from 'int' method
 // I am from 'string' method.
-// I am from 'Int32' method
+// I am from 'int' method
 // I am from 'string' method.
 
 // System.Reflection.AmbiguousMatchException
