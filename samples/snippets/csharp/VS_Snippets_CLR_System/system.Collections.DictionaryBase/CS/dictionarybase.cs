@@ -1,4 +1,4 @@
-﻿// The following code example implements the DictionaryBase class and uses that implementation to create a dictionary of String keys and values that have a Length of 5 or less.
+// The following code example implements the DictionaryBase class and uses that implementation to create a dictionary of string keys and values that have a Length of 5 or less.
 
 // <Snippet1>
 using System;
@@ -6,9 +6,9 @@ using System.Collections;
 
 public class ShortStringDictionary : DictionaryBase  {
 
-   public String this[ String key ]  {
+   public string this[ string key ]  {
       get  {
-         return( (String) Dictionary[key] );
+         return( (string) Dictionary[key] );
       }
       set  {
          Dictionary[key] = value;
@@ -27,35 +27,35 @@ public class ShortStringDictionary : DictionaryBase  {
       }
    }
 
-   public void Add( String key, String value )  {
+   public void Add( string key, string value )  {
       Dictionary.Add( key, value );
    }
 
-   public bool Contains( String key )  {
+   public bool Contains( string key )  {
       return( Dictionary.Contains( key ) );
    }
 
-   public void Remove( String key )  {
+   public void Remove( string key )  {
       Dictionary.Remove( key );
    }
 
    protected override void OnInsert( Object key, Object value )  {
       if ( key.GetType() != typeof(System.String) )
         {
-            throw new ArgumentException( "key must be of type String.", "key" );
+            throw new ArgumentException( "key must be of type string.", "key" );
         }
         else  {
-         String strKey = (String) key;
+         string strKey = (string) key;
          if ( strKey.Length > 5 )
             throw new ArgumentException( "key must be no more than 5 characters in length.", "key" );
       }
 
       if ( value.GetType() != typeof(System.String) )
         {
-            throw new ArgumentException( "value must be of type String.", "value" );
+            throw new ArgumentException( "value must be of type string.", "value" );
         }
         else  {
-         String strValue = (String) value;
+         string strValue = (string) value;
          if ( strValue.Length > 5 )
             throw new ArgumentException( "value must be no more than 5 characters in length.", "value" );
       }
@@ -64,10 +64,10 @@ public class ShortStringDictionary : DictionaryBase  {
    protected override void OnRemove( Object key, Object value )  {
       if ( key.GetType() != typeof(System.String) )
         {
-            throw new ArgumentException( "key must be of type String.", "key" );
+            throw new ArgumentException( "key must be of type string.", "key" );
         }
         else  {
-         String strKey = (String) key;
+         string strKey = (string) key;
          if ( strKey.Length > 5 )
             throw new ArgumentException( "key must be no more than 5 characters in length.", "key" );
       }
@@ -76,20 +76,20 @@ public class ShortStringDictionary : DictionaryBase  {
    protected override void OnSet( Object key, Object oldValue, Object newValue )  {
       if ( key.GetType() != typeof(System.String) )
         {
-            throw new ArgumentException( "key must be of type String.", "key" );
+            throw new ArgumentException( "key must be of type string.", "key" );
         }
         else  {
-         String strKey = (String) key;
+         string strKey = (string) key;
          if ( strKey.Length > 5 )
             throw new ArgumentException( "key must be no more than 5 characters in length.", "key" );
       }
 
       if ( newValue.GetType() != typeof(System.String) )
         {
-            throw new ArgumentException( "newValue must be of type String.", "newValue" );
+            throw new ArgumentException( "newValue must be of type string.", "newValue" );
         }
         else  {
-         String strValue = (String) newValue;
+         string strValue = (string) newValue;
          if ( strValue.Length > 5 )
             throw new ArgumentException( "newValue must be no more than 5 characters in length.", "newValue" );
       }
@@ -98,20 +98,20 @@ public class ShortStringDictionary : DictionaryBase  {
    protected override void OnValidate( Object key, Object value )  {
       if ( key.GetType() != typeof(System.String) )
         {
-            throw new ArgumentException( "key must be of type String.", "key" );
+            throw new ArgumentException( "key must be of type string.", "key" );
         }
         else  {
-         String strKey = (String) key;
+         string strKey = (string) key;
          if ( strKey.Length > 5 )
             throw new ArgumentException( "key must be no more than 5 characters in length.", "key" );
       }
 
       if ( value.GetType() != typeof(System.String) )
         {
-            throw new ArgumentException( "value must be of type String.", "value" );
+            throw new ArgumentException( "value must be of type string.", "value" );
         }
         else  {
-         String strValue = (String) value;
+         string strValue = (string) value;
          if ( strValue.Length > 5 )
             throw new ArgumentException( "value must be no more than 5 characters in length.", "value" );
       }
@@ -199,7 +199,7 @@ public class SamplesDictionaryBase  {
    // Uses the Keys property and the Item property.
    public static void PrintKeysAndValues3( ShortStringDictionary myCol )  {
       ICollection myKeys = myCol.Keys;
-      foreach ( String k in myKeys )
+      foreach ( string k in myKeys )
          Console.WriteLine( "   {0,-5} : {1}", k, myCol[k] );
       Console.WriteLine();
    }

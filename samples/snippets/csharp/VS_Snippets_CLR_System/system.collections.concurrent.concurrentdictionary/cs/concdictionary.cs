@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 //<snippet1>
@@ -46,7 +46,7 @@ class CD_TryXYZ
             int numFailures = 0; // for bookkeeping
 
             // Construct an empty dictionary
-            ConcurrentDictionary<int, String> cd = new ConcurrentDictionary<int, string>();
+            ConcurrentDictionary<int, string> cd = new ConcurrentDictionary<int, string>();
 
             // This should work
             if (!cd.TryAdd(1, "one"))

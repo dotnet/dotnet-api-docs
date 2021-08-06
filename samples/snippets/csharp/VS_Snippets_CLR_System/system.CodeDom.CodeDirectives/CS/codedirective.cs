@@ -1,4 +1,4 @@
-﻿//<Snippet1>
+//<Snippet1>
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections;
@@ -147,7 +147,7 @@ namespace System.CodeDom
             cd.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End,
                 string.Empty));
 
-            CodeMemberField field1 = new CodeMemberField(typeof(String), "field1");
+            CodeMemberField field1 = new CodeMemberField(typeof(string), "field1");
             cd.Members.Add(field1);
             field1.Comments.Add(new CodeCommentStatement("Field 1 Comment"));
 

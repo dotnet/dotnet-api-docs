@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 using System.Globalization;
 
@@ -15,7 +15,7 @@ public class Example
       foreach (var ch in chars) {
          Console.Write("    {0}", ch);
          foreach (var culture in cultures)
-            Console.Write("{0,12}", Char.ToUpper(ch, culture));
+            Console.Write("{0,12}", char.ToUpper(ch, culture));
 
          Console.WriteLine();
       }
