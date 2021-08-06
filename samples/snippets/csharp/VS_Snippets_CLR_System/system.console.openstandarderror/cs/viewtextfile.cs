@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.IO;
 
@@ -7,7 +7,7 @@ public class ViewTextFile
    public static void Main()
    {
       String[] args = Environment.GetCommandLineArgs();
-      String errorOutput = "";
+      string errorOutput = "";
       // Make sure that there is at least one command line argument.
       if (args.Length <= 1)
          errorOutput += "You must include a filename on the command line.\n";
@@ -15,12 +15,12 @@ public class ViewTextFile
       for (int ctr = 1; ctr <= args.GetUpperBound(0); ctr++)  {
          // Check whether the file exists.
          if (! File.Exists(args[ctr])) {
-            errorOutput += String.Format("'{0}' does not exist.\n", args[ctr]);
+            errorOutput += string.Format("'{0}' does not exist.\n", args[ctr]);
          }
          else {
             // Display the contents of the file.
             StreamReader sr = new StreamReader(args[ctr]);
-            String contents = sr.ReadToEnd();
+            string contents = sr.ReadToEnd();
             sr.Close();
             Console.WriteLine("*****Contents of file '{0}':\n\n",
                               args[ctr]);
@@ -30,7 +30,7 @@ public class ViewTextFile
       }
 
       // Check for error conditions.
-      if (! String.IsNullOrEmpty(errorOutput)) {
+      if (! string.IsNullOrEmpty(errorOutput)) {
          // Write error information to a file.
          Console.SetError(new StreamWriter(@".\ViewTextFile.Err.txt"));
          Console.Error.WriteLine(errorOutput);

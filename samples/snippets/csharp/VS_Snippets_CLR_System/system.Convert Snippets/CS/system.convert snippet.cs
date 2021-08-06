@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace BasicSnippetC {
 
@@ -19,7 +19,7 @@ namespace BasicSnippetC {
 			snippet.ConvertLongs(longVal);
 
 			string stringVal;
-			System.Console.WriteLine("Enter the String value: ");
+			System.Console.WriteLine("Enter the string value: ");
 			stringVal = System.Console.ReadLine();
 			snippet.ConvertStrings(stringVal);
 
@@ -213,7 +213,7 @@ namespace BasicSnippetC {
 					"Overflow in long-to-char conversion.");
 			}
 			
-			// A conversion from Char to long cannot overflow.
+			// A conversion from char to long cannot overflow.
 			longVal = System.Convert.ToInt64(charVal);
 			System.Console.WriteLine("{0} as an Int64 is {1}",
 				charVal, longVal);
