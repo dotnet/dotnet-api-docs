@@ -1,4 +1,4 @@
-﻿// <Snippet5>
+// <Snippet5>
 using System;
 using System.IO;
 
@@ -8,7 +8,7 @@ public class Example
    {
       char[] chars = { '\u0061', '\u0308' };
 
-      string combining = new String(chars);
+      string combining = new string(chars);
       Console.WriteLine(combining);
 
       combining = combining.Normalize();

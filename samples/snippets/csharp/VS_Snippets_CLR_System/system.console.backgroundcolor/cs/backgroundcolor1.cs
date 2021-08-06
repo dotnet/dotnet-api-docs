@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -23,7 +23,7 @@ public class Example
          if (changeColor)
             Console.BackgroundColor = (ConsoleColor) ((ctr - 1) % 16);
 
-         Console.WriteLine(new String((char)(ctr + 64), 30));
+         Console.WriteLine(new string((char)(ctr + 64), 30));
       }
    }
 }

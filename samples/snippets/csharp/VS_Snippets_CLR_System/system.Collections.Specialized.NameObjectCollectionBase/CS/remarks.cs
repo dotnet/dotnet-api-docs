@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Specialized;
 
@@ -11,7 +11,7 @@ public class DerivedCollection : NameObjectCollectionBase
    // Adds elements from an IDictionary into the new collection.
    public DerivedCollection( IDictionary d, Boolean bReadOnly )  {
       foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
+         this.BaseAdd( (string) de.Key, de.Value );
       }
       this.IsReadOnly = bReadOnly;
    }
@@ -25,7 +25,7 @@ public class DerivedCollection : NameObjectCollectionBase
    }
 
    // Gets or sets the value associated with the specified key.
-   public Object this[ String key ]  {
+   public Object this[ string key ]  {
       get  {
          return( this.BaseGet( key ) );
       }
@@ -34,7 +34,7 @@ public class DerivedCollection : NameObjectCollectionBase
       }
    }
 
-   // Gets a String array that contains all the keys in the collection.
+   // Gets a string array that contains all the keys in the collection.
    public String[] AllKeys  {
       get  {
          return( this.BaseGetAllKeys() );
@@ -48,7 +48,7 @@ public class DerivedCollection : NameObjectCollectionBase
       }
    }
 
-   // Gets a String array that contains all the values in the collection.
+   // Gets a string array that contains all the values in the collection.
    public String[] AllStringValues  {
       get  {
          return( (String[]) this.BaseGetAllValues( typeof( string ) ));
@@ -63,12 +63,12 @@ public class DerivedCollection : NameObjectCollectionBase
    }
 
    // Adds an entry to the collection.
-   public void Add( String key, Object value )  {
+   public void Add( string key, Object value )  {
       this.BaseAdd( key, value );
    }
 
    // Removes an entry with the specified key from the collection.
-   public void Remove( String key )  {
+   public void Remove( string key )  {
       this.BaseRemove( key );
    }
 

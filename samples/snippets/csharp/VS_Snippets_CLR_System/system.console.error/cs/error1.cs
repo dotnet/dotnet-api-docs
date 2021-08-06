@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -27,12 +27,12 @@ public class Example
          increment += 10;
          Console.Error.Write("Display multiples of {0} through {1} (y/n)? ",
                              increment + 1, increment + 10);
-         Char response = Console.ReadKey(true).KeyChar;
+         char response = Console.ReadKey(true).KeyChar;
          Console.Error.WriteLine(response);
          if (! Console.IsOutputRedirected)
             Console.CursorTop--;
 
-         if (Char.ToUpperInvariant(response) == 'N')
+         if (char.ToUpperInvariant(response) == 'N')
             exitFlag = true;
       }
    }

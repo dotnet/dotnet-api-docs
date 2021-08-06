@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class CityInfo
@@ -25,7 +25,7 @@ public class CityInfo
 
    public static int CompareByName(CityInfo city1, CityInfo city2)
    {
-      return String.Compare(city1.City, city2.City);
+      return string.Compare(city1.City, city2.City);
    }
 
    public static int CompareByPopulation(CityInfo city1, CityInfo city2)
@@ -35,7 +35,7 @@ public class CityInfo
 
    public static int CompareByNames(CityInfo city1, CityInfo city2)
    {
-      return String.Compare(city1.Country + city1.City, city2.Country + city2.City);
+      return string.Compare(city1.Country + city1.City, city2.Country + city2.City);
    }
 }
 
