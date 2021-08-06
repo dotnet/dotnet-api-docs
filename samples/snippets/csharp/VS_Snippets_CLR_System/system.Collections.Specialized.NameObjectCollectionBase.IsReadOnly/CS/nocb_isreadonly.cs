@@ -1,4 +1,4 @@
-﻿// The following example creates a read-only collection.
+// The following example creates a read-only collection.
 // For an expanded version of this example, see the NameObjectCollectionBase class topic.
 
 // <snippet1>
@@ -22,13 +22,13 @@ public class MyCollection : NameObjectCollectionBase  {
    // Adds elements from an IDictionary into the new collection.
    public MyCollection( IDictionary d, Boolean bReadOnly )  {
       foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
+         this.BaseAdd( (string) de.Key, de.Value );
       }
       this.IsReadOnly = bReadOnly;
    }
 
    // Adds an entry to the collection.
-   public void Add( String key, Object value )  {
+   public void Add( string key, Object value )  {
       this.BaseAdd( key, value );
    }
 }
@@ -69,7 +69,7 @@ public class SamplesNameObjectCollectionBase  {
 This code produces the following output.
 
 System.NotSupportedException: Collection is read-only.
-   at System.Collections.Specialized.NameObjectCollectionBase.BaseAdd(String name, Object value)
+   at System.Collections.Specialized.NameObjectCollectionBase.BaseAdd(string name, Object value)
    at SamplesNameObjectCollectionBase.Main()
 Read-Only Collection:
 [0] : red, apple

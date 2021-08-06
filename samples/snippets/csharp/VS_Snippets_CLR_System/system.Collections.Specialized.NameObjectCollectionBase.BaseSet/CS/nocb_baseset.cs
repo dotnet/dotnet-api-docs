@@ -1,4 +1,4 @@
-﻿// The following example uses BaseSet to set the value of a specific element.
+// The following example uses BaseSet to set the value of a specific element.
 // For an expanded version of this example, see the NameObjectCollectionBase class topic.
 
 // <snippet1>
@@ -19,7 +19,7 @@ public class MyCollection : NameObjectCollectionBase  {
    }
 
    // Gets or sets the value associated with the specified key.
-   public Object this[ String key ]  {
+   public Object this[ string key ]  {
       get  {
          return( this.BaseGet( key ) );
       }
@@ -28,7 +28,7 @@ public class MyCollection : NameObjectCollectionBase  {
       }
    }
 
-   // Gets a String array that contains all the keys in the collection.
+   // Gets a string array that contains all the keys in the collection.
    public String[] AllKeys  {
       get  {
          return( this.BaseGetAllKeys() );
@@ -38,7 +38,7 @@ public class MyCollection : NameObjectCollectionBase  {
    // Adds elements from an IDictionary into the new collection.
    public MyCollection( IDictionary d )  {
       foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
+         this.BaseAdd( (string) de.Key, de.Value );
       }
    }
 }
@@ -70,7 +70,7 @@ public class SamplesNameObjectCollectionBase  {
    }
 
    public static void PrintKeysAndValues2( MyCollection myCol )  {
-      foreach ( String s in myCol.AllKeys )  {
+      foreach ( string s in myCol.AllKeys )  {
          Console.WriteLine( "{0}, {1}", s, myCol[s] );
       }
    }
