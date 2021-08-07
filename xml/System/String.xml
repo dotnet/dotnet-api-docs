@@ -161,7 +161,7 @@ For more information about Unicode, UTF-16, code units, code points, and the <xr
 
  A single <xref:System.Char> object usually represents a single code point; that is, the numeric value of the <xref:System.Char> equals the code point. For example, the code point for the character "a" is U+0061. However, a code point might require more than one encoded element (more than one <xref:System.Char> object). The Unicode standard defines two types of characters that correspond to multiple <xref:System.Char> objects: graphemes, and Unicode supplementary code points that correspond to characters in the Unicode supplementary planes.
 
-- A grapheme is represented by a base character followed by one or more combining characters. For example, the character Ã¤ is represented by a <xref:System.Char> object whose code point is U+0061 followed by a <xref:System.Char> object whose code point is U+0308. This character can also be defined by a single <xref:System.Char> object that has a code point of U+00E4. As the following example shows, a culture-sensitive comparison for equality indicates that these two representations are equal, although an ordinary ordinal comparison does not. However, if the two strings are normalized, an ordinal comparison also indicates that they are equal. (For more information on normalizing strings, see the [Normalization](#Normalization) section.)
+- A grapheme is represented by a base character followed by one or more combining characters. For example, the character ä is represented by a <xref:System.Char> object whose code point is U+0061 followed by a <xref:System.Char> object whose code point is U+0308. This character can also be defined by a single <xref:System.Char> object that has a code point of U+00E4. As the following example shows, a culture-sensitive comparison for equality indicates that these two representations are equal, although an ordinary ordinal comparison does not. However, if the two strings are normalized, an ordinal comparison also indicates that they are equal. (For more information on normalizing strings, see the [Normalization](#Normalization) section.)
 
      :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Class/cpp/string.char1.cpp" id="Snippet2":::
      :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Class/cs/grapheme1.cs" id="Snippet2":::
@@ -357,7 +357,7 @@ You can download the sorting weight tables, a set of text files that contain inf
 
 <a name="comparison"></a>
 ### String comparison and sorting
- Conventions for comparing and sorting strings vary from culture to culture. For example, the sort order may be based on phonetics or on the visual representation of characters. In East Asian languages, characters are sorted by the stroke and radical of ideographs. Sorting also depends on the order languages and cultures use for the alphabet. For example, the Danish language has an "Ã†" character that it sorts after "Z" in the alphabet. In addition, comparisons can be case-sensitive or case-insensitive, and casing rules might differ by culture. Ordinal comparison, on the other hand, uses the Unicode code points of individual characters in a string when comparing and sorting strings.
+ Conventions for comparing and sorting strings vary from culture to culture. For example, the sort order may be based on phonetics or on the visual representation of characters. In East Asian languages, characters are sorted by the stroke and radical of ideographs. Sorting also depends on the order languages and cultures use for the alphabet. For example, the Danish language has an "Æ" character that it sorts after "Z" in the alphabet. In addition, comparisons can be case-sensitive or case-insensitive, and casing rules might differ by culture. Ordinal comparison, on the other hand, uses the Unicode code points of individual characters in a string when comparing and sorting strings.
 
  Sort rules determine the alphabetic order of Unicode characters and how two strings compare to each other. For example, the <xref:System.String.Compare(System.String%2CSystem.String%2CSystem.StringComparison)?displayProperty=nameWithType> method compares two strings based on the <xref:System.StringComparison> parameter. If the parameter value is <xref:System.StringComparison.CurrentCulture?displayProperty=nameWithType>, the method performs a linguistic comparison that uses the conventions of the current culture; if the parameter value is <xref:System.StringComparison.Ordinal?displayProperty=nameWithType>, the method performs an ordinal comparison. Consequently, as the following example shows, if the current culture is U.S. English, the first call to the <xref:System.String.Compare(System.String%2CSystem.String%2CSystem.StringComparison)?displayProperty=nameWithType> method (using culture-sensitive comparison) considers "a" less than "A", but the second call to the same method (using ordinal comparison) considers "a" greater than "A".
 
@@ -375,7 +375,7 @@ You can download the sorting weight tables, a set of text files that contain inf
 
  A culture-sensitive comparison is any comparison that explicitly or implicitly uses a <xref:System.Globalization.CultureInfo> object, including the invariant culture that is specified by the <xref:System.Globalization.CultureInfo.InvariantCulture%2A?displayProperty=nameWithType> property. The implicit culture is the current culture, which is specified by the <xref:System.Threading.Thread.CurrentCulture%2A?displayProperty=nameWithType> and <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> properties. There is considerable variation in the sort order of alphabetic characters (that is, characters for which the <xref:System.Char.IsLetter%2A?displayProperty=nameWithType> property returns `true`) across cultures. You can specify a culture-sensitive comparison that uses the conventions of a specific culture by supplying a <xref:System.Globalization.CultureInfo> object to a string comparison method such as <xref:System.String.Compare(System.String%2CSystem.String%2CSystem.Globalization.CultureInfo%2CSystem.Globalization.CompareOptions)>. You can specify a culture-sensitive comparison that uses the conventions of the current culture by supplying <xref:System.StringComparison.CurrentCulture?displayProperty=nameWithType>, <xref:System.StringComparison.CurrentCultureIgnoreCase?displayProperty=nameWithType>, or any member of the <xref:System.Globalization.CompareOptions> enumeration other than <xref:System.Globalization.CompareOptions.Ordinal?displayProperty=nameWithType> or <xref:System.Globalization.CompareOptions.OrdinalIgnoreCase?displayProperty=nameWithType> to an appropriate overload of the <xref:System.String.Compare%2A> method. A culture-sensitive comparison is generally appropriate for sorting whereas an ordinal comparison is not. An ordinal comparison is generally appropriate for determining whether two strings are equal (that is, for determining identity) whereas a culture-sensitive comparison is not.
 
- The following example illustrates the difference between culture-sensitive and ordinal comparison. The example evaluates three strings, "Apple", "Ã†ble", and "AEble", using ordinal comparison and the conventions of the da-DK and en-US cultures (each of which is the default culture at the time the <xref:System.String.Compare%2A> method is called). Because the Danish language treats the character "Ã†" as an individual letter and sorts it after "Z" in the alphabet, the string "Ã†ble" is greater than "Apple". However, "Ã†ble" is not considered equivalent to "AEble", so "Ã†ble" is also greater than "AEble". The en-US culture doesn't include the letter"Ã†" but treats it as equivalent to "AE", which explains why  "Ã†ble" is less than "Apple" but equal to "AEble". Ordinal comparison, on the other hand, considers "Apple" to be less than "Ã†ble", and "Ã†ble" to be greater than "AEble".
+ The following example illustrates the difference between culture-sensitive and ordinal comparison. The example evaluates three strings, "Apple", "Æble", and "AEble", using ordinal comparison and the conventions of the da-DK and en-US cultures (each of which is the default culture at the time the <xref:System.String.Compare%2A> method is called). Because the Danish language treats the character "Æ" as an individual letter and sorts it after "Z" in the alphabet, the string "Æble" is greater than "Apple". However, "Æble" is not considered equivalent to "AEble", so "Æble" is also greater than "AEble". The en-US culture doesn't include the letter"Æ" but treats it as equivalent to "AE", which explains why  "Æble" is less than "Apple" but equal to "AEble". Ordinal comparison, on the other hand, considers "Apple" to be less than "Æble", and "Æble" to be greater than "AEble".
 
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Class/cs/compare4.cs" id="Snippet21":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Class/vb/compare4.vb" id="Snippet21":::
@@ -412,7 +412,7 @@ You can download the sorting weight tables, a set of text files that contain inf
 > [!WARNING]
 > If your primary purpose in comparing strings is to determine whether they are equal, you should call the <xref:System.String.Equals%2A?displayProperty=nameWithType> method. Typically, you should use <xref:System.String.Equals%2A> to perform an ordinal comparison. The <xref:System.String.Compare%2A?displayProperty=nameWithType> method is intended primarily to sort strings.
 
- String search methods, such as <xref:System.String.StartsWith%2A?displayProperty=nameWithType> and <xref:System.String.IndexOf%2A?displayProperty=nameWithType>, also can perform culture-sensitive or ordinal string comparisons. The following example illustrates the differences between ordinal and culture-sensitive comparisons using the <xref:System.String.IndexOf%2A> method. A culture-sensitive search in which the current culture is English (United States) considers the substring "oe" to match the ligature "Å“". Because a soft hyphen (U+00AD) is a zero-width character, the search treats the soft hyphen as equivalent to <xref:System.String.Empty?displayProperty=nameWithtype> and finds a match at the beginning of the string. An ordinal search, on the other hand, does not find a match in either case.
+ String search methods, such as <xref:System.String.StartsWith%2A?displayProperty=nameWithType> and <xref:System.String.IndexOf%2A?displayProperty=nameWithType>, also can perform culture-sensitive or ordinal string comparisons. The following example illustrates the differences between ordinal and culture-sensitive comparisons using the <xref:System.String.IndexOf%2A> method. A culture-sensitive search in which the current culture is English (United States) considers the substring "oe" to match the ligature "œ". Because a soft hyphen (U+00AD) is a zero-width character, the search treats the soft hyphen as equivalent to <xref:System.String.Empty?displayProperty=nameWithtype> and finds a match at the beginning of the string. An ordinal search, on the other hand, does not find a match in either case.
 
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Class/cpp/string.compare3.cpp" id="Snippet13":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Class/cs/compare3.cs" id="Snippet13":::
@@ -421,7 +421,7 @@ You can download the sorting weight tables, a set of text files that contain inf
 ### Search in strings
  String search methods, such as <xref:System.String.StartsWith%2A?displayProperty=nameWithType> and <xref:System.String.IndexOf%2A?displayProperty=nameWithType>, also can perform culture-sensitive or ordinal string comparisons to determine whether a character or substring is found in a specified string.
 
- The search methods in the <xref:System.String> class that search for an individual character, such as the <xref:System.String.IndexOf%2A> method, or one of a set of characters,   such as the <xref:System.String.IndexOfAny%2A> method, all perform an ordinal search. To perform a culture-sensitive search for a character, you must call a <xref:System.Globalization.CompareInfo> method such as <xref:System.Globalization.CompareInfo.IndexOf(System.String%2CSystem.Char)?displayProperty=nameWithType> or <xref:System.Globalization.CompareInfo.LastIndexOf(System.String%2CSystem.Char)?displayProperty=nameWithType>. Note that the results of searching for a character using ordinal and culture-sensitive comparison can be very different. For example, a search for a precomposed Unicode character such as the ligature "Ã†" (U+00C6) might match any occurrence of its components in the correct sequence, such as "AE" (U+041U+0045), depending on the culture. The following example illustrates the difference between the <xref:System.String.IndexOf(System.Char)?displayProperty=nameWithType> and <xref:System.Globalization.CompareInfo.IndexOf(System.String%2CSystem.Char)?displayProperty=nameWithType> methods when searching for an individual character. The ligature "Ã¦" (U+00E6) is found in the string "aerial" when using the conventions of the en-US culture, but not when using the conventions of the da-DK culture or when performing an ordinal comparison.
+ The search methods in the <xref:System.String> class that search for an individual character, such as the <xref:System.String.IndexOf%2A> method, or one of a set of characters,   such as the <xref:System.String.IndexOfAny%2A> method, all perform an ordinal search. To perform a culture-sensitive search for a character, you must call a <xref:System.Globalization.CompareInfo> method such as <xref:System.Globalization.CompareInfo.IndexOf(System.String%2CSystem.Char)?displayProperty=nameWithType> or <xref:System.Globalization.CompareInfo.LastIndexOf(System.String%2CSystem.Char)?displayProperty=nameWithType>. Note that the results of searching for a character using ordinal and culture-sensitive comparison can be very different. For example, a search for a precomposed Unicode character such as the ligature "Æ" (U+00C6) might match any occurrence of its components in the correct sequence, such as "AE" (U+041U+0045), depending on the culture. The following example illustrates the difference between the <xref:System.String.IndexOf(System.Char)?displayProperty=nameWithType> and <xref:System.Globalization.CompareInfo.IndexOf(System.String%2CSystem.Char)?displayProperty=nameWithType> methods when searching for an individual character. The ligature "æ" (U+00E6) is found in the string "aerial" when using the conventions of the en-US culture, but not when using the conventions of the da-DK culture or when performing an ordinal comparison.
 
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Class/cs/search1.cs" id="Snippet22":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.String.Class/vb/search1.vb" id="Snippet22":::
@@ -436,7 +436,7 @@ Use the <xref:System.String.Compare%2A?displayProperty=nameWithType> method to d
 > [!WARNING]
 > It is possible to test for equality by calling the <xref:System.String.Compare%2A?displayProperty=nameWithType> method and determining whether the return value is zero. However, this practice is not recommended. To determine whether two strings are equal, you should call one of the overloads of the <xref:System.String.Equals%2A?displayProperty=nameWithType> method. The preferred overload to call is either the instance <xref:System.String.Equals(System.String%2CSystem.StringComparison)> method or the static <xref:System.String.Equals(System.String%2CSystem.String%2CSystem.StringComparison)> method, because both methods include a <xref:System.StringComparison?displayProperty=nameWithType> parameter that explicitly specifies the type of comparison.
 
- The following example illustrates the danger of performing a culture-sensitive comparison for equality when an ordinal one should be used instead. In this case, the intent of the code is to prohibit file system access from URLs that begin with "FILE://" or "file://" by performing a case-insensitive comparison of the beginning of a URL with the string "FILE://". However, if a culture-sensitive comparison is performed using the Turkish (Turkey) culture on a URL that begins with "file://", the comparison for equality fails, because the Turkish uppercase equivalent of the lowercase "i" is "Ä°" instead of "I". As a result, file system access is inadvertently permitted. On the other hand, if an ordinal comparison is performed, the comparison for equality succeeds, and file system access is denied.
+ The following example illustrates the danger of performing a culture-sensitive comparison for equality when an ordinal one should be used instead. In this case, the intent of the code is to prohibit file system access from URLs that begin with "FILE://" or "file://" by performing a case-insensitive comparison of the beginning of a URL with the string "FILE://". However, if a culture-sensitive comparison is performed using the Turkish (Turkey) culture on a URL that begins with "file://", the comparison for equality fails, because the Turkish uppercase equivalent of the lowercase "i" is "I" instead of "I". As a result, file system access is inadvertently permitted. On the other hand, if an ordinal comparison is performed, the comparison for equality succeeds, and file system access is denied.
 
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Class/cpp/string.equals.cpp" id="Snippet11":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Class/cs/equality1.cs" id="Snippet11":::
@@ -444,7 +444,7 @@ Use the <xref:System.String.Compare%2A?displayProperty=nameWithType> method to d
 
 <a name="Normalization"></a>
 ## Normalization
- Some Unicode characters have multiple representations. For example, any of the following code points can represent the letter "áº¯":
+ Some Unicode characters have multiple representations. For example, any of the following code points can represent the letter "?":
 
 - U+1EAF
 
@@ -468,7 +468,7 @@ Use the <xref:System.String.Compare%2A?displayProperty=nameWithType> method to d
 
  You can determine whether a string is normalized to normalization form C by calling the <xref:System.String.IsNormalized?displayProperty=nameWithType> method, or you can call the <xref:System.String.IsNormalized(System.Text.NormalizationForm)?displayProperty=nameWithType> method to determine whether a string is normalized to a specified normalization form. You can also call the <xref:System.String.Normalize?displayProperty=nameWithType> method to convert a string to normalization form C, or you can call the <xref:System.String.Normalize(System.Text.NormalizationForm)?displayProperty=nameWithType> method to convert a string to a specified normalization form. For step-by-step information about normalizing and comparing strings, see the <xref:System.String.Normalize> and <xref:System.String.Normalize(System.Text.NormalizationForm)> methods.
 
- The following simple example illustrates string normalization. It defines the letter "á»‘" in three different ways in three different strings, and uses an ordinal comparison for equality to determine that each string differs from the other two strings. It then converts each string to the supported normalization forms, and again performs an ordinal comparison of each string in a specified normalization form. In each case, the second test for equality shows that the strings are equal.
+ The following simple example illustrates string normalization. It defines the letter "?" in three different ways in three different strings, and uses an ordinal comparison for equality to determine that each string differs from the other two strings. It then converts each string to the supported normalization forms, and again performs an ordinal comparison of each string in a specified normalization form. In each case, the second test for equality shows that the strings are equal.
 
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.String.Class/cpp/string.normalize.cpp" id="Snippet14":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.String.Class/cs/normalize1.cs" id="Snippet14":::
@@ -4460,9 +4460,10 @@ Depending on Why you want to call the `Copy` method, there are a number of alter
         <Parameter Name="destination" Type="System.Span&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The span into which to copy this string's contents.</param>
+        <summary>Copies the contents of this string into the destination span.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The destination span is shorter than the source string.</exception>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -5254,12 +5255,12 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
  The `comparisonType` parameter indicates whether the comparison should use the current or invariant culture, honor or ignore the case of the two strings being compared, or use word or ordinal sort rules.
 
 ## Examples
- The following example creates a string array that consists of an uppercase "I", a lowercase "i", and a dotless "Ä±". It then calls the <xref:System.String.Equals(System.String%2CSystem.StringComparison)> method to compare them by using each possible <xref:System.StringComparison> enumeration value.
+ The following example creates a string array that consists of an uppercase "I", a lowercase "i", and a dotless "i". It then calls the <xref:System.String.Equals(System.String%2CSystem.StringComparison)> method to compare them by using each possible <xref:System.StringComparison> enumeration value.
 
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.equals/cs/eqcmp.cs" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.equals/vb/eqcmp.vb" id="Snippet1":::
 
- The following example compares four sets of words by using each member of the <xref:System.StringComparison> enumeration.  The comparisons use the conventions of the English (United States) and Sami (Upper Sweden) cultures. Note that the strings "encyclopÃ¦dia" and "encyclopaedia" are considered equivalent in the en-US culture but not in the Sami (Northern Sweden) culture.
+ The following example compares four sets of words by using each member of the <xref:System.StringComparison> enumeration.  The comparisons use the conventions of the English (United States) and Sami (Upper Sweden) cultures. Note that the strings "encyclopædia" and "encyclopaedia" are considered equivalent in the en-US culture but not in the Sami (Northern Sweden) culture.
 
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.equals/cs/equals_ex4.cs" interactive="try-dotnet" id="Snippet4":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.equals/vb/equals_ex4.vb" id="Snippet4":::
@@ -5331,7 +5332,7 @@ Invalid sequences are represented in the enumeration by <xref:System.Text.Rune.R
  The `comparisonType` parameter indicates whether the comparison should use the current or invariant culture, honor or ignore the case of the two strings being compared, or use word or ordinal sort rules.
 
 ## Examples
- The following example compares four sets of words by using each member of the <xref:System.StringComparison> enumeration.  The comparisons use the conventions of the English (United States) and Sami (Upper Sweden) cultures. Note that the strings "encyclopÃ¦dia" and "encyclopaedia" are considered equivalent in the en-US culture but not in the Sami (Northern Sweden) culture.
+ The following example compares four sets of words by using each member of the <xref:System.StringComparison> enumeration.  The comparisons use the conventions of the English (United States) and Sami (Upper Sweden) cultures. Note that the strings "encyclopædia" and "encyclopaedia" are considered equivalent in the en-US culture but not in the Sami (Northern Sweden) culture.
 
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.string.equals/cs/equals_ex3.cs" interactive="try-dotnet" id="Snippet3":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.string.equals/vb/equals_ex3.vb" id="Snippet3":::
@@ -6822,7 +6823,7 @@ The `GetPinnableReference` method returns a character that can be used for pinni
 ## Remarks
  Index numbering starts from zero.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example demonstrates how you can search a <xref:System.String> for a character using the <xref:System.String.IndexOf%2A> method.
@@ -6979,7 +6980,7 @@ The `GetPinnableReference` method returns a character that can be used for pinni
 
  The search ranges from `startIndex` to the end of the string.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example demonstrates the <xref:System.String.IndexOf%2A> method.
@@ -7271,7 +7272,7 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 
  Index numbering starts from 0 (zero). The `startIndex` parameter can range from 0 to the length of the string instance.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example demonstrates the <xref:System.String.IndexOf%2A> method.
@@ -7636,7 +7637,7 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 
  The search for `anyOf` is case-sensitive. If `anyOf` is an empty array, the method finds a match at the beginning of the string (that  is, at index zero).
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example finds the first vowel in a string.
@@ -7713,7 +7714,7 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 
  The search for `anyOf` is case-sensitive.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar value are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar value are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example finds the index of the occurrence of any character of the string "is" within a substring of another string.
@@ -7802,7 +7803,7 @@ The `comparisonType` parameter is a <xref:System.StringComparison> enumeration m
 
  The search for `anyOf` is case-sensitive.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar value are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar value are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.IndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example finds the index of the occurrence of any character of the string "aid" within a substring of another string.
@@ -9096,7 +9097,7 @@ A string is empty if it  is explicitly assigned an empty string ("") or <xref:Sy
 
  This method begins searching at the last character position of this instance and proceeds backward toward the beginning until either `value` is found or the first character position has been examined. The search is case-sensitive.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example defines an `ExtractFilename` method that uses the <xref:System.String.LastIndexOf(System.Char)> method to find the last directory separator character in a string and to extract the string's file name. If the file exists, the method returns the file name without its path.
@@ -9247,7 +9248,7 @@ In the following example, the <xref:System.String.LastIndexOf%28System.String%29
 ## Remarks
  Index numbering starts from zero. That is, the first character in the string is at index zero and the last is at <xref:System.String.Length%2A> - 1. This method begins searching at the `startIndex` character position of this instance and proceeds backward toward the beginning of the current instance until either `value` is found or the first character position has been examined. For example, if `startIndex` is <xref:System.String.Length%2A> - 1, the method searches every character from the last character in the string to the beginning. The search is case-sensitive.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example finds the index of all occurrences of a character in a string, working from the end of the string to the start of the string.
@@ -9500,7 +9501,7 @@ The search begins at the last character position of this instance and proceeds b
 
  This method begins searching at the `startIndex` character position and proceeds backward toward the beginning of this instance until either `value` is found or `count` character positions have been examined. For example, if `startIndex` is <xref:System.String.Length%2A> - 1, the method searches backward `count` characters from the last character in the string. The search is case-sensitive.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar value are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar value are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example finds the index of all occurrences of a character in a substring, working from the end of the substring to the start of the substring.
@@ -9884,7 +9885,7 @@ In the following example, the <xref:System.String.LastIndexOf%2A> method is used
 
  This method begins searching at the last character position of this instance and proceeds backward toward the beginning until either a character in `anyOf` is found or the first character position has been examined. The search is case-sensitive.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example finds the index of the last occurrence of any character in the string "is" within another string.
@@ -9957,7 +9958,7 @@ In the following example, the <xref:System.String.LastIndexOf%2A> method is used
 
  This method begins searching at the `startIndex` character position of this instance and proceeds backward toward the beginning until either a character in `anyOf` is found or the first character position has been examined. The search is case-sensitive.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example finds the index of the last occurrence of any character in the string "is" within a substring of another string.
@@ -10039,7 +10040,7 @@ In the following example, the <xref:System.String.LastIndexOf%2A> method is used
 
  This method begins searching at the `startIndex` character position of this instance and proceeds backward toward the beginning until either a character in `anyOf` is found or `count` character positions have been examined. The search is case-sensitive.
 
- This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Ã†" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
+ This method performs an ordinal (culture-insensitive) search, where a character is considered equivalent to another character only if their Unicode scalar values are the same. To perform a culture-sensitive search, use the <xref:System.Globalization.CompareInfo.LastIndexOf%2A?displayProperty=nameWithType> method, where a Unicode scalar value representing a precomposed character, such as the ligature "Æ" (U+00C6), might be considered equivalent to any occurrence of the character's components in the correct sequence, such as "AE" (U+0041, U+0045), depending on the culture.
 
 ## Examples
  The following example finds the index of the last occurrence of any character in the string "aid" within a substring of another string.
@@ -10193,7 +10194,7 @@ In the following example, the <xref:System.String.LastIndexOf%2A> method is used
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Some Unicode characters have multiple equivalent binary representations consisting of sets of combining and/or composite Unicode characters. For example, any of the following code points can represent the letter "áº¯":
+ Some Unicode characters have multiple equivalent binary representations consisting of sets of combining and/or composite Unicode characters. For example, any of the following code points can represent the letter "?":
 
 - U+1EAF
 
@@ -11292,9 +11293,32 @@ Because this method returns the modified string, you can chain together successi
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Replaces all newline sequences in the current string with <see cref="P:System.Environment.NewLine" />.</summary>
+        <returns>A string whose contents match the current string, but with all newline sequences replaced with <see cref="P:System.Environment.NewLine" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method searches for all newline sequences within the string and canonicalizes them to match
+             the newline sequence for the current environment. For example, when running on Windows, all
+             occurrences of non-Windows newline sequences will be replaced with the sequence CRLF. When
+             running on Unix, all occurrences of non-Unix newline sequences will be replaced with
+             a single LF character.
+            
+             It is not recommended that protocol parsers utilize this API. Protocol specifications often
+             mandate specific newline sequences. For example, HTTP/1.1 (RFC 8615) mandates that the request
+             line, status line, and headers lines end with CRLF. Since this API operates over a wide range
+             of newline sequences, a protocol parser utilizing this API could exhibit behaviors unintended
+             by the protocol's authors.
+            
+             This overload is equivalent to calling <xref:System.String.ReplaceLineEndings(System.String)>, passing
+             <xref:System.Environment.NewLine> as the <em>replacementText</em> parameter.
+            
+             This method is guaranteed O(n) complexity, where <em>n</em> is the length of the input string.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ReplaceLineEndings">
@@ -11323,9 +11347,32 @@ Because this method returns the modified string, you can chain together successi
       </Parameters>
       <Docs>
         <param name="replacementText">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Replaces all newline sequences in the current string with <paramref name="replacementText" />.</summary>
+        <returns>A string whose contents match the current string, but with all newline sequences replaced with <paramref name="replacementText" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method searches for all newline sequences within the string and canonicalizes them to the
+             newline sequence provided by `replacementText`. If `replacementText`
+             is <xref:System.String.Empty>, all newline sequences within the string will be removed.
+            
+             It is not recommended that protocol parsers utilize this API. Protocol specifications often
+             mandate specific newline sequences. For example, HTTP/1.1 (RFC 8615) mandates that the request
+             line, status line, and headers lines end with CRLF. Since this API operates over a wide range
+             of newline sequences, a protocol parser utilizing this API could exhibit behaviors unintended
+             by the protocol's authors.
+            
+             The list of recognized newline sequences is CR (U+000D), LF (U+000A), CRLF (U+000D U+000A),
+             NEL (U+0085), LS (U+2028), FF (U+000C), and PS (U+2029). This list is given by the Unicode
+             Standard, Sec. 5.8, Recommendation R4 and Table 5-2.
+            
+             This method is guaranteed O(n * r) complexity, where <em>n</em> is the length of the input string,
+             and where <em>r</em> is the length of `replacementText`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="Split">
@@ -15270,9 +15317,10 @@ The following example then illustrates a call to the `StripComments` method.
         <Parameter Name="destination" Type="System.Span&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The span into which to copy this string's contents.</param>
+        <summary>Copies the contents of this string into the destination span.</summary>
+        <returns>
+          <see langword="true" /> if the data was copied; <see langword="false" /> if the destination was too short to fit the contents of the string.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

@@ -71,7 +71,7 @@
  [The System.Random class and thread safety](#ThreadSafety)   
  [Generating different types of random numbers](#Functionality)   
  [Substituting your own algorithm](#Overriding)   
- [How do you use System.Random toâ€¦](#Operations)   
+ [How do you use System.Random to…](#Operations)   
  [Retrieve the same sequence of random values](#Same)  
  [Retrieve unique sequences of random values](#Unique)  
  [Retrieve integers in a specified range](#Range)  
@@ -173,7 +173,7 @@ To avoid this problem, create a single <xref:System.Random> object instead of mu
 > [!IMPORTANT]
 >  The <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29> method allows you to specify the range of the returned random number. However, the `maxValue` parameter, which specifies the upper range returned number, is an exclusive, not an inclusive, value. This means that the method call `Next(0, 100)` returns a value between 0 and 99, and not between 0 and 100.  
   
- You can also use the <xref:System.Random> class for such tasks as generating [random T:System.Boolean values](#Boolean), generating [random floating point values with a range other than 0 to 1](#Floats), generating [random 64-bit integers](#Long), and [randomly retrieving a unique element from an array or collection](#UniqueArray). For these and other common tasks, see the [How do you use System.Random toâ€¦](#Operations) section.  
+ You can also use the <xref:System.Random> class for such tasks as generating [random T:System.Boolean values](#Boolean), generating [random floating point values with a range other than 0 to 1](#Floats), generating [random 64-bit integers](#Long), and [randomly retrieving a unique element from an array or collection](#UniqueArray). For these and other common tasks, see the [How do you use System.Random to…](#Operations) section.  
   
 <a name="Overriding"></a>   
 ## Substituting your own algorithm  
@@ -182,7 +182,7 @@ To avoid this problem, create a single <xref:System.Random> object instead of mu
  For an example that derives from the <xref:System.Random> class and modifies its default pseudo-random number generator, see the <xref:System.Random.Sample%2A> reference page.  
   
 <a name="Operations"></a>   
-## How do you use System.Random toâ€¦  
+## How do you use System.Random to…  
  The following sections discuss and provide sample code for some of the ways you might want to use random numbers in your app.  
   
 <a name="Same"></a>   
@@ -242,7 +242,7 @@ To avoid this problem, create a single <xref:System.Random> object instead of mu
  To generate random floating-point numbers between two arbitrary values, like the <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29> method does for integers, use the following formula:  
   
 ```csharp  
-Random.NextDouble() * (maxValue - minValue) +Â minValue  
+Random.NextDouble() * (maxValue - minValue) + minValue  
 ```  
   
  The following example generates 1 million random numbers that range from 10.0 to 11.0, and displays their distribution.  
@@ -940,8 +940,8 @@ Each element of the span of bytes is set to a random number greater than or equa
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns a non-negative random integer.</summary>
+        <returns>A 64-bit signed integer that is greater than or equal to 0 and less than <see cref="F:System.Int64.MaxValue" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -973,10 +973,12 @@ Each element of the span of bytes is set to a random number greater than or equa
         <Parameter Name="maxValue" Type="System.Int64" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="maxValue">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="maxValue">The exclusive upper bound of the random number to be generated. <paramref name="maxValue" /> must be greater than or equal to 0.</param>
+        <summary>Returns a non-negative random integer that is less than the specified maximum.</summary>
+        <returns>A 64-bit signed integer that is greater than or equal to 0, and less than <paramref name="maxValue" />; that is, the range of return values ordinarily includes 0 but not <paramref name="maxValue" />. However, if <paramref name="maxValue" /> equals 0, <paramref name="maxValue" /> is returned.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="maxValue" /> is less than 0.</exception>
       </Docs>
     </Member>
     <Member MemberName="NextInt64">
@@ -1008,11 +1010,13 @@ Each element of the span of bytes is set to a random number greater than or equa
         <Parameter Name="maxValue" Type="System.Int64" Index="1" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="minValue">To be added.</param>
-        <param name="maxValue">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="minValue">The inclusive lower bound of the random number returned.</param>
+        <param name="maxValue">The exclusive upper bound of the random number returned. <paramref name="maxValue" /> must be greater than or equal to <paramref name="minValue" />.</param>
+        <summary>Returns a random integer that is within a specified range.</summary>
+        <returns>A 64-bit signed integer greater than or equal to <paramref name="minValue" /> and less than <paramref name="maxValue" />; that is, the range of return values includes <paramref name="minValue" /> but not <paramref name="maxValue" />. If minValue equals <paramref name="maxValue" />, <paramref name="minValue" /> is returned.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="minValue" /> is greater than <paramref name="maxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="NextSingle">
@@ -1041,8 +1045,8 @@ Each element of the span of bytes is set to a random number greater than or equa
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns a random floating-point number that is greater than or equal to 0.0, and less than 1.0.</summary>
+        <returns>A single-precision floating point number that is greater than or equal to 0.0, and less than 1.0.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1152,7 +1156,7 @@ Each element of the span of bytes is set to a random number greater than or equa
         <ReturnType>System.Random</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Provides a thread-safe <see cref="T:System.Random" /> instance that may be used concurrently from any thread.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
