@@ -918,9 +918,27 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Attempts to reset the <see cref="T:System.Threading.CancellationTokenSource" /> to be used for an unrelated operation.</summary>
+        <returns>
+          <see langword="true" /> if the <see cref="T:System.Threading.CancellationTokenSource" /> has not had cancellation requested and could have its state reset to be reused for a subsequent operation; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+<xref:System.Threading.CancellationTokenSource.TryReset> is intended to be used by the sole owner of the <xref:System.Threading.CancellationTokenSource>
+            when it is known that the operation with which the <xref:System.Threading.CancellationTokenSource> was used has
+            completed, no one else will be attempting to cancel it, and any registrations still remaining are erroneous.
+            Upon a successful reset, such registrations will no longer be notified for any subsequent cancellation of the
+            <xref:System.Threading.CancellationTokenSource>; however, if any component still holds a reference to this
+            <xref:System.Threading.CancellationTokenSource> either directly or indirectly via a <xref:System.Threading.CancellationToken>
+            handed out from it, polling via their reference will show the current state any time after the reset as
+            it's the same instance.  Usage of <xref:System.Threading.CancellationTokenSource.TryReset> concurrently with requesting cancellation is not
+            thread-safe and may result in TryReset returning `true` even if cancellation was already requested and may result
+            in registrations not being invoked as part of the concurrent cancellation request.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

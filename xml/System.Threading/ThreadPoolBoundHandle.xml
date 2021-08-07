@@ -488,12 +488,41 @@ The buffer or buffers specified in <paramref name="pinData" /> must be the same 
         <Parameter Name="pinData" Type="System.Object" Index="2" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="callback">To be added.</param>
-        <param name="state">To be added.</param>
-        <param name="pinData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="callback">An <see cref="T:System.Threading.IOCompletionCallback" /> delegate that represents the callback method invoked when the asynchronous I/O operation completes.</param>
+        <param name="state">A user-provided object that distinguishes this <see cref="T:System.Threading.NativeOverlapped" /> from other <see cref="T:System.Threading.NativeOverlapped" /> instances. Can be <see langword="null" />.</param>
+        <param name="pinData">An object or array of objects representing the input or output buffer for the operation. Each object represents a buffer, for example an array of bytes.  Can be <see langword="null" />.</param>
+        <summary>Returns an unmanaged pointer to a <see cref="T:System.Threading.NativeOverlapped" /> structure, specifying a delegate that is invoked when the asynchronous I/O operation is complete, a user-provided object providing context, and managed objects that serve as buffers.</summary>
+        <returns>An unmanaged pointer to a <see cref="T:System.Threading.NativeOverlapped" /> structure.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+
+                    The unmanaged pointer returned by this method can be passed to the operating system in
+                    overlapped I/O operations. The <xref:System.Threading.NativeOverlapped> structure is fixed in
+                    physical memory until <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped(System.Threading.NativeOverlapped*)> is called.
+                
+
+
+                    The buffer or buffers specified in `pinData` must be the same as those passed
+                    to the unmanaged operating system function that performs the asynchronous I/O.
+                
+
+
+  <xref:System.Threading.ExecutionContext> is not flowed to the invocation of the callback.
+                
+
+<note>
+                    The buffers specified in `pinData` are pinned for the duration of
+                    the I/O operation.
+                
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="callback" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">This method was called after the <see cref="T:System.Threading.ThreadPoolBoundHandle" /> was disposed.</exception>
       </Docs>
     </Member>
   </Members>
