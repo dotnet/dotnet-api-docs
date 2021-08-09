@@ -138,7 +138,8 @@ namespace samples2
         [DataMember(EmitDefaultValue = false)]
         public int? bonus = null;
 
-        // This will be written as <targetSalary>57800</targetSalary>
+        // This will be written as <targetSalary>57800</targetSalary> 
+        // because the 57800 does not match the .NET default of 0. 
         [DataMember(EmitDefaultValue = false)]
         public int targetSalary = 57800;
     }
