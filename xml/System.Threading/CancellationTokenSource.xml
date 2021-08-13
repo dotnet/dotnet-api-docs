@@ -927,14 +927,19 @@
 ## Remarks
 
 <xref:System.Threading.CancellationTokenSource.TryReset> is intended to be used by the sole owner of the <xref:System.Threading.CancellationTokenSource>
-            when it is known that the operation with which the <xref:System.Threading.CancellationTokenSource> was used has
-            completed, no one else will be attempting to cancel it, and any registrations still remaining are erroneous.
+            when it is known that:
+
+- The operation with which the <xref:System.Threading.CancellationTokenSource> was used has completed.
+- No-one else will attempt to cancel it.
+
+- Any remaining registrations are erroneous.
+
             Upon a successful reset, such registrations will no longer be notified for any subsequent cancellation of the
             <xref:System.Threading.CancellationTokenSource>; however, if any component still holds a reference to this
             <xref:System.Threading.CancellationTokenSource> either directly or indirectly via a <xref:System.Threading.CancellationToken>
             handed out from it, polling via their reference will show the current state any time after the reset as
             it's the same instance.  Usage of <xref:System.Threading.CancellationTokenSource.TryReset> concurrently with requesting cancellation is not
-            thread-safe and may result in <xref:System.Threading.CancellationTokenSource.TryReset> returning `true` even if cancellation was already requested and may result
+            thread-safe and may result in <xref:System.Threading.CancellationTokenSource.TryReset> returning `true` even if cancellation was already requested. Also, it may result
             in registrations not being invoked as part of the concurrent cancellation request.
 
           ]]></format>
