@@ -21,11 +21,26 @@
     <ReturnType>method</ReturnType>
   </ReturnValue>
   <Docs>
-    <param name="exception">To be added.</param>
-    <param name="lastMethod">To be added.</param>
-    <param name="context">To be added.</param>
-    <summary>To be added.</summary>
+    <param name="exception">Unhandled exception.</param>
+    <param name="lastMethod">Last managed method.</param>
+    <param name="context">Context provided to the returned function pointer.</param>
+    <summary>Handler for unhandled Exceptions crossing the managed -&gt; native boundary (that is, Reverse P/Invoke).</summary>
     <returns>To be added.</returns>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the handler is able to propagate the managed Exception properly to the native environment an
+             unmanaged callback can be returned, otherwise `null`. The <xref:System.RuntimeMethodHandle> is to the
+             last managed method that was executed prior to leaving the runtime. Along with the returned callback
+             the handler can return a context that will be passed to the callback during dispatch.
+            
+             The returned handler will be passed the context when called and it is the responsibility of the callback
+             to manage. The handler must not return and is expected to propagate the exception (for example, throw a native exception)
+             into the native environment or fail fast.
+
+      ]]></format>
+    </remarks>
   </Docs>
 </Type>

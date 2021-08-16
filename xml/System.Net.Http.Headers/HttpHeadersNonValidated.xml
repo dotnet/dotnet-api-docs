@@ -42,8 +42,19 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides a view on top of a <see cref="T:System.Net.Http.Headers.HttpHeaders" /> collection that avoids forcing validation or parsing on its contents.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The view surfaces data as it's stored in the headers collection.  Any header values that have not yet been parsed / validated won't be
+            as part of any accesses from this view, e.g. a raw header value of "one, two" that hasn't yet been parsed due to other operations
+            on the <xref:System.Net.Http.Headers.HttpHeaders> will be surfaced as a single header value rather than two.  For any header values that have already
+            been parsed and validated, that value will be converted to a string to be returned from operations on this view.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Contains">
@@ -65,9 +76,10 @@
         <Parameter Name="headerName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="headerName">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="headerName">The name of the header.</param>
+        <summary>Gets whether the collection contains the specified header.</summary>
+        <returns>
+          <see langword="true" /> if the collection contains the header; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -90,9 +102,17 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the number of headers stored in the collection.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Multiple header values associated with the same header name are considered to be one header as far as this count is concerned.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -112,8 +132,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets an enumerator that iterates through the <see cref="T:System.Net.Http.Headers.HttpHeadersNonValidated" />.</summary>
+        <returns>An enumerator that iterates through the <see cref="T:System.Net.Http.Headers.HttpHeadersNonValidated" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -139,10 +159,11 @@
         <Parameter Name="headerName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="headerName">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <param name="headerName">The name of the header.</param>
+        <summary>Gets the values for the specified header name.</summary>
+        <value>The values for the specified header.</value>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Collections.Generic.KeyNotFoundException">The header was not contained in the collection.</exception>
       </Docs>
     </Member>
     <Member MemberName="System.Collections.Generic.IEnumerable&lt;System.Collections.Generic.KeyValuePair&lt;System.String,System.Net.Http.Headers.HeaderStringValues&gt;&gt;.GetEnumerator">
@@ -165,8 +186,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns an enumerator that iterates through the collection.</summary>
+        <returns>An enumerator that can be used to iterate through the collection.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -193,8 +214,9 @@
       </Parameters>
       <Docs>
         <param name="key">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Determines whether the read-only dictionary contains an element that has the specified key.</summary>
+        <returns>
+          <see langword="true" /> if the read-only dictionary contains an element that has the specified key; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -217,7 +239,7 @@
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets an enumerable collection that contains the keys in the read-only dictionary.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -268,7 +290,7 @@
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Net.Http.Headers.HeaderStringValues&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets an enumerable collection that contains the values in the read-only dictionary.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -293,9 +315,17 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns an enumerator that iterates through a collection.</summary>
+        <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This member is an explicit interface member implementation. It can be used only when the <xref:System.Net.Http.Headers.HttpHeadersNonValidated> instance is cast to an <xref:System.Collections.IEnumerable> interface.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetValues">
@@ -318,10 +348,11 @@
         <Parameter Name="values" Type="System.Net.Http.Headers.HeaderStringValues" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="headerName">To be added.</param>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="headerName">The name of the header.</param>
+        <param name="values">The retrieved header values.</param>
+        <summary>Attempts to retrieve the values associated with the specified header name.</summary>
+        <returns>
+          <see langword="true" /> if the collection contains the specified header; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
