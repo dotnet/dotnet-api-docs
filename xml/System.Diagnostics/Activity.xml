@@ -625,9 +625,10 @@ Normally if the <xref:System.Diagnostics.Activity.ParentId> is defined, its form
         <Parameter Name="key" Type="System.String" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="key">The tag key string.</param>
+        <summary>Returns the value of the Activity tag mapped to the input key/&gt;.
+            Returns <see langword="null" /> if that key does not exist.</summary>
+        <returns>The tag value mapped to the input key.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -973,10 +974,15 @@ The root ID is a substring from the <xref:System.Diagnostics.Activity.Id> or the
         <Parameter Name="value" Type="System.String" Index="1" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="key">The baggage key name</param>
+        <param name="value">The baggage value mapped to the input key</param>
+        <summary>Add or update the Activity baggage with the input key and value.
+            If the input value is <see langword="null" /> - if the collection has any baggage with the same key, then this baggage will get removed from the collection.
+                - otherwise, nothing will happen and the collection will not change.
+            If the input value is not <see langword="null" /> - if the collection has any baggage with the same key, then the value mapped to this key will get updated with the new input value.
+                - otherwise, the key and value will get added as a new baggage to the collection.</summary>
+        <returns>
+          <see langword="this" /> for convenient chaining.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1204,11 +1210,21 @@ This method has the advantage that no string manipulation is needed to set the I
         <Parameter Name="description" Type="System.String" Index="1" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="code">To be added.</param>
-        <param name="description">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="code">The status code</param>
+        <param name="description">The error status description</param>
+        <summary>Sets the status code and description on the current activity object.</summary>
+        <returns>
+          <see langword="this" /> for convenient chaining.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When passing code value different than ActivityStatusCode.Error, the Activity.StatusDescription will reset to `null` value.
+            The description paramater will be respected only when passing ActivityStatusCode.Error value.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SetTag">
@@ -1339,12 +1355,13 @@ All activities created from public constructors will have a singleton source whe
 ## Remarks
 
 Calling the `Start` method does the following:
+
 -   Sets <xref:System.Diagnostics.Activity.Parent> to hold <xref:System.Diagnostics.Activity.Current>.
 -   Sets <xref:System.Diagnostics.Activity.Current> to this <xref:System.Diagnostics.Activity>.
 -   If <xref:System.Diagnostics.Activity.StartTimeUtc> was not set previously, sets it to <xref:System.DateTime.UtcNow?displayProperty=nameWithType>.
 -   Generates a unique <xref:System.Diagnostics.Activity.Id> for this activity.</item>
 
-Use <xref:System.Diagnostics.DiagnosticSource.StartActivity%2A?displayProperty=nameWithType> to start the <see cref="T:System.Diagnostics.Activity" /> and write the start event.
+Use <xref:System.Diagnostics.DiagnosticSource.StartActivity%2A?displayProperty=nameWithType> to start the <xref:System.Diagnostics.Activity> and write the start event.
 
 ]]></format>
         </remarks>
@@ -1400,7 +1417,7 @@ The `StartTimeUtc` property is typically initialized when <xref:System.Diagnosti
         <ReturnType>System.Diagnostics.ActivityStatusCode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets status code of the current activity object.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1421,7 +1438,7 @@ The `StartTimeUtc` property is typically initialized when <xref:System.Diagnosti
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the status description of the current activity object.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1555,9 +1572,21 @@ Call <xref:System.Diagnostics.DiagnosticSource.StopActivity%2A?displayProperty=n
         <ReturnType>System.Func&lt;System.Diagnostics.ActivityTraceId&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>When starting an Activity which does not have a parent context, the Trace Id will automatically be generated using random numbers.
+            TraceIdGenerator can be used to override the runtime's default Trace Id generation algorithm.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+- TraceIdGenerator needs to be set only if the default Trace Id generation is not enough for the app scenario.
+            - When setting TraceIdGenerator, ensure it is performant enough to avoid any slowness in the Activity starting operation.
+            - If TraceIdGenerator is set multiple times, the last set will be the one used for the Trace Id generation.
+            - Setting TraceIdGenerator to `null` will re-enable the default Trace Id generation algorithm.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TraceStateString">

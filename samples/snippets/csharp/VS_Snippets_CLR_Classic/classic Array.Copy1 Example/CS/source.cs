@@ -1,10 +1,10 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  public class SamplesArray  {
 
     public static void Main()  {
 
-       // Creates and initializes a new Array of type Int32.
+       // Creates and initializes a new Array of type int.
        Array myIntArray=Array.CreateInstance( typeof(System.Int32), 5 );
        for ( int i = myIntArray.GetLowerBound(0); i <= myIntArray.GetUpperBound(0); i++ )
           myIntArray.SetValue( i+1, i );
@@ -15,21 +15,21 @@
           myObjArray.SetValue( i+26, i );
 
        // Displays the initial values of both arrays.
-       Console.WriteLine( "Int32 array:" );
+       Console.WriteLine( "int array:" );
        PrintValues( myIntArray );
        Console.WriteLine( "Object array:" );
        PrintValues( myObjArray );
 
-       // Copies the first element from the Int32 array to the Object array.
+       // Copies the first element from the int array to the Object array.
        Array.Copy( myIntArray, myIntArray.GetLowerBound(0), myObjArray, myObjArray.GetLowerBound(0), 1 );
 
-       // Copies the last two elements from the Object array to the Int32 array.
+       // Copies the last two elements from the Object array to the int array.
        Array.Copy( myObjArray, myObjArray.GetUpperBound(0) - 1, myIntArray, myIntArray.GetUpperBound(0) - 1, 2 );
 
        // Displays the values of the modified arrays.
-       Console.WriteLine( "Int32 array - Last two elements should now be the same as Object array:" );
+       Console.WriteLine( "int array - Last two elements should now be the same as Object array:" );
        PrintValues( myIntArray );
-       Console.WriteLine( "Object array - First element should now be the same as Int32 array:" );
+       Console.WriteLine( "Object array - First element should now be the same as int array:" );
        PrintValues( myObjArray );
     }
 
@@ -52,13 +52,13 @@
  /*
  This code produces the following output.
 
- Int32 array:
+ int array:
      1    2    3    4    5
  Object array:
      26    27    28    29    30
- Int32 array - Last two elements should now be the same as Object array:
+ int array - Last two elements should now be the same as Object array:
      1    2    3    29    30
- Object array - First element should now be the same as Int32 array:
+ Object array - First element should now be the same as int array:
      1    27    28    29    30
  */
 // </Snippet1>

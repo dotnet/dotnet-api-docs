@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class SamplesArray
@@ -6,7 +6,7 @@ public class SamplesArray
     public static void Main()
     {
         // Creates and initializes a new Array.
-        Array myIntArray = Array.CreateInstance(typeof(Int32), 5);
+        Array myIntArray = Array.CreateInstance(typeof(int), 5);
 
         myIntArray.SetValue(8, 0);
         myIntArray.SetValue(2, 1);
@@ -18,7 +18,7 @@ public class SamplesArray
         Array.Sort(myIntArray);
 
         // Displays the values of the Array.
-        Console.WriteLine( "The Int32 array contains the following:" );
+        Console.WriteLine( "The int array contains the following:" );
         PrintValues(myIntArray);
 
         // Locates a specific object that does not exist in the Array.
@@ -65,7 +65,7 @@ public class SamplesArray
 }
 // This code produces the following output.
 //
-//The Int32 array contains the following:
+//The int array contains the following:
 //        2       3       6       7       8
 //The object to search for (1) is not found. The next larger object is at index 0
 //

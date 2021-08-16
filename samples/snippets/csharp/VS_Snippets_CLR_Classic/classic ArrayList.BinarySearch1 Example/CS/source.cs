@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesArrayList  {
@@ -12,7 +12,7 @@
           myAL.Add( i*2 );
 
        // Displays the ArrayList.
-       Console.WriteLine( "The Int32 ArrayList contains the following:" );
+       Console.WriteLine( "The int ArrayList contains the following:" );
        PrintValues( myAL );
 
        // Locates a specific object that does not exist in the ArrayList.
@@ -41,7 +41,7 @@
  /*
  This code produces the following output.
 
- The Int32 ArrayList contains the following:
+ The int ArrayList contains the following:
     0   2   4   6   8
  The object to search for (3) is not found. The next larger object is at index 2.
  The object to search for (6) is at index 3.

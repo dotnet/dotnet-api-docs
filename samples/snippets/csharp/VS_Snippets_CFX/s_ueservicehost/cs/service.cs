@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.ServiceModel;
 
@@ -121,7 +121,7 @@ namespace ServiceModel.Sample
             // <Snippet5>
             BasicHttpBinding binding = new BasicHttpBinding();
             Uri listenUri = new Uri("http://localhost:8000/MyListenUri");
-            String address = "http://localhost:8000/servicemodelsamples/service2";
+            string address = "http://localhost:8000/servicemodelsamples/service2";
             serviceHost.AddServiceEndpoint(typeof(ICalculator), binding, address, listenUri);
             // </Snippet5>
         }

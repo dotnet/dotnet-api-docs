@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Workflow.Activities;
 using System.Workflow.ComponentModel;
 using System.Collections.Generic;
@@ -100,7 +100,7 @@ namespace SendActivitySnippets
         {
             //SendActivity.ReturnValuePropertyName
             //<snippet6>
-            String retValName = SendActivity.ReturnValuePropertyName;
+            string retValName = SendActivity.ReturnValuePropertyName;
             //</snippet6>
         }
         void Container7()
@@ -165,19 +165,19 @@ namespace SendActivitySnippets
             SendActivity sendActivity1 = new SendActivity();
             ChannelToken channelToken1 = new ChannelToken();
             sendActivity1.ChannelToken = channelToken1;
-            Dictionary<String, String> Context = (Dictionary<String, String>)SendActivity.GetContext(sendActivity1, channelToken1, contractType);
+            Dictionary<string, string> Context = (Dictionary<string, string>)SendActivity.GetContext(sendActivity1, channelToken1, contractType);
             //</snippet12>
         }
 
         void Container15()
         {
-            //SendActivity.GetContext(Activity, String, String, Type)
+            //SendActivity.GetContext(Activity, string, string, Type)
             Type contractType = typeof(string);
-            String endpointName = "";
-            String ownerActivityName = "";
+            string endpointName = "";
+            string ownerActivityName = "";
             //<snippet15>
             SendActivity sendActivity1 = new SendActivity();
-            Dictionary<String, String> Context = (Dictionary<String, String>)SendActivity.GetContext(sendActivity1, endpointName, ownerActivityName, contractType);
+            Dictionary<string, string> Context = (Dictionary<string, string>)SendActivity.GetContext(sendActivity1, endpointName, ownerActivityName, contractType);
             //</snippet15>
         }
         void Container16()
@@ -190,7 +190,7 @@ namespace SendActivitySnippets
         }
         void Container17()
         {
-            //SendActivity.SendActivity(String)
+            //SendActivity.SendActivity(string)
             //<snippet17>
             SendActivity RequestQuoteFromShipper3;
             RequestQuoteFromShipper3 = new System.Workflow.Activities.SendActivity("RequestQuoteFromShipper3");

@@ -1,11 +1,11 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  public class SamplesArray  {
 
     public static void Main()  {
 
-       // Creates and initializes a one-dimensional Array of type Int32.
-       Array my1DArray=Array.CreateInstance( typeof(Int32), 5 );
+       // Creates and initializes a one-dimensional Array of type int.
+       Array my1DArray=Array.CreateInstance( typeof(int), 5 );
        for ( int i = my1DArray.GetLowerBound(0); i <= my1DArray.GetUpperBound(0); i++ )
           my1DArray.SetValue( i+1, i );
 
