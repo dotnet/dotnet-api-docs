@@ -24,7 +24,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>API to enable Objective-C marshalling.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -48,11 +48,36 @@
         <Parameter Name="taggedMemory" Type="System.Span&lt;System.IntPtr&gt;" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="taggedMemory">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="obj">The object to track.</param>
+        <param name="taggedMemory">A pointer to memory tagged to the object.</param>
+        <summary>Request native reference tracking for the supplied object.</summary>
+        <returns>Reference tracking GC handle.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The Initialize() must be called prior to calling this function.
+            
+             The `obj` must have a type in its hierarchy marked with
+             <xref:System.Runtime.InteropServices.ObjectiveC.ObjectiveCTrackedTypeAttribute>.
+            
+             The "Is Referenced" callback passed to Initialize()
+             will be passed the `taggedMemory` returned from this function.
+             The memory it points at is defined by the length in the <xref:System.Span`1> and
+             will be zeroed out. It will be available until `obj` is collected by the GC.
+             The memory pointed to by `taggedMemory` can be used for any purpose by the
+             caller of this function and usable during the "Is Referenced" callback.
+            
+             Calling this function multiple times with the same `obj` will
+             return a new handle each time but the same tagged memory will be returned. The
+             tagged memory is only guaranteed to be zero initialized on the first call.
+            
+             The caller is responsible for freeing the returned <xref:System.Runtime.InteropServices.GCHandle>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Thrown if the ObjectiveCMarshal API has not been initialized.</exception>
       </Docs>
     </Member>
     <Member MemberName="Initialize">
@@ -105,10 +130,19 @@
         <Parameter Name="func" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="msgSendFunction">To be added.</param>
-        <param name="func">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="msgSendFunction">The export to override.</param>
+        <param name="func">The function override.</param>
+        <summary>Set a function pointer override for an Objective-C runtime message passing export.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Providing an override can enable support for Objective-C variadic argument support.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Thrown if the msgSend function has already been overridden.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetMessageSendPendingException">
@@ -130,9 +164,17 @@
         <Parameter Name="exception" Type="System.Exception" />
       </Parameters>
       <Docs>
-        <param name="exception">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="exception">The exception.</param>
+        <summary>Sets a pending exception to be thrown the next time the runtime is entered from an Objective-C msgSend P/Invoke.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If `null` is supplied any pending exception is discarded.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
