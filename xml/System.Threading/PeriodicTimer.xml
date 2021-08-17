@@ -18,8 +18,18 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides a periodic timer that enables waiting asynchronously for timer ticks.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This timer is intended to be used only by a single consumer at a time: only one call to <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)> may be in flight at any given moment.
+
+<xref:System.Threading.PeriodicTimer.Dispose> may be used concurrently with an active <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)> to interrupt it and cause it to return `false`.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -38,9 +48,11 @@
         <Parameter Name="period" Type="System.TimeSpan" />
       </Parameters>
       <Docs>
-        <param name="period">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="period">The time interval between invocations of the callback.</param>
+        <summary>Initializes the timer.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="period" /> must represent a number of milliseconds larger than 0 and smaller than <see cref="F:System.UInt32.MaxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -63,8 +75,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Stops the timer and releases the associated managed resources.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+<xref:System.Threading.PeriodicTimer.Dispose> will cause an active wait with <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)> to complete with a value of `false`. All subsequent <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)> invocations will produce a value of `false`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="WaitForNextTickAsync">
@@ -85,10 +105,18 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> for cancelling the asynchronous wait. If cancellation is requested, it affects only the single wait operation; the underlying timer continues firing.</param>
+        <summary>Waits for the next tick of the timer, or for the timer to be stopped.</summary>
+        <returns>A task that will be completed due to the timer firing, <see cref="M:System.Threading.PeriodicTimer.Dispose" /> being called to stop the timer, or cancellation being requested.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The <xref:System.Threading.PeriodicTimer> behaves like an auto-reset event, in that multiple ticks are coalesced into a single tick if they occur between calls to <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)>. Similarly, a call to <xref:System.Threading.PeriodicTimer.Dispose> will void any tick not yet consumed. <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)> may only be used by one consumer at a time, and may be used concurrently with a single call to <xref:System.Threading.PeriodicTimer.Dispose>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
