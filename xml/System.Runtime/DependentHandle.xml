@@ -18,8 +18,34 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a dependent garbage-collection handle. The handle will conditionally keep a dependent object instance alive as long as a target object instance is alive as well, without representing a strong reference to the target instance.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A <xref:System.Runtime.DependentHandle> value with a given object instance as target will not cause the target
+            to be kept alive if there are no other strong references to it, but it will do so for the dependent
+            object instance as long as the target is alive.
+            
+            Using this type is conceptually equivalent to having a weak reference to a given target object instance A,
+            with that object having a field or property (or some other strong reference) to a dependent object instance B.
+            
+
+
+            The <xref:System.Runtime.DependentHandle> type is not thread-safe, and consumers are responsible for ensuring that
+            <xref:System.Runtime.DependentHandle.Dispose> is not called concurrently with other APIs. Not doing so results in undefined behavior.
+            
+
+
+            The <xref:System.Runtime.DependentHandle.IsAllocated>, <xref:System.Runtime.DependentHandle.Target>, <xref:System.Runtime.DependentHandle.Dependent>, and <xref:System.Runtime.DependentHandle.TargetAndDependent>
+            properties are instead thread-safe, and safe to use if <xref:System.Runtime.DependentHandle.Dispose> is not concurrently invoked as well.
+            
+
+
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -39,9 +65,9 @@
         <Parameter Name="dependent" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="target">To be added.</param>
-        <param name="dependent">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="target">The target object instance to track.</param>
+        <param name="dependent">The dependent object instance to associate with <paramref name="target" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Runtime.DependentHandle" /> struct with the specified arguments.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -61,9 +87,21 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the dependent object instance for the current handle.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If you need to retrieve both <xref:System.Runtime.DependentHandle.Target> and <xref:System.Runtime.DependentHandle.Dependent>,
+            ensure that the returned instance from <xref:System.Runtime.DependentHandle.Target> will be kept alive until <xref:System.Runtime.DependentHandle.Dependent>
+            is retrieved as well, or it might be collected and result in unexpected behavior. This can be done by storing the
+            target in a local and calling <xref:System.GC.KeepAlive(System.Object)> on it after <xref:System.Runtime.DependentHandle.Dependent> is accessed.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Thrown if <see cref="P:System.Runtime.DependentHandle.IsAllocated" /> is <see langword="false" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -86,8 +124,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is not thread-safe.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsAllocated">
@@ -106,9 +152,17 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a value indicating whether this instance was constructed with <see cref="M:System.Runtime.DependentHandle.#ctor(System.Object,System.Object)" /> and has not yet been disposed.</summary>
+        <value><see langword="true" /> if this instance was constructed with <see cref="M:System.Runtime.DependentHandle.#ctor(System.Object,System.Object)" /> and has not yet been disposed; <see langword="false" /> otherwise.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This property is thread-safe.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Target">
@@ -127,9 +181,19 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the target object instance for the current handle. The target can only be set to a <see langword="null" /> value once the <see cref="T:System.Runtime.DependentHandle" /> instance has been created. Doing so will cause <see cref="P:System.Runtime.DependentHandle.Dependent" /> to start returning <see langword="null" /> as well, and to become eligible for collection even if the previous target is still alive.</summary>
+        <value>The target object instance for the current handle.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This property is thread-safe.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <see cref="P:System.Runtime.DependentHandle.IsAllocated" /> is <see langword="false" /> or the input value is not <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TargetAndDependent">
@@ -154,9 +218,21 @@
         <ReturnType>System.ValueTuple&lt;System.Object,System.Object&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the values of both <see cref="P:System.Runtime.DependentHandle.Target" /> and <see cref="P:System.Runtime.DependentHandle.Dependent" /> (if available) as an atomic operation.
+            That is, even if <see cref="P:System.Runtime.DependentHandle.Target" /> is concurrently set to <see langword="null" />, calling this method will either return <see langword="null" /> for both target and dependent, or return both previous values.
+            If <see cref="P:System.Runtime.DependentHandle.Target" /> and <see cref="P:System.Runtime.DependentHandle.Dependent" /> were used sequentially in this scenario instead, it would be possible to sometimes successfully retrieve the previous target, but then fail to get the dependent.</summary>
+        <value>The values of <see cref="P:System.Runtime.DependentHandle.Target" /> and <see cref="P:System.Runtime.DependentHandle.Dependent" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This property is thread-safe.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <see cref="P:System.Runtime.DependentHandle.IsAllocated" /> is <see langword="false" />.</exception>
       </Docs>
     </Member>
   </Members>
