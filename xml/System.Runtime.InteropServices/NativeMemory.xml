@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>This class contains methods that are mainly used to manage native memory.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -43,11 +43,28 @@
         <Parameter Name="alignment" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="byteCount">To be added.</param>
-        <param name="alignment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="byteCount">The size, in bytes, of the block to allocate.</param>
+        <param name="alignment">The alignment, in bytes, of the block to allocate. This must be a power of <c>2</c>.</param>
+        <summary>Allocates an aligned block of memory of the specified size and alignment, in bytes.</summary>
+        <returns>A pointer to the allocated aligned block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `aligned_alloc` API or a platform dependent aligned allocation API such as `_aligned_malloc` on Win32.
+
+This method is not compatible with <xref:System.Runtime.InteropServices.NativeMemory.Free(System.Void*)> or <xref:System.Runtime.InteropServices.NativeMemory.Realloc(System.Void*,System.UIntPtr)>, instead <xref:System.Runtime.InteropServices.NativeMemory.AlignedFree(System.Void*)> or <xref:System.Runtime.InteropServices.NativeMemory.AlignedRealloc(System.Void*,System.UIntPtr,System.UIntPtr)> should be called.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="alignment" /> is not a power of two.</exception>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="byteCount" /> of memory with <paramref name="alignment" /> failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AlignedFree">
@@ -74,9 +91,21 @@
         <Parameter Name="ptr" Type="System.Void*" />
       </Parameters>
       <Docs>
-        <param name="ptr">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="ptr">A pointer to the aligned block of memory that should be freed.</param>
+        <summary>Frees an aligned block of memory.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method does nothing if `ptr` is `null`.
+
+This method is a thin wrapper over the C `free` API or a platform dependent aligned free API such as `_aligned_free` on Win32.
+
+
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AlignedRealloc">
@@ -105,12 +134,31 @@
         <Parameter Name="alignment" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="ptr">To be added.</param>
-        <param name="byteCount">To be added.</param>
-        <param name="alignment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="ptr">The previously allocated block of memory.</param>
+        <param name="byteCount">The size, in bytes, of the block to allocate.</param>
+        <param name="alignment">The alignment, in bytes, of the block to allocate. This must be a power of <c>2</c>.</param>
+        <summary>Reallocates an aligned block of memory of the specified size and alignment, in bytes.</summary>
+        <returns>A pointer to the reallocated aligned block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method acts as <xref:System.Runtime.InteropServices.NativeMemory.AlignedAlloc(System.UIntPtr,System.UIntPtr)> if `ptr` is `null`.
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a platform dependent aligned reallocation API such as `_aligned_realloc` on Win32.
+
+This method is not compatible with <xref:System.Runtime.InteropServices.NativeMemory.Free(System.Void*)> or <xref:System.Runtime.InteropServices.NativeMemory.Realloc(System.Void*,System.UIntPtr)>, instead <xref:System.Runtime.InteropServices.NativeMemory.AlignedFree(System.Void*)> or <xref:System.Runtime.InteropServices.NativeMemory.AlignedRealloc(System.Void*,System.UIntPtr,System.UIntPtr)> should be called.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="alignment" /> is not a power of two.</exception>
+        <exception cref="T:System.OutOfMemoryException">Reallocating <paramref name="byteCount" /> of memory with <paramref name="alignment" /> failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Alloc">
@@ -137,10 +185,23 @@
         <Parameter Name="byteCount" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="byteCount">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="byteCount">The size, in bytes, of the block to allocate.</param>
+        <summary>Allocates a block of memory of the specified size, in bytes.</summary>
+        <returns>A pointer to the allocated block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `malloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="byteCount" /> of memory failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Alloc">
@@ -168,11 +229,24 @@
         <Parameter Name="elementSize" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="elementCount">To be added.</param>
-        <param name="elementSize">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="elementCount">The count, in elements, of the block to allocate.</param>
+        <param name="elementSize">The size, in bytes, of each element in the allocation.</param>
+        <summary>Allocates a block of memory of the specified size, in elements.</summary>
+        <returns>A pointer to the allocated block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `elementCount` and/or `elementSize` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `malloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="elementCount" /> * <paramref name="elementSize" /> bytes of memory failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AllocZeroed">
@@ -199,10 +273,23 @@
         <Parameter Name="byteCount" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="byteCount">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="byteCount">The size, in bytes, of the block to allocate.</param>
+        <summary>Allocates and zeroes a block of memory of the specified size, in bytes.</summary>
+        <returns>A pointer to the allocated and zeroed block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `calloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="byteCount" /> of memory failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AllocZeroed">
@@ -230,11 +317,24 @@
         <Parameter Name="elementSize" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="elementCount">To be added.</param>
-        <param name="elementSize">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="elementCount">The count, in elements, of the block to allocate.</param>
+        <param name="elementSize">The size, in bytes, of each element in the allocation.</param>
+        <summary>Allocates and zeroes a block of memory of the specified size, in elements.</summary>
+        <returns>A pointer to the allocated and zeroed block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `elementCount` and/or `elementSize` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `calloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="elementCount" /> * <paramref name="elementSize" /> bytes of memory failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Free">
@@ -261,9 +361,21 @@
         <Parameter Name="ptr" Type="System.Void*" />
       </Parameters>
       <Docs>
-        <param name="ptr">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="ptr">A pointer to the block of memory that should be freed.</param>
+        <summary>Frees a block of memory.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method does nothing if `ptr` is `null`.
+
+This method is a thin wrapper over the C `free` API.
+
+
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Realloc">
@@ -291,11 +403,26 @@
         <Parameter Name="byteCount" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="ptr">To be added.</param>
-        <param name="byteCount">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="ptr">The previously allocated block of memory.</param>
+        <param name="byteCount">The size, in bytes, of the reallocated block.</param>
+        <summary>Reallocates a block of memory to be the specified size, in bytes.</summary>
+        <returns>A pointer to the reallocated block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method acts as <xref:System.Runtime.InteropServices.NativeMemory.Alloc(System.UIntPtr,System.UIntPtr)> if `ptr` is `null`.
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `realloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Reallocating <paramref name="byteCount" /> of memory failed.</exception>
       </Docs>
     </Member>
   </Members>
