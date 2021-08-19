@@ -365,11 +365,19 @@ Directory::CreateDirectory("c:\\Users\\User1\\Public\\Html");
         <Parameter Name="pathToTarget" Type="System.String" Index="1" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <param name="pathToTarget">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="path">The absolute path where the symbolic link should be created.</param>
+        <param name="pathToTarget">The target directory of the symbolic link.</param>
+        <summary>Creates a directory symbolic link identified by <paramref name="path" /> that points to <paramref name="pathToTarget" />.</summary>
+        <returns>A <see cref="T:System.IO.DirectoryInfo" /> instance that wraps the newly created directory symbolic link.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="path" /> or <paramref name="pathToTarget" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="path" /> or <paramref name="pathToTarget" /> is empty.
+            -or- <paramref name="path" /> is not an absolute path.
+            -or- <paramref name="path" /> or <paramref name="pathToTarget" /> contains invalid path characters.</exception>
+        <exception cref="T:System.IO.IOException">A file or directory already exists in the location of <paramref name="path" />.
+            -or- An I/O error occurred.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Delete">
@@ -4072,11 +4080,23 @@ Directory::CreateDirectory("c:\\Users\\User1\\Public\\Html");
         <Parameter Name="returnFinalTarget" Type="System.Boolean" Index="1" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="linkPath">To be added.</param>
-        <param name="returnFinalTarget">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="linkPath">The path of the directory link.</param>
+        <param name="returnFinalTarget">
+          <see langword="true" /> to follow links to the final target; <see langword="false" /> to return the immediate next link.</param>
+        <summary>Gets the target of the specified directory link.</summary>
+        <returns>A <see cref="T:System.IO.DirectoryInfo" /> instance if <paramref name="linkPath" /> exists, independently if the target exists or not. <see langword="null" /> if <paramref name="linkPath" /> is not a link.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When `returnFinalTarget` is `true`, the maximum number of symbolic links that are followed are 40 on Unix and 63 on Windows.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">The directory on <paramref name="linkPath" /> does not exist.
+            -or- The link's file system entry type is inconsistent with that of its target.
+            -or- Too many levels of symbolic links.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetAccessControl">
