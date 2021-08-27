@@ -34,13 +34,13 @@ public class Example
    }
 }
 // The example displays output like the following:
-//     The current culture is en-US
-//     Current culture changed to pt-BR
+//     The current UI culture is en-US
+//     Current UI culture changed to pt-BR
 //     Application thread is thread 9
-//     Culture of task 2 on thread 11 is pt-BR
-//     Culture of task 1 on thread 10 is pt-BR
-//     Culture of task 3 on thread 11 is pt-BR
-//     Culture of task 5 on thread 11 is pt-BR
-//     Culture of task 6 on thread 11 is pt-BR
-//     Culture of task 4 on thread 10 is pt-BR
+//     UI Culture of task 2 on thread 11 is pt-BR
+//     UI Culture of task 1 on thread 10 is pt-BR
+//     UI Culture of task 3 on thread 11 is pt-BR
+//     UI Culture of task 5 on thread 11 is pt-BR
+//     UI Culture of task 6 on thread 11 is pt-BR
+//     UI Culture of task 4 on thread 10 is pt-BR
 // </Snippet14>
