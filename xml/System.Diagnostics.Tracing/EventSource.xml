@@ -49,28 +49,38 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Provides the ability to create events for event tracing for Windows (ETW).</summary>
+    <summary>Provides the ability to create events for event tracing across platforms.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This class is intended to be inherited by a user class that provides specific events to be used for ETW. The <xref:System.Diagnostics.Tracing.EventSource.WriteEvent%2A?displayProperty=nameWithType> methods are called to log the events.  
+ This class is intended to be inherited by a user class that provides specific events to be used for event tracing. The <xref:System.Diagnostics.Tracing.EventSource.WriteEvent%2A?displayProperty=nameWithType> methods are called to log the events.
   
-> [!IMPORTANT]
->  This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.  
-  
- The basic functionality of <xref:System.Diagnostics.Tracing.EventSource> is sufficient for most applications.  If you want more control over the ETW manifest that is created, you can apply the <xref:System.Diagnostics.Tracing.EventAttribute> attribute to the methods. For advanced event source applications, it is possible to intercept the commands being sent to the derived event source and change the filtering, or to cause actions (such as dumping a data structure) to be performed by the inheritor.  An event source can be activated with Windows ETW controllers, such as the Logman tool, immediately.  It is also possible to programmatically control and intercept the data dispatcher.  The <xref:System.Diagnostics.Tracing.EventListener> class provides additional functionality.  
-  
- Starting with .NET Framework 4.6, <xref:System.Diagnostics.Tracing.EventSource> provides channel support and some of the event source validation rules have been relaxed. This means:  
-  
--   <xref:System.Diagnostics.Tracing.EventSource> types may now implement interfaces. This enables the use of event source types in advanced logging systems that use interfaces to define a common logging target.  
-  
--   The concept of a utility event source type has been introduced. This feature enables sharing code across multiple event source types in a project to enable scenarios such as optimized <xref:System.Diagnostics.Tracing.EventSource.WriteEvent%2A> overloads.  
-  
- For a version of the <xref:System.Diagnostics.Tracing.EventSource> class that provides features such as channel support you are targeting .NET Framework 4.5.1 or earlier, see [Microsoft EventSource Library 1.0.16](https://www.nuget.org/packages/Microsoft.Diagnostics.Tracing.EventSource).  
-  
-   
-  
+ The basic functionality of <xref:System.Diagnostics.Tracing.EventSource> is sufficient for most applications.  If you want more control over the event metadata that is created, you can apply the <xref:System.Diagnostics.Tracing.EventAttribute> attribute to the methods. For advanced event source applications, it is possible to intercept the commands being sent to the derived event source and change the filtering, or to cause actions (such as dumping a data structure) to be performed by the inheritor.  An event source can be activated in-process using <xref:System.Diagnostics.Tracing.EventListener> and out-of-process using tools EVentPipe based tools such as `dotnet-trace` or Event Tracing for Windows (ETW) based tools like `PerfView` or `Logman`.  It is also possible to programmatically control and intercept the data dispatcher.  The <xref:System.Diagnostics.Tracing.EventListener> class provides additional functionality.  
+
+## Conventions
+ <xref:System.Diagnostics.Tracing.EventSource> derived classes should follow the following conventions:
+
+ - User defined classes should implement a singleton pattern. The singleton instance is traditionally named `Log`. By extension, users should not call `IDisposable.Dispose` manually and allow the runtime to clean up the singleton instance at the end of managed code execution.
+ - User defined, derived class should be marked as `sealed` unless implementing the advanced "Utility EventSource" configuration discussed below.
+ - Users should call <xref:System.Diagnostics.Tracing.EventSource.IsEnabled> before performing any resource intensive work related to firing an event.
+ - Users can implicitly create <xref:System.Diagnostics.Tracing.EventTask>s by declaring two event methods with subsequent event IDs that have the naming pattern `<EventName>Start` and `<EventName>Stop`. Note that these events _must_ declared next to each other in the class definition and the `<EventName>Start` method _must_ come first.
+ - User should attempt to keep their <xref:System.Diagnostics.Tracing.EventSource>s backwards compatible and appropriately version them. The default version for an event is `0`. The version can be can be changed by setting <xref:System.Diagnostics.Tracing.EventAttribute.Version>. Users should change the version of an event whenever they change properites of the payload. New payload properties should always be added to the end of the event declaration. If this is not possible, a new event with a new ID should be created to replace the old one.
+ - Users should specify fixed size payload properties before variably sized properties when declaring event methods.
+ - <xref:System.Diagnostics.Tracing.EventKeywords> are used as a bitmask for specifying specific events when subscribing to a provider. Users can specify keywords by defining a `public static class Keywords` member class that has `public const EventKeywords` members. 
+ - Expensive events should be associated with a <xref:System.Diagnostics.Tracing.EventKeywords> using <xref:System.Diagnostics.Tracing.EventAttribute>. This allows users of your <xref:System.Diagnostics.Tracing.EventSource> to opt out of these expensive operations.
+
+## Self Describing (Tracelogging) vs Manifest Event Formats
+ <xref:System.Diagnostics.Tracing.EventSource> can be configured into to two different modes based on the constructor used or what flags are set on <xref:System.Diagnostics.Tracing.EventSourceOptions>.
+
+ Historically, these two formats are derived from two formats Event Tracing for Windows (ETW) used. These two modes generate the metadata for events differently.
+
+ The default event format is <xref:System.Tracing.EventSourceSettings.EtwManifestEventFormat>. Manifest-based <xref:System.Diagnostics.Tracing.EventSource>s will generate an xml document representing the events defined on the class upon intialization. This requires the <xref:System.Diagnostics.Tracing.EventSource> to reflect over itself to generate the provider and event metadata.
+
+ To use Self Describing (Tracelogging) event format, construct your <xref:System.Diagnostics.Tracing.EventSource> using the <xref:System.Diagnostics.Tracing.EventSource.ctor(string)> constructor, <xref:System.Diagnostics.Tracing.EventSource.ctor(string, EventSourceSettings)> constructor, or setting the <xref:System.Diagnostics.Tracing.EventSourceSettings.EtwSelfDescribingEventFormat> flag. Self Describing sources generate minimnal provider metadata on initialization and only generate event metadata when <xref:Syste.Diagnostics.Tracing.EventSource.Write> is called.
+
+ In practice, these event format settings only affect usage with Event Tracing for Windows (ETW) based readers. They can, however, have a small effect on initialization time and per-event write times due to the time requried for reflection and generating the metadata.
+
 ## Examples  
  The following example shows a simple implementation of the <xref:System.Diagnostics.Tracing.EventSource> class.  
   
@@ -82,6 +92,28 @@
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/etwtrace/cs/program.cs" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/etwtrace/vb/program.vb" id="Snippet1":::  
   
+
+## Advanced Usage
+ Traditionally, user defined <xref:System.Diagnostics.Tracing.EventSource>s expect to inherit directly from <xref:System.Diagnostics.Tracing.EventSource>. For advanced scenarios, however, users can create `abstract` <xref:System.Diagnostics.Tracing.EventSource>s, called a Utility Source, and implement interfaces. Using one or both of these techniques allows users to share code between different derived sources.
+
+> [!IMPORTANT]
+>  Abstract <xref:System.Diagnostics.Tracing.EventSource>s cannot define keywords, tasks, opcodes, channels, or events.
+
+> [!IMPORTANT]
+>  When using interfaces with <xref:System.Diagnostics.Tracing.EventSource>, do not explicitly implement interface methods to avoid name collisions at runtime when generating event metadata.
+
+The following example shows an implementation of <xref:System.Diagnostics.Tracing.EventSource> that uses an interface.
+
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/etwtracelarge/cs/program.cs" id="InterfaceSource":::
+
+The following example shows an implementation of <xref:System.Diagnostics.Tracing.EventSource> that uses the Utility EventSource pattern.
+
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/etwtracelarge/cs/program.cs" id="UtilitySource":::
+
+The following example shows an implementation of <xref:System.Diagnostics.Tracing.EventSource> for tracing information about a component in a library.
+
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/etwtracelarge/cs/program.cs" id="ComplexSource":::
+
  ]]></format>
     </remarks>
     <threadsafe>This type is thread safe.</threadsafe>
@@ -731,7 +763,7 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyName>netstandard</AssemblyName> 
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
