@@ -89,7 +89,10 @@ namespace Demo
             }
         }
 
-        // ...
+        private void ExpensiveWork1() => System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(250));
+        private void ExpensiveWork2() => System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(250));
+        private void ExpensiveWork3() => System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(250));
+        private void ExpensiveWork4() => System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(250));
 
         public void DoWork()
         {
@@ -165,5 +168,34 @@ namespace Demo
         }
     }
     //</ComplexSource>
+
+    //<Main>
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine($"PID: {System.Diagnostics.Process.GetCurrentProcess().Id}");
+
+            long i = 0;
+            while (true)
+            {
+                using ComplexComponent c1 = new($"COMPONENT_{i++}");
+                using ComplexComponent c2 = new($"COMPONENT_{i++}");
+                using ComplexComponent c3 = new($"COMPONENT_{i++}");
+                using ComplexComponent c4 = new($"COMPONENT_{i++}");
+
+                c1.SetState("key1", "value1");
+                c2.SetState("key2", "value2");
+                c3.SetState("key3", "value3");
+                c4.SetState("key4", "value4");
+
+                c1.DoWork();
+                c2.DoWork();
+                c3.DoWork();
+                c4.DoWork();
+            }
+        }
+    }
+    //</Main>
 }
 //</root>
