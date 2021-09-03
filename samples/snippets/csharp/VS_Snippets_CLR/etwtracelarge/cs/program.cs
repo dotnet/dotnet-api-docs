@@ -43,11 +43,11 @@ namespace Demo
             {
                 EventSource.EventData* descrs = stackalloc EventSource.EventData[3];
                 descrs[0].DataPointer = (IntPtr)(&arg1);
-                descrs[0].Size = 4
+                descrs[0].Size = 4;
                 descrs[1].DataPointer = (IntPtr)(&arg2);
-                descrs[2].Size = 2
+                descrs[2].Size = 2;
                 descrs[1].DataPointer = (IntPtr)(&arg3);
-                descrs[2].Size = 8
+                descrs[2].Size = 8;
                 WriteEventCore(eventId, 3, descrs);
             }
         }
