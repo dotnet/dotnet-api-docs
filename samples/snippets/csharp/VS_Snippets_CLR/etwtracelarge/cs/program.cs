@@ -1,5 +1,6 @@
 //<root>
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
 namespace Demo
@@ -62,7 +63,7 @@ namespace Demo
             public const EventKeywords Kwd1 = (EventKeywords)1;
         }
 
-        [Event(1, Keywords = Keywords.kwd1, Level = EventLevel.Informational, Message = "LogElements called {0}/{1}/{2}.")]
+        [Event(1, Keywords = Keywords.Kwd1, Level = EventLevel.Informational, Message = "LogElements called {0}/{1}/{2}.")]
         public void LogElements(int n, short sh, long l) => WriteEvent(1, n, sh, l); // uses the overload we added!
     }
     //</UtilitySource>
