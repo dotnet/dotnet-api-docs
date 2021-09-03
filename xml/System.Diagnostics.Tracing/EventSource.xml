@@ -73,11 +73,11 @@
 ## Self Describing (Tracelogging) vs Manifest Event Formats
  <xref:System.Diagnostics.Tracing.EventSource> can be configured into to two different modes based on the constructor used or what flags are set on <xref:System.Diagnostics.Tracing.EventSourceOptions>.
 
- Historically, these two formats are derived from two formats Event Tracing for Windows (ETW) used. These two modes generate the metadata for events differently.
+ Historically, these two formats are derived from two formats Event Tracing for Windows (ETW) used. While these two modes don't affect your ability to use Event Tracing for Windows (ETW) or EventPipe based listeners, they do generate the metadata for events differently.
 
- The default event format is <xref:System.Tracing.EventSourceSettings.EtwManifestEventFormat>. Manifest-based <xref:System.Diagnostics.Tracing.EventSource>s will generate an xml document representing the events defined on the class upon intialization. This requires the <xref:System.Diagnostics.Tracing.EventSource> to reflect over itself to generate the provider and event metadata.
+ The default event format is `EtwManifestEventFormat` which is set if not specified on <xref:System.Diagnostics.Tracing.EventSourceSettings>. Manifest-based <xref:System.Diagnostics.Tracing.EventSource>s will generate an xml document representing the events defined on the class upon intialization. This requires the <xref:System.Diagnostics.Tracing.EventSource> to reflect over itself to generate the provider and event metadata.
 
- To use Self Describing (Tracelogging) event format, construct your <xref:System.Diagnostics.Tracing.EventSource> using the <xref:System.Diagnostics.Tracing.EventSource.ctor(string)> constructor, <xref:System.Diagnostics.Tracing.EventSource.ctor(string, EventSourceSettings)> constructor, or setting the <xref:System.Diagnostics.Tracing.EventSourceSettings.EtwSelfDescribingEventFormat> flag. Self Describing sources generate minimnal provider metadata on initialization and only generate event metadata when <xref:Syste.Diagnostics.Tracing.EventSource.Write> is called.
+ To use Self Describing (Tracelogging) event format, construct your <xref:System.Diagnostics.Tracing.EventSource> using the <xref:System.Diagnostics.Tracing.EventSource.ctor(string)> constructor, <xref:System.Diagnostics.Tracing.EventSource.ctor(string, EventSourceSettings)> constructor, or setting the `EtwSelfDescribingEventFormat` flag on <xref:System.Diagnostics.Tracing.EventSourceSettings>. Self Describing sources generate minimnal provider metadata on initialization and only generate event metadata when <xref:Syste.Diagnostics.Tracing.EventSource.Write> is called.
 
  In practice, these event format settings only affect usage with Event Tracing for Windows (ETW) based readers. They can, however, have a small effect on initialization time and per-event write times due to the time requried for reflection and generating the metadata.
 
