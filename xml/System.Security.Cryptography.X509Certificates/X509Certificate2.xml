@@ -1075,10 +1075,19 @@ If you create an <xref:System.Security.Cryptography.X509Certificates.X509Certifi
         <Parameter Name="privateKey" Type="System.Security.Cryptography.ECDiffieHellman" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="privateKey">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="privateKey">The private ECDiffieHellman key.</param>
+        <summary>Combines a private key with the public key of an <see cref="T:System.Security.Cryptography.ECDiffieHellman" /> certificate to generate a new ECDiffieHellman certificate.</summary>
+        <returns>A new ECDiffieHellman certificate with the <see cref="P:System.Security.Cryptography.X509Certificates.X509Certificate2.HasPrivateKey" /> property set to <see langword="true" />.
+            The current certificate isn't modified.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="privateKey" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The certificate already has an associated private key.</exception>
+        <exception cref="T:System.ArgumentException">The certificate doesn't have a public key.
+
+-or-
+
+The specified private key doesn't match the public key for this certificate.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromEncryptedPem">
@@ -1237,10 +1246,23 @@ The password specified for the private key is incorrect.</exception>
         <Parameter Name="certPem" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="certPem">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="certPem">The text of the PEM-encoded X509 certificate.</param>
+        <summary>Creates a new X509 certificate from the contents of an RFC 7468 PEM-encoded certificate.</summary>
+        <returns>A new X509 certificate.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This loads the first well-formed PEM found with a CERTIFICATE label.
+            
+For PEM-encoded certificates with a private key, use
+            <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char})>.
+
+For PEM-encoded certificates in a file, use <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.String)>.
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The contents of <paramref name="certPem" /> do not contain a PEM-encoded certificate, or it is malformed.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromPem">
@@ -1727,9 +1749,10 @@ The certificate uses an unknown public key algorithm.</exception>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets the <see cref="T:System.Security.Cryptography.ECDiffieHellman" /> private key from this certificate.</summary>
+        <returns>The private key, or <see langword="null" /> if this certificate does not have an ECDiffieHellman private key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The handle is invalid.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetECDiffieHellmanPublicKey">
@@ -1752,9 +1775,10 @@ The certificate uses an unknown public key algorithm.</exception>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets the <see cref="T:System.Security.Cryptography.ECDiffieHellman" /> public key from this certificate.</summary>
+        <returns>The public key, or <see langword="null" /> if this certificate does not have an ECDiffieHellman public key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The handle is invalid.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetNameInfo">
