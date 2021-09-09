@@ -32,7 +32,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents a symmetric key to be used with the ChaCha20 stream cipher in the combined mode with the Poly1305 authenticator.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -52,9 +52,10 @@
         <Parameter Name="key" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="key">The secret key to use for this instance.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ChaCha20Poly1305" /> class with a provided key.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="key" /> parameter length is not 32 bytes (256 bits).</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -73,9 +74,10 @@
         <Parameter Name="key" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="key">The secret key to use for this instance.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.ChaCha20Poly1305" /> class with a provided key.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="key" /> parameter length is not 32 bytes (256 bits).</exception>
       </Docs>
     </Member>
     <Member MemberName="Decrypt">
@@ -100,13 +102,32 @@
         <Parameter Name="associatedData" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="nonce">To be added.</param>
-        <param name="ciphertext">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="plaintext">To be added.</param>
-        <param name="associatedData">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="nonce">The nonce associated with this message, which must match the value provided during encryption.</param>
+        <param name="ciphertext">The encrypted content to decrypt.</param>
+        <param name="tag">The authentication tag produced for this message during encryption.</param>
+        <param name="plaintext">The byte array to receive the decrypted contents.</param>
+        <param name="associatedData">Extra data associated with this message, which must match the value provided during encryption.</param>
+        <summary>Decrypts the ciphertext into the provided destination buffer if the authentication tag can be validated.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If `tag` cannot be validated (using the key, `nonce`, `ciphertext`, and `associatedData` values), then `plaintext` is cleared.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="plaintext" /> parameter and the <paramref name="ciphertext" /> do not have the same length.
+
+-or-
+
+The <paramref name="nonce" /> parameter length is not 12 bytes (96 bits).
+
+-or-
+
+The <paramref name="tag" /> parameter length is not 16 bytes (128 bits).</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="nonce" />, <paramref name="ciphertext" />, <paramref name="tag" />, or <paramref name="plaintext" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The tag value could not be verified, or the decryption operation otherwise failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Decrypt">
@@ -131,13 +152,31 @@
         <Parameter Name="associatedData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="nonce">To be added.</param>
-        <param name="ciphertext">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="plaintext">To be added.</param>
-        <param name="associatedData">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="nonce">The nonce associated with this message, which must match the value provided during encryption.</param>
+        <param name="ciphertext">The encrypted content to decrypt.</param>
+        <param name="tag">The authentication tag produced for this message during encryption.</param>
+        <param name="plaintext">The byte array to receive the decrypted contents.</param>
+        <param name="associatedData">Extra data associated with this message, which must match the value provided during encryption.</param>
+        <summary>Decrypts the ciphertext into the provided destination buffer if the authentication tag can be validated.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If `tag` cannot be validated (using the key, `nonce`, `ciphertext`, and `associatedData` values), then `plaintext` is cleared.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="plaintext" /> parameter and the <paramref name="ciphertext" /> do not have the same length.
+
+-or-
+
+The <paramref name="nonce" /> parameter length is not 12 bytes (96 bits).
+
+-or-
+
+The <paramref name="tag" /> parameter length is not 16 bytes (128 bits).</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The tag value could not be verified, or the decryption operation otherwise failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -186,13 +225,32 @@
         <Parameter Name="associatedData" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="nonce">To be added.</param>
-        <param name="plaintext">To be added.</param>
-        <param name="ciphertext">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="associatedData">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="nonce">The nonce associated with this message, which should be a unique value for every operation with the same key.</param>
+        <param name="plaintext">The content to encrypt.</param>
+        <param name="ciphertext">The byte array to receive the encrypted contents.</param>
+        <param name="tag">The byte array to receive the generated authentication tag.</param>
+        <param name="associatedData">Extra data associated with this message, which must also be provided during decryption.</param>
+        <summary>Encrypts the plaintext into the ciphertext destination buffer and generates the authentication tag into a separate buffer.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The security guarantees of the ChaCha20/Poly1305 algorithm mode require that the same nonce value is never used twice with the same key.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="plaintext" /> parameter and the <paramref name="ciphertext" /> do not have the same length.
+
+-or-
+
+The <paramref name="nonce" /> parameter length is not 12 bytes (96 bits).
+
+-or-
+
+The <paramref name="tag" /> parameter length is not 16 bytes (128 bits).</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="nonce" />, <paramref name="ciphertext" />, <paramref name="tag" />, or <paramref name="plaintext" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The encryption operation failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Encrypt">
@@ -217,13 +275,32 @@
         <Parameter Name="associatedData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="nonce">To be added.</param>
-        <param name="plaintext">To be added.</param>
-        <param name="ciphertext">To be added.</param>
-        <param name="tag">To be added.</param>
-        <param name="associatedData">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="nonce">The nonce associated with this message, which should be a unique value for every operation with the same key.</param>
+        <param name="plaintext">The content to encrypt.</param>
+        <param name="ciphertext">The byte array to receive the encrypted contents.</param>
+        <param name="tag">The byte array to receive the generated authentication tag.</param>
+        <param name="associatedData">Extra data associated with this message, which must also be provided during decryption.</param>
+        <summary>Encrypts the plaintext into the ciphertext destination buffer and generates the authentication tag into a separate buffer.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The security guarantees of the ChaCha20/Poly1305 algorithm mode require that the same nonce value is never used twice with the same key.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="plaintext" /> parameter and the <paramref name="ciphertext" /> do not have the same length.
+
+-or-
+
+The <paramref name="nonce" /> parameter length is not 12 bytes (96 bits).
+
+-or-
+
+The <paramref name="tag" /> parameter length is not 16 bytes (128 bits).</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="nonce" />, <paramref name="ciphertext" />, <paramref name="tag" />, or <paramref name="plaintext" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The encryption operation failed.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsSupported">
@@ -242,8 +319,8 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the algorithm is supported on the current platform.</summary>
+        <value><see langword="true" /> if the algorithm is supported; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
