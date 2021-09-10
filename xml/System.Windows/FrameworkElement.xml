@@ -103,7 +103,16 @@
       <Parameters />
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Windows.FrameworkElement" /> class.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Automatic determination of current Dispatcher. Use alternative constructor
+                that accepts a Dispatcher for best performance.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ActualHeight">
@@ -399,7 +408,32 @@
         <param name="finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
         <summary>When overridden in a derived class, positions child elements and determines a size for a <see cref="T:System.Windows.FrameworkElement" /> derived class.</summary>
         <returns>The actual size used.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Element authors should override this method, call Arrange on each visible child element,
+             passing final size for each child element via finalSize parameter.
+             Note: It is required that a parent element calls Arrange on each child or they won't be rendered.
+             Typical override follows a pattern roughly like this (pseudo-code):
+             <example>
+  <code lang="C#">
+            
+            
+             protected override Size ArrangeOverride(Size finalSize)
+             {
+                 foreach (UIElement child in VisualChildren)
+                 {
+                     child.Arrange(new Rect(childX, childY, childFinalSize));
+                 }
+                 return finalSize; //this can be another size if the panel actually takes smaller/larger then finalSize
+             }
+             </code>
+</example>
+
+          ]]></format>
+        </remarks>
         <block subset="none" type="overrides">
           <para>Control authors who want to customize the arrange pass of layout processing should override this method. The implementation pattern should call <see cref="M:System.Windows.UIElement.Arrange(System.Windows.Rect)" /> on each visible child element, and pass the final desired size for each child element as the <paramref name="finalRect" /> parameter. Parent elements should call <see cref="M:System.Windows.UIElement.Arrange(System.Windows.Rect)" /> on each child, otherwise the child elements will not be rendered.  
   
