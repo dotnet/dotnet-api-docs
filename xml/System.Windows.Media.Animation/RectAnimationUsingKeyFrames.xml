@@ -138,7 +138,24 @@
       <Docs>
         <param name="childText">The text to add to the <see cref="T:System.Windows.Media.Animation.RectAnimationUsingKeyFrames" />.</param>
         <summary>Adds a text string as a child of this <see cref="T:System.Windows.Media.Animation.RectAnimationUsingKeyFrames" />.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is the only core implementation.  It does not call
+            WritePreamble() or WritePostscript().  It also doesn't throw an
+            ArgumentNullException if the childText parameter is `null`.  These tasks
+            are performed by the interface implementation.  Therefore, it's OK
+            for a derived class to override this method and call the base
+            class implementation only if they determine that it's the right
+            course of action.  The derived class can rely on KeyFrameAnimation's
+            implementation of IAddChild.AddChild or implement their own
+            following the Freezable pattern since that would be a public
+            method.
+
+          ]]></format>
+        </remarks>
         <exception cref="T:System.InvalidOperationException">Child text cannot be added because <see cref="T:System.Windows.Media.Animation.RectAnimationUsingKeyFrames" /> does not accept text as a child until a derived class overrides this behavior to allow text to be added.</exception>
       </Docs>
     </Member>
@@ -510,7 +527,22 @@
         <summary>Gets or sets a value that indicates whether the animation's output value is added to the base value of the property being animated.</summary>
         <value>
           <see langword="true" /> if the animation adds its output value to the base value of the property being animated instead of replacing it; otherwise, <see langword="false" />. The default value is <see langword="false" />.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+In the case where the first key frame's resolved key time is not
+            0.0 there is slightly different behavior between KeyFrameRectAnimations
+            with IsAdditive set and without.  Animations with the property set to false
+            will behave as if there is a key frame at time 0.0 with the value of the
+            base value.  Animations with the property set to `true` will behave as if
+            there is a key frame at time 0.0 with a zero value appropriate to the type
+            of the animation.  These behaviors provide the results most commonly expected
+            and can be overridden by simply adding a key frame at time 0.0 with the preferred value.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsCumulative">
@@ -669,7 +701,16 @@
       <Docs>
         <param name="child">The child object to add.</param>
         <summary>Adds a child object.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A KeyFrameAnimation only accepts a KeyFrame of the proper type as
+            a child.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="System.Windows.Markup.IAddChild.AddText">
@@ -699,7 +740,19 @@
       <Docs>
         <param name="childText">The text to add to the object.</param>
         <summary>Adds the text content of a node to the object.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A KeyFrameAnimation does not accept text as a child, so this method will
+            raise an InvalididOperationException unless a derived class has
+            overridden the behavior to add text.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The childText parameter is
+            <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="System.Windows.Media.Animation.IKeyFrameAnimation.KeyFrames">
