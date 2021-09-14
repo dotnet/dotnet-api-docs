@@ -102,12 +102,23 @@ The Initialize() must be called prior to calling this function.
         <Parameter Name="unhandledExceptionPropagationHandler" Type="System.Runtime.InteropServices.ObjectiveC.ObjectiveCMarshal+UnhandledExceptionPropagationHandler" />
       </Parameters>
       <Docs>
-        <param name="beginEndCallback">To be added.</param>
-        <param name="isReferencedCallback">To be added.</param>
-        <param name="trackedObjectEnteredFinalization">To be added.</param>
-        <param name="unhandledExceptionPropagationHandler">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="beginEndCallback">Called when tracking begins and ends.</param>
+        <param name="isReferencedCallback">Called to determine if a managed object instance is referenced elsewhere, and must not be collected by the GC.</param>
+        <param name="trackedObjectEnteredFinalization">Called when a tracked object enters the finalization queue.</param>
+        <param name="unhandledExceptionPropagationHandler">Handler for the propagation of unhandled Exceptions across a managed -&gt; native boundary (that is, Reverse P/Invoke).</param>
+        <summary>Initialize the Objective-C marshalling API.</summary>
+        <remarks>
+All unmanaged function pointers must be written in native code since they will be called by the GC and
+managed code is not able to run at that time.
+
+The <paramref name="beginEndCallback" /> will be called when reference tracking begins and ends.
+The associated begin/end pair will never be nested. When using Workstation GC, the begin/end pair
+will be called on the same thread. When using Server GC, the begin/end pair is not guaranteed to
+be called on the same thread.
+
+The <paramref name="isReferencedCallback" /> should return 0 for not reference or 1 for
+referenced. Any other value has undefined behavior.
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SetMessageSendCallback">
