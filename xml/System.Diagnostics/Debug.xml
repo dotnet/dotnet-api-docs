@@ -215,12 +215,12 @@
       </Docs>
     </Member>
     <Member MemberName="Assert">
-      <MemberSignature Language="C#" Value="public static void Assert (bool condition, System.Diagnostics.Debug.AssertInterpolatedStringHandler message);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Assert(bool condition, valuetype System.Diagnostics.Debug/AssertInterpolatedStringHandler message) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.Assert(System.Boolean,System.Diagnostics.Debug.AssertInterpolatedStringHandler)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub Assert (condition As Boolean, message As Debug.AssertInterpolatedStringHandler)" />
-      <MemberSignature Language="F#" Value="static member Assert : bool * System.Diagnostics.Debug.AssertInterpolatedStringHandler -&gt; unit" Usage="System.Diagnostics.Debug.Assert (condition, message)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Assert(bool condition, System::Diagnostics::Debug::AssertInterpolatedStringHandler message);" />
+      <MemberSignature Language="C#" Value="public static void Assert (bool condition, ref System.Diagnostics.Debug.AssertInterpolatedStringHandler message);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Assert(bool condition, valuetype System.Diagnostics.Debug/AssertInterpolatedStringHandler&amp; message) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.Assert(System.Boolean,System.Diagnostics.Debug.AssertInterpolatedStringHandler@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub Assert (condition As Boolean, ByRef message As Debug.AssertInterpolatedStringHandler)" />
+      <MemberSignature Language="F#" Value="static member Assert : bool * AssertInterpolatedStringHandler -&gt; unit" Usage="System.Diagnostics.Debug.Assert (condition, message)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Assert(bool condition, System::Diagnostics::Debug::AssertInterpolatedStringHandler % message);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
@@ -253,7 +253,7 @@
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="message" Type="System.Diagnostics.Debug+AssertInterpolatedStringHandler" Index="1" FrameworkAlternate="net-6.0">
+        <Parameter Name="message" Type="System.Diagnostics.Debug+AssertInterpolatedStringHandler" RefType="ref" Index="1" FrameworkAlternate="net-6.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("condition")]</AttributeName>
@@ -263,10 +263,41 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="condition">To be added.</param>
-        <param name="message">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="condition">The conditional expression to evaluate. If the condition is <see langword="true" />, the specified message is not sent and the message box is not displayed.</param>
+        <param name="message">The message to send to the <see cref="P:System.Diagnostics.Trace.Listeners" /> collection.</param>
+        <summary>Checks for a condition; if the condition is <see langword="false" />, outputs a specified message and displays a message box that shows the call stack.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ By default, the <xref:System.Diagnostics.Debug.Assert%2A?displayProperty=nameWithType> method works only in debug builds. Use the <xref:System.Diagnostics.Trace.Assert%2A?displayProperty=nameWithType> method if you want to do assertions in release builds. For more information, see [Assertions in Managed Code](/visualstudio/debugger/assertions-in-managed-code).  
+  
+ Typically, the <xref:System.Diagnostics.Debug.Assert%2A> method is used to identify logic errors during program development. <xref:System.Diagnostics.Debug.Assert%2A> evaluates the condition. If the result is `false`, it sends the specified diagnostic message to the <xref:System.Diagnostics.Debug.Listeners%2A> collection. You can customize this behavior by adding a <xref:System.Diagnostics.TraceListener> to, or removing one from, the <xref:System.Diagnostics.Debug.Listeners%2A> collection.  
+  
+ When the application runs in user interface mode, it displays a message box that shows the call stack with file and line numbers. The message box contains three buttons: **Abort**, **Retry**, and **Ignore**. Clicking the **Abort** button terminates the application. Clicking **Retry** sends you to the code in the debugger if your application is running in a debugger, or offers to open a debugger if it is not. Clicking **Ignore** continues with the next instruction in the code.  
+  
+> [!NOTE]
+> The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [&lt;clear&gt; element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) or the [&lt;remove&gt; element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).  
+  
+ You can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:  
+  
+```xml  
+<configuration>  
+  <system.diagnostics>  
+    <assert assertuienabled="true" logfilename="c:\\myFile.log" />  
+  </system.diagnostics>  
+</configuration>  
+```  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Diagnostics.Debug" />
+        <altmember cref="T:System.Diagnostics.Trace" />
+        <altmember cref="T:System.Diagnostics.BooleanSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="T:System.Diagnostics.DefaultTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConsoleTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConditionalAttribute" />
       </Docs>
     </Member>
     <Member MemberName="Assert">
@@ -365,12 +396,12 @@
       </Docs>
     </Member>
     <Member MemberName="Assert">
-      <MemberSignature Language="C#" Value="public static void Assert (bool condition, System.Diagnostics.Debug.AssertInterpolatedStringHandler message, System.Diagnostics.Debug.AssertInterpolatedStringHandler detailMessage);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Assert(bool condition, valuetype System.Diagnostics.Debug/AssertInterpolatedStringHandler message, valuetype System.Diagnostics.Debug/AssertInterpolatedStringHandler detailMessage) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.Assert(System.Boolean,System.Diagnostics.Debug.AssertInterpolatedStringHandler,System.Diagnostics.Debug.AssertInterpolatedStringHandler)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub Assert (condition As Boolean, message As Debug.AssertInterpolatedStringHandler, detailMessage As Debug.AssertInterpolatedStringHandler)" />
-      <MemberSignature Language="F#" Value="static member Assert : bool * System.Diagnostics.Debug.AssertInterpolatedStringHandler * System.Diagnostics.Debug.AssertInterpolatedStringHandler -&gt; unit" Usage="System.Diagnostics.Debug.Assert (condition, message, detailMessage)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Assert(bool condition, System::Diagnostics::Debug::AssertInterpolatedStringHandler message, System::Diagnostics::Debug::AssertInterpolatedStringHandler detailMessage);" />
+      <MemberSignature Language="C#" Value="public static void Assert (bool condition, ref System.Diagnostics.Debug.AssertInterpolatedStringHandler message, ref System.Diagnostics.Debug.AssertInterpolatedStringHandler detailMessage);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Assert(bool condition, valuetype System.Diagnostics.Debug/AssertInterpolatedStringHandler&amp; message, valuetype System.Diagnostics.Debug/AssertInterpolatedStringHandler&amp; detailMessage) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.Assert(System.Boolean,System.Diagnostics.Debug.AssertInterpolatedStringHandler@,System.Diagnostics.Debug.AssertInterpolatedStringHandler@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub Assert (condition As Boolean, ByRef message As Debug.AssertInterpolatedStringHandler, ByRef detailMessage As Debug.AssertInterpolatedStringHandler)" />
+      <MemberSignature Language="F#" Value="static member Assert : bool * AssertInterpolatedStringHandler * AssertInterpolatedStringHandler -&gt; unit" Usage="System.Diagnostics.Debug.Assert (condition, message, detailMessage)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Assert(bool condition, System::Diagnostics::Debug::AssertInterpolatedStringHandler % message, System::Diagnostics::Debug::AssertInterpolatedStringHandler % detailMessage);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
@@ -403,7 +434,7 @@
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="message" Type="System.Diagnostics.Debug+AssertInterpolatedStringHandler" Index="1" FrameworkAlternate="net-6.0">
+        <Parameter Name="message" Type="System.Diagnostics.Debug+AssertInterpolatedStringHandler" RefType="ref" Index="1" FrameworkAlternate="net-6.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("condition")]</AttributeName>
@@ -411,7 +442,7 @@
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="detailMessage" Type="System.Diagnostics.Debug+AssertInterpolatedStringHandler" Index="2" FrameworkAlternate="net-6.0">
+        <Parameter Name="detailMessage" Type="System.Diagnostics.Debug+AssertInterpolatedStringHandler" RefType="ref" Index="2" FrameworkAlternate="net-6.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("condition")]</AttributeName>
@@ -421,11 +452,42 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="condition">To be added.</param>
-        <param name="message">To be added.</param>
-        <param name="detailMessage">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="condition">The conditional expression to evaluate. If the condition is <see langword="true" />, the specified message is not sent and the message box is not displayed.</param>
+        <param name="message">The message to send to the <see cref="P:System.Diagnostics.Trace.Listeners" /> collection.</param>
+        <param name="detailMessage">The detailed message to send to the <see cref="P:System.Diagnostics.Trace.Listeners" /> collection.</param>
+        <summary>Checks for a condition; if the condition is <see langword="false" />, outputs a specified message and displays a message box that shows the call stack.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ By default, the <xref:System.Diagnostics.Debug.Assert%2A?displayProperty=nameWithType> method works only in debug builds. Use the <xref:System.Diagnostics.Trace.Assert%2A?displayProperty=nameWithType> method if you want to do assertions in release builds. For more information, see [Assertions in Managed Code](/visualstudio/debugger/assertions-in-managed-code).  
+  
+ Typically, the <xref:System.Diagnostics.Debug.Assert%2A> method is used to identify logic errors during program development. <xref:System.Diagnostics.Debug.Assert%2A> evaluates the condition. If the result is `false`, it sends the specified diagnostic message to the <xref:System.Diagnostics.Debug.Listeners%2A> collection. You can customize this behavior by adding a <xref:System.Diagnostics.TraceListener> to, or removing one from, the <xref:System.Diagnostics.Debug.Listeners%2A> collection.  
+  
+ When the application runs in user interface mode, it displays a message box that shows the call stack with file and line numbers. The message box contains three buttons: **Abort**, **Retry**, and **Ignore**. Clicking the **Abort** button terminates the application. Clicking **Retry** sends you to the code in the debugger if your application is running in a debugger, or offers to open a debugger if it is not. Clicking **Ignore** continues with the next instruction in the code.  
+  
+> [!NOTE]
+> The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [&lt;clear&gt; element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) or the [&lt;remove&gt; element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).  
+  
+ You can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:  
+  
+```xml  
+<configuration>  
+  <system.diagnostics>  
+    <assert assertuienabled="true" logfilename="c:\\myFile.log" />  
+  </system.diagnostics>  
+</configuration>  
+```  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Diagnostics.Debug" />
+        <altmember cref="T:System.Diagnostics.Trace" />
+        <altmember cref="T:System.Diagnostics.BooleanSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="T:System.Diagnostics.DefaultTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConsoleTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConditionalAttribute" />
       </Docs>
     </Member>
     <Member MemberName="Assert">
@@ -1856,12 +1918,12 @@ End of list of errors
       </Docs>
     </MemberGroup>
     <Member MemberName="WriteIf">
-      <MemberSignature Language="C#" Value="public static void WriteIf (bool condition, System.Diagnostics.Debug.WriteIfInterpolatedStringHandler message);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void WriteIf(bool condition, valuetype System.Diagnostics.Debug/WriteIfInterpolatedStringHandler message) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.WriteIf(System.Boolean,System.Diagnostics.Debug.WriteIfInterpolatedStringHandler)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub WriteIf (condition As Boolean, message As Debug.WriteIfInterpolatedStringHandler)" />
-      <MemberSignature Language="F#" Value="static member WriteIf : bool * System.Diagnostics.Debug.WriteIfInterpolatedStringHandler -&gt; unit" Usage="System.Diagnostics.Debug.WriteIf (condition, message)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void WriteIf(bool condition, System::Diagnostics::Debug::WriteIfInterpolatedStringHandler message);" />
+      <MemberSignature Language="C#" Value="public static void WriteIf (bool condition, ref System.Diagnostics.Debug.WriteIfInterpolatedStringHandler message);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void WriteIf(bool condition, valuetype System.Diagnostics.Debug/WriteIfInterpolatedStringHandler&amp; message) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.WriteIf(System.Boolean,System.Diagnostics.Debug.WriteIfInterpolatedStringHandler@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub WriteIf (condition As Boolean, ByRef message As Debug.WriteIfInterpolatedStringHandler)" />
+      <MemberSignature Language="F#" Value="static member WriteIf : bool * WriteIfInterpolatedStringHandler -&gt; unit" Usage="System.Diagnostics.Debug.WriteIf (condition, message)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void WriteIf(bool condition, System::Diagnostics::Debug::WriteIfInterpolatedStringHandler % message);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
@@ -1887,7 +1949,7 @@ End of list of errors
       </ReturnValue>
       <Parameters>
         <Parameter Name="condition" Type="System.Boolean" Index="0" FrameworkAlternate="net-6.0" />
-        <Parameter Name="message" Type="System.Diagnostics.Debug+WriteIfInterpolatedStringHandler" Index="1" FrameworkAlternate="net-6.0">
+        <Parameter Name="message" Type="System.Diagnostics.Debug+WriteIfInterpolatedStringHandler" RefType="ref" Index="1" FrameworkAlternate="net-6.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("condition")]</AttributeName>
@@ -1897,10 +1959,29 @@ End of list of errors
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="condition">To be added.</param>
-        <param name="message">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="message">A message to write.</param>
+        <param name="category">A category name used to organize the output.</param>
+        <summary>Writes a category name and message to the trace listeners in the <see cref="P:System.Diagnostics.Debug.Listeners" /> collection.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ By default, the output is written to an instance of <xref:System.Diagnostics.DefaultTraceListener>.  
+  
+ Use the `category` parameter to group output messages.  
+  
+ This method calls the <xref:System.Diagnostics.TraceListener.Write%2A> method of the trace listener.  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Diagnostics.Debug" />
+        <altmember cref="T:System.Diagnostics.Trace" />
+        <altmember cref="T:System.Diagnostics.BooleanSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="T:System.Diagnostics.DefaultTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConsoleTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConditionalAttribute" />
       </Docs>
     </Member>
     <Member MemberName="WriteIf">
@@ -2102,12 +2183,12 @@ Debug.WriteIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range");
       </Docs>
     </Member>
     <Member MemberName="WriteIf">
-      <MemberSignature Language="C#" Value="public static void WriteIf (bool condition, System.Diagnostics.Debug.WriteIfInterpolatedStringHandler message, string? category);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void WriteIf(bool condition, valuetype System.Diagnostics.Debug/WriteIfInterpolatedStringHandler message, string category) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.WriteIf(System.Boolean,System.Diagnostics.Debug.WriteIfInterpolatedStringHandler,System.String)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub WriteIf (condition As Boolean, message As Debug.WriteIfInterpolatedStringHandler, category As String)" />
-      <MemberSignature Language="F#" Value="static member WriteIf : bool * System.Diagnostics.Debug.WriteIfInterpolatedStringHandler * string -&gt; unit" Usage="System.Diagnostics.Debug.WriteIf (condition, message, category)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void WriteIf(bool condition, System::Diagnostics::Debug::WriteIfInterpolatedStringHandler message, System::String ^ category);" />
+      <MemberSignature Language="C#" Value="public static void WriteIf (bool condition, ref System.Diagnostics.Debug.WriteIfInterpolatedStringHandler message, string? category);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void WriteIf(bool condition, valuetype System.Diagnostics.Debug/WriteIfInterpolatedStringHandler&amp; message, string category) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.WriteIf(System.Boolean,System.Diagnostics.Debug.WriteIfInterpolatedStringHandler@,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub WriteIf (condition As Boolean, ByRef message As Debug.WriteIfInterpolatedStringHandler, category As String)" />
+      <MemberSignature Language="F#" Value="static member WriteIf : bool * WriteIfInterpolatedStringHandler * string -&gt; unit" Usage="System.Diagnostics.Debug.WriteIf (condition, message, category)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void WriteIf(bool condition, System::Diagnostics::Debug::WriteIfInterpolatedStringHandler % message, System::String ^ category);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
@@ -2133,7 +2214,7 @@ Debug.WriteIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range");
       </ReturnValue>
       <Parameters>
         <Parameter Name="condition" Type="System.Boolean" Index="0" FrameworkAlternate="net-6.0" />
-        <Parameter Name="message" Type="System.Diagnostics.Debug+WriteIfInterpolatedStringHandler" Index="1" FrameworkAlternate="net-6.0">
+        <Parameter Name="message" Type="System.Diagnostics.Debug+WriteIfInterpolatedStringHandler" RefType="ref" Index="1" FrameworkAlternate="net-6.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("condition")]</AttributeName>
@@ -2144,11 +2225,30 @@ Debug.WriteIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range");
         <Parameter Name="category" Type="System.String" Index="2" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="condition">To be added.</param>
-        <param name="message">To be added.</param>
-        <param name="category">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="condition">The conditional expression to evaluate. If the condition is <see langword="true" />, the message is written to the trace listeners in the collection.</param>
+        <param name="message">A message to write.</param>
+        <param name="category">A category name used to organize the output.</param>
+        <summary>Writes a category name and message to the trace listeners in the <see cref="P:System.Diagnostics.Debug.Listeners" /> collection.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ By default, the output is written to an instance of <xref:System.Diagnostics.DefaultTraceListener>.  
+  
+ Use the `category` parameter to group output messages.  
+  
+ This method calls the <xref:System.Diagnostics.TraceListener.Write%2A> method of the trace listener.  
+ 
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Diagnostics.Debug" />
+        <altmember cref="T:System.Diagnostics.Trace" />
+        <altmember cref="T:System.Diagnostics.BooleanSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="T:System.Diagnostics.DefaultTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConsoleTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConditionalAttribute" />
       </Docs>
     </Member>
     <Member MemberName="WriteIf">
@@ -2785,12 +2885,12 @@ Debug.WriteIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range");
       </Docs>
     </MemberGroup>
     <Member MemberName="WriteLineIf">
-      <MemberSignature Language="C#" Value="public static void WriteLineIf (bool condition, System.Diagnostics.Debug.WriteIfInterpolatedStringHandler message);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void WriteLineIf(bool condition, valuetype System.Diagnostics.Debug/WriteIfInterpolatedStringHandler message) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.WriteLineIf(System.Boolean,System.Diagnostics.Debug.WriteIfInterpolatedStringHandler)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub WriteLineIf (condition As Boolean, message As Debug.WriteIfInterpolatedStringHandler)" />
-      <MemberSignature Language="F#" Value="static member WriteLineIf : bool * System.Diagnostics.Debug.WriteIfInterpolatedStringHandler -&gt; unit" Usage="System.Diagnostics.Debug.WriteLineIf (condition, message)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void WriteLineIf(bool condition, System::Diagnostics::Debug::WriteIfInterpolatedStringHandler message);" />
+      <MemberSignature Language="C#" Value="public static void WriteLineIf (bool condition, ref System.Diagnostics.Debug.WriteIfInterpolatedStringHandler message);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void WriteLineIf(bool condition, valuetype System.Diagnostics.Debug/WriteIfInterpolatedStringHandler&amp; message) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.WriteLineIf(System.Boolean,System.Diagnostics.Debug.WriteIfInterpolatedStringHandler@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub WriteLineIf (condition As Boolean, ByRef message As Debug.WriteIfInterpolatedStringHandler)" />
+      <MemberSignature Language="F#" Value="static member WriteLineIf : bool * WriteIfInterpolatedStringHandler -&gt; unit" Usage="System.Diagnostics.Debug.WriteLineIf (condition, message)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void WriteLineIf(bool condition, System::Diagnostics::Debug::WriteIfInterpolatedStringHandler % message);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
@@ -2816,7 +2916,7 @@ Debug.WriteIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range");
       </ReturnValue>
       <Parameters>
         <Parameter Name="condition" Type="System.Boolean" Index="0" FrameworkAlternate="net-6.0" />
-        <Parameter Name="message" Type="System.Diagnostics.Debug+WriteIfInterpolatedStringHandler" Index="1" FrameworkAlternate="net-6.0">
+        <Parameter Name="message" Type="System.Diagnostics.Debug+WriteIfInterpolatedStringHandler" RefType="ref" Index="1" FrameworkAlternate="net-6.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("condition")]</AttributeName>
@@ -2826,10 +2926,43 @@ Debug.WriteIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range");
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="condition">To be added.</param>
-        <param name="message">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="condition">The conditional expression to evaluate. If the condition is <see langword="true" />, the message is written to the trace listeners in the collection.</param>
+        <param name="message">A message to write.</param>
+        <summary>Writes a message to the trace listeners in the <see cref="P:System.Diagnostics.Debug.Listeners" /> collection if a condition is <see langword="true" />.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ By default, the output is written to an instance of <xref:System.Diagnostics.DefaultTraceListener>.  
+  
+ This method calls the <xref:System.Diagnostics.TraceListener.WriteLine%2A?displayProperty=nameWithType> method of the trace listener.  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>You can minimize the performance penalty of instrumenting your application by using <see langword="If...Then" /> statements instead of using <see cref="M:System.Diagnostics.Debug.WriteLineIf(System.Boolean,System.String)" /> statements. The following two code examples send the same debugging message. However, the first example is much faster when tracing is off, because if <c>mySwitch.TraceError</c> evaluates to <see langword="false" />, you do not call <see cref="M:System.Diagnostics.Debug.WriteLine(System.String)" />. The second example always calls <see cref="M:System.Diagnostics.Debug.WriteLineIf(System.Boolean,System.String)" />, even when <c>mySwitch.TraceError</c> is <see langword="false" /> and no tracing output is produced. This can result in unnecessary execution of arbitrarily complex code.  
+  
+ First example:  
+  
+```csharp  
+if(mySwitch.TraceError)   
+    Debug.WriteLine("aNumber = " + aNumber + " out of range");  
+```  
+  
+ Second example:  
+  
+```csharp  
+Debug.WriteLineIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range");  
+```</para>
+        </block>
+        <altmember cref="T:System.Diagnostics.Debug" />
+        <altmember cref="T:System.Diagnostics.Trace" />
+        <altmember cref="T:System.Diagnostics.BooleanSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="T:System.Diagnostics.DefaultTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConsoleTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConditionalAttribute" />
       </Docs>
     </Member>
     <Member MemberName="WriteLineIf">
@@ -3032,12 +3165,12 @@ Debug.WriteLineIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range")
       </Docs>
     </Member>
     <Member MemberName="WriteLineIf">
-      <MemberSignature Language="C#" Value="public static void WriteLineIf (bool condition, System.Diagnostics.Debug.WriteIfInterpolatedStringHandler message, string? category);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void WriteLineIf(bool condition, valuetype System.Diagnostics.Debug/WriteIfInterpolatedStringHandler message, string category) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.WriteLineIf(System.Boolean,System.Diagnostics.Debug.WriteIfInterpolatedStringHandler,System.String)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub WriteLineIf (condition As Boolean, message As Debug.WriteIfInterpolatedStringHandler, category As String)" />
-      <MemberSignature Language="F#" Value="static member WriteLineIf : bool * System.Diagnostics.Debug.WriteIfInterpolatedStringHandler * string -&gt; unit" Usage="System.Diagnostics.Debug.WriteLineIf (condition, message, category)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void WriteLineIf(bool condition, System::Diagnostics::Debug::WriteIfInterpolatedStringHandler message, System::String ^ category);" />
+      <MemberSignature Language="C#" Value="public static void WriteLineIf (bool condition, ref System.Diagnostics.Debug.WriteIfInterpolatedStringHandler message, string? category);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void WriteLineIf(bool condition, valuetype System.Diagnostics.Debug/WriteIfInterpolatedStringHandler&amp; message, string category) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Debug.WriteLineIf(System.Boolean,System.Diagnostics.Debug.WriteIfInterpolatedStringHandler@,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub WriteLineIf (condition As Boolean, ByRef message As Debug.WriteIfInterpolatedStringHandler, category As String)" />
+      <MemberSignature Language="F#" Value="static member WriteLineIf : bool * WriteIfInterpolatedStringHandler * string -&gt; unit" Usage="System.Diagnostics.Debug.WriteLineIf (condition, message, category)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void WriteLineIf(bool condition, System::Diagnostics::Debug::WriteIfInterpolatedStringHandler % message, System::String ^ category);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
@@ -3063,7 +3196,7 @@ Debug.WriteLineIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range")
       </ReturnValue>
       <Parameters>
         <Parameter Name="condition" Type="System.Boolean" Index="0" FrameworkAlternate="net-6.0" />
-        <Parameter Name="message" Type="System.Diagnostics.Debug+WriteIfInterpolatedStringHandler" Index="1" FrameworkAlternate="net-6.0">
+        <Parameter Name="message" Type="System.Diagnostics.Debug+WriteIfInterpolatedStringHandler" RefType="ref" Index="1" FrameworkAlternate="net-6.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("condition")]</AttributeName>
@@ -3074,11 +3207,46 @@ Debug.WriteLineIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range")
         <Parameter Name="category" Type="System.String" Index="2" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="condition">To be added.</param>
-        <param name="message">To be added.</param>
-        <param name="category">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="condition">
+          <see langword="true" /> to cause a message to be written; otherwise, <see langword="false" />.</param>
+        <param name="message">A message to write.</param>
+        <param name="category">A category name used to organize the output.</param>
+        <summary>Writes a category name and message to the trace listeners in the <see cref="P:System.Diagnostics.Debug.Listeners" /> collection if a condition is <see langword="true" />.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ By default, the output is written to an instance of <xref:System.Diagnostics.DefaultTraceListener>.  
+  
+ The `category` parameter can be used to group output messages.  
+  
+ This method calls the <xref:System.Diagnostics.TraceListener.WriteLine%2A?displayProperty=nameWithType> method of the trace listener.  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>You can minimize the performance penalty of instrumenting your application by using <see langword="If...Then" /> statements instead of using <see cref="M:System.Diagnostics.Debug.WriteLineIf(System.Boolean,System.String)" /> statements. The following two code examples send the same debugging message. However, the first example is much faster when tracing is off, because if <c>mySwitch.TraceError</c> evaluates to <see langword="false" />, you do not call <see cref="M:System.Diagnostics.Debug.WriteLine(System.String)" />. The second example always calls <see cref="M:System.Diagnostics.Debug.WriteLineIf(System.Boolean,System.String)" />, even when <c>mySwitch.TraceError</c> is <see langword="false" /> and no tracing output is produced. This can result in unnecessary execution of arbitrarily complex code.  
+  
+ First example:  
+  
+```csharp  
+if(mySwitch.TraceError)   
+    Debug.WriteLine("aNumber = " + aNumber + " out of range");  
+```  
+  
+ Second example:  
+  
+```csharp  
+Debug.WriteLineIf(mySwitch.TraceError, "aNumber = " + aNumber + " out of range");  
+```</para>
+        </block>
+        <altmember cref="T:System.Diagnostics.Debug" />
+        <altmember cref="T:System.Diagnostics.Trace" />
+        <altmember cref="T:System.Diagnostics.BooleanSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceSwitch" />
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="T:System.Diagnostics.DefaultTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConsoleTraceListener" />
+        <altmember cref="T:System.Diagnostics.ConditionalAttribute" />
       </Docs>
     </Member>
     <Member MemberName="WriteLineIf">

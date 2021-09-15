@@ -31,7 +31,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides a handler used by the language compiler to format interpolated strings into character spans.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -54,12 +54,12 @@
         <Parameter Name="shouldAppend" Type="System.Boolean" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="literalLength">To be added.</param>
-        <param name="formattedCount">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="shouldAppend">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="literalLength">The number of constant characters outside of interpolation expressions in the interpolated string.</param>
+        <param name="formattedCount">The number of interpolation expressions in the interpolated string.</param>
+        <param name="destination">The destination buffer.</param>
+        <param name="shouldAppend">Upon return, <see langword="true"/> if the destination may be long enough to support the formatting, or <see langword="false"/> if it won't be.</param>
+        <summary>Creates a handler used to write an interpolated string into a span of characterss.</summary>
+        <remarks>This is intended to be called only by compiler-generated code. Arguments are not validated as they'd otherwise be for members intended to be used directly.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -82,13 +82,13 @@
         <Parameter Name="shouldAppend" Type="System.Boolean" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="literalLength">To be added.</param>
-        <param name="formattedCount">To be added.</param>
-        <param name="destination">To be added.</param>
+        <param name="literalLength">The number of constant characters outside of interpolation expressions in the interpolated string.</param>
+        <param name="formattedCount">The number of interpolation expressions in the interpolated string.</param>
+        <param name="destination">The destination buffer.</param>
         <param name="provider">To be added.</param>
-        <param name="shouldAppend">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="shouldAppend">Upon return, <see langword="true"/> if the destination may be long enough to support the formatting, or <see langword="false"/> if it won't be.</param>
+        <summary>Creates a handler used to write an interpolated string into a span of characters.</summary>
+        <remarks>This is intended to be called only by compiler-generated code. Arguments are not validated as they'd otherwise be for members intended to be used directly.</remarks>
       </Docs>
     </Member>
     <Member MemberName="AppendFormatted">
@@ -110,9 +110,9 @@
         <Parameter Name="value" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The value to write.</param>
+        <summary>Writes the specified value to the handler.</summary>
+        <returns><see langword="false"/> if the operation failed; <see langword="true"/> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -135,9 +135,10 @@
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The value to write.</param>
+        <summary>Writes the specified value to the handler.</summary>
+        <returns>
+          <see langword="true" /> on success; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -161,11 +162,12 @@
         <Parameter Name="format" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="alignment">To be added.</param>
-        <param name="format">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The value to write.</param>
+        <param name="alignment">The minimum number of characters that should be written for this value. A negative value indicates left-aligned, and the required minimum is the absolute value.</param>
+        <param name="format">The format string.</param>
+        <summary>Writes the specified value to the handler.</summary>
+        <returns>
+          <see langword="true" /> on success; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -189,11 +191,11 @@
         <Parameter Name="format" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="alignment">To be added.</param>
-        <param name="format">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The value to write.</param>
+        <param name="alignment">>The minimum number of characters that should be written for this value. If the value is negative, it indicates left-aligned and the required minimum is the absolute value.</param>
+        <param name="format">The format string.</param>
+        <summary>Writes the specified value to the handler.</summary>
+        <returns><see langword="false"/> if the operation failed; <see langword="true"/> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -217,11 +219,12 @@
         <Parameter Name="format" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="alignment">To be added.</param>
-        <param name="format">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The value to write.</param>
+        <param name="alignment">The minimum number of characters that should be written for this value. A negative value indicates left-aligned, and the required minimum is the absolute value.</param>
+        <param name="format">The format string.</param>
+        <summary>Writes a specified value to the handler using a specified format string.</summary>
+        <returns>
+          <see langword="true" /> on success; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -247,10 +250,11 @@
         <Parameter Name="value" Type="T" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">The type of the value to write.</typeparam>
+        <param name="value">The value to write.</param>
+        <summary>Writes the specified value to the handler.</summary>
+        <returns>
+          <see langword="true" /> on success; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -277,11 +281,11 @@
         <Parameter Name="alignment" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="value">To be added.</param>
-        <param name="alignment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">The type of the value to write.</typeparam>
+        <param name="value">The value to write.</param>
+        <param name="alignment">The minimum number of characters that should be written for this value.A negative value indicates left-aligned, and the required minimum is the absolute value.</param>
+        <summary>Writes the specified value to the handler.</summary>
+        <returns><see langword="false"/> if the operation failed; <see langword="true"/> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -308,11 +312,12 @@
         <Parameter Name="format" Type="System.String" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="value">To be added.</param>
-        <param name="format">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">The type of the value to write.</typeparam>
+        <param name="value">The value to write.</param>
+        <param name="format">The format string.</param>
+        <summary>Writes a specified value to the handler using a specified format string.</summary>
+        <returns>
+          <see langword="true" /> on success; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -340,12 +345,13 @@
         <Parameter Name="format" Type="System.String" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="value">To be added.</param>
-        <param name="alignment">To be added.</param>
-        <param name="format">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">The type of the value to write.</typeparam>
+        <param name="value">The value to write.</param>
+        <param name="alignment">The minimum number of characters that should be written for this value. A negative value indicates left-aligned, and the required minimum is the absolute value.</param>
+        <param name="format">The format string.</param>
+        <summary>Writes a specified value to the handler using a specified format string.</summary>
+        <returns>
+          <see langword="true" /> on success; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -368,9 +374,10 @@
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The string to write.</param>
+        <summary>Writes the specified string to the handler.</summary>
+        <returns>
+          <see langword="true" /> if the value could be formatted to the span; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
