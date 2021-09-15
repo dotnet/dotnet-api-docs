@@ -36,9 +36,9 @@ class SinCos
             "\nWhen you have calls to sin(X) and cos(X) they \n" +
             "can be replaced with a single call to sincos(x):" );
 
-        UseCombinedSinCosine(15.0);
-        UseCombinedSinCosine(30.0);
-        UseCombinedSinCosine(45.0);
+        UseCombinedSineCosine(15.0);
+        UseCombinedSineCosine(30.0);
+        UseCombinedSineCosine(45.0);
     }
 
     // Evaluate trigonometric identities with a given angle.
