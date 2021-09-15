@@ -20,7 +20,7 @@ namespace StreamWriterSample
         {
             BeginWrite(logFile);
         }
-        //Destructor
+        // Finalizer
         ~Logger()
         {
             EndWrite();
