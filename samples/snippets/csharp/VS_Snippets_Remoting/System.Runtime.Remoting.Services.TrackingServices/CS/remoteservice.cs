@@ -1,8 +1,5 @@
-﻿//<snippet10>
+//<snippet10>
 using System;
-using System.Diagnostics;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
 
 // Remote object.
 public class RemoteService : MarshalByRefObject
