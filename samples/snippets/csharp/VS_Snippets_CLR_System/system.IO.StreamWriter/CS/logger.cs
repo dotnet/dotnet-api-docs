@@ -1,8 +1,6 @@
 ﻿//<snippet1>
 using System;
 using System.IO;
-using System.Runtime;
-using System.Reflection;
 using System.Runtime.Remoting.Lifetime;
 using System.Security.Permissions;
 
