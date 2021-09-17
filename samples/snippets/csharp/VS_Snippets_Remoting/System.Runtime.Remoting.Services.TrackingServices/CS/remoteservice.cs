@@ -1,8 +1,5 @@
-﻿//<snippet10>
+//<snippet10>
 using System;
-using System.Diagnostics;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
 
 // Remote object.
 public class RemoteService : MarshalByRefObject
@@ -18,10 +15,10 @@ public class RemoteService : MarshalByRefObject
 
     ~RemoteService()
     {
-        // Notify the user that the destructor was invoked.
+        // Notify the user that the finalizer was invoked.
         TimeSpan elapsedTime = 
             new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Console.WriteLine("Destructor invoked after " + 
+        Console.WriteLine("Finalizer invoked after " + 
             elapsedTime.ToString() + " seconds.");
     }
 

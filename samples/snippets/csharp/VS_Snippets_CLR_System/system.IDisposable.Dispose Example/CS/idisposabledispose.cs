@@ -77,11 +77,11 @@ public class DisposeExample
         [System.Runtime.InteropServices.DllImport("Kernel32")]
         private extern static Boolean CloseHandle(IntPtr handle);
 
-        // Use C# destructor syntax for finalization code.
-        // This destructor will run only if the Dispose method
+        // Use C# finalizer syntax for finalization code.
+        // This finalizer will run only if the Dispose method
         // does not get called.
         // It gives your base class the opportunity to finalize.
-        // Do not provide destructors in types derived from this class.
+        // Do not provide finalizer in types derived from this class.
         ~MyResource()
         {
             // Do not re-create Dispose clean-up code here.
