@@ -11,10 +11,10 @@ public class Example
       
       // Get position of space character.
       int index1 = name1.IndexOf(" ");
-      index1 = index1 < 0 ? 0 : index1--;
+      index1 = index1 < 0 ? 0 : ++index1;
       
       int index2 = name2.IndexOf(" ");
-      index1 = index1 < 0 ? 0 : index1--;
+      index2 = index2 < 0 ? 0 : ++index2;
       
       int length = Math.Max(name1.Length, name2.Length);
       
