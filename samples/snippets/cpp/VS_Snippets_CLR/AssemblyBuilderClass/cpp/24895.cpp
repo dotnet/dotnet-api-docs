@@ -12,7 +12,7 @@ void main()
     // that gets and sets the private field, constructors that 
     // initialize the private field, and a method that multiplies 
     // a user-supplied number by the private field value and returns
-    // the result. In Visual C++ the type might look like this:
+    // the result. In Visual C++ the type might look like this
     /*
       public ref class MyDynamicType
       {
