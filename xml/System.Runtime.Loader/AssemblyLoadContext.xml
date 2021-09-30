@@ -525,18 +525,20 @@ For more information, see [How to use and debug assembly unloadability in .NET C
         <Parameter Name="assemblyName" Type="System.Reflection.AssemblyName" />
       </Parameters>
       <Docs>
-        <param name="assemblyName">The object that describes the assembly to be loaded.</param>
-        <summary>When overridden in a derived class, allows an assembly to be resolved and loaded based on its <see cref="T:System.Reflection.AssemblyName" />.</summary>
-        <returns>The loaded assembly, or <see langword="null" />.</returns>
+        <param name="assemblyName">The object that describes the assembly to be resolved.</param>
+        <summary>When overridden in a derived class, allows an assembly to be resolved based on its <see cref="T:System.Reflection.AssemblyName" />.</summary>
+        <returns>The resolved assembly, or <see langword="null" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
- 
+
 ## Remarks
- During assembly resolution, the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)> method has the first chance to resolve the assembly name to a loaded assembly. It can either load an assembly or return `null`. If it returns `null`, the resolution process continues. See <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName(System.Reflection.AssemblyName)> for the full process description.
- 
+During assembly resolution, the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)> method has the first chance to resolve the assembly name to a loaded assembly. It can load an assembly and return it, return an already loaded assembly, or return `null`. If it returns `null`, the resolution process continues. See [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed.md#algorithm) for the full process description.
+
+Implementations of this method can return an assembly loaded into any <xref:System.Runtime.Loader.AssemblyLoadContext>, not just the instance it was called on. Returning an assembly from a different <xref:System.Runtime.Loader.AssemblyLoadContext> does not result in that assembly becoming associated with this instance.
+
  > [!IMPORTANT]
  > To prevent recursive stack overflow, do not call this instance's <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName(System.Reflection.AssemblyName)> method from this method.
- 
+
  ]]></format>
         </remarks>
       </Docs>

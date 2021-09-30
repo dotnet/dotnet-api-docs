@@ -1,12 +1,11 @@
 ﻿// <Snippet21>
-using System;
 using System.IO;
 
 namespace ConsoleApplication
 {
-    class Program
+    class Program2
     {
-        static void Main(string[] args)
+        static void Main()
         {
             WriteCharacters();
         }
