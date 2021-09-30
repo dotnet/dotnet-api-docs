@@ -40,7 +40,6 @@
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Globalization" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
-    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Runtime" ToVersion="0.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="System.Globalization" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
@@ -1172,30 +1171,34 @@ If `name` is <xref:System.String.Empty?displayProperty=nameWithType>, the constr
         <ReturnType>System.Globalization.CultureInfo</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the <see cref="T:System.Globalization.CultureInfo" /> object that represents the culture used by the current thread.</summary>
-        <value>An object that represents the culture used by the current thread.</value>
+        <summary>Gets or sets the <see cref="T:System.Globalization.CultureInfo" /> object that represents the culture used by the current thread and task-based asynchronous operations.</summary>
+        <value>The culture used by the current thread and task-based asynchronous operations.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Globalization.CultureInfo> object that is returned by this property and its associated objects determine the default format for dates, times, numbers, currency values, the sorting order of text, casing conventions, and string comparisons.
 
- The current culture is a property of the executing thread. Retrieving the value of the <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property is a more performant equivalent of retrieving the <xref:System.Globalization.CultureInfo> object returned by the `Thread.CurrentThread.CurrentCulture` property.
+The <xref:System.Globalization.CultureInfo> object that's returned by this property and its associated objects determine the default format for dates, times, numbers, currency values, the sorting order of text, casing conventions, and string comparisons.
+
+The current culture is a property of the executing thread. When you set this property to a <xref:System.Globalization.CultureInfo> object that represents a new culture, the value of the `Thread.CurrentThread.CurrentCulture` property also changes. However, we recommend that you always use the <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> property to retrieve and set the current culture.
+
+The `CultureInfo` object that this property returns is read-only. That means you can't mutate the existing object, for example, by changing the `DateTimeFormat`. To change the date-time format or some other aspect of the current culture, create a new `CultureInfo` object and assign it to the property.
 
 > [!NOTE]
-> In the .NET Framework 4.5.2 and earlier versions, the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> property is read-only;  that is, you can retrieve the property value, but you cannot set it. To change the current culture, you assign the <xref:System.Globalization.CultureInfo> object that represents the new culture to the `Thread.CurrentThread.CurrentCulture` property. Starting with the .NET Framework 4.6, the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> property is read-write; you can both set and retrieve the property's value. If you do set the property value to a <xref:System.Globalization.CultureInfo> object that represents a new culture, the value of the `Thread.CurrentThread.CurrentCulture` property also changes.
+> In .NET Framework 4.5.2 and earlier versions, the <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property is read-only; that is, you can retrieve the property value, but you cannot set it.
 
- In this section:
+In this section:
 
  [How a Thread's Culture Is Determined](#ThreadCulture)\
- [Getting the Current Culture](#Getting)\
- [Explicitly Setting the CurrentCulture Property](#ExplicitSetting)\
- [The Current Culture and User Overrides](#Overrides)\
- [Culture and Windows Apps](#WindowsAndCurr)\
+ [Get the Current Culture](#Getting)\
+ [Set the CurrentCulture Property Explicitly](#ExplicitSetting)\
+ [User Overrides](#Overrides)\
+ [Culture and Windows Apps](#WindowsAndCurr)
 
 <a name="ThreadCulture"></a>
 ## How a Thread's Culture Is Determined
- When a thread is started, its culture is initially determined as follows:
+
+When a thread is started, its culture is initially determined as follows:
 
 - By retrieving the culture that is specified by the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture%2A> property in the application domain in which the thread is executing, if the property value is not `null`.
 
@@ -1213,17 +1216,17 @@ If `name` is <xref:System.String.Empty?displayProperty=nameWithType>, the constr
  For more information about how the culture of a thread is determined, see the "Culture and threads" section in the <xref:System.Globalization.CultureInfo> reference page.
 
 <a name="Getting"></a>
-## Getting the Current Culture
- The <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property is a per-thread setting; that is, each thread can have its own culture. You get the culture of the current thread by retrieving the value of the   <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property, as the following example illustrates.
+## Get the Current Culture
+
+The <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property is a per-thread setting; that is, each thread can have its own culture. You get the culture of the current thread by retrieving the value of the <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property, as the following example illustrates.
 
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentculture/cs/Get1.cs" id="Snippet5":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentculture/vb/Get1.vb" id="Snippet5":::
 
- You can also retrieve the value of the current thread's culture from the <xref:System.Threading.Thread.CurrentThread%2A?displayProperty=nameWithType> property.
-
 <a name="ExplicitSetting"></a>
-## Explicitly Setting the CurrentCulture Property
- Staring with the .NET Framework 4.6, to change the culture that is used by an existing thread, you set the <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property to the new culture. If you explicitly change a thread's culture in this way, that change persists if the thread crosses application domain boundaries. The following example changes the current thread culture to Dutch (Netherlands). It also shows that, when the current thread crosses application domain boundaries, its current culture remains changed.
+## Set the CurrentCulture Property Explicitly
+
+To change the culture that's used by an existing thread, you set the <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> property to the new culture. If you explicitly change a thread's culture in this way, that change persists if the thread crosses application domain boundaries. The following example changes the current thread culture to Dutch (Netherlands). It also shows that, when the current thread crosses application domain boundaries, its current culture remains changed.
 
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentculture/cs/changeculture11.cs" id="Snippet11":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentculture/vb/changeculture11.vb" id="Snippet11":::
@@ -1243,7 +1246,8 @@ If `name` is <xref:System.String.Empty?displayProperty=nameWithType>, the constr
 
 <a name="Overrides"></a>
 ## The Current Culture and User Overrides
- Windows allows users to override the standard property values of the <xref:System.Globalization.CultureInfo> object and its associated objects by using **Regional and Language Options** in Control Panel. The <xref:System.Globalization.CultureInfo> object returned by the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> property reflects these user overrides in the following cases:
+
+Windows allows users to override the standard property values of the <xref:System.Globalization.CultureInfo> object and its associated objects by using **Regional and Language Options** in Control Panel. The <xref:System.Globalization.CultureInfo> object returned by the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> property reflects these user overrides in the following cases:
 
 - If the current thread culture is set implicitly by the Windows `GetUserDefaultLocaleName` function.
 
@@ -1261,12 +1265,14 @@ If `name` is <xref:System.String.Empty?displayProperty=nameWithType>, the constr
 
 <a name="WindowsAndCurr"></a>
 ## The current culture and UWP apps
- In Universal Windows Platform (UWP) apps, the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> property is read-write, just as it is in .NET Framework and .NET Core apps; you can use it both to get and to set the current culture. However, UWP apps do not distinguish between the current culture and the current UI culture. The <xref:System.Globalization.CultureInfo.CurrentCulture%2A> and <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> properties map to the first value in the [Windows.ApplicationModel.Resources.Core.ResourceManager.DefaultContext.Languages](https://docs.microsoft.com/uwp/api/windows.applicationmodel.resources.core.resourcecontext#properties_) collection.
+
+In Universal Windows Platform (UWP) apps, the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> property is read-write, just as it is in .NET Framework and .NET Core apps; you can use it both to get and to set the current culture. However, UWP apps do not distinguish between the current culture and the current UI culture. The <xref:System.Globalization.CultureInfo.CurrentCulture%2A> and <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> properties map to the first value in the [Windows.ApplicationModel.Resources.Core.ResourceManager.DefaultContext.Languages](https://docs.microsoft.com/uwp/api/windows.applicationmodel.resources.core.resourcecontext#properties_) collection.
 
 In .NET Framework and .NET Core apps, the current culture is a per-thread setting, and the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> property reflects the culture of the current thread only. In UWP apps, the current culture maps to the [Windows.ApplicationModel.Resources.Core.ResourceManager.DefaultContext.Languages](https://docs.microsoft.com/uwp/api/windows.applicationmodel.resources.core.resourcecontext#properties_) property, which is a global setting. Setting the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> property changes the culture of the entire app; culture cannot be set on a per-thread basis.
 
 ## Examples
- The following example demonstrates how to change the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> and <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> of the current thread.
+
+The following example demonstrates how to change the <xref:System.Globalization.CultureInfo.CurrentCulture%2A> and <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> of the current thread.
 
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Globalization.CultureInfo.CurrentCulture2/CPP/currentculture.cpp" id="Snippet11":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Globalization.CultureInfo.CurrentCulture2/CS/currentculture.cs" id="Snippet11":::
