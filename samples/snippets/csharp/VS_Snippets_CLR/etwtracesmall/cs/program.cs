@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Demo1
 {
     //<Snippet2>
-    class MyCompanyEventSource : EventSource
+    sealed class MyCompanyEventSource : EventSource
     {
         public static MyCompanyEventSource Log = new MyCompanyEventSource();
 
