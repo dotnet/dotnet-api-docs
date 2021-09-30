@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -37,7 +37,7 @@ public class ConsoleMonitor : IDisposable
       WriteConsole(handle, output, (uint) output.Length, out written, IntPtr.Zero);
    }
 
-   // The destructor calls Object.Finalize.
+   // The finalizer represents Object.Finalize override.
    ~ConsoleMonitor()
    {
       if (handle != IntPtr.Zero) {
