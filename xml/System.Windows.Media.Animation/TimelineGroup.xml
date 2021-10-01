@@ -203,7 +203,24 @@
       <Docs>
         <param name="child">The object to be added as the child of this <see cref="T:System.Windows.Media.Animation.TimelineGroup" />. If this object is a <see cref="T:System.Windows.Media.Animation.Timeline" /> it will be added to the <see cref="P:System.Windows.Media.Animation.TimelineGroup.Children" /> collection; otherwise, an exception will be thrown.</param>
         <summary>Adds a child <see cref="T:System.Windows.Media.Animation.Timeline" /> to this <see cref="T:System.Windows.Media.Animation.TimelineGroup" />.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is the only core implementation.  It does not call
+            WritePreamble() or WritePostscript().  It also doesn't throw an
+            ArgumentNullException if the child parameter is `null`.  These tasks
+            are performed by the interface implementation.  Therefore, it's OK
+            for a derived class to override this method and call the base
+            class implementation only if they determine that it's the right
+            course of action.  The derived class can rely on Timeline's
+            implementation of IAddChild.AddChild or implement their own
+            following the Freezable pattern since that would be a public
+            method.
+
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentException">The parameter <paramref name="child" /> is not a <see cref="T:System.Windows.Media.Animation.Timeline" />.</exception>
       </Docs>
     </Member>
@@ -245,6 +262,8 @@
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">Timelines have no way
+            of adding text.</exception>
       </Docs>
     </Member>
     <Member MemberName="AllocateClock">
@@ -467,7 +486,16 @@
       <Docs>
         <param name="child">The child object to add.</param>
         <summary>Adds a child object.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A Timeline only accepts another Timeline (or derived class) as
+            a child.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="System.Windows.Markup.IAddChild.AddText">
@@ -497,7 +525,19 @@
       <Docs>
         <param name="childText">The text to add to the object.</param>
         <summary>Adds the text content of a node to the object.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A Timeline does not accept text as a child, so this method will
+            raise an InvalididOperationException unless a derived class has
+            overridden the behavior to add text.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The childText parameter is
+            <see langword="null" />.</exception>
       </Docs>
     </Member>
   </Members>
