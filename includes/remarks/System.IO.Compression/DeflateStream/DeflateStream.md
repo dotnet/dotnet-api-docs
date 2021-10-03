@@ -1,4 +1,3 @@
-
 This class represents the Deflate algorithm, which is an industry-standard algorithm for lossless file compression and decompression. Starting with the .NET Framework 4.5, the <xref:System.IO.Compression.DeflateStream> class uses the zlib library. As a result, it provides a better compression algorithm and, in most cases, a smaller compressed file than it provides in earlier versions of the .NET Framework.
 
 This class does not inherently provide functionality for adding files to or extracting files from zip archives. To work with zip archives, use the <xref:System.IO.Compression.ZipArchive> and the <xref:System.IO.Compression.ZipArchiveEntry> classes.
@@ -9,7 +8,7 @@ The compression functionality in <xref:System.IO.Compression.DeflateStream> and 
 
 ## Examples
 
-The following example shows how to use the <xref:System.IO.Compression.DeflateStream> class to compress and decompress a directory of files.
+The following example shows how to use the <xref:System.IO.Compression.DeflateStream> class to compress and decompress a file.
 
-:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/IO.Compression.Deflate1/CS/deflatetest.cs" id="Snippet1":::
-:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/IO.Compression.Deflate1/VB/deflatetest.vb" id="Snippet1":::
+:::code language="csharp" source="~/samples/snippets/visualbasic/System.IO.Compression/Deflate/FileCompressDecompressCompressionModeExample.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/System.IO.Compression/Deflate/FileCompressDecompressCompressionModeExample.vb" id="Snippet1":::
