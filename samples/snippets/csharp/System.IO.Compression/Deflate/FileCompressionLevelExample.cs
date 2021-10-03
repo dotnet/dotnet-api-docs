@@ -3,8 +3,9 @@ using System;
 using System.IO;
 using System.IO.Compression;
 
-public static class FileCompressCompressionLevelExample
+public static class FileCompressionLevelExample
 {
+    private const string Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
     private const string OriginalFileName = "original.txt";
     private const string CompressedFileName = "compressed.dfl";
 
@@ -17,30 +18,27 @@ public static class FileCompressCompressionLevelExample
 
         /*
          Output:
-            The original file 'original.txt' weighs 55 bytes. Contents: "This is the content saved inside the original.txt file."
-            The compressed file 'compressed.dfl' weighs 54 bytes.
+            The original file 'original.txt' weighs 445 bytes.
+            The compressed file 'compressed.dfl' weighs 259 bytes.
          */
     }
 
-    private static void CreateFileToCompress()
-    {
-        using var writer = new StreamWriter(OriginalFileName);
-        writer.Write($"This is the content saved inside the {OriginalFileName} file.");
-    }
+    private static void CreateFileToCompress() => File.WriteAllText(OriginalFileName, Message);
 
     private static void CompressFile()
     {
         using FileStream originalFileStream = File.Open(OriginalFileName, FileMode.Open);
         using FileStream compressedFileStream = File.Create(CompressedFileName);
-        using var deflateStream = new DeflateStream(compressedFileStream, CompressionLevel.Fastest);
-        originalFileStream.CopyTo(deflateStream);
+        using var compressor = new DeflateStream(compressedFileStream, CompressionLevel.Fastest);
+        originalFileStream.CopyTo(compressor);
     }
 
     private static void PrintResults()
     {
         long originalSize = new FileInfo(OriginalFileName).Length;
         long compressedSize = new FileInfo(CompressedFileName).Length;
-        Console.WriteLine($"The original file '{OriginalFileName}' weighs {originalSize} bytes. Contents: \"{File.ReadAllText(OriginalFileName)}\"");
+        
+        Console.WriteLine($"The original file '{OriginalFileName}' weighs {originalSize} bytes.");
         Console.WriteLine($"The compressed file '{CompressedFileName}' weighs {compressedSize} bytes.");
     }
 

@@ -10,5 +10,5 @@ The compression functionality in <xref:System.IO.Compression.DeflateStream> and 
 
 The following example shows how to use the <xref:System.IO.Compression.DeflateStream> class to compress and decompress a file.
 
-:::code language="csharp" source="~/samples/snippets/visualbasic/System.IO.Compression/Deflate/FileCompressDecompressCompressionModeExample.cs" id="Snippet1":::
-:::code language="vb" source="~/samples/snippets/visualbasic/System.IO.Compression/Deflate/FileCompressDecompressCompressionModeExample.vb" id="Snippet1":::
+:::code language="csharp" source="~/samples/snippets/visualbasic/System.IO.Compression/Deflate/FileCompressionModeExample.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/System.IO.Compression/Deflate/FileCompressionModeExample.vb" id="Snippet1":::

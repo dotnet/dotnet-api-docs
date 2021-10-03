@@ -2,7 +2,8 @@
 Imports System.IO
 Imports System.IO.Compression
 
-Module FileCompressCompressionLevelExample
+Module FileCompressionLevelExample
+    Private Const Message As String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     Private Const OriginalFileName As String = "original.txt"
     Private Const CompressedFileName As String = "compressed.dfl"
 
@@ -13,21 +14,19 @@ Module FileCompressCompressionLevelExample
         DeleteFiles()
 
         'Output:
-        '   The original file 'original.txt' weighs 55 bytes. Contents: "This is the content saved inside the original.txt file."
-        '   The compressed file 'compressed.dfl' weighs 54 bytes.
+        '   The original file 'original.txt' weighs 445 bytes.
+        '   The compressed file 'compressed.dfl' weighs 259 bytes.
     End Sub
 
     Private Sub CreateFileToCompress()
-        Using writer = New StreamWriter(OriginalFileName)
-            writer.Write($"This is the content saved inside the {OriginalFileName} file.")
-        End Using
+        File.WriteAllText(OriginalFileName, Message)
     End Sub
 
     Private Sub CompressFile()
         Using originalFileStream As FileStream = File.Open(OriginalFileName, FileMode.Open)
             Using compressedFileStream As FileStream = File.Create(CompressedFileName)
-                Using deflateStream = New DeflateStream(compressedFileStream, CompressionLevel.Fastest)
-                    originalFileStream.CopyTo(deflateStream)
+                Using compressor = New DeflateStream(compressedFileStream, CompressionLevel.Fastest)
+                    originalFileStream.CopyTo(compressor)
                 End Using
             End Using
         End Using
@@ -36,7 +35,8 @@ Module FileCompressCompressionLevelExample
     Private Sub PrintResults()
         Dim originalSize As Long = New FileInfo(OriginalFileName).Length
         Dim compressedSize As Long = New FileInfo(CompressedFileName).Length
-        Console.WriteLine($"The original file '{OriginalFileName}' weighs {originalSize} bytes. Contents: ""{File.ReadAllText(OriginalFileName)}""")
+
+        Console.WriteLine($"The original file '{OriginalFileName}' weighs {originalSize} bytes.")
         Console.WriteLine($"The compressed file '{CompressedFileName}' weighs {compressedSize} bytes.")
     End Sub
 
