@@ -9,10 +9,3 @@ Multiple simultaneous asynchronous requests render the request completion order 
 Use the <xref:System.IO.Compression.GZipStream.CanRead%2A> property to determine whether the current <xref:System.IO.Compression.GZipStream> object supports reading.
 
 If a stream is closed or you pass an invalid argument, exceptions are thrown immediately from <xref:System.IO.Compression.GZipStream.BeginRead%2A>. Errors that occur during an asynchronous read request, such as a disk failure during the I/O request, occur on the thread pool thread and throw exceptions when calling <xref:System.IO.Compression.GZipStream.EndRead%2A>.
-
-## Examples
-
-The following code example shows how to use the <xref:System.IO.Compression.GZipStream> class to compress and decompress a file.
-
-:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/IO.Compression.GZip1/CS/gziptest.cs" id="Snippet1":::
-:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/IO.Compression.GZip1/VB/gziptest.vb" id="Snippet1":::
