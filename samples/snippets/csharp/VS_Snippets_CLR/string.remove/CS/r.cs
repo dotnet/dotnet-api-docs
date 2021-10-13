@@ -6,12 +6,12 @@ class Sample
 {
     public static void Main()
     {
-    string s = "abc---def";
-//
-    Console.WriteLine("Index: 012345678");
-    Console.WriteLine("1)     {0}", s);
-    Console.WriteLine("2)     {0}", s.Remove(3));
-    Console.WriteLine("3)     {0}", s.Remove(3, 3));
+        string s = "abc---def";
+
+        Console.WriteLine("Index: 012345678");
+        Console.WriteLine("1)     {0}", s);
+        Console.WriteLine("2)     {0}", s.Remove(3));
+        Console.WriteLine("3)     {0}", s.Remove(3, 3));
     }
 }
 /*
