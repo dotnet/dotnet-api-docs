@@ -140,11 +140,23 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The initial allocation size in bytes for the file. A positive value is effective only when a regular file is being created, overwritten, or replaced.
-            Negative values are not allowed.
-            In other cases (including the default 0 value), it's ignored.</summary>
+        <summary>The initial allocation size in bytes for the file. A positive value is effective only when a regular file is being created, overwritten, or replaced. Negative values are not allowed. In other cases (including the default 0 value), it's ignored. This value is a hint and is not a strong guarantee: we will check if there is enough disk space to fill the requested allocation size, but it will not be reserved for this file. The final disk space used will be determined by the final number of bytes written to the file, then flushed to disk.</summary>
         <value>A non-negative number that represents the initial allocation size in bytes for the file.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format><![CDATA[
+
+## Remarks
+
+When creating a <xref:System.IO.FileStream> instance using a constructor that takes a <xref:System.IO.FileStreamOptions> as an argument, and sets <xref:System.IO.FileStreamOptions.PreallocationSize> to a value greater than zero, then the user must ensure to set <xref:System.IO.FileStreamOptions.Access> to <xref:System.IO.FileAccess.Write>, and <xref:System.IO.FileStreamOptions.Mode> to either <xref:System.IO.FileMode.Create> or to <xref:System.IO.FileMode.CreateNew>. Otherwise, the constructor will throw an exception, because a preallocation size can only be requested in write mode and when creating new files.
+
+If the operating system or platform does not support preallocation, then <xref:System.IO.FileStreamOptions.PreallocationSize> is ignored. This is the case for Web Assembly and FreeBSD.
+
+If there is not enough disk space as requested with <xref:System.IO.FileStreamOptions.PreallocationSize>, an exception is thrown.
+
+When flushing a file to disk, it is not guaranteed that a space of the size of <xref:System.IO.FileStreamOptions.PreallocationSize> will be filled. A case where this can happen is if the final number of written bytes in the file is smaller than the requested preallocation size. To ensure that the disk space is reserved when the file is flushed, call <xref:FileStream.SetLength(System.Int64)> in advance.
+
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">When <paramref name="value" /> is negative.</exception>
       </Docs>
     </Member>
