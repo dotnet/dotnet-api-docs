@@ -37,9 +37,9 @@ class Program
         }
     }
 
-    private static void ReadSingleRow(IDataRecord record)
+    private static void ReadSingleRow(IDataRecord dataRecord)
     {
-        Console.WriteLine(String.Format("{0}, {1}", record[0], record[1]));
+        Console.WriteLine(String.Format("{0}, {1}", dataRecord[0], dataRecord[1]));
     }
 }
 // </Snippet1>
