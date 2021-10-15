@@ -147,19 +147,19 @@
 
 ## Remarks
 
- PreallocationSize can only be requested for write mode (the user must set <xref:System.IO.FileStreamOptions.Access> to <xref:System.IO.FileAccess.Write>) and when creating new files (<xref:System.IO.FileStreamOptions.Mode> needs to be set to either <xref:System.IO.FileMode.Create> or to <xref:System.IO.FileMode.CreateNew>). Otherwise, the <xref:System.IO.FileStream> constructor will throw an exception.
+<xref:System.IO.FileStreamOptions.PreallocationSize> can only be requested for write mode (<xref:System.IO.FileStreamOptions.Access> must be set to <xref:System.IO.FileAccess.Write>) and when creating new files (<xref:System.IO.FileStreamOptions.Mode> must be set to either <xref:System.IO.FileMode.Create> or to <xref:System.IO.FileMode.CreateNew>). Otherwise, the <xref:System.IO.FileStream> constructor will throw an exception.
 
-If the operating system or platform does not support preallocation, then <xref:System.IO.FileStreamOptions.PreallocationSize> is ignored. This is the case for Web Assembly (WASM) and FreeBSD.
+If the operating system, platform or file system does not support preallocation, then <xref:System.IO.FileStreamOptions.PreallocationSize> is ignored. This is the case for Web Assembly (WASM) and FreeBSD.
 
-If there is not enough disk space as requested with <xref:System.IO.FileStreamOptions.PreallocationSize>, an exception is thrown.
+If there is not enough disk space or the file system does not support files of given size (example: 5 GB file on FAT32), an exception is thrown.
 
 The file length is determined by how many bytes were written to the file.
 
-When not all of the allocated size is written to when the file is closed, it is platform dependent what happens to the remaining size. On Windows, this size is no longer reserved for the file. On other platforms (like Linux and MacOS), it remains allocated to the file.
+When the file is closed and not all of the allocated space is written to, what happens to the remaining space is platform dependent. On Windows, this space is no longer reserved for the file. On other platforms, such as Linux and macOS, it remains allocated to the file.
 
-For example, if the user preallocates 2 GB file, and writes only 1 GB. After closing the file, both on Windows and Linux, the file length will be 1 GB. On Windows, the allocated size will also be 1 GB, but on Linux, the allocated size will still be 2 GB.
+For example, assume 2 GB is preallocated for a file, but only 1 GB is written. After closing the file, the file length is 1 GB on all operating systems. On Windows, the allocated size is also 1 GB, but on Linux and macOS, the allocated size is still 2 GB.
 
-It is allowed to write more than what was initially preallocated. As long as there is enough disk space, the operation should succeed.
+It's permissible to write more than what was initially preallocated. As long as there is enough disk space, the operation should succeed.
 
 ## Examples  
 
