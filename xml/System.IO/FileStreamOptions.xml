@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Defines a variety of configuration options for <see. cref="T:System.IO.FileStream" />.</summary>
+    <summary>Defines a variety of configuration options for <see cref="T:System.IO.FileStream" />.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -140,11 +140,36 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The initial allocation size in bytes for the file. A positive value is effective only when a regular file is being created, overwritten, or replaced.
-            Negative values are not allowed.
-            In other cases (including the default 0 value), it's ignored.</summary>
+        <summary>The initial allocation size in bytes for the file. A positive value is effective only when a regular file is being created or overwritten (<see cref="F:System.IO.FileMode.Create"/> or <see cref="F:System.IO.FileMode.CreateNew"/>). Negative values are not allowed. In other cases (including the default 0 value), it's ignored. This value is a hint and is not a strong guarantee. It is not supported on Web Assembly (WASM) and FreeBSD (the value is ignored). For Windows, Linux and macOS we will try to preallocate the disk space to fill the requested allocation size. If that turns out to be impossible, the operation is going to throw an exception. The final file length (EOF) will be determined by the number of bytes written to the file.</summary>
         <value>A non-negative number that represents the initial allocation size in bytes for the file.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format><![CDATA[
+
+## Remarks
+
+<xref:System.IO.FileStreamOptions.PreallocationSize> can only be requested for write mode (<xref:System.IO.FileStreamOptions.Access> must be set to <xref:System.IO.FileAccess.Write>) and when creating new files (<xref:System.IO.FileStreamOptions.Mode> must be set to either <xref:System.IO.FileMode.Create> or to <xref:System.IO.FileMode.CreateNew>). Otherwise, the <xref:System.IO.FileStream> constructor will throw an exception.
+
+If the operating system, platform or file system does not support preallocation, then <xref:System.IO.FileStreamOptions.PreallocationSize> is ignored. This is the case for Web Assembly (WASM) and FreeBSD.
+
+If there is not enough disk space or the file system does not support files of given size (example: 5 GB file on FAT32), an exception is thrown.
+
+The file length is determined by how many bytes were written to the file.
+
+When the file is closed and not all of the allocated space is written to, what happens to the remaining space is platform dependent. On Windows, this space is no longer reserved for the file. On other platforms, such as Linux and macOS, it remains allocated to the file.
+
+For example, assume 2 GB is preallocated for a file, but only 1 GB is written. After closing the file, the file length is 1 GB on all operating systems. On Windows, the allocated size is also 1 GB, but on Linux and macOS, the allocated size is still 2 GB.
+
+It's permissible to write more than what was initially preallocated. As long as there is enough disk space, the operation should succeed.
+
+## Examples  
+
+ The following code example demonstrates how to use <xref:System.IO.FileStreamOptions.PreallocationSize> when working with <xref:System.IO.FileStream> objects:
+
+:::code language="csharp" source="~/samples/snippets/csharp/System.IO/FileStreamOptions/PreallocationSizeExample.cs" id="Snippet1":::
+:::code language="vb" source="~/samples/snippets/visualbasic/System.IO/FileStreamOptions/PreallocationSizeExample.vb" id="Snippet1":::  
+  
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">When <paramref name="value" /> is negative.</exception>
       </Docs>
     </Member>
