@@ -153,9 +153,11 @@ If the operating system or platform does not support preallocation, then <xref:S
 
 If there is not enough disk space as requested with <xref:System.IO.FileStreamOptions.PreallocationSize>, an exception is thrown.
 
-The file length is dependent on how many bytes were actually written to the file, not on how many were requested to be preallocated.
+The file length is determined by how many bytes were written to the file.
 
-For example, if the user preallocates a 2 GB file, but writes only 1 GB to it, the allocated size will be 2 GB until the file gets closed, and after that, the length will be reported as 1 GB.
+When not all of the allocated size is written to when the file is closed, it is platform dependent what happens to the remaining size. On Windows, this size is no longer reserved for the file. On other platforms (like Linux and MacOS), it remains allocated to the file.
+
+For example, if the user preallocates 2 GB file, and writes only 1 GB. After closing the file, both on Windows and Linux, the file length will be 1 GB. On Windows, the allocated size will also be 1 GB, but on Linux, the allocated size will still be 2 GB.
 
 It is allowed to write more than what was initially preallocated. As long as there is enough disk space, the operation should succeed.
 
