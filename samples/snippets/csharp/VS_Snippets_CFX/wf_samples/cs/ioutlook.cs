@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,7 +7,7 @@ namespace Microsoft.Office.Core
     //Hack: Skeleton of the interfaces that the code sample is looking for in the obsolete Outlook Interop Assembly...
     public class Application
     {
-        public _MailItem CreateItem(String item)
+        public _MailItem CreateItem(string item)
         {
             return new _MailItem();
         }

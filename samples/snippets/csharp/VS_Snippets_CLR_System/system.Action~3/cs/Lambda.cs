@@ -1,4 +1,4 @@
-﻿// <Snippet4>
+// <Snippet4>
 using System;
 
 public class TestLambda
@@ -20,7 +20,7 @@ public class TestLambda
          throw new IndexOutOfRangeException("The source and target arrays must have the same number of elements.");
 
       for (int ctr = startPos; ctr <= source.Length - 1; ctr++)
-         target[ctr] = String.Copy(source[ctr]);
+         target[ctr] = string.Copy(source[ctr]);
    }
 }
 // </Snippet4>

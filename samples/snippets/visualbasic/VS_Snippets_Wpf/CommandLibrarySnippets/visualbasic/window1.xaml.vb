@@ -24,7 +24,7 @@ Namespace SDKSamples
 
 		' <SnippetKeyGestureGetProperties>
 		Private Sub CmdExecutedHandler(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs)
-			' This method gets the KeyGestures Associated with a Command 
+			' This method gets the KeyGestures Associated with a Command
 			' and displays the Key and ModifierKeys properties.
 
 			Dim cmd As RoutedCommand = TryCast(e.Command, RoutedCommand)
@@ -115,14 +115,14 @@ Namespace SDKSamples
 			Me.InputBindings.Add(inputBinding)
 			' </SnippetInputBindingAddingCommand>
 
-			' <SnippetMouseBindingMouseAction> 
+			' <SnippetMouseBindingMouseAction>
 			Dim CutCmdMouseGesture As New MouseGesture(MouseAction.MiddleClick)
 
 			Dim CutMouseBinding As New MouseBinding(ApplicationCommands.Cut, CutCmdMouseGesture)
 
 			' RootWindow is an instance of Window.
 			RootWindow.InputBindings.Add(CutMouseBinding)
-			' </SnippetMouseBindingMouseAction> 
+			' </SnippetMouseBindingMouseAction>
 
 			' <SnippetMouseBindingGesture>
 			Dim NewCmdMouseGesture As New MouseGesture()
@@ -133,7 +133,7 @@ Namespace SDKSamples
             NewMouseBinding.Command = ApplicationCommands.[New]
 			NewMouseBinding.Gesture = NewCmdMouseGesture
 
-			' RootWindow is an instance of Window. 
+			' RootWindow is an instance of Window.
 			RootWindow.InputBindings.Add(NewMouseBinding)
 			' </SnippetMouseBindingGesture>
 		End Sub
@@ -158,7 +158,7 @@ Namespace SDKSamples
 						Dim keyGesture As KeyGesture = TryCast(gesture, KeyGesture)
 						If keyGesture IsNot Nothing Then
 							txtGesture.Text &= "Key: " & keyGesture.Key.ToString() & vbLf
-							txtGesture.Text &= "Modifers: " & keyGesture.Modifiers.ToString() & vbLf
+							txtGesture.Text &= "Modifiers: " & keyGesture.Modifiers.ToString() & vbLf
 						End If
 
 						txtGesture.Text += vbLf
@@ -166,7 +166,7 @@ Namespace SDKSamples
 						Dim mouseGesture As MouseGesture = TryCast(gesture, MouseGesture)
 						If mouseGesture IsNot Nothing Then
 							txtGesture.Text &= "Mouse Action: " & mouseGesture.MouseAction.ToString() & vbLf
-							txtGesture.Text &= "Modifers: " & mouseGesture.Modifiers.ToString() & vbLf
+							txtGesture.Text &= "Modifiers: " & mouseGesture.Modifiers.ToString() & vbLf
 						End If
 						If mouseGesture Is Nothing Then
 							txtGesture.Text &= "No Mouse Gestures" & vbLf

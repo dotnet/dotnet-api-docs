@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using Microsoft.Win32;
 
@@ -16,7 +16,7 @@ class Reg {
     static void PrintKeys(RegistryKey rkey) {
 
         // Retrieve all the subkeys for the specified key.
-        String [] names = rkey.GetSubKeyNames();
+        string [] names = rkey.GetSubKeyNames();
 
         int icount = 0;
 
@@ -24,7 +24,7 @@ class Reg {
         Console.WriteLine("-----------------------------------------------");
 
         // Print the contents of the array to the console.
-        foreach (String s in names) {
+        foreach (string s in names) {
             Console.WriteLine(s);
 
             // The following code puts a limit on the number

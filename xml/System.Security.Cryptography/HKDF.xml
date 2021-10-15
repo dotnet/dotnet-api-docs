@@ -3,11 +3,12 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit HKDF extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.HKDF" />
   <TypeSignature Language="VB.NET" Value="Public Class HKDF" />
-  <TypeSignature Language="C++ CLI" Value="public ref class HKDF abstract sealed" />
   <TypeSignature Language="F#" Value="type HKDF = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class HKDF abstract sealed" />
   <AssemblyInfo>
     <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -43,6 +44,7 @@ In situations where the input key material is already a uniformly random bit str
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -63,6 +65,10 @@ In situations where the input key material is already a uniformly random bit str
         <summary>Performs the key derivation HKDF Expand and Extract functions.</summary>
         <returns>The output keying material.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="ikm" />is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="outputLength" /> is less than 1.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeriveKey">
@@ -70,12 +76,13 @@ In situations where the input key material is already a uniformly random bit str
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void DeriveKey(valuetype System.Security.Cryptography.HashAlgorithmName hashAlgorithmName, valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; ikm, valuetype System.Span`1&lt;unsigned int8&gt; output, valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; salt, valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; info) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.HKDF.DeriveKey(System.Security.Cryptography.HashAlgorithmName,System.ReadOnlySpan{System.Byte},System.Span{System.Byte},System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte})" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub DeriveKey (hashAlgorithmName As HashAlgorithmName, ikm As ReadOnlySpan(Of Byte), output As Span(Of Byte), salt As ReadOnlySpan(Of Byte), info As ReadOnlySpan(Of Byte))" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void DeriveKey(System::Security::Cryptography::HashAlgorithmName hashAlgorithmName, ReadOnlySpan&lt;System::Byte&gt; ikm, Span&lt;System::Byte&gt; output, ReadOnlySpan&lt;System::Byte&gt; salt, ReadOnlySpan&lt;System::Byte&gt; info);" />
       <MemberSignature Language="F#" Value="static member DeriveKey : System.Security.Cryptography.HashAlgorithmName * ReadOnlySpan&lt;byte&gt; * Span&lt;byte&gt; * ReadOnlySpan&lt;byte&gt; * ReadOnlySpan&lt;byte&gt; -&gt; unit" Usage="System.Security.Cryptography.HKDF.DeriveKey (hashAlgorithmName, ikm, output, salt, info)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void DeriveKey(System::Security::Cryptography::HashAlgorithmName hashAlgorithmName, ReadOnlySpan&lt;System::Byte&gt; ikm, Span&lt;System::Byte&gt; output, ReadOnlySpan&lt;System::Byte&gt; salt, ReadOnlySpan&lt;System::Byte&gt; info);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -95,6 +102,8 @@ In situations where the input key material is already a uniformly random bit str
         <param name="info">The context and application specific information (can be an empty span).</param>
         <summary>Performs the key derivation HKDF Expand and Extract functions.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="ikm" /> is empty, or is larger than the maximum allowed length.</exception>
       </Docs>
     </Member>
     <Member MemberName="Expand">
@@ -107,6 +116,7 @@ In situations where the input key material is already a uniformly random bit str
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -119,12 +129,16 @@ In situations where the input key material is already a uniformly random bit str
       </Parameters>
       <Docs>
         <param name="hashAlgorithmName">The hash algorithm used for HMAC operations.</param>
-        <param name="prk">The pseudorandom key that is at least as long as the output byte array of the specified hash algorithm (usually the output from Expand step).</param>
+        <param name="prk">The pseudorandom key that is at least as long as the output byte array of the specified hash algorithm (usually the output from the Extract step).</param>
         <param name="outputLength">The length of the output keying material.</param>
         <param name="info">The optional context and application specific information.</param>
         <summary>Performs the HKDF-Expand function See section 2.3 of <a href="https://tools.ietf.org/html/rfc5869#section-2.3">RFC5869</a>.</summary>
         <returns>The output keying material.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="prk" />is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="outputLength" /> is less than 1.</exception>
       </Docs>
     </Member>
     <Member MemberName="Expand">
@@ -132,12 +146,13 @@ In situations where the input key material is already a uniformly random bit str
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Expand(valuetype System.Security.Cryptography.HashAlgorithmName hashAlgorithmName, valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; prk, valuetype System.Span`1&lt;unsigned int8&gt; output, valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; info) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.HKDF.Expand(System.Security.Cryptography.HashAlgorithmName,System.ReadOnlySpan{System.Byte},System.Span{System.Byte},System.ReadOnlySpan{System.Byte})" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub Expand (hashAlgorithmName As HashAlgorithmName, prk As ReadOnlySpan(Of Byte), output As Span(Of Byte), info As ReadOnlySpan(Of Byte))" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Expand(System::Security::Cryptography::HashAlgorithmName hashAlgorithmName, ReadOnlySpan&lt;System::Byte&gt; prk, Span&lt;System::Byte&gt; output, ReadOnlySpan&lt;System::Byte&gt; info);" />
       <MemberSignature Language="F#" Value="static member Expand : System.Security.Cryptography.HashAlgorithmName * ReadOnlySpan&lt;byte&gt; * Span&lt;byte&gt; * ReadOnlySpan&lt;byte&gt; -&gt; unit" Usage="System.Security.Cryptography.HKDF.Expand (hashAlgorithmName, prk, output, info)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Expand(System::Security::Cryptography::HashAlgorithmName hashAlgorithmName, ReadOnlySpan&lt;System::Byte&gt; prk, Span&lt;System::Byte&gt; output, ReadOnlySpan&lt;System::Byte&gt; info);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -150,11 +165,13 @@ In situations where the input key material is already a uniformly random bit str
       </Parameters>
       <Docs>
         <param name="hashAlgorithmName">The hash algorithm used for HMAC operations.</param>
-        <param name="prk">The pseudorandom key that is at least as long as as the output byte array of the specified hash algorithm (usually the output from Expand step).</param>
+        <param name="prk">The pseudorandom key that is at least as long as as the output byte array of the specified hash algorithm (usually the output from the Extract step).</param>
         <param name="output">The destination buffer to receive the output keying material.</param>
         <param name="info">The context and application specific information (can be an empty span).</param>
         <summary>Performs the HKDF-Expand function. See section 2.3 of <a href="https://tools.ietf.org/html/rfc5869#section-2.3">RFC5869</a>.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="output" /> is empty, or is larger than the maximum allowed length.</exception>
       </Docs>
     </Member>
     <Member MemberName="Extract">
@@ -167,6 +184,7 @@ In situations where the input key material is already a uniformly random bit str
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -191,12 +209,13 @@ In situations where the input key material is already a uniformly random bit str
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 Extract(valuetype System.Security.Cryptography.HashAlgorithmName hashAlgorithmName, valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; ikm, valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; salt, valuetype System.Span`1&lt;unsigned int8&gt; prk) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Security.Cryptography.HKDF.Extract(System.Security.Cryptography.HashAlgorithmName,System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte},System.Span{System.Byte})" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Extract (hashAlgorithmName As HashAlgorithmName, ikm As ReadOnlySpan(Of Byte), salt As ReadOnlySpan(Of Byte), prk As Span(Of Byte)) As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static int Extract(System::Security::Cryptography::HashAlgorithmName hashAlgorithmName, ReadOnlySpan&lt;System::Byte&gt; ikm, ReadOnlySpan&lt;System::Byte&gt; salt, Span&lt;System::Byte&gt; prk);" />
       <MemberSignature Language="F#" Value="static member Extract : System.Security.Cryptography.HashAlgorithmName * ReadOnlySpan&lt;byte&gt; * ReadOnlySpan&lt;byte&gt; * Span&lt;byte&gt; -&gt; int" Usage="System.Security.Cryptography.HKDF.Extract (hashAlgorithmName, ikm, salt, prk)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static int Extract(System::Security::Cryptography::HashAlgorithmName hashAlgorithmName, ReadOnlySpan&lt;System::Byte&gt; ikm, ReadOnlySpan&lt;System::Byte&gt; salt, Span&lt;System::Byte&gt; prk);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography.Algorithms</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>

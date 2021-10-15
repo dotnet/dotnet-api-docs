@@ -10,7 +10,6 @@ int main()
     // Regional Info for Sweden
     RegionInfo^ ri = gcnew RegionInfo("SE");
 
-    Console::Clear();
     Console::WriteLine("Region English Name: . . . {0}", ri->EnglishName);
     Console::WriteLine("Native Name: . . . . . . . {0}", ri->NativeName);
     Console::WriteLine("Currency English Name: . . {0}",

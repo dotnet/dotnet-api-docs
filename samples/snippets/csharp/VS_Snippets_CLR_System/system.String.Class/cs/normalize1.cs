@@ -47,7 +47,7 @@ public class Example
    {
       string result = null;
       foreach (var ch in str)
-         result += String.Format("{0} ", Convert.ToUInt16(ch).ToString("X4")); 
+         result += $"{(ushort)ch:X4} ";
       return result.Trim();            
    } 
    

@@ -728,7 +728,7 @@ Namespace SequenceExamples
             ' Display the output.
             Console.WriteLine($"The name chosen at random is {name}")
 
-            ' This code produces the following output:
+            ' This code produces output similar to the following:
             '
             ' The name chosen at random is Ito, Shu
             ' </Snippet28>

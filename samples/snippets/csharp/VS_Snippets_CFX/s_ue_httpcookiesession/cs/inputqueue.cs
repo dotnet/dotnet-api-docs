@@ -311,8 +311,7 @@ namespace Microsoft.ServiceModel.Samples
 
         public void Dispose()
         {
-            Dispose(true);
-
+            Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 

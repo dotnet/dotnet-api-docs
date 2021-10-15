@@ -1,0 +1,429 @@
+<Type Name="NativeMemory" FullName="System.Runtime.InteropServices.NativeMemory">
+  <TypeSignature Language="C#" Value="public static class NativeMemory" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit NativeMemory extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.Runtime.InteropServices.NativeMemory" />
+  <TypeSignature Language="VB.NET" Value="Public Class NativeMemory" />
+  <TypeSignature Language="F#" Value="type NativeMemory = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class NativeMemory abstract sealed" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>This class contains methods that are mainly used to manage native memory.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="AlignedAlloc">
+      <MemberSignature Language="C#" Value="public static void* AlignedAlloc (UIntPtr byteCount, UIntPtr alignment);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void* AlignedAlloc(native unsigned int byteCount, native unsigned int alignment) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.AlignedAlloc(System.UIntPtr,System.UIntPtr)" />
+      <MemberSignature Language="F#" Value="static member AlignedAlloc : unativeint * unativeint -&gt; nativeptr&lt;unit&gt;" Usage="System.Runtime.InteropServices.NativeMemory.AlignedAlloc (byteCount, alignment)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void* AlignedAlloc(UIntPtr byteCount, UIntPtr alignment);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void*</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="byteCount" Type="System.UIntPtr" />
+        <Parameter Name="alignment" Type="System.UIntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="byteCount">The size, in bytes, of the block to allocate.</param>
+        <param name="alignment">The alignment, in bytes, of the block to allocate. This must be a power of <c>2</c>.</param>
+        <summary>Allocates an aligned block of memory of the specified size and alignment, in bytes.</summary>
+        <returns>A pointer to the allocated aligned block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `aligned_alloc` API or a platform dependent aligned allocation API such as `_aligned_malloc` on Win32.
+
+This method is not compatible with <xref:System.Runtime.InteropServices.NativeMemory.Free(System.Void*)> or <xref:System.Runtime.InteropServices.NativeMemory.Realloc(System.Void*,System.UIntPtr)>. Instead, call  <xref:System.Runtime.InteropServices.NativeMemory.AlignedFree(System.Void*)> or <xref:System.Runtime.InteropServices.NativeMemory.AlignedRealloc(System.Void*,System.UIntPtr,System.UIntPtr)>.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="alignment" /> is not a power of two.</exception>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="byteCount" /> of memory with <paramref name="alignment" /> failed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="AlignedFree">
+      <MemberSignature Language="C#" Value="public static void AlignedFree (void* ptr);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void AlignedFree(void* ptr) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.AlignedFree(System.Void*)" />
+      <MemberSignature Language="F#" Value="static member AlignedFree : nativeptr&lt;unit&gt; -&gt; unit" Usage="System.Runtime.InteropServices.NativeMemory.AlignedFree ptr" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void AlignedFree(void* ptr);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="ptr" Type="System.Void*" />
+      </Parameters>
+      <Docs>
+        <param name="ptr">A pointer to the aligned block of memory that should be freed.</param>
+        <summary>Frees an aligned block of memory.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method does nothing if `ptr` is `null`.
+
+This method is a thin wrapper over the C `free` API or a platform dependent aligned free API such as `_aligned_free` on Win32.
+
+
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AlignedRealloc">
+      <MemberSignature Language="C#" Value="public static void* AlignedRealloc (void* ptr, UIntPtr byteCount, UIntPtr alignment);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void* AlignedRealloc(void* ptr, native unsigned int byteCount, native unsigned int alignment) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.AlignedRealloc(System.Void*,System.UIntPtr,System.UIntPtr)" />
+      <MemberSignature Language="F#" Value="static member AlignedRealloc : nativeptr&lt;unit&gt; * unativeint * unativeint -&gt; nativeptr&lt;unit&gt;" Usage="System.Runtime.InteropServices.NativeMemory.AlignedRealloc (ptr, byteCount, alignment)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void* AlignedRealloc(void* ptr, UIntPtr byteCount, UIntPtr alignment);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void*</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="ptr" Type="System.Void*" />
+        <Parameter Name="byteCount" Type="System.UIntPtr" />
+        <Parameter Name="alignment" Type="System.UIntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="ptr">The previously allocated block of memory.</param>
+        <param name="byteCount">The size, in bytes, of the block to allocate.</param>
+        <param name="alignment">The alignment, in bytes, of the block to allocate. This must be a power of <c>2</c>.</param>
+        <summary>Reallocates an aligned block of memory of the specified size and alignment, in bytes.</summary>
+        <returns>A pointer to the reallocated aligned block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method acts as <xref:System.Runtime.InteropServices.NativeMemory.AlignedAlloc(System.UIntPtr,System.UIntPtr)> if `ptr` is `null`.
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a platform dependent aligned reallocation API such as `_aligned_realloc` on Win32.
+
+This method is not compatible with <xref:System.Runtime.InteropServices.NativeMemory.Free(System.Void*)> or <xref:System.Runtime.InteropServices.NativeMemory.Realloc(System.Void*,System.UIntPtr)>. Instead, call  <xref:System.Runtime.InteropServices.NativeMemory.AlignedFree(System.Void*)> or <xref:System.Runtime.InteropServices.NativeMemory.AlignedRealloc(System.Void*,System.UIntPtr,System.UIntPtr)>.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="alignment" /> is not a power of two.</exception>
+        <exception cref="T:System.OutOfMemoryException">Reallocating <paramref name="byteCount" /> of memory with <paramref name="alignment" /> failed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Alloc">
+      <MemberSignature Language="C#" Value="public static void* Alloc (UIntPtr byteCount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void* Alloc(native unsigned int byteCount) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.Alloc(System.UIntPtr)" />
+      <MemberSignature Language="F#" Value="static member Alloc : unativeint -&gt; nativeptr&lt;unit&gt;" Usage="System.Runtime.InteropServices.NativeMemory.Alloc byteCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void* Alloc(UIntPtr byteCount);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void*</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="byteCount" Type="System.UIntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="byteCount">The size, in bytes, of the block to allocate.</param>
+        <summary>Allocates a block of memory of the specified size, in bytes.</summary>
+        <returns>A pointer to the allocated block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `malloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="byteCount" /> of memory failed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Alloc">
+      <MemberSignature Language="C#" Value="public static void* Alloc (UIntPtr elementCount, UIntPtr elementSize);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void* Alloc(native unsigned int elementCount, native unsigned int elementSize) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.Alloc(System.UIntPtr,System.UIntPtr)" />
+      <MemberSignature Language="F#" Value="static member Alloc : unativeint * unativeint -&gt; nativeptr&lt;unit&gt;" Usage="System.Runtime.InteropServices.NativeMemory.Alloc (elementCount, elementSize)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void* Alloc(UIntPtr elementCount, UIntPtr elementSize);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void*</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="elementCount" Type="System.UIntPtr" />
+        <Parameter Name="elementSize" Type="System.UIntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="elementCount">The count, in elements, of the block to allocate.</param>
+        <param name="elementSize">The size, in bytes, of each element in the allocation.</param>
+        <summary>Allocates a block of memory of the specified size, in elements.</summary>
+        <returns>A pointer to the allocated block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `elementCount` and/or `elementSize` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `malloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="elementCount" /> * <paramref name="elementSize" /> bytes of memory failed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="AllocZeroed">
+      <MemberSignature Language="C#" Value="public static void* AllocZeroed (UIntPtr byteCount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void* AllocZeroed(native unsigned int byteCount) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.AllocZeroed(System.UIntPtr)" />
+      <MemberSignature Language="F#" Value="static member AllocZeroed : unativeint -&gt; nativeptr&lt;unit&gt;" Usage="System.Runtime.InteropServices.NativeMemory.AllocZeroed byteCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void* AllocZeroed(UIntPtr byteCount);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void*</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="byteCount" Type="System.UIntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="byteCount">The size, in bytes, of the block to allocate.</param>
+        <summary>Allocates and zeroes a block of memory of the specified size, in bytes.</summary>
+        <returns>A pointer to the allocated and zeroed block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `calloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="byteCount" /> of memory failed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="AllocZeroed">
+      <MemberSignature Language="C#" Value="public static void* AllocZeroed (UIntPtr elementCount, UIntPtr elementSize);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void* AllocZeroed(native unsigned int elementCount, native unsigned int elementSize) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.AllocZeroed(System.UIntPtr,System.UIntPtr)" />
+      <MemberSignature Language="F#" Value="static member AllocZeroed : unativeint * unativeint -&gt; nativeptr&lt;unit&gt;" Usage="System.Runtime.InteropServices.NativeMemory.AllocZeroed (elementCount, elementSize)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void* AllocZeroed(UIntPtr elementCount, UIntPtr elementSize);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void*</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="elementCount" Type="System.UIntPtr" />
+        <Parameter Name="elementSize" Type="System.UIntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="elementCount">The count, in elements, of the block to allocate.</param>
+        <param name="elementSize">The size, in bytes, of each element in the allocation.</param>
+        <summary>Allocates and zeroes a block of memory of the specified size, in elements.</summary>
+        <returns>A pointer to the allocated and zeroed block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method allows `elementCount` and `elementSize` to be `0`. It returns a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `calloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Allocating <paramref name="elementCount" /> * <paramref name="elementSize" /> bytes of memory failed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Free">
+      <MemberSignature Language="C#" Value="public static void Free (void* ptr);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Free(void* ptr) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.Free(System.Void*)" />
+      <MemberSignature Language="F#" Value="static member Free : nativeptr&lt;unit&gt; -&gt; unit" Usage="System.Runtime.InteropServices.NativeMemory.Free ptr" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Free(void* ptr);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="ptr" Type="System.Void*" />
+      </Parameters>
+      <Docs>
+        <param name="ptr">A pointer to the block of memory that should be freed.</param>
+        <summary>Frees a block of memory.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method does nothing if `ptr` is `null`.
+
+This method is a thin wrapper over the C `free` API.
+
+
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Realloc">
+      <MemberSignature Language="C#" Value="public static void* Realloc (void* ptr, UIntPtr byteCount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void* Realloc(void* ptr, native unsigned int byteCount) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.NativeMemory.Realloc(System.Void*,System.UIntPtr)" />
+      <MemberSignature Language="F#" Value="static member Realloc : nativeptr&lt;unit&gt; * unativeint -&gt; nativeptr&lt;unit&gt;" Usage="System.Runtime.InteropServices.NativeMemory.Realloc (ptr, byteCount)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void* Realloc(void* ptr, UIntPtr byteCount);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void*</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="ptr" Type="System.Void*" />
+        <Parameter Name="byteCount" Type="System.UIntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="ptr">The previously allocated block of memory.</param>
+        <param name="byteCount">The size, in bytes, of the reallocated block.</param>
+        <summary>Reallocates a block of memory to be the specified size, in bytes.</summary>
+        <returns>A pointer to the reallocated block of memory.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method acts as <xref:System.Runtime.InteropServices.NativeMemory.Alloc(System.UIntPtr,System.UIntPtr)> if `ptr` is `null`.
+
+This method allows `byteCount` to be `0` and will return a valid pointer that should not be dereferenced and that should be passed to free to avoid memory leaks.
+
+This method is a thin wrapper over the C `realloc` API.
+
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OutOfMemoryException">Reallocating <paramref name="byteCount" /> of memory failed.</exception>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

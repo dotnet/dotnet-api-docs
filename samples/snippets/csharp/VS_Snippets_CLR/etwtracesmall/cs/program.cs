@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Demo1
 {
     //<Snippet2>
-    class MyCompanyEventSource : EventSource
+    sealed class MyCompanyEventSource : EventSource
     {
         public static MyCompanyEventSource Log = new MyCompanyEventSource();
 
@@ -20,8 +20,6 @@ namespace Demo1
     {
         static void Main(string[] args)
         {
-            string name = MyCompanyEventSource.GetName(typeof(MyCompanyEventSource));
-            IEnumerable<EventSource> eventSources = MyCompanyEventSource.GetSources();
             MyCompanyEventSource.Log.Startup();
             // ...
             MyCompanyEventSource.Log.OpenFileStart("SomeFile");

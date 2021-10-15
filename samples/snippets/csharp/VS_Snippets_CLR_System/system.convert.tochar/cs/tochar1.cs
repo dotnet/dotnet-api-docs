@@ -66,9 +66,9 @@ public class Example
       //       40 converts to '('.
       //       160 converts to ' '.
       //       255 converts to 'ÿ'.
-      //       1028 converts to '?'.
-      //       2011 converts to '?'.
-      //       32767 converts to '?'.
+      //       1028 converts to 'Є'.
+      //       2011 converts to 'ߛ'.
+      //       32767 converts to '翿'.
       // </Snippet2>
    }
 
@@ -89,18 +89,18 @@ public class Example
                               number);
          }
       }
+      //       -1 is outside the range of the Char data type.
+      //       0 converts to ' '.
+      //       40 converts to '('.
+      //       160 converts to ' '.
+      //       255 converts to 'ÿ'.
+      //       1028 converts to 'Є'.
+      //       2011 converts to 'ߛ'.
+      //       30001 converts to '由'.
+      //       207154 is outside the range of the Char data type.
+      //       2147483647 is outside the range of the Char data type.
+      // </Snippet3>
    }
-   //       -1 is outside the range of the Char data type.
-   //       0 converts to ' '.
-   //       40 converts to '('.
-   //       160 converts to ' '.
-   //       255 converts to 'ÿ'.
-   //       1028 converts to '?'.
-   //       2011 converts to '?'.
-   //       30001 converts to '?'.
-   //       207154 is outside the range of the Char data type.
-   //       2147483647 is outside the range of the Char data type.
-   // </Snippet3>
 
    private static void ConvertSByte()
    {
@@ -173,9 +173,9 @@ public class Example
       //       40 converts to '('.
       //       160 converts to ' '.
       //       255 converts to 'ÿ'.
-      //       1028 converts to '?'.
-      //       2011 converts to '?'.
-      //       65535 converts to '?'.
+      //       1028 converts to 'Є'.
+      //       2011 converts to 'ߛ'.
+      //       65535 converts to '￿'.
       // </Snippet6>
    }
 
@@ -201,9 +201,9 @@ public class Example
       //       40 converts to '('.
       //       160 converts to ' '.
       //       255 converts to 'ÿ'.
-      //       1028 converts to '?'.
-      //       2011 converts to '?'.
-      //       30001 converts to '?'.
+      //       1028 converts to 'Є'.
+      //       2011 converts to 'ߛ'.
+      //       30001 converts to '由'.
       //       207154 is outside the range of the Char data type.
       //       2147483647 is outside the range of the Char data type.
       // </Snippet7>
@@ -231,9 +231,9 @@ public class Example
       //       40 converts to '('.
       //       160 converts to ' '.
       //       255 converts to 'ÿ'.
-      //       1028 converts to '?'.
-      //       2011 converts to '?'.
-      //       30001 converts to '?'.
+      //       1028 converts to 'Є'.
+      //       2011 converts to 'ߛ'.
+      //       30001 converts to '由'.
       //       207154 is outside the range of the Char data type.
       //       9223372036854775807 is outside the range of the Char data type.
       // </Snippet8>

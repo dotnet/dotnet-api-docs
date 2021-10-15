@@ -87,10 +87,10 @@ public class Example
       // The example displays the following output:
       //       Converted the Char value 'a' to the Int64 value 97.
       //       Converted the Char value 'z' to the Int64 value 122.
-      //       Converted the Char value '' to the Int64 value 7.
-      //       Converted the Char value '?' to the Int64 value 1023.
-      //       Converted the Char value '?' to the Int64 value 32767.
-      //       Converted the Char value '?' to the Int64 value 65534.
+      //       Converted the Char value '' to the Int64 value 7.
+      //       Converted the Char value 'Ͽ' to the Int64 value 1023.
+      //       Converted the Char value '翿' to the Int64 value 32767.
+      //       Converted the Char value '￾' to the Int64 value 65534.
       // </Snippet3>
    }
 
@@ -145,15 +145,15 @@ public class Example
             Console.WriteLine("{0} is outside the range of the Int64 type.", value);
          }
       }
-      //    -1.79769313486232E+308 is outside the range of the Int64 type.
-      //    -13800000000 is outside the range of the Int16 type.
+      //    -1.7976931348623157E+308 is outside the range of the Int64 type.
+      //    Converted the Double value '-13800000000' to the Int64 value -13800000000.
       //    Converted the Double value '-1023.299' to the Int64 value -1023.
       //    Converted the Double value '-12.98' to the Int64 value -13.
       //    Converted the Double value '0' to the Int64 value 0.
       //    Converted the Double value '9.113E-16' to the Int64 value 0.
       //    Converted the Double value '103.919' to the Int64 value 104.
       //    Converted the Double value '17834.191' to the Int64 value 17834.
-      //    1.79769313486232E+308 is outside the range of the Int64 type.
+      //    1.7976931348623157E+308 is outside the range of the Int64 type.
       // </Snippet5>
    }
 
@@ -289,15 +289,15 @@ public class Example
          }
       }
       // The example displays the following output:
-      //    -3.40282346638529E+38 is outside the range of the Int64 type.
-      //    -13799999488 is outside the range of the Int64 type.
-      //    Converted the Double value -1023.29901123047 to the Int64 value -1023.
-      //    Converted the Double value -12.9799995422363 to the Int64 value -13.
-      //    Converted the Double value 0 to the Int64 value 0.
-      //    Converted the Double value 9.11299983940444E-16 to the Int64 value 0.
-      //    Converted the Double value 103.918998718262 to the Int64 value 104.
-      //    Converted the Double value 17834.19140625 to the Int64 value 17834.
-      //    3.40282346638529E+38 is outside the range of the Int64 type.
+      //    -3.4028235E+38 is outside the range of the Int64 type.
+      //    Converted the Single value -1.38E+10 to the Int64 value -13799999488.
+      //    Converted the Single value -1023.299 to the Int64 value -1023.
+      //    Converted the Single value -12.98 to the Int64 value -13.
+      //    Converted the Single value 0 to the Int64 value 0.
+      //    Converted the Single value 9.113E-16 to the Int64 value 0.
+      //    Converted the Single value 103.919 to the Int64 value 104.
+      //    Converted the Single value 17834.191 to the Int64 value 17834.
+      //    3.4028235E+38 is outside the range of the Int64 type.
       // </Snippet10>
    }
 

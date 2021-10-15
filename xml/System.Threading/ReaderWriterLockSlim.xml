@@ -3,8 +3,8 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ReaderWriterLockSlim extends System.Object implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Threading.ReaderWriterLockSlim" />
   <TypeSignature Language="VB.NET" Value="Public Class ReaderWriterLockSlim&#xA;Implements IDisposable" />
-  <TypeSignature Language="C++ CLI" Value="public ref class ReaderWriterLockSlim : IDisposable" />
   <TypeSignature Language="F#" Value="type ReaderWriterLockSlim = class&#xA;    interface IDisposable" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ReaderWriterLockSlim : IDisposable" />
   <AssemblyInfo>
     <AssemblyName>System.Threading</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -13,6 +13,7 @@
     <AssemblyVersion>4.1.1.0</AssemblyVersion>
     <AssemblyVersion>4.1.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>System.Core</AssemblyName>
@@ -28,6 +29,7 @@
   <TypeForwardingChain>
     <TypeForwarding From="System.Core" FromVersion="4.0.0.0" To="System.Threading" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -46,8 +48,10 @@
  Use <xref:System.Threading.ReaderWriterLockSlim> to protect a resource that is read by multiple threads and written to by one thread at a time. <xref:System.Threading.ReaderWriterLockSlim> allows multiple threads to be in read mode, allows one thread to be in write mode with exclusive ownership of the lock, and allows one thread that has read access to be in upgradeable read mode, from which the thread can upgrade to write mode without having to relinquish its read access to the resource.  
   
 > [!NOTE]
->  <xref:System.Threading.ReaderWriterLockSlim> is similar to <xref:System.Threading.ReaderWriterLock>, but it has simplified rules for recursion and for upgrading and downgrading lock state. <xref:System.Threading.ReaderWriterLockSlim> avoids many cases of potential deadlock. In addition, the performance of <xref:System.Threading.ReaderWriterLockSlim> is significantly better than <xref:System.Threading.ReaderWriterLock>. <xref:System.Threading.ReaderWriterLockSlim> is recommended for all new development.  
-  
+>
+> - <xref:System.Threading.ReaderWriterLockSlim> is similar to <xref:System.Threading.ReaderWriterLock>, but it has simplified rules for recursion and for upgrading and downgrading lock state. <xref:System.Threading.ReaderWriterLockSlim> avoids many cases of potential deadlock. In addition, the performance of <xref:System.Threading.ReaderWriterLockSlim> is significantly better than <xref:System.Threading.ReaderWriterLock>. <xref:System.Threading.ReaderWriterLockSlim> is recommended for all new development.  
+> - <xref:System.Threading.ReaderWriterLockSlim> is not thread-abort safe. You should not use it in an environment where threads accessing it can be aborted (for example, ASP.NET).
+
  By default, new instances of <xref:System.Threading.ReaderWriterLockSlim> are created with the <xref:System.Threading.LockRecursionPolicy.NoRecursion?displayProperty=nameWithType> flag and do not allow recursion. This default policy is recommended for all new development, because recursion introduces unnecessary complications and makes your code more prone to deadlocks. To simplify migration from existing projects that use <xref:System.Threading.Monitor> or <xref:System.Threading.ReaderWriterLock>, you can use the <xref:System.Threading.LockRecursionPolicy.SupportsRecursion?displayProperty=nameWithType> flag to create instances of <xref:System.Threading.ReaderWriterLockSlim> that allow recursion.  
   
  A thread can enter the lock in three modes: read mode, write mode, and upgradeable read mode. (In the rest of this topic, "upgradeable read mode" is referred to as "upgradeable mode", and the phrase "enter `x` mode" is used in preference to the longer phrase "enter the lock in `x` mode".)  
@@ -64,7 +68,7 @@
 -   A thread that tries to enter read mode blocks if there are threads waiting to enter write mode or if there is a single thread in write mode.  
   
     > [!NOTE]
-    >  Blocking new readers when writers are queued is a lock fairness policy that favors writers. The current fairness policy balances fairness to readers and writers, to promote throughput in the most common scenarios. Future versions of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] may introduce new fairness policies.  
+    >  Blocking new readers when writers are queued is a lock fairness policy that favors writers. The current fairness policy balances fairness to readers and writers, to promote throughput in the most common scenarios. Future versions of the .NET Framework may introduce new fairness policies.  
   
 -   A thread that tries to enter upgradeable mode blocks if there is already a thread in upgradeable mode, if there are threads waiting to enter write mode, or if there is a single thread in write mode.  
   
@@ -156,17 +160,17 @@
   
  The example uses the parameterless constructor to create the lock, so recursion is not allowed. Programming the <xref:System.Threading.ReaderWriterLockSlim> is simpler and less prone to error when the lock does not allow recursion.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#11)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#11)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#12)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#12)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs" id="Snippet11":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb" id="Snippet11":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs" id="Snippet12":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb" id="Snippet12":::  
   
  The following code then uses the `SynchronizedCache` object to store a dictionary of vegetable names. It creates three tasks. The first writes the names of vegetables stored in an array to a `SynchronizedCache` instance. The second and third task display the names of the vegetables, the first in ascending order (from low index to high index), the second in descending order. The final task searches for the string "cucumber" and, when it finds it, calls the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock%2A> method  to substitute the string "green bean".  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#11)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#11)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#13)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#13)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs" id="Snippet11":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb" id="Snippet11":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs" id="Snippet13":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb" id="Snippet13":::  
   
  ]]></format>
     </remarks>
@@ -199,6 +203,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -241,17 +246,17 @@
   
  The example uses the parameterless constructor to create the lock, so recursion is not allowed. Programming the <xref:System.Threading.ReaderWriterLockSlim> is simpler and less prone to error when the lock does not allow recursion.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#11)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#11)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#12)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#12)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs" id="Snippet11":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb" id="Snippet11":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs" id="Snippet12":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb" id="Snippet12":::  
   
  The following code then uses the `SynchronizedCache` object to store a dictionary of vegetable names. It creates three tasks. The first writes the names of vegetables stored in an array to a `SynchronizedCache` instance. The second and third task display the names of the vegetables, the first in ascending order (from low index to high index), the second in descending order. The final task searches for the string "cucumber" and, when it finds it, calls the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock%2A> method  to substitute the string "green bean".  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#11)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#11)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#13)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#13)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs" id="Snippet11":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb" id="Snippet11":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs" id="Snippet13":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb" id="Snippet13":::  
   
  ]]></format>
         </remarks>
@@ -263,8 +268,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.Threading.LockRecursionPolicy recursionPolicy) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.#ctor(System.Threading.LockRecursionPolicy)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (recursionPolicy As LockRecursionPolicy)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReaderWriterLockSlim(System::Threading::LockRecursionPolicy recursionPolicy);" />
       <MemberSignature Language="F#" Value="new System.Threading.ReaderWriterLockSlim : System.Threading.LockRecursionPolicy -&gt; System.Threading.ReaderWriterLockSlim" Usage="new System.Threading.ReaderWriterLockSlim recursionPolicy" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReaderWriterLockSlim(System::Threading::LockRecursionPolicy recursionPolicy);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -274,6 +279,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -314,17 +320,17 @@
   
  In the second scenario, the thread enters read mode and then tries to enter write mode. <xref:System.Threading.LockRecursionException> is thrown regardless of the lock recursion policy.  
   
-[!code-csharp[System.Threading.LockRecursionPolicy#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs#11)] 
-[!code-vb[System.Threading.LockRecursionPolicy#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb#11)]   
-[!code-csharp[System.Threading.LockRecursionPolicy#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs#12)] 
-[!code-vb[System.Threading.LockRecursionPolicy#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb#12)]  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs" id="Snippet11"::: 
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb" id="Snippet11":::   
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs" id="Snippet12"::: 
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb" id="Snippet12":::  
   
  The following code then uses the `SynchronizedCache` object to store a dictionary of vegetable names. It creates three tasks. The first writes the names of vegetables stored in an array to a `SynchronizedCache` instance. The second and third task display the names of the vegetables, the first in ascending order (from low index to high index), the second in descending order. The final task searches for the string "cucumber" and, when it finds it, calls the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock%2A> method  to substitute the string "green bean".  
   
-[!code-csharp[System.Threading.LockRecursionPolicy#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs#11)] 
-[!code-vb[System.Threading.LockRecursionPolicy#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb#11)]   
-[!code-csharp[System.Threading.LockRecursionPolicy#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs#13)] 
-[!code-vb[System.Threading.LockRecursionPolicy#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb#13)]  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs" id="Snippet11"::: 
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb" id="Snippet11":::   
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs" id="Snippet13"::: 
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb" id="Snippet13":::  
   
  ]]></format>
         </remarks>
@@ -337,8 +343,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 CurrentReadCount" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.CurrentReadCount" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property CurrentReadCount As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int CurrentReadCount { int get(); };" />
       <MemberSignature Language="F#" Value="member this.CurrentReadCount : int" Usage="System.Threading.ReaderWriterLockSlim.CurrentReadCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int CurrentReadCount { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -348,6 +354,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -379,12 +386,12 @@
 ## Examples  
  The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.CurrentReadCount%2A> property to generate an event log entry if the number of threads in read mode exceeds a threshold.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#2)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#2)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#11)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#11)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet1":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet2":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet2":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet11":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet11":::  
   
  ]]></format>
         </remarks>
@@ -395,8 +402,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Dispose() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.Dispose" />
       <MemberSignature Language="VB.NET" Value="Public Sub Dispose ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Dispose();" />
       <MemberSignature Language="F#" Value="abstract member Dispose : unit -&gt; unit&#xA;override this.Dispose : unit -&gt; unit" Usage="readerWriterLockSlim.Dispose " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Dispose();" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.IDisposable.Dispose</InterfaceMember>
@@ -409,6 +416,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -461,8 +469,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void EnterReadLock() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.EnterReadLock" />
       <MemberSignature Language="VB.NET" Value="Public Sub EnterReadLock ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void EnterReadLock();" />
       <MemberSignature Language="F#" Value="member this.EnterReadLock : unit -&gt; unit" Usage="readerWriterLockSlim.EnterReadLock " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void EnterReadLock();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -472,6 +480,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -512,10 +521,10 @@
   
  This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#3)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet2":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet3":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet3":::  
   
  ]]></format>
         </remarks>
@@ -536,8 +545,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void EnterUpgradeableReadLock() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock" />
       <MemberSignature Language="VB.NET" Value="Public Sub EnterUpgradeableReadLock ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void EnterUpgradeableReadLock();" />
       <MemberSignature Language="F#" Value="member this.EnterUpgradeableReadLock : unit -&gt; unit" Usage="readerWriterLockSlim.EnterUpgradeableReadLock " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void EnterUpgradeableReadLock();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -547,6 +556,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -591,12 +601,12 @@
   
  This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#6)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#6)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#10)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#10)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet2":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet6":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet6":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet10":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet10":::  
   
  ]]></format>
         </remarks>
@@ -617,8 +627,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void EnterWriteLock() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.EnterWriteLock" />
       <MemberSignature Language="VB.NET" Value="Public Sub EnterWriteLock ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void EnterWriteLock();" />
       <MemberSignature Language="F#" Value="member this.EnterWriteLock : unit -&gt; unit" Usage="readerWriterLockSlim.EnterWriteLock " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void EnterWriteLock();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -628,6 +638,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -664,10 +675,10 @@
   
  This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#4)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#4)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet2":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet4":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet4":::  
   
  ]]></format>
         </remarks>
@@ -688,8 +699,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void ExitReadLock() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.ExitReadLock" />
       <MemberSignature Language="VB.NET" Value="Public Sub ExitReadLock ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ExitReadLock();" />
       <MemberSignature Language="F#" Value="member this.ExitReadLock : unit -&gt; unit" Usage="readerWriterLockSlim.ExitReadLock " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ExitReadLock();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -699,6 +710,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -732,10 +744,10 @@
   
  This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#3)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet2":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet3":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet3":::  
   
  ]]></format>
         </remarks>
@@ -747,8 +759,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void ExitUpgradeableReadLock() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock" />
       <MemberSignature Language="VB.NET" Value="Public Sub ExitUpgradeableReadLock ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ExitUpgradeableReadLock();" />
       <MemberSignature Language="F#" Value="member this.ExitUpgradeableReadLock : unit -&gt; unit" Usage="readerWriterLockSlim.ExitUpgradeableReadLock " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ExitUpgradeableReadLock();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -758,6 +770,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -795,12 +808,12 @@
   
  This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#6)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#6)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#10)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#10)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet2":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet6":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet6":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet10":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet10":::  
   
  ]]></format>
         </remarks>
@@ -812,8 +825,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void ExitWriteLock() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.ExitWriteLock" />
       <MemberSignature Language="VB.NET" Value="Public Sub ExitWriteLock ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ExitWriteLock();" />
       <MemberSignature Language="F#" Value="member this.ExitWriteLock : unit -&gt; unit" Usage="readerWriterLockSlim.ExitWriteLock " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ExitWriteLock();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -823,6 +836,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -856,10 +870,10 @@
   
  This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#4)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#4)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet2":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet4":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet4":::  
   
  ]]></format>
         </remarks>
@@ -871,8 +885,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool IsReadLockHeld" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.IsReadLockHeld" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsReadLockHeld As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsReadLockHeld { bool get(); };" />
       <MemberSignature Language="F#" Value="member this.IsReadLockHeld : bool" Usage="System.Threading.ReaderWriterLockSlim.IsReadLockHeld" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsReadLockHeld { bool get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -882,6 +896,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -912,10 +927,10 @@
 ## Examples  
  The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.IsReadLockHeld%2A> property to generate an assert if the current thread has entered read mode unexpectedly.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#21](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#21)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#21](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#21)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet1":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet21":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet21":::  
   
  ]]></format>
         </remarks>
@@ -926,8 +941,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool IsUpgradeableReadLockHeld" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsUpgradeableReadLockHeld As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsUpgradeableReadLockHeld { bool get(); };" />
       <MemberSignature Language="F#" Value="member this.IsUpgradeableReadLockHeld : bool" Usage="System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsUpgradeableReadLockHeld { bool get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -937,6 +952,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -967,10 +983,10 @@
 ## Examples  
  The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld%2A> property to generate an assert if the current thread has entered upgradeable mode unexpectedly.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#22](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#22)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#22](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#22)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet1":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet22":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet22":::  
   
  ]]></format>
         </remarks>
@@ -981,8 +997,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool IsWriteLockHeld" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.IsWriteLockHeld" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsWriteLockHeld As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsWriteLockHeld { bool get(); };" />
       <MemberSignature Language="F#" Value="member this.IsWriteLockHeld : bool" Usage="System.Threading.ReaderWriterLockSlim.IsWriteLockHeld" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsWriteLockHeld { bool get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -992,6 +1008,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1022,10 +1039,10 @@
 ## Examples  
  The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.IsWriteLockHeld%2A> property to generate an assert if the current thread has entered write mode unexpectedly.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#23](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#23)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#23](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#23)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet1":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet23":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet23":::  
   
  ]]></format>
         </remarks>
@@ -1036,8 +1053,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Threading.LockRecursionPolicy RecursionPolicy" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property RecursionPolicy As LockRecursionPolicy" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Threading::LockRecursionPolicy RecursionPolicy { System::Threading::LockRecursionPolicy get(); };" />
       <MemberSignature Language="F#" Value="member this.RecursionPolicy : System.Threading.LockRecursionPolicy" Usage="System.Threading.ReaderWriterLockSlim.RecursionPolicy" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Threading::LockRecursionPolicy RecursionPolicy { System::Threading::LockRecursionPolicy get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1047,6 +1064,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1088,8 +1106,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 RecursiveReadCount" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.RecursiveReadCount" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property RecursiveReadCount As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int RecursiveReadCount { int get(); };" />
       <MemberSignature Language="F#" Value="member this.RecursiveReadCount : int" Usage="System.Threading.ReaderWriterLockSlim.RecursiveReadCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int RecursiveReadCount { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1099,6 +1117,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1132,8 +1151,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 RecursiveUpgradeCount" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.RecursiveUpgradeCount" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property RecursiveUpgradeCount As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int RecursiveUpgradeCount { int get(); };" />
       <MemberSignature Language="F#" Value="member this.RecursiveUpgradeCount : int" Usage="System.Threading.ReaderWriterLockSlim.RecursiveUpgradeCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int RecursiveUpgradeCount { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1143,6 +1162,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1176,8 +1196,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 RecursiveWriteCount" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.RecursiveWriteCount" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property RecursiveWriteCount As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int RecursiveWriteCount { int get(); };" />
       <MemberSignature Language="F#" Value="member this.RecursiveWriteCount : int" Usage="System.Threading.ReaderWriterLockSlim.RecursiveWriteCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int RecursiveWriteCount { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1187,6 +1207,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1231,8 +1252,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnterReadLock(int32 millisecondsTimeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEnterReadLock (millisecondsTimeout As Integer) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterReadLock(int millisecondsTimeout);" />
       <MemberSignature Language="F#" Value="member this.TryEnterReadLock : int -&gt; bool" Usage="readerWriterLockSlim.TryEnterReadLock millisecondsTimeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterReadLock(int millisecondsTimeout);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1242,6 +1263,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1296,8 +1318,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnterReadLock(valuetype System.TimeSpan timeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.TimeSpan)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEnterReadLock (timeout As TimeSpan) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterReadLock(TimeSpan timeout);" />
       <MemberSignature Language="F#" Value="member this.TryEnterReadLock : TimeSpan -&gt; bool" Usage="readerWriterLockSlim.TryEnterReadLock timeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterReadLock(TimeSpan timeout);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1307,6 +1329,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1376,8 +1399,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnterUpgradeableReadLock(int32 millisecondsTimeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEnterUpgradeableReadLock (millisecondsTimeout As Integer) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterUpgradeableReadLock(int millisecondsTimeout);" />
       <MemberSignature Language="F#" Value="member this.TryEnterUpgradeableReadLock : int -&gt; bool" Usage="readerWriterLockSlim.TryEnterUpgradeableReadLock millisecondsTimeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterUpgradeableReadLock(int millisecondsTimeout);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1387,6 +1410,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1445,8 +1469,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnterUpgradeableReadLock(valuetype System.TimeSpan timeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.TimeSpan)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEnterUpgradeableReadLock (timeout As TimeSpan) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterUpgradeableReadLock(TimeSpan timeout);" />
       <MemberSignature Language="F#" Value="member this.TryEnterUpgradeableReadLock : TimeSpan -&gt; bool" Usage="readerWriterLockSlim.TryEnterUpgradeableReadLock timeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterUpgradeableReadLock(TimeSpan timeout);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1456,6 +1480,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1529,8 +1554,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnterWriteLock(int32 millisecondsTimeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEnterWriteLock (millisecondsTimeout As Integer) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterWriteLock(int millisecondsTimeout);" />
       <MemberSignature Language="F#" Value="member this.TryEnterWriteLock : int -&gt; bool" Usage="readerWriterLockSlim.TryEnterWriteLock millisecondsTimeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterWriteLock(int millisecondsTimeout);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1540,6 +1565,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1583,10 +1609,10 @@
   
  This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#5)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#5)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet2":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs" id="Snippet5":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb" id="Snippet5":::  
   
  ]]></format>
         </remarks>
@@ -1608,8 +1634,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnterWriteLock(valuetype System.TimeSpan timeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.TimeSpan)" />
       <MemberSignature Language="VB.NET" Value="Public Function TryEnterWriteLock (timeout As TimeSpan) As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterWriteLock(TimeSpan timeout);" />
       <MemberSignature Language="F#" Value="member this.TryEnterWriteLock : TimeSpan -&gt; bool" Usage="readerWriterLockSlim.TryEnterWriteLock timeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnterWriteLock(TimeSpan timeout);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1619,6 +1645,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1677,8 +1704,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 WaitingReadCount" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.WaitingReadCount" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property WaitingReadCount As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int WaitingReadCount { int get(); };" />
       <MemberSignature Language="F#" Value="member this.WaitingReadCount : int" Usage="System.Threading.ReaderWriterLockSlim.WaitingReadCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int WaitingReadCount { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1688,6 +1715,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1723,10 +1751,10 @@
 ## Examples  
  The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.WaitingReadCount%2A> property to generate an event log entry if the number of threads that are blocked, waiting to enter read mode, exceeds a threshold.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#31](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#31)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#31](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#31)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet1":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet31":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet31":::  
   
  ]]></format>
         </remarks>
@@ -1737,8 +1765,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 WaitingUpgradeCount" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property WaitingUpgradeCount As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int WaitingUpgradeCount { int get(); };" />
       <MemberSignature Language="F#" Value="member this.WaitingUpgradeCount : int" Usage="System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int WaitingUpgradeCount { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1748,6 +1776,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1783,10 +1812,10 @@
 ## Examples  
  The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount%2A> property to generate an event log entry if the number of threads that are blocked, waiting to enter upgradeable mode, exceeds a threshold.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#33](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#33)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#33](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#33)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet1":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet33":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet33":::  
   
  ]]></format>
         </remarks>
@@ -1797,8 +1826,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance int32 WaitingWriteCount" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ReaderWriterLockSlim.WaitingWriteCount" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property WaitingWriteCount As Integer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int WaitingWriteCount { int get(); };" />
       <MemberSignature Language="F#" Value="member this.WaitingWriteCount : int" Usage="System.Threading.ReaderWriterLockSlim.WaitingWriteCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int WaitingWriteCount { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1808,6 +1837,7 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -1843,10 +1873,10 @@
 ## Examples  
  The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.WaitingWriteCount%2A> property to generate an event log entry if the number of threads that are blocked, waiting to enter write mode, exceeds a threshold.  
   
- [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]
- [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  
-[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#32](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#32)]
-[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#32](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#32)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet1":::  
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs" id="Snippet32":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb" id="Snippet32":::  
   
  ]]></format>
         </remarks>

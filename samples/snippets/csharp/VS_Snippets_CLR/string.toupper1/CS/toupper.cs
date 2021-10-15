@@ -34,6 +34,6 @@ class Example
 // This example displays the following output:
 //       str1 = indigo: 0069 006e 0064 0069 0067 006f
 //       str2 = INDIGO: 0049 004e 0044 0049 0047 004f
-//       str3 = INDIGO: 0130 004e 0044 0130 0047 004f
+//       str3 = İNDİGO: 0130 004e 0044 0130 0047 004f
 //       str2 is not equal to str3.
 // </Snippet1>

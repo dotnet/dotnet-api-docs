@@ -17,8 +17,8 @@ class Alice
             alice.HashAlgorithm = CngAlgorithm.Sha256;
             alicePublicKey = alice.PublicKey.ToByteArray();
             Bob bob = new Bob();
-            CngKey k = CngKey.Import(bob.bobPublicKey, CngKeyBlobFormat.EccPublicBlob);
-            byte[] aliceKey = alice.DeriveKeyMaterial(CngKey.Import(bob.bobPublicKey, CngKeyBlobFormat.EccPublicBlob));
+            CngKey bobKey = CngKey.Import(bob.bobPublicKey, CngKeyBlobFormat.EccPublicBlob);
+            byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
             byte[] encryptedMessage = null;
             byte[] iv = null;
             Send(aliceKey, "Secret message", out encryptedMessage, out iv);

@@ -1,4 +1,4 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
 
 public class Example
@@ -18,7 +18,7 @@ public class Example
          Console.WriteLine("One or more names begin with '{0}': {1}",
                            charToFind,
                            Array.Exists(names,
-                                        s => { if (String.IsNullOrEmpty(s))
+                                        s => { if (string.IsNullOrEmpty(s))
                                                   return false;
 
                                                if (s.Substring(0, 1).ToUpper() == charToFind.ToString())

@@ -341,7 +341,7 @@ namespace SequenceExamples
             // <Snippet16>
             string[] numbers = { "10007", "37", "299846234235" };
 
-            double average = numbers.Average(num => Convert.ToInt64(num));
+            double average = numbers.Average(num => long.Parse(num));
 
             Console.WriteLine("The average is {0}.", average);
 
@@ -694,7 +694,7 @@ namespace SequenceExamples
             Console.WriteLine("The name chosen at random is '{0}'.", name);
 
             /*
-             This code produces the following sample output:
+             This code produces output similar to the following:
 
              The name chosen at random is 'Ito, Shu'.
             */
@@ -2961,7 +2961,7 @@ namespace SequenceExamples
                 // as the element values of the Lookup.
                 ILookup<char, string> lookup =
                     packages
-                    .ToLookup(p => Convert.ToChar(p.Company.Substring(0, 1)),
+                    .ToLookup(p => p.Company[0],
                               p => p.Company + " " + p.TrackingNumber);
 
                 // Iterate through each IGrouping in the Lookup.

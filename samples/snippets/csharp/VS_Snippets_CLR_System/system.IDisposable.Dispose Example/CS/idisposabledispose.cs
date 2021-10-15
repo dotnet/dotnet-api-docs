@@ -31,9 +31,9 @@ public class DisposeExample
         // A derived class should not be able to override this method.
         public void Dispose()
         {
-            Dispose(true);
+            Dispose(disposing: true);
             // This object will be cleaned up by the Dispose method.
-            // Therefore, you should call GC.SupressFinalize to
+            // Therefore, you should call GC.SuppressFinalize to
             // take this object off the finalization queue
             // and prevent finalization code for this object
             // from executing a second time.
@@ -77,17 +77,17 @@ public class DisposeExample
         [System.Runtime.InteropServices.DllImport("Kernel32")]
         private extern static Boolean CloseHandle(IntPtr handle);
 
-        // Use C# destructor syntax for finalization code.
-        // This destructor will run only if the Dispose method
+        // Use C# finalizer syntax for finalization code.
+        // This finalizer will run only if the Dispose method
         // does not get called.
         // It gives your base class the opportunity to finalize.
-        // Do not provide destructors in types derived from this class.
+        // Do not provide finalizer in types derived from this class.
         ~MyResource()
         {
             // Do not re-create Dispose clean-up code here.
-            // Calling Dispose(false) is optimal in terms of
+            // Calling Dispose(disposing: false) is optimal in terms of
             // readability and maintainability.
-            Dispose(false);
+            Dispose(disposing: false);
         }
     }
     public static void Main()

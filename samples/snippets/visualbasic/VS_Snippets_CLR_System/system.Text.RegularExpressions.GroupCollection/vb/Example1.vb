@@ -24,13 +24,10 @@ Module Example
    End Sub
 End Module
 ' The example displays the following output:
-'       r: Microsoft
-'       r: Excel
-'       r: Access
-'       r: Outlook
-'       r: PowerPoint
-'       T: Silverlight
+'       ®: Microsoft
+'       ®: Excel
+'       ®: Access
+'       ®: Outlook
+'       ®: PowerPoint
+'       ™: Silverlight
 ' </Snippet1>
-
-
-

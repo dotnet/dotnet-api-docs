@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesArrayList  {
@@ -105,7 +105,7 @@
     at System.Collections.FixedSizeArrayList.Add(Object obj)
     at SamplesArrayList.Main()
  Exception: System.NotSupportedException: Collection was of a fixed size.
-    at System.Collections.FixedSizeArrayList.Insert(Int32 index, Object obj)
+    at System.Collections.FixedSizeArrayList.Insert(int index, Object obj)
     at SamplesArrayList.Main()
 
  */

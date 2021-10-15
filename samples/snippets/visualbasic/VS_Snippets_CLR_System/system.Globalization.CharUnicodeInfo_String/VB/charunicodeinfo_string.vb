@@ -3,7 +3,7 @@
 ' <snippet1>
 Imports System.Globalization
 
-Public Class SamplesCharUnicodeInfo   
+Public Class SamplesCharUnicodeInfo
 
    Public Shared Sub Main()
 
@@ -29,15 +29,15 @@ End Class
 
 'This code produces the following output.  Some characters might not display at the console.
 '
-'String: a9\u0393\u00B2\u00BC\u0BEF\u0BF0\u2788
+'String: a9Γ²¼௯௰➈
 'index c  Num   Dig   Dec   UnicodeCategory
 '0     a   -1    -1    -1   LowercaseLetter
 '1     9   9     9     9    DecimalDigitNumber
-'2     \u0393   -1    -1    -1   UppercaseLetter
-'3     \u00B2   2     2     2    OtherNumber
-'4     \u00BC   0.25  -1    -1   OtherNumber
-'5     \u0BEF   9     9     9    DecimalDigitNumber
-'6     \u0BF0   10    -1    -1   OtherNumber
-'7     \u2788   9     9     -1   OtherNumber
+'2     Γ   -1    -1    -1   UppercaseLetter
+'3     ²   2     2     -1   OtherNumber
+'4     ¼   0.25  -1    -1   OtherNumber
+'5     ௯   9     9     9    DecimalDigitNumber
+'6     ௰   10    -1    -1   OtherNumber
+'7     ➈   9     9     -1   OtherNumber
 
 ' </snippet1>

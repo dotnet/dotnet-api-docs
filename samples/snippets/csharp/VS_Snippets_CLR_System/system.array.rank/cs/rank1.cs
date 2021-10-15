@@ -18,7 +18,7 @@ public class Example
    }
 }
 // The example displays the following output:
-//       System.Int32[]: 1 dimension
-//       System.Int32[,]: 2 dimension
-//       System.Int32[][]: 1 dimension
+//       System.Int32[]: 1 dimension(s)
+//       System.Int32[,]: 2 dimension(s)
+//       System.Int32[][]: 1 dimension(s)
 // </Snippet1>

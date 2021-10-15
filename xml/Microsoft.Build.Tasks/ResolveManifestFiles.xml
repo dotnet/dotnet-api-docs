@@ -3,8 +3,8 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit ResolveManifestFiles extends Microsoft.Build.Tasks.TaskExtension" />
   <TypeSignature Language="DocId" Value="T:Microsoft.Build.Tasks.ResolveManifestFiles" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class ResolveManifestFiles&#xA;Inherits TaskExtension" />
-  <TypeSignature Language="C++ CLI" Value="public ref class ResolveManifestFiles sealed : Microsoft::Build::Tasks::TaskExtension" />
   <TypeSignature Language="F#" Value="type ResolveManifestFiles = class&#xA;    inherit TaskExtension" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ResolveManifestFiles sealed : Microsoft::Build::Tasks::TaskExtension" />
   <AssemblyInfo>
     <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -26,9 +26,27 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>This task resolves the following items in the build process to files for manifest generation: built items, dependencies, satellites, content, debug symbols, and documentation) to files for manifest generation.</summary>
+    <summary>
+            This task resolves items in the build process (built, dependencies, satellites,
+            content, debug symbols, documentation, etc.) to files for manifest generation.
+            </summary>
     <remarks>To be added.</remarks>
     <forInternalUseOnly />
+    <comment>
+            This task executes following steps:
+              (1) Filter out Framework assemblies
+              (2) Filter out non-existant files
+              (3) Build list of Dependencies from built items with CopyLocal=True
+              (4) Build list of Prerequisites from built items with CopyLocal=False
+              (5) Build list of Satellites from built items based on TargetCulture
+              (6) Build list of Files from Files and ExtraFiles inputs, using next step
+              (7) For each PublishFile item...
+               If item is on Dependencies list then move it to Prerequisites list
+               If item is on Content list then add it to File list unless it is excluded
+               If item is on Extra list then add it to File list only if it is included
+               Apply Group and Optional attributes from PublishFile items to built items
+               (8) Insure all output items have a TargetPath, and if in a Group that IsOptional is set
+            </comment>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -67,13 +85,34 @@
         <forInternalUseOnly />
       </Docs>
     </Member>
+    <Member MemberName="AssemblyName">
+      <MemberSignature Language="C#" Value="public string AssemblyName { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string AssemblyName" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.AssemblyName" />
+      <MemberSignature Language="VB.NET" Value="Public Property AssemblyName As String" />
+      <MemberSignature Language="F#" Value="member this.AssemblyName : string with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.AssemblyName" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ AssemblyName { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="DeploymentManifestEntryPoint">
-      <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem DeploymentManifestEntryPoint { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem DeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.DeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="VB.NET" Value="Public Property DeploymentManifestEntryPoint As ITaskItem" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Build::Framework::ITaskItem ^ DeploymentManifestEntryPoint { Microsoft::Build::Framework::ITaskItem ^ get(); void set(Microsoft::Build::Framework::ITaskItem ^ value); };" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="F#" Value="member this.DeploymentManifestEntryPoint : Microsoft.Build.Framework.ITaskItem with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.DeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem DeploymentManifestEntryPoint { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem DeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.DeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="VB.NET" Value="Public Property DeploymentManifestEntryPoint As ITaskItem" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="F#" Value="member this.DeploymentManifestEntryPoint : Microsoft.Build.Framework.ITaskItem with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.DeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Build::Framework::ITaskItem ^ DeploymentManifestEntryPoint { Microsoft::Build::Framework::ITaskItem ^ get(); void set(Microsoft::Build::Framework::ITaskItem ^ value); };" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -98,7 +137,7 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">Microsoft.Build.Framework.ITaskItem</ReturnType>
+        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">Microsoft.Build.Framework.ITaskItem</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the name of the deployment manifest.</summary>
@@ -119,8 +158,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem EntryPoint" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.EntryPoint" />
       <MemberSignature Language="VB.NET" Value="Public Property EntryPoint As ITaskItem" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Build::Framework::ITaskItem ^ EntryPoint { Microsoft::Build::Framework::ITaskItem ^ get(); void set(Microsoft::Build::Framework::ITaskItem ^ value); };" />
       <MemberSignature Language="F#" Value="member this.EntryPoint : Microsoft.Build.Framework.ITaskItem with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.EntryPoint" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Build::Framework::ITaskItem ^ EntryPoint { Microsoft::Build::Framework::ITaskItem ^ get(); void set(Microsoft::Build::Framework::ITaskItem ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -163,8 +202,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Execute() cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Build.Tasks.ResolveManifestFiles.Execute" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function Execute () As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Execute();" />
       <MemberSignature Language="F#" Value="override this.Execute : unit -&gt; bool" Usage="resolveManifestFiles.Execute " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Execute();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -199,8 +238,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] ExtraFiles" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.ExtraFiles" />
       <MemberSignature Language="VB.NET" Value="Public Property ExtraFiles As ITaskItem()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ ExtraFiles { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberSignature Language="F#" Value="member this.ExtraFiles : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.ExtraFiles" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ ExtraFiles { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -239,8 +278,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] Files" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.Files" />
       <MemberSignature Language="VB.NET" Value="Public Property Files As ITaskItem()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ Files { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberSignature Language="F#" Value="member this.Files : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.Files" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ Files { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -274,13 +313,76 @@
         <forInternalUseOnly />
       </Docs>
     </Member>
+    <Member MemberName="IsSelfContainedPublish">
+      <MemberSignature Language="C#" Value="public bool IsSelfContainedPublish { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsSelfContainedPublish" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.IsSelfContainedPublish" />
+      <MemberSignature Language="VB.NET" Value="Public Property IsSelfContainedPublish As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsSelfContainedPublish : bool with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.IsSelfContainedPublish" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsSelfContainedPublish { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsSingleFilePublish">
+      <MemberSignature Language="C#" Value="public bool IsSingleFilePublish { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsSingleFilePublish" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.IsSingleFilePublish" />
+      <MemberSignature Language="VB.NET" Value="Public Property IsSingleFilePublish As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsSingleFilePublish : bool with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.IsSingleFilePublish" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsSingleFilePublish { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LauncherBasedDeployment">
+      <MemberSignature Language="C#" Value="public bool LauncherBasedDeployment { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool LauncherBasedDeployment" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.LauncherBasedDeployment" />
+      <MemberSignature Language="VB.NET" Value="Public Property LauncherBasedDeployment As Boolean" />
+      <MemberSignature Language="F#" Value="member this.LauncherBasedDeployment : bool with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.LauncherBasedDeployment" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool LauncherBasedDeployment { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="ManagedAssemblies">
       <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem[] ManagedAssemblies { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] ManagedAssemblies" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.ManagedAssemblies" />
       <MemberSignature Language="VB.NET" Value="Public Property ManagedAssemblies As ITaskItem()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ ManagedAssemblies { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberSignature Language="F#" Value="member this.ManagedAssemblies : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.ManagedAssemblies" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ ManagedAssemblies { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -319,8 +421,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] NativeAssemblies" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.NativeAssemblies" />
       <MemberSignature Language="VB.NET" Value="Public Property NativeAssemblies As ITaskItem()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ NativeAssemblies { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberSignature Language="F#" Value="member this.NativeAssemblies : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.NativeAssemblies" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ NativeAssemblies { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -359,8 +461,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] OutputAssemblies" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.OutputAssemblies" />
       <MemberSignature Language="VB.NET" Value="Public Property OutputAssemblies As ITaskItem()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ OutputAssemblies { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberSignature Language="F#" Value="member this.OutputAssemblies : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.OutputAssemblies" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ OutputAssemblies { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -403,12 +505,12 @@
       </Docs>
     </Member>
     <Member MemberName="OutputDeploymentManifestEntryPoint">
-      <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem OutputDeploymentManifestEntryPoint { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem OutputDeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.OutputDeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="VB.NET" Value="Public Property OutputDeploymentManifestEntryPoint As ITaskItem" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Build::Framework::ITaskItem ^ OutputDeploymentManifestEntryPoint { Microsoft::Build::Framework::ITaskItem ^ get(); void set(Microsoft::Build::Framework::ITaskItem ^ value); };" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="F#" Value="member this.OutputDeploymentManifestEntryPoint : Microsoft.Build.Framework.ITaskItem with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.OutputDeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem OutputDeploymentManifestEntryPoint { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem OutputDeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.OutputDeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="VB.NET" Value="Public Property OutputDeploymentManifestEntryPoint As ITaskItem" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="F#" Value="member this.OutputDeploymentManifestEntryPoint : Microsoft.Build.Framework.ITaskItem with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.OutputDeploymentManifestEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Build::Framework::ITaskItem ^ OutputDeploymentManifestEntryPoint { Microsoft::Build::Framework::ITaskItem ^ get(); void set(Microsoft::Build::Framework::ITaskItem ^ value); };" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -423,7 +525,7 @@
         <AssemblyVersion>15.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
+        <Attribute FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName Language="C#">[Microsoft.Build.Framework.Output]</AttributeName>
           <AttributeName Language="F#">[&lt;Microsoft.Build.Framework.Output&gt;]</AttributeName>
         </Attribute>
@@ -437,7 +539,7 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">Microsoft.Build.Framework.ITaskItem</ReturnType>
+        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">Microsoft.Build.Framework.ITaskItem</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the output deployment manifest entry point.</summary>
@@ -454,12 +556,12 @@
       </Docs>
     </Member>
     <Member MemberName="OutputEntryPoint">
-      <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem OutputEntryPoint { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem OutputEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.OutputEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="VB.NET" Value="Public Property OutputEntryPoint As ITaskItem" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Build::Framework::ITaskItem ^ OutputEntryPoint { Microsoft::Build::Framework::ITaskItem ^ get(); void set(Microsoft::Build::Framework::ITaskItem ^ value); };" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="F#" Value="member this.OutputEntryPoint : Microsoft.Build.Framework.ITaskItem with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.OutputEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem OutputEntryPoint { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem OutputEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.OutputEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="VB.NET" Value="Public Property OutputEntryPoint As ITaskItem" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="F#" Value="member this.OutputEntryPoint : Microsoft.Build.Framework.ITaskItem with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.OutputEntryPoint" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Build::Framework::ITaskItem ^ OutputEntryPoint { Microsoft::Build::Framework::ITaskItem ^ get(); void set(Microsoft::Build::Framework::ITaskItem ^ value); };" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -474,7 +576,7 @@
         <AssemblyVersion>15.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
+        <Attribute FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
           <AttributeName Language="C#">[Microsoft.Build.Framework.Output]</AttributeName>
           <AttributeName Language="F#">[&lt;Microsoft.Build.Framework.Output&gt;]</AttributeName>
         </Attribute>
@@ -488,7 +590,7 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">Microsoft.Build.Framework.ITaskItem</ReturnType>
+        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">Microsoft.Build.Framework.ITaskItem</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the output entry point.</summary>
@@ -502,8 +604,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] OutputFiles" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.OutputFiles" />
       <MemberSignature Language="VB.NET" Value="Public Property OutputFiles As ITaskItem()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ OutputFiles { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberSignature Language="F#" Value="member this.OutputFiles : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.OutputFiles" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ OutputFiles { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -550,8 +652,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] PublishFiles" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.PublishFiles" />
       <MemberSignature Language="VB.NET" Value="Public Property PublishFiles As ITaskItem()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ PublishFiles { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberSignature Language="F#" Value="member this.PublishFiles : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.PublishFiles" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ PublishFiles { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -585,13 +687,34 @@
         <forInternalUseOnly />
       </Docs>
     </Member>
+    <Member MemberName="RuntimePackAssets">
+      <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem[] RuntimePackAssets { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] RuntimePackAssets" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.RuntimePackAssets" />
+      <MemberSignature Language="VB.NET" Value="Public Property RuntimePackAssets As ITaskItem()" />
+      <MemberSignature Language="F#" Value="member this.RuntimePackAssets : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.RuntimePackAssets" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ RuntimePackAssets { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Microsoft.Build.Framework.ITaskItem[]</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="SatelliteAssemblies">
       <MemberSignature Language="C#" Value="public Microsoft.Build.Framework.ITaskItem[] SatelliteAssemblies { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Build.Framework.ITaskItem[] SatelliteAssemblies" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.SatelliteAssemblies" />
       <MemberSignature Language="VB.NET" Value="Public Property SatelliteAssemblies As ITaskItem()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ SatelliteAssemblies { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberSignature Language="F#" Value="member this.SatelliteAssemblies : Microsoft.Build.Framework.ITaskItem[] with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.SatelliteAssemblies" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ SatelliteAssemblies { cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ get(); void set(cli::array &lt;Microsoft::Build::Framework::ITaskItem ^&gt; ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -626,12 +749,12 @@
       </Docs>
     </Member>
     <Member MemberName="SigningManifests">
-      <MemberSignature Language="C#" Value="public bool SigningManifests { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool SigningManifests" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.SigningManifests" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="VB.NET" Value="Public Property SigningManifests As Boolean" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool SigningManifests { bool get(); void set(bool value); };" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="F#" Value="member this.SigningManifests : bool with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.SigningManifests" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C#" Value="public bool SigningManifests { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool SigningManifests" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.SigningManifests" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="VB.NET" Value="Public Property SigningManifests As Boolean" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="F#" Value="member this.SigningManifests : bool with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.SigningManifests" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool SigningManifests { bool get(); void set(bool value); };" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -656,7 +779,7 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">System.Boolean</ReturnType>
+        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets or sets a value that indicates whether the manifests are signed.</summary>
@@ -670,8 +793,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance string TargetCulture" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.TargetCulture" />
       <MemberSignature Language="VB.NET" Value="Public Property TargetCulture As String" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ TargetCulture { System::String ^ get(); void set(System::String ^ value); };" />
       <MemberSignature Language="F#" Value="member this.TargetCulture : string with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.TargetCulture" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ TargetCulture { System::String ^ get(); void set(System::String ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -709,13 +832,34 @@
         <forInternalUseOnly />
       </Docs>
     </Member>
+    <Member MemberName="TargetFrameworkIdentifier">
+      <MemberSignature Language="C#" Value="public string TargetFrameworkIdentifier { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string TargetFrameworkIdentifier" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.TargetFrameworkIdentifier" />
+      <MemberSignature Language="VB.NET" Value="Public Property TargetFrameworkIdentifier As String" />
+      <MemberSignature Language="F#" Value="member this.TargetFrameworkIdentifier : string with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.TargetFrameworkIdentifier" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ TargetFrameworkIdentifier { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Build.Tasks.Core</AssemblyName>
+        <AssemblyVersion>15.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="TargetFrameworkVersion">
-      <MemberSignature Language="C#" Value="public string TargetFrameworkVersion { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="ILAsm" Value=".property instance string TargetFrameworkVersion" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.TargetFrameworkVersion" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="VB.NET" Value="Public Property TargetFrameworkVersion As String" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ TargetFrameworkVersion { System::String ^ get(); void set(System::String ^ value); };" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-      <MemberSignature Language="F#" Value="member this.TargetFrameworkVersion : string with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.TargetFrameworkVersion" FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C#" Value="public string TargetFrameworkVersion { get; set; }" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="ILAsm" Value=".property instance string TargetFrameworkVersion" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Build.Tasks.ResolveManifestFiles.TargetFrameworkVersion" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="VB.NET" Value="Public Property TargetFrameworkVersion As String" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="F#" Value="member this.TargetFrameworkVersion : string with get, set" Usage="Microsoft.Build.Tasks.ResolveManifestFiles.TargetFrameworkVersion" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ TargetFrameworkVersion { System::String ^ get(); void set(System::String ^ value); };" FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Build.Tasks.v4.0</AssemblyName>
@@ -736,7 +880,7 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">System.String</ReturnType>
+        <ReturnType FrameworkAlternate="msbuild-15;msbuild-16;msbuild-16-netcore;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the target .NET Framework version.</summary>

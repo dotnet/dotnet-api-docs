@@ -27,19 +27,19 @@ public:
        // Define the is greater than operator.
     bool operator>=  (Temperature^ other)
     {
-       return CompareTo(other) == 1;
+       return CompareTo(other) >= 0;
     }
     
     // Define the is less than operator.
     bool operator<  (Temperature^ other)
     {
-       return CompareTo(other) == -1;
+       return CompareTo(other) < 0;
     }
     
        // Define the is greater than or equal to operator.
     bool operator>  (Temperature^ other)
     {
-       return CompareTo(other) >= 0;
+       return CompareTo(other) > 0;
     }
     
     // Define the is less than or equal to operator.

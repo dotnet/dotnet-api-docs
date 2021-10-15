@@ -74,7 +74,7 @@ Public Class Form1
     'Declare a new TrackBar object.
     Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
 
-    ' Initalize the TrackBar and add it to the form.
+    ' Initialize the TrackBar and add it to the form.
     Private Sub InitializeTrackBar()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar
 

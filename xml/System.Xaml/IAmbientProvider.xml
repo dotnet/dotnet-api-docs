@@ -3,12 +3,13 @@
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IAmbientProvider" />
   <TypeSignature Language="DocId" Value="T:System.Xaml.IAmbientProvider" />
   <TypeSignature Language="VB.NET" Value="Public Interface IAmbientProvider" />
-  <TypeSignature Language="C++ CLI" Value="public interface class IAmbientProvider" />
   <TypeSignature Language="F#" Value="type IAmbientProvider = interface" />
+  <TypeSignature Language="C++ CLI" Value="public interface class IAmbientProvider" />
   <AssemblyInfo>
     <AssemblyName>System.Xaml</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Interfaces />
   <Docs>
@@ -31,7 +32,7 @@
  <xref:System.Xaml.XamlMember.DependsOn%2A> is a similar concept that also influences XAML node-processing order. However, <xref:System.Xaml.XamlMember.DependsOn%2A> can only be used for peer member and node relationships; it cannot influence all descendants. Also, <xref:System.Xaml.XamlMember.DependsOn%2A> directly influences object graph property setting; whereas the ambient technique relies on type converters or markup extensions. In the ambient technique, there must also be a specific type converter or markup extension definition that specifies how the ambient property value should be interpreted and applied to the object.  
   
 ## WPF Usage Notes  
- An ambient property scenario that is illustrated in the [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)] feature set is <xref:System.Windows.Style.TargetType%2A?displayProperty=nameWithType>, which can qualify the necessary property name lookups for other values. In this case, the <xref:System.Windows.Style.TargetType%2A?displayProperty=nameWithType> value qualifies the <xref:System.Windows.Setter.Property%2A?displayProperty=nameWithType> values that are located in the XAML nodes underneath it. <xref:System.Windows.Setter.Property%2A?displayProperty=nameWithType> uses the type converter behavior for a <xref:System.Windows.DependencyProperty>. This behavior accesses the ambient <xref:System.Windows.Style.TargetType%2A?displayProperty=nameWithType> value by querying <xref:System.Xaml.IAmbientProvider.GetFirstAmbientValue%2A> from a service context that is available to type converters and markup extensions.  
+ An ambient property scenario that is illustrated in the WPF feature set is <xref:System.Windows.Style.TargetType%2A?displayProperty=nameWithType>, which can qualify the necessary property name lookups for other values. In this case, the <xref:System.Windows.Style.TargetType%2A?displayProperty=nameWithType> value qualifies the <xref:System.Windows.Setter.Property%2A?displayProperty=nameWithType> values that are located in the XAML nodes underneath it. <xref:System.Windows.Setter.Property%2A?displayProperty=nameWithType> uses the type converter behavior for a <xref:System.Windows.DependencyProperty>. This behavior accesses the ambient <xref:System.Windows.Style.TargetType%2A?displayProperty=nameWithType> value by querying <xref:System.Xaml.IAmbientProvider.GetFirstAmbientValue%2A> from a service context that is available to type converters and markup extensions.  
   
  An ambient type scenario that is illustrated in the WPF feature set is <xref:System.Windows.ResourceDictionary>. <xref:System.Windows.ResourceDictionary> has a <xref:System.Windows.ResourceDictionary.MergedDictionaries%2A> property that can contain other <xref:System.Windows.ResourceDictionary> objects to merge, and the intended order of resource resolution for the merged scenario clashes with the order that types are loaded. <xref:System.Windows.ResourceDictionary> applies <xref:System.Windows.Markup.AmbientAttribute> so that a XAML processor can correctly process the references in a merged dictionary with `StaticResource` usages. Specifically, `StaticResource` is a markup extension, which calls <xref:System.Xaml.IAmbientProvider.GetAllAmbientValues%2A>.  
   
@@ -54,13 +55,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Collections.Generic.IEnumerable`1&lt;object&gt; GetAllAmbientValues(class System.Xaml.XamlType[] types) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xaml.IAmbientProvider.GetAllAmbientValues(System.Xaml.XamlType[])" />
       <MemberSignature Language="VB.NET" Value="Public Function GetAllAmbientValues (ParamArray types As XamlType()) As IEnumerable(Of Object)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Collections::Generic::IEnumerable&lt;System::Object ^&gt; ^ GetAllAmbientValues(... cli::array &lt;System::Xaml::XamlType ^&gt; ^ types);" />
       <MemberSignature Language="F#" Value="abstract member GetAllAmbientValues : System.Xaml.XamlType[] -&gt; seq&lt;obj&gt;" Usage="iAmbientProvider.GetAllAmbientValues types" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Collections::Generic::IEnumerable&lt;System::Object ^&gt; ^ GetAllAmbientValues(... cli::array &lt;System::Xaml::XamlType ^&gt; ^ types);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xaml</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Object&gt;</ReturnType>
@@ -68,7 +70,7 @@
       <Parameters>
         <Parameter Name="types" Type="System.Xaml.XamlType[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-4.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -87,13 +89,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Collections.Generic.IEnumerable`1&lt;class System.Xaml.AmbientPropertyValue&gt; GetAllAmbientValues(class System.Collections.Generic.IEnumerable`1&lt;class System.Xaml.XamlType&gt; ceilingTypes, class System.Xaml.XamlMember[] properties) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xaml.IAmbientProvider.GetAllAmbientValues(System.Collections.Generic.IEnumerable{System.Xaml.XamlType},System.Xaml.XamlMember[])" />
       <MemberSignature Language="VB.NET" Value="Public Function GetAllAmbientValues (ceilingTypes As IEnumerable(Of XamlType), ParamArray properties As XamlMember()) As IEnumerable(Of AmbientPropertyValue)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Collections::Generic::IEnumerable&lt;System::Xaml::AmbientPropertyValue ^&gt; ^ GetAllAmbientValues(System::Collections::Generic::IEnumerable&lt;System::Xaml::XamlType ^&gt; ^ ceilingTypes, ... cli::array &lt;System::Xaml::XamlMember ^&gt; ^ properties);" />
       <MemberSignature Language="F#" Value="abstract member GetAllAmbientValues : seq&lt;System.Xaml.XamlType&gt; * System.Xaml.XamlMember[] -&gt; seq&lt;System.Xaml.AmbientPropertyValue&gt;" Usage="iAmbientProvider.GetAllAmbientValues (ceilingTypes, properties)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Collections::Generic::IEnumerable&lt;System::Xaml::AmbientPropertyValue ^&gt; ^ GetAllAmbientValues(System::Collections::Generic::IEnumerable&lt;System::Xaml::XamlType ^&gt; ^ ceilingTypes, ... cli::array &lt;System::Xaml::XamlMember ^&gt; ^ properties);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xaml</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Xaml.AmbientPropertyValue&gt;</ReturnType>
@@ -102,7 +105,7 @@
         <Parameter Name="ceilingTypes" Type="System.Collections.Generic.IEnumerable&lt;System.Xaml.XamlType&gt;" />
         <Parameter Name="properties" Type="System.Xaml.XamlMember[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-4.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -129,13 +132,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Collections.Generic.IEnumerable`1&lt;class System.Xaml.AmbientPropertyValue&gt; GetAllAmbientValues(class System.Collections.Generic.IEnumerable`1&lt;class System.Xaml.XamlType&gt; ceilingTypes, bool searchLiveStackOnly, class System.Collections.Generic.IEnumerable`1&lt;class System.Xaml.XamlType&gt; types, class System.Xaml.XamlMember[] properties) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xaml.IAmbientProvider.GetAllAmbientValues(System.Collections.Generic.IEnumerable{System.Xaml.XamlType},System.Boolean,System.Collections.Generic.IEnumerable{System.Xaml.XamlType},System.Xaml.XamlMember[])" />
       <MemberSignature Language="VB.NET" Value="Public Function GetAllAmbientValues (ceilingTypes As IEnumerable(Of XamlType), searchLiveStackOnly As Boolean, types As IEnumerable(Of XamlType), ParamArray properties As XamlMember()) As IEnumerable(Of AmbientPropertyValue)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Collections::Generic::IEnumerable&lt;System::Xaml::AmbientPropertyValue ^&gt; ^ GetAllAmbientValues(System::Collections::Generic::IEnumerable&lt;System::Xaml::XamlType ^&gt; ^ ceilingTypes, bool searchLiveStackOnly, System::Collections::Generic::IEnumerable&lt;System::Xaml::XamlType ^&gt; ^ types, ... cli::array &lt;System::Xaml::XamlMember ^&gt; ^ properties);" />
       <MemberSignature Language="F#" Value="abstract member GetAllAmbientValues : seq&lt;System.Xaml.XamlType&gt; * bool * seq&lt;System.Xaml.XamlType&gt; * System.Xaml.XamlMember[] -&gt; seq&lt;System.Xaml.AmbientPropertyValue&gt;" Usage="iAmbientProvider.GetAllAmbientValues (ceilingTypes, searchLiveStackOnly, types, properties)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Collections::Generic::IEnumerable&lt;System::Xaml::AmbientPropertyValue ^&gt; ^ GetAllAmbientValues(System::Collections::Generic::IEnumerable&lt;System::Xaml::XamlType ^&gt; ^ ceilingTypes, bool searchLiveStackOnly, System::Collections::Generic::IEnumerable&lt;System::Xaml::XamlType ^&gt; ^ types, ... cli::array &lt;System::Xaml::XamlMember ^&gt; ^ properties);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xaml</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Xaml.AmbientPropertyValue&gt;</ReturnType>
@@ -146,7 +150,7 @@
         <Parameter Name="types" Type="System.Collections.Generic.IEnumerable&lt;System.Xaml.XamlType&gt;" />
         <Parameter Name="properties" Type="System.Xaml.XamlMember[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-4.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -189,13 +193,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object GetFirstAmbientValue(class System.Xaml.XamlType[] types) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xaml.IAmbientProvider.GetFirstAmbientValue(System.Xaml.XamlType[])" />
       <MemberSignature Language="VB.NET" Value="Public Function GetFirstAmbientValue (ParamArray types As XamlType()) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ GetFirstAmbientValue(... cli::array &lt;System::Xaml::XamlType ^&gt; ^ types);" />
       <MemberSignature Language="F#" Value="abstract member GetFirstAmbientValue : System.Xaml.XamlType[] -&gt; obj" Usage="iAmbientProvider.GetFirstAmbientValue types" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ GetFirstAmbientValue(... cli::array &lt;System::Xaml::XamlType ^&gt; ^ types);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xaml</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -203,7 +208,7 @@
       <Parameters>
         <Parameter Name="types" Type="System.Xaml.XamlType[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-4.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -222,13 +227,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xaml.AmbientPropertyValue GetFirstAmbientValue(class System.Collections.Generic.IEnumerable`1&lt;class System.Xaml.XamlType&gt; ceilingTypes, class System.Xaml.XamlMember[] properties) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xaml.IAmbientProvider.GetFirstAmbientValue(System.Collections.Generic.IEnumerable{System.Xaml.XamlType},System.Xaml.XamlMember[])" />
       <MemberSignature Language="VB.NET" Value="Public Function GetFirstAmbientValue (ceilingTypes As IEnumerable(Of XamlType), ParamArray properties As XamlMember()) As AmbientPropertyValue" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Xaml::AmbientPropertyValue ^ GetFirstAmbientValue(System::Collections::Generic::IEnumerable&lt;System::Xaml::XamlType ^&gt; ^ ceilingTypes, ... cli::array &lt;System::Xaml::XamlMember ^&gt; ^ properties);" />
       <MemberSignature Language="F#" Value="abstract member GetFirstAmbientValue : seq&lt;System.Xaml.XamlType&gt; * System.Xaml.XamlMember[] -&gt; System.Xaml.AmbientPropertyValue" Usage="iAmbientProvider.GetFirstAmbientValue (ceilingTypes, properties)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Xaml::AmbientPropertyValue ^ GetFirstAmbientValue(System::Collections::Generic::IEnumerable&lt;System::Xaml::XamlType ^&gt; ^ ceilingTypes, ... cli::array &lt;System::Xaml::XamlMember ^&gt; ^ properties);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xaml</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Xaml.AmbientPropertyValue</ReturnType>
@@ -237,7 +243,7 @@
         <Parameter Name="ceilingTypes" Type="System.Collections.Generic.IEnumerable&lt;System.Xaml.XamlType&gt;" />
         <Parameter Name="properties" Type="System.Xaml.XamlMember[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-4.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>

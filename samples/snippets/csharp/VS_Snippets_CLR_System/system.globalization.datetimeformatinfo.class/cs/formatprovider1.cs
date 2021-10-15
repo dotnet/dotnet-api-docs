@@ -21,7 +21,7 @@ public class Example
 {
    public static void Main()
    {
-      DateTime dateValue = new DateTime(2013, 5, 28, 12, 30, 0);
+      DateTime dateValue = new DateTime(2013, 5, 28, 13, 30, 0);
       string value = dateValue.ToString("F", new CurrentCultureFormatProvider());
       Console.WriteLine(value);
       Console.WriteLine();

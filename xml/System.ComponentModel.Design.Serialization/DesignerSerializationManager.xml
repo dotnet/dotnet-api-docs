@@ -3,8 +3,8 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit DesignerSerializationManager extends System.Object implements class System.ComponentModel.Design.Serialization.IDesignerSerializationManager, class System.IServiceProvider" />
   <TypeSignature Language="DocId" Value="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" />
   <TypeSignature Language="VB.NET" Value="Public Class DesignerSerializationManager&#xA;Implements IDesignerSerializationManager, IServiceProvider" />
-  <TypeSignature Language="C++ CLI" Value="public ref class DesignerSerializationManager : IServiceProvider, System::ComponentModel::Design::Serialization::IDesignerSerializationManager" />
   <TypeSignature Language="F#" Value="type DesignerSerializationManager = class&#xA;    interface IDesignerSerializationManager&#xA;    interface IServiceProvider" />
+  <TypeSignature Language="C++ CLI" Value="public ref class DesignerSerializationManager : IServiceProvider, System::ComponentModel::Design::Serialization::IDesignerSerializationManager" />
   <AssemblyInfo>
     <AssemblyName>System.Design</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
@@ -14,19 +14,21 @@
     <AssemblyName>System.Windows.Forms.Design</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="System.Design" FromVersion="5.0.0.0" To="System.Windows.Forms.Design" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="System.Design" FromVersion="4.0.0.0" To="System.Windows.Forms.Design" ToVersion="4.0.0.0" FrameworkAlternate="netcore-3.0;netcore-3.1" />
+    <TypeForwarding From="System.Design" FromVersion="4.0.0.0" To="System.Windows.Forms.Design" ToVersion="4.0.0.0" FrameworkAlternate="windowsdesktop-3.0;windowsdesktop-3.1" />
+    <TypeForwarding From="System.Design" FromVersion="5.0.0.0" To="System.Windows.Forms.Design" ToVersion="5.0.0.0" FrameworkAlternate="windowsdesktop-5.0" />
+    <TypeForwarding From="System.Design" FromVersion="6.0.0.0" To="System.Windows.Forms.Design" ToVersion="6.0.0.0" FrameworkAlternate="windowsdesktop-6.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces>
-    <Interface>
+    <Interface FrameworkAlternate="windowsdesktop-6.0">
       <InterfaceName>System.ComponentModel.Design.Serialization.IDesignerSerializationManager</InterfaceName>
     </Interface>
-    <Interface>
+    <Interface FrameworkAlternate="windowsdesktop-6.0">
       <InterfaceName>System.IServiceProvider</InterfaceName>
     </Interface>
   </Interfaces>
@@ -62,18 +64,18 @@
   
  Because of these differences, a different serialization model applies to design-time serialization. This model utilizes a separate serializer object for each data type being serialized. Each serializer provides its small contribution to the problem as a whole. These serializers are all coordinated through a common serialization manager. The serialization manager is responsible for maintaining state between these different serializers. As an example, consider the following class:  
   
- [!code-csharp[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#2](~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/Program.cs#2)]
- [!code-vb[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#2](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/Program.vb#2)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/Program.cs" id="Snippet2":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/Program.vb" id="Snippet2":::  
   
  An instance of this class would utilize three different serializers: one for `SampleObject`, one for strings, and another for integers. The serializer for `SampleObject` is called the root serializer because `SampleObject` is the root of the serialization graph. More complex object graphs can be created as well. For example, consider what would happen if `SampleObject` were changed as follows:  
   
- [!code-csharp[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#11](~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/SampleObject.cs#11)]
- [!code-vb[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#11](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/SampleObject.vb#11)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/SampleObject.cs" id="Snippet11":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/SampleObject.vb" id="Snippet11":::  
   
  This allows `SampleObject` to have a child that is another instance of itself. The following code fills in the object graph:  
   
- [!code-csharp[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#12](~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/SampleObject.cs#12)]
- [!code-vb[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#12](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/SampleObject.vb#12)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/SampleObject.cs" id="Snippet12":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/SampleObject.vb" id="Snippet12":::  
   
  When `root` is serialized, there will be four serializers used: one root serializer, one serializer for the child `SampleObject`, one serializer for `int`, and one serializer for `string`. Serializers are cached based on type, so there is no need to create a serializer for each instance of `SampleObject`.  
   
@@ -132,6 +134,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -153,8 +156,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.IServiceProvider provider) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.#ctor(System.IServiceProvider)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (provider As IServiceProvider)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; DesignerSerializationManager(IServiceProvider ^ provider);" />
       <MemberSignature Language="F#" Value="new System.ComponentModel.Design.Serialization.DesignerSerializationManager : IServiceProvider -&gt; System.ComponentModel.Design.Serialization.DesignerSerializationManager" Usage="new System.ComponentModel.Design.Serialization.DesignerSerializationManager provider" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DesignerSerializationManager(IServiceProvider ^ provider);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -165,6 +168,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="provider" Type="System.IServiceProvider" />
@@ -194,8 +198,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class System.ComponentModel.IContainer Container" />
       <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Container" />
       <MemberSignature Language="VB.NET" Value="Public Property Container As IContainer" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::ComponentModel::IContainer ^ Container { System::ComponentModel::IContainer ^ get(); void set(System::ComponentModel::IContainer ^ value); };" />
       <MemberSignature Language="F#" Value="member this.Container : System.ComponentModel.IContainer with get, set" Usage="System.ComponentModel.Design.Serialization.DesignerSerializationManager.Container" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::ComponentModel::IContainer ^ Container { System::ComponentModel::IContainer ^ get(); void set(System::ComponentModel::IContainer ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -206,6 +210,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ComponentModel.IContainer</ReturnType>
@@ -229,8 +234,8 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance object CreateInstance(class System.Type type, class System.Collections.ICollection arguments, string name, bool addToContainer) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Protected Overridable Function CreateInstance (type As Type, arguments As ICollection, name As String, addToContainer As Boolean) As Object" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Object ^ CreateInstance(Type ^ type, System::Collections::ICollection ^ arguments, System::String ^ name, bool addToContainer);" />
       <MemberSignature Language="F#" Value="abstract member CreateInstance : Type * System.Collections.ICollection * string * bool -&gt; obj&#xA;override this.CreateInstance : Type * System.Collections.ICollection * string * bool -&gt; obj" Usage="designerSerializationManager.CreateInstance (type, arguments, name, addToContainer)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Object ^ CreateInstance(Type ^ type, System::Collections::ICollection ^ arguments, System::String ^ name, bool addToContainer);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -241,6 +246,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -280,8 +286,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.IDisposable CreateSession() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateSession" />
       <MemberSignature Language="VB.NET" Value="Public Function CreateSession () As IDisposable" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; IDisposable ^ CreateSession();" />
       <MemberSignature Language="F#" Value="member this.CreateSession : unit -&gt; IDisposable" Usage="designerSerializationManager.CreateSession " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; IDisposable ^ CreateSession();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -292,6 +298,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.IDisposable</ReturnType>
@@ -318,8 +325,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.IList Errors" />
       <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Errors As IList" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::IList ^ Errors { System::Collections::IList ^ get(); };" />
       <MemberSignature Language="F#" Value="member this.Errors : System.Collections.IList" Usage="System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::IList ^ Errors { System::Collections::IList ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -330,6 +337,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.IList</ReturnType>
@@ -353,8 +361,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Type GetRuntimeType(string typeName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetRuntimeType(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function GetRuntimeType (typeName As String) As Type" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; Type ^ GetRuntimeType(System::String ^ typeName);" />
       <MemberSignature Language="F#" Value="member this.GetRuntimeType : string -&gt; Type" Usage="designerSerializationManager.GetRuntimeType typeName" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Type ^ GetRuntimeType(System::String ^ typeName);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -364,12 +372,13 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Type</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="typeName" Type="System.String" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="typeName" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="typeName">The name of the type to get.</param>
@@ -383,8 +392,8 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object GetSerializer(class System.Type objectType, class System.Type serializerType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetSerializer(System.Type,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Function GetSerializer (objectType As Type, serializerType As Type) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ GetSerializer(Type ^ objectType, Type ^ serializerType);" />
       <MemberSignature Language="F#" Value="member this.GetSerializer : Type * Type -&gt; obj" Usage="designerSerializationManager.GetSerializer (objectType, serializerType)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ GetSerializer(Type ^ objectType, Type ^ serializerType);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -395,6 +404,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -427,8 +437,8 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance object GetService(class System.Type serviceType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetService(System.Type)" />
       <MemberSignature Language="VB.NET" Value="Protected Overridable Function GetService (serviceType As Type) As Object" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Object ^ GetService(Type ^ serviceType);" />
       <MemberSignature Language="F#" Value="abstract member GetService : Type -&gt; obj&#xA;override this.GetService : Type -&gt; obj" Usage="designerSerializationManager.GetService serviceType" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Object ^ GetService(Type ^ serviceType);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -439,6 +449,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -465,8 +476,8 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Type GetType(string typeName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetType(System.String)" />
       <MemberSignature Language="VB.NET" Value="Protected Overridable Function GetType (typeName As String) As Type" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual Type ^ GetType(System::String ^ typeName);" />
       <MemberSignature Language="F#" Value="override this.GetType : string -&gt; Type" Usage="designerSerializationManager.GetType typeName" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual Type ^ GetType(System::String ^ typeName);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -477,6 +488,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Type</ReturnType>
@@ -503,8 +515,8 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnResolveName(class System.ComponentModel.Design.Serialization.ResolveNameEventArgs e) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnResolveName(System.ComponentModel.Design.Serialization.ResolveNameEventArgs)" />
       <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnResolveName (e As ResolveNameEventArgs)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnResolveName(System::ComponentModel::Design::Serialization::ResolveNameEventArgs ^ e);" />
       <MemberSignature Language="F#" Value="abstract member OnResolveName : System.ComponentModel.Design.Serialization.ResolveNameEventArgs -&gt; unit&#xA;override this.OnResolveName : System.ComponentModel.Design.Serialization.ResolveNameEventArgs -&gt; unit" Usage="designerSerializationManager.OnResolveName e" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnResolveName(System::ComponentModel::Design::Serialization::ResolveNameEventArgs ^ e);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -515,6 +527,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -548,8 +561,8 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnSessionCreated(class System.EventArgs e) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated(System.EventArgs)" />
       <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnSessionCreated (e As EventArgs)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSessionCreated(EventArgs ^ e);" />
       <MemberSignature Language="F#" Value="abstract member OnSessionCreated : EventArgs -&gt; unit&#xA;override this.OnSessionCreated : EventArgs -&gt; unit" Usage="designerSerializationManager.OnSessionCreated e" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSessionCreated(EventArgs ^ e);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -560,6 +573,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -592,8 +606,8 @@
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnSessionDisposed(class System.EventArgs e) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed(System.EventArgs)" />
       <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnSessionDisposed (e As EventArgs)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSessionDisposed(EventArgs ^ e);" />
       <MemberSignature Language="F#" Value="abstract member OnSessionDisposed : EventArgs -&gt; unit&#xA;override this.OnSessionDisposed : EventArgs -&gt; unit" Usage="designerSerializationManager.OnSessionDisposed e" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSessionDisposed(EventArgs ^ e);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -604,6 +618,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -636,8 +651,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool PreserveNames" />
       <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames" />
       <MemberSignature Language="VB.NET" Value="Public Property PreserveNames As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool PreserveNames { bool get(); void set(bool value); };" />
       <MemberSignature Language="F#" Value="member this.PreserveNames : bool with get, set" Usage="System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool PreserveNames { bool get(); void set(bool value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -648,6 +663,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -682,8 +698,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance object PropertyProvider" />
       <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PropertyProvider" />
       <MemberSignature Language="VB.NET" Value="Public Property PropertyProvider As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Object ^ PropertyProvider { System::Object ^ get(); void set(System::Object ^ value); };" />
       <MemberSignature Language="F#" Value="member this.PropertyProvider : obj with get, set" Usage="System.ComponentModel.Design.Serialization.DesignerSerializationManager.PropertyProvider" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Object ^ PropertyProvider { System::Object ^ get(); void set(System::Object ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -694,6 +710,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -724,8 +741,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool RecycleInstances" />
       <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances" />
       <MemberSignature Language="VB.NET" Value="Public Property RecycleInstances As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool RecycleInstances { bool get(); void set(bool value); };" />
       <MemberSignature Language="F#" Value="member this.RecycleInstances : bool with get, set" Usage="System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool RecycleInstances { bool get(); void set(bool value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -736,6 +753,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -770,8 +788,8 @@
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler SessionCreated" />
       <MemberSignature Language="DocId" Value="E:System.ComponentModel.Design.Serialization.DesignerSerializationManager.SessionCreated" />
       <MemberSignature Language="VB.NET" Value="Public Custom Event SessionCreated As EventHandler " />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ SessionCreated;" />
       <MemberSignature Language="F#" Value="member this.SessionCreated : EventHandler " Usage="member this.SessionCreated : System.EventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ SessionCreated;" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -782,6 +800,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler</ReturnType>
@@ -796,8 +815,8 @@
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler SessionDisposed" />
       <MemberSignature Language="DocId" Value="E:System.ComponentModel.Design.Serialization.DesignerSerializationManager.SessionDisposed" />
       <MemberSignature Language="VB.NET" Value="Public Custom Event SessionDisposed As EventHandler " />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ SessionDisposed;" />
       <MemberSignature Language="F#" Value="member this.SessionDisposed : EventHandler " Usage="member this.SessionDisposed : System.EventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ SessionDisposed;" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -808,6 +827,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler</ReturnType>
@@ -822,8 +842,8 @@
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider(class System.ComponentModel.Design.Serialization.IDesignerSerializationProvider provider) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#AddSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)" />
       <MemberSignature Language="VB.NET" Value="Sub AddSerializationProvider (provider As IDesignerSerializationProvider) Implements IDesignerSerializationManager.AddSerializationProvider" />
-      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider(System::ComponentModel::Design::Serialization::IDesignerSerializationProvider ^ provider) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::AddSerializationProvider;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider : System.ComponentModel.Design.Serialization.IDesignerSerializationProvider -&gt; unit&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider : System.ComponentModel.Design.Serialization.IDesignerSerializationProvider -&gt; unit" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider provider" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider(System::ComponentModel::Design::Serialization::IDesignerSerializationProvider ^ provider) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::AddSerializationProvider;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)</InterfaceMember>
@@ -837,6 +857,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -864,8 +885,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class System.ComponentModel.Design.Serialization.ContextStack System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context" />
       <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#Context" />
       <MemberSignature Language="VB.NET" Value=" ReadOnly Property Context As ContextStack Implements IDesignerSerializationManager.Context" />
-      <MemberSignature Language="C++ CLI" Value="property System::ComponentModel::Design::Serialization::ContextStack ^ System::ComponentModel::Design::Serialization::IDesignerSerializationManager::Context { System::ComponentModel::Design::Serialization::ContextStack ^ get(); };" />
       <MemberSignature Language="F#" Value="member this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context : System.ComponentModel.Design.Serialization.ContextStack" Usage="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context" />
+      <MemberSignature Language="C++ CLI" Value="property System::ComponentModel::Design::Serialization::ContextStack ^ System::ComponentModel::Design::Serialization::IDesignerSerializationManager::Context { System::ComponentModel::Design::Serialization::ContextStack ^ get(); };" />
       <MemberType>Property</MemberType>
       <Implements>
         <InterfaceMember>P:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context</InterfaceMember>
@@ -879,6 +900,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ComponentModel.Design.Serialization.ContextStack</ReturnType>
@@ -904,8 +926,8 @@
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance object System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance(class System.Type type, class System.Collections.ICollection arguments, string name, bool addToContainer) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Function CreateInstance (type As Type, arguments As ICollection, name As String, addToContainer As Boolean) As Object Implements IDesignerSerializationManager.CreateInstance" />
-      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance(Type ^ type, System::Collections::ICollection ^ arguments, System::String ^ name, bool addToContainer) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::CreateInstance;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance : Type * System.Collections.ICollection * string * bool -&gt; obj&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance : Type * System.Collections.ICollection * string * bool -&gt; obj" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance (type, arguments, name, addToContainer)" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance(Type ^ type, System::Collections::ICollection ^ arguments, System::String ^ name, bool addToContainer) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::CreateInstance;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)</InterfaceMember>
@@ -919,6 +941,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -945,8 +968,8 @@
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance object System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance(string name) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetInstance(System.String)" />
       <MemberSignature Language="VB.NET" Value="Function GetInstance (name As String) As Object Implements IDesignerSerializationManager.GetInstance" />
-      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance(System::String ^ name) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetInstance;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance : string -&gt; obj&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance : string -&gt; obj" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance name" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance(System::String ^ name) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetInstance;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance(System.String)</InterfaceMember>
@@ -960,6 +983,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -984,8 +1008,8 @@
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance string System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName(object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetName(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Function GetName (value As Object) As String Implements IDesignerSerializationManager.GetName" />
-      <MemberSignature Language="C++ CLI" Value=" virtual System::String ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName(System::Object ^ value) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetName;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName : obj -&gt; string&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName : obj -&gt; string" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName value" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::String ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName(System::Object ^ value) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetName;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName(System.Object)</InterfaceMember>
@@ -999,6 +1023,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -1032,8 +1057,8 @@
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance object System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer(class System.Type objectType, class System.Type serializerType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetSerializer(System.Type,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Function GetSerializer (objectType As Type, serializerType As Type) As Object Implements IDesignerSerializationManager.GetSerializer" />
-      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer(Type ^ objectType, Type ^ serializerType) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetSerializer;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer : Type * Type -&gt; obj&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer : Type * Type -&gt; obj" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer (objectType, serializerType)" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer(Type ^ objectType, Type ^ serializerType) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetSerializer;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer(System.Type,System.Type)</InterfaceMember>
@@ -1047,6 +1072,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -1074,8 +1100,8 @@
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance class System.Type System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType(string typeName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetType(System.String)" />
       <MemberSignature Language="VB.NET" Value="Function GetType (typeName As String) As Type Implements IDesignerSerializationManager.GetType" />
-      <MemberSignature Language="C++ CLI" Value=" virtual Type ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType(System::String ^ typeName) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetType;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType : string -&gt; Type&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType : string -&gt; Type" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType typeName" />
+      <MemberSignature Language="C++ CLI" Value=" virtual Type ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType(System::String ^ typeName) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetType;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType(System.String)</InterfaceMember>
@@ -1089,6 +1115,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Type</ReturnType>
@@ -1109,8 +1136,8 @@
       <MemberSignature Language="ILAsm" Value=".property instance class System.ComponentModel.PropertyDescriptorCollection System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" />
       <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#Properties" />
       <MemberSignature Language="VB.NET" Value=" ReadOnly Property Properties As PropertyDescriptorCollection Implements IDesignerSerializationManager.Properties" />
-      <MemberSignature Language="C++ CLI" Value="property System::ComponentModel::PropertyDescriptorCollection ^ System::ComponentModel::Design::Serialization::IDesignerSerializationManager::Properties { System::ComponentModel::PropertyDescriptorCollection ^ get(); };" />
       <MemberSignature Language="F#" Value="member this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties : System.ComponentModel.PropertyDescriptorCollection" Usage="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" />
+      <MemberSignature Language="C++ CLI" Value="property System::ComponentModel::PropertyDescriptorCollection ^ System::ComponentModel::Design::Serialization::IDesignerSerializationManager::Properties { System::ComponentModel::PropertyDescriptorCollection ^ get(); };" />
       <MemberType>Property</MemberType>
       <Implements>
         <InterfaceMember>P:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties</InterfaceMember>
@@ -1124,6 +1151,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ComponentModel.PropertyDescriptorCollection</ReturnType>
@@ -1139,8 +1167,8 @@
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider(class System.ComponentModel.Design.Serialization.IDesignerSerializationProvider provider) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#RemoveSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)" />
       <MemberSignature Language="VB.NET" Value="Sub RemoveSerializationProvider (provider As IDesignerSerializationProvider) Implements IDesignerSerializationManager.RemoveSerializationProvider" />
-      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider(System::ComponentModel::Design::Serialization::IDesignerSerializationProvider ^ provider) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::RemoveSerializationProvider;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider : System.ComponentModel.Design.Serialization.IDesignerSerializationProvider -&gt; unit&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider : System.ComponentModel.Design.Serialization.IDesignerSerializationProvider -&gt; unit" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider provider" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider(System::ComponentModel::Design::Serialization::IDesignerSerializationProvider ^ provider) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::RemoveSerializationProvider;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)</InterfaceMember>
@@ -1154,6 +1182,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -1181,8 +1210,8 @@
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError(object errorInformation) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#ReportError(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Sub ReportError (errorInformation As Object) Implements IDesignerSerializationManager.ReportError" />
-      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError(System::Object ^ errorInformation) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::ReportError;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError : obj -&gt; unit&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError : obj -&gt; unit" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError errorInformation" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError(System::Object ^ errorInformation) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::ReportError;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError(System.Object)</InterfaceMember>
@@ -1196,6 +1225,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -1240,6 +1270,7 @@
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ComponentModel.Design.Serialization.ResolveNameEventHandler</ReturnType>
@@ -1280,6 +1311,7 @@ This event provides a way for a serializer to demand-create an object so the ser
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler</ReturnType>
@@ -1307,8 +1339,8 @@ In a related use, this event can be used to remove a temporary service installed
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName(object instance, string name) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#SetName(System.Object,System.String)" />
       <MemberSignature Language="VB.NET" Value="Sub SetName (instance As Object, name As String) Implements IDesignerSerializationManager.SetName" />
-      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName(System::Object ^ instance, System::String ^ name) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::SetName;" />
       <MemberSignature Language="F#" Value="abstract member System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName : obj * string -&gt; unit&#xA;override this.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName : obj * string -&gt; unit" Usage="designerSerializationManager.System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName (instance, name)" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName(System::Object ^ instance, System::String ^ name) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::SetName;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName(System.Object,System.String)</InterfaceMember>
@@ -1322,6 +1354,7 @@ In a related use, this event can be used to remove a temporary service installed
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -1355,8 +1388,8 @@ In a related use, this event can be used to remove a temporary service installed
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance object System.IServiceProvider.GetService(class System.Type serviceType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#IServiceProvider#GetService(System.Type)" />
       <MemberSignature Language="VB.NET" Value="Function GetService (serviceType As Type) As Object Implements IServiceProvider.GetService" />
-      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.IServiceProvider.GetService(Type ^ serviceType) = IServiceProvider::GetService;" />
       <MemberSignature Language="F#" Value="abstract member System.IServiceProvider.GetService : Type -&gt; obj&#xA;override this.System.IServiceProvider.GetService : Type -&gt; obj" Usage="designerSerializationManager.System.IServiceProvider.GetService serviceType" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.IServiceProvider.GetService(Type ^ serviceType) = IServiceProvider::GetService;" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.IServiceProvider.GetService(System.Type)</InterfaceMember>
@@ -1370,6 +1403,7 @@ In a related use, this event can be used to remove a temporary service installed
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -1406,8 +1440,8 @@ In a related use, this event can be used to remove a temporary service installed
       <MemberSignature Language="ILAsm" Value=".property instance bool ValidateRecycledTypes" />
       <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes" />
       <MemberSignature Language="VB.NET" Value="Public Property ValidateRecycledTypes As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool ValidateRecycledTypes { bool get(); void set(bool value); };" />
       <MemberSignature Language="F#" Value="member this.ValidateRecycledTypes : bool with get, set" Usage="System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool ValidateRecycledTypes { bool get(); void set(bool value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -1418,6 +1452,7 @@ In a related use, this event can be used to remove a temporary service installed
         <AssemblyName>System.Windows.Forms.Design</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">

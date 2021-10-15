@@ -1,4 +1,4 @@
-﻿// <Snippet4>
+// <Snippet4>
 using System;
 using System.Collections.Generic;
 
@@ -6,7 +6,7 @@ public class Example
 {
    public static void Main()
    {
-      var list = new List<String>();
+      var list = new List<string>();
       Console.WriteLine("Number of items: {0}", list.Count);
       try {
          Console.WriteLine("The first item: '{0}'", list[0]);
@@ -26,7 +26,7 @@ public class Example2
 {
    public static void Test()
    {
-      var list = new List<String>();
+      var list = new List<string>();
       Console.WriteLine("Number of items: {0}", list.Count);
       // <Snippet5>
       if (list.Count > 0)

@@ -1,16 +1,17 @@
 <Type Name="Dispatcher" FullName="System.Windows.Threading.Dispatcher">
   <TypeSignature Language="C#" Value="public sealed class Dispatcher" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Dispatcher extends System.Object" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed Dispatcher extends System.Object" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
   <TypeSignature Language="DocId" Value="T:System.Windows.Threading.Dispatcher" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class Dispatcher" />
-  <TypeSignature Language="C++ CLI" Value="public ref class Dispatcher sealed" />
   <TypeSignature Language="F#" Value="type Dispatcher = class" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed Dispatcher extends System.Object" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+  <TypeSignature Language="C++ CLI" Value="public ref class Dispatcher sealed" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Dispatcher extends System.Object" FrameworkAlternate="windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
   <AssemblyInfo>
     <AssemblyName>WindowsBase</AssemblyName>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -30,7 +31,7 @@
   
  If a <xref:System.Windows.Threading.Dispatcher> is shut down, it cannot be restarted.  
   
- In WPF, a <xref:System.Windows.Threading.DispatcherObject> can only be accessed by the <xref:System.Windows.Threading.Dispatcher> it is associated with.  For example, a background thread cannot update the contents of a <xref:System.Windows.Controls.Button> that is associated with the <xref:System.Windows.Threading.Dispatcher> on the [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)] thread.  In order for the background thread to access the <xref:System.Windows.Controls.ContentControl.Content%2A> property of the <xref:System.Windows.Controls.Button>, the background thread must delegate the work to the <xref:System.Windows.Threading.Dispatcher> associated with the [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)] thread.  This is accomplished by using either <xref:System.Windows.Threading.Dispatcher.Invoke%2A> or <xref:System.Windows.Threading.Dispatcher.BeginInvoke%2A>. <xref:System.Windows.Threading.Dispatcher.Invoke%2A> is synchronous and <xref:System.Windows.Threading.Dispatcher.BeginInvoke%2A> is asynchronous.  The operation is added to the queue of the <xref:System.Windows.Threading.Dispatcher> at the specified <xref:System.Windows.Threading.DispatcherPriority>.  
+ In WPF, a <xref:System.Windows.Threading.DispatcherObject> can only be accessed by the <xref:System.Windows.Threading.Dispatcher> it is associated with.  For example, a background thread cannot update the contents of a <xref:System.Windows.Controls.Button> that is associated with the <xref:System.Windows.Threading.Dispatcher> on the UI thread.  In order for the background thread to access the <xref:System.Windows.Controls.ContentControl.Content%2A> property of the <xref:System.Windows.Controls.Button>, the background thread must delegate the work to the <xref:System.Windows.Threading.Dispatcher> associated with the UI thread.  This is accomplished by using either <xref:System.Windows.Threading.Dispatcher.Invoke%2A> or <xref:System.Windows.Threading.Dispatcher.BeginInvoke%2A>. <xref:System.Windows.Threading.Dispatcher.Invoke%2A> is synchronous and <xref:System.Windows.Threading.Dispatcher.BeginInvoke%2A> is asynchronous.  The operation is added to the queue of the <xref:System.Windows.Threading.Dispatcher> at the specified <xref:System.Windows.Threading.DispatcherPriority>.  
   
  If <xref:System.Windows.Threading.Dispatcher.BeginInvoke%2A> is called on a <xref:System.Windows.Threading.Dispatcher> that has shut down, the status property of the returned <xref:System.Windows.Threading.DispatcherOperation> is set to <xref:System.Windows.Threading.DispatcherOperationStatus.Aborted>.  
   
@@ -47,13 +48,13 @@
   
  First, a delegate is created that accepts no arguments.  
   
- [!code-csharp[ThreadingPrimeNumbers#ThreadingPrimeNumberInit](~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingPrimeNumbers/CSharp/Window1.xaml.cs#threadingprimenumberinit)] 
- [!code-vb[ThreadingPrimeNumbers#ThreadingPrimeNumberInit](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingPrimeNumbers/visualbasic/mainwindow.xaml.vb#threadingprimenumberinit)]   
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingPrimeNumbers/CSharp/Window1.xaml.cs" id="Snippetthreadingprimenumberinit"::: 
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingPrimeNumbers/visualbasic/mainwindow.xaml.vb" id="Snippetthreadingprimenumberinit":::   
   
  Next, <xref:System.Windows.Threading.Dispatcher.BeginInvoke%28System.Windows.Threading.DispatcherPriority%2CSystem.Delegate%29> is called.  This call to <xref:System.Windows.Threading.Dispatcher.BeginInvoke%28System.Windows.Threading.DispatcherPriority%2CSystem.Delegate%29> takes two parameters: the priority, which is set to <xref:System.Windows.Threading.DispatcherPriority.Normal?displayProperty=nameWithType>, and the callback, which is passed in through an instance of the delegate `NextPrimeDelegate`.  
   
- [!code-csharp[ThreadingPrimeNumbers#ThreadingPrimeNumberBeginInvoke](~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingPrimeNumbers/CSharp/Window1.xaml.cs#threadingprimenumberbegininvoke)] 
- [!code-vb[ThreadingPrimeNumbers#ThreadingPrimeNumberBeginInvoke](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingPrimeNumbers/visualbasic/mainwindow.xaml.vb#threadingprimenumberbegininvoke)]   
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingPrimeNumbers/CSharp/Window1.xaml.cs" id="Snippetthreadingprimenumberbegininvoke"::: 
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingPrimeNumbers/visualbasic/mainwindow.xaml.vb" id="Snippetthreadingprimenumberbegininvoke":::   
   
  ]]></format>
     </remarks>
@@ -100,14 +101,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation BeginInvoke(class System.Delegate method, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.BeginInvoke(System.Delegate,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function BeginInvoke (method As Delegate, ParamArray args As Object()) As DispatcherOperation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(Delegate ^ method, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.BeginInvoke : Delegate * obj[] -&gt; System.Windows.Threading.DispatcherOperation" Usage="dispatcher.BeginInvoke (method, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(Delegate ^ method, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -122,7 +124,7 @@
         <Parameter Name="method" Type="System.Delegate" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -163,14 +165,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation BeginInvoke(valuetype System.Windows.Threading.DispatcherPriority priority, class System.Delegate method) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority,System.Delegate)" />
       <MemberSignature Language="VB.NET" Value="Public Function BeginInvoke (priority As DispatcherPriority, method As Delegate) As DispatcherOperation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method);" />
       <MemberSignature Language="F#" Value="member this.BeginInvoke : System.Windows.Threading.DispatcherPriority * Delegate -&gt; System.Windows.Threading.DispatcherOperation" Usage="dispatcher.BeginInvoke (priority, method)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -229,13 +232,13 @@
   
  First, a delegate is created that accepts no arguments.  
   
- [!code-csharp[ThreadingPrimeNumbers#ThreadingPrimeNumberInit](~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingPrimeNumbers/CSharp/Window1.xaml.cs#threadingprimenumberinit)] 
- [!code-vb[ThreadingPrimeNumbers#ThreadingPrimeNumberInit](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingPrimeNumbers/visualbasic/mainwindow.xaml.vb#threadingprimenumberinit)]   
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingPrimeNumbers/CSharp/Window1.xaml.cs" id="Snippetthreadingprimenumberinit"::: 
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingPrimeNumbers/visualbasic/mainwindow.xaml.vb" id="Snippetthreadingprimenumberinit":::   
   
  Next, <xref:System.Windows.Threading.Dispatcher.BeginInvoke%28System.Windows.Threading.DispatcherPriority%2CSystem.Delegate%29> is called.  Because every <xref:System.Windows.Threading.DispatcherObject> has a property that returns the <xref:System.Windows.Threading.Dispatcher> it is associated with, the desired <xref:System.Windows.Threading.Dispatcher> is obtained by querying the <xref:System.Windows.Threading.DispatcherObject>, in this case a <xref:System.Windows.Controls.Button> named `startStopButton`.   The call to <xref:System.Windows.Threading.Dispatcher.BeginInvoke%28System.Windows.Threading.DispatcherPriority%2CSystem.Delegate%29> takes two parameters: the priority, which is set to <xref:System.Windows.Threading.DispatcherPriority.Normal?displayProperty=nameWithType>, and the callback, which is passed in through an instance of the delegate `NextPrimeDelegate`.  
   
- [!code-csharp[ThreadingPrimeNumbers#ThreadingPrimeNumberBeginInvoke](~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingPrimeNumbers/CSharp/Window1.xaml.cs#threadingprimenumberbegininvoke)] 
- [!code-vb[ThreadingPrimeNumbers#ThreadingPrimeNumberBeginInvoke](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingPrimeNumbers/visualbasic/mainwindow.xaml.vb#threadingprimenumberbegininvoke)]   
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingPrimeNumbers/CSharp/Window1.xaml.cs" id="Snippetthreadingprimenumberbegininvoke"::: 
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingPrimeNumbers/visualbasic/mainwindow.xaml.vb" id="Snippetthreadingprimenumberbegininvoke":::   
   
  ]]></format>
         </remarks>
@@ -251,14 +254,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation BeginInvoke(class System.Delegate method, valuetype System.Windows.Threading.DispatcherPriority priority, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.BeginInvoke(System.Delegate,System.Windows.Threading.DispatcherPriority,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function BeginInvoke (method As Delegate, priority As DispatcherPriority, ParamArray args As Object()) As DispatcherOperation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(Delegate ^ method, System::Windows::Threading::DispatcherPriority priority, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.BeginInvoke : Delegate * System.Windows.Threading.DispatcherPriority * obj[] -&gt; System.Windows.Threading.DispatcherOperation" Usage="dispatcher.BeginInvoke (method, priority, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(Delegate ^ method, System::Windows::Threading::DispatcherPriority priority, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -274,7 +278,7 @@
         <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -316,14 +320,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation BeginInvoke(valuetype System.Windows.Threading.DispatcherPriority priority, class System.Delegate method, object arg) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority,System.Delegate,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function BeginInvoke (priority As DispatcherPriority, method As Delegate, arg As Object) As DispatcherOperation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method, System::Object ^ arg);" />
       <MemberSignature Language="F#" Value="member this.BeginInvoke : System.Windows.Threading.DispatcherPriority * Delegate * obj -&gt; System.Windows.Threading.DispatcherOperation" Usage="dispatcher.BeginInvoke (priority, method, arg)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method, System::Object ^ arg);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -384,13 +389,13 @@
   
  First, a delegate is created that accepts one argument, in this case a string.  
   
- [!code-csharp[ThreadingWeatherForecast#ThreadingWeatherDelegates](~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingWeatherForecast/CSharp/Window1.xaml.cs#threadingweatherdelegates)]
- [!code-vb[ThreadingWeatherForecast#ThreadingWeatherDelegates](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingWeatherForecast/visualbasic/window1.xaml.vb#threadingweatherdelegates)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingWeatherForecast/CSharp/Window1.xaml.cs" id="Snippetthreadingweatherdelegates":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingWeatherForecast/visualbasic/window1.xaml.vb" id="Snippetthreadingweatherdelegates":::  
   
  Next, <xref:System.Windows.Threading.Dispatcher.BeginInvoke%28System.Windows.Threading.DispatcherPriority%2CSystem.Delegate%2CSystem.Object%29> is called.  Because every <xref:System.Windows.Threading.DispatcherObject> has a property that returns the <xref:System.Windows.Threading.Dispatcher> it is associated with, the desired <xref:System.Windows.Threading.Dispatcher> is obtained by querying the <xref:System.Windows.Threading.DispatcherObject>, in this case a <xref:System.Windows.Controls.Grid> named `tomorrowsWeather`. The call to <xref:System.Windows.Threading.Dispatcher.BeginInvoke%28System.Windows.Threading.DispatcherPriority%2CSystem.Delegate%2CSystem.Object%29> takes three parameters: the priority, which is set to <xref:System.Windows.Threading.DispatcherPriority.Normal?displayProperty=nameWithType>; the callback, which is passed in through an instance of the delegate `OneArgDelegate`; and a string named `weather`, which is the argument for the callback.  
   
- [!code-csharp[threadingweatherforecast#ThreadingWeatherDispatcherOneArge](~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingWeatherForecast/CSharp/Window1.xaml.cs#threadingweatherdispatcheronearge)]
- [!code-vb[threadingweatherforecast#ThreadingWeatherDispatcherOneArge](~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingWeatherForecast/visualbasic/window1.xaml.vb#threadingweatherdispatcheronearge)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/ThreadingWeatherForecast/CSharp/Window1.xaml.cs" id="Snippetthreadingweatherdispatcheronearge":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/ThreadingWeatherForecast/visualbasic/window1.xaml.vb" id="Snippetthreadingweatherdispatcheronearge":::  
   
  ]]></format>
         </remarks>
@@ -406,14 +411,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation BeginInvoke(valuetype System.Windows.Threading.DispatcherPriority priority, class System.Delegate method, object arg, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority,System.Delegate,System.Object,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function BeginInvoke (priority As DispatcherPriority, method As Delegate, arg As Object, ParamArray args As Object()) As DispatcherOperation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method, System::Object ^ arg, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.BeginInvoke : System.Windows.Threading.DispatcherPriority * Delegate * obj * obj[] -&gt; System.Windows.Threading.DispatcherOperation" Usage="dispatcher.BeginInvoke (priority, method, arg, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ BeginInvoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method, System::Object ^ arg, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -434,7 +440,7 @@
         <Parameter Name="arg" Type="System.Object" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -488,14 +494,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void BeginInvokeShutdown(valuetype System.Windows.Threading.DispatcherPriority priority) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.BeginInvokeShutdown(System.Windows.Threading.DispatcherPriority)" />
       <MemberSignature Language="VB.NET" Value="Public Sub BeginInvokeShutdown (priority As DispatcherPriority)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void BeginInvokeShutdown(System::Windows::Threading::DispatcherPriority priority);" />
       <MemberSignature Language="F#" Value="member this.BeginInvokeShutdown : System.Windows.Threading.DispatcherPriority -&gt; unit" Usage="dispatcher.BeginInvokeShutdown priority" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void BeginInvokeShutdown(System::Windows::Threading::DispatcherPriority priority);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -535,14 +542,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool CheckAccess() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.CheckAccess" />
       <MemberSignature Language="VB.NET" Value="Public Function CheckAccess () As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool CheckAccess();" />
       <MemberSignature Language="F#" Value="member this.CheckAccess : unit -&gt; bool" Usage="dispatcher.CheckAccess " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool CheckAccess();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -571,8 +579,8 @@
 ## Examples  
  The following example uses <xref:System.Windows.Threading.Dispatcher.CheckAccess%2A> to determine whether a thread has access to a <xref:System.Windows.Controls.Button>.  The <xref:System.Windows.Threading.Dispatcher.CheckAccess%2A> method on the <xref:System.Windows.Threading.Dispatcher> associated with the <xref:System.Windows.Controls.Button> is called to verify access to the thread.  If the calling thread has access to the <xref:System.Windows.Threading.Dispatcher>, the <xref:System.Windows.Controls.Button> is updated by accessing the members of the <xref:System.Windows.Controls.Button>; otherwise, a delegate, which accepts a <xref:System.Windows.Controls.Button> as an argument, is placed onto the <xref:System.Windows.Threading.Dispatcher>.  The <xref:System.Windows.Threading.Dispatcher> will delegate the work of updating the <xref:System.Windows.Controls.Button>.  
   
- [!code-csharp[DispatcherAccessSample#DispatcherAccessCheckAccess](~/samples/snippets/csharp/VS_Snippets_Wpf/DispatcherAccessSample/CSharp/Window1.xaml.cs#dispatcheraccesscheckaccess)]
- [!code-vb[DispatcherAccessSample#DispatcherAccessCheckAccess](~/samples/snippets/visualbasic/VS_Snippets_Wpf/DispatcherAccessSample/visualbasic/window1.xaml.vb#dispatcheraccesscheckaccess)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/DispatcherAccessSample/CSharp/Window1.xaml.cs" id="Snippetdispatcheraccesscheckaccess":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/DispatcherAccessSample/visualbasic/window1.xaml.vb" id="Snippetdispatcheraccesscheckaccess":::  
   
  ]]></format>
         </remarks>
@@ -584,14 +592,15 @@
       <MemberSignature Language="ILAsm" Value=".property class System.Windows.Threading.Dispatcher CurrentDispatcher" />
       <MemberSignature Language="DocId" Value="P:System.Windows.Threading.Dispatcher.CurrentDispatcher" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property CurrentDispatcher As Dispatcher" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Windows::Threading::Dispatcher ^ CurrentDispatcher { System::Windows::Threading::Dispatcher ^ get(); };" />
       <MemberSignature Language="F#" Value="member this.CurrentDispatcher : System.Windows.Threading.Dispatcher" Usage="System.Windows.Threading.Dispatcher.CurrentDispatcher" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Windows::Threading::Dispatcher ^ CurrentDispatcher { System::Windows::Threading::Dispatcher ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.Dispatcher</ReturnType>
@@ -614,14 +623,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Windows.Threading.DispatcherProcessingDisabled DisableProcessing() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.DisableProcessing" />
       <MemberSignature Language="VB.NET" Value="Public Function DisableProcessing () As DispatcherProcessingDisabled" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherProcessingDisabled DisableProcessing();" />
       <MemberSignature Language="F#" Value="member this.DisableProcessing : unit -&gt; System.Windows.Threading.DispatcherProcessingDisabled" Usage="dispatcher.DisableProcessing " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherProcessingDisabled DisableProcessing();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.DispatcherProcessingDisabled</ReturnType>
@@ -651,8 +661,8 @@
 ## Examples  
  The following example shows how to disable dispatcher processing and re-enable dispatcher processing.  <xref:System.Windows.Threading.Dispatcher.DisableProcessing%2A> is called in a **using** statement.  <xref:System.Windows.Threading.Dispatcher.DisableProcessing%2A> returns a <xref:System.Windows.Threading.DispatcherProcessingDisabled> structure that is used as the object to be disposed when the **using** block finishes.  When <xref:System.Windows.Threading.DispatcherProcessingDisabled.Dispose%2A> is called on the <xref:System.Windows.Threading.DispatcherProcessingDisabled> structure, dispatcher processing is re-enabled.  
   
- [!code-csharp[DispatcherSnippets#DispatcherDisableProcessing](~/samples/snippets/csharp/VS_Snippets_Wpf/DispatcherSnippets/CSharp/Window1.xaml.cs#dispatcherdisableprocessing)]
- [!code-vb[DispatcherSnippets#DispatcherDisableProcessing](~/samples/snippets/visualbasic/VS_Snippets_Wpf/DispatcherSnippets/visualbasic/window1.xaml.vb#dispatcherdisableprocessing)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/DispatcherSnippets/CSharp/Window1.xaml.cs" id="Snippetdispatcherdisableprocessing":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/DispatcherSnippets/visualbasic/window1.xaml.vb" id="Snippetdispatcherdisableprocessing":::  
   
  ]]></format>
         </remarks>
@@ -663,14 +673,15 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void ExitAllFrames() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.ExitAllFrames" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub ExitAllFrames ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void ExitAllFrames();" />
       <MemberSignature Language="F#" Value="static member ExitAllFrames : unit -&gt; unit" Usage="System.Windows.Threading.Dispatcher.ExitAllFrames " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void ExitAllFrames();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -694,14 +705,15 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Windows.Threading.Dispatcher FromThread(class System.Threading.Thread thread) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.FromThread(System.Threading.Thread)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function FromThread (thread As Thread) As Dispatcher" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Windows::Threading::Dispatcher ^ FromThread(System::Threading::Thread ^ thread);" />
       <MemberSignature Language="F#" Value="static member FromThread : System.Threading.Thread -&gt; System.Windows.Threading.Dispatcher" Usage="System.Windows.Threading.Dispatcher.FromThread thread" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Windows::Threading::Dispatcher ^ FromThread(System::Threading::Thread ^ thread);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.Dispatcher</ReturnType>
@@ -730,14 +742,15 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool HasShutdownFinished" />
       <MemberSignature Language="DocId" Value="P:System.Windows.Threading.Dispatcher.HasShutdownFinished" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property HasShutdownFinished As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool HasShutdownFinished { bool get(); };" />
       <MemberSignature Language="F#" Value="member this.HasShutdownFinished : bool" Usage="System.Windows.Threading.Dispatcher.HasShutdownFinished" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool HasShutdownFinished { bool get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -773,14 +786,15 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool HasShutdownStarted" />
       <MemberSignature Language="DocId" Value="P:System.Windows.Threading.Dispatcher.HasShutdownStarted" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property HasShutdownStarted As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool HasShutdownStarted { bool get(); };" />
       <MemberSignature Language="F#" Value="member this.HasShutdownStarted : bool" Usage="System.Windows.Threading.Dispatcher.HasShutdownStarted" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool HasShutdownStarted { bool get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -816,14 +830,15 @@
       <MemberSignature Language="ILAsm" Value=".property instance class System.Windows.Threading.DispatcherHooks Hooks" />
       <MemberSignature Language="DocId" Value="P:System.Windows.Threading.Dispatcher.Hooks" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Hooks As DispatcherHooks" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Windows::Threading::DispatcherHooks ^ Hooks { System::Windows::Threading::DispatcherHooks ^ get(); };" />
       <MemberSignature Language="F#" Value="member this.Hooks : System.Windows.Threading.DispatcherHooks" Usage="System.Windows.Threading.Dispatcher.Hooks" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Windows::Threading::DispatcherHooks ^ Hooks { System::Windows::Threading::DispatcherHooks ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -869,8 +884,8 @@
 ## Examples  
  The following example places a delegate onto a <xref:System.Windows.Threading.Dispatcher> at <xref:System.Windows.Threading.DispatcherPriority.Normal> using <xref:System.Windows.Threading.Dispatcher.Invoke%2A>.  
   
- [!code-csharp[invalidaterequerywithsystemtimer#SystemTimerDispatcherInvoke](~/samples/snippets/csharp/VS_Snippets_Wpf/InvalidateRequeryWithSystemTimer/CSharp/Window1.xaml.cs#systemtimerdispatcherinvoke)]
- [!code-vb[invalidaterequerywithsystemtimer#SystemTimerDispatcherInvoke](~/samples/snippets/visualbasic/VS_Snippets_Wpf/InvalidateRequeryWithSystemTimer/visualbasic/window1.xaml.vb#systemtimerdispatcherinvoke)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/InvalidateRequeryWithSystemTimer/CSharp/Window1.xaml.cs" id="Snippetsystemtimerdispatcherinvoke":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/InvalidateRequeryWithSystemTimer/visualbasic/window1.xaml.vb" id="Snippetsystemtimerdispatcherinvoke":::  
   
  ]]></format>
         </remarks>
@@ -881,24 +896,33 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Invoke(class System.Action callback) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Action)" />
       <MemberSignature Language="VB.NET" Value="Public Sub Invoke (callback As Action)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invoke(Action ^ callback);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Action -&gt; unit" Usage="dispatcher.Invoke callback" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invoke(Action ^ callback);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="callback">A delegate to invoke through the dispatcher.</param>
         <summary>Executes the specified <see cref="T:System.Action" /> synchronously on the thread the <see cref="T:System.Windows.Threading.Dispatcher" /> is associated with.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The default priority is `DispatcherPriority.Send`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -906,20 +930,21 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Invoke(class System.Action callback, valuetype System.Windows.Threading.DispatcherPriority priority) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Action,System.Windows.Threading.DispatcherPriority)" />
       <MemberSignature Language="VB.NET" Value="Public Sub Invoke (callback As Action, priority As DispatcherPriority)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invoke(Action ^ callback, System::Windows::Threading::DispatcherPriority priority);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Action * System.Windows.Threading.DispatcherPriority -&gt; unit" Usage="dispatcher.Invoke (callback, priority)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invoke(Action ^ callback, System::Windows::Threading::DispatcherPriority priority);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="callback">A delegate to invoke through the dispatcher.</param>
@@ -933,14 +958,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(class System.Delegate method, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Delegate,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (method As Delegate, ParamArray args As Object()) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(Delegate ^ method, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Delegate * obj[] -&gt; obj" Usage="dispatcher.Invoke (method, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(Delegate ^ method, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -949,7 +975,7 @@
         <Parameter Name="method" Type="System.Delegate" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -978,14 +1004,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(valuetype System.Windows.Threading.DispatcherPriority priority, class System.Delegate method) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority,System.Delegate)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (priority As DispatcherPriority, method As Delegate) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method);" />
       <MemberSignature Language="F#" Value="member this.Invoke : System.Windows.Threading.DispatcherPriority * Delegate -&gt; obj" Usage="dispatcher.Invoke (priority, method)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -1020,8 +1047,8 @@
 ## Examples  
  The following example places a delegate onto a <xref:System.Windows.Threading.Dispatcher> at <xref:System.Windows.Threading.DispatcherPriority.Normal> using <xref:System.Windows.Threading.Dispatcher.Invoke%2A>.  
   
- [!code-csharp[invalidaterequerywithsystemtimer#SystemTimerDispatcherInvoke](~/samples/snippets/csharp/VS_Snippets_Wpf/InvalidateRequeryWithSystemTimer/CSharp/Window1.xaml.cs#systemtimerdispatcherinvoke)]
- [!code-vb[invalidaterequerywithsystemtimer#SystemTimerDispatcherInvoke](~/samples/snippets/visualbasic/VS_Snippets_Wpf/InvalidateRequeryWithSystemTimer/visualbasic/window1.xaml.vb#systemtimerdispatcherinvoke)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/InvalidateRequeryWithSystemTimer/CSharp/Window1.xaml.cs" id="Snippetsystemtimerdispatcherinvoke":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/InvalidateRequeryWithSystemTimer/visualbasic/window1.xaml.vb" id="Snippetsystemtimerdispatcherinvoke":::  
   
  ]]></format>
         </remarks>
@@ -1038,21 +1065,22 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Invoke(class System.Action callback, valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Action,System.Windows.Threading.DispatcherPriority,System.Threading.CancellationToken)" />
       <MemberSignature Language="VB.NET" Value="Public Sub Invoke (callback As Action, priority As DispatcherPriority, cancellationToken As CancellationToken)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invoke(Action ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Action * System.Windows.Threading.DispatcherPriority * System.Threading.CancellationToken -&gt; unit" Usage="dispatcher.Invoke (callback, priority, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invoke(Action ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="callback">A delegate to invoke through the dispatcher.</param>
@@ -1067,14 +1095,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(class System.Delegate method, valuetype System.TimeSpan timeout, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Delegate,System.TimeSpan,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (method As Delegate, timeout As TimeSpan, ParamArray args As Object()) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(Delegate ^ method, TimeSpan timeout, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Delegate * TimeSpan * obj[] -&gt; obj" Usage="dispatcher.Invoke (method, timeout, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(Delegate ^ method, TimeSpan timeout, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -1090,7 +1119,7 @@
         <Parameter Name="timeout" Type="System.TimeSpan" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -1124,14 +1153,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(class System.Delegate method, valuetype System.Windows.Threading.DispatcherPriority priority, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Delegate,System.Windows.Threading.DispatcherPriority,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (method As Delegate, priority As DispatcherPriority, ParamArray args As Object()) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(Delegate ^ method, System::Windows::Threading::DispatcherPriority priority, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Delegate * System.Windows.Threading.DispatcherPriority * obj[] -&gt; obj" Usage="dispatcher.Invoke (method, priority, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(Delegate ^ method, System::Windows::Threading::DispatcherPriority priority, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -1141,7 +1171,7 @@
         <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -1171,14 +1201,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(valuetype System.Windows.Threading.DispatcherPriority priority, class System.Delegate method, object arg) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority,System.Delegate,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (priority As DispatcherPriority, method As Delegate, arg As Object) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method, System::Object ^ arg);" />
       <MemberSignature Language="F#" Value="member this.Invoke : System.Windows.Threading.DispatcherPriority * Delegate * obj -&gt; obj" Usage="dispatcher.Invoke (priority, method, arg)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method, System::Object ^ arg);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -1229,14 +1260,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.TimeSpan timeout, class System.Delegate method) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority,System.TimeSpan,System.Delegate)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (priority As DispatcherPriority, timeout As TimeSpan, method As Delegate) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, TimeSpan timeout, Delegate ^ method);" />
       <MemberSignature Language="F#" Value="member this.Invoke : System.Windows.Threading.DispatcherPriority * TimeSpan * Delegate -&gt; obj" Usage="dispatcher.Invoke (priority, timeout, method)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, TimeSpan timeout, Delegate ^ method);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -1291,13 +1323,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Invoke(class System.Action callback, valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.Threading.CancellationToken cancellationToken, valuetype System.TimeSpan timeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Action,System.Windows.Threading.DispatcherPriority,System.Threading.CancellationToken,System.TimeSpan)" />
       <MemberSignature Language="VB.NET" Value="Public Sub Invoke (callback As Action, priority As DispatcherPriority, cancellationToken As CancellationToken, timeout As TimeSpan)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invoke(Action ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken, TimeSpan timeout);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Action * System.Windows.Threading.DispatcherPriority * System.Threading.CancellationToken * TimeSpan -&gt; unit" Usage="dispatcher.Invoke (callback, priority, cancellationToken, timeout)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invoke(Action ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken, TimeSpan timeout);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -1309,10 +1342,10 @@
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="timeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="timeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="callback">An Action delegate to invoke through the dispatcher.</param>
@@ -1334,14 +1367,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(class System.Delegate method, valuetype System.TimeSpan timeout, valuetype System.Windows.Threading.DispatcherPriority priority, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Delegate,System.TimeSpan,System.Windows.Threading.DispatcherPriority,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (method As Delegate, timeout As TimeSpan, priority As DispatcherPriority, ParamArray args As Object()) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(Delegate ^ method, TimeSpan timeout, System::Windows::Threading::DispatcherPriority priority, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Delegate * TimeSpan * System.Windows.Threading.DispatcherPriority * obj[] -&gt; obj" Usage="dispatcher.Invoke (method, timeout, priority, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(Delegate ^ method, TimeSpan timeout, System::Windows::Threading::DispatcherPriority priority, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -1358,7 +1392,7 @@
         <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -1397,14 +1431,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(valuetype System.Windows.Threading.DispatcherPriority priority, class System.Delegate method, object arg, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority,System.Delegate,System.Object,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (priority As DispatcherPriority, method As Delegate, arg As Object, ParamArray args As Object()) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method, System::Object ^ arg, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.Invoke : System.Windows.Threading.DispatcherPriority * Delegate * obj * obj[] -&gt; obj" Usage="dispatcher.Invoke (priority, method, arg, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, Delegate ^ method, System::Object ^ arg, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -1425,7 +1460,7 @@
         <Parameter Name="arg" Type="System.Object" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -1464,14 +1499,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.TimeSpan timeout, class System.Delegate method, object arg) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority,System.TimeSpan,System.Delegate,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (priority As DispatcherPriority, timeout As TimeSpan, method As Delegate, arg As Object) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, TimeSpan timeout, Delegate ^ method, System::Object ^ arg);" />
       <MemberSignature Language="F#" Value="member this.Invoke : System.Windows.Threading.DispatcherPriority * TimeSpan * Delegate * obj -&gt; obj" Usage="dispatcher.Invoke (priority, timeout, method, arg)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, TimeSpan timeout, Delegate ^ method, System::Object ^ arg);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -1528,14 +1564,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.TimeSpan timeout, class System.Delegate method, object arg, object[] args) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority,System.TimeSpan,System.Delegate,System.Object,System.Object[])" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (priority As DispatcherPriority, timeout As TimeSpan, method As Delegate, arg As Object, ParamArray args As Object()) As Object" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, TimeSpan timeout, Delegate ^ method, System::Object ^ arg, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberSignature Language="F#" Value="member this.Invoke : System.Windows.Threading.DispatcherPriority * TimeSpan * Delegate * obj * obj[] -&gt; obj" Usage="dispatcher.Invoke (priority, timeout, method, arg, args)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ Invoke(System::Windows::Threading::DispatcherPriority priority, TimeSpan timeout, Delegate ^ method, System::Object ^ arg, ... cli::array &lt;System::Object ^&gt; ^ args);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -1557,7 +1594,7 @@
         <Parameter Name="arg" Type="System.Object" />
         <Parameter Name="args" Type="System.Object[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="netframework-3.0">
               <AttributeName Language="C#">[System.ParamArray]</AttributeName>
               <AttributeName Language="F#">[&lt;System.ParamArray&gt;]</AttributeName>
             </Attribute>
@@ -1599,13 +1636,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !!TResult Invoke&lt;TResult&gt;(class System.Func`1&lt;!!TResult&gt; callback) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke``1(System.Func{``0})" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke(Of TResult) (callback As Func(Of TResult)) As TResult" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; TResult Invoke(Func&lt;TResult&gt; ^ callback);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Func&lt;'Result&gt; -&gt; 'Result" Usage="dispatcher.Invoke callback" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; TResult Invoke(Func&lt;TResult&gt; ^ callback);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>TResult</ReturnType>
@@ -1614,7 +1652,7 @@
         <TypeParameter Name="TResult" />
       </TypeParameters>
       <Parameters>
-        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <typeparam name="TResult">The return value type of the specified delegate.</typeparam>
@@ -1629,13 +1667,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !!TResult Invoke&lt;TResult&gt;(class System.Func`1&lt;!!TResult&gt; callback, valuetype System.Windows.Threading.DispatcherPriority priority) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke``1(System.Func{``0},System.Windows.Threading.DispatcherPriority)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke(Of TResult) (callback As Func(Of TResult), priority As DispatcherPriority) As TResult" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; TResult Invoke(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Func&lt;'Result&gt; * System.Windows.Threading.DispatcherPriority -&gt; 'Result" Usage="dispatcher.Invoke (callback, priority)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; TResult Invoke(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>TResult</ReturnType>
@@ -1644,8 +1683,8 @@
         <TypeParameter Name="TResult" />
       </TypeParameters>
       <Parameters>
-        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <typeparam name="TResult">The return value type of the specified delegate.</typeparam>
@@ -1661,13 +1700,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !!TResult Invoke&lt;TResult&gt;(class System.Func`1&lt;!!TResult&gt; callback, valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke``1(System.Func{``0},System.Windows.Threading.DispatcherPriority,System.Threading.CancellationToken)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke(Of TResult) (callback As Func(Of TResult), priority As DispatcherPriority, cancellationToken As CancellationToken) As TResult" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; TResult Invoke(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Func&lt;'Result&gt; * System.Windows.Threading.DispatcherPriority * System.Threading.CancellationToken -&gt; 'Result" Usage="dispatcher.Invoke (callback, priority, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; TResult Invoke(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>TResult</ReturnType>
@@ -1676,9 +1716,9 @@
         <TypeParameter Name="TResult" />
       </TypeParameters>
       <Parameters>
-        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <typeparam name="TResult">The return value type of the specified delegate.</typeparam>
@@ -1695,13 +1735,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !!TResult Invoke&lt;TResult&gt;(class System.Func`1&lt;!!TResult&gt; callback, valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.Threading.CancellationToken cancellationToken, valuetype System.TimeSpan timeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Invoke``1(System.Func{``0},System.Windows.Threading.DispatcherPriority,System.Threading.CancellationToken,System.TimeSpan)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke(Of TResult) (callback As Func(Of TResult), priority As DispatcherPriority, cancellationToken As CancellationToken, timeout As TimeSpan) As TResult" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; TResult Invoke(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken, TimeSpan timeout);" />
       <MemberSignature Language="F#" Value="member this.Invoke : Func&lt;'Result&gt; * System.Windows.Threading.DispatcherPriority * System.Threading.CancellationToken * TimeSpan -&gt; 'Result" Usage="dispatcher.Invoke (callback, priority, cancellationToken, timeout)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; TResult Invoke(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken, TimeSpan timeout);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -1716,10 +1757,10 @@
         <TypeParameter Name="TResult" />
       </TypeParameters>
       <Parameters>
-        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="timeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="timeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <typeparam name="TResult">The return value type of the specified delegate.</typeparam>
@@ -1752,25 +1793,35 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation InvokeAsync(class System.Action callback) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.InvokeAsync(System.Action)" />
       <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync (callback As Action) As DispatcherOperation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ InvokeAsync(Action ^ callback);" />
       <MemberSignature Language="F#" Value="member this.InvokeAsync : Action -&gt; System.Windows.Threading.DispatcherOperation" Usage="dispatcher.InvokeAsync callback" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ InvokeAsync(Action ^ callback);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.DispatcherOperation</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="callback">A delegate to invoke through the dispatcher.</param>
         <summary>Executes the specified <see cref="T:System.Action" /> asynchronously on the thread the <see cref="T:System.Windows.Threading.Dispatcher" /> is associated with.</summary>
         <returns>An object, which is returned immediately after <see cref="M:System.Windows.Threading.Dispatcher.InvokeAsync(System.Action)" /> is called, that can be used to interact with the delegate as it is pending execution in the event queue.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The default priority is `DispatcherPriority.Normal`.
+
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="InvokeAsync">
@@ -1778,20 +1829,21 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation InvokeAsync(class System.Action callback, valuetype System.Windows.Threading.DispatcherPriority priority) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.InvokeAsync(System.Action,System.Windows.Threading.DispatcherPriority)" />
       <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync (callback As Action, priority As DispatcherPriority) As DispatcherOperation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ InvokeAsync(Action ^ callback, System::Windows::Threading::DispatcherPriority priority);" />
       <MemberSignature Language="F#" Value="member this.InvokeAsync : Action * System.Windows.Threading.DispatcherPriority -&gt; System.Windows.Threading.DispatcherOperation" Usage="dispatcher.InvokeAsync (callback, priority)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ InvokeAsync(Action ^ callback, System::Windows::Threading::DispatcherPriority priority);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.DispatcherOperation</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="callback">A delegate to invoke through the dispatcher.</param>
@@ -1806,13 +1858,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation InvokeAsync(class System.Action callback, valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.InvokeAsync(System.Action,System.Windows.Threading.DispatcherPriority,System.Threading.CancellationToken)" />
       <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync (callback As Action, priority As DispatcherPriority, cancellationToken As CancellationToken) As DispatcherOperation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ InvokeAsync(Action ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="F#" Value="member this.InvokeAsync : Action * System.Windows.Threading.DispatcherPriority * System.Threading.CancellationToken -&gt; System.Windows.Threading.DispatcherOperation" Usage="dispatcher.InvokeAsync (callback, priority, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Windows::Threading::DispatcherOperation ^ InvokeAsync(Action ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -1824,9 +1877,9 @@
         <ReturnType>System.Windows.Threading.DispatcherOperation</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="callback">A delegate to invoke through the dispatcher.</param>
@@ -1842,13 +1895,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation`1&lt;!!TResult&gt; InvokeAsync&lt;TResult&gt;(class System.Func`1&lt;!!TResult&gt; callback) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.InvokeAsync``1(System.Func{``0})" />
       <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync(Of TResult) (callback As Func(Of TResult)) As DispatcherOperation(Of TResult)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; System::Windows::Threading::DispatcherOperation&lt;TResult&gt; ^ InvokeAsync(Func&lt;TResult&gt; ^ callback);" />
       <MemberSignature Language="F#" Value="member this.InvokeAsync : Func&lt;'Result&gt; -&gt; System.Windows.Threading.DispatcherOperation&lt;'Result&gt;" Usage="dispatcher.InvokeAsync callback" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; System::Windows::Threading::DispatcherOperation&lt;TResult&gt; ^ InvokeAsync(Func&lt;TResult&gt; ^ callback);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.DispatcherOperation&lt;TResult&gt;</ReturnType>
@@ -1857,7 +1911,7 @@
         <TypeParameter Name="TResult" />
       </TypeParameters>
       <Parameters>
-        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <typeparam name="TResult">The return value type of the specified delegate.</typeparam>
@@ -1872,13 +1926,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation`1&lt;!!TResult&gt; InvokeAsync&lt;TResult&gt;(class System.Func`1&lt;!!TResult&gt; callback, valuetype System.Windows.Threading.DispatcherPriority priority) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.InvokeAsync``1(System.Func{``0},System.Windows.Threading.DispatcherPriority)" />
       <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync(Of TResult) (callback As Func(Of TResult), priority As DispatcherPriority) As DispatcherOperation(Of TResult)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; System::Windows::Threading::DispatcherOperation&lt;TResult&gt; ^ InvokeAsync(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority);" />
       <MemberSignature Language="F#" Value="member this.InvokeAsync : Func&lt;'Result&gt; * System.Windows.Threading.DispatcherPriority -&gt; System.Windows.Threading.DispatcherOperation&lt;'Result&gt;" Usage="dispatcher.InvokeAsync (callback, priority)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; System::Windows::Threading::DispatcherOperation&lt;TResult&gt; ^ InvokeAsync(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.DispatcherOperation&lt;TResult&gt;</ReturnType>
@@ -1887,8 +1942,8 @@
         <TypeParameter Name="TResult" />
       </TypeParameters>
       <Parameters>
-        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <typeparam name="TResult">The return value type of the specified delegate.</typeparam>
@@ -1904,13 +1959,14 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Windows.Threading.DispatcherOperation`1&lt;!!TResult&gt; InvokeAsync&lt;TResult&gt;(class System.Func`1&lt;!!TResult&gt; callback, valuetype System.Windows.Threading.DispatcherPriority priority, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.InvokeAsync``1(System.Func{``0},System.Windows.Threading.DispatcherPriority,System.Threading.CancellationToken)" />
       <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync(Of TResult) (callback As Func(Of TResult), priority As DispatcherPriority, cancellationToken As CancellationToken) As DispatcherOperation(Of TResult)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; System::Windows::Threading::DispatcherOperation&lt;TResult&gt; ^ InvokeAsync(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="F#" Value="member this.InvokeAsync : Func&lt;'Result&gt; * System.Windows.Threading.DispatcherPriority * System.Threading.CancellationToken -&gt; System.Windows.Threading.DispatcherOperation&lt;'Result&gt;" Usage="dispatcher.InvokeAsync (callback, priority, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TResult&gt;&#xA; System::Windows::Threading::DispatcherOperation&lt;TResult&gt; ^ InvokeAsync(Func&lt;TResult&gt; ^ callback, System::Windows::Threading::DispatcherPriority priority, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -1925,9 +1981,9 @@
         <TypeParameter Name="TResult" />
       </TypeParameters>
       <Parameters>
-        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="callback" Type="System.Func&lt;TResult&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <typeparam name="TResult">The return value type of the specified delegate.</typeparam>
@@ -1944,14 +2000,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void InvokeShutdown() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.InvokeShutdown" />
       <MemberSignature Language="VB.NET" Value="Public Sub InvokeShutdown ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void InvokeShutdown();" />
       <MemberSignature Language="F#" Value="member this.InvokeShutdown : unit -&gt; unit" Usage="dispatcher.InvokeShutdown " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void InvokeShutdown();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -1988,14 +2045,15 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void PushFrame(class System.Windows.Threading.DispatcherFrame frame) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.PushFrame(System.Windows.Threading.DispatcherFrame)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub PushFrame (frame As DispatcherFrame)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void PushFrame(System::Windows::Threading::DispatcherFrame ^ frame);" />
       <MemberSignature Language="F#" Value="static member PushFrame : System.Windows.Threading.DispatcherFrame -&gt; unit" Usage="System.Windows.Threading.Dispatcher.PushFrame frame" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void PushFrame(System::Windows::Threading::DispatcherFrame ^ frame);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -2025,10 +2083,10 @@
  <xref:System.Windows.Threading.DispatcherFrame> allows for the <xref:System.Windows.Threading.DispatcherFrame.Continue%2A> property to be set explicitly and it respects the <xref:System.Windows.Threading.Dispatcher.HasShutdownStarted%2A> property on the <xref:System.Windows.Threading.Dispatcher>.  This means when the <xref:System.Windows.Threading.Dispatcher> starts to shut down, frames that use the default <xref:System.Windows.Threading.DispatcherFrame> implementation will exit, which enables all nested frames to exit.
   
 ## Examples  
- The following example shows how to use a <xref:System.Windows.Threading.DispatcherFrame> to achieve similar results as the [!INCLUDE[TLA#tla_winforms](~/includes/tlasharptla-winforms-md.md)] <xref:System.Windows.Forms.Application.DoEvents%2A> method.  
+ The following example shows how to use a <xref:System.Windows.Threading.DispatcherFrame> to achieve similar results as the Windows Forms <xref:System.Windows.Forms.Application.DoEvents%2A> method.  
   
- [!code-csharp[dispatchersnippets#DispatcherDispatcherFrameDoEvents](~/samples/snippets/csharp/VS_Snippets_Wpf/DispatcherSnippets/CSharp/Window1.xaml.cs#dispatcherdispatcherframedoevents)]
- [!code-vb[dispatchersnippets#DispatcherDispatcherFrameDoEvents](~/samples/snippets/visualbasic/VS_Snippets_Wpf/DispatcherSnippets/visualbasic/window1.xaml.vb#dispatcherdispatcherframedoevents)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/DispatcherSnippets/CSharp/Window1.xaml.cs" id="Snippetdispatcherdispatcherframedoevents":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/DispatcherSnippets/visualbasic/window1.xaml.vb" id="Snippetdispatcherdispatcherframedoevents":::  
   
  ]]></format>
         </remarks>
@@ -2052,14 +2110,15 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Run() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Run" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub Run ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Run();" />
       <MemberSignature Language="F#" Value="static member Run : unit -&gt; unit" Usage="System.Windows.Threading.Dispatcher.Run " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Run();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -2089,9 +2148,9 @@
       <MemberSignature Language="C#" Value="public event EventHandler ShutdownFinished;" />
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler ShutdownFinished" />
       <MemberSignature Language="DocId" Value="E:System.Windows.Threading.Dispatcher.ShutdownFinished" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event ShutdownFinished As EventHandler " FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ ShutdownFinished;" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event ShutdownFinished As EventHandler " FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       <MemberSignature Language="F#" Value="member this.ShutdownFinished : EventHandler " Usage="member this.ShutdownFinished : System.EventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ ShutdownFinished;" />
       <MemberSignature Language="VB.NET" Value="Public Event ShutdownFinished As EventHandler " FrameworkAlternate="netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
@@ -2099,6 +2158,7 @@
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler</ReturnType>
@@ -2129,9 +2189,9 @@
       <MemberSignature Language="C#" Value="public event EventHandler ShutdownStarted;" />
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler ShutdownStarted" />
       <MemberSignature Language="DocId" Value="E:System.Windows.Threading.Dispatcher.ShutdownStarted" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event ShutdownStarted As EventHandler " FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ ShutdownStarted;" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event ShutdownStarted As EventHandler " FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       <MemberSignature Language="F#" Value="member this.ShutdownStarted : EventHandler " Usage="member this.ShutdownStarted : System.EventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ ShutdownStarted;" />
       <MemberSignature Language="VB.NET" Value="Public Event ShutdownStarted As EventHandler " FrameworkAlternate="netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
@@ -2139,6 +2199,7 @@
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler</ReturnType>
@@ -2170,14 +2231,15 @@
       <MemberSignature Language="ILAsm" Value=".property instance class System.Threading.Thread Thread" />
       <MemberSignature Language="DocId" Value="P:System.Windows.Threading.Dispatcher.Thread" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Thread As Thread" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Threading::Thread ^ Thread { System::Threading::Thread ^ get(); };" />
       <MemberSignature Language="F#" Value="member this.Thread : System.Threading.Thread" Usage="System.Windows.Threading.Dispatcher.Thread" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Threading::Thread ^ Thread { System::Threading::Thread ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -2198,9 +2260,9 @@
       <MemberSignature Language="C#" Value="public event System.Windows.Threading.DispatcherUnhandledExceptionEventHandler UnhandledException;" />
       <MemberSignature Language="ILAsm" Value=".event class System.Windows.Threading.DispatcherUnhandledExceptionEventHandler UnhandledException" />
       <MemberSignature Language="DocId" Value="E:System.Windows.Threading.Dispatcher.UnhandledException" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event UnhandledException As DispatcherUnhandledExceptionEventHandler " FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::Windows::Threading::DispatcherUnhandledExceptionEventHandler ^ UnhandledException;" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event UnhandledException As DispatcherUnhandledExceptionEventHandler " FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       <MemberSignature Language="F#" Value="member this.UnhandledException : System.Windows.Threading.DispatcherUnhandledExceptionEventHandler " Usage="member this.UnhandledException : System.Windows.Threading.DispatcherUnhandledExceptionEventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::Windows::Threading::DispatcherUnhandledExceptionEventHandler ^ UnhandledException;" />
       <MemberSignature Language="VB.NET" Value="Public Event UnhandledException As DispatcherUnhandledExceptionEventHandler " FrameworkAlternate="netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
@@ -2208,6 +2270,7 @@
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.DispatcherUnhandledExceptionEventHandler</ReturnType>
@@ -2237,14 +2300,15 @@
       <MemberSignature Language="ILAsm" Value=".event class System.Windows.Threading.DispatcherUnhandledExceptionFilterEventHandler UnhandledExceptionFilter" />
       <MemberSignature Language="DocId" Value="E:System.Windows.Threading.Dispatcher.UnhandledExceptionFilter" />
       <MemberSignature Language="VB.NET" Value="Public Custom Event UnhandledExceptionFilter As DispatcherUnhandledExceptionFilterEventHandler " />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::Windows::Threading::DispatcherUnhandledExceptionFilterEventHandler ^ UnhandledExceptionFilter;" />
       <MemberSignature Language="F#" Value="member this.UnhandledExceptionFilter : System.Windows.Threading.DispatcherUnhandledExceptionFilterEventHandler " Usage="member this.UnhandledExceptionFilter : System.Windows.Threading.DispatcherUnhandledExceptionFilterEventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::Windows::Threading::DispatcherUnhandledExceptionFilterEventHandler ^ UnhandledExceptionFilter;" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
@@ -2284,14 +2348,15 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void ValidatePriority(valuetype System.Windows.Threading.DispatcherPriority priority, string parameterName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.ValidatePriority(System.Windows.Threading.DispatcherPriority,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub ValidatePriority (priority As DispatcherPriority, parameterName As String)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void ValidatePriority(System::Windows::Threading::DispatcherPriority priority, System::String ^ parameterName);" />
       <MemberSignature Language="F#" Value="static member ValidatePriority : System.Windows.Threading.DispatcherPriority * string -&gt; unit" Usage="System.Windows.Threading.Dispatcher.ValidatePriority (priority, parameterName)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void ValidatePriority(System::Windows::Threading::DispatcherPriority priority, System::String ^ parameterName);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -2314,14 +2379,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void VerifyAccess() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.VerifyAccess" />
       <MemberSignature Language="VB.NET" Value="Public Sub VerifyAccess ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void VerifyAccess();" />
       <MemberSignature Language="F#" Value="member this.VerifyAccess : unit -&gt; unit" Usage="dispatcher.VerifyAccess " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void VerifyAccess();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -2352,8 +2418,8 @@
   
  If the calling thread does not have access, an <xref:System.InvalidOperationException> is thrown.  This example catches the exception and pushes a delegate, which accepts a <xref:System.Windows.Controls.Button> as an argument, onto the <xref:System.Windows.Threading.Dispatcher> of the <xref:System.Windows.Controls.Button>.  This <xref:System.Windows.Threading.Dispatcher> will do the work of updating the <xref:System.Windows.Controls.Button>.  
   
- [!code-csharp[DispatcherAccessSample#DispatcherAccessVerifyAccess](~/samples/snippets/csharp/VS_Snippets_Wpf/DispatcherAccessSample/CSharp/Window1.xaml.cs#dispatcheraccessverifyaccess)]
- [!code-vb[DispatcherAccessSample#DispatcherAccessVerifyAccess](~/samples/snippets/visualbasic/VS_Snippets_Wpf/DispatcherAccessSample/visualbasic/window1.xaml.vb#dispatcheraccessverifyaccess)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Wpf/DispatcherAccessSample/CSharp/Window1.xaml.cs" id="Snippetdispatcheraccessverifyaccess":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Wpf/DispatcherAccessSample/visualbasic/window1.xaml.vb" id="Snippetdispatcheraccessverifyaccess":::  
   
  ]]></format>
         </remarks>
@@ -2375,13 +2441,14 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Windows.Threading.DispatcherPriorityAwaitable Yield() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Yield" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Yield () As DispatcherPriorityAwaitable" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Windows::Threading::DispatcherPriorityAwaitable Yield();" />
       <MemberSignature Language="F#" Value="static member Yield : unit -&gt; System.Windows.Threading.DispatcherPriorityAwaitable" Usage="System.Windows.Threading.Dispatcher.Yield " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Windows::Threading::DispatcherPriorityAwaitable Yield();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.DispatcherPriorityAwaitable</ReturnType>
@@ -2407,19 +2474,20 @@
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Windows.Threading.DispatcherPriorityAwaitable Yield(valuetype System.Windows.Threading.DispatcherPriority priority) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Threading.Dispatcher.Yield(System.Windows.Threading.DispatcherPriority)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Yield (priority As DispatcherPriority) As DispatcherPriorityAwaitable" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Windows::Threading::DispatcherPriorityAwaitable Yield(System::Windows::Threading::DispatcherPriority priority);" />
       <MemberSignature Language="F#" Value="static member Yield : System.Windows.Threading.DispatcherPriority -&gt; System.Windows.Threading.DispatcherPriorityAwaitable" Usage="System.Windows.Threading.Dispatcher.Yield priority" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Windows::Threading::DispatcherPriorityAwaitable Yield(System::Windows::Threading::DispatcherPriority priority);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Windows.Threading.DispatcherPriorityAwaitable</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="0" FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8" />
+        <Parameter Name="priority" Type="System.Windows.Threading.DispatcherPriority" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
       </Parameters>
       <Docs>
         <param name="priority">The priority at which to schedule the continuation.</param>
