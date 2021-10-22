@@ -181,7 +181,7 @@ Public NotInheritable Class Form1
         ' Set the effect based upon the KeyState.
         If ((e.KeyState And (8 + 32)) = (8 + 32) And
             (e.AllowedEffect And DragDropEffects.Link) = DragDropEffects.Link) Then
-            ' KeyState 8 + 32 = CTL + ALT
+            ' KeyState 8 + 32 = CTRL + ALT
 
             ' Link drag-and-drop effect.
             e.Effect = DragDropEffects.Link
@@ -201,7 +201,7 @@ Public NotInheritable Class Form1
         ElseIf ((e.KeyState And 8) = 8 And
             (e.AllowedEffect And DragDropEffects.Copy) = DragDropEffects.Copy) Then
 
-            ' CTL KeyState for copy.
+            ' CTRL KeyState for copy.
             e.Effect = DragDropEffects.Copy
 
         ElseIf ((e.AllowedEffect And DragDropEffects.Move) = DragDropEffects.Move) Then
