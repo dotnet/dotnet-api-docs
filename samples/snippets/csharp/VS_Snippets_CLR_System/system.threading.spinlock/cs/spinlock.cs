@@ -26,7 +26,6 @@ class SpinLockDemo
             bool gotLock = false;
             for (int i = 0; i < 10000; i++)
             {
-                gotLock = false;
                 try
                 {
                     sl.Enter(ref gotLock);
@@ -35,7 +34,11 @@ class SpinLockDemo
                 finally
                 {
                     // Only give up the lock if you actually acquired it
-                    if (gotLock) sl.Exit();
+                    if (gotLock)
+                    {
+                        sl.Exit();
+                        gotLock = false;
+                    };
                 }
             }
         };
