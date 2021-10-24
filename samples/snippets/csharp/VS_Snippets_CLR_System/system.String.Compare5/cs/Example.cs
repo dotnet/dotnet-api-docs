@@ -9,7 +9,7 @@ public class Example
       string name1 = "Jack Smith";
       string name2 = "John Doe";
       
-      // Get position of space character.
+      // Get position of character after the space character.
       int index1 = name1.IndexOf(" ");
       index1 = index1 < 0 ? 0 : ++index1;
       
