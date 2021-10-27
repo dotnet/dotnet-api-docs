@@ -20,7 +20,7 @@ Class X500Sample
 	 MsgBox(msg)
          Dim x509 As X509Certificate2
          For Each x509 In  scollection
-            Dim dname As New X500DistinguishedName(x509.SubjectName)
+            Dim dname As New X500DistinguishedName(x509.SubjectName, X500DistinguishedNameFlags.Reversed | X500DistinguishedNameFlags.UseSemicolons)
 	    msg = "X500DistinguishedName: " & dname.Name & Environment.NewLine
 	 MsgBox(msg)
             x509.Reset()

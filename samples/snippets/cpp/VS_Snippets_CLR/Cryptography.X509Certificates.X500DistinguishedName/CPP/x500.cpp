@@ -23,7 +23,7 @@ int main()
       while ( myEnum->MoveNext() )
       {
          X509Certificate2 ^ x509 = safe_cast<X509Certificate2 ^>(myEnum->Current);
-         X500DistinguishedName ^ dname = gcnew X500DistinguishedName( x509->SubjectName );
+         X500DistinguishedName ^ dname = gcnew X500DistinguishedName( x509->SubjectName, X500DistinguishedNameFlags::Reversed | X500DistinguishedNameFlags::UseSemicolons );
          Console::WriteLine( "X500DistinguishedName: {0}{1}", dname->Name, Environment::NewLine );
          x509->Reset();
       }

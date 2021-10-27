@@ -19,7 +19,7 @@ class X500Sample
 			Console.WriteLine("Number of certificates: {0}{1}", scollection.Count, Environment.NewLine);
 			foreach (X509Certificate2 x509 in scollection)
 			{
-				X500DistinguishedName dname = new X500DistinguishedName(x509.SubjectName);
+				X500DistinguishedName dname = new X500DistinguishedName(x509.SubjectName, X500DistinguishedNameFlags.Reversed | X500DistinguishedNameFlags.UseSemicolons);
 				Console.WriteLine("X500DistinguishedName: {0}{1}", dname.Name, Environment.NewLine);
 				x509.Reset();
 			}
