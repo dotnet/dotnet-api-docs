@@ -54,9 +54,11 @@
 
  <xref:System.Security.Cryptography.Aes>, <xref:System.Security.Cryptography.DES>, <xref:System.Security.Cryptography.RC2>, and <xref:System.Security.Cryptography.TripleDES> are implementations of symmetric algorithms.
 
- Note that when using derived classes, it is not enough, from a security perspective, to simply force a garbage collection after you have finished using the object. You must explicitly call the <xref:System.Security.Cryptography.SymmetricAlgorithm.Clear%2A> method on the object to zero out any sensitive data within the object before it is released. Note that garbage collection does not zero out the contents of collected objects but simply marks the memory as available for reallocation. Thus the data contained within a garbage collected object may still be present in the memory heap in unallocated memory. In the case of cryptographic objects, this data could contain sensitive information such as key data or a block of plain text.
+ This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.  
 
- All cryptographic classes in the .NET Framework that hold sensitive data implement a `Clear` method. When called, the `Clear` method overwrites all sensitive data within the object with zeros and then releases the object so that it can be safely garbage collected. When the object has been zeroed and released, you should then call the `Dispose` method with the `disposing` parameter set to `True` to dispose of all managed and unmanaged resources associated with the object.
+ Note that when using derived classes, it is not enough, from a security perspective, to simply force a garbage collection after you have finished using the object. You must dispose the object to zero out any sensitive data within the object before it is released. Note that garbage collection does not zero out the contents of collected objects but simply marks the memory as available for reallocation. Thus the data contained within a garbage collected object may still be present in the memory heap in unallocated memory. In the case of cryptographic objects, this data could contain sensitive information such as key data or a block of plain text.
+
+ All cryptographic classes in the .NET Framework that hold sensitive data implement the <xref:System.IDisposable> interface. Disposing overwrites all sensitive data within the object with zeros and then releases the object so that it can be safely garbage collected.
 
 
 
@@ -249,14 +251,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Releases all resources used by the <see cref="T:System.Security.Cryptography.SymmetricAlgorithm" /> class.</summary>
+        <summary>Releases all resources used by the <see cref="T:System.Security.Cryptography.SymmetricAlgorithm" />. Instead of calling this method, ensure that the stream is properly disposed.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Note that when using derived classes, it is not enough, from a security perspective, to simply force a garbage collection after you have finished using the object. You must explicitly call the <xref:System.Security.Cryptography.SymmetricAlgorithm.Clear%2A> method on the object to zero out any sensitive data within the object before it is released. Note that garbage collection does not zero out the contents of collected objects but simply marks the memory as available for reallocation. Thus the data contained within a garbage collected object may still be present in the memory heap in unallocated memory. In the case of cryptographic objects, this data could contain sensitive information such as key data or a block of plain text.
-
- All cryptographic classes in the .NET Framework that hold sensitive data implement a `Clear` method. When called, the `Clear` method overwrites all sensitive data within the object with zeros and then releases the object so that it can be safely garbage collected. When the object has been zeroed and released, you should then call the `Dispose` method with the `disposing` parameter set to `True` to dispose of all managed and unmanaged resources associated with the object.
+ This method calls <xref:System.Security.Cryptography.SymmetricAlgorithm.Dispose%2A>. You do not have to specifically call the <xref:System.Security.Cryptography.SymmetricAlgorithm.Clear%2A> method. Instead, ensure that every <xref:System.Security.Cryptography.SymmetricAlgorithm> object is properly disposed. You can declare <xref:System.Security.Cryptography.SymmetricAlgorithm> objects within a `using` block (or `Using` block in Visual Basic) to ensure that the symmetric algorithm and all of its resources are disposed, or you can explicitly call the <xref:System.IO.Stream.Dispose%2A> method.  
 
  ]]></format>
         </remarks>
@@ -1086,7 +1086,7 @@ This method's behavior is defined by <xref:System.Security.Cryptography.Symmetri
         <AssemblyVersion>4.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Releases all resources used by the current instance of the <see cref="T:System.Security.Cryptography.SymmetricAlgorithm" /> class.</summary>
+        <summary>Overwrites all sensitive data within the object with zeros and releases any resources associated with the current <see cref="T:System.Security.Cryptography.SymmetricAlgorithm" />.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="Dispose">
