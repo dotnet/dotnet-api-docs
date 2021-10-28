@@ -4362,15 +4362,26 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Get the last platform invoke error on the current thread</summary>
-        <returns>The last platform invoke error</returns>
+        <summary>Get the last platform invoke error on the current thread.</summary>
+        <returns>The last platform invoke error.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-The last platform invoke error corresponds to the error set by either the most recent platform
-            invoke that was configured to set the last error or a call to <xref:System.Runtime.InteropServices.Marshal.SetLastPInvokeError(System.Int32)>.
+The last platform invoke error corresponds to the error set either by the most recent platform invoke that was
+configured with <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType>
+set to `true` or by a call to <xref:System.Runtime.InteropServices.Marshal.SetLastPInvokeError(System.Int32)>.
+
+This method will only return errors set via the mentioned scenarios. To get the last system error independent of
+platform invoke usage, use <xref:System.Runtime.InteropServices.Marshal.GetLastSystemError%2A>.
+
+## Examples
+
+The following example defines a p/invoke with <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType>
+set to `true` and demonstrates using <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError%2A> to get the last p/invoke error.
+
+:::code language="csharp" source="~/samples/snippets/csharp/System.Runtime.InteropServices/Marshal/GetLastPInvokeError.cs" id="Snippet1":::
 
           ]]></format>
         </remarks>
@@ -4399,14 +4410,14 @@ The last platform invoke error corresponds to the error set by either the most r
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Get the last system error on the current thread</summary>
-        <returns>The last system error</returns>
+        <summary>Get the last system error on the current thread.</summary>
+        <returns>The last system error.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-The error is that for the current operating system (e.g. errno on Unix, GetLastError on Windows)
+The system error is based on the current operating system &mdash that is, `errno` on non-Windows and [GetLastError](/windows/win32/api/errhandlingapi/nf-errhandlingapi-getlasterror) on Windows.
 
           ]]></format>
         </remarks>
@@ -4472,6 +4483,8 @@ On Windows systems, <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Err
 You can use this method to obtain error codes only if you apply the <xref:System.Runtime.InteropServices.DllImportAttribute?displayProperty=nameWithType> to the method signature and set the <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType> field to `true`. The process for this varies depending upon the source language used: C# and C++ are `false` by default, but the `Declare` statement in Visual Basic is `true`.  
   
 There is a difference in the behavior of the `GetLastWin32Error` method on .NET Core and .NET Framework when <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType> is `true`. On .NET Framework, the `GetLastWin32Error` method can retain error information from one P/Invoke call to the next. On .NET Core, error information is cleared before P/Invoke call, and the `GetLastWin32Error` represents only error information from the last method call.
+
+On .NET 6.0 and above, this method is functionally equivalent to <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError%2A>, which is named to better reflect the intent of the API and its cross-platform nature. <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError%2A> should be preferred over <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error%2A>.
 
 ## Examples  
  The following example calls the `GetLastWin32Error` method. The example first demonstrates calling the method with no error present and then demonstrates calling the method with an error present.  
@@ -9692,9 +9705,17 @@ There is a difference in the behavior of the `GetLastWin32Error` method on .NET 
         <Parameter Name="error" Type="System.Int32" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="error">Error to set</param>
-        <summary>Set the last platform invoke error on the current thread</summary>
-        <remarks>To be added.</remarks>
+        <param name="error">Error to set.</param>
+        <summary>Set the last platform invoke error on the current thread.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The last platform invoke error is stored per-thread and can be retrieved using <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError%2A>.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SetLastSystemError">
@@ -9722,14 +9743,14 @@ There is a difference in the behavior of the `GetLastWin32Error` method on .NET 
         <Parameter Name="error" Type="System.Int32" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="error">Error to set</param>
-        <summary>Set the last system error on the current thread</summary>
+        <param name="error">Error to set.</param>
+        <summary>Set the last system error on the current thread.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-The error is that for the current operating system (e.g. errno on Unix, SetLastError on Windows)
+The system error is based on the current operating system &mdash; that is, `errno` on Unix and [SetLastError](/windows/win32/api/errhandlingapi/nf-errhandlingapi-setlasterror) on Windows.
 
           ]]></format>
         </remarks>
