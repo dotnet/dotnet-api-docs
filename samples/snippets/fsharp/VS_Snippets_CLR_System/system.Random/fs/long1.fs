@@ -8,7 +8,7 @@ let rnd = Random()
 
 let count =
     // Generate 20 million random long integers.
-    Array.init 20000000 (fun _ -> rnd.NextDouble() * (double Int64.MaxValue) |> int64 )
+    Array.init 20000000 (fun _ -> rnd.NextDouble() * (float Int64.MaxValue) |> int64 )
     |> Array.countBy (fun x -> x / ONE_TENTH) // Categorize and count random numbers.
     |> Array.map snd
 
@@ -17,7 +17,7 @@ printfn "%28s %32s   %7s\n" "Range" "Count" "Pct."
 for i = 0 to 9 do
     let r1 = int64 i * ONE_TENTH
     let r2 = if i < 9 then r1 + ONE_TENTH - 1L else Int64.MaxValue
-    printfn $"{r1,25:N0}-{r2,25:N0}  {count.[i],8:N0}   {double count.[i] / 20000000.0,7:P2}"
+    printfn $"{r1,25:N0}-{r2,25:N0}  {count.[i],8:N0}   {float count.[i] / 20000000.0,7:P2}"
 
 // The example displays output like the following:
 //                           Range                            Count      Pct.

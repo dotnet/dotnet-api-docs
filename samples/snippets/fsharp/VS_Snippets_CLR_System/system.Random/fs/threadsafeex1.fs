@@ -4,11 +4,11 @@ open System.Threading
 
 type Example() =
     [<ThreadStatic; DefaultValue>]
-    static val mutable private previous : double
+    static val mutable private previous : float
     [<ThreadStatic; DefaultValue>]
     static val mutable private perThreadCtr : int
     [<ThreadStatic; DefaultValue>]
-    static val mutable private perThreadTotal : double
+    static val mutable private perThreadTotal : float
 
     static let source = new CancellationTokenSource()
     static let countdown = new CountdownEvent 1
