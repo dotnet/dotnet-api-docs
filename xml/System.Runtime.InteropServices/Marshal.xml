@@ -4371,10 +4371,15 @@
 
 The last platform invoke error corresponds to the error set either by the most recent platform invoke that was
 configured with <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType>
-set to `true` or by a call to <xref:System.Runtime.InteropServices.Marshal.SetLastPInvokeError(System.Int32)>.
+set to `true` or by a call to <xref:System.Runtime.InteropServices.Marshal.SetLastPInvokeError(System.Int32)>,
+whichever happened last.
 
 This method will only return errors set via the mentioned scenarios. To get the last system error independent of
 platform invoke usage, use <xref:System.Runtime.InteropServices.Marshal.GetLastSystemError%2A>.
+
+This method is functionally equivalent to <xref:System.Runtime.InteropServices.Marshal.GetWin32Error%2A>. It is
+named to better reflect the intent of the API and its cross-platform nature. <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError%2A>
+should be preferred over <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error%2A>.
 
 ## Examples
 
@@ -4418,6 +4423,9 @@ set to `true` and demonstrates using <xref:System.Runtime.InteropServices.Marsha
 ## Remarks
 
 The system error is based on the current operating system&mdashthat is, `errno` on non-Windows and [GetLastError](/windows/win32/api/errhandlingapi/nf-errhandlingapi-getlasterror) on Windows.
+
+This method is provided as a low-level API to allow getting the current system error in a cross-platform manner. It is not tied to
+platform invoke usage. To get the last platform invoke error, use <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError%2A>.
 
           ]]></format>
         </remarks>

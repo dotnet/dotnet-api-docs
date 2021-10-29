@@ -564,10 +564,14 @@
 ## Remarks  
  `true` to indicate that the callee will set an error via `SetLastError` on Windows or `errno` on other platforms; otherwise, `false`. The default is `false`.
   
- The runtime marshaler calls `GetLastError` or `errno` and caches the value returned to prevent it from being overwritten by other API calls.
- You can retrieve the error code by calling <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error%2A> on .NET 6.0 and above
+ If this field is set to `true`, the runtime marshaler calls `GetLastError` or `errno` and caches the value returned to prevent it from being overwritten by other API calls.
+ You can retrieve the error code by calling <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError%2A> on .NET 6.0 and above
  or <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error%2A> on .NET 5.0 and below or .NET Framework.
    
+ On .NET, the error information is cleared (set to `0`) before invoking the callee when this field is set to `true`. On .NET Framework, the error information is not cleared.
+ This means that error information returned by <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError%2A> and <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error%2A>
+ on .NET represents only the error information from the last p/invoke with <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType>
+ set to `true`. On .NET Framework, the error information can persist from one p/invoke to the next.
   
 ## Examples  
  In some cases, Visual Basic developers use the <xref:System.Runtime.InteropServices.DllImportAttribute>, instead of using the `Declare` statement, to define a DLL function in managed code. Setting the <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError> field is one of those cases.  
@@ -578,6 +582,7 @@
   
  ]]></format>
         </remarks>
+        <altmember cref="M:System.Runtime.InteropServices.Marshal.GetLastPInvokeError" />
         <altmember cref="M:System.Runtime.InteropServices.Marshal.GetLastWin32Error" />
       </Docs>
     </Member>
