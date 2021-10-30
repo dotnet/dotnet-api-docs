@@ -49,8 +49,7 @@ for _ = 1 to rows do
     printfn ""
 
 printfn $"""
-To demonstrate the proportional distribution, 
-{runCount:N0} random 
+To demonstrate the proportional distribution, {runCount:N0} random 
 integers and doubles are grouped into {distGroupCount} equal value ranges. This 
 is the count of values in each range:
 """

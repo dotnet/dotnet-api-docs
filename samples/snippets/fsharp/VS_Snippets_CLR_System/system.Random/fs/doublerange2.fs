@@ -4,7 +4,7 @@ open System
 let rnd = Random()
 
 for _ = 1 to 10 do
-    printfn "%f" (rnd.NextDouble() - 1.0)
+    printfn "%O" (rnd.NextDouble() - 1.0)
 
 // The example displays output like the following:
 //       -0.930412760437658
