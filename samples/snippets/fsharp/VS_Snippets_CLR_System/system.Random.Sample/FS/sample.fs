@@ -67,20 +67,20 @@ let intCounts =
 
 let realCounts = 
     Array.init runCount (fun _ -> 
-        randObj.NextDouble() * float intGroupSize
+        randObj.NextDouble() * float distGroupCount
         |> int )
     |> Array.countBy id
     |> Array.map snd
 
 // Display the count of each group.
-for i = 1 to distGroupCount - 1 do 
+for i = 0 to distGroupCount - 1 do 
     Console.WriteLine(
         "{0,10}-{1,10}{2,10:N0}{3,12:N5}-{4,7:N5}{5,10:N0}",
-        (int)((float)i * intGroupSize),
-        (int)((float)(i + 1) * intGroupSize - 1.0),
+        int(float i * intGroupSize),
+        int(float (i + 1) * intGroupSize - 1.0),
         intCounts.[i],
-        ((float)i) / (float)distGroupCount,
-        ((float)(i + 1)) / (float)distGroupCount,
+        (float i) / float distGroupCount,
+        float (i + 1) / float distGroupCount,
         realCounts.[i])
 
 (*

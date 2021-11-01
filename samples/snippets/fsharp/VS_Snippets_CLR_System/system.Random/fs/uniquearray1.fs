@@ -1,3 +1,5 @@
+module UniqueArray1
+
 // <Snippet11>
 open System
 

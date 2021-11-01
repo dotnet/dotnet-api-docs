@@ -1,3 +1,5 @@
+module Unique
+
 // <Snippet13>
 open System
 open System.Threading

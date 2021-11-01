@@ -1,3 +1,5 @@
+module Same1
+
 // <Snippet12>
 open System
 open System.IO
@@ -19,17 +21,13 @@ let displayNewRandomNumbers () =
     for _ = 0 to 20 do 
         printfn $"{rnd.NextDouble()}"
 
-[<EntryPoint>]
-let main _ =
-    let seed = 100100
-    showRandomNumbers seed
-    printfn ""
+let seed = 100100
+showRandomNumbers seed
+printfn ""
 
-    persistSeed seed
+persistSeed seed
 
-    displayNewRandomNumbers ()
-
-    0
+displayNewRandomNumbers ()
 
 // The example displays output like the following:
 //       0.500193602172748

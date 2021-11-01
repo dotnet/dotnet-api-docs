@@ -1,3 +1,5 @@
+module Bytes1
+
 // <Snippet9>
 open System
 

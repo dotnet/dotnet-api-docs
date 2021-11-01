@@ -1,3 +1,5 @@
+module Ctor
+
 //<Snippet1>
 // Example of the Random class constructors and Random.NextDouble()
 // method.

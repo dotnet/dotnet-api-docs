@@ -1,3 +1,5 @@
+module Ctor4
+
 // <Snippet4>
 open System
 open System.Threading

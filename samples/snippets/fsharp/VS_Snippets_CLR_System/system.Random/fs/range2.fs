@@ -1,3 +1,5 @@
+module Range2
+
 open System
 
 // <Snippet16>

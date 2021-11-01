@@ -1,3 +1,5 @@
+module DoubleRange3
+
 open System
 
 // <Snippet19>

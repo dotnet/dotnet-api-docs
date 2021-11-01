@@ -1,3 +1,5 @@
+module NextDoubleEx1
+
 open System
 
 // <Snippet7>

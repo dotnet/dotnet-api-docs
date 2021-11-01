@@ -1,3 +1,5 @@
+module NextBytes1
+
 open System
 
 // <Snippet5>

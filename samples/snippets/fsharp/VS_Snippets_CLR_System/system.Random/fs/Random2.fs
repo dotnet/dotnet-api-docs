@@ -1,3 +1,5 @@
+module Random2
+
 open System
 
 // <Snippet2>

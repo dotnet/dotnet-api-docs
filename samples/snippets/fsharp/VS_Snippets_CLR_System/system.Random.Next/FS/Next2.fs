@@ -1,3 +1,5 @@
+module Next2
+
 open System
 
 //<Snippet2>

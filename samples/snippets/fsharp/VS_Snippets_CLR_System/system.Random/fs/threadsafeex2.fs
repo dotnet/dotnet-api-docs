@@ -1,3 +1,5 @@
+module ThreadSafeEx2
+
 // <Snippet4>
 open System
 open System.Threading

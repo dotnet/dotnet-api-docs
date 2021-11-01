@@ -1,3 +1,5 @@
+module NextEx1
+
 open System
 
 // <Snippet6>

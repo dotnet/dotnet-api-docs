@@ -1,3 +1,5 @@
+module Next
+
 // Example of the Random.Next() methods.
 open System
 
