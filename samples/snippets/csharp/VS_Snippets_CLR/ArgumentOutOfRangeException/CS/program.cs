@@ -2,14 +2,20 @@
 using System;
 using static System.Console;
 
-try
+public class Program
 {
-    Guest guest1 = new Guest("Ben", "Miller", 17);
-    WriteLine(guest1.GuestInfo);
-}
-catch (ArgumentOutOfRangeException argumentOutOfRangeException)
-{
-    WriteLine($"Error: {argumentOutOfRangeException.Message}");
+    public static void Main(string[] args)
+    {
+        try
+        {
+            Guest guest1 = new Guest("Ben", "Miller", 17);
+            WriteLine(guest1.GuestInfo);
+        }
+        catch (ArgumentOutOfRangeException argumentOutOfRangeException)
+        {
+            WriteLine($"Error: {argumentOutOfRangeException.Message}");
+        }
+    }
 }
 
 class Guest
