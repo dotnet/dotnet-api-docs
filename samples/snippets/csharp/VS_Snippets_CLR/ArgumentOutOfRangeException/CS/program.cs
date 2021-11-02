@@ -19,14 +19,16 @@ public class Program
 
 class Guest
 {
+    const int minimumRequiredAge = 21;
+
     private string firstName;
     private string lastName;
     private int age;
 
     public Guest(string firstName, string lastName, int age)
     {
-        if (age < 21)
-            throw new ArgumentOutOfRangeException(nameof(age), "All guests must be 21-years-old or older.");
+        if (age < minimumRequiredAge)
+            throw new ArgumentOutOfRangeException(nameof(age), $"All guests must be {minimumRequiredAge}-years-old or older.");
 
         this.firstName = firstName;
         this.lastName = lastName;
