@@ -12,7 +12,6 @@ class Program
         }
         catch (ArgumentOutOfRangeException outOfRange)
         {
-
             Console.WriteLine("Error: {0}", outOfRange.Message);
         }
     }
@@ -29,7 +28,7 @@ class Guest
         FirstName = fName;
         LastName = lName;
         if (age < 21)
-            throw new ArgumentOutOfRangeException("age","All guests must be 21-years-old or older.");
+            throw new ArgumentOutOfRangeException("age", "All guests must be 21-years-old or older.");
         else
             Age = age;
     }
@@ -37,7 +36,7 @@ class Guest
     public string GuestInfo()
     {
         string gInfo = FirstName + " " + LastName + ", " + Age.ToString();
-        return(gInfo);
+        return (gInfo);
     }
 }
 // </Snippet1>
