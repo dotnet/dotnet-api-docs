@@ -19,23 +19,23 @@ public class Program
 
 class Guest
 {
-    private string FirstName;
-    private string LastName;
-    private int Age;
+    private string firstName;
+    private string lastName;
+    private int age;
 
     public Guest(string fName, string lName, int age)
     {
-        FirstName = fName;
-        LastName = lName;
+        firstName = fName;
+        lastName = lName;
         if (age < 21)
             throw new ArgumentOutOfRangeException("age", "All guests must be 21-years-old or older.");
         else
-            Age = age;
+            this.age = age;
     }
 
     public string GuestInfo()
     {
-        string gInfo = FirstName + " " + LastName + ", " + Age.ToString();
+        string gInfo = firstName + " " + lastName + ", " + age.ToString();
         return gInfo;
     }
 }
