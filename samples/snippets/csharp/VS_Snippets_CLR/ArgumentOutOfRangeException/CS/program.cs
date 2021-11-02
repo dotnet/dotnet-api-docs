@@ -19,7 +19,7 @@ public class Program
 
 class Guest
 {
-    const int minimumRequiredAge = 21;
+    private const int minimumRequiredAge = 21;
 
     private string firstName;
     private string lastName;
