@@ -23,10 +23,10 @@ class Guest
     private string lastName;
     private int age;
 
-    public Guest(string fName, string lName, int age)
+    public Guest(string firstName, string lastName, int age)
     {
-        firstName = fName;
-        lastName = lName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         if (age < 21)
             throw new ArgumentOutOfRangeException("age", "All guests must be 21-years-old or older.");
         else
