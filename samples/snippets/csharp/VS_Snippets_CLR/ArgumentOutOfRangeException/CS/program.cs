@@ -12,7 +12,7 @@ public class Program
         }
         catch (ArgumentOutOfRangeException argumentOutOfRangeException)
         {
-            Console.WriteLine("Error: {0}", argumentOutOfRangeException.Message);
+            Console.WriteLine($"Error: {argumentOutOfRangeException.Message}");
         }
     }
 }
