@@ -36,7 +36,7 @@ class Guest
     public string GuestInfo()
     {
         string gInfo = FirstName + " " + LastName + ", " + Age.ToString();
-        return (gInfo);
+        return gInfo;
     }
 }
 // </Snippet1>
