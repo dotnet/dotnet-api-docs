@@ -8,7 +8,7 @@ public class Program
     {
         try
         {
-            Guest guest1 = new Guest("Ben", "Miller", 17);
+            var guest1 = new Guest("Ben", "Miller", 17);
             WriteLine(guest1.GuestInfo);
         }
         catch (ArgumentOutOfRangeException argumentOutOfRangeException)
