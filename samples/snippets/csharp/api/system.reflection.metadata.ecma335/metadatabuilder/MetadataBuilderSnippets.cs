@@ -17,7 +17,6 @@ namespace MetadataBuilderSnippets
         private static MethodDefinitionHandle EmitHelloWorld(MetadataBuilder metadata, BlobBuilder ilBuilder)
         {
             // Create module and assembly for a console application.
-
             metadata.AddModule(
                 0,
                 metadata.GetOrAddString("ConsoleApplication.exe"),
@@ -34,7 +33,6 @@ namespace MetadataBuilderSnippets
                 hashAlgorithm: AssemblyHashAlgorithm.None);
 
             // Create references to System.Object and System.Console types.
-
             AssemblyReferenceHandle mscorlibAssemblyRef = metadata.AddAssemblyReference(
                 name: metadata.GetOrAddString("mscorlib"),
                 version: new Version(4, 0, 0, 0),
