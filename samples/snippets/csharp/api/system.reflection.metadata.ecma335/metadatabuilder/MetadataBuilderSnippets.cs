@@ -54,7 +54,6 @@ namespace MetadataBuilderSnippets
                 metadata.GetOrAddString("Console"));
 
             // Get reference to Console.WriteLine(string) method.
-
             var consoleWriteLineSignature = new BlobBuilder();
 
             new BlobEncoder(consoleWriteLineSignature).
@@ -69,7 +68,6 @@ namespace MetadataBuilderSnippets
                 metadata.GetOrAddBlob(consoleWriteLineSignature));
 
             // Get reference to Object's constructor.
-
             var parameterlessCtorSignature = new BlobBuilder();
 
             new BlobEncoder(parameterlessCtorSignature).
@@ -84,7 +82,6 @@ namespace MetadataBuilderSnippets
                 parameterlessCtorBlobIndex);
 
             // Create signature for "void Main()" method.
-
             var mainSignature = new BlobBuilder();
 
             new BlobEncoder(mainSignature).
@@ -97,7 +94,6 @@ namespace MetadataBuilderSnippets
             InstructionEncoder il;
             
             // Emit IL for Program::.ctor
-            
             il = new InstructionEncoder(codeBuilder);
 
             // ldarg.0
@@ -113,7 +109,6 @@ namespace MetadataBuilderSnippets
             codeBuilder.Clear();
 
             // Emit IL for Program::Main
-            
             var flowBuilder = new ControlFlowBuilder();
             il = new InstructionEncoder(codeBuilder, flowBuilder);
 
@@ -130,7 +125,6 @@ namespace MetadataBuilderSnippets
             codeBuilder.Clear();
 
             // Create method definition for Program::Main
-
             MethodDefinitionHandle mainMethodDef = metadata.AddMethodDefinition(
                 MethodAttributes.Public | MethodAttributes.Static | MethodAttributes.HideBySig,
                 MethodImplAttributes.IL,
@@ -140,7 +134,6 @@ namespace MetadataBuilderSnippets
                 parameterList: default(ParameterHandle));
 
             // Create method definition for Program::.ctor
-
             MethodDefinitionHandle ctorDef = metadata.AddMethodDefinition(
                 MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName,
                 MethodImplAttributes.IL,
@@ -150,7 +143,6 @@ namespace MetadataBuilderSnippets
                 parameterList: default(ParameterHandle));
 
             // Create type definition for the special <Module> type that holds global functions
-
             metadata.AddTypeDefinition(
                 default(TypeAttributes),
                 default(StringHandle),
@@ -160,7 +152,6 @@ namespace MetadataBuilderSnippets
                 methodList: mainMethodDef);
 
             // Create type definition for ConsoleApplication.Program
-
             metadata.AddTypeDefinition(
                 TypeAttributes.Class | TypeAttributes.Public | TypeAttributes.AutoLayout | TypeAttributes.BeforeFieldInit,
                 metadata.GetOrAddString("ConsoleApplication"),
@@ -180,7 +171,6 @@ namespace MetadataBuilderSnippets
             )
         {
             // Create executable with the managed metadata from the specified MetadataBuilder.
-
             var peHeaderBuilder = new PEHeaderBuilder(
                 imageCharacteristics: Characteristics.ExecutableImage
                 );
@@ -194,13 +184,12 @@ namespace MetadataBuilderSnippets
                 deterministicIdProvider: content => s_contentId);
 
             // Write executable into the specified stream.
-
             var peBlob = new BlobBuilder();
             BlobContentId contentId = peBuilder.Serialize(peBlob);
             peBlob.WriteContentTo(peStream);
         }
 
-        public static void BuildHelloWorldApp()
+        private static void Main(string[] args)
         {
             using var peStream = new FileStream(
                 "ConsoleApplication.exe", FileMode.OpenOrCreate, FileAccess.ReadWrite
@@ -213,10 +202,5 @@ namespace MetadataBuilderSnippets
             WritePEImage(peStream, metadataBuilder, ilBuilder, entryPoint);
         }
         //</SnippetEmitConsoleApp>
-
-        public static void Run()
-        {
-            BuildHelloWorldApp();
-        }
     }
 }
