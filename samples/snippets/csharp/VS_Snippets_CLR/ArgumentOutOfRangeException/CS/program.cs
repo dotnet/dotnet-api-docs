@@ -10,9 +10,9 @@ public class Program
             Guest guest1 = new Guest("Ben", "Miller", 17);
             Console.WriteLine(guest1.GuestInfo());
         }
-        catch (ArgumentOutOfRangeException outOfRange)
+        catch (ArgumentOutOfRangeException argumentOutOfRangeException)
         {
-            Console.WriteLine("Error: {0}", outOfRange.Message);
+            Console.WriteLine("Error: {0}", argumentOutOfRangeException.Message);
         }
     }
 }
@@ -35,8 +35,8 @@ class Guest
 
     public string GuestInfo()
     {
-        string gInfo = firstName + " " + lastName + ", " + age.ToString();
-        return gInfo;
+        string guestInfo = firstName + " " + lastName + ", " + age.ToString();
+        return guestInfo;
     }
 }
 // </Snippet1>
