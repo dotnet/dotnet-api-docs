@@ -28,7 +28,7 @@ class Guest
         this.firstName = firstName;
         this.lastName = lastName;
         if (age < 21)
-            throw new ArgumentOutOfRangeException("age", "All guests must be 21-years-old or older.");
+            throw new ArgumentOutOfRangeException(nameof(age), "All guests must be 21-years-old or older.");
         else
             this.age = age;
     }
