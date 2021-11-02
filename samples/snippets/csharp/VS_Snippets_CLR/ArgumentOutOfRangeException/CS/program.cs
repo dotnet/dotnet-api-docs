@@ -1,14 +1,15 @@
 ﻿// <Snippet1>
 using System;
+using static System.Console;
 
 try
 {
     Guest guest1 = new Guest("Ben", "Miller", 17);
-    Console.WriteLine(guest1.GuestInfo);
+    WriteLine(guest1.GuestInfo);
 }
 catch (ArgumentOutOfRangeException argumentOutOfRangeException)
 {
-    Console.WriteLine($"Error: {argumentOutOfRangeException.Message}");
+    WriteLine($"Error: {argumentOutOfRangeException.Message}");
 }
 
 class Guest
