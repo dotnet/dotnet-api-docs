@@ -8,7 +8,7 @@ public class Program
         try
         {
             Guest guest1 = new Guest("Ben", "Miller", 17);
-            Console.WriteLine(guest1.GuestInfo());
+            Console.WriteLine(guest1.GuestInfo);
         }
         catch (ArgumentOutOfRangeException argumentOutOfRangeException)
         {
@@ -35,10 +35,6 @@ class Guest
         this.age = age;
     }
 
-    public string GuestInfo()
-    {
-        string guestInfo = firstName + " " + lastName + ", " + age.ToString();
-        return guestInfo;
-    }
+    public string GuestInfo => $"{firstName} {lastName}, {age}";
 }
 // </Snippet1>
