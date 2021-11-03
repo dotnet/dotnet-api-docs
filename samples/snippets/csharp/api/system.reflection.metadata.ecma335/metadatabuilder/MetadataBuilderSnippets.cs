@@ -189,7 +189,7 @@ namespace MetadataBuilderSnippets
             peBlob.WriteContentTo(peStream);
         }
 
-        private static void Main(string[] args)
+        public static void BuildHelloWorldApp()
         {
             using var peStream = new FileStream(
                 "ConsoleApplication.exe", FileMode.OpenOrCreate, FileAccess.ReadWrite
@@ -202,5 +202,10 @@ namespace MetadataBuilderSnippets
             WritePEImage(peStream, metadataBuilder, ilBuilder, entryPoint);
         }
         //</SnippetEmitConsoleApp>
+        
+        public static void Run()
+        {
+            BuildHelloWorldApp();
+        }
     }
 }
