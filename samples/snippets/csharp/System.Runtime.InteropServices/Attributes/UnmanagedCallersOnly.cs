@@ -15,5 +15,5 @@ internal static class UnmanagedCallersOnly
     {
         NativeFunctionWithCallback(&DoubleInt);
     }
-    //<SnippetUnmanagedCallersOnly>
+    //</SnippetUnmanagedCallersOnly>
 }
