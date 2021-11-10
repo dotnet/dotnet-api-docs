@@ -1729,6 +1729,7 @@ Namespace SequenceExamples
             Dim fruits As New System.Collections.ArrayList(4)
             fruits.Add("Mango")
             fruits.Add("Orange")
+            fruits.Add(Nothing)
             fruits.Add("Apple")
             fruits.Add(3.0)
             fruits.Add("Banana")

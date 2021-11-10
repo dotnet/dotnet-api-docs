@@ -1705,6 +1705,7 @@ namespace SequenceExamples
             System.Collections.ArrayList fruits = new System.Collections.ArrayList(4);
             fruits.Add("Mango");
             fruits.Add("Orange");
+            fruits.Add(null);
             fruits.Add("Apple");
             fruits.Add(3.0);
             fruits.Add("Banana");
