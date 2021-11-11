@@ -1,7 +1,7 @@
 open System
 
 //<snippet01>
-// F# provides a type alias for System.Collections.List<T> as ResizeArray<T>.
+// F# provides a type alias for System.Collections.List<'T> as ResizeArray<'T>.
 let names = ResizeArray<string>()
 names.Add "Bruce"
 names.Add "Alfred"
