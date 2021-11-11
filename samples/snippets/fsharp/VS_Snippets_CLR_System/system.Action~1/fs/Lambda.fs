@@ -1,6 +1,6 @@
 module TestLambdaExpression
 
-// <Snippet1>
+// <Snippet4>
 open System
 open System.Windows.Forms
 
@@ -17,4 +17,4 @@ let messageTarget =
 
 messageTarget.Invoke "Hello, World!"
 
-// </Snippet1>
+// </Snippet4>
