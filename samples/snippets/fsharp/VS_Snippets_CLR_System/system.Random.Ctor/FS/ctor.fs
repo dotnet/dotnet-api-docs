@@ -19,7 +19,7 @@ let runIntNDoubleRandoms (randObj: Random) =
     printfn ""
 
 let fixedSeedRandoms seed =
-    printfn "\nRandom numbers from a Random object with seed = %i:" seed
+    printfn $"\nRandom numbers from a Random object with seed = %i{seed}:"
     let fixRand = Random seed
     
     runIntNDoubleRandoms fixRand
@@ -33,10 +33,11 @@ let autoSeedRandoms () =
 
     runIntNDoubleRandoms autoRand
 
-printfn "This example of the Random class constructors and Random.NextDouble()"
-printfn "generates the following output.\n"
-printfn "Create Random objects, and then generate and display six integers and" 
-printfn "six doubles from each."
+printfn 
+  """This example of the Random class constructors and Random.NextDouble()
+generates the following output.
+Create Random objects, and then generate and display six integers and
+six doubles from each."""
  
 fixedSeedRandoms 123
 fixedSeedRandoms 123
@@ -90,10 +91,7 @@ Random numbers from a Random object with an auto-generated seed:
 let createEngineWithSameTimer () =
 // <Snippet3>
     let randomEngines = 
-        Array.init 4 (fun i ->
-            Operators.(>>>) DateTime.Now.Ticks i
-            |> int
-            |> Random )
+        [| for i in 0 .. 3 -> Random(int (DateTime.Now.Ticks >>> i)) |]
 // </Snippet3>
     for i in randomEngines do
         printfn "%i" (i.Next())
