@@ -115,7 +115,7 @@ To avoid this problem, create a single <xref:System.Random> object instead of mu
 ## The System.Random class and thread safety  
  Instead of instantiating individual <xref:System.Random> objects, we recommend that you create a single <xref:System.Random> instance to generate all the random numbers needed by your app. However, <xref:System.Random> objects are not thread safe. If your app calls <xref:System.Random> methods from multiple threads, you must use a synchronization object to ensure that only one thread can access the random number generator at a time. If you don't ensure that the <xref:System.Random> object is accessed in a thread-safe way, calls to methods that return random numbers return 0.  
   
- The following example uses the C# [lock Statement](/dotnet/csharp/language-reference/keywords/lock-statement) and the Visual Basic [SyncLock statement](/dotnet/visual-basic/language-reference/statements/synclock-statement) to ensure that a single random number generator is accessed by 11 threads in a thread-safe manner. Each thread generates 2 million random numbers, counts the number of random numbers generated and calculates their sum, and then updates the totals for all threads when it finishes executing.  
+ The following example uses the C# [lock Statement](/dotnet/csharp/language-reference/keywords/lock-statement), the F# [lock function](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-core-operators.html#lock) and the Visual Basic [SyncLock statement](/dotnet/visual-basic/language-reference/statements/synclock-statement) to ensure that a single random number generator is accessed by 11 threads in a thread-safe manner. Each thread generates 2 million random numbers, counts the number of random numbers generated and calculates their sum, and then updates the totals for all threads when it finishes executing.  
   
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Random/cpp/threadsafeex1.cpp" id="Snippet3":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Random/cs/threadsafeex1.cs" id="Snippet3":::
@@ -126,7 +126,7 @@ To avoid this problem, create a single <xref:System.Random> object instead of mu
   
 -   The <xref:System.ThreadStaticAttribute> attribute is used to define thread-local variables that track the total number of random numbers generated and their sum for each thread.  
   
--   A lock (the `lock` statement in C# and the `SyncLock` statement in Visual Basic) protects access to the variables for the total count and sum of all random numbers generated on all threads.  
+-   A lock (the `lock` statement in C#, the `lock` function in F# and the `SyncLock` statement in Visual Basic) protects access to the variables for the total count and sum of all random numbers generated on all threads.  
   
 -   A semaphore (the <xref:System.Threading.CountdownEvent> object) is used to ensure that the main thread blocks until all other threads complete execution.  
   
@@ -309,7 +309,7 @@ Random.NextDouble() * (maxValue - minValue) + minValue
  :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR_System/system.Random/fs/bytes1.fs" id="Snippet9":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Random/vb/bytes1.vb" id="Snippet9":::
 
- The `NextBytes(Byte[], Byte, Byte)` method wraps a call to the <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29> method and specifies the minimum value and one greater than the maximum value (in this case, 0 and 101) that we want returned in the byte array. Because we are sure that the integer values returned by the <xref:System.Random.Next%2A> method are within the range of the <xref:System.Byte> data type, we can safely cast them (in C#) or convert them (in Visual Basic) from integers to bytes.  
+ The `NextBytes(Byte[], Byte, Byte)` method wraps a call to the <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29> method and specifies the minimum value and one greater than the maximum value (in this case, 0 and 101) that we want returned in the byte array. Because we are sure that the integer values returned by the <xref:System.Random.Next%2A> method are within the range of the <xref:System.Byte> data type, we can safely cast them (in C# and F#) or convert them (in Visual Basic) from integers to bytes.  
   
 <a name="Array"></a>   
 ### Retrieve an element from an array or collection at random  
