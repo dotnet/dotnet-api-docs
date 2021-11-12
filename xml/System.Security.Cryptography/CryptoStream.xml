@@ -52,24 +52,22 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- The common language runtime uses a stream-oriented design for cryptography. The core of this design is <xref:System.Security.Cryptography.CryptoStream>. Any cryptographic objects that implement <xref:System.Security.Cryptography.CryptoStream> can be chained together with any objects that implement <xref:System.IO.Stream>, so the streamed output from one object can be fed into the input of another object. The intermediate result (the output from the first object) does not need to be stored separately.  
-  
+## Remarks
+
+The common language runtime uses a stream-oriented design for cryptography. The core of this design is <xref:System.Security.Cryptography.CryptoStream>. Any cryptographic objects that implement <xref:System.Security.Cryptography.CryptoStream> can be chained together with any objects that implement <xref:System.IO.Stream>, so the streamed output from one object can be fed into the input of another object. The intermediate result (the output from the first object) does not need to be stored separately.
+
 > [!IMPORTANT]
->  This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly by calling its <xref:System.Security.Cryptography.CryptoStream.Clear%2A> method, which in turn calls its <xref:System.IDisposable> implementation. To dispose of the type directly, call its <xref:System.Security.Cryptography.CryptoStream.Clear%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.  
-  
-> [!IMPORTANT]
-> When `Stream.Read` or `Stream.ReadAsync` is called with a buffer of length `N`, the operation completes when either:
- > -   At least one byte has been read from the stream, or
- > -   The underlying stream that it wraps returns 0 from a call to `Read`, indicating no more data is available.
+> - This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly by calling its <xref:System.Security.Cryptography.CryptoStream.Clear%2A> method, which in turn calls its <xref:System.IDisposable> implementation. To dispose of the type directly, call its <xref:System.Security.Cryptography.CryptoStream.Clear%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.  
+> - When `Stream.Read` or `Stream.ReadAsync` is called with a buffer of length `N`, the operation completes when either:
 >
-> Also, when `Stream.Read` or `Stream.ReadAsync` is called with a buffer of length 0, the operation succeeds once a call with a non-zero buffer would succeed.
+>   - At least one byte has been read from the stream, or
+>   - The underlying stream that it wraps returns 0 from a call to `Read`, indicating no more data is available.
+>
+>   Also, when `Stream.Read` or `Stream.ReadAsync` is called with a buffer of length 0, the operation succeeds once a call with a non-zero buffer would succeed.
 
 Prior to .NET 6, `Stream.Read` and `Stream.ReadAsync` did not return until `N` bytes had been read from the stream or the underlying stream returned 0 from a call to `Read`. If your code assumed they wouldn't return until all `N` bytes were read, it could fail to read all the content. For more information, see (Partial and zero-byte reads in streams)[/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams].
 
- You should always explicitly close your <xref:System.Security.Cryptography.CryptoStream> object after you are done using it by calling the <xref:System.Security.Cryptography.CryptoStream.Clear%2A> method.  Doing so flushes the underlying stream and causes all remaining blocks of data to be processed by the <xref:System.Security.Cryptography.CryptoStream> object.  However, if an exception occurs before you call the <xref:System.IO.Stream.Close%2A> method, the <xref:System.Security.Cryptography.CryptoStream> object might not be closed.  To ensure that the <xref:System.IO.Stream.Close%2A> method always gets called, place your call to the <xref:System.Security.Cryptography.CryptoStream.Clear%2A> method within the `finally` block of a `try`/`catch` statement.  
-  
-   
+You should always explicitly close your <xref:System.Security.Cryptography.CryptoStream> object after you are done using it by calling the <xref:System.Security.Cryptography.CryptoStream.Clear%2A> method.  Doing so flushes the underlying stream and causes all remaining blocks of data to be processed by the <xref:System.Security.Cryptography.CryptoStream> object.  However, if an exception occurs before you call the <xref:System.IO.Stream.Close%2A> method, the <xref:System.Security.Cryptography.CryptoStream> object might not be closed.  To ensure that the <xref:System.IO.Stream.Close%2A> method always gets called, place your call to the <xref:System.Security.Cryptography.CryptoStream.Clear%2A> method within the `finally` block of a `try`/`catch` statement.
   
 ## Examples  
  The following example demonstrates how to use a <xref:System.Security.Cryptography.CryptoStream> to encrypt a string. This method uses <xref:System.Security.Cryptography.RijndaelManaged> class with the specified <xref:System.Security.Cryptography.SymmetricAlgorithm.Key%2A> and initialization vector (<xref:System.Security.Cryptography.SymmetricAlgorithm.IV%2A>).  
