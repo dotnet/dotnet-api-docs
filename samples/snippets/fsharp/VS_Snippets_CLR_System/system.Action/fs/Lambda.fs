@@ -5,13 +5,11 @@ open System
 open System.Windows.Forms
 
 type Name(name) =
-    let instanceName = name
-
     member _.DisplayToConsole() = 
-        printfn "%s" instanceName
+        printfn "%s" name
 
     member _.DisplayToWindow() = 
-        MessageBox.Show instanceName |> ignore
+        MessageBox.Show name |> ignore
 
 let testName = Name "Koani"
 
