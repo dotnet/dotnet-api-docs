@@ -9,33 +9,35 @@ let getAllFiles str =
 
 // Get a folder path whose directories should throw an UnauthorizedAccessException.
 let path =
-    Environment.SpecialFolder.UserProfile
-    |> Environment.GetFolderPath
-    |> Directory.GetParent
-    |> fun x -> x.FullName
+    let directory =
+        Environment.SpecialFolder.UserProfile
+        |> Environment.GetFolderPath
+        |> Directory.GetParent
+    directory.FullName
 
 // Use this line to throw an exception that is not handled.
 // let task1 = Task<string []>.Factory.StartNew(fun () -> raise (IndexOutOfRangeException()) )
 let task1 = Task.Factory.StartNew(fun () -> getAllFiles (path))
 
-try
-    Async.AwaitTask task1
-    |> Async.Ignore
-    |> Async.RunSynchronously
-with
-| :? UnauthorizedAccessException -> printfn "Caught unauthorized access exception-await behavior"
-| :? AggregateException as ae ->
-    printfn "Caught aggregate exception-Task.Wait behavior"
+let execute () =
+    try
+        task1.Wait()
+    with
+    | :? UnauthorizedAccessException -> printfn "Caught unauthorized access exception-await behavior"
+    | :? AggregateException as ae ->
+        printfn "Caught aggregate exception-Task.Wait behavior"
 
-    ae.Handle (fun x ->
-        match x with
-        | :? UnauthorizedAccessException ->
-            printfn "You do not have permission to access all folders in this path."
-            printfn "See your network administrator or try another path."
-            true
-        | _ -> false)
-printfn $"""task1 Status: {if task1.IsCompleted then "Completed," else ""}{task1.Status}"""
-                                                
+        ae.Handle (fun x ->
+            match x with
+            | :? UnauthorizedAccessException ->
+                printfn "You do not have permission to access all folders in this path."
+                printfn "See your network administrator or try another path."
+                true
+            | _ -> false)
+    printfn $"""task1 Status: {if task1.IsCompleted then "Completed," else ""}{task1.Status}"""
+
+execute ()
+
 // The example displays the following output if the file access task is run:
 //       You do not have permission to access all folders in this path.
 //       See your network administrator or try another path.
