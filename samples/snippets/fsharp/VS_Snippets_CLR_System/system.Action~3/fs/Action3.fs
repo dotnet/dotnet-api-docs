@@ -11,7 +11,7 @@ let copyStrings (source: string []) (target: string []) startPos =
         target.[i] <- source.[i]
 
 let ordinals = [| "First"; "Second"; "Third"; "Fourth"; "Fifth" |]
-let copiedOrdinals: = Array.zeroCreate<string> ordinals.Length
+let copiedOrdinals = Array.zeroCreate<string> ordinals.Length
 
 let copyOperation = Action<_,_,_> copyStrings
 
