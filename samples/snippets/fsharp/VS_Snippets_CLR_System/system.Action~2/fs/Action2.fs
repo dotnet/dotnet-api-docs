@@ -12,16 +12,14 @@ let writeToConsole string1 string2 =
 
 let writeToFile string1 string2 =
     use writer = new StreamWriter(Environment.GetCommandLineArgs().[1], false)
-    try
-        writer.WriteLine $"{string1}\n{string2}"
-    with _ -> printfn "File write operation failed..."
+    writer.WriteLine $"{string1}\n{string2}"
 
 let concat =
-    Action<string, string>(
+    Action<string, string>(fun string1 string2 ->
         if Environment.GetCommandLineArgs().Length > 1 then
-            writeToFile
+            writeToFile string1 string2
         else
-            writeToConsole
+            writeToConsole string1 string2
     )
 
 concat.Invoke(message1, message2)
