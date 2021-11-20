@@ -7,7 +7,7 @@ open System
 let rand = Random()
 
 // Generate and display 5 random byte (integer) values.
-let bytes : byte [] = Array.zeroCreate 5
+let bytes = Array.zeroCreate 5
 rand.NextBytes bytes
 printfn "Five random byte values:"
 for byte in bytes do

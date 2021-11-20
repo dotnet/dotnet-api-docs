@@ -3,8 +3,8 @@ module Random1
 open System
 
 // <Snippet1>
-let bytes1 : byte [] = Array.zeroCreate 100
-let bytes2 : byte [] = Array.zeroCreate 100
+let bytes1 = Array.zeroCreate 100
+let bytes2 = Array.zeroCreate 100
 let rnd1 = Random()
 let rnd2 = Random()
 

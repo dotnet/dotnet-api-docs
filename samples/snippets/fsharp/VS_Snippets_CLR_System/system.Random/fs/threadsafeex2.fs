@@ -16,44 +16,47 @@ type Example() =
     let mutable totalCount = 0
 
     member _.Execute() =
-        use source = source // Dispose of the cancellationTokenSource when we're done with it.
+        use source = source // Dispose of the CancellationTokenSource when we're done with it.
         let token = source.Token
-        let tasks = [|
-            for i = 0 to 10 do 
-                Task.Run(fun () ->
-                    let mutable previous = 0.0
-                    let mutable taskCtr = 0
-                    let mutable taskTotal = 0.0
-                    let mutable result = 0.0
 
-                    for _ = 1 to 2000000 do
-                        // Make sure there's no corruption of Random.
-                        token.ThrowIfCancellationRequested()
-                    
-                        lock randLock (fun () -> 
-                            result <- rand.NextDouble() )
-                    
-                        // Check for corruption of Random instance.
-                        if result = previous && result = 0.0 then 
-                            source.Cancel()
-                        else 
-                            previous <- result
+        let tasks =
+            [| for i = 0 to 10 do
+                   Task.Run(
+                       (fun () ->
+                           let mutable previous = 0.0
+                           let mutable taskCtr = 0
+                           let mutable taskTotal = 0.0
+                           let mutable result = 0.0
 
-                        taskCtr <- taskCtr + 1
-                        taskTotal <- taskTotal + result
+                           for _ = 1 to 2000000 do
+                               // Make sure there's no corruption of Random.
+                               token.ThrowIfCancellationRequested()
 
-                    lock numericLock (fun () ->
-                        // Show result.
-                        printfn "Task %i finished execution." i
-                        printfn $"Random numbers generated: {taskCtr:N0}"
-                        printfn $"Sum of random numbers: {taskTotal:N2}"
-                        printfn $"Random number mean: {(taskTotal / float taskCtr):N4}\n"
+                               lock randLock (fun () -> result <- rand.NextDouble())
 
-                        // Update overall totals.
-                        totalCount <- totalCount + taskCtr
-                        totalValue <- totalValue + taskTotal)
-                 , token) |]
-        try 
+                               // Check for corruption of Random instance.
+                               if result = previous && result = 0.0 then
+                                   source.Cancel()
+                               else
+                                   previous <- result
+
+                               taskCtr <- taskCtr + 1
+                               taskTotal <- taskTotal + result
+
+                           lock numericLock (fun () ->
+                               // Show result.
+                               printfn "Task %i finished execution." i
+                               printfn $"Random numbers generated: {taskCtr:N0}"
+                               printfn $"Sum of random numbers: {taskTotal:N2}"
+                               printfn $"Random number mean: {(taskTotal / float taskCtr):N4}\n"
+
+                               // Update overall totals.
+                               totalCount <- totalCount + taskCtr
+                               totalValue <- totalValue + taskTotal)),
+                       token
+                   ) |]
+
+        try
             // Run tasks with F# Async.
             Task.WhenAll tasks
             |> Async.AwaitTask
@@ -65,11 +68,11 @@ type Example() =
         with
         | :? AggregateException as e ->
             for inner in e.InnerExceptions do
-                match inner with 
+                match inner with
                 | :? TaskCanceledException as canc ->
                     if canc <> null then
                         printfn $"Task #{canc.Task.Id} cancelled"
-                    else 
+                    else
                         printfn $"Exception: {inner.GetType().Name}"
                 | _ -> ()
 

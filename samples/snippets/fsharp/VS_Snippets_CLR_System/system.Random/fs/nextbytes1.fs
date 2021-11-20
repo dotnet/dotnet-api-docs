@@ -4,7 +4,7 @@ open System
 
 // <Snippet5>
 let rnd = Random()
-let bytes : Byte [] = Array.zeroCreate 20
+let bytes = Array.zeroCreate 20
 rnd.NextBytes bytes
 
 for i = 1 to bytes.Length do

@@ -7,16 +7,19 @@ open System.Threading
 type Example() =
     [<ThreadStatic; DefaultValue>]
     static val mutable private previous : float
+    
     [<ThreadStatic; DefaultValue>]
     static val mutable private perThreadCtr : int
+
     [<ThreadStatic; DefaultValue>]
     static val mutable private perThreadTotal : float
 
     static let source = new CancellationTokenSource()
-    static let countdown = new CountdownEvent 1
+    static let countdown = new CountdownEvent(1)
     static let randLock = obj ()
     static let numericLock = obj ()
     static let rand = Random()
+
     let mutable totalValue = 0.0
     let mutable totalCount = 0
 

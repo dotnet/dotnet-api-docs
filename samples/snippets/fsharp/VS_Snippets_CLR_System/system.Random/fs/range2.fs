@@ -4,9 +4,8 @@ open System
 
 // <Snippet16>
 let rnd = Random()
-
 for i = 1 to 50 do
-    printf "%3i    " (rnd.Next(1000,10000))
+    printf "%3i    " (rnd.Next(1000, 10000))
     if i % 10 = 0 then printfn ""
 
 // The example displays output like the following:

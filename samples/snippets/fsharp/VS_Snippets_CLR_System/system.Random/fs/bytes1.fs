@@ -11,8 +11,8 @@ type Random2() =
             bytes.[i] <- this.Next(int minValue, int maxValue) |> byte
 
 let rnd = Random2()
-let bytes : byte [] = Array.zeroCreate 10000
-let total : int [] = Array.zeroCreate 101
+let bytes = Array.zeroCreate 10000
+let total = Array.zeroCreate 101
 rnd.NextBytes(bytes, 0uy, 101uy)
 
 // Calculate how many of each value we have.

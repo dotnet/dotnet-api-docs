@@ -10,7 +10,7 @@ let rnd = Random()
 
 // Generate 20 million random integers.
 let count =
-    Array.init 20000000 (fun _ -> rnd.NextDouble() * (double Int64.MaxValue) )
+    Array.init 20000000 (fun _ -> rnd.NextDouble() * (float Int64.MaxValue) )
     |> Array.countBy (fun x -> x / (float ONE_TENTH) |> int ) // Categorize into 10 groups and count them.
     |> Array.map snd
 

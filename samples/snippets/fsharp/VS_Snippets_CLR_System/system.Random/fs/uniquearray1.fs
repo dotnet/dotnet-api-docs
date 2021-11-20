@@ -17,8 +17,8 @@ type Face =
 
 type Card = { Face: Face; Suit: Suit }
 
-let suits = [Clubs; Diamonds; Hearts; Spades]
-let faces = [Ace; Two; Three; Four; Five; Six; Seven; Eight; Nine; Ten; Jack; Queen; King]
+let suits = [ Clubs; Diamonds; Hearts; Spades ]
+let faces = [ Ace; Two; Three; Four; Five; Six; Seven; Eight; Nine; Ten; Jack; Queen; King ]
 
 type Dealer() =
     let rnd = Random()
