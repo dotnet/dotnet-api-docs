@@ -397,7 +397,7 @@ You must ensure that the routine that restores the <xref:System.DateTime> values
 
 To successfully restore <xref:System.DateTime> values that are persisted as strings, follow these rules:  
   
--   Make the same assumptions about culture-specific formatting when you restore the string as when you persisted it. To ensure that a string can be restored on a system whose current culture is different from the culture of the system it was saved on, call the <xref:System.DateTime.ToString%2A> overload to save the string by using the conventions of the invariant culture. Call the <xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29> or <xref:System.DateTime.TryParse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%2CSystem.DateTime%40%29> overload to restore the string by using the conventions of the invariant culture. Never use the <xref:System.DateTime.ToString>, <xref:System.DateTime.Parse%28System.String%29>, or <xref:System.DateTime.TryParse%28System.String%2CSystem.DateTime%40%29> overloads, which use the conventions of the current thread culture.  
+-   Make the same assumptions about culture-specific formatting when you restore the string as when you persisted it. To ensure that a string can be restored on a system whose current culture is different from the culture of the system it was saved on, call the <xref:System.DateTime.ToString%2A> overload to save the string by using the conventions of the invariant culture. Call the <xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29> or <xref:System.DateTime.TryParse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%2CSystem.DateTime%40%29> overload to restore the string by using the conventions of the invariant culture. Never use the <xref:System.DateTime.ToString>, <xref:System.DateTime.Parse%28System.String%29>, or <xref:System.DateTime.TryParse%28System.String%2CSystem.DateTime%40%29> overloads, which use the conventions of the current culture.  
   
 -   If the date represents a single moment of time, ensure that it represents the same moment in time when it's restored, even on a different time zone. Convert the <xref:System.DateTime> value to Coordinated Universal Time (UTC) before saving it. You can also serialize the value along with time zone information. For more information about this approach, see [Serializing DateTime and time zone data](#serializing-datetime-and-time-zone-data).  
   
@@ -2481,17 +2481,15 @@ The behavior of the .NET Framework and COM means that if your application round-
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.DateTime.Day%2A> property always returns the day of the month in the Gregorian calendar, even if the current <xref:System.DateTime> value was instantiated using some other calendar or if the current thread culture's default calendar is not the Gregorian calendar. To retrieve the day of the month of a particular date using some other calendar, call that calendar's <xref:System.Globalization.Calendar.GetDayOfMonth%2A?displayProperty=nameWithType> method. The following example uses both the <xref:System.DateTime.Day%2A> property and the <xref:System.Globalization.HijriCalendar.GetDayOfMonth%2A?displayProperty=nameWithType> method to retrieve the day of the month for a <xref:System.DateTime> value that is instantiated using the Hijri calendar.  
+ The <xref:System.DateTime.Day%2A> property always returns the day of the month in the Gregorian calendar, even if the current <xref:System.DateTime> value was instantiated using some other calendar or if the current culture's default calendar is not the Gregorian calendar. To retrieve the day of the month of a particular date using some other calendar, call that calendar's <xref:System.Globalization.Calendar.GetDayOfMonth%2A?displayProperty=nameWithType> method. The following example uses both the <xref:System.DateTime.Day%2A> property and the <xref:System.Globalization.HijriCalendar.GetDayOfMonth%2A?displayProperty=nameWithType> method to retrieve the day of the month for a <xref:System.DateTime> value that is instantiated using the Hijri calendar.  
   
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.DateTime.Day/cs/Day1.cs" interactive="try-dotnet-method" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.DateTime.Day/vb/Day1.vb" id="Snippet1":::
 
- Similarly, the following example uses both the <xref:System.DateTime.Day%2A> property and the <xref:System.Globalization.HijriCalendar.GetDayOfMonth%2A?displayProperty=nameWithType> method to retrieve the day of the month when the current thread culture is ar-SA, which uses Hijri as its default calendar.  
+ Similarly, the following example uses both the <xref:System.DateTime.Day%2A> property and the <xref:System.Globalization.HijriCalendar.GetDayOfMonth%2A?displayProperty=nameWithType> method to retrieve the day of the month when the current culture is ar-SA, which uses Hijri as its default calendar.  
   
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.DateTime.Day/cs/Day2.cs" id="Snippet2":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.DateTime.Day/vb/Day2.vb" id="Snippet2":::  
-  
-   
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.DateTime.Day/vb/Day2.vb" id="Snippet2":::
   
 ## Examples  
  The following example demonstrates the <xref:System.DateTime.Day%2A> property.  
@@ -2613,9 +2611,7 @@ The behavior of the .NET Framework and COM means that if your application round-
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.DateTime.DayOfYear%2A> property takes leap years into account when it calculates the day of the year. The property value always reflects the day of the year in the Gregorian calendar, regardless of the current thread culture's current calendar. To retrieve the day of the year in a different calendar, call the <xref:System.Globalization.Calendar.GetDayOfYear%2A?displayProperty=nameWithType> method of that calendar.  
-  
-   
+ The <xref:System.DateTime.DayOfYear%2A> property takes leap years into account when it calculates the day of the year. The property value always reflects the day of the year in the Gregorian calendar, regardless of the current culture's current calendar. To retrieve the day of the year in a different calendar, call the <xref:System.Globalization.Calendar.GetDayOfYear%2A?displayProperty=nameWithType> method of that calendar.
   
 ## Examples  
  The following example displays the day of the year of December 31 for the years 2010-2020 in the Gregorian calendar. Note that the example shows that December 31 is the 366th day of the year in leap years.  
@@ -5140,9 +5136,9 @@ The following example parses strings in each of these formats by using the forma
 
 |If you call|And `provider` is|Formatting information is derived from|  
 |-----------------|-----------------------|--------------------------------------------|  
-|<xref:System.DateTime.Parse%28System.String%29>|-|The current thread culture (<xref:System.Globalization.DateTimeFormatInfo.CurrentInfo%2A?displayProperty=nameWithType> property)|  
+|<xref:System.DateTime.Parse%28System.String%29>|-|The current culture (<xref:System.Globalization.DateTimeFormatInfo.CurrentInfo%2A?displayProperty=nameWithType> property)|  
 |<xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%29> or <xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29>|a <xref:System.Globalization.DateTimeFormatInfo> object|The specified <xref:System.Globalization.DateTimeFormatInfo> object|  
-|<xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%29> or <xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29>|`null`|The current thread culture (<xref:System.Globalization.DateTimeFormatInfo.CurrentInfo%2A?displayProperty=nameWithType> property)|  
+|<xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%29> or <xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29>|`null`|The current culture (<xref:System.Globalization.DateTimeFormatInfo.CurrentInfo%2A?displayProperty=nameWithType> property)|  
 |<xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%29> or <xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29>|a <xref:System.Globalization.CultureInfo> object|The <xref:System.Globalization.CultureInfo.DateTimeFormat%2A?displayProperty=nameWithType> property|  
 |<xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%29> or <xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29>|Custom <xref:System.IFormatProvider> implementation|The <xref:System.IFormatProvider.GetFormat%2A?displayProperty=nameWithType> method|  
   
@@ -5266,7 +5262,7 @@ You can also download a complete set of `DateTime.Parse` examples, which are inc
       </Parameters>
       <Docs>
         <param name="s">A string that contains a date and time to convert. See [The string to parse](#StringToParse) for more information.</param>
-        <summary>Converts the string representation of a date and time to its <see cref="T:System.DateTime" /> equivalent by using the conventions of the current thread culture.</summary>
+        <summary>Converts the string representation of a date and time to its <see cref="T:System.DateTime" /> equivalent by using the conventions of the current culture.</summary>
         <returns>An object that is equivalent to the date and time contained in <paramref name="s" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -5283,11 +5279,11 @@ This overload attempts to parse `s` by using <xref:System.Globalization.DateTime
 
 The following example parses the string representation of several date and time values by:
 
-- Using the default format provider, which provides the formatting conventions of the current thread culture of the computer used to produce the example output. The output from this example reflects the formatting conventions of the en-US culture.
+- Using the default format provider, which provides the formatting conventions of the current culture of the computer used to produce the example output. The output from this example reflects the formatting conventions of the en-US culture.
 
 - Using the default style value, which is <xref:System.Globalization.DateTimeStyles.AllowWhiteSpaces?displayProperty=nameWIthType>. 
 
-It handles the <xref:System.FormatException> exception that is thrown when the method tries to parse the string representation of a date and time by using some other culture's formatting conventions. It also shows how to successfully parse a date and time value that does not use the formatting conventions of the current thread culture.  
+It handles the <xref:System.FormatException> exception that is thrown when the method tries to parse the string representation of a date and time by using some other culture's formatting conventions. It also shows how to successfully parse a date and time value that does not use the formatting conventions of the current culture.  
   
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.DateTime.Parse/cs/Parse1.cs" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.DateTime.Parse/vb/Parse1.vb" id="Snippet1":::  
@@ -7716,7 +7712,7 @@ In general, the ticks represent the time according to the time zone specified by
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The value of the current <xref:System.DateTime> object is formatted using the pattern defined by the <xref:System.Globalization.DateTimeFormatInfo.LongDatePattern%2A> property associated with the current thread culture. The return value is identical to the value returned by specifying the "D" [standard DateTime format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) with the <xref:System.DateTime.ToString%28System.String%29> method.  
+ The value of the current <xref:System.DateTime> object is formatted using the pattern defined by the <xref:System.Globalization.DateTimeFormatInfo.LongDatePattern%2A> property associated with the current culture. The return value is identical to the value returned by specifying the "D" [standard DateTime format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) with the <xref:System.DateTime.ToString%28System.String%29> method.  
   
 > [!NOTE]
 >  The string returned by the <xref:System.DateTime.ToLongDateString%2A> method is culture-sensitive. It reflects the pattern defined by the current culture's <xref:System.Globalization.DateTimeFormatInfo.LongDatePattern?displayProperty=nameWithType> property. For example, for the en-US culture, the standard long date pattern is commonly "dddd, MMMM dd, yyyy"; for the de-DE culture, it is "dddd, d. MMMM yyyy"; for the ja-JP culture, it is "yyyy'年'M'月'd'日'". Note that its value can vary depending on the .NET implementation and its version, the operating system and its version, and user customization.
@@ -7786,7 +7782,7 @@ The following example demonstrates the <xref:System.DateTime.ToLongDateString%2A
   
 ## Remarks  
 
-The value of the current <xref:System.DateTime> object is formatted using the pattern defined by the <xref:System.Globalization.DateTimeFormatInfo.LongTimePattern%2A?displayProperty=nameWithType> property associated with the current thread culture. The return value is identical to the value returned by specifying the "T" [standard date and time format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) with the <xref:System.DateTime.ToString%28System.String%29> method.  
+The value of the current <xref:System.DateTime> object is formatted using the pattern defined by the <xref:System.Globalization.DateTimeFormatInfo.LongTimePattern%2A?displayProperty=nameWithType> property associated with the current culture. The return value is identical to the value returned by specifying the "T" [standard date and time format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) with the <xref:System.DateTime.ToString%28System.String%29> method.  
   
 > [!NOTE]
 >  The string returned by the <xref:System.DateTime.ToLongTimeString%2A> method is culture-sensitive. It reflects the pattern defined by the current culture's <xref:System.Globalization.DateTimeFormatInfo.LongTimePattern%2A?displayProperty=nameWithType> property. For example, for the en-US culture, the standard long time pattern is "h:mm:ss tt"; for the de-DE culture, it is "HH:mm:ss"; for the ja-JP culture, it is "H:mm:ss". Note that its value can vary depending on the .NET implementation and its version, the operating system and its version, and user customization.
@@ -7908,7 +7904,7 @@ The value of the current <xref:System.DateTime> object is formatted using the pa
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The value of the current <xref:System.DateTime> object is formatted using the pattern defined by the <xref:System.Globalization.DateTimeFormatInfo.ShortDatePattern%2A?displayProperty=nameWithType> property associated with the current thread culture. The return value is identical to the value returned by specifying the "d" [standard DateTime format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) with the <xref:System.DateTime.ToString%28System.String%29> method.  
+ The value of the current <xref:System.DateTime> object is formatted using the pattern defined by the <xref:System.Globalization.DateTimeFormatInfo.ShortDatePattern%2A?displayProperty=nameWithType> property associated with the current culture. The return value is identical to the value returned by specifying the "d" [standard DateTime format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) with the <xref:System.DateTime.ToString%28System.String%29> method.  
   
 > [!NOTE]
 >  The string returned by the <xref:System.DateTime.ToShortDateString%2A> method is culture-sensitive. It reflects the pattern defined by the current culture's <xref:System.Globalization.DateTimeFormatInfo.ShortDatePattern?displayProperty=nameWithType> property. For example, for the en-US culture, the standard short date pattern is "M/d/yyyy"; for the de-DE culture, it is "dd.MM.yyyy"; for the ja-JP culture, it is "yyyy/MM/dd". Note that its value can vary depending on the .NET implementation and its version, the operating system and its version, and user customization.
@@ -7977,7 +7973,7 @@ The value of the current <xref:System.DateTime> object is formatted using the pa
   
 ## Remarks
 
-The value of the current <xref:System.DateTime> object is formatted using the pattern defined by the <xref:System.Globalization.DateTimeFormatInfo.ShortTimePattern%2A?displayProperty=nameWithType> property associated with the current thread culture. The return value is identical to the value returned by specifying the "t" [standard DateTime format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) with the <xref:System.DateTime.ToString%28System.String%29> method.  
+The value of the current <xref:System.DateTime> object is formatted using the pattern defined by the <xref:System.Globalization.DateTimeFormatInfo.ShortTimePattern%2A?displayProperty=nameWithType> property associated with the current culture. The return value is identical to the value returned by specifying the "t" [standard DateTime format string](/dotnet/standard/base-types/standard-date-and-time-format-strings) with the <xref:System.DateTime.ToString%28System.String%29> method.  
   
 > [!NOTE]
 >  The string returned by the <xref:System.DateTime.ToShortTimeString%2A> method is culture-sensitive. It reflects the pattern defined by the current culture's <xref:System.Globalization.DateTimeFormatInfo.ShortTimePattern?displayProperty=nameWithType> property. For example, for the en-US culture, the standard short time pattern is "h:mm tt"; for the de-DE culture, it is "HH:mm"; for the ja-JP culture, it is "H:mm". Note that its value can vary depending on the .NET implementation and its version, the operating system and its version, and user customization. 
@@ -8064,12 +8060,10 @@ The value of the current <xref:System.DateTime> object is formatted using the pa
 ## Remarks  
  The value of the current <xref:System.DateTime> object is formatted using the general date and time format specifier ('G'). To format it using a specific date and time format specifier, call the <xref:System.DateTime.ToString%28System.String%29> method. To format it using the general date and time format specifier ('G') for a specific culture, call the <xref:System.DateTime.ToString%28System.IFormatProvider%29> method. To format it using a specific date and time format specifier and the conventions of a specific culture, call the <xref:System.DateTime.ToString%28System.String%2CSystem.IFormatProvider%29> method.  
   
- This method uses formatting information derived from the current culture. In particular, it combines the custom format strings returned by the <xref:System.Globalization.DateTimeFormatInfo.ShortDatePattern%2A> and <xref:System.Globalization.DateTimeFormatInfo.LongTimePattern%2A> properties of the <xref:System.Globalization.DateTimeFormatInfo> object returned by the `Thread.CurrentThread.CurrentCulture.DateTimeFormat` property. For more information, see <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType>. Other overloads of the <xref:System.DateTime.ToString%2A> method enable you to specify the culture whose formatting to use and to define the output pattern of the <xref:System.DateTime> value.  
-  
-   
+ This method uses formatting information derived from the current culture. In particular, it combines the custom format strings returned by the <xref:System.Globalization.DateTimeFormatInfo.ShortDatePattern%2A> and <xref:System.Globalization.DateTimeFormatInfo.LongTimePattern%2A> properties of the <xref:System.Globalization.DateTimeFormatInfo> object returned by the `Thread.CurrentThread.CurrentCulture.DateTimeFormat` property. For more information, see <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType>. Other overloads of the <xref:System.DateTime.ToString%2A> method enable you to specify the culture whose formatting to use and to define the output pattern of the <xref:System.DateTime> value.
   
 ## Examples  
- The following example illustrates how the string representation of a <xref:System.DateTime> value returned by the <xref:System.DateTime.ToString> method depends on the thread current culture. It changes the current thread culture from en-US to fr-FR to ja-JP. and in each case calls the <xref:System.DateTime.ToString> method to return the string representation of a date and time value using that culture.  
+ The following example illustrates how the string representation of a <xref:System.DateTime> value returned by the <xref:System.DateTime.ToString> method depends on the thread current culture. It changes the current culture from en-US to fr-FR to ja-JP. and in each case calls the <xref:System.DateTime.ToString> method to return the string representation of a date and time value using that culture.  
   
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.DateTime.ToString/cs/ToString1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.DateTime.ToString/vb/ToString1.vb" id="Snippet1":::
@@ -8649,7 +8643,7 @@ The value of the current <xref:System.DateTime> object is formatted using the pa
 ## Remarks  
  The <xref:System.DateTime.TryParse%28System.String%2CSystem.DateTime%40%29?displayProperty=nameWithType> method is similar to the <xref:System.DateTime.Parse%28System.String%29?displayProperty=nameWithType> method, except that the <xref:System.DateTime.TryParse%28System.String%2CSystem.DateTime%40%29> method does not throw an exception if the conversion fails.  
   
- The string `s` is parsed using formatting information in the current <xref:System.Globalization.DateTimeFormatInfo> object, which is supplied implicitly by the current thread culture.  
+ The string `s` is parsed using formatting information in the current <xref:System.Globalization.DateTimeFormatInfo> object, which is supplied implicitly by the current culture.  
   
  This method tries to ignore unrecognized data, if possible, and fills in missing month, day, and year information with the current date. If `s` contains only a date and no time, this method assumes the time is 12:00 midnight. If `s` includes a date component with a two-digit year, it is converted to a year in the current culture's current calendar based on the value of the <xref:System.Globalization.Calendar.TwoDigitYearMax%2A?displayProperty=nameWithType> property. Any leading, inner, or trailing white space character in `s` is ignored. The date and time can be bracketed with a pair of leading and trailing NUMBER SIGN characters ('#', U+0023), and can be trailed with one or more NULL characters (U+0000).  
   
@@ -8657,9 +8651,7 @@ The value of the current <xref:System.DateTime> object is formatted using the pa
   
  If `s` is the string representation of a leap day in a leap year in the current calendar, the method parses `s` successfully. If `s` is the string representation of a leap day in a non-leap year in the current culture's current calendar, the parse operation fails and the method returns `false`.  
   
- If `s` contains no time zone information, `result` contains a <xref:System.DateTime> value whose <xref:System.DateTime.Kind%2A> property is <xref:System.DateTimeKind.Unspecified?displayProperty=nameWithType> when the method returns. If the string to be parsed contains time zone information, `result` contains a <xref:System.DateTime> value whose <xref:System.DateTime.Kind%2A> property is <xref:System.DateTimeKind.Local?displayProperty=nameWithType> when the method returns.  
-  
-   
+ If `s` contains no time zone information, `result` contains a <xref:System.DateTime> value whose <xref:System.DateTime.Kind%2A> property is <xref:System.DateTimeKind.Unspecified?displayProperty=nameWithType> when the method returns. If the string to be parsed contains time zone information, `result` contains a <xref:System.DateTime> value whose <xref:System.DateTime.Kind%2A> property is <xref:System.DateTimeKind.Local?displayProperty=nameWithType> when the method returns.
   
 ## Examples  
  The following example passes a number of date and time strings to the <xref:System.DateTime.TryParse%28System.String%2CSystem.DateTime%40%29?displayProperty=nameWithType> method.  

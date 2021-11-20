@@ -1,10 +1,10 @@
-// <Snippet4>
+﻿// <Snippet4>
 using System;
 using System.Globalization;
 
 public class Example
 {
-   public static void Main()
+   public static void Main1()
    {
       // Create an array of all supported standard date and time format specifiers.
       string[] formats = {"d", "D", "f", "F", "g", "G", "m", "o", "r",
