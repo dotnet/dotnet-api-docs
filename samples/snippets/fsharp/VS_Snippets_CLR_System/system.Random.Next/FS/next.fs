@@ -10,27 +10,27 @@ let noBoundsRandoms seed =
 
     // Generate six random integers from 0 to int.MaxValue.
     for _ = 1 to 6 do
-        printf "%11i " (randObj.Next())
+        printf $"%11i{randObj.Next()} "
     printfn ""
 
 // Generate random numbers with an upper bound specified.
 let upperBoundRandoms seed upper = 
-    printfn "\nRandom object, seed = %i, upper bound = %i" seed upper
+    printfn $"\nRandom object, seed = %i{seed}, upper bound = %i{upper}"
     let randObj = Random seed
 
     // Generate six random integers from 0 to the upper bound.
     for _ = 1 to 6 do
-        printf "%11i " (randObj.Next(upper))
+        printf $"%11i{randObj.Next upper} "
     printfn ""
 
 // Generate random numbers with both bounds specified.
 let bothBoundRandoms seed lower upper =
-    printfn "\nRandom object, seed = %i, lower = %i, upper = %i: " seed lower upper
+    printfn $"\nRandom object, seed = %i{seed}, lower = %i{lower}, upper = %i{upper}: "
     let randObj = Random seed
 
     // Generate six random integers from the lower to upper bounds.
     for _ = 1 to 6 do 
-        printf "%11i " (randObj.Next(lower,upper))
+        printf $"%11i{randObj.Next(lower,upper)} "
     printfn ""
 
 printfn "This example of the Random.Next() methods\ngenerates the following.\n"
