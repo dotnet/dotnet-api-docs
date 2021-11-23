@@ -4,26 +4,26 @@ using System.Globalization;
 
 public class DateToStringExample
 {
-   public static void Main()
-   {
-      CultureInfo currentCulture = CultureInfo.CurrentCulture;
-      DateTime exampleDate = new DateTime(2021, 5, 1, 18, 32, 6);
+    public static void Main()
+    {
+        CultureInfo currentCulture = CultureInfo.CurrentCulture;
+        DateTime exampleDate = new DateTime(2021, 5, 1, 18, 32, 6);
 
         // Change the current culture to en-US and display the date.
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         Console.WriteLine(exampleDate.ToString());
 
-      // Change the current culture to fr-FR and display the date.
-      CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("fr-FR");
-      Console.WriteLine(exampleDate.ToString());
+        // Change the current culture to fr-FR and display the date.
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("fr-FR");
+        Console.WriteLine(exampleDate.ToString());
 
-      // Change the current culture to ja-JP and display the date.
-      CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-      Console.WriteLine(exampleDate.ToString());
+        // Change the current culture to ja-JP and display the date.
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
+        Console.WriteLine(exampleDate.ToString());
 
-      // Restore the original culture
-      CultureInfo.CurrentCulture = currentCulture;
-   }
+        // Restore the original culture
+        CultureInfo.CurrentCulture = currentCulture;
+    }
 }
 
 // The example displays the following output to the console:
