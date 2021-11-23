@@ -123,20 +123,31 @@ public class Sync_Send_Receive
     // using the overload that takes a buffer, offset, message size, and socket flags.
     public static int SendReceiveTest4(Socket server)
     {
-        byte[] msg = Encoding.UTF8.GetBytes("This is a test");
-        byte[] bytes = new byte[256];
         try
         {
+            byte[] msg = Encoding.UTF8.GetBytes("This is a test");
             // Blocks until send returns.
-            int byteCount = server.Send(msg, 0, msg.Length, SocketFlags.None);
-            Console.WriteLine("Sent {0} bytes.", byteCount);
+            int sentTotalLength = server.Send(msg, 0, msg.Length, SocketFlags.None);
+            Console.WriteLine("Sent {0} bytes.", sentTotalLength);
 
+            const int bufferLength = 256;
+            byte[] received = new byte[bufferLength];
+            int receivedTotalLength = 0;
             // Get reply from the server.
-            byteCount = server.Receive(bytes, 0, server.Available,
-                                       SocketFlags.None);
+            while (true)
+            {
+                int receivedLength = server.Receive(received, receivedTotalLength, bufferLength, SocketFlags.None);
+                if (receivedLength == 0)
+                {
+                    break;
+                }
 
-            if (byteCount > 0)
-                Console.WriteLine(Encoding.UTF8.GetString(bytes));
+                receivedTotalLength += receivedLength;
+                Array.Resize(ref received, receivedTotalLength + bufferLength);
+            }
+
+            if (receivedTotalLength > 0)
+                Console.WriteLine(Encoding.UTF8.GetString(received, 0, receivedTotalLength));
         }
         catch (SocketException e)
         {
@@ -182,7 +193,7 @@ public class Sync_Send_Receive
         s.Close();
     }
     //</Snippet6>
-    //<Snippet7>	
+    //<Snippet7>
     public static void SendTo3()
     {
         IPHostEntry hostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -238,7 +249,7 @@ public class Sync_Send_Receive
         s.Bind(endPoint);
 
         byte[] msg = new Byte[256];
-        Console.WriteLine ("Waiting to receive datagrams from client...");
+        Console.WriteLine("Waiting to receive datagrams from client...");
 
         // This call blocks.
         s.ReceiveFrom(msg, ref senderRemote);
@@ -264,13 +275,13 @@ public class Sync_Send_Receive
         s.Bind(endPoint);
 
         byte[] msg = new Byte[256];
-        Console.WriteLine ("Waiting to receive datagrams from client...");
+        Console.WriteLine("Waiting to receive datagrams from client...");
         // This call blocks.
         s.ReceiveFrom(msg, SocketFlags.None, ref senderRemote);
         s.Close();
     }
     //</Snippet10>
-    //<Snippet11>	
+    //<Snippet11>
     public static void ReceiveFrom3()
     {
         IPHostEntry hostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -288,7 +299,7 @@ public class Sync_Send_Receive
         s.Bind(endPoint);
 
         byte[] msg = new Byte[256];
-        Console.WriteLine ("Waiting to receive datagrams from client...");
+        Console.WriteLine("Waiting to receive datagrams from client...");
         // This call blocks.
         s.ReceiveFrom(msg, msg.Length, SocketFlags.None, ref senderRemote);
         s.Close();
@@ -311,7 +322,7 @@ public class Sync_Send_Receive
         // Binding is required with ReceiveFrom calls.
         s.Bind(endPoint);
         byte[] msg = new Byte[256];
-        Console.WriteLine ("Waiting to receive datagrams from client...");
+        Console.WriteLine("Waiting to receive datagrams from client...");
         // This call blocks.
         s.ReceiveFrom(msg, 0, msg.Length, SocketFlags.None, ref senderRemote);
         s.Close();
@@ -363,13 +374,13 @@ public class Sync_Send_Receive
     // To test tcp - run 2 instances source /s runs server, source /c runs client.
     // To test Upd run source /u.
 
-    public static int  Main(string[] args)
+    public static int Main(string[] args)
     {
         string host;
         bool isServer;
 
         char c = args[0].ToLower()[1];
-        if ( c == 'c')
+        if (c == 'c')
         {
             isServer = false;
             host = "127.0.0.1";
@@ -404,7 +415,7 @@ public class Sync_Send_Receive
             {
                 sender = s.Accept();
                 // exchange messages with all clients tests
-                for (int i = 0; i< 4; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     ReceiveTest1(sender);
                 }
