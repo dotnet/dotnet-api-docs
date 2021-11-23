@@ -10,10 +10,10 @@ public class Example
       string[] formats = {"d", "D", "f", "F", "g", "G", "m", "o", "r",
                           "s", "t", "T", "u", "U", "Y"};
       // Create an array of four cultures.
-      CultureInfo[] cultures = {CultureInfo.CreateSpecificCulture("de-DE"),
-                                CultureInfo.CreateSpecificCulture("en-US"),
-                                CultureInfo.CreateSpecificCulture("es-ES"),
-                                CultureInfo.CreateSpecificCulture("fr-FR")};
+      CultureInfo[] cultures = {CultureInfo.GetCultureInfo("de-DE"),
+                                CultureInfo.GetCultureInfo("en-US"),
+                                CultureInfo.GetCultureInfo("es-ES"),
+                                CultureInfo.GetCultureInfo("fr-FR")};
        // Define date to be displayed.
       DateTime dateToDisplay = new DateTime(2008, 10, 31, 17, 4, 32);
 
