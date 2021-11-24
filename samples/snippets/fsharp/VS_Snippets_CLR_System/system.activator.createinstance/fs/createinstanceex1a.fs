@@ -1,6 +1,6 @@
 module createinstanceex1a
 
-// <Snippet2>
+// <Snippet3>
 open System
 
 let handle =
@@ -21,4 +21,4 @@ if not (isNull retVal) then
 
 // The example displays the following output:
 //        Samuel
-// </Snippet2>
+// </Snippet3>
