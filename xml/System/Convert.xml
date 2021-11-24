@@ -137,7 +137,7 @@
 
 -   <xref:System.Convert.ToBoolean%28System.String%2CSystem.IFormatProvider%29?displayProperty=nameWithType>
 
- The <xref:System.IFormatProvider> parameter can supply culture-specific formatting information to assist the conversion process. However, it is ignored by most of the base type conversion methods. It is used only by the following base type conversion methods. If a `null`<xref:System.IFormatProvider> argument is passed to these methods, the <xref:System.Globalization.CultureInfo> object that represents the current thread culture is used.
+ The <xref:System.IFormatProvider> parameter can supply culture-specific formatting information to assist the conversion process. However, it is ignored by most of the base type conversion methods. It is used only by the following base type conversion methods. If a `null`<xref:System.IFormatProvider> argument is passed to these methods, the <xref:System.Globalization.CultureInfo> object that represents the current culture is used.
 
 -   By methods that convert a value to a numeric type. The <xref:System.IFormatProvider> parameter is used by the overload that has parameters of type <xref:System.String> and <xref:System.IFormatProvider>. It is also used by the overload that has parameters of type <xref:System.Object> and <xref:System.IFormatProvider> if the object's run-time type is a <xref:System.String>.
 
@@ -462,13 +462,11 @@
 
  The `provider` parameter is an <xref:System.IFormatProvider> implementation that supplies formatting information for the conversion. Whether and how this parameter is used depends on the underlying <xref:System.IConvertible> implementation. If `value` is a base data type, `provider` is used only for the following conversions:
 
--   Conversion from a number to a string, or from a string to a number. `provider` must be a <xref:System.Globalization.CultureInfo> object, a <xref:System.Globalization.NumberFormatInfo> object, or a custom <xref:System.IFormatProvider> implementation that returns a <xref:System.Globalization.NumberFormatInfo> object. However, because the <xref:System.Convert.ChangeType%28System.Object%2CSystem.TypeCode%2CSystem.IFormatProvider%29> method performs the conversion using the default "G" format specifier, the `provider` parameter has no effect if `value` or the target type is an unsigned integer. If `provider` is `null`, the <xref:System.Globalization.CultureInfo> object that represents the current thread culture is used.
+-   Conversion from a number to a string, or from a string to a number. `provider` must be a <xref:System.Globalization.CultureInfo> object, a <xref:System.Globalization.NumberFormatInfo> object, or a custom <xref:System.IFormatProvider> implementation that returns a <xref:System.Globalization.NumberFormatInfo> object. However, because the <xref:System.Convert.ChangeType%28System.Object%2CSystem.TypeCode%2CSystem.IFormatProvider%29> method performs the conversion using the default "G" format specifier, the `provider` parameter has no effect if `value` or the target type is an unsigned integer. If `provider` is `null`, the <xref:System.Globalization.CultureInfo> object that represents the current culture is used.
 
--   Conversion from a <xref:System.DateTime> value to a string, or from a string to a <xref:System.DateTime> value. `provider` must be a <xref:System.Globalization.CultureInfo> or <xref:System.Globalization.DateTimeFormatInfo> object. If `provider` is `null`, the <xref:System.Globalization.CultureInfo> object that represents the current thread culture is used.
+-   Conversion from a <xref:System.DateTime> value to a string, or from a string to a <xref:System.DateTime> value. `provider` must be a <xref:System.Globalization.CultureInfo> or <xref:System.Globalization.DateTimeFormatInfo> object. If `provider` is `null`, the <xref:System.Globalization.CultureInfo> object that represents the current culture is used.
 
  If `value` is an application-defined type, its <xref:System.IConvertible> implementation may use the `provider` parameter.
-
-
 
 ## Examples
  The following example defines a `Temperature` class that implements the <xref:System.IConvertible> interface.
@@ -573,15 +571,13 @@
 
  The <xref:System.Convert.ChangeType%28System.Object%2CSystem.TypeCode%2CSystem.IFormatProvider%29> method does not support the conversion of `value` to a custom type. To perform such a conversion, call the <xref:System.Convert.ChangeType%28System.Object%2CSystem.Type%2CSystem.IFormatProvider%29> method.
 
- The `provider` parameter is an <xref:System.IFormatProvider> implementation that supplies formatting information for the conversion. Whether and how this parameter is used depends on the underlying <xref:System.IConvertible> implementation. If `value` is a base data type, `provider` is used only for the following conversions. If a `null`<xref:System.IFormatProvider> argument is passed to these methods, the <xref:System.Globalization.CultureInfo> object that represents the current thread culture is used.
+ The `provider` parameter is an <xref:System.IFormatProvider> implementation that supplies formatting information for the conversion. Whether and how this parameter is used depends on the underlying <xref:System.IConvertible> implementation. If `value` is a base data type, `provider` is used only for the following conversions. If a `null`<xref:System.IFormatProvider> argument is passed to these methods, the <xref:System.Globalization.CultureInfo> object that represents the current culture is used.
 
 -   Conversion from a number to a string, or from a string to a number. `provider` must be a <xref:System.Globalization.CultureInfo> object, a <xref:System.Globalization.NumberFormatInfo> object, or a custom <xref:System.IFormatProvider> implementation that returns a <xref:System.Globalization.NumberFormatInfo> object. However, because the <xref:System.Convert.ChangeType%28System.Object%2CSystem.TypeCode%2CSystem.IFormatProvider%29> method performs the conversion using the default "G" format specifier, the `provider` parameter has no effect if `value` or the target type is an unsigned integer.
 
 -   Conversion from a <xref:System.DateTime> value to a string, or from a string to a <xref:System.DateTime> value. `provider` must be a <xref:System.Globalization.CultureInfo> or <xref:System.Globalization.DateTimeFormatInfo> object.
 
  If `value` is an application-defined type, its <xref:System.IConvertible> implementation may use the `provider` parameter.
-
-
 
 ## Examples
  The following example defines a custom format provider named `InterceptProvider` that indicates when its <xref:System.IFormatProvider.GetFormat%2A> method is called and returns a <xref:System.Globalization.NumberFormatInfo> for the fr-FR culture and a <xref:System.Globalization.DateTimeFormatInfo> object for the en-US culture. This format provider is used in all calls to the <xref:System.Convert.ChangeType%28System.Object%2CSystem.TypeCode%2CSystem.IFormatProvider%29> method. The example then creates an array with a <xref:System.Double> and a <xref:System.DateTime> value and makes repeated calls to <xref:System.Convert.ChangeType%28System.Object%2CSystem.TypeCode%2CSystem.IFormatProvider%29> with each value and each member of the <xref:System.TypeCode> enumeration. The example illustrates when the method uses the <xref:System.IFormatProvider> parameter and also illustrates the use of the `provider` parameter to perform culture-sensitive formatting.
@@ -3542,11 +3538,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToByte%28System.String%29> method is equivalent to passing `value` to the <xref:System.Byte.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToByte%28System.String%29> method is equivalent to passing `value` to the <xref:System.Byte.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.Byte.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
-
-
 
 ## Examples
  The following example defines a string array and attempts to convert each string to a <xref:System.Byte>.  Note that while a `null` string parses to zero, <xref:System.String.Empty?displayProperty=nameWithType> throws a <xref:System.FormatException>. Also note that while leading and trailing spaces parse successfully, formatting symbols, such as currency symbols, group separators, or decimal separators, do not.
@@ -5947,9 +5941,7 @@
 ## Remarks
  The return value is the result of invoking the <xref:System.IConvertible.ToDateTime%2A?displayProperty=nameWithType> method of the underlying type of `value`.
 
- `provider` enables the user to specify culture-specific conversion information about the contents of `value`. For example, if `value` is a <xref:System.String> that represents a date, `provider` could supply culture-specific information about the notation used to represent that date. `provider` is involved in the conversion of `value` if the runtime type of `value` is a <xref:System.String>, or if `value` is a user-defined type whose <xref:System.IConvertible.ToDateTime%2A?displayProperty=nameWithType> implementation makes use of `provider`. If the runtime type of `value` is <xref:System.String> and `provider` is `null`, the <xref:System.Globalization.CultureInfo> object that represents the current thread culture is used.
-
-
+ `provider` enables the user to specify culture-specific conversion information about the contents of `value`. For example, if `value` is a <xref:System.String> that represents a date, `provider` could supply culture-specific information about the notation used to represent that date. `provider` is involved in the conversion of `value` if the runtime type of `value` is a <xref:System.String>, or if `value` is a user-defined type whose <xref:System.IConvertible.ToDateTime%2A?displayProperty=nameWithType> implementation makes use of `provider`. If the runtime type of `value` is <xref:System.String> and `provider` is `null`, the <xref:System.Globalization.CultureInfo> object that represents the current culture is used.
 
 ## Examples
  The following example defines a custom format provider, `CustomProvider`, whose <xref:System.IFormatProvider.GetFormat%2A> method outputs a message to the console that it has been invoked, and then returns the <xref:System.Globalization.DateTimeFormatInfo> object of the culture whose name was passed as a parameter to its class constructor. Each of these `CustomProvider` objects is used to convert the elements in an object array to date and time values. The output indicates that the `CustomProvider` object is used in the conversion only when the type of the `value` parameter is a <xref:System.String>.
@@ -6821,11 +6813,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToDecimal%28System.String%29> method is equivalent to passing `value` to the <xref:System.Decimal.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToDecimal%28System.String%29> method is equivalent to passing `value` to the <xref:System.Decimal.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.Decimal.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
-
-
 
 ## Examples
  The following example illustrates the use of `ToDecimal`. It attempts to convert a <xref:System.String> to a <xref:System.Decimal>, and throws the possible exceptions that may arise during the conversion.
@@ -7932,7 +7922,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToDouble%28System.String%29> method is equivalent to passing `value` to the <xref:System.Double.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToDouble%28System.String%29> method is equivalent to passing `value` to the <xref:System.Double.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.Double.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
@@ -9180,7 +9170,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToInt16%28System.String%29> method is equivalent to passing `value` to the <xref:System.Int16.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToInt16%28System.String%29> method is equivalent to passing `value` to the <xref:System.Int16.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.Int16.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
@@ -10408,7 +10398,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToInt32%28System.String%29> method is equivalent to passing `value` to the <xref:System.Int32.Parse%28System.String%29?displayProperty=nameWithType> method.`value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToInt32%28System.String%29> method is equivalent to passing `value` to the <xref:System.Int32.Parse%28System.String%29?displayProperty=nameWithType> method.`value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.Int32.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
@@ -11621,7 +11611,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToInt64%28System.String%29> method is equivalent to passing `value` to the <xref:System.Int64.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToInt64%28System.String%29> method is equivalent to passing `value` to the <xref:System.Int64.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.Int64.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
@@ -12915,7 +12905,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToSByte%28System.String%29> method is equivalent to passing `value` to the <xref:System.SByte.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToSByte%28System.String%29> method is equivalent to passing `value` to the <xref:System.SByte.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.SByte.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
@@ -14141,7 +14131,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToSingle%28System.String%29> method is equivalent to passing `value` to the <xref:System.Single.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToSingle%28System.String%29> method is equivalent to passing `value` to the <xref:System.Single.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.Single.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
@@ -15002,9 +14992,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- This implementation is identical to <xref:System.Int32.ToString?displayProperty=nameWithType>. It formats `value` by using the formatting conventions of the current thread culture.
-
-
+ This implementation is identical to <xref:System.Int32.ToString?displayProperty=nameWithType>. It formats `value` by using the formatting conventions of the current culture.
 
 ## Examples
  The following example compares the <xref:System.Convert.ToString%28System.Int32%29> method with the <xref:System.Convert.ToString%28System.UInt16%2CSystem.IFormatProvider%29> method. It defines a custom <xref:System.Globalization.NumberFormatInfo> object that uses the sting "minus" to represent the negative sign. It converts each element in an integer array to its equivalent string representation using default formatting (the formatting conventions of the current culture) and the custom format provider.
@@ -17751,7 +17739,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToUInt16%28System.String%29> method is equivalent to passing `value` to the <xref:System.UInt16.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToUInt16%28System.String%29> method is equivalent to passing `value` to the <xref:System.UInt16.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.UInt16.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
@@ -19070,7 +19058,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToUInt32%28System.String%29> method is equivalent to passing `value` to the <xref:System.UInt32.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToUInt32%28System.String%29> method is equivalent to passing `value` to the <xref:System.UInt32.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.UInt32.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
@@ -20391,7 +20379,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Using the <xref:System.Convert.ToInt64%28System.String%29> method is equivalent to passing `value` to the <xref:System.Int64.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current thread culture.
+ Using the <xref:System.Convert.ToInt64%28System.String%29> method is equivalent to passing `value` to the <xref:System.Int64.Parse%28System.String%29?displayProperty=nameWithType> method. `value` is interpreted by using the formatting conventions of the current culture.
 
  If you prefer not to handle an exception if the conversion fails, you can call the <xref:System.UInt64.TryParse%2A?displayProperty=nameWithType> method instead. It returns a <xref:System.Boolean> value that indicates whether the conversion succeeded or failed.
 
