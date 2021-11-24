@@ -1,19 +1,19 @@
-// <Snippet4>
+﻿// <Snippet4>
 using System;
 using System.Globalization;
 
 public class Example
 {
-   public static void Main()
+   public static void Main1()
    {
       // Create an array of all supported standard date and time format specifiers.
       string[] formats = {"d", "D", "f", "F", "g", "G", "m", "o", "r",
                           "s", "t", "T", "u", "U", "Y"};
       // Create an array of four cultures.
-      CultureInfo[] cultures = {CultureInfo.CreateSpecificCulture("de-DE"),
-                                CultureInfo.CreateSpecificCulture("en-US"),
-                                CultureInfo.CreateSpecificCulture("es-ES"),
-                                CultureInfo.CreateSpecificCulture("fr-FR")};
+      CultureInfo[] cultures = {CultureInfo.GetCultureInfo("de-DE"),
+                                CultureInfo.GetCultureInfo("en-US"),
+                                CultureInfo.GetCultureInfo("es-ES"),
+                                CultureInfo.GetCultureInfo("fr-FR")};
        // Define date to be displayed.
       DateTime dateToDisplay = new DateTime(2008, 10, 31, 17, 4, 32);
 
@@ -28,6 +28,7 @@ public class Example
       }
    }
 }
+
 // The example displays the following output:
 //    d Format Specifier      de-DE Culture                               31.10.2008
 //    d Format Specifier      en-US Culture                               10/31/2008

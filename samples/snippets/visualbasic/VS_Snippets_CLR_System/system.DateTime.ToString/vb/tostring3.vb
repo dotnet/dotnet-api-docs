@@ -5,29 +5,30 @@ Option Strict On
 Imports System.Globalization
 
 Module Example
-   Public Sub Main()
-      ' Create an array of all supported standard date and time format specifiers.
-      Dim formats() As String = {"d", "D", "f", "F", "g", "G", "m", "o", "r", _
+    Public Sub Main4()
+        ' Create an array of all supported standard date and time format specifiers.
+        Dim formats() As String = {"d", "D", "f", "F", "g", "G", "m", "o", "r",
                                  "s", "t", "T", "u", "U", "Y"}
-      ' Create an array of four cultures.                                 
-      Dim cultures() As CultureInfo = {CultureInfo.CreateSpecificCulture("de-DE"), _
-                                       CultureInfo.CreateSpecificCulture("en-US"), _
-                                       CultureInfo.CreateSpecificCulture("es-ES"), _
-                                       CultureInfo.CreateSpecificCulture("fr-FR")}
-       ' Define date to be displayed.
-      Dim dateToDisplay As Date = #10/1/2008 17:04:32#
+        ' Create an array of four cultures.                                 
+        Dim cultures() As CultureInfo = {CultureInfo.GetCultureInfo("de-DE"),
+                                       CultureInfo.GetCultureInfo("en-US"),
+                                       CultureInfo.GetCultureInfo("es-ES"),
+                                       CultureInfo.GetCultureInfo("fr-FR")}
+        ' Define date to be displayed.
+        Dim dateToDisplay As Date = #10/1/2008 17:04:32#
 
-      ' Iterate each standard format specifier.
-      For Each formatSpecifier As String In formats
-         For Each culture As CultureInfo In cultures
-            Console.WriteLine("{0} Format Specifier {1, 10} Culture {2, 40}", _
-                              formatSpecifier, culture.Name, _
+        ' Iterate each standard format specifier.
+        For Each formatSpecifier As String In formats
+            For Each culture As CultureInfo In cultures
+                Console.WriteLine("{0} Format Specifier {1, 10} Culture {2, 40}",
+                              formatSpecifier, culture.Name,
                               dateToDisplay.ToString(formatSpecifier, culture))
-         Next
-         Console.WriteLine()
-      Next                                       
-   End Sub
+            Next
+            Console.WriteLine()
+        Next
+    End Sub
 End Module
+
 ' The example displays the following output:
 '    d Format Specifier      de-DE Culture                               01.10.2008
 '    d Format Specifier      en-US Culture                                10/1/2008
