@@ -2,16 +2,14 @@ module createinstanceex2
 // <Snippet4>
 open System
 
-let characters = [| 'a'; 'b'; 'c'; 'd'; 'e'; 'f' |]
+let chars = [| 'a' .. 'f' |]
 
 let arguments =
-    [| characters
-       characters[1..4]
-       Array.create 20 characters[1] |]
+    [| chars
+       chars[1..4]
+       Array.create 20 chars[1] |]
 
-for i = 0 to arguments.GetUpperBound 0 do
-    let args = arguments[i]
-
+for args in arguments do
     let result =
         Activator.CreateInstance(typeof<string>, args)
 
