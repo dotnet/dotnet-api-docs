@@ -104,10 +104,9 @@ public class Sync_Send_Receive
             Console.WriteLine("Sent {0} bytes.", i);
 
             // Get reply from the server.
-            int byteCount = server.Receive(bytes, server.Available,
-                                               SocketFlags.None);
+            int byteCount = server.Receive(bytes, bytes.Length, SocketFlags.None);
             if (byteCount > 0)
-                Console.WriteLine(Encoding.UTF8.GetString(bytes));
+                Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, byteCount));
         }
         catch (SocketException e)
         {
@@ -123,31 +122,19 @@ public class Sync_Send_Receive
     // using the overload that takes a buffer, offset, message size, and socket flags.
     public static int SendReceiveTest4(Socket server)
     {
+        byte[] msg = Encoding.UTF8.GetBytes("This is a test");
+        byte[] bytes = new byte[256];
         try
         {
-            byte[] msg = Encoding.UTF8.GetBytes("This is a test");
             // Blocks until send returns.
-            int sentTotalLength = server.Send(msg, 0, msg.Length, SocketFlags.None);
-            Console.WriteLine("Sent {0} bytes.", sentTotalLength);
+            int byteCount = server.Send(msg, 0, msg.Length, SocketFlags.None);
+            Console.WriteLine("Sent {0} bytes.", byteCount);
 
-            const int bufferLength = 256;
-            byte[] received = new byte[bufferLength];
-            int receivedTotalLength = 0;
             // Get reply from the server.
-            while (true)
-            {
-                int receivedLength = server.Receive(received, receivedTotalLength, bufferLength, SocketFlags.None);
-                if (receivedLength == 0)
-                {
-                    break;
-                }
+            byteCount = server.Receive(bytes, 0, bytes.Length, SocketFlags.None);
 
-                receivedTotalLength += receivedLength;
-                Array.Resize(ref received, receivedTotalLength + bufferLength);
-            }
-
-            if (receivedTotalLength > 0)
-                Console.WriteLine(Encoding.UTF8.GetString(received, 0, receivedTotalLength));
+            if (byteCount > 0)
+                Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, byteCount));
         }
         catch (SocketException e)
         {
