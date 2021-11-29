@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class DateToStringExample
+public class DateToStringExample2
 {
-   public static void Main()
+   public static void Main0()
    {
       DateTime dateValue = new DateTime(2008, 6, 15, 21, 15, 07);
       // Create an array of standard format strings.
