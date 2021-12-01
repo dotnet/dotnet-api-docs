@@ -13,7 +13,6 @@ let printValues (myArr: Array) =
         printf $"\t{item}"
     printfn ""
 
-
 // Creates and initializes a one-dimensional Array of type int.
 let my1DArray = Array.CreateInstance(typeof<int>, 5)
 // let my1DArrayy = Array.zeroCreate<int> 5

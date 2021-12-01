@@ -13,7 +13,6 @@ let compareDinosByLength (x: string) (y: string) =
         // If x is not null and y is not null, compare the lengths of the two strings.
         else
             let retval = x.Length.CompareTo y.Length
-
             if retval <> 0 then
                 // If the strings are not of equal length, the longer string is greater.
                 retval
@@ -36,6 +35,7 @@ let dinosaurs =
        null
        "Mamenchisaurus"
        "Deinonychus" |]
+       
 display dinosaurs
 
 printfn "\nSort with generic Comparison<string> delegate:"

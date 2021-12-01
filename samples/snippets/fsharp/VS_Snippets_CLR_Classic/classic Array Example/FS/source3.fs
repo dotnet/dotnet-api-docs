@@ -15,7 +15,6 @@ let printValues (myArray: Array) =
         printf $"\t{item}"
     printfn ""
 
-
 // Creates and initializes a new three-dimensional Array of type int.
 let myArr = Array.CreateInstance(typeof<int>, 2, 3, 4)
 for i = myArr.GetLowerBound 0 to myArr.GetUpperBound 0 do
@@ -26,6 +25,7 @@ for i = myArr.GetLowerBound 0 to myArr.GetUpperBound 0 do
 // Displays the properties of the Array.
 printfn $"The Array has {myArr.Rank} dimension(s) and a total of {myArr.Length} elements."
 printfn $"\tLength\tLower\tUpper"
+
 for i = 0 to myArr.Rank - 1 do
     printf $"{i}:\t{myArr.GetLength i}"
     printfn $"\t{myArr.GetLowerBound i}\t{myArr.GetUpperBound i}"

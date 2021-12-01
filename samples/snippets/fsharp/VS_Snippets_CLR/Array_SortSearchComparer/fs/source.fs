@@ -40,7 +40,7 @@ printfn ""
 for dino in dinosaurs do
     printfn $"{dino}"
 
-let rc = new ReverseComparer();
+let rc = ReverseComparer()
 
 printfn "\nSort"
 Array.Sort(dinosaurs, rc)

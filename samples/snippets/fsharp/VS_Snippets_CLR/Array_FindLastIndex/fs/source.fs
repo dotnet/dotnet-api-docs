@@ -12,8 +12,8 @@ let dinosaurs =
        "Gallimimus"; "Triceratops" |]
 
 printfn ""
-for dinosaur in dinosaurs do
-    printfn $"{dinosaur}"
+for dino in dinosaurs do
+    printfn $"{dino}"
 
 Array.FindLastIndex(dinosaurs, endsWithSaurus)
 |> printfn "\nArray.FindLastIndex(dinosaurs, EndsWithSaurus): %i"

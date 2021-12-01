@@ -6,7 +6,7 @@
 open System
 open System.Collections
 
-type myReverserClass() = 
+type MyReverserClass() = 
     interface IComparer with
         member _.Compare(x, y) =
             // Calls CaseInsensitiveComparer.Compare with the parameters reversed.
@@ -20,7 +20,7 @@ let printKeysAndValues (myKeys: string []) (myValues: string []) =
 // Creates and initializes a new Array and a new custom comparer.
 let myKeys = [| "red"; "GREEN"; "YELLOW"; "BLUE"; "purple"; "black"; "orange" |]
 let myValues = [| "strawberries"; "PEARS"; "LIMES"; "BERRIES"; "grapes"; "olives"; "cantaloupe" |]
-let myComparer = myReverserClass()
+let myComparer = MyReverserClass()
 
 // Displays the values of the Array.
 printfn "The Array initially contains the following values:"

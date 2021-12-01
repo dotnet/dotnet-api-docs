@@ -9,8 +9,8 @@ let printValues myArr =
     printfn ""
 
 // Creates and initializes a new integer array and a new Object array.
-let myIntArray = [| 1; 2; 3; 4; 5 |]
-let myObjArray = [| 26; 27; 28; 29; 30 |]
+let myIntArray = [| 1..5 |]
+let myObjArray = [| 26..30 |]
 
 // Prints the initial values of both arrays.
 printfn "Initially,"

@@ -4,7 +4,7 @@ module example
 open System
 
 printfn "One dimension (Rank=1):"
-let numbers1 = [| 1 .. 9 |]
+let numbers1 = [| 1..9 |]
 
 for i in numbers1 do
     printf $"{i} " 
