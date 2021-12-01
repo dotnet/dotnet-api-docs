@@ -2,29 +2,29 @@
 Option Strict On
 
 ' <Snippet2>
-Module DateToStringExample
-   Public Sub Main()
-      Dim dateValue As Date = #6/15/2008 9:15:07PM#
-      ' Create an array of standard format strings.
-      Dim standardFmts() As String = {"d", "D", "f", "F", "g", "G", _
-                                      "m", "o", "R", "s", "t", "T", _
+Module DateToStringExample2
+    Public Sub Main2()
+        Dim dateValue As Date = #6/15/2008 9:15:07PM#
+        ' Create an array of standard format strings.
+        Dim standardFmts() As String = {"d", "D", "f", "F", "g", "G",
+                                      "m", "o", "R", "s", "t", "T",
                                       "u", "U", "y"}
-      ' Output date and time using each standard format string.
-      For Each standardFmt As String In standardFmts
-         Console.WriteLine("{0}: {1}", standardFmt, _
+        ' Output date and time using each standard format string.
+        For Each standardFmt As String In standardFmts
+            Console.WriteLine("{0}: {1}", standardFmt,
                            dateValue.ToString(standardFmt))
-      Next
-      Console.WriteLine()
-      
-      ' Create an array of some custom format strings.
-      Dim customFmts() As String = {"h:mm:ss.ff t", "d MMM yyyy", "HH:mm:ss.f", _
-                                    "dd MMM HH:mm:ss", "\Mon\t\h\: M", "HH:mm:ss.ffffzzz" }
-      ' Output date and time using each custom format string.
-      For Each customFmt As String In customFmts
-         Console.WriteLine("'{0}': {1}", customFmt, _
+        Next
+        Console.WriteLine()
+
+        ' Create an array of some custom format strings.
+        Dim customFmts() As String = {"h:mm:ss.ff t", "d MMM yyyy", "HH:mm:ss.f",
+                                    "dd MMM HH:mm:ss", "\Mon\t\h\: M", "HH:mm:ss.ffffzzz"}
+        ' Output date and time using each custom format string.
+        For Each customFmt As String In customFmts
+            Console.WriteLine("'{0}': {1}", customFmt,
                            dateValue.ToString(customFmt))
-      Next
-   End Sub
+        Next
+    End Sub
 End Module
 ' This example displays the following output to the console:
 '       d: 6/15/2008
