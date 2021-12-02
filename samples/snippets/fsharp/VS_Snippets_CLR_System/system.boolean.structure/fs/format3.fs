@@ -7,16 +7,18 @@ open System.Globalization
 type BooleanFormatter(culture) =
     interface ICustomFormatter with
         member this.Format(_, arg, formatProvider) =
-            if arg :? bool && formatProvider = this then
-                let value = arg :?> bool
-                match culture.Name with 
-                | "en-US" -> string arg
-                | "fr-FR" when value -> "vrai"
-                | "fr-FR" -> "faux"
-                | "ru-RU" when value -> "верно"
-                | "ru-RU" -> "неверно"
-                | _ -> string arg
-            else null
+            if formatProvider <> this then null
+            else
+                match arg with
+                | :? bool as value -> 
+                    match culture.Name with 
+                    | "en-US" -> string arg
+                    | "fr-FR" when value -> "vrai"
+                    | "fr-FR" -> "faux"
+                    | "ru-RU" when value -> "верно"
+                    | "ru-RU" -> "неверно"
+                    | _ -> string arg
+                | _ -> null
     interface IFormatProvider with
         member this.GetFormat(formatType) =
             if formatType = typeof<ICustomFormatter> then this
