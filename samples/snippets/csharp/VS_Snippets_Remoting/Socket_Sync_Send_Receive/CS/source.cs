@@ -104,10 +104,9 @@ public class Sync_Send_Receive
             Console.WriteLine("Sent {0} bytes.", i);
 
             // Get reply from the server.
-            int byteCount = server.Receive(bytes, server.Available,
-                                               SocketFlags.None);
+            int byteCount = server.Receive(bytes, bytes.Length, SocketFlags.None);
             if (byteCount > 0)
-                Console.WriteLine(Encoding.UTF8.GetString(bytes));
+                Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, byteCount));
         }
         catch (SocketException e)
         {
@@ -132,11 +131,10 @@ public class Sync_Send_Receive
             Console.WriteLine("Sent {0} bytes.", byteCount);
 
             // Get reply from the server.
-            byteCount = server.Receive(bytes, 0, server.Available,
-                                       SocketFlags.None);
+            byteCount = server.Receive(bytes, 0, bytes.Length, SocketFlags.None);
 
             if (byteCount > 0)
-                Console.WriteLine(Encoding.UTF8.GetString(bytes));
+                Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, byteCount));
         }
         catch (SocketException e)
         {
@@ -182,7 +180,7 @@ public class Sync_Send_Receive
         s.Close();
     }
     //</Snippet6>
-    //<Snippet7>	
+    //<Snippet7>
     public static void SendTo3()
     {
         IPHostEntry hostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -238,7 +236,7 @@ public class Sync_Send_Receive
         s.Bind(endPoint);
 
         byte[] msg = new Byte[256];
-        Console.WriteLine ("Waiting to receive datagrams from client...");
+        Console.WriteLine("Waiting to receive datagrams from client...");
 
         // This call blocks.
         s.ReceiveFrom(msg, ref senderRemote);
@@ -264,13 +262,13 @@ public class Sync_Send_Receive
         s.Bind(endPoint);
 
         byte[] msg = new Byte[256];
-        Console.WriteLine ("Waiting to receive datagrams from client...");
+        Console.WriteLine("Waiting to receive datagrams from client...");
         // This call blocks.
         s.ReceiveFrom(msg, SocketFlags.None, ref senderRemote);
         s.Close();
     }
     //</Snippet10>
-    //<Snippet11>	
+    //<Snippet11>
     public static void ReceiveFrom3()
     {
         IPHostEntry hostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -288,7 +286,7 @@ public class Sync_Send_Receive
         s.Bind(endPoint);
 
         byte[] msg = new Byte[256];
-        Console.WriteLine ("Waiting to receive datagrams from client...");
+        Console.WriteLine("Waiting to receive datagrams from client...");
         // This call blocks.
         s.ReceiveFrom(msg, msg.Length, SocketFlags.None, ref senderRemote);
         s.Close();
@@ -311,7 +309,7 @@ public class Sync_Send_Receive
         // Binding is required with ReceiveFrom calls.
         s.Bind(endPoint);
         byte[] msg = new Byte[256];
-        Console.WriteLine ("Waiting to receive datagrams from client...");
+        Console.WriteLine("Waiting to receive datagrams from client...");
         // This call blocks.
         s.ReceiveFrom(msg, 0, msg.Length, SocketFlags.None, ref senderRemote);
         s.Close();
@@ -363,13 +361,13 @@ public class Sync_Send_Receive
     // To test tcp - run 2 instances source /s runs server, source /c runs client.
     // To test Upd run source /u.
 
-    public static int  Main(string[] args)
+    public static int Main(string[] args)
     {
         string host;
         bool isServer;
 
         char c = args[0].ToLower()[1];
-        if ( c == 'c')
+        if (c == 'c')
         {
             isServer = false;
             host = "127.0.0.1";
@@ -404,7 +402,7 @@ public class Sync_Send_Receive
             {
                 sender = s.Accept();
                 // exchange messages with all clients tests
-                for (int i = 0; i< 4; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     ReceiveTest1(sender);
                 }
