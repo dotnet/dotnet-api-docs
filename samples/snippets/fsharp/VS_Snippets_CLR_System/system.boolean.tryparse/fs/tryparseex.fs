@@ -10,7 +10,7 @@ for value in values do
     | true, flag ->
         printfn $"'{value}' --> {flag}"
     | false, _ ->
-        printfn "Unable to parse '%s'." (if value = null then "<null>" else value)
+        printfn $"""Unable to parse '%s{if value = null then "<null>" else value}'."""
                                 
 // The example displays the following output:
 //       Unable to parse '<null>'.
