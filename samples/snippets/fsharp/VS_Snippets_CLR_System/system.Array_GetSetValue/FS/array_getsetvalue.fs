@@ -33,14 +33,10 @@ myArr7.SetValue("one-two-three-zero-one-two-three", myIndices)
 printfn $"[1,2,3,0,1,2,3]:   {myArr7.GetValue myIndices}"
 
 
-(*
-This code produces the following output.
-
-[3]:   three
-[1,3]:   one-three
-[1,2,3]:   one-two-three
-[1,2,3,0,1,2,3]:   one-two-three-zero-one-two-three
-
-*)
+// This code produces the following output.
+//     [3]:   three
+//     [1,3]:   one-three
+//     [1,2,3]:   one-two-three
+//     [1,2,3,0,1,2,3]:   one-two-three-zero-one-two-three
 
 // </Snippet1>

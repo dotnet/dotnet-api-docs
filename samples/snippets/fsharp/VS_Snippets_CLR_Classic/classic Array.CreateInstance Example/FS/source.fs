@@ -23,10 +23,9 @@ for i = my1DArray.GetLowerBound 0 to my1DArray.GetUpperBound 0 do
 printfn "The one-dimensional Array contains the following values:"
 printValues my1DArray
 
-(*
-This code produces the following output.
 
-The one-dimensional Array contains the following values:
-    1    2    3    4    5
-*)
+// This code produces the following output.
+//     The one-dimensional Array contains the following values:
+//         1    2    3    4    5
+
 // </Snippet1>

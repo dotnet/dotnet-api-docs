@@ -54,27 +54,26 @@ let goMesozoic = { Dinosaurs = dinosaurs }
 goMesozoic.DiscoverAll()
 goMesozoic.DiscoverByEnding "saurus"
 
-(* This code example produces the following output:
 
-Compsognathus
-Amargasaurus
-Oviraptor
-Velociraptor
-Deinonychus
-Dilophosaurus
-Gallimimus
-Triceratops
-
-Array.Exists(dinosaurs, "saurus"): true
-
-Array.TrueForAll(dinosaurs, "saurus"): false
-
-Array.Find(dinosaurs, "saurus"): Amargasaurus
-
-Array.FindLast(dinosaurs, "saurus"): Dilophosaurus
-
-Array.FindAll(dinosaurs, "saurus"):
-Amargasaurus
-Dilophosaurus
-*)
+// This code example produces the following output:
+//     Compsognathus
+//     Amargasaurus
+//     Oviraptor
+//     Velociraptor
+//     Deinonychus
+//     Dilophosaurus
+//     Gallimimus
+//     Triceratops
+//
+//     Array.Exists(dinosaurs, "saurus"): true
+//
+//     Array.TrueForAll(dinosaurs, "saurus"): false
+//
+//     Array.Find(dinosaurs, "saurus"): Amargasaurus
+//
+//     Array.FindLast(dinosaurs, "saurus"): Dilophosaurus
+//
+//     Array.FindAll(dinosaurs, "saurus"):
+//     Amargasaurus
+//     Dilophosaurus
 // </Snippet1>

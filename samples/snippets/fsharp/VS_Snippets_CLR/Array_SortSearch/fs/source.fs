@@ -21,7 +21,7 @@ let showWhere (array: 'a []) index =
     else
         printfn $"Found at index {index}."
 
-let dinosaurs = 
+let dinosaurs =
     [| "Pachycephalosaurus"
        "Amargasaurus"
        "Tyrannosaurus"
@@ -48,28 +48,29 @@ printfn "\nBinarySearch for 'Tyrannosaurus':"
 Array.BinarySearch(dinosaurs, "Tyrannosaurus")
 |> showWhere dinosaurs
 
-(* This code example produces the following output:
 
-Pachycephalosaurus
-Amargasaurus
-Tyrannosaurus
-Mamenchisaurus
-Deinonychus
-Edmontosaurus
+// This code example produces the following output:
+//
+//     Pachycephalosaurus
+//     Amargasaurus
+//     Tyrannosaurus
+//     Mamenchisaurus
+//     Deinonychus
+//     Edmontosaurus
+//
+//     Sort
+//
+//     Amargasaurus
+//     Deinonychus
+//     Edmontosaurus
+//     Mamenchisaurus
+//     Pachycephalosaurus
+//     Tyrannosaurus
+//
+//     BinarySearch for 'Coelophysis':
+//     Not found. Sorts between: Amargasaurus and Deinonychus.
+//
+//     BinarySearch for 'Tyrannosaurus':
+//     Found at index 5.
 
-Sort
-
-Amargasaurus
-Deinonychus
-Edmontosaurus
-Mamenchisaurus
-Pachycephalosaurus
-Tyrannosaurus
-
-BinarySearch for 'Coelophysis':
-Not found. Sorts between: Amargasaurus and Deinonychus.
-
-BinarySearch for 'Tyrannosaurus':
-Found at index 5.
- *)
 // </Snippet1>

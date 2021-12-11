@@ -47,54 +47,50 @@ printfn "After sorting the entire Array using the reverse case-insensitive compa
 printKeysAndValues myKeys myValues
 
 
-(*
-This code produces the following output.
-
-The Array initially contains the following values:
-   red       : strawberries
-   GREEN     : PEARS
-   YELLOW    : LIMES
-   BLUE      : BERRIES
-   purple    : grapes
-   black     : olives
-   orange    : cantaloupe
-
-After sorting a section of the Array using the default comparer:
-   red       : strawberries
-   BLUE      : BERRIES
-   GREEN     : PEARS
-   YELLOW    : LIMES
-   purple    : grapes
-   black     : olives
-   orange    : cantaloupe
-
-After sorting a section of the Array using the reverse case-insensitive comparer:
-   red       : strawberries
-   YELLOW    : LIMES
-   GREEN     : PEARS
-   BLUE      : BERRIES
-   purple    : grapes
-   black     : olives
-   orange    : cantaloupe
-
-After sorting the entire Array using the default comparer:
-   black     : olives
-   BLUE      : BERRIES
-   GREEN     : PEARS
-   orange    : cantaloupe
-   purple    : grapes
-   red       : strawberries
-   YELLOW    : LIMES
-
-After sorting the entire Array using the reverse case-insensitive comparer:
-   YELLOW    : LIMES
-   red       : strawberries
-   purple    : grapes
-   orange    : cantaloupe
-   GREEN     : PEARS
-   BLUE      : BERRIES
-   black     : olives
-
-*)
+// This code produces the following output.
+//     The Array initially contains the following values:
+//        red       : strawberries
+//        GREEN     : PEARS
+//        YELLOW    : LIMES
+//        BLUE      : BERRIES
+//        purple    : grapes
+//        black     : olives
+//        orange    : cantaloupe
+//     
+//     After sorting a section of the Array using the default comparer:
+//        red       : strawberries
+//        BLUE      : BERRIES
+//        GREEN     : PEARS
+//        YELLOW    : LIMES
+//        purple    : grapes
+//        black     : olives
+//        orange    : cantaloupe
+//     
+//     After sorting a section of the Array using the reverse case-insensitive comparer:
+//        red       : strawberries
+//        YELLOW    : LIMES
+//        GREEN     : PEARS
+//        BLUE      : BERRIES
+//        purple    : grapes
+//        black     : olives
+//        orange    : cantaloupe
+//     
+//     After sorting the entire Array using the default comparer:
+//        black     : olives
+//        BLUE      : BERRIES
+//        GREEN     : PEARS
+//        orange    : cantaloupe
+//        purple    : grapes
+//        red       : strawberries
+//        YELLOW    : LIMES
+//     
+//     After sorting the entire Array using the reverse case-insensitive comparer:
+//        YELLOW    : LIMES
+//        red       : strawberries
+//        purple    : grapes
+//        orange    : cantaloupe
+//        GREEN     : PEARS
+//        BLUE      : BERRIES
+//        black     : olives
 
 // </Snippet1>

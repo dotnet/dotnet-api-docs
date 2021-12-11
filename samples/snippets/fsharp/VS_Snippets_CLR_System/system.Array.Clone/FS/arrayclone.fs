@@ -43,26 +43,23 @@ printfn "After changes to the clone:"
 printfn $"   Original: The DateTimeFormatInfo.DateSeparator for {arrCI[3].Name} is {arrCI[3].DateTimeFormat.DateSeparator}."
 printfn $"      Clone: The DateTimeFormatInfo.DateSeparator for {arrCIClone[3].Name} is {arrCIClone[3].DateTimeFormat.DateSeparator}."
 
-(*
-This code produces the following output.
 
-The original array contains the following values:
-        [0]:    ar-SA
-        [1]:    en-US
-        [2]:    fr-FR
-        [3]:    ja-JP
-The clone array contains the following values:
-        [0]:    th-TH
-        [1]:    en-US
-        [2]:    fr-FR
-        [3]:    ja-JP
-Before changes to the clone:
-   Original: The DateTimeFormatInfo.DateSeparator for ja-JP is /.
-      Clone: The DateTimeFormatInfo.DateSeparator for ja-JP is /.
-After changes to the clone:
-   Original: The DateTimeFormatInfo.DateSeparator for ja-JP is -.
-      Clone: The DateTimeFormatInfo.DateSeparator for ja-JP is -.
-
-*)
+// This code produces the following output.
+//     The original array contains the following values:
+//             [0]:    ar-SA
+//             [1]:    en-US
+//             [2]:    fr-FR
+//             [3]:    ja-JP
+//     The clone array contains the following values:
+//             [0]:    th-TH
+//             [1]:    en-US
+//             [2]:    fr-FR
+//             [3]:    ja-JP
+//     Before changes to the clone:
+//        Original: The DateTimeFormatInfo.DateSeparator for ja-JP is /.
+//           Clone: The DateTimeFormatInfo.DateSeparator for ja-JP is /.
+//     After changes to the clone:
+//        Original: The DateTimeFormatInfo.DateSeparator for ja-JP is -.
+//           Clone: The DateTimeFormatInfo.DateSeparator for ja-JP is -.
 
 // </Snippet1>

@@ -37,16 +37,15 @@ printValues myIntArray
 printfn "Object array - First element should now be the same as int array:"
 printValues myObjArray
 
- (*
- This code produces the following output.
 
- int array:
-     1    2    3    4    5
- Object array:
-     26    27    28    29    30
- int array - Last two elements should now be the same as Object array:
-     1    2    3    29    30
- Object array - First element should now be the same as int array:
-     1    27    28    29    30
- *)
+// This code produces the following output.
+//     int array:
+//         1    2    3    4    5
+//     Object array:
+//         26    27    28    29    30
+//     int array - Last two elements should now be the same as Object array:
+//         1    2    3    29    30
+//     Object array - First element should now be the same as int array:
+//         1    27    28    29    30
+
 // </Snippet1>

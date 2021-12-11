@@ -39,9 +39,9 @@ let myObjectEven: obj = 6
 findMyObject myIntArray myObjectEven
        
 // This code produces the following output:
-//
-//The int array contains the following:
-//        2       3       6       7       8
-//The object to search for (1) is not found. The next larger object is at index 0.
-//The object to search for (6) is at index 2.
+//     The int array contains the following:
+//             2       3       6       7       8
+//     The object to search for (1) is not found. The next larger object is at index 0.
+//     The object to search for (6) is at index 2.
+
 // </Snippet1>

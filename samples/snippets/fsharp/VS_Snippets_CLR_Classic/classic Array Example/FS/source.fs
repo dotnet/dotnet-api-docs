@@ -39,19 +39,18 @@ printValues myIntArray
 printf "Object array: "
 printValues myObjArray
 
-(*
-This code produces the following output.
 
-Initially,
-integer array:  1       2       3       4       5
-Object array:   26      27      28      29      30
+// This code produces the following output.
+//     Initially,
+//     integer array:  1       2       3       4       5
+//     Object array:   26      27      28      29      30
+//     
+//     After copying the first two elements of the integer array to the Object array,
+//     integer array:  1       2       3       4       5
+//     Object array:   1       2       28      29      30
+//     
+//     After copying the last two elements of the Object array to the integer array,
+//     integer array:  1       2       3       29      30
+//     Object array:   1       2       28      29      30
 
-After copying the first two elements of the integer array to the Object array,
-integer array:  1       2       3       4       5
-Object array:   1       2       28      29      30
-
-After copying the last two elements of the Object array to the integer array,
-integer array:  1       2       3       29      30
-Object array:   1       2       28      29      30
-*)
 // </Snippet1>

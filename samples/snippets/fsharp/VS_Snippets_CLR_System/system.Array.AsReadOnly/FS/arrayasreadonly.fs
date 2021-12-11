@@ -41,35 +41,32 @@ printIndexAndValues myArr
 printfn "After changing the third element, the read-only IList contains the following values:"
 printIndexAndValues myList
 
-(*
-This code produces the following output.
 
-The string array initially contains the following values:
-   [0] : The
-   [1] : quick
-   [2] : brown
-   [3] : fox
-
-The read-only IList contains the following values:
-   [0] : The
-   [1] : quick
-   [2] : brown
-   [3] : fox
-
-System.NotSupportedException - Collection is read-only.
-
-After changing the third element, the string array contains the following values:
-   [0] : The
-   [1] : quick
-   [2] : RED
-   [3] : fox
-
-After changing the third element, the read-only IList contains the following values:
-   [0] : The
-   [1] : quick
-   [2] : RED
-   [3] : fox
-
-*)
+// This code produces the following output.
+//     The string array initially contains the following values:
+//        [0] : The
+//        [1] : quick
+//        [2] : brown
+//        [3] : fox
+//     
+//     The read-only IList contains the following values:
+//        [0] : The
+//        [1] : quick
+//        [2] : brown
+//        [3] : fox
+//     
+//     System.NotSupportedException - Collection is read-only.
+//     
+//     After changing the third element, the string array contains the following values:
+//        [0] : The
+//        [1] : quick
+//        [2] : RED
+//        [3] : fox
+//     
+//     After changing the third element, the read-only IList contains the following values:
+//        [0] : The
+//        [1] : quick
+//        [2] : RED
+//        [3] : fox
 
 // </Snippet1>

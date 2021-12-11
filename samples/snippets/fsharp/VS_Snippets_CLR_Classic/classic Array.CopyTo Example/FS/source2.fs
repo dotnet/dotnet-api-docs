@@ -36,23 +36,22 @@ myArrayZero.CopyTo(myArrayTwo, 3)
 printfn "\nAfter copying to the target array from index 3:"
 printIndexAndValues myArrayTwo
 
-(*
-This code produces the following output.
 
-The array with lower bound=0 contains:
-    [0]:    zero
-    [1]:    one
-    [2]:
-The array with lower bound=2 contains:
-    [2]:    two
-    [3]:    three
-    [4]:    four
-    [5]:    five
+// This code produces the following output.
+//     The array with lower bound=0 contains:
+//         [0]:    zero
+//         [1]:    one
+//         [2]:
+//     The array with lower bound=2 contains:
+//         [2]:    two
+//         [3]:    three
+//         [4]:    four
+//         [5]:    five
+//     
+//     After copying to the target array from index 3:
+//         [2]:    two
+//         [3]:    zero
+//         [4]:    one
+//         [5]:
 
-After copying to the target array from index 3:
-    [2]:    two
-    [3]:    zero
-    [4]:    one
-    [5]:
-*)
 // </Snippet1>

@@ -26,15 +26,14 @@ for i = my3DArray.GetLowerBound 0 to my3DArray.GetUpperBound 0 do
 printfn "The three-dimensional Array contains the following values:"
 printValues my3DArray
 
-(*
-This code produces the following output.
 
-The three-dimensional Array contains the following values:
-    abc000    abc001    abc002    abc003
-    abc010    abc011    abc012    abc013
-    abc020    abc021    abc022    abc023
-    abc100    abc101    abc102    abc103
-    abc110    abc111    abc112    abc113
-    abc120    abc121    abc122    abc123
-*)
+// This code produces the following output.
+//     The three-dimensional Array contains the following values:
+//         abc000    abc001    abc002    abc003
+//         abc010    abc011    abc012    abc013
+//         abc020    abc021    abc022    abc023
+//         abc100    abc101    abc102    abc103
+//         abc110    abc111    abc112    abc113
+//         abc120    abc121    abc122    abc123
+
 // </Snippet1>

@@ -12,12 +12,8 @@ let intArray = [| 2..4 |]
 Array.ForEach(intArray, showSquares)
 // Array.iter showSquares intArray
 
-(*
-This code produces the following output:
-
-2 squared = 4
-3 squared = 9
-4 squared = 16
-*)
-
+// This code produces the following output:
+//     2 squared = 4
+//     3 squared = 9
+//     4 squared = 16
 //</Snippet1>

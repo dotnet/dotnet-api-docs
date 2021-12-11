@@ -31,15 +31,14 @@ for  i = 0 to myArray.Rank - 1 do
 printfn "The Array contains the following values:"
 printValues myArray 
 
-(*
-This code produces the following output.
 
-Bounds:    Lower    Upper
-0:         2        4
-1:         3        7
-The Array contains the following values:
-    23    24    25    26    27
-    33    34    35    36    37
-    43    44    45    46    47
-*)
+// This code produces the following output.
+//     Bounds:    Lower    Upper
+//     0:         2        4
+//     1:         3        7
+//     The Array contains the following values:
+//         23    24    25    26    27
+//         33    34    35    36    37
+//         43    44    45    46    47
+
 // </Snippet1>

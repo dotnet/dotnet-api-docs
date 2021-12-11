@@ -37,11 +37,10 @@ mySourceArray.CopyTo(myTargetArray, 6)
 // Displays the values of the Array.
 printValues myTargetArray ' '
 
-(*
-This code produces the following output.
 
-The target Array contains the following (before and after copying):
- The quick brown fox jumps over the lazy dog
- The quick brown fox jumps over three napping cats in the barn
-*)
+// This code produces the following output.
+//     The target Array contains the following (before and after copying):
+//      The quick brown fox jumps over the lazy dog
+//      The quick brown fox jumps over three napping cats in the barn
+
 // </Snippet1>

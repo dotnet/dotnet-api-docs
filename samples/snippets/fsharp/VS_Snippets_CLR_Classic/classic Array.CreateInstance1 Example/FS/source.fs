@@ -25,11 +25,10 @@ for i = my2DArray.GetLowerBound 0 to my2DArray.GetUpperBound 0 do
 printfn "The two-dimensional Array contains the following values:"
 printValues my2DArray 
 
-(*
-This code produces the following output.
 
-The two-dimensional Array contains the following values:
-    abc00    abc01    abc02
-    abc10    abc11    abc12
-*)
+// This code produces the following output.
+//     The two-dimensional Array contains the following values:
+//         abc00    abc01    abc02
+//         abc10    abc11    abc12
+
 // </Snippet1>
