@@ -1251,10 +1251,13 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
   
  If <xref:System.Net.HttpWebRequest.AllowAutoRedirect%2A> is set to `false`, all responses with an HTTP status code from 300 to 399 is returned to the application.  
   
- The Authorization header is cleared on auto-redirects and <xref:System.Net.HttpWebRequest> automatically tries to re-authenticate to the redirected location. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module. The <xref:System.Net.AuthenticationManager?displayProperty=nameWithType> and related class are used to implement a custom authentication module. The <xref:System.Net.AuthenticationManager.Register%2A?displayProperty=nameWithType> method registers a custom authentication module.  
-  
-   
-  
+ The Authorization header is cleared on auto-redirects and <xref:System.Net.HttpWebRequest> automatically tries to re-authenticate to the redirected location. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection.
+
+ If the Authorization header is being added in response to a challenge or request from the server, the application may implement and register a custom authentication module to cache the authorization and pro-actively send it with subsequent requests without waiting for the server to request it. The <xref:System.Net.AuthenticationManager?displayProperty=nameWithType> and related class are used to implement a custom authentication module. The <xref:System.Net.AuthenticationManager.Register%2A?displayProperty=nameWithType> method registers a custom authentication module.  
+
+ If instead the Authorization header is being added pro-actively regardless of server requests (as for the GitHub API, which allows authorization to access a higher rate limit but does not require it), then redirects cannot pass an Authorization header unless the application disables auto-redirects and adds the authorization to redirects itself.
+
+
 ## Examples  
  The following code example uses the <xref:System.Net.HttpWebRequest.AllowAutoRedirect%2A> property to allow the request to follow redirection responses.  
   
