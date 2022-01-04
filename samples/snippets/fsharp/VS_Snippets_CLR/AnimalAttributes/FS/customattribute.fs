@@ -24,9 +24,9 @@ type AnimalTypeTestClass() =
     member _.BirdMethod() = ()
 
 let testClass = AnimalTypeTestClass()
-let type' = testClass.GetType()
+let clsType = testClass.GetType()
 // Iterate through all the methods of the class.
-for mInfo in type'.GetMethods() do
+for mInfo in clsType.GetMethods() do
     // Iterate through all the Attributes for each method.
     for attr in Attribute.GetCustomAttributes mInfo do
         // Check for the AnimalType attribute.
