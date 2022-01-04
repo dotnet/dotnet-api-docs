@@ -1,4 +1,4 @@
-﻿// <Snippet3>
+// <Snippet3>
 using System;
 
 public class Example
@@ -8,7 +8,7 @@ public class Example
       int value = -16;
       Byte[] bytes = BitConverter.GetBytes(value);
 
-      // Convert bytes back to Int32.
+      // Convert bytes back to int.
       int intValue = BitConverter.ToInt32(bytes, 0);
       Console.WriteLine("{0} = {1}: {2}",
                         value, intValue,

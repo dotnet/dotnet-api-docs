@@ -76,7 +76,7 @@ public class Example
                                   199.55m, 9214.16m, Decimal.MaxValue };
       float result;
 
-      foreach (float value in values)
+      foreach (var value in values)
       {
          result = Convert.ToSingle(value);
          Console.WriteLine("Converted the {0} value '{1}' to the {2} value {3}.",
@@ -84,14 +84,14 @@ public class Example
                            result.GetType().Name, result);
       }
       // The example displays the following output:
-      //    Converted the Decimal value '-79228162514264337593543950335' to the Single value -7.922816E+28.
+      //    Converted the Decimal value '-79228162514264337593543950335' to the Single value -7.9228163E+28.
       //    Converted the Decimal value '-1034.23' to the Single value -1034.23.
       //    Converted the Decimal value '-12' to the Single value -12.
       //    Converted the Decimal value '0' to the Single value 0.
       //    Converted the Decimal value '147' to the Single value 147.
       //    Converted the Decimal value '199.55' to the Single value 199.55.
       //    Converted the Decimal value '9214.16' to the Single value 9214.16.
-      //    Converted the Decimal value '79228162514264337593543950335' to the Single value 7.922816E+28.
+      //    Converted the Decimal value '79228162514264337593543950335' to the Single value 7.9228163E+28.
       // </Snippet3>
    }
 
@@ -170,11 +170,11 @@ public class Example
    {
       // <Snippet7>
       long[] numbers = { Int64.MinValue, -903, 0, 172, Int64.MaxValue};
-      double result;
+      float result;
 
       foreach (long number in numbers)
       {
-         result = Convert.ToDouble(number);
+         result = Convert.ToSingle(number);
          Console.WriteLine("Converted the {0} value '{1}' to the {2} value {3}.",
                            number.GetType().Name, number,
                            result.GetType().Name, result);

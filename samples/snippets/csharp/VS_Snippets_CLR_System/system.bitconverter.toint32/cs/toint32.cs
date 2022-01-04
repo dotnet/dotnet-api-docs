@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -26,7 +26,7 @@ public class Example
    {
        string value = "";
        foreach (var byt in bytes)
-          value += String.Format("{0:X2} ", byt);
+          value += string.Format("{0:X2} ", byt);
 
        return value;
    }

@@ -31,8 +31,8 @@ public class SamplesTextElementEnumerator  {
 This code produces the following output.  The question marks take the place of high and low surrogates.
 
 Index   Current GetTextElement
-[0]:    ??      ??
-[2]:    a`      a`
+[0]:    𐀀       𐀀
+[2]:    à       à
 [4]:    Æ       Æ
 
 */

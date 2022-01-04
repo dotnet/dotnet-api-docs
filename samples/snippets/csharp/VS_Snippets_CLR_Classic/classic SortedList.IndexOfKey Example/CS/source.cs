@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesSortedList  {
@@ -22,7 +22,7 @@
        Console.WriteLine( "The key \"{0}\" is at index {1}.", myKey, mySL.IndexOfKey( myKey ) );
 
        // Searches for a specific value.
-       String myValue = "three";
+       string myValue = "three";
        Console.WriteLine( "The value \"{0}\" is at index {1}.", myValue, mySL.IndexOfValue( myValue ) );
     }
 

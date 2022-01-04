@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 #define TRACE
 
 using System;
@@ -12,7 +12,7 @@ public class TextWriterTraceListenerSample
         TextWriterTraceListener myTextListener = null;
 
         // Create a file for output named TestFile.txt.
-        String myFileName = "TestFile.txt";
+        string myFileName = "TestFile.txt";
         StreamWriter myOutputWriter = new StreamWriter(myFileName, true);
 
         // Add a TextWriterTraceListener for the file.

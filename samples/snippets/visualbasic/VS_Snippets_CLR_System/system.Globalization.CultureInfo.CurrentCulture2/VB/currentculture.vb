@@ -5,7 +5,7 @@ Imports System.Threading
 Public Module Example
    Public Sub Main()
 
-      ' Display the name of the current thread culture.
+      ' Display the name of the current culture.
       Console.WriteLine("CurrentCulture is {0}.", CultureInfo.CurrentCulture.Name)
 
       ' Change the current culture to th-TH.

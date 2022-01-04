@@ -14,7 +14,7 @@ public class Example
       idnRelaxed.UseStd3AsciiRules = false;  // The default, but make it explicit.
 
       for (int ctr = 0; ctr <= 0x7F; ctr++) {
-         string name = "Prose" + Convert.ToChar(ctr) + "ware.com";
+         string name = $"Prose{ctr}ware.com";
 
          bool stdFailed = false;
          bool relaxedFailed = false;

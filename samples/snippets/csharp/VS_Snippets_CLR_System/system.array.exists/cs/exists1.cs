@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -23,16 +23,16 @@ public class Example
 
 public class StringSearcher
 {
-   Char firstChar;
+   char firstChar;
 
-   public StringSearcher(Char firstChar)
+   public StringSearcher(char firstChar)
    {
-      this.firstChar = Char.ToUpper(firstChar);
+      this.firstChar = char.ToUpper(firstChar);
    }
 
-   public bool StartsWith(String s)
+   public bool StartsWith(string s)
    {
-      if (String.IsNullOrEmpty(s)) return false;
+      if (string.IsNullOrEmpty(s)) return false;
 
       if(s.Substring(0, 1).ToUpper() == firstChar.ToString())
          return true;

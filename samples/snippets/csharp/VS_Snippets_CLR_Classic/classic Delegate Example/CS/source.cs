@@ -1,15 +1,15 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 public class SamplesDelegate  {
 
-   // Declares a delegate for a method that takes in an int and returns a String.
-   public delegate String myMethodDelegate( int myInt );
+   // Declares a delegate for a method that takes in an int and returns a string.
+   public delegate string myMethodDelegate( int myInt );
 
    // Defines some methods to which the delegate can point.
    public class mySampleClass  {
 
       // Defines an instance method.
-      public String myStringMethod ( int myInt )  {
+      public string myStringMethod ( int myInt )  {
          if ( myInt > 0 )
             return( "positive" );
          if ( myInt < 0 )
@@ -18,7 +18,7 @@ public class SamplesDelegate  {
       }
 
       // Defines a static method.
-      public static String mySignMethod ( int myInt )  {
+      public static string mySignMethod ( int myInt )  {
          if ( myInt > 0 )
             return( "+" );
          if ( myInt < 0 )

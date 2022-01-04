@@ -14,7 +14,7 @@ public class Example
                            false, Encoding.Unicode);
 
       for (int ctr = 0; ctr <= 1000; ctr++) {
-         str += Convert.ToChar(rnd.Next(1, 0x0530)); 
+         str += (char)rnd.Next(1, 0x0530);
          if (str.Length % 60 == 0)
             str += Environment.NewLine;          
       }                    

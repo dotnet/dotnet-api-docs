@@ -160,7 +160,7 @@ public class Example
                                 } ));
       // Execute two readers, one to read from first to last and the second from last to first.
       for (int ctr = 0; ctr <= 1; ctr++) {
-         bool desc = Convert.ToBoolean(ctr);
+         bool desc = ctr == 1;
          tasks.Add(Task.Run( () => { int start, last, step;
                                      int items;
                                      do {

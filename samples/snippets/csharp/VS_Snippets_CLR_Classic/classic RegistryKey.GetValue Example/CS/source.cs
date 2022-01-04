@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using Microsoft.Win32;
 
@@ -33,7 +33,7 @@ class RegGetDef
                 Console.WriteLine();
                 break;
             case RegistryValueKind.DWord:
-                Console.WriteLine("Value = " + Convert.ToString((Int32)o));
+                Console.WriteLine("Value = " + Convert.ToString((int)o));
                 break;
             case RegistryValueKind.QWord:
                 Console.WriteLine("Value = " + Convert.ToString((Int64)o));

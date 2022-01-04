@@ -25,7 +25,7 @@ This code produces the following output.  The question marks take the place of n
 
 CULTURE    PROPERTY VALUE
 en-US     dddd, MMMM dd, yyyy h:mm:ss tt
-ja-JP     yyyy'?'M'?'d'?' H:mm:ss
+ja-JP     yyyy'年'M'月'd'日' H:mm:ss
 fr-FR     dddd d MMMM yyyy HH:mm:ss
 
 */

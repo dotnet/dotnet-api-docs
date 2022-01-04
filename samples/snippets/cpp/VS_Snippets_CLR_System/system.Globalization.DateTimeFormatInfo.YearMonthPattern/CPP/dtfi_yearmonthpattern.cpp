@@ -12,7 +12,7 @@ void PrintPattern( String^ myCulture )
 
 int main()
 {
-   
+
    // Displays the values of the pattern properties.
    Console::WriteLine( " CULTURE    PROPERTY VALUE" );
    PrintPattern( "en-US" );
@@ -23,10 +23,10 @@ int main()
 /*
 This code produces the following output.  The question marks take the place of native script characters.
 
-CULTURE    PROPERTY VALUE
-en-US     MMMM, yyyy
-ja-JP     yyyy'?'M'?'
-fr-FR     MMMM yyyy
+ CULTURE    PROPERTY VALUE
+  en-US     MMMM yyyy
+  ja-JP     yyyy年M月
+  fr-FR     MMMM yyyy
 
 */
 // </snippet1>

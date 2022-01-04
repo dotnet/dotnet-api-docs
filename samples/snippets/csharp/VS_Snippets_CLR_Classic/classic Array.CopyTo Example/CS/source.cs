@@ -8,14 +8,14 @@ public class SamplesArray
    {
 
       // Creates and initializes two new Arrays.
-      Array mySourceArray=Array.CreateInstance(typeof(String), 6);
+      Array mySourceArray=Array.CreateInstance(typeof(string), 6);
       mySourceArray.SetValue("three", 0);
       mySourceArray.SetValue("napping", 1);
       mySourceArray.SetValue("cats", 2);
       mySourceArray.SetValue("in", 3);
       mySourceArray.SetValue("the", 4);
       mySourceArray.SetValue("barn", 5);
-      Array myTargetArray=Array.CreateInstance(typeof(String), 15);
+      Array myTargetArray=Array.CreateInstance(typeof(string), 15);
       myTargetArray.SetValue("The", 0);
       myTargetArray.SetValue("quick", 1);
       myTargetArray.SetValue("brown", 2);

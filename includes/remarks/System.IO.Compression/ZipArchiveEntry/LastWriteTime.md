@@ -6,5 +6,5 @@ When you set this property, the <xref:System.DateTimeOffset> value is converted 
 
 The following example shows how to open an entry in a zip archive, modify it, and set the <xref:System.IO.Compression.ZipArchiveEntry.LastWriteTime%2A> property to the current time.
 
-[!code-csharp[System.IO.Compression.ZipArchiveEntry#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchiveentry/cs/program2.cs#2)]
-[!code-vb[System.IO.Compression.ZipArchiveEntry#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchiveentry/vb/program2.vb#2)]
+:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchiveentry/cs/program2.cs" id="Snippet2":::
+:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchiveentry/vb/program2.vb" id="Snippet2":::

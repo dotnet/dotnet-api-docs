@@ -170,7 +170,7 @@ public class Form1:
 	private System.Drawing.Printing.PrintDocument document =
 		new System.Drawing.Printing.PrintDocument();
 
-	// Initalize the dialog.
+	// Initialize the dialog.
 	private void InitializePrintPreviewDialog()
 	{
 

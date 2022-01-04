@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Workflow.ComponentModel;
@@ -469,27 +469,27 @@ namespace WF_Snippets
             message.To.Add(this.To);
 
             // Assign the message values if they are valid.
-            if (!String.IsNullOrEmpty(this.CC))
+            if (!string.IsNullOrEmpty(this.CC))
             {
                 message.CC.Add(this.CC);
             }
 
-            if (!String.IsNullOrEmpty(this.Bcc))
+            if (!string.IsNullOrEmpty(this.Bcc))
             {
                 message.Bcc.Add(this.Bcc);
             }
 
-            if (!String.IsNullOrEmpty(this.Subject))
+            if (!string.IsNullOrEmpty(this.Subject))
             {
                 message.Subject = this.Subject;
             }
 
-            if (!String.IsNullOrEmpty(this.Body))
+            if (!string.IsNullOrEmpty(this.Body))
             {
                 message.Body = this.Body;
             }
 
-            if (!String.IsNullOrEmpty(this.ReplyTo))
+            if (!string.IsNullOrEmpty(this.ReplyTo))
             {
                 message.ReplyTo = new MailAddress(this.ReplyTo);
             }
@@ -536,7 +536,7 @@ namespace WF_Snippets
         private void ValidateEmailProperties(ValidationErrorCollection validationErrors, SendEmailActivity activity)
         {
             // Validate the To property
-            if (String.IsNullOrEmpty(activity.To))
+            if (string.IsNullOrEmpty(activity.To))
             {
                 validationErrors.Add(ValidationError.GetNotSetValidationError(SendEmailActivity.ToProperty.Name));
             }
@@ -546,7 +546,7 @@ namespace WF_Snippets
             }
 
             // Validate the From property
-            if (String.IsNullOrEmpty(activity.From))
+            if (string.IsNullOrEmpty(activity.From))
             {
                 validationErrors.Add(ValidationError.GetNotSetValidationError(SendEmailActivity.FromProperty.Name));
             }
@@ -560,7 +560,7 @@ namespace WF_Snippets
         private void ValidateSMTPProperties(ValidationErrorCollection validationErrors, SendEmailActivity activity)
         {
             // Validate the SMTPHost property
-            if (String.IsNullOrEmpty(activity.SmtpHost))
+            if (string.IsNullOrEmpty(activity.SmtpHost))
             {
                 validationErrors.Add(ValidationError.GetNotSetValidationError(SendEmailActivity.SmtpHostProperty.Name));
             }
@@ -848,7 +848,7 @@ namespace WF_Snippets
     {
         static void OnWorkflowIdle(object sender, WorkflowEventArgs e)
         {
-            Int32 newAmount = 15000;
+            int newAmount = 15000;
             WorkflowInstance workflowInstance = e.WorkflowInstance;
             // <snippet257>
             WorkflowChanges workflowchanges = new WorkflowChanges(workflowInstance.GetWorkflowDefinition());
@@ -1125,7 +1125,7 @@ namespace WF_Snippets
         // Serialize the activity instance state to file
         private void SerializeToFile(byte[] workflowBytes, Guid id)
         {
-            String filename = id.ToString();
+            string filename = id.ToString();
             FileStream fileStream = null;
             try
             {
@@ -1147,7 +1147,7 @@ namespace WF_Snippets
         // Deserialize the instance state from the file given the instance id
         private byte[] DeserializeFromFile(Guid id)
         {
-            String filename = id.ToString();
+            string filename = id.ToString();
             FileStream fileStream = null;
             try
             {
@@ -1536,7 +1536,7 @@ namespace WF_Snippets
             TrackingProfileSerializer serializer = new TrackingProfileSerializer();
             StringWriter writer = new StringWriter(new StringBuilder(), CultureInfo.InvariantCulture);
             serializer.Serialize(writer, profile);
-            String trackingprofile = writer.ToString();
+            string trackingprofile = writer.ToString();
             InsertTrackingProfile(trackingprofile);
         }
         // </snippet291>
@@ -1643,7 +1643,7 @@ namespace WF_Snippets
         internal const string connectionString = "Initial Catalog=Tracking;Data Source=localhost;Integrated Security=SSPI;";
 
         // <snippet296>
-        internal static void SetPartitionInterval(Char interval)
+        internal static void SetPartitionInterval(char interval)
         {
             // Valid values are 'd' (daily), 'm' (monthly), and 'y' (yearly).  The default is 'm'.
             using (SqlCommand command = new SqlCommand("dbo.SetPartitionInterval"))

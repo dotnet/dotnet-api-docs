@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesSortedList  {
@@ -18,7 +18,7 @@
        String[] tempArray = new String[] { "The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog" };
        DictionaryEntry[] myTargetArray = new DictionaryEntry[15];
        int i = 0;
-       foreach ( String s in tempArray )  {
+       foreach ( string s in tempArray )  {
           myTargetArray[i].Key = i;
           myTargetArray[i].Value = s;
           i++;

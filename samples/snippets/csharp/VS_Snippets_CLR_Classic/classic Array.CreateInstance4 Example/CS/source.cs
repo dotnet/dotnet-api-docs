@@ -1,13 +1,13 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  public class SamplesArray  {
 
     public static void Main()  {
 
-       // Creates and initializes a multidimensional Array of type String.
+       // Creates and initializes a multidimensional Array of type string.
        int[] myLengthsArray = new int[2] { 3, 5 };
        int[] myBoundsArray = new int[2] { 2, 3 };
-       Array myArray=Array.CreateInstance( typeof(String), myLengthsArray, myBoundsArray );
+       Array myArray=Array.CreateInstance( typeof(string), myLengthsArray, myBoundsArray );
        for ( int i = myArray.GetLowerBound(0); i <= myArray.GetUpperBound(0); i++ )
           for ( int j = myArray.GetLowerBound(1); j <= myArray.GetUpperBound(1); j++ )  {
              int[] myIndicesArray = new int[2] { i, j };

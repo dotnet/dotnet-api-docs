@@ -60,8 +60,7 @@ class MemStream
             // Read the remaining bytes, byte by byte.
             while(count < memStream.Length)
             {
-                byteArray[count++] =
-                    Convert.ToByte(memStream.ReadByte());
+                byteArray[count++] = (byte)memStream.ReadByte();
             }
             // </Snippet8>
 

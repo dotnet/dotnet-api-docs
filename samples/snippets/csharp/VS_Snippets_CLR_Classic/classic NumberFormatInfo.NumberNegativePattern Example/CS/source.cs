@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Globalization;
 
@@ -20,7 +20,7 @@
        for (int i = 0; i <= 4; i++)  {
           nfi.NumberNegativePattern = i;
             Console.WriteLine("{0,-20} {1,-10}",
-                              String.Format("Pattern {0}:",
+                              string.Format("Pattern {0}:",
                                             nfi.NumberNegativePattern),
                               value.ToString("N", nfi));
        }

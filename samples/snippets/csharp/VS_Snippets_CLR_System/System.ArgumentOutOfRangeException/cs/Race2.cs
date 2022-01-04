@@ -1,11 +1,11 @@
-﻿// <Snippet12>
+// <Snippet12>
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
 
 public class Continent
 {
-   public String Name { get; set; }
+   public string Name { get; set; }
    public int Population { get; set; }
    public Decimal Area { get; set; }
 }
@@ -14,7 +14,7 @@ public class Example
 {
    static ConcurrentBag<Continent> continents = new ConcurrentBag<Continent>();
    static CountdownEvent gate;
-   static String msg = String.Empty;
+   static string msg = string.Empty;
 
    public static void Main()
    {
@@ -45,9 +45,9 @@ public class Example
 
    private static void PopulateContinents(Object obj)
    {
-      String name = obj.ToString();
+      string name = obj.ToString();
       lock(msg) {
-         msg += String.Format("Adding '{0}' to the list.\n", name);
+         msg += string.Format("Adding '{0}' to the list.\n", name);
       }
       var continent = new Continent();
       continent.Name = name;

@@ -23,7 +23,7 @@ public class Example
          if (changeColor)
             Console.BackgroundColor = (ConsoleColor) ((ctr - 1) % 16);
 
-         Console.WriteLine(new String(Convert.ToChar(ctr + 64), 30));
+         Console.WriteLine(new String((char)(ctr + 64), 30));
       }
    }
 }

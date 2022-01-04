@@ -160,7 +160,7 @@ public class StreamReaderEnumerator : IEnumerator<string>
     private bool disposedValue = false;
     public void Dispose()
     {
-        Dispose(true);
+        Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
 
@@ -184,7 +184,7 @@ public class StreamReaderEnumerator : IEnumerator<string>
 
      ~StreamReaderEnumerator()
     {
-        Dispose(false);
+        Dispose(disposing: false);
     }
 }
 // This example displays output similar to the following:

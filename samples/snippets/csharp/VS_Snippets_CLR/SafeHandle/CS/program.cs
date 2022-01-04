@@ -116,14 +116,14 @@ namespace SafeHandleDemo
 
         public void Dispose()  // Follow the Dispose pattern - public nonvirtual.
         {
-            Dispose(true);
+            Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
         // No finalizer is needed. The finalizer on SafeHandle
         // will clean up the MySafeFileHandle instance,
         // if it hasn't already been disposed.
-        // Howerver, there may be a need for a subclass to
+        // However, there may be a need for a subclass to
         // introduce a finalizer, so Dispose is properly implemented here.
         [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
         protected virtual void Dispose(bool disposing)
@@ -176,7 +176,7 @@ namespace SafeHandleDemo
         private static void Usage()
         {
             Console.WriteLine("Usage:");
-            // Assumes that application is named HexViwer"
+            // Assumes that application is named HexViewer"
             Console.WriteLine("HexViewer <fileName> [-fault]");
             Console.WriteLine(" -fault Runs hex viewer repeatedly, injecting faults.");
         }

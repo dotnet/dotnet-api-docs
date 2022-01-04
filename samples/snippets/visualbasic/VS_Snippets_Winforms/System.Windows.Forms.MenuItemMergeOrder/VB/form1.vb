@@ -71,7 +71,7 @@ Public Class Form1
            {Me.newItem, Me.openItem, Me.saveItem})
         '
 
-        ' Initalize the optionsMenu item and its contents.
+        ' Initialize the optionsMenu item and its contents.
         Me.optionsMenu.Index = 1
         Me.optionsMenu.Text = "Options"
 

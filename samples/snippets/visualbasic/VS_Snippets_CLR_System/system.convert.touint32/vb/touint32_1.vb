@@ -38,7 +38,7 @@ Module modMain
       ' <Snippet1>
       Dim falseFlag As Boolean = False
       Dim trueFlag As Boolean = True
-      
+
       Console.WriteLine("{0} converts to {1}.", falseFlag, _
                         Convert.ToUInt32(falseFlag))
       Console.WriteLine("{0} converts to {1}.", trueFlag, _
@@ -48,12 +48,12 @@ Module modMain
       '       True converts to 1.
       ' </Snippet1>
    End Sub
-   
+
    Private Sub ConvertByte()
       ' <Snippet2>
       Dim bytes() As Byte = { Byte.MinValue, 14, 122, Byte.MaxValue}
       Dim result As UInteger
-      
+
       For Each byteValue As Byte In bytes
          result = Convert.ToUInt32(byteValue)
          Console.WriteLine("Converted the {0} value {1} to the {2} value {3}.", _
@@ -66,36 +66,36 @@ Module modMain
       '    Converted the Byte value 122 to the UInt32 value 122.
       '    Converted the Byte value 255 to the UInt32 value 255.
       ' </Snippet2>
-   End Sub   
-   
+   End Sub
+
    Private Sub ConvertChar()
       ' <Snippet3>
       Dim chars() As Char = { "a"c, "z"c, ChrW(7), ChrW(1023), _
                               ChrW(Short.MaxValue), ChrW(&hFFFE) }
       Dim result As UInteger
-                              
+
       For Each ch As Char in chars
          result = Convert.ToUInt32(ch)
          Console.WriteLine("Converted the {0} value '{1}' to the {2} value {3}.", _
                            ch.GetType().Name, ch, _
                            result.GetType().Name, result)
-      Next   
+      Next
       ' The example displays the following output:
       '    Converted the Char value 'a' to the UInt32 value 97.
       '    Converted the Char value 'z' to the UInt32 value 122.
-      '    Converted the Char value '' to the UInt32 value 7.
-      '    Converted the Char value '?' to the UInt32 value 1023.
-      '    Converted the Char value '?' to the UInt32 value 32767.
-      '    Converted the Char value '?' to the UInt32 value 65534.
+      '    Converted the Char value '' to the UInt32 value 7.
+      '    Converted the Char value 'Ͽ' to the UInt32 value 1023.
+      '    Converted the Char value '翿' to the UInt32 value 32767.
+      '    Converted the Char value '￾' to the UInt32 value 65534.
       ' </Snippet3>
    End Sub
-   
+
    Private Sub ConvertDecimal()
       ' <Snippet4>
       Dim values() As Decimal = { Decimal.MinValue, -1034.23d, -12d, 0d, 147d, _
                                   199.55d, 9214.16d, Decimal.MaxValue }
       Dim result As UInteger
-      
+
       For Each value As Decimal In values
          Try
             result = Convert.ToUInt32(value)
@@ -105,8 +105,8 @@ Module modMain
          Catch e As OverflowException
             Console.WriteLine("{0} is outside the range of the UInt32 type.", _
                               value)
-         End Try   
-      Next                                  
+         End Try
+      Next
       ' The example displays the following output:
       '    -79228162514264337593543950335 is outside the range of the UInt32 type.
       '    -1034.23 is outside the range of the UInt32 type.
@@ -118,13 +118,13 @@ Module modMain
       '    79228162514264337593543950335 is outside the range of the UInt32 type.
       ' </Snippet4>
    End Sub
-   
+
    Private Sub ConvertDouble()
       ' <Snippet5>
       Dim values() As Double = { Double.MinValue, -1.38e10, -1023.299, -12.98, _
                                  0, 9.113e-16, 103.919, 17834.191, Double.MaxValue }
       Dim result As UInteger
-      
+
       For Each value As Double In values
          Try
             result = Convert.ToUInt32(value)
@@ -134,9 +134,9 @@ Module modMain
          Catch e As OverflowException
             Console.WriteLine("The {0} value {1} is outside the range of the UInt32 type.", _
                               value.GetType().Name, value)
-         End Try   
-      Next         
-      ' The example displays the following output:                        
+         End Try
+      Next
+      ' The example displays the following output:
       '    The Double value -1.79769313486232E+308 is outside the range of the UInt32 type.
       '    The Double value -13800000000 is outside the range of the UInt32 type.
       '    The Double value -1023.299 is outside the range of the UInt32 type.
@@ -148,12 +148,12 @@ Module modMain
       '    The Double value 1.79769313486232E+308 is outside the range of the UInt32 type.
       ' </Snippet5>
    End Sub
-      
+
    Private Sub ConvertInt16()
       ' <Snippet6>
       Dim numbers() As Short = { Int16.MinValue, -1, 0, 121, 340, Int16.MaxValue }
       Dim result As UInteger
-      
+
       For Each number As Short In numbers
          Try
             result = Convert.ToUInt32(number)
@@ -162,7 +162,7 @@ Module modMain
                                  result.GetType().Name, result)
          Catch e As OverflowException
             Console.WriteLine("The {0} value {1} is outside the range of the UInt32 type.", _
-                              number.GetType().Name, number) 
+                              number.GetType().Name, number)
          End Try
       Next
       ' The example displays the following output:
@@ -174,7 +174,7 @@ Module modMain
       '    Converted the Int16 value 32767 to the UInt32 value 32767.
       ' </Snippet6>
    End Sub
-   
+
    Private Sub ConvertInt32()
       ' <Snippet7>
       Dim numbers() As Integer = { Int32.MinValue, -1203, 0, 121, 1340, Int32.MaxValue }
@@ -199,7 +199,7 @@ Module modMain
       '    Converted the Int32 value 2147483647 to the UInt32 value 2147483647.
       ' </Snippet7>
    End Sub
-   
+
    Private Sub ConvertInt64
       ' <Snippet8>
       Dim numbers() As Long = { Int64.MinValue, -1, 0, 121, 340, Int64.MaxValue }
@@ -222,16 +222,16 @@ Module modMain
       '    Converted the Int64 value 121 to the UInt32 value 121.
       '    Converted the Int64 value 340 to the UInt32 value 340.
       '    The Int64 value 9223372036854775807 is outside the range of the UInt32 type.
-      ' </Snippet8>   
-   End Sub   
-   
+      ' </Snippet8>
+   End Sub
+
    Private Sub ConvertObject()
       ' <Snippet9>
       Dim values() As Object = { True, -12, 163, 935, "x"c, #5/12/2009#, _
                                  "104", "103.0", "-1", _
                                  "1.00e2", "One", 1.00e2, 16.3e42}
       Dim result As UInteger
-      
+
       For Each value As Object In values
          Try
             result = Convert.ToUInt32(value)
@@ -247,9 +247,9 @@ Module modMain
          Catch e As InvalidCastException
             Console.WriteLine("No conversion to a UInt32 exists for the {0} value {1}.", _
                               value.GetType().Name, value)
-                              
+
          End Try
-      Next                           
+      Next
       ' The example displays the following output:
       '    Converted the Boolean value True to the UInt32 value 1.
       '    The Int32 value -12 is outside the range of the UInt32 type.
@@ -266,12 +266,12 @@ Module modMain
       '    The Double value 1.63E+43 is outside the range of the UInt32 type.
       ' </Snippet9>
    End Sub
-   
+
    Private Sub ConvertSByte()
       ' <Snippet10>
       Dim numbers() As SByte = { SByte.MinValue, -1, 0, 10, SByte.MaxValue }
       Dim result As UInteger
-      
+
       For Each number As SByte In numbers
          Try
             result = Convert.ToUInt32(number)
@@ -280,7 +280,7 @@ Module modMain
                               result.GetType().Name, result)
          Catch e As OverflowException
             Console.WriteLine("The {0} value {1} is outside the range of the UInt32 type.", _
-                              number.GetType().Name, number)         
+                              number.GetType().Name, number)
          End Try
       Next
       ' The example displays the following output:
@@ -291,13 +291,13 @@ Module modMain
       '    Converted the SByte value 127 to the UInt32 value 127.
       ' </Snippet10>
    End Sub
-   
+
    Private Sub ConvertSingle()
       ' <Snippet11>
       Dim values() As Single = { Single.MinValue, -1.38e10, -1023.299, -12.98, _
                                  0, 9.113e-16, 103.919, 17834.191, Single.MaxValue }
       Dim result As UInteger
-      
+
       For Each value As Single In values
          Try
             result = Convert.ToUInt32(value)
@@ -306,8 +306,8 @@ Module modMain
          Catch e As OverflowException
             Console.WriteLine("The {0} value {1} is outside the range of the UInt32 type.", _
                               value.GetType().Name, value)
-         End Try   
-      Next                                 
+         End Try
+      Next
       ' The example displays the following output:
       '    The Single value -3.402823E+38 is outside the range of the UInt32 type.
       '    The Single value -1.38E+10 is outside the range of the UInt32 type.
@@ -326,7 +326,7 @@ Module modMain
       Dim values() As String = { "One", "1.34e28", "-26.87", "-18", "-6.00", _
                                  " 0", "137", "1601.9", Int32.MaxValue.ToString() }
       Dim result As UInteger
-      
+
       For Each value As String In values
          Try
             result = Convert.ToUInt32(value)
@@ -338,8 +338,8 @@ Module modMain
          Catch e As FormatException
             Console.WriteLine("The {0} value '{1}' is not in a recognizable format.", _
                               value.GetType().Name, value)
-         End Try   
-      Next                                 
+         End Try
+      Next
       ' The example displays the following output:
       '    The String value 'One' is not in a recognizable format.
       '    The String value '1.34e28' is not in a recognizable format.
@@ -357,7 +357,7 @@ Module modMain
       ' <Snippet13>
       Dim numbers() As UShort = { UInt16.MinValue, 121, 340, UInt16.MaxValue }
       Dim result As UInteger
-      
+
       For Each number As UShort In numbers
          result = Convert.ToUInt32(number)
          Console.WriteLine("Converted the {0} value {1} to the {2} value {3}.", _
@@ -368,15 +368,15 @@ Module modMain
       '    Converted the UInt16 value 0 to the UInt32 value 0.
       '    Converted the UInt16 value 121 to the UInt32 value 121.
       '    Converted the UInt16 value 340 to the UInt32 value 340.
-      '    Converted the UInt16 value 65535 to the UInt32 value 65535.      
+      '    Converted the UInt16 value 65535 to the UInt32 value 65535.
       ' </Snippet13>
    End Sub
-   
+
    Private Sub ConvertUInt64
       ' <Snippet14>
       Dim numbers() As ULong = { UInt64.MinValue, 121, 340, UInt64.MaxValue }
       Dim result As UInteger
-      
+
       For Each number As ULong In numbers
          Try
             result = Convert.ToUInt32(number)
@@ -393,6 +393,6 @@ Module modMain
       '    Converted the UInt64 value 121 to a UInt32 value 121.
       '    Converted the UInt64 value 340 to a UInt32 value 340.
       '    The UInt64 value 18446744073709551615 is outside the range of the UInt32 type.
-      ' </Snippet14>   
+      ' </Snippet14>
    End Sub
 End Module

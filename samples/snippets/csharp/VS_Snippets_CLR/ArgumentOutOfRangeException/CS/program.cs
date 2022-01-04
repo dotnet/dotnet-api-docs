@@ -1,43 +1,41 @@
 ﻿// <Snippet1>
 using System;
+using static System.Console;
 
-class Program
+public class Program
 {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
         try
         {
-            Guest guest1 = new Guest("Ben", "Miller", 17);
-            Console.WriteLine(guest1.GuestInfo());
+            var guest1 = new Guest("Ben", "Miller", 17);
+            WriteLine(guest1.GuestInfo);
         }
-        catch (ArgumentOutOfRangeException outOfRange)
+        catch (ArgumentOutOfRangeException argumentOutOfRangeException)
         {
-
-            Console.WriteLine("Error: {0}", outOfRange.Message);
+            WriteLine($"Error: {argumentOutOfRangeException.Message}");
         }
     }
 }
 
 class Guest
 {
-    private string FirstName;
-    private string LastName;
-    private int Age;
+    private const int minimumRequiredAge = 21;
 
-    public Guest(string fName, string lName, int age)
+    private string firstName;
+    private string lastName;
+    private int age;
+
+    public Guest(string firstName, string lastName, int age)
     {
-        FirstName = fName;
-        LastName = lName;
-        if (age < 21)
-            throw new ArgumentOutOfRangeException("age","All guests must be 21-years-old or older.");
-        else
-            Age = age;
+        if (age < minimumRequiredAge)
+            throw new ArgumentOutOfRangeException(nameof(age), $"All guests must be {minimumRequiredAge}-years-old or older.");
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
     }
 
-    public string GuestInfo()
-    {
-        string gInfo = FirstName + " " + LastName + ", " + Age.ToString();
-        return(gInfo);
-    }
+    public string GuestInfo => $"{firstName} {lastName}, {age}";
 }
 // </Snippet1>

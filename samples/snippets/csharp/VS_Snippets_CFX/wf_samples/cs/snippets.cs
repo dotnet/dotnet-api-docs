@@ -1,4 +1,4 @@
-﻿
+
 using System;
 
 using System.Collections;
@@ -76,7 +76,7 @@ class snippets
         // Create a new Correlation Property object
         CorrelationProperty correlationProperty = new CorrelationProperty("taskName", "reportBalance");
         // Read the property name
-        String taskName = correlationProperty.Name;
+        string taskName = correlationProperty.Name;
         // Read the property value
         Object taskValue = correlationProperty.Value;
         //</snippet2>
@@ -838,9 +838,9 @@ class snippets
             StringBuilder b = new StringBuilder(baseIdentifier.Length);
             for (int i = 0; i < baseIdentifier.Length; i++)
             {
-                if (Char.IsUpper(baseIdentifier[i]) && (i == 0 || i == baseIdentifier.Length - 1 || Char.IsUpper(baseIdentifier[i + 1])))
+                if (char.IsUpper(baseIdentifier[i]) && (i == 0 || i == baseIdentifier.Length - 1 || char.IsUpper(baseIdentifier[i + 1])))
                 {
-                    b.Append(Char.ToLower(baseIdentifier[i]));
+                    b.Append(char.ToLower(baseIdentifier[i]));
                 }
                 else
                 {
@@ -1037,7 +1037,7 @@ class snippets
         {
             get
             {
-                return String.Empty;
+                return string.Empty;
             }
             set
             {
@@ -1693,7 +1693,7 @@ class snippets
 
             string text = this.Text;
             Rectangle textRectangle = this.TextRectangle;
-            if (!String.IsNullOrEmpty(text) && !textRectangle.IsEmpty)
+            if (!string.IsNullOrEmpty(text) && !textRectangle.IsEmpty)
             {
                 ActivityDesignerPaint.DrawText(graphics, compositeDesignerTheme.Font, text, textRectangle, StringAlignment.Center, e.AmbientTheme.TextQuality, compositeDesignerTheme.ForegroundBrush);
             }

@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 
 public class Example
@@ -8,7 +8,7 @@ public class Example
       int dimension1 = 10;
       int dimension2 = -1;
       try {
-         Array arr = Array.CreateInstance(typeof(String),
+         Array arr = Array.CreateInstance(typeof(string),
                                           dimension1, dimension2);
       }
       catch (ArgumentOutOfRangeException e) {
@@ -30,7 +30,7 @@ public class Example2
       // <Snippet2>
       int dimension1 = 10;
       int dimension2 = 10;
-      Array arr = Array.CreateInstance(typeof(String),
+      Array arr = Array.CreateInstance(typeof(string),
                                        dimension1, dimension2);
       // </Snippet2>
    }
@@ -46,7 +46,7 @@ public class Example2
          Console.WriteLine("Specify non-negative values for the two dimensions.");
       }
       else {
-         arr = Array.CreateInstance(typeof(String),
+         arr = Array.CreateInstance(typeof(string),
                                     dimension1, dimension2);
       }
       // </Snippet3>

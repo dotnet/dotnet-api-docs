@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesArrayList  {
@@ -75,7 +75,7 @@
     The   quick   brown   fox   jumps   over   the   lazy   dog   !!!
  Exception: System.ArgumentOutOfRangeException: Insertion index was out of range.  Must be non-negative and less than or equal to size.
  Parameter name: index
-    at System.Collections.ArrayList.Insert(Int32 index, Object value)
+    at System.Collections.ArrayList.Insert(int index, Object value)
     at SamplesArrayList.Main()
  */
 

@@ -1,12 +1,11 @@
 ﻿'<snippet1>
-' This example demonstrates the RegionInfo.EnglishName, NativeName, 
+' This example demonstrates the RegionInfo.EnglishName, NativeName,
 ' CurrencyEnglishName, CurrencyNativeName, and GeoId properties.
 Imports System.Globalization
 
 Class Sample
    Public Shared Sub Main()
       Dim ri As New RegionInfo("SE") ' Sweden
-      Console.Clear()
       Console.WriteLine("Region English Name: . . . {0}", ri.EnglishName)
       Console.WriteLine("Native Name: . . . . . . . {0}", ri.NativeName)
       Console.WriteLine("Currency English Name: . . {0}", ri.CurrencyEnglishName)

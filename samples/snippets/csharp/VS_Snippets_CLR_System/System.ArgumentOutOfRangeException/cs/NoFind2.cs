@@ -1,4 +1,4 @@
-﻿// <Snippet18>
+// <Snippet18>
 using System;
 
 public class Example
@@ -8,19 +8,19 @@ public class Example
       String[] phrases = { "ocean blue", "concerned citizen",
                            "runOnPhrase" };
       foreach (var phrase in phrases) {
-         String word = GetSecondWord(phrase);
-         if (! String.IsNullOrEmpty(word))
+         string word = GetSecondWord(phrase);
+         if (! string.IsNullOrEmpty(word))
             Console.WriteLine("Second word is {0}", word);
       }
    }
 
-   static String GetSecondWord(String s)
+   static string GetSecondWord(string s)
    {
       int pos = s.IndexOf(" ");
       if (pos >= 0)
          return s.Substring(pos).Trim();
       else
-         return String.Empty;
+         return string.Empty;
    }
 }
 // The example displays the following output:

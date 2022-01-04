@@ -1,6 +1,6 @@
-﻿using System;
+﻿// <Snippet16>
+using System;
 
-// <Snippet16>
 public class Example
 {
    public static void Main()

@@ -16,25 +16,25 @@ Public Class ConsoleMonitor
    Private Declare Function WriteConsole Lib "kernel32" _
                             Alias "WriteConsoleA" _
                             (hConsoleOutput As IntPtr, lpBuffer As String,
-                            nNumberOfCharsToWrite As UInteger, 
+                            nNumberOfCharsToWrite As UInteger,
                             ByRef lpNumberOfCharsWritten As UInteger,
-                            lpReserved As IntPtr) As Boolean 
+                            lpReserved As IntPtr) As Boolean
 
-   Private Declare Function CloseHandle Lib "kernel32" _ 
+   Private Declare Function CloseHandle Lib "kernel32" _
                            (handle As IntPtr) As Boolean
-                    
+
    Private disposed As Boolean = False
    Private handle As IntPtr
    Private component As Component
-   
+
    Public Sub New()
       handle = GetStdHandle(STD_OUTPUT_HANDLE)
       If handle = IntPtr.Zero Then
          Throw New InvalidOperationException("A console handle is not available.")
       End If
-      
+
       component = new Component()
-      
+
       Dim output As String = "The ConsoleMonitor class constructor." + vbCrLf
       Dim written As UInteger = 0
       WriteConsole(handle, output, CUInt(output.Length), written, IntPtr.Zero)
@@ -45,11 +45,10 @@ Public Class ConsoleMonitor
          Dim output As String = "The ConsoleMonitor finalizer." + vbCrLf
          Dim written As UInteger = 0
          WriteConsole(handle, output, CUInt(output.Length), written, IntPtr.Zero)
-      Else     
+      Else
          Console.Error.WriteLine("Object finalization.")
       End If
-      ' Call Dispose with disposing = false.
-      Dispose(false)
+      Dispose(disposing:=False)
    End Sub
 
    Public Sub Write()
@@ -63,12 +62,12 @@ Public Class ConsoleMonitor
       Dim written As UInteger = 0
       WriteConsole(handle, output, CUInt(output.Length), written, IntPtr.Zero)
 
-      Dispose(True)
-      GC.SuppressFinalize(Me) 
+      Dispose(disposing:=True)
+      GC.SuppressFinalize(Me)
    End Sub
 
    Private Sub Dispose(disposing As Boolean)
-      Dim output As String =  String.Format("The Dispose({0}) method.{1}", 
+      Dim output As String =  String.Format("The Dispose({0}) method.{1}",
                                             disposing, vbCrLf)
       Dim written As UInteger = 0
       WriteConsole(handle, output, CUInt(output.Length), written, IntPtr.Zero)
@@ -83,12 +82,12 @@ Public Class ConsoleMonitor
          ' Free unmanaged resources.
          output = "Disposing of unmanaged resources."
          WriteConsole(handle, output, CUInt(output.Length), written, IntPtr.Zero)
-         
+
          If handle <> IntPtr.Zero Then
             If Not CloseHandle(handle) Then
                Console.Error.WriteLine("Handle cannot be closed.")
-            End If    
-         End If   
+            End If
+         End If
       End If
       disposed = True
    End Sub
@@ -109,7 +108,7 @@ End Module
 '       The ConsoleMonitor finalizer.
 '       The Dispose(False) method.
 '       Disposing of unmanaged resources.
-'       
+'
 ' If the monitor.Dispose method is called, the example displays the following output:
 '       ConsoleMonitor instance....
 '       The ConsoleMonitor class constructor.

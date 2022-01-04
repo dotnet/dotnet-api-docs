@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 
 <Assembly: SecurityPermission( _
-SecurityAction.RequestMinimum, Execution:=True)> 
+SecurityAction.RequestMinimum, Execution:=True)>
 ' This class includes several Win32 interop definitions.
 Friend Class Win32
     Public Shared ReadOnly InvalidHandleValue As New IntPtr(-1)
@@ -64,13 +64,13 @@ Friend Class Win32
 End Class
 
 
-' This class wraps memory that can be simultaneously 
+' This class wraps memory that can be simultaneously
 ' shared by multiple AppDomains and Processes.
 <Serializable()> Public NotInheritable Class SharedMemory
     Implements ISerializable
     Implements IDisposable
 
-    ' The handle and string that identify 
+    ' The handle and string that identify
     ' the Windows file-mapping object.
     Private m_hFileMap As IntPtr = IntPtr.Zero
     Private m_name As String
@@ -113,7 +113,7 @@ End Class
     ' The cleanup methods.
     Public Sub Dispose() Implements IDisposable.Dispose
         GC.SuppressFinalize(Me)
-        Dispose(True)
+        Dispose(disposing:=True)
     End Sub
 
     Private Sub Dispose(ByVal disposing As Boolean)
@@ -124,7 +124,7 @@ End Class
     End Sub
 
     Protected Overrides Sub Finalize()
-        Dispose(False)
+        Dispose(disposing:=False)
     End Sub
 
 
@@ -140,7 +140,7 @@ End Class
     End Function
 
 
-    ' The security attribute demands that code that calls  
+    ' The security attribute demands that code that calls
     ' this method have permission to perform serialization.
     <SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter:=True)> _
     Sub GetObjectData(ByVal info As SerializationInfo, _
@@ -148,7 +148,7 @@ End Class
                       Implements ISerializable.GetObjectData
         ' The context's State member indicates where the object will be deserialized.
 
-        ' A SharedMemory object cannot be serialized 
+        ' A SharedMemory object cannot be serialized
         ' to any of the following destinations.
         Const InvalidDestinations As StreamingContextStates = _
            StreamingContextStates.CrossMachine Or _
@@ -262,11 +262,11 @@ Class App
         Next
         Console.WriteLine(BitConverter.ToString(b))
 
-        ' To serialize the hashtable (and its key/value pairs), you must first 
+        ' To serialize the hashtable (and its key/value pairs), you must first
         ' open a stream for writing. Use a file stream here.
         Dim fs As New FileStream("DataFile.dat", FileMode.Create)
 
-        ' Construct a BinaryFormatter telling it where 
+        ' Construct a BinaryFormatter telling it where
         ' the objects will be serialized to.
         Dim formatter As New BinaryFormatter(Nothing, _
            New StreamingContext(StreamingContextStates.CrossAppDomain))
@@ -290,7 +290,7 @@ Class App
             Dim Formatter As New BinaryFormatter(Nothing, _
                New StreamingContext(StreamingContextStates.CrossAppDomain))
 
-            ' Deserialize the SharedMemory object from the file and 
+            ' Deserialize the SharedMemory object from the file and
             ' assign the reference to the local variable.
             sm = DirectCast(Formatter.Deserialize(fs), SharedMemory)
         Catch e As SerializationException
@@ -299,7 +299,7 @@ Class App
             fs.Close()
         End Try
 
-        ' To prove that the SharedMemory object deserialized correctly, 
+        ' To prove that the SharedMemory object deserialized correctly,
         ' display some of its bytes to the console.
         Dim b(9) As Byte
         Dim x As Int32

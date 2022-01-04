@@ -67,7 +67,7 @@ public class Form1:
 		this.fileItem.MenuItems.AddRange(new MenuItem[]
 			{this.newItem, this.openItem, this.saveItem});
 
-		// Initalize the optionsMenu item and its contents.
+		// Initialize the optionsMenu item and its contents.
 		this.optionsMenu.Index = 1;
 		this.optionsMenu.Text = "Options";
 

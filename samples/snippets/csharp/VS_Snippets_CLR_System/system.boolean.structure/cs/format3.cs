@@ -1,4 +1,4 @@
-﻿// <Snippet5>
+// <Snippet5>
 using System;
 using System.Globalization;
 
@@ -12,7 +12,7 @@ public class Example
          CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
          BooleanFormatter formatter = new BooleanFormatter(culture);
 
-         String result = String.Format(formatter, "Value for '{0}': {1}", culture.Name, value);
+         string result = string.Format(formatter, "Value for '{0}': {1}", culture.Name, value);
          Console.WriteLine(result);
       }
    }
@@ -38,7 +38,7 @@ public class BooleanFormatter : ICustomFormatter, IFormatProvider
          return null;
    }
 
-   public String Format(String fmt, Object arg, IFormatProvider formatProvider)
+   public string Format(string fmt, Object arg, IFormatProvider formatProvider)
    {
       // Exit if another format provider is used.
       if (! formatProvider.Equals(this)) return null;

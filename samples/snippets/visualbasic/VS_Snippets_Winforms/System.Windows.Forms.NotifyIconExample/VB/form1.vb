@@ -59,7 +59,7 @@ Public Class Form1
     End Sub
 
     ' <snippet1>
-    ' Initalize the NofifyIcon object's shortcut menu.
+    ' Initialize the NofifyIcon object's shortcut menu.
     Private Sub InitializeContextMenu()
         Dim menuList() As MenuItem = New MenuItem() _
                     {New MenuItem("Sign In"), New MenuItem("Get Help"), _

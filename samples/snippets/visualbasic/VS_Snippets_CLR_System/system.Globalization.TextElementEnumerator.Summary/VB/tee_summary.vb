@@ -17,7 +17,7 @@ Public Class SamplesTextElementEnumerator
       Dim myTEE As TextElementEnumerator = StringInfo.GetTextElementEnumerator( myString )
 
       ' Displays the values returned by ElementIndex, Current and GetTextElement.
-      ' Current and GetTextElement return a string containing the entire text element. 
+      ' Current and GetTextElement return a string containing the entire text element.
       Console.WriteLine("Index" + ControlChars.Tab + "Current" + ControlChars.Tab + "GetTextElement")
       myTEE.Reset()
       While myTEE.MoveNext()
@@ -31,8 +31,8 @@ End Class
 'This code produces the following output.  The question marks take the place of high and low surrogates.
 '
 'Index   Current GetTextElement
-'[0]:    ??      ??
-'[2]:    a`      a`
+'[0]:    𐀀       𐀀
+'[2]:    à       à
 '[4]:    Æ       Æ
 
 ' </snippet1>

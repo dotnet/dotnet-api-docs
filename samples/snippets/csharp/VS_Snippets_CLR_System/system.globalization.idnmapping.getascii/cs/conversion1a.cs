@@ -36,7 +36,7 @@ public class Example
    {
       string output = "";
       foreach (var ch in str1)
-         output += String.Format("U+{0} ", Convert.ToUInt16(ch).ToString("X4"));
+         output += $"U+{(ushort)ch:X4} ";
 
       return output;
    }

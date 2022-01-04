@@ -14,20 +14,20 @@ Class BaseClass : Implements IDisposable
    ' Public implementation of Dispose pattern callable by consumers.
    Public Sub Dispose() _
               Implements IDisposable.Dispose
-      Dispose(True)
-      GC.SuppressFinalize(Me)           
+      Dispose(disposing:=True)
+      GC.SuppressFinalize(Me)
    End Sub
-   
+
    ' Protected implementation of Dispose pattern.
    Protected Overridable Sub Dispose(disposing As Boolean)
       If disposed Then Return
-      
+
       If disposing Then
          handle.Dispose()
          ' Free any other managed objects here.
          '
       End If
-      
+
       disposed = True
    End Sub
 End Class

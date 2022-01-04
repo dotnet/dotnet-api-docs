@@ -24,13 +24,13 @@ Public Class FileAssociationInfo : Implements IDisposable
                    Alias "RegQueryValueExW" (hKey As IntPtr, _
                    lpValueName As String, lpReserved As Integer, _
                    ByRef lpType As UInteger, lpData As String, _
-                   ByRef lpcbData As UInteger) As Integer   
+                   ByRef lpcbData As UInteger) As Integer
    Private Declare Function RegSetValueEx Lib "advapi32.dll" _
                   (hKey As IntPtr, _
                   <MarshalAs(UnmanagedType.LPStr)> lpValueName As String, _
                   reserved As Integer, dwType As UInteger, _
                   <MarshalAs(UnmanagedType.LPStr)> lpData As String, _
-                  cpData As Integer) As Integer 
+                  cpData As Integer) As Integer
    Private Declare Function RegCloseKey Lib "advapi32.dll" _
                   (hKey As IntPtr) As Integer
 
@@ -40,37 +40,37 @@ Public Class FileAssociationInfo : Implements IDisposable
 
    Private Const KEY_QUERY_VALUE As Integer = 1
    Private Const KEY_SET_VALUE As Integer = &h2
-   
+
    Private REG_SZ As UInteger = 1
-   
+
    Private Const MAX_PATH As Integer  = 260
-   
+
    Public Sub New(fileExtension As String)
       Dim retVal As Integer = 0
       Dim lpType As UInteger = 0
-                  
-      If Not fileExtension.StartsWith(".") Then 
+
+      If Not fileExtension.StartsWith(".") Then
          fileExtension = "." + fileExtension
-      End If   
+      End If
       ext = fileExtension
-       
+
       Dim hExtension As IntPtr = IntPtr.Zero
       ' Get the file extension value.
-      retVal = RegOpenKeyEx(New IntPtr(HKEY_CLASSES_ROOT), fileExtension, 0, 
+      retVal = RegOpenKeyEx(New IntPtr(HKEY_CLASSES_ROOT), fileExtension, 0,
                             KEY_QUERY_VALUE, hExtension)
-      if retVal <> ERROR_SUCCESS Then 
+      if retVal <> ERROR_SUCCESS Then
          Throw New Win32Exception(retVal)
-      End If  
+      End If
       ' Instantiate the first SafeRegistryHandle.
       hExtHandle = New SafeRegistryHandle(hExtension, True)
-      
+
       Dim appId As New String(" "c, MAX_PATH)
       Dim appIdLength As UInteger = CUInt(appId.Length)
       retVal = RegQueryValueEx(hExtHandle.DangerousGetHandle(), String.Empty, _
                                0, lpType, appId, appIdLength)
       if retVal <> ERROR_SUCCESS Then
          Throw New Win32Exception(retVal)
-      End If   
+      End If
       ' We no longer need the hExtension handle.
       hExtHandle.Dispose()
 
@@ -81,11 +81,11 @@ Public Class FileAssociationInfo : Implements IDisposable
       Dim exeName As New string(" "c, MAX_PATH)
       Dim exeNameLength As UInteger = CUInt(exeName.Length)
       Dim hAppId As IntPtr
-      retVal = RegOpenKeyEx(New IntPtr(HKEY_CLASSES_ROOT), appId, 0, 
+      retVal = RegOpenKeyEx(New IntPtr(HKEY_CLASSES_ROOT), appId, 0,
                             KEY_QUERY_VALUE Or KEY_SET_VALUE, hAppId)
-      If retVal <> ERROR_SUCCESS Then 
+      If retVal <> ERROR_SUCCESS Then
          Throw New Win32Exception(retVal)
-      End If   
+      End If
 
       ' Instantiate the second SafeRegistryHandle.
       hAppIdHandle = New SafeRegistryHandle(hAppId, True)
@@ -97,17 +97,17 @@ Public Class FileAssociationInfo : Implements IDisposable
                                String.Empty, 0, lpType, exePath, exePathLength)
       If retVal <> ERROR_SUCCESS Then
          Throw New Win32Exception(retVal)
-      End If     
+      End If
       ' Determine the number of characters without the terminating null.
       exePath = exePath.Substring(0, CInt(exePathLength) \ 2 - 1)
-  
+
       exePath = Environment.ExpandEnvironmentVariables(exePath)
       Dim position As Integer = exePath.IndexOf("%"c)
       If position >= 0 Then
          args = exePath.Substring(position)
          ' Remove command line parameters ('%0', etc.).
          exePath = exePath.Substring(0, position).Trim()
-      End If   
+      End If
       openCmd = exePath
    End Sub
 
@@ -116,38 +116,38 @@ Public Class FileAssociationInfo : Implements IDisposable
          Return ext
       End Get
    End Property
-   
+
    Public Property Open As String
       Get
          Return openCmd
-      End Get    
-      Set 
+      End Get
+      Set
         If hAppIdHandle.IsInvalid Or hAppIdHandle.IsClosed Then
            Throw New InvalidOperationException("Cannot write to registry key.")
-        End If    
+        End If
         If Not File.Exists(value) Then
            Dim message As String = String.Format("'{0}' does not exist", value)
-           Throw New FileNotFoundException(message) 
+           Throw New FileNotFoundException(message)
         End If
         Dim cmd As String = value + " %1"
-        Dim retVal As Integer = RegSetValueEx(hAppIdHandle.DangerousGetHandle(), String.Empty, 0, 
+        Dim retVal As Integer = RegSetValueEx(hAppIdHandle.DangerousGetHandle(), String.Empty, 0,
                                               REG_SZ, value, value.Length + 1)
-        If retVal <> ERROR_SUCCESS Then 
+        If retVal <> ERROR_SUCCESS Then
            Throw New Win32Exception(retVal)
-        End If                             
+        End If
       End Set
-   End Property   
-   
+   End Property
+
    Public Sub Dispose() _
-      Implements IDisposable.Dispose 
-      Dispose(true)
+      Implements IDisposable.Dispose
+      Dispose(disposing:=True)
       GC.SuppressFinalize(Me)
-   End Sub   
-   
+   End Sub
+
    Protected Sub Dispose(disposing As Boolean)
-      ' Ordinarily, we release unmanaged resources here 
+      ' Ordinarily, we release unmanaged resources here
       ' but all are wrapped by safe handles.
-      
+
       ' Release disposable objects.
       If disposing Then
          If hExtHandle IsNot Nothing Then hExtHandle.Dispose()

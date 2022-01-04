@@ -1,4 +1,4 @@
-﻿//----------------------------------------------------------------
+//----------------------------------------------------------------
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //----------------------------------------------------------------
 
@@ -78,7 +78,7 @@ namespace Microsoft.Samples.SQLStoreExtensibility
 
         public class SaveCounter : CodeActivity
         {
-            public InArgument<Int32> Counter { get; set; }
+            public InArgument<int> Counter { get; set; }
 
             protected override void Execute(CodeActivityContext context )
             {
@@ -89,7 +89,7 @@ namespace Microsoft.Samples.SQLStoreExtensibility
 
         class CounterStatus : PersistenceParticipant
         {
-            public Int32 Count { get; set; }
+            public int Count { get; set; }
 
             protected override void CollectValues(
                 out IDictionary<XName, object> readWriteValues,

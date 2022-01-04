@@ -109,10 +109,10 @@ public static class DisplayChars
          for (uint c = 0; c < 0x10; ++c) {
             uint cur = (first + 0x10 * r + c);
             if (cur  < start) {
-               Console.Write(" {0} ", Convert.ToChar(0x20));
+               Console.Write($" {(char)(0x20)} ");
             }
             else if (end < cur) {
-               Console.Write(" {0} ", Convert.ToChar(0x20));
+               Console.Write($" {(char)(0x20)} ");
             }
             else {
                // the cast to int is safe, since we know that val <= upperRange.
@@ -120,19 +120,19 @@ public static class DisplayChars
                // Display a space for code points that are not valid characters.
                if (CharUnicodeInfo.GetUnicodeCategory(chars[0]) ==
                                                UnicodeCategory.OtherNotAssigned)
-                  Console.Write(" {0} ", Convert.ToChar(0x20));
+                  Console.Write($" {(char)(0x20)} ");
                // Display a space for code points in the private use area.
                else if (CharUnicodeInfo.GetUnicodeCategory(chars[0]) ==
                                               UnicodeCategory.PrivateUse)
-                 Console.Write(" {0} ", Convert.ToChar(0x20));
+                 Console.Write($" {(char)(0x20)} ");
                // Is surrogate pair a valid character?
                // Note that the console will interpret the high and low surrogate
                // as separate (and unrecognizable) characters.
                else if (chars.Length > 1 && CharUnicodeInfo.GetUnicodeCategory(chars, 0) ==
                                             UnicodeCategory.OtherNotAssigned)
-                  Console.Write(" {0} ", Convert.ToChar(0x20));
+                  Console.Write($" {(char)(0x20)} ");
                else
-                  Console.Write(" {0} ", chars);
+                  Console.Write($" {chars} ");
             }
 
             switch (c) {

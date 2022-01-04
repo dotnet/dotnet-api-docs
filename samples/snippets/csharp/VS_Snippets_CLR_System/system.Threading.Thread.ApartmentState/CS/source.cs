@@ -11,7 +11,7 @@ class ApartmentTest
         newThread.SetApartmentState(ApartmentState.MTA);
 
         Console.WriteLine("ThreadState: {0}, ApartmentState: {1}", 
-            newThread.ThreadState, newThread.ApartmentState);
+            newThread.ThreadState, newThread.GetApartmentState());
 
         newThread.Start();
 

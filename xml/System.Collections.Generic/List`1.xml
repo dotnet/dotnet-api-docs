@@ -37,7 +37,7 @@
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Collections" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0" />
+    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Collections" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Collections" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Collections" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
   </TypeForwardingChain>
@@ -79,8 +79,8 @@
       <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerDisplay("Count = {Count}")&gt;]</AttributeName>
     </Attribute>
     <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
-      <AttributeName Language="C#">[System.Diagnostics.DebuggerTypeProxy(typeof(System.Collections.Generic.Mscorlib_CollectionDebugView`1))]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerTypeProxy(typeof(System.Collections.Generic.Mscorlib_CollectionDebugView`1))&gt;]</AttributeName>
+      <AttributeName Language="C#">[System.Diagnostics.DebuggerTypeProxy(typeof(System.Collections.Generic.Mscorlib_CollectionDebugView&lt;&gt;))]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerTypeProxy(typeof(System.Collections.Generic.Mscorlib_CollectionDebugView&lt;&gt;))&gt;]</AttributeName>
     </Attribute>
     <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
       <AttributeName Language="C#">[System.Serializable]</AttributeName>
@@ -117,11 +117,11 @@
 ## Performance Considerations  
  In deciding whether to use the <xref:System.Collections.Generic.List%601> or <xref:System.Collections.ArrayList> class, both of which have similar functionality, remember that the <xref:System.Collections.Generic.List%601> class performs better in most cases and is type safe. If a reference type is used for type `T` of the <xref:System.Collections.Generic.List%601> class, the behavior of the two classes is identical. However, if a value type is used for type `T`, you need to consider implementation and boxing issues.  
   
- If a value type is used for type `T`, the compiler generates an implementation of the <xref:System.Collections.Generic.List%601> class specifically for that value type. That means a list element of a <xref:System.Collections.Generic.List%601> object does not have to be boxed before the element can be used, and after about 500 list elements are created the memory saved not boxing list elements is greater than the memory used to generate the class implementation.  
+ If a value type is used for type `T`, the compiler generates an implementation of the <xref:System.Collections.Generic.List%601> class specifically for that value type. That means a list element of a <xref:System.Collections.Generic.List%601> object does not have to be boxed before the element can be used, and after about 500 list elements are created, the memory saved by not boxing list elements is greater than the memory used to generate the class implementation.  
   
  Make certain the value type used for type `T` implements the <xref:System.IEquatable%601> generic interface. If not, methods such as <xref:System.Collections.Generic.List%601.Contains%2A> must call the <xref:System.Object.Equals%28System.Object%29?displayProperty=nameWithType> method, which boxes the affected list element. If the value type implements the <xref:System.IComparable> interface and you own the source code, also implement the <xref:System.IComparable%601> generic interface to prevent the <xref:System.Collections.Generic.List%601.BinarySearch%2A> and <xref:System.Collections.Generic.List%601.Sort%2A> methods from boxing list elements. If you do not own the source code, pass an <xref:System.Collections.Generic.IComparer%601> object to the <xref:System.Collections.Generic.List%601.BinarySearch%2A> and <xref:System.Collections.Generic.List%601.Sort%2A> methods  
   
- It is to your advantage to use the type-specific implementation of the <xref:System.Collections.Generic.List%601> class instead of using the <xref:System.Collections.ArrayList> class or writing a strongly typed wrapper collection yourself. The reason is your implementation must do what the .NET Framework does for you already, and the common language runtime can share Microsoft intermediate language code and metadata, which your implementation cannot.  
+ It is to your advantage to use the type-specific implementation of the <xref:System.Collections.Generic.List%601> class instead of using the <xref:System.Collections.ArrayList> class or writing a strongly typed wrapper collection yourself. That's because your implementation must do what the .NET Framework does for you already, and the common language runtime can share Microsoft intermediate language code and metadata, which your implementation cannot.  
   
 ## F# Considerations  
  The <xref:System.Collections.Generic.List%601> class is used infrequently in F# code. Instead, [Lists](/dotnet/fsharp/language-reference/lists), which are immutable, singly-linked lists, are typically preferred. An F# `List` provides an ordered, immutable series of values, and is supported for use in functional-style development. When used from F#, the <xref:System.Collections.Generic.List%601> class is typically referred to by the `ResizeArray<'T>` type abbreviation to avoid naming conflicts with F# Lists.
@@ -146,10 +146,10 @@
   
  Finally, the <xref:System.Collections.Generic.List%601.Clear%2A> method is used to remove all items from the list, and the <xref:System.Collections.Generic.List%601.Capacity%2A> and <xref:System.Collections.Generic.List%601.Count%2A> properties are displayed.  
   
- [!code-cpp[List\`1_Class#1](~/samples/snippets/cpp/VS_Snippets_CLR/List`1_Class/cpp/source.cpp#1)]
- [!code-csharp-interactive[List\`1_Class#1](~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs#1)]
- [!code-vb[List\`1_Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb#1)]  
- [!code-fsharp[List\`1_Class#1](~/samples/snippets/fsharp/VS_Snippets_CLR/List`1_Class/fs/listclass.fs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/List`1_Class/cpp/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb" id="Snippet1":::  
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR/List`1_Class/fs/listclass.fs" id="Snippet1":::
   
  ]]></format>
     </remarks>
@@ -426,10 +426,10 @@
   
  Other properties and methods are used to search for, insert, and remove elements from the list, and finally to clear the list.  
   
- [!code-cpp[List\`1_Class#1](~/samples/snippets/cpp/VS_Snippets_CLR/List`1_Class/cpp/source.cpp#1)]
- [!code-csharp-interactive[List\`1_Class#1](~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs#1)]
- [!code-vb[List\`1_Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb#1)]  
- [!code-fsharp[List\`1_Class#1](~/samples/snippets/fsharp/VS_Snippets_CLR/List`1_Class/fs/listclass.fs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/List`1_Class/cpp/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb" id="Snippet1":::  
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR/List`1_Class/fs/listclass.fs" id="Snippet1":::
   
  ]]></format>
         </remarks>
@@ -890,10 +890,10 @@
   
  The <xref:System.Collections.Generic.List%601.Capacity%2A> property is displayed again after the <xref:System.Collections.Generic.List%601.TrimExcess%2A> method is used to reduce the capacity to match the count. Finally, the <xref:System.Collections.Generic.List%601.Clear%2A> method is used to remove all items from the list, and the <xref:System.Collections.Generic.List%601.Capacity%2A> and <xref:System.Collections.Generic.List%601.Count%2A> properties are displayed again.  
   
- [!code-cpp[List\`1_Class#1](~/samples/snippets/cpp/VS_Snippets_CLR/List`1_Class/cpp/source.cpp#1)]
- [!code-csharp-interactive[List\`1_Class#1](~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs#1)]
- [!code-vb[List\`1_Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb#1)]  
- [!code-fsharp[List\`1_Class#1](~/samples/snippets/fsharp/VS_Snippets_CLR/List`1_Class/fs/listclass.fs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/List`1_Class/cpp/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb" id="Snippet1":::  
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR/List`1_Class/fs/listclass.fs" id="Snippet1":::
   
  ]]></format>
         </remarks>
@@ -956,10 +956,10 @@
 
  The following example demonstrates the <xref:System.Collections.Generic.List%601.Clear%2A> method and various other properties and methods of the <xref:System.Collections.Generic.List%601> generic class. The <xref:System.Collections.Generic.List%601.Clear%2A> method is used at the end of the program, to remove all items from the list, and the <xref:System.Collections.Generic.List%601.Capacity%2A> and <xref:System.Collections.Generic.List%601.Count%2A> properties are then displayed.  
   
- [!code-cpp[List\`1_Class#1](~/samples/snippets/cpp/VS_Snippets_CLR/List`1_Class/cpp/source.cpp#1)]
- [!code-csharp-interactive[List\`1_Class#1](~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs#1)]
- [!code-vb[List\`1_Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb#1)]  
- [!code-fsharp[List\`1_Class#1](~/samples/snippets/fsharp/VS_Snippets_CLR/List`1_Class/fs/listclass.fs#1)]
+ :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/List`1_Class/cpp/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs" interactive="try-dotnet-method" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb" id="Snippet1":::  
+ :::code language="fsharp" source="~/samples/snippets/fsharp/VS_Snippets_CLR/List`1_Class/fs/listclass.fs" id="Snippet1":::
   
  ]]></format>
         </remarks>
@@ -1418,9 +1418,9 @@
         <Parameter Name="capacity" Type="System.Int32" Index="0" FrameworkAlternate="net-6.0" />
       </Parameters>
       <Docs>
-        <param name="capacity">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="capacity">The minimum capacity to ensure.</param>
+        <summary>Ensures that the capacity of this list is at least the specified <paramref name="capacity" />. If the current capacity is less than <paramref name="capacity" />, it is successively increased to twice the current capacity until it is at least the specified <paramref name="capacity" />.</summary>
+        <returns>The new capacity of this list.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1580,8 +1580,8 @@
 |<xref:System.Collections.Generic.List%601.FindIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of first computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
 |<xref:System.Collections.Generic.List%601.FindLastIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of last computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
   
- [!code-csharp[List\`1_Find_Methods#1](~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs#1)]
- [!code-vb[List\`1_Find_Methods#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -1660,8 +1660,8 @@
 |<xref:System.Collections.Generic.List%601.FindIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of first computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
 |<xref:System.Collections.Generic.List%601.FindLastIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of last computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
   
- [!code-csharp[List\`1_Find_Methods#1](~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs#1)]
- [!code-vb[List\`1_Find_Methods#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -2037,8 +2037,8 @@ Public Function StartsWith(e As Employee) As Boolean
 |<xref:System.Collections.Generic.List%601.FindIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of first computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
 |<xref:System.Collections.Generic.List%601.FindLastIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of last computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
   
- [!code-csharp[List\`1_Find_Methods#1](~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs#1)]
- [!code-vb[List\`1_Find_Methods#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -2130,8 +2130,8 @@ Public Function StartsWith(e As Employee) As Boolean
 |<xref:System.Collections.Generic.List%601.FindIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of first computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
 |<xref:System.Collections.Generic.List%601.FindLastIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of last computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
   
- [!code-csharp[List\`1_Find_Methods#1](~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs#1)]
- [!code-vb[List\`1_Find_Methods#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -2284,8 +2284,8 @@ Public Function StartsWith(e As Employee) As Boolean
 |<xref:System.Collections.Generic.List%601.FindIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of first computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
 |<xref:System.Collections.Generic.List%601.FindLastIndex%28System.Int32%2CSystem.Int32%2CSystem.Predicate%7B%600%7D%29>|Finds the index of last computer book in the second half of the collection, using the `FindComputer` predicate delegate.|  
   
- [!code-csharp[List\`1_Find_Methods#1](~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs#1)]
- [!code-vb[List\`1_Find_Methods#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb#1)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/list`1_find_methods/cs/program.cs" id="Snippet1":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/list`1_find_methods/vb/module1.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -2971,8 +2971,8 @@ Public Function StartsWith(e As Employee) As Boolean
   
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs" interactive="try-dotnet-method" id="Snippet2":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb" id="Snippet2":::
- [!code-csharp[List`1_Class#3](~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs#3)]
- [!code-vb[List`1_Class#3](~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb#3)]  
+ :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/List`1_Class/cs/source.cs" id="Snippet3":::
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/List`1_Class/vb/source.vb" id="Snippet3":::  
   
  ]]></format>
         </remarks>

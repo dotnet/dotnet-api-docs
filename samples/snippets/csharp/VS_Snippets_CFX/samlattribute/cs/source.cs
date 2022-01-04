@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 using System;
@@ -91,7 +91,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
         {
             if (!CheckIfPurchaseLimitMet(bookName))
             {
-                throw new FaultException(String.Format("Purchase limit not sufficient to purchase '{0}'", bookName));
+                throw new FaultException(string.Format("Purchase limit not sufficient to purchase '{0}'", bookName));
             }
         }
 
@@ -310,7 +310,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
                 throw new ArgumentNullException("message");
 
             if (message.Headers.Action != Constants.Trust.Actions.Issue)
-                throw new InvalidOperationException(String.Format("Bad or Unsupported Action: {0}", message.Headers.Action));
+                throw new InvalidOperationException(string.Format("Bad or Unsupported Action: {0}", message.Headers.Action));
         }
 
         /// <summary>
@@ -474,7 +474,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
         /// Default constructor.
         /// </summary>
         protected RequestSecurityTokenBase()
-            : this(String.Empty, String.Empty, 0, null)
+            : this(string.Empty, string.Empty, 0, null)
         {
         }
 
@@ -555,7 +555,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
         /// </summary>
         public RequestSecurityToken()
             :
-            this(String.Empty, String.Empty, 0, null, null)
+            this(string.Empty, string.Empty, 0, null, null)
         {
         }
 
@@ -694,10 +694,10 @@ namespace Microsoft.ServiceModel.Samples.Federation
             int initialDepth = xr.Depth;
 
             // Extract the @Context attribute value.
-            string context = xr.GetAttribute(Constants.Trust.Attributes.Context, String.Empty);
+            string context = xr.GetAttribute(Constants.Trust.Attributes.Context, string.Empty);
 
             // Set up some default values.
-            string tokenType = String.Empty;
+            string tokenType = string.Empty;
             int keySize = 0;
             EndpointAddress appliesTo = null;
             SecurityToken entropy = null;
@@ -958,7 +958,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
         /// Default constructor.
         /// </summary>
         public RequestSecurityTokenResponse()
-            : this(String.Empty, String.Empty, 0, null, null, null, false)
+            : this(string.Empty, string.Empty, 0, null, null, null, false)
         {
         }
 
@@ -1204,7 +1204,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
                                                                            subjectDistinguishedName, false);
                 if (certs.Count != 1)
                 {
-                    throw new Exception(String.Format("FedUtil: Certificate {0} not found or more than one certificate found", subjectDistinguishedName));
+                    throw new Exception(string.Format("FedUtil: Certificate {0} not found or more than one certificate found", subjectDistinguishedName));
                 }
                 return (X509Certificate2)certs[0];
             }
@@ -1351,7 +1351,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
 /*		
             BookDB = ConfigurationManager.AppSettings["bookDB"];
             CheckIfLoaded(BookDB);
-            BookDB = String.Format("{0}\\{1}", System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, BookDB);
+            BookDB = string.Format("{0}\\{1}", System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, BookDB);
 
             CertDistinguishedName = ConfigurationManager.AppSettings["certDistinguishedName"];
             CheckIfLoaded(CertDistinguishedName);
@@ -1370,7 +1370,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
         /// </summary>
         private static void CheckIfLoaded(string s)
         {
-            if (String.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(s))
             {
                 throw new ConfigurationErrorsException("Required Configuration Element(s) missing at BookStoreSTS. Please check the STS configuration file.");
             }

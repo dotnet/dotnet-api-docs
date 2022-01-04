@@ -31,7 +31,7 @@ int main()
     SamplesStringDictionary::Main();
 }
 // This code produces the following output.
-// VALUE
+// VALUES
 // verde
 // rojo
 // azul

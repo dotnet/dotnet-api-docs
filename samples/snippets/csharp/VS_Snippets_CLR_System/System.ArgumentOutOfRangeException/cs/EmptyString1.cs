@@ -1,4 +1,4 @@
-﻿// <Snippet15>
+// <Snippet15>
 using System;
 
 public class Example
@@ -11,7 +11,7 @@ public class Example
                             word, GetFirstCharacter(word));
    }
 
-   private static char GetFirstCharacter(String s)
+   private static char GetFirstCharacter(string s)
    {
       return s[0];
    }
@@ -29,16 +29,16 @@ public class Example
 public static class StringLib
 {
    // <Snippet16>
-   static char GetFirstCharacter(String s)
+   static char GetFirstCharacter(string s)
    {
-      if (String.IsNullOrEmpty(s))
+      if (string.IsNullOrEmpty(s))
          return '\u0000';
       else
          return s[0];
    }
    // </Snippet16>
 
-   public static char DoNothing(String s)
+   public static char DoNothing(string s)
    {
       return GetFirstCharacter(s);
    }

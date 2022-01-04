@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesArrayList  {
@@ -25,7 +25,7 @@
        PrintIndexAndValues( myAL );
 
        // Searches for the last occurrence of the duplicated value.
-       String myString = "the";
+       string myString = "the";
        int myIndex = myAL.LastIndexOf( myString );
        Console.WriteLine( "The last occurrence of \"{0}\" is at index {1}.", myString, myIndex );
 

@@ -1,4 +1,4 @@
-﻿// <Snippet17>
+// <Snippet17>
 using System;
 
 public class Example
@@ -11,7 +11,7 @@ public class Example
          Console.WriteLine("Second word is {0}", GetSecondWord(phrase));
    }
 
-   static String GetSecondWord(String s)
+   static string GetSecondWord(string s)
    {
       int pos = s.IndexOf(" ");
       return s.Substring(pos).Trim();

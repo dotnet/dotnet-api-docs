@@ -1,4 +1,4 @@
-﻿// <snippet2>
+// <snippet2>
 using System;
 using System.ServiceModel;
 using System.Transactions;
@@ -61,7 +61,7 @@ namespace Microsoft.WCF.Documentation
       TransactionInformation info = Transaction.Current.TransactionInformation;
       Console.WriteLine("The distributed tx ID: {0}.", info.DistributedIdentifier);
       Console.WriteLine("The tx status: {0}.", info.Status);
-      return String.Format("Hello. This was object {0}.",myID.ToString()) ;
+      return string.Format("Hello. This was object {0}.",myID.ToString()) ;
     }
 
     public void Dispose()

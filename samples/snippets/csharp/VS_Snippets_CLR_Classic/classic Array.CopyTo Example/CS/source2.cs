@@ -7,7 +7,7 @@ public class SamplesArray2
    public static void Main()
    {
       // Creates and initializes the source Array.
-      Array myArrayZero=Array.CreateInstance(typeof(String), 3);
+      Array myArrayZero=Array.CreateInstance(typeof(string), 3);
       myArrayZero.SetValue("zero", 0);
       myArrayZero.SetValue("one", 1);
 
@@ -18,7 +18,7 @@ public class SamplesArray2
       // Creates and initializes the target Array.
       int[] myArrLen = { 4 };
       int[] myArrLow = { 2 };
-      Array myArrayTwo=Array.CreateInstance(typeof(String), myArrLen, myArrLow);
+      Array myArrayTwo=Array.CreateInstance(typeof(string), myArrLen, myArrLow);
       myArrayTwo.SetValue("two", 2);
       myArrayTwo.SetValue("three", 3);
       myArrayTwo.SetValue("four", 4);

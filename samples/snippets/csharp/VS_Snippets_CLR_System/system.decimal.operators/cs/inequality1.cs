@@ -17,6 +17,6 @@ public class Example
    }
 }
 // The example displays the following output:
-//       16354.0695 = 16354.0699: True
-//       16354.07 = 16354.07: False
+//       16354.0695 <> 16354.0699: True
+//       16354.07 <> 16354.07: False
 // </Snippet2>

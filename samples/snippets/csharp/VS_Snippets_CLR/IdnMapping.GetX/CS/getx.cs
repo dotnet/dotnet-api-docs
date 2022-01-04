@@ -32,7 +32,6 @@ class Sample
                   "Note that the reconstituted string contains standard label " +
                   "separators (U+002e).";
 // ----------------------------------------------------------------------------
-    Console.Clear();
     CodePoints(name, msg1);
 // ----------------------------------------------------------------------------
 

@@ -13,7 +13,7 @@ public class Form1:
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
-        InitalizeComboBoxAndTextBoxes();
+        InitializeComboBoxAndTextBoxes();
         this.comboBox1.SelectionChangeCommitted += 
             new EventHandler(comboBox1_SelectionChangeCommitted);
         //Add any initialization after the InitializeComponent() call
@@ -65,7 +65,7 @@ public class Form1:
     internal System.Windows.Forms.ComboBox comboBox1;
     internal System.Windows.Forms.TextBox textbox1;
 
-    private void InitalizeComboBoxAndTextBoxes()
+    private void InitializeComboBoxAndTextBoxes()
     {
         this.comboBox1 = new System.Windows.Forms.ComboBox();
         this.comboBox1.Location = new Point(25, 150);

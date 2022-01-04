@@ -7,11 +7,11 @@ namespace Demo2
     enum MyColor { Red, Yellow, Blue };
 
     [EventSource(Name = "MyCompany")]
-    class MyCompanyEventSource : EventSource
+    sealed class MyCompanyEventSource : EventSource
     {
         //<Snippet2>
         //<Snippet3>
-        public class Keywords
+        public static class Keywords
         {
             public const EventKeywords Page = (EventKeywords)1;
             public const EventKeywords DataBase = (EventKeywords)2;
@@ -21,7 +21,7 @@ namespace Demo2
         //</Snippet3>
 
         //<Snippet4>
-        public class Tasks
+        public static class Tasks
         {
             public const EventTask Page = (EventTask)1;
             public const EventTask DBQuery = (EventTask)2;

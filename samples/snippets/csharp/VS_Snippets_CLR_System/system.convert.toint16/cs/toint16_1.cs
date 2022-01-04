@@ -88,10 +88,10 @@ public class Class1
       // The example displays the following output:
       //       'a' converts to 97.
       //       'z' converts to 122.
-      //       '' converts to 7.
-      //       '?' converts to 1023.
-      //       '?' converts to 32767.
-      //       Unable to convert u+FFFE to a UInt16.
+      //       '' converts to 7.
+      //       'Ͽ' converts to 1023.
+      //       '翿' converts to 32767.
+      //       Unable to convert u+FFFE to an Int16.
       // </Snippet3>
    }
 
@@ -298,15 +298,15 @@ public class Class1
          }
       }
       // The example displays the following output:
-      //    -3.40282346638529E+38 is outside the range of the Int16 type.
-      //    -13799999488 is outside the range of the Int16 type.
-      //    Converted the Double value -1023.29901123047 to the Int16 value -1023.
-      //    Converted the Double value -12.9799995422363 to the Int16 value -13.
-      //    Converted the Double value 0 to the Int16 value 0.
-      //    Converted the Double value 9.11299983940444E-16 to the Int16 value 0.
-      //    Converted the Double value 103.918998718262 to the Int16 value 104.
-      //    Converted the Double value 17834.19140625 to the Int16 value 17834.
-      //    3.40282346638529E+38 is outside the range of the Int16 type.
+      //    -3.4028235E+38 is outside the range of the Int16 type.
+      //    -1.38E+10 is outside the range of the Int16 type.
+      //    Converted the Single value -1023.299 to the Int16 value -1023.
+      //    Converted the Single value -12.98 to the Int16 value -13.
+      //    Converted the Single value 0 to the Int16 value 0.
+      //    Converted the Single value 9.113E-16 to the Int16 value 0.
+      //    Converted the Single value 103.919 to the Int16 value 104.
+      //    Converted the Single value 17834.191 to the Int16 value 17834.
+      //    3.4028235E+38 is outside the range of the Int16 type.
       // </Snippet10>
    }
 

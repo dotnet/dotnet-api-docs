@@ -9,13 +9,14 @@ class SinCos
     {
         Console.WriteLine(
             "This example of trigonometric " +
-            "Math.Sin( double ) and Math.Cos( double )\n" +
+            "Math.Sin( double ), Math.Cos( double ), and Math.SinCos( double )\n" +
             "generates the following output.\n" );
         Console.WriteLine(
             "Convert selected values for X to radians \n" +
             "and evaluate these trigonometric identities:" );
         Console.WriteLine( "   sin^2(X) + cos^2(X) == 1\n" +
                            "   sin(2 * X) == 2 * sin(X) * cos(X)" );
+        Console.WriteLine( "   cos(2 * X) == cos^2(X) - sin^2(X)" );
         Console.WriteLine( "   cos(2 * X) == cos^2(X) - sin^2(X)" );
 
         UseSineCosine(15.0);
@@ -30,6 +31,32 @@ class SinCos
 
         UseTwoAngles(15.0, 30.0);
         UseTwoAngles(30.0, 45.0);
+
+        Console.WriteLine(
+            "\nWhen you have calls to sin(X) and cos(X) they \n" +
+            "can be replaced with a single call to sincos(x):" );
+
+        UseCombinedSineCosine(15.0);
+        UseCombinedSineCosine(30.0);
+        UseCombinedSineCosine(45.0);
+    }
+
+    // Evaluate trigonometric identities with a given angle.
+    static void UseCombinedSineCosine(double degrees)
+    {
+        double angle = Math.PI * degrees / 180.0;
+        (double sinAngle, double cosAngle) = Math.SinCos(angle);
+
+        // Evaluate sin^2(X) + cos^2(X) == 1.
+        Console.WriteLine(
+            "\n                           Math.SinCos({0} deg) == ({1:E16}, {2:E16})",
+            degrees, sinAngle, cosAngle);
+        Console.WriteLine(
+            "(double sin, double cos) = Math.SinCos({0} deg)",
+            degrees );
+        Console.WriteLine(
+            "sin^2 + cos^2 == {0:E16}",
+            sinAngle * sinAngle + cosAngle * cosAngle );
     }
 
     // Evaluate trigonometric identities with a given angle.

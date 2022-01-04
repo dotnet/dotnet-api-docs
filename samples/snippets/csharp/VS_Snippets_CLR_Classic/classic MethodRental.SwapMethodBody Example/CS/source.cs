@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -8,7 +8,7 @@ class SwapMethodBodySample
 {
     // First make a method that returns 0.
     // Then swap the method body with a body that returns 1.
-    public static void Main(String [] args)
+    public static void Main(string [] args)
     {
     // Construct a dynamic assembly
     Guid g = Guid.NewGuid();

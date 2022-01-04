@@ -195,7 +195,7 @@ namespace Snip_DragNDrop
          // Set the effect based upon the KeyState.
          if ( (e->KeyState & (8 + 32)) == (8 + 32) && ((e->AllowedEffect & DragDropEffects::Link) == DragDropEffects::Link) )
          {
-            // KeyState 8 + 32 = CTL + ALT
+            // KeyState 8 + 32 = CTRL + ALT
             // Link drag-and-drop effect.
             e->Effect = DragDropEffects::Link;
          }
@@ -214,7 +214,7 @@ namespace Snip_DragNDrop
          else
          if ( (e->KeyState & 8) == 8 && ((e->AllowedEffect & DragDropEffects::Copy) == DragDropEffects::Copy) )
          {
-            // CTL KeyState for copy.
+            // CTRL KeyState for copy.
             e->Effect = DragDropEffects::Copy;
          }
          else

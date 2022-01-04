@@ -87,10 +87,10 @@ public class Example
       // The example displays the following output:
       //    Converted the Char value 'a' to the UInt32 value 97.
       //    Converted the Char value 'z' to the UInt32 value 122.
-      //    Converted the Char value '' to the UInt32 value 7.
-      //    Converted the Char value '?' to the UInt32 value 1023.
-      //    Converted the Char value '?' to the UInt32 value 32767.
-      //    Converted the Char value '?' to the UInt32 value 65534.
+      //    Converted the Char value '' to the UInt32 value 7.
+      //    Converted the Char value 'Ͽ' to the UInt32 value 1023.
+      //    Converted the Char value '翿' to the UInt32 value 32767.
+      //    Converted the Char value '￾' to the UInt32 value 65534.
       // </Snippet3>
    }
 

@@ -1,11 +1,11 @@
-﻿// <Snippet11>
+// <Snippet11>
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
 public class Continent
 {
-   public String Name { get; set; }
+   public string Name { get; set; }
    public int Population { get; set; }
    public Decimal Area { get; set; }
 }
@@ -13,7 +13,7 @@ public class Continent
 public class Example
 {
    static List<Continent> continents = new List<Continent>();
-   static String msg;
+   static string msg;
 
    public static void Main()
    {
@@ -39,8 +39,8 @@ public class Example
 
    private static void PopulateContinents(Object obj)
    {
-      String name = obj.ToString();
-      msg += String.Format("Adding '{0}' to the list.\n", name);
+      string name = obj.ToString();
+      msg += string.Format("Adding '{0}' to the list.\n", name);
       var continent = new Continent();
       continent.Name = name;
       // Sleep to simulate retrieving remaining data.

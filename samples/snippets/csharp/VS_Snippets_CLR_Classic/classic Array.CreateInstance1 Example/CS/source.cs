@@ -1,11 +1,11 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  public class SamplesArray  {
 
     public static void Main()  {
 
-       // Creates and initializes a two-dimensional Array of type String.
-       Array my2DArray=Array.CreateInstance( typeof(String), 2, 3 );
+       // Creates and initializes a two-dimensional Array of type string.
+       Array my2DArray=Array.CreateInstance( typeof(string), 2, 3 );
        for ( int i = my2DArray.GetLowerBound(0); i <= my2DArray.GetUpperBound(0); i++ )
           for ( int j = my2DArray.GetLowerBound(1); j <= my2DArray.GetUpperBound(1); j++ )
              my2DArray.SetValue( "abc" + i + j, i, j );

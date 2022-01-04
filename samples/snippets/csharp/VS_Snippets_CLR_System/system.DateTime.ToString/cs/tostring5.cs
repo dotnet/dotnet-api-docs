@@ -1,26 +1,24 @@
 ﻿// <Snippet5>
 using System;
 using System.Globalization;
-using System.Threading;
 
-public class Example
+public class Example3
 {
-   public static void Main()
-   {
-      String[] formats = { "G", "MM/yyyy", @"MM\/dd\/yyyy HH:mm",
-                           "yyyyMMdd" };
-      String[] cultureNames = { "en-US", "fr-FR" };
-      DateTime date = new DateTime(2015, 8, 18, 13, 31, 17);
-      foreach (var cultureName in cultureNames) {
-         var culture = new CultureInfo(cultureName);
-         CultureInfo.CurrentCulture = culture;
-         Console.WriteLine(culture.NativeName);
-         foreach (var format in formats)
-            Console.WriteLine("   {0}: {1}", format,
-                              date.ToString(format));
-         Console.WriteLine();
-      }
-   }
+    public static void Main3()
+    {
+        string[] formats = { "G", "MM/yyyy", @"MM\/dd\/yyyy HH:mm", "yyyyMMdd" };
+        string[] cultureNames = { "en-US", "fr-FR" };
+        DateTime date = new DateTime(2015, 8, 18, 13, 31, 17);
+        foreach (var cultureName in cultureNames)
+        {
+            var culture = new CultureInfo(cultureName);
+            CultureInfo.CurrentCulture = culture;
+            Console.WriteLine(culture.NativeName);
+            foreach (var format in formats)
+                Console.WriteLine($"   {format}: {date.ToString(format)}");
+            Console.WriteLine();
+        }
+    }
 }
 // The example displays the following output:
 //       English (United States)

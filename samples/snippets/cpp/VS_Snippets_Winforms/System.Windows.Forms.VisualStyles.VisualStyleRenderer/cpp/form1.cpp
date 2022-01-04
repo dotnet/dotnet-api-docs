@@ -173,7 +173,7 @@ namespace VisualStyleRendererSample
             // to the Dictionary of rectangles.
             elementRectangles["windowClose"] =
                 Rectangle(ClientRectangle.Right +
-                    closeButtonOffset.X, closeButtonOffset.Y,
+                    closeButtonOffset.X - closeButtonSize.Width - frameThickness, closeButtonOffset.Y,
                     closeButtonSize.Width, closeButtonSize.Height);
 
             // Calculate the status bar rectangles and add them

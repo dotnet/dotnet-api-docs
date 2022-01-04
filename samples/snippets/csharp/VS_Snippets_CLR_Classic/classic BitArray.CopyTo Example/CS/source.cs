@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Collections;
  public class SamplesBitArray  {
@@ -56,7 +56,7 @@
 
        // Returns an exception if the array is not of type Boolean, integer or byte.
        try  {
-          Array myStringArray=Array.CreateInstance( typeof(String), 8 );
+          Array myStringArray=Array.CreateInstance( typeof(string), 8 );
           myStringArray.SetValue( "Hello", 0 );
           myStringArray.SetValue( "World", 1 );
           myBA.CopyTo( myStringArray, 3 );
@@ -87,7 +87,7 @@
        10      11       0       0       0       0       0       0
        10      11       0      15       0       0       0       0
  Exception: System.ArgumentException: Only supported array types for CopyTo on BitArrays are Boolean[], Int32[] and Byte[].
-    at System.Collections.BitArray.CopyTo(Array array, Int32 index)
+    at System.Collections.BitArray.CopyTo(Array array, int index)
     at SamplesBitArray.Main()
 
  */

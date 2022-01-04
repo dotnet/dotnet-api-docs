@@ -126,7 +126,7 @@ class AttributeEqualsDemo
     }
     }
 /*
-The example displays the following output.
+The example displays an output similar to the following:
 //         Compare a usage attribute instance to another instance of the same attribute:
 //            "ArgumentUsageAttribute: Must pass an array here." ==
 //            "ArgumentUsageAttribute: Must pass an array here."? True

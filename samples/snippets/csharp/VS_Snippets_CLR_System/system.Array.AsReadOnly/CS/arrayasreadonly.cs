@@ -1,4 +1,4 @@
-﻿// The following example wraps an array in a read-only IList.
+// The following example wraps an array in a read-only IList.
 
 // <Snippet1>
 using System;
@@ -16,7 +16,7 @@ public class SamplesArray  {
       PrintIndexAndValues( myArr );
 
       // Create a read-only IList wrapper around the array.
-      IList<String> myList = Array.AsReadOnly( myArr );
+      IList<string> myList = Array.AsReadOnly( myArr );
 
       // Display the values of the read-only IList.
       Console.WriteLine( "The read-only IList contains the following values:" );
@@ -50,7 +50,7 @@ public class SamplesArray  {
       Console.WriteLine();
    }
 
-   public static void PrintIndexAndValues( IList<String> myList )  {
+   public static void PrintIndexAndValues( IList<string> myList )  {
       for ( int i = 0; i < myList.Count; i++ )  {
          Console.WriteLine( "   [{0}] : {1}", i, myList[i] );
       }

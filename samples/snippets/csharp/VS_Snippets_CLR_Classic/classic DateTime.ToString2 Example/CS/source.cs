@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
  using System;
  using System.Globalization;
 
@@ -21,10 +21,10 @@ public class MainClass {
             "M/yy",
             "dd-MM-yy",
         };
-        String date;
+        string date;
         for (int i = 0; i < format.Length; i++) {
             date = dt.ToString(format[i], DateTimeFormatInfo.InvariantInfo);
-            Console.WriteLine(String.Concat(format[i], " :" , date));
+            Console.WriteLine(string.Concat(format[i], " :" , date));
         }
 
    /** Output.

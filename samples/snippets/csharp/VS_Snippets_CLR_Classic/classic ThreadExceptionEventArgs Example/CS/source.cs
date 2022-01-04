@@ -1,4 +1,4 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -57,7 +57,7 @@ using System.Windows.Forms;
     {
        string errorMsg = "An error occurred.  Please contact the adminstrator " +
             "with the following information:\n\n";
-       errorMsg += String.Format("Exception Type: {0}\n\n", e.GetType().Name);
+       errorMsg += string.Format("Exception Type: {0}\n\n", e.GetType().Name);
        errorMsg += "\n\nStack Trace:\n" + e.StackTrace;
        return MessageBox.Show(errorMsg, "Application Error",
             MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Stop);

@@ -55,7 +55,7 @@ class StringRW
             if(intCharacter == -1) break;
 
             // <Snippet3>
-            convertedCharacter = Convert.ToChar(intCharacter);
+            convertedCharacter = (char)intCharacter;
             if(convertedCharacter == '.')
             {
                 strWriter.Write(".\n\n");

@@ -15,7 +15,7 @@ public class FSSeek
             for (offset = 1; offset <= fs.Length; offset++)
             {
                 fs.Seek(-offset, SeekOrigin.End);
-                Console.Write(Convert.ToChar(fs.ReadByte()));
+                Console.Write((char)fs.ReadByte());
             }
             Console.WriteLine();
 
@@ -23,7 +23,7 @@ public class FSSeek
 
             while ((nextByte = fs.ReadByte()) > 0)
             {
-                Console.Write(Convert.ToChar(nextByte));
+                Console.Write((char)nextByte);
             }
             Console.WriteLine();
         }

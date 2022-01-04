@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using System.Collections.ObjectModel;
 using System.Workflow.Activities;
@@ -851,7 +851,7 @@ namespace WF_Snippets
         {
             get
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
         //</snippet122>

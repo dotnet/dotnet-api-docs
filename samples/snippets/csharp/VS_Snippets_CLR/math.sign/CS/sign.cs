@@ -15,6 +15,7 @@ class Sample
         float    xSingle1  = 0.0f;
         double   xDouble1  = 6.0;
         Decimal  xDecimal1 = -7m;
+        nint     xIntPtr1  = 8;
 
         // The following type is not CLS-compliant.
         sbyte    xSbyte1   = -101;
@@ -27,6 +28,7 @@ class Sample
         Console.WriteLine(str, "Single ", xSingle1, Test(Math.Sign(xSingle1)));
         Console.WriteLine(str, "Double ", xDouble1, Test(Math.Sign(xDouble1)));
         Console.WriteLine(str, "Decimal", xDecimal1, Test(Math.Sign(xDecimal1)));
+        Console.WriteLine(str, "IntPtr", xIntPtr1, Test(Math.Sign(xIntPtr1)));
 
         Console.WriteLine($"{nl}The following type is not CLS-compliant.");
         Console.WriteLine(str, "SByte  ", xSbyte1, Test(Math.Sign(xSbyte1)));
@@ -53,6 +55,7 @@ Int64  :  -4 is less than zero.
 Single :   0 is equal to zero.
 Double :   6 is greater than zero.
 Decimal:  -7 is less than zero.
+IntPtr:    8 is greater than zero.
 
 The following type is not CLS-compliant.
 SByte  : -101 is less than zero.
