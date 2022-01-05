@@ -28,10 +28,10 @@ longBitsToDouble 0x3DF0000000000000L
 longBitsToDouble 0x0000000000000001L
 longBitsToDouble 0x000000000000FFFFL
 longBitsToDouble 0x0000FFFFFFFFFFFFL
-longBitsToDouble 0xFFFFFFFFFFFFFFFFL       //
-longBitsToDouble 0xFFF0000000000000L            //
+longBitsToDouble 0xFFFFFFFFFFFFFFFFL
+longBitsToDouble 0xFFF0000000000000L
 longBitsToDouble 0x7FF0000000000000L
-longBitsToDouble 0xFFEFFFFFFFFFFFFFL        //
+longBitsToDouble 0xFFEFFFFFFFFFFFFFL
 longBitsToDouble 0x7FEFFFFFFFFFFFFFL
 longBitsToDouble Int64.MinValue
 longBitsToDouble Int64.MaxValue
