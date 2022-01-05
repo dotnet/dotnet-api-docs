@@ -11,7 +11,7 @@ public class Example
       double[] numbers = { -1.0, -16.3, -106.35 };
 
       foreach (var number in numbers)
-         Console.WriteLine(number.ToString(culture));
+         Console.WriteLine(number.ToString(ci));
    }
 }
 // The example displays the following output:
