@@ -1,4 +1,6 @@
-﻿// <Snippet2>
+﻿module TryParseExact2
+
+// <Snippet2>
 open System
 open System.Globalization
 
