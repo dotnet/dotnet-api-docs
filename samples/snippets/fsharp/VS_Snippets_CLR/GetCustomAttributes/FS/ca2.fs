@@ -15,18 +15,18 @@ do ()
 type DemoClass = class end
 
 // Get the Module type to access its metadata.
-let module' = typeof<DemoClass>.Module
+let ilmodule = typeof<DemoClass>.Module
 
 // Iterate through all the attributes for the module.
-for attr in Attribute.GetCustomAttributes module' do
+for attr in Attribute.GetCustomAttributes ilmodule do
     match attr with
     // Check for the Description attribute.
     | :? DescriptionAttribute as attr ->
-        printfn $"Module {module'.Name} has the description \"{attr.Description}\"."
+        printfn $"Module {ilmodule.Name} has the description \"{attr.Description}\"."
                 
     // Check for the CLSCompliant attribute.
     | :? CLSCompliantAttribute as attr ->
-        printfn $"""Module {module'.Name} {if attr.IsCompliant then "is" else "is not"} CLSCompliant."""
+        printfn $"""Module {ilmodule.Name} {if attr.IsCompliant then "is" else "is not"} CLSCompliant."""
     | _ -> ()
     
 // Output:
