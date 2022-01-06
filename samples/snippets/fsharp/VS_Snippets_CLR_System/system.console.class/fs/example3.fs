@@ -32,7 +32,7 @@ let displayRange (start: uint) (``end``: uint) =
             (String.Format("0x{0:X5} is outside the upper range of Unicode code points (0x{0:X5})", ``end``, upperRange))
 
     // Since we're using 21-bit code points, we can't use U+D800 to U+DFFF.
-    if ((start < surrogateStart && ``end`` > surrogateStart) || (start >= surrogateStart && start <= surrogateEnd)) then
+    if (start < surrogateStart && ``end`` > surrogateStart) || (start >= surrogateStart && start <= surrogateEnd) then
         raise
             (ArgumentException
                 (String.Format
@@ -53,13 +53,13 @@ let displayRange (start: uint) (``end``: uint) =
                 printf " %c " (Convert.ToChar 0x20)
             else
                 // the cast to int is safe, since we know that val <= upperRange.
-                let chars = Char.ConvertFromUtf32((int) cur)
+                let chars = Char.ConvertFromUtf32(int cur)
                 // Display a space for code points that are not valid characters.
-                if CharUnicodeInfo.GetUnicodeCategory(chars.[0]) = UnicodeCategory.OtherNotAssigned then
+                if CharUnicodeInfo.GetUnicodeCategory(chars[0]) = UnicodeCategory.OtherNotAssigned then
                     printf " %c " (Convert.ToChar 0x20)
                 else
                     // Display a space for code points in the private use area.
-                    if CharUnicodeInfo.GetUnicodeCategory(chars.[0]) = UnicodeCategory.PrivateUse then
+                    if CharUnicodeInfo.GetUnicodeCategory(chars[0]) = UnicodeCategory.PrivateUse then
                         printf " %c " (Convert.ToChar 0x20)
                     else if chars.Length > 1
                             && CharUnicodeInfo.GetUnicodeCategory(chars, 0) = UnicodeCategory.OtherNotAssigned then
@@ -89,8 +89,8 @@ let main args =
                 | 2 ->
                     Some
                         {| setOutputEncodingToUnicode = true
-                           rangeStart = uint.Parse(args.[0], NumberStyles.HexNumber)
-                           rangeEnd = uint.Parse(args.[1], NumberStyles.HexNumber) |}
+                           rangeStart = uint.Parse(args[0], NumberStyles.HexNumber)
+                           rangeEnd = uint.Parse(args[1], NumberStyles.HexNumber) |}
                 | 3 ->
                     let parseHexNumberOrThrow (value: string) parameterName =
                         (uint.TryParse(value, NumberStyles.HexNumber, null))
@@ -100,16 +100,16 @@ let main args =
                         | (true, value) -> value
 
                     let setOutputEncodingToUnicode =
-                        match bool.TryParse args.[2] with
+                        match bool.TryParse args[2] with
                         | true, value -> value
                         | false, _ -> true
 
                     Some
                         {| setOutputEncodingToUnicode = setOutputEncodingToUnicode
-                           rangeStart = parseHexNumberOrThrow args.[0] "rangeStart"
-                           rangeEnd = parseHexNumberOrThrow args.[1] "rangeEnd" |}
+                           rangeStart = parseHexNumberOrThrow args[0] "rangeStart"
+                           rangeEnd = parseHexNumberOrThrow args[1] "rangeEnd" |}
                 | _ ->
-                    printfn "Usage: %s <%s> <%s> [%s]" (Environment.GetCommandLineArgs().[0]) "startingCodePointInHex"
+                    printfn "Usage: %s <%s> <%s> [%s]" (Environment.GetCommandLineArgs()[0]) "startingCodePointInHex"
                         "endingCodePointInHex" "<setOutputEncodingToUnicode?{true|false, default:false}>"
                     None
 
