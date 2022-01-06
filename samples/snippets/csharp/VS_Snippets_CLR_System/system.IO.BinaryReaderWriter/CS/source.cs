@@ -1,6 +1,7 @@
 ﻿// <Snippet1>
 using System;
 using System.IO;
+using System.Text;
 
 class ConsoleApplication
 {
@@ -14,12 +15,15 @@ class ConsoleApplication
 
     public static void WriteDefaultValues()
     {
-        using (BinaryWriter writer = new BinaryWriter(File.Open(fileName, FileMode.Create)))
+        using (var stream = File.Open(fileName, FileMode.Create))
         {
-            writer.Write(1.250F);
-            writer.Write(@"c:\Temp");
-            writer.Write(10);
-            writer.Write(true);
+            using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
+            {
+                writer.Write(1.250F);
+                writer.Write(@"c:\Temp");
+                writer.Write(10);
+                writer.Write(true);
+            }
         }
     }
 
@@ -32,12 +36,15 @@ class ConsoleApplication
 
         if (File.Exists(fileName))
         {
-            using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))
+            using (var stream = File.Open(fileName, FileMode.Open))
             {
-                aspectRatio = reader.ReadSingle();
-                tempDirectory = reader.ReadString();
-                autoSaveTime = reader.ReadInt32();
-                showStatusBar = reader.ReadBoolean();
+                using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                {
+                    aspectRatio = reader.ReadSingle();
+                    tempDirectory = reader.ReadString();
+                    autoSaveTime = reader.ReadInt32();
+                    showStatusBar = reader.ReadBoolean();
+                }
             }
 
             Console.WriteLine("Aspect ratio set to: " + aspectRatio);
