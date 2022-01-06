@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-public class Form1
+public class Form4
 {
     protected DataSet DataSet1;
 

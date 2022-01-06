@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 
 //<Snippet1>
-public class Product : IEquatable<Product>
+public class MyProduct : IEquatable<MyProduct>
 {
     public string Name { get; set; }
     public int Code { get; set; }
 
-    public bool Equals(Product other)
+    public bool Equals(MyProduct other)
     {
 
         //Check whether the compared object is null.
@@ -39,7 +39,7 @@ public class Product : IEquatable<Product>
 }
 //</Snippet1>
 
-class Program
+class Program1
 {
     static void Main(string[] args)
     {
@@ -53,14 +53,6 @@ class Program
         ProductA[] store2 = { new ProductA { Name = "apple", Code = 9 },
                                new ProductA { Name = "lemon", Code = 12 } };
         //</Snippet10>
-
-        //<Snippet2>
-        Product[] store1 = { new Product { Name = "apple", Code = 9 },
-                               new Product { Name = "orange", Code = 4 } };
-
-        Product[] store2 = { new Product { Name = "apple", Code = 9 },
-                               new Product { Name = "lemon", Code = 12 } };
-        //</Snippet2>
 
         //INTERSECT
 
@@ -104,14 +96,14 @@ class Program
         //DISTINCT
 
         //<Snippet5>
-        Product[] products = { new Product { Name = "apple", Code = 9 },
-                               new Product { Name = "orange", Code = 4 },
-                               new Product { Name = "apple", Code = 9 },
-                               new Product { Name = "lemon", Code = 12 } };
+        MyProduct[] products = { new MyProduct { Name = "apple", Code = 9 },
+                               new MyProduct { Name = "orange", Code = 4 },
+                               new MyProduct { Name = "apple", Code = 9 },
+                               new MyProduct { Name = "lemon", Code = 12 } };
 
         //Exclude duplicates.
 
-        IEnumerable<Product> noduplicates =
+        IEnumerable<MyProduct> noduplicates =
             products.Distinct();
 
         foreach (var product in noduplicates)

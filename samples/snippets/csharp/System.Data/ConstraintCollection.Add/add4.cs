@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 
-public class Form1: Form
+public class Form5: Form
 {
     protected DataSet DataSet1;
 
