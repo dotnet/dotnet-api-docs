@@ -4,13 +4,14 @@ using System.Threading;
 
 class Test
 {
-    // Create a new Mutex. The creating thread owns the Mutex.
-    private static Mutex mut = new Mutex(true);
+    private static Mutex mut;
     private const int numIterations = 1;
     private const int numThreads = 3;
 
     static void Main()
     {
+        // Create a new Mutex. The creating thread owns the Mutex.
+        mut = new Mutex(true);
         // Create the threads that will use the protected resource.
         for(int i = 0; i < numThreads; i++)
         {
