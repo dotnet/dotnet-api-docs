@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
  using System;
  using System.Collections;
- public class SamplesArrayList  {
+ public class SamplesArrayList1  {
 
     public static void Main()  {
 

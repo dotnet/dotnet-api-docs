@@ -1,6 +1,6 @@
-// <Snippet1>
+﻿// <Snippet1>
  using System;
- public class SamplesArray  {
+ public class SamplesArray3  {
 
     public static void Main()  {
 

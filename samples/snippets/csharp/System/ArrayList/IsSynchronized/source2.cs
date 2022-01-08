@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-public class SamplesArrayList
+public class SamplesArrayList2
 {
     public static void Main()
     {
