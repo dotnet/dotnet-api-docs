@@ -46,7 +46,7 @@ public class Form2
     [STAThread]
     static void Main()
     {
-        Form1 myForm = new Form1();
+        var myForm = new Form2();
         myForm.Method(Option.Second, "not an integer string");
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 // <Snippet1>
 // Create an index for an array.

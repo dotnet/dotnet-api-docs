@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Data;
 using System.Diagnostics;
 
-public class Form1
+public class Form2
 {
     // <Snippet1>
     public static void MyMethod(Type type, Type baseType)
@@ -12,6 +11,5 @@ public class Form1
 
         // Perform some processing.
     }
-
     // </Snippet1>
 }
