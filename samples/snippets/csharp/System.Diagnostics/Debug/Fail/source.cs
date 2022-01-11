@@ -3,7 +3,7 @@ using System.Data;
 using System.Diagnostics;
 
 public class Form1
-
+{
     protected enum Option { First, Second };
 
     protected Option option;

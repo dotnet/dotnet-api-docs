@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.ComponentModel;
+﻿using System.Diagnostics;
 
 // <Snippet1>
 // Create a trace listener for the event log.

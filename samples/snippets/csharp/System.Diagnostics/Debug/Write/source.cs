@@ -2,19 +2,24 @@
 using System.Data;
 using System.Diagnostics;
 
-// <Snippet1>
-// Class-level declaration.
-// Create a TraceSwitch.
-static TraceSwitch generalSwitch = new TraceSwitch("General", "Entire Application");
-
-static public void MyErrorMethod(Object myObject, string category)
+class Class1
 {
-    // Write the message if the TraceSwitch level is set to Error or higher.
-    if (generalSwitch.TraceError)
-        Debug.Write(myObject, category);
+    public static void Main() { }
 
-    // Write a second message if the TraceSwitch level is set to Verbose.
-    if (generalSwitch.TraceVerbose)
-        Debug.WriteLine(" Object is not valid for this category.");
+    // <Snippet1>
+    // Class-level declaration.
+    // Create a TraceSwitch.
+    static TraceSwitch generalSwitch = new TraceSwitch("General", "Entire Application");
+
+    static public void MyErrorMethod(Object myObject, string category)
+    {
+        // Write the message if the TraceSwitch level is set to Error or higher.
+        if (generalSwitch.TraceError)
+            Debug.Write(myObject, category);
+
+        // Write a second message if the TraceSwitch level is set to Verbose.
+        if (generalSwitch.TraceVerbose)
+            Debug.WriteLine(" Object is not valid for this category.");
+    }
+    // </Snippet1>
 }
-// </Snippet1>
