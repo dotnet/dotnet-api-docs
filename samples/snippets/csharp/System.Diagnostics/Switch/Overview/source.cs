@@ -11,75 +11,77 @@ public enum MethodTracingSwitchLevel
     Both = 3,
 }
 // </Snippet1>
+
 // <Snippet2>
 public class MyMethodTracingSwitch : Switch
 {
-     protected bool outExit;
-     protected bool outEnter;
-     protected MethodTracingSwitchLevel level;
+    protected bool outExit;
+    protected bool outEnter;
+    protected MethodTracingSwitchLevel level;
 
-     public MyMethodTracingSwitch(string displayName, string description) :
-         base(displayName, description)
-     {
-     }
+    public MyMethodTracingSwitch(string displayName, string description) :
+        base(displayName, description)
+    {
+    }
 
-     public MethodTracingSwitchLevel Level
-     {
-         get
-         {
-             return level;
-         }
-         set
-         {
-             SetSwitchSetting((int)value);
-         }
-     }
+    public MethodTracingSwitchLevel Level
+    {
+        get
+        {
+            return level;
+        }
+        set
+        {
+            SetSwitchSetting((int)value);
+        }
+    }
 
-     protected void SetSwitchSetting(int value)
-     {
-         if (value < 0)
-         {
-             value = 0;
-         }
-         if (value > 3)
-         {
-             value = 3;
-         }
+    protected void SetSwitchSetting(int value)
+    {
+        if (value < 0)
+        {
+            value = 0;
+        }
+        if (value > 3)
+        {
+            value = 3;
+        }
 
-         level = (MethodTracingSwitchLevel)value;
+        level = (MethodTracingSwitchLevel)value;
 
-         outEnter = false;
-         if ((value == (int)MethodTracingSwitchLevel.EnteringMethod) ||
-             (value == (int)MethodTracingSwitchLevel.Both))
-         {
-             outEnter = true;
-         }
+        outEnter = false;
+        if ((value == (int)MethodTracingSwitchLevel.EnteringMethod) ||
+            (value == (int)MethodTracingSwitchLevel.Both))
+        {
+            outEnter = true;
+        }
 
-         outExit = false;
-         if ((value == (int)MethodTracingSwitchLevel.ExitingMethod) ||
-             (value == (int)MethodTracingSwitchLevel.Both))
-         {
-             outExit = true;
-         }
-     }
+        outExit = false;
+        if ((value == (int)MethodTracingSwitchLevel.ExitingMethod) ||
+            (value == (int)MethodTracingSwitchLevel.Both))
+        {
+            outExit = true;
+        }
+    }
 
-     public bool OutputExit
-     {
-         get
-         {
-             return outExit;
-         }
-     }
+    public bool OutputExit
+    {
+        get
+        {
+            return outExit;
+        }
+    }
 
-     public bool OutputEnter
-     {
-         get
-         {
-             return outEnter;
-         }
-     }
- }
+    public bool OutputEnter
+    {
+        get
+        {
+            return outEnter;
+        }
+    }
+}
 // </Snippet2>
+
 // <Snippet3>
 public class Class1
 {

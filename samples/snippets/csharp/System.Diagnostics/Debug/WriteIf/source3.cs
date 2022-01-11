@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Diagnostics;
-using System.Windows.Forms;
 
-public class Form4 : Form
+
+public class Form4
 {
-    protected TextBox textBox1;
     // <Snippet1>
     // Class-level declaration.
     // Create a TraceSwitch.
@@ -19,6 +18,5 @@ public class Form4 : Form
         // Write a second message if the TraceSwitch level is set to Error or higher.
         Debug.WriteLineIf(generalSwitch.TraceError, " Object is not valid for this category.");
     }
-
     // </Snippet1>
 }

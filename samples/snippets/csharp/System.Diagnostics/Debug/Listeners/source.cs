@@ -7,5 +7,4 @@ using System.Diagnostics;
   * add it to the debug listeners. */
 var myWriter = new TextWriterTraceListener(System.Console.Out);
 Debug.Listeners.Add(myWriter);
-
 // </Snippet1>

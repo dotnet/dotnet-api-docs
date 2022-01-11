@@ -1,13 +1,12 @@
-#define TRACE
+﻿#define TRACE
 
 using System;
 using System.Data;
 using System.Diagnostics;
-using System.Windows.Forms;
 
-public class Form1: Form
+public class Form1
 {
-    public enum Option {First, Second};
+    public enum Option { First, Second };
 
     protected double result;
 
@@ -15,28 +14,31 @@ public class Form1: Form
     {
         int value = 0;
         int newValue = 1;
-        try {
+        try
+        {
             value = int.Parse(userInput);
         }
         // <Snippet1>
-        catch (Exception) {
+        catch (Exception)
+        {
             Trace.Fail("Invalid value: " + value.ToString(),
                "Resetting value to newValue.");
             value = newValue;
         }
         // </Snippet1>
         // <Snippet2>
-        switch (option) {
+        switch (option)
+        {
             case Option.First:
-               result = 1.0;
-               break;
+                result = 1.0;
+                break;
 
             // Insert additional cases.
 
             default:
-               Trace.Fail("Unsupported option " + option, "Result set to 1.0");
-               result = 1.0;
-               break;
+                Trace.Fail("Unsupported option " + option, "Result set to 1.0");
+                result = 1.0;
+                break;
         }
         // </Snippet2>
     }

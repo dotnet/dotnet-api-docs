@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Diagnostics;
-using System.Windows.Forms;
 
-public class Form2 : Form
+public class Form2
 {
-    protected TextBox textBox1;
     protected enum MyOption { First, Second };
     protected MyOption option1;
     protected double result;
@@ -24,6 +22,7 @@ public class Form2 : Form
             value = newValue;
         }
         // </Snippet1>
+
         // <Snippet2>
         switch (option1)
         {

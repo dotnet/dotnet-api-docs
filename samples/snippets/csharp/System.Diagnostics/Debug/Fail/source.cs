@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Diagnostics;
-using System.Windows.Forms;
 
-public class Form1 : Form
-{
-    protected TextBox textBox1;
+public class Form1
 
     protected enum Option { First, Second };
 
@@ -13,18 +10,17 @@ public class Form1 : Form
 
     protected double result;
 
-    protected void Method()
+    public static void Main()
     {
         try
-        {
-            //
-        }
+        { }
         // <Snippet1>
         catch (Exception)
         {
             Debug.Fail("Unknown Option " + option + ", using the default.");
         }
         // </Snippet1>
+
         // <Snippet2>
         switch (option)
         {

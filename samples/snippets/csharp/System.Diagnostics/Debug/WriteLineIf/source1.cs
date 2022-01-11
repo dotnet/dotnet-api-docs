@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Diagnostics;
-using System.Windows.Forms;
 
-public class Form2 : Form
+public class Form2
 {
-    protected TextBox textBox1;
     // <Snippet1>
     // Class-level declaration.
     // Create a TraceSwitch.
@@ -19,6 +17,5 @@ public class Form2 : Form
         // Write a second message if the TraceSwitch level is set to Verbose.
         Debug.WriteLineIf(generalSwitch.TraceVerbose, myObject);
     }
-
     // </Snippet1>
 }

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Diagnostics;
-using System.Windows.Forms;
 
-public class Form2 : Form
+public class Form2
 {
-    protected TextBox textBox1;
     // <Snippet1>
     public static void MyMethod(Type type, Type baseType)
     {
@@ -13,6 +11,5 @@ public class Form2 : Form
 
         // Perform some processing.
     }
-
     // </Snippet1>
 }
