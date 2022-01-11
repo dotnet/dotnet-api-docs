@@ -3,12 +3,10 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-class MySample
+class MySample1
 {
-
     public static void Main()
     {
-
         string logName;
 
         if (EventLog.SourceExists("MySource"))

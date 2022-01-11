@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 
-public class SamplesQueue
+public class SamplesQueue2
 {
     public static void Main()
     {
         // <Snippet2>
         Queue myCollection = new Queue();
-        lock(myCollection.SyncRoot)
+        lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)
             {

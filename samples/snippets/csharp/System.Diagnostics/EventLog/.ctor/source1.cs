@@ -3,8 +3,8 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-class MySample{
-
+class MySample1
+{
     public static void Main()
     {
         // Create the source, if it does not already exist.
@@ -24,7 +24,8 @@ class MySample{
         EventLog myLog = new EventLog("myNewLog", "myServer");
 
         // Read the event log entries.
-        foreach(EventLogEntry entry in myLog.Entries){
+        foreach (EventLogEntry entry in myLog.Entries)
+        {
             Console.WriteLine("\tEntry: " + entry.Message);
         }
     }

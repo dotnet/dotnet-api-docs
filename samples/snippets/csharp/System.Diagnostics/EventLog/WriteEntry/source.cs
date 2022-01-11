@@ -3,12 +3,14 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-class MySample{
+class MySample
+{
 
-    public static void Main(){
+    public static void Main()
+    {
 
         // Create the source, if it does not already exist.
-        if(!EventLog.SourceExists("MySource"))
+        if (!EventLog.SourceExists("MySource"))
         {
             // An event log source should not be created and immediately used.
             // There is a latency time to enable the source, it should be created

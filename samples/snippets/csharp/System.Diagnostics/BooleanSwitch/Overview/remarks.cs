@@ -3,11 +3,11 @@ using System.Diagnostics;
 
 public class SomeClass
 {
-// <Snippet2>
+    // <Snippet2>
     private static BooleanSwitch boolSwitch = new BooleanSwitch("mySwitch",
         "Switch in config file");
 
-    public static void Main( )
+    public static void Main()
     {
         //...
         Console.WriteLine("Boolean switch {0} configured as {1}",
@@ -17,5 +17,5 @@ public class SomeClass
             //...
         }
     }
-// </Snippet2>
+    // </Snippet2>
 }

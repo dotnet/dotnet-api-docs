@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 
-public class SamplesSortedList
+public class SamplesSortedList2
 {
     public static void Main()
     {
         // <Snippet2>
         SortedList myCollection = new SortedList();
-        lock(myCollection.SyncRoot)
+        lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)
             {

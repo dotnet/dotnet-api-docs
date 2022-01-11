@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections;
 
-public class SamplesStack
+public class SamplesStack2
 {
     public static void Main()
     {
         // <Snippet2>
         Stack myCollection = new Stack();
 
-        lock(myCollection.SyncRoot)
+        lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)
             {

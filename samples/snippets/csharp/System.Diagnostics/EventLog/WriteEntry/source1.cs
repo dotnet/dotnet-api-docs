@@ -3,9 +3,11 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-class MySample{
+class MySample1
+{
 
-    public static void Main(){
+    public static void Main()
+    {
 
         // Create an EventLog instance and assign its source.
         EventLog myLog = new EventLog("MyNewLog");

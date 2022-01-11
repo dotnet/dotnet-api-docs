@@ -5,10 +5,8 @@ using System.Threading;
 
 class MySample
 {
-
     public static void Main()
     {
-
         string logName;
 
         if (EventLog.SourceExists("MySource", "MyMachine"))
