@@ -4,9 +4,9 @@ using System.Diagnostics;
 
 // <Snippet1>
 // Create an index for an array.
-protected int index;
+int index;
 
-protected void Method()
+void Method()
 {
     // Perform some action that sets the index.
 
