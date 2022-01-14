@@ -27,8 +27,6 @@ namespace SequencePointSnippets
             // Open Portable PDB file
             using var fs = new FileStream(pdbPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             using MetadataReaderProvider provider = MetadataReaderProvider.FromPortablePdbStream(fs);
-
-            // Stream is disposed by MetadataReaderProvider
             MetadataReader reader = provider.GetMetadataReader();
 
             if (rowNumber > reader.MethodDebugInformation.Count)
