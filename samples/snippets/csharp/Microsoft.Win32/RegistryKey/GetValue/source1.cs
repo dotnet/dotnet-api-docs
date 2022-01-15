@@ -1,4 +1,5 @@
-﻿// <Snippet1>
+﻿// GetValue(String, Object, RegistryValueOptions)
+// <Snippet1>
 using System;
 using Microsoft.Win32;
 using Microsoft.VisualBasic;

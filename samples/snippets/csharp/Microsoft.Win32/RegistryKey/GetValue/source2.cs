@@ -1,4 +1,5 @@
-﻿//<Snippet1>
+// GetValue(String)
+//<Snippet1>
 using System;
 using Microsoft.Win32;
 
