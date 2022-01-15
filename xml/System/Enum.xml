@@ -68,188 +68,188 @@
   <Docs>
     <summary>Provides the base class for enumerations.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- An enumeration is a set of named constants whose underlying type is any integral type. If no underlying type is explicitly declared, <xref:System.Int32> is used. <xref:System.Enum> is the base class for all enumerations in the .NET Framework. Enumeration types are defined by the `enum` keyword in C# and the `Enum`...`End Enum` construct in Visual Basic.  
-  
- <xref:System.Enum> provides methods for comparing instances of this class, converting the value of an instance to its string representation, converting the string representation of a number to an instance of this class, and creating an instance of a specified enumeration and value.  
-  
- You can also treat an enumeration as a bit field. For more information, see the [Non-Exclusive Members and the Flags Attribute](#Flags) section and the <xref:System.FlagsAttribute> topic.  
-  
- In this topic:  
-  
- [Creating an enumeration type](#Creating)   
- [Instantiating an enumeration type](#Instantiating)   
- [Enumeration best practices](#BestPractices)   
- [Performing operations with enumerations](#Operations)   
- [Performing conversions](#conversions)  
- [Parsing enumeration values](#parsing)  
- [Formatting enumeration values](#formatting)  
-[Iterating enumeration members](#iterating)  
-[Non-exclusive members and the Flags attribute](#Flags)  
-[Adding enumeration methods](#Methods)  
-  
-<a name="Creating"></a>   
-## Creating an enumeration type  
- Programming languages typically provide syntax to declare an enumeration that consists of a set of named constants and their values. The following example illustrates the syntax used by C# and Visual Basic to define an enumeration. It creates an enumeration named `ArrivalStatus` that has three members: `ArrivalStatus.Early`, `ArrivalStatus.OnTime`, and `ArrivalStatus.Late`. Note that in both cases, the enumeration does not explicitly inherit from <xref:System.Enum>; the inheritance relationship is handled implicitly by the compiler.  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ An enumeration is a set of named constants whose underlying type is any integral type. If no underlying type is explicitly declared, <xref:System.Int32> is used. <xref:System.Enum> is the base class for all enumerations in the .NET Framework. Enumeration types are defined by the `enum` keyword in C# and the `Enum`...`End Enum` construct in Visual Basic.
+
+ <xref:System.Enum> provides methods for comparing instances of this class, converting the value of an instance to its string representation, converting the string representation of a number to an instance of this class, and creating an instance of a specified enumeration and value.
+
+ You can also treat an enumeration as a bit field. For more information, see the [Non-Exclusive Members and the Flags Attribute](#Flags) section and the <xref:System.FlagsAttribute> topic.
+
+ In this topic:
+
+ [Creating an enumeration type](#Creating)
+ [Instantiating an enumeration type](#Instantiating)
+ [Enumeration best practices](#BestPractices)
+ [Performing operations with enumerations](#Operations)
+ [Performing conversions](#conversions)
+ [Parsing enumeration values](#parsing)
+ [Formatting enumeration values](#formatting)
+[Iterating enumeration members](#iterating)
+[Non-exclusive members and the Flags attribute](#Flags)
+[Adding enumeration methods](#Methods)
+
+<a name="Creating"></a>
+## Creating an enumeration type
+ Programming languages typically provide syntax to declare an enumeration that consists of a set of named constants and their values. The following example illustrates the syntax used by C# and Visual Basic to define an enumeration. It creates an enumeration named `ArrivalStatus` that has three members: `ArrivalStatus.Early`, `ArrivalStatus.OnTime`, and `ArrivalStatus.Late`. Note that in both cases, the enumeration does not explicitly inherit from <xref:System.Enum>; the inheritance relationship is handled implicitly by the compiler.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/class1.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class1.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class1.vb" id="Snippet1":::
+
 > [!WARNING]
->  You should never create an enumeration type whose underlying type is non-integral or <xref:System.Char>. Although you can create such an enumeration type by using reflection, method calls that use the resulting type are unreliable and may also throw additional exceptions.  
-  
-<a name="Instantiating"></a>   
-## Instantiating an enumeration type  
- You can instantiate an enumeration type just as you instantiate any other value type: by declaring a variable and assigning one of the enumeration's constants to it. The following example instantiates an `ArrivalStatus` whose value is `ArrivalStatus.OnTime`.  
-  
+>  You should never create an enumeration type whose underlying type is non-integral or <xref:System.Char>. Although you can create such an enumeration type by using reflection, method calls that use the resulting type are unreliable and may also throw additional exceptions.
+
+<a name="Instantiating"></a>
+## Instantiating an enumeration type
+ You can instantiate an enumeration type just as you instantiate any other value type: by declaring a variable and assigning one of the enumeration's constants to it. The following example instantiates an `ArrivalStatus` whose value is `ArrivalStatus.OnTime`.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/class1.cs" id="Snippet2":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class1.vb" id="Snippet2":::  
-  
- You can also instantiate an enumeration value in the following ways:  
-  
--   By using a particular programming language's features to cast (as in C#) or convert (as in Visual Basic) an integer value to an enumeration value. The following example creates an `ArrivalStatus` object whose value is `ArrivalStatus.Early` in this way.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class1.vb" id="Snippet2":::
+
+ You can also instantiate an enumeration value in the following ways:
+
+-   By using a particular programming language's features to cast (as in C#) or convert (as in Visual Basic) an integer value to an enumeration value. The following example creates an `ArrivalStatus` object whose value is `ArrivalStatus.Early` in this way.
+
      :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/class2.cs" id="Snippet4":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class2.vb" id="Snippet4":::  
-  
--   By calling its implicit parameterless constructor. As the following example shows, in this case the underlying value of the enumeration instance is 0. However, this is not necessarily the value of a valid constant in the enumeration.  
-  
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class2.vb" id="Snippet4":::
+
+-   By calling its implicit parameterless constructor. As the following example shows, in this case the underlying value of the enumeration instance is 0. However, this is not necessarily the value of a valid constant in the enumeration.
+
      :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/class2.cs" id="Snippet3":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class2.vb" id="Snippet3":::  
-  
--   By calling the <xref:System.Enum.Parse%2A> or <xref:System.Enum.TryParse%2A> method to parse a string that contains the name of a constant in the enumeration. For more information, see the [Parsing Enumeration Values](#parsing) section.  
-  
--   By calling the <xref:System.Enum.ToObject%2A> method to convert an integral value to an enumeration type. For more information, see the [Performing Conversions](#conversions) section.  
-  
-<a name="BestPractices"></a>   
-## Enumeration best practices  
- We recommend that you use the following best practices when you define enumeration types:  
-  
--   If you have not defined an enumeration member whose value is 0, consider creating a `None` enumerated constant. By default, the memory used for the enumeration is initialized to zero by the common language runtime. Consequently, if you do not define a constant whose value is zero, the enumeration will contain an illegal value when it is created.  
-  
--   If there is an obvious default case that your application has to represent, consider using an enumerated constant whose value is zero to represent it. If there is no default case, consider using an enumerated constant whose value is zero to specify the case that is not represented by any of the other enumerated constants.  
-  
--   Do not specify enumerated constants that are reserved for future use.  
-  
--   When you define a method or property that takes an enumerated constant as a value, consider validating the value. The reason is that you can cast a numeric value to the enumeration type even if that numeric value is not defined in the enumeration.  
-  
- Additional best practices for enumeration types whose constants are bit fields are listed in the [Non-Exclusive Members and the Flags Attribute](#Flags) section.  
-  
-<a name="Operations"></a>   
-## Performing operations with enumerations  
- You cannot define new methods when you are creating an enumeration. However, an enumeration type inherits a complete set of static and instance methods from the <xref:System.Enum> class. The following sections survey most of these methods, in addition to several other methods that are commonly used when working with enumeration values.  
-  
-<a name="conversions"></a>   
-### Performing conversions  
- You can convert between an enumeration member and its underlying type by using a casting (in C#) or conversion (in Visual Basic) operator. The following example uses casting or conversion operators to perform conversions both from an integer to an enumeration value and from an enumeration value to an integer.  
-  
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class2.vb" id="Snippet3":::
+
+-   By calling the <xref:System.Enum.Parse%2A> or <xref:System.Enum.TryParse%2A> method to parse a string that contains the name of a constant in the enumeration. For more information, see the [Parsing Enumeration Values](#parsing) section.
+
+-   By calling the <xref:System.Enum.ToObject%2A> method to convert an integral value to an enumeration type. For more information, see the [Performing Conversions](#conversions) section.
+
+<a name="BestPractices"></a>
+## Enumeration best practices
+ We recommend that you use the following best practices when you define enumeration types:
+
+-   If you have not defined an enumeration member whose value is 0, consider creating a `None` enumerated constant. By default, the memory used for the enumeration is initialized to zero by the common language runtime. Consequently, if you do not define a constant whose value is zero, the enumeration will contain an illegal value when it is created.
+
+-   If there is an obvious default case that your application has to represent, consider using an enumerated constant whose value is zero to represent it. If there is no default case, consider using an enumerated constant whose value is zero to specify the case that is not represented by any of the other enumerated constants.
+
+-   Do not specify enumerated constants that are reserved for future use.
+
+-   When you define a method or property that takes an enumerated constant as a value, consider validating the value. The reason is that you can cast a numeric value to the enumeration type even if that numeric value is not defined in the enumeration.
+
+ Additional best practices for enumeration types whose constants are bit fields are listed in the [Non-Exclusive Members and the Flags Attribute](#Flags) section.
+
+<a name="Operations"></a>
+## Performing operations with enumerations
+ You cannot define new methods when you are creating an enumeration. However, an enumeration type inherits a complete set of static and instance methods from the <xref:System.Enum> class. The following sections survey most of these methods, in addition to several other methods that are commonly used when working with enumeration values.
+
+<a name="conversions"></a>
+### Performing conversions
+ You can convert between an enumeration member and its underlying type by using a casting (in C#) or conversion (in Visual Basic) operator. The following example uses casting or conversion operators to perform conversions both from an integer to an enumeration value and from an enumeration value to an integer.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/class2.cs" id="Snippet5":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class2.vb" id="Snippet5":::  
-  
- The <xref:System.Enum> class also includes a <xref:System.Enum.ToObject%2A> method that converts a value of any integral type to an enumeration value. The following example uses the <xref:System.Enum.ToObject%28System.Type%2CSystem.Int32%29> method to convert an <xref:System.Int32> to an `ArrivalStatus` value. Note that, because the <xref:System.Enum.ToObject%2A> returns a value of type <xref:System.Object>, the use of a casting or conversion operator may still be necessary to cast the object to the enumeration type.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class2.vb" id="Snippet5":::
+
+ The <xref:System.Enum> class also includes a <xref:System.Enum.ToObject%2A> method that converts a value of any integral type to an enumeration value. The following example uses the <xref:System.Enum.ToObject%28System.Type%2CSystem.Int32%29> method to convert an <xref:System.Int32> to an `ArrivalStatus` value. Note that, because the <xref:System.Enum.ToObject%2A> returns a value of type <xref:System.Object>, the use of a casting or conversion operator may still be necessary to cast the object to the enumeration type.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/class2.cs" id="Snippet6":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class2.vb" id="Snippet6":::  
-  
- When converting an integer to an enumeration value, it is possible to assign a value that is not actually a member of the enumeration. To prevent this, you can pass the integer to the <xref:System.Enum.IsDefined%2A> method before performing the conversion. The following example uses this method to determine whether the elements in an array of integer values can be converted to `ArrivalStatus` values.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/class2.vb" id="Snippet6":::
+
+ When converting an integer to an enumeration value, it is possible to assign a value that is not actually a member of the enumeration. To prevent this, you can pass the integer to the <xref:System.Enum.IsDefined%2A> method before performing the conversion. The following example uses this method to determine whether the elements in an array of integer values can be converted to `ArrivalStatus` values.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classconversion1.cs" interactive="try-dotnet" id="Snippet7":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classconversion1.vb" id="Snippet7"::: 
-  
- Although the <xref:System.Enum> class provides explicit interface implementations of the <xref:System.IConvertible> interface for converting from an enumeration value to an integral type, you should use the methods of the <xref:System.Convert> class, such as <xref:System.Convert.ToInt32%2A>, to perform these conversions. The following example illustrates how you can use the <xref:System.Enum.GetUnderlyingType%2A> method along with the <xref:System.Convert.ChangeType%2A?displayProperty=nameWithType> method to convert an enumeration value to its underlying type. Note that this example does not require the underlying type of the enumeration to be known at compile time.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classconversion1.vb" id="Snippet7":::
+
+ Although the <xref:System.Enum> class provides explicit interface implementations of the <xref:System.IConvertible> interface for converting from an enumeration value to an integral type, you should use the methods of the <xref:System.Convert> class, such as <xref:System.Convert.ToInt32%2A>, to perform these conversions. The following example illustrates how you can use the <xref:System.Enum.GetUnderlyingType%2A> method along with the <xref:System.Convert.ChangeType%2A?displayProperty=nameWithType> method to convert an enumeration value to its underlying type. Note that this example does not require the underlying type of the enumeration to be known at compile time.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classconversion2.cs" id="Snippet8":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classconversion2.vb" id="Snippet8":::  
-  
-<a name="parsing"></a>   
-### Parsing enumeration values  
- The <xref:System.Enum.Parse%2A> and <xref:System.Enum.TryParse%2A> methods allow you to convert the string representation of an enumeration value to that value. The string representation can be either the name or the underlying value of an enumeration constant. Note that the parsing methods will successfully convert string representations of numbers that are not members of a particular enumeration if the strings can be converted to a value of the enumeration's underlying type. To prevent this, the <xref:System.Enum.IsDefined%2A> method can be called to ensure that the result of the parsing method is a valid enumeration value. The example illustrates this approach and demonstrates calls to both the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> and <xref:System.Enum.TryParse%60%601%28System.String%2C%60%600%40%29?displayProperty=nameWithType> methods. Note that the non-generic parsing method returns an object that you may have to cast (in C#) or convert (in Visual Basic) to the appropriate enumeration type.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classconversion2.vb" id="Snippet8":::
+
+<a name="parsing"></a>
+### Parsing enumeration values
+ The <xref:System.Enum.Parse%2A> and <xref:System.Enum.TryParse%2A> methods allow you to convert the string representation of an enumeration value to that value. The string representation can be either the name or the underlying value of an enumeration constant. Note that the parsing methods will successfully convert string representations of numbers that are not members of a particular enumeration if the strings can be converted to a value of the enumeration's underlying type. To prevent this, the <xref:System.Enum.IsDefined%2A> method can be called to ensure that the result of the parsing method is a valid enumeration value. The example illustrates this approach and demonstrates calls to both the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> and <xref:System.Enum.TryParse%60%601%28System.String%2C%60%600%40%29?displayProperty=nameWithType> methods. Note that the non-generic parsing method returns an object that you may have to cast (in C#) or convert (in Visual Basic) to the appropriate enumeration type.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classparse1.cs" id="Snippet9":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classparse1.vb" id="Snippet9":::  
-  
-<a name="formatting"></a>   
-### Formatting enumeration values  
- You can convert enumeration values to their string representations by calling the static <xref:System.Enum.Format%2A> method, as well as the overloads of the instance <xref:System.Enum.ToString%2A> method. You can use a format string to control the precise way in which an enumeration value is represented as a string. For more information, see [Enumeration Format Strings](/dotnet/standard/base-types/enumeration-format-strings). The following example uses each of the supported enumeration format strings ("G" or "g", "D" or "d", "X" or "x", and "F" or "f" ) to convert a member of the `ArrivalStatus` enumeration to its string representations.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classparse1.vb" id="Snippet9":::
+
+<a name="formatting"></a>
+### Formatting enumeration values
+ You can convert enumeration values to their string representations by calling the static <xref:System.Enum.Format%2A> method, as well as the overloads of the instance <xref:System.Enum.ToString%2A> method. You can use a format string to control the precise way in which an enumeration value is represented as a string. For more information, see [Enumeration Format Strings](/dotnet/standard/base-types/enumeration-format-strings). The following example uses each of the supported enumeration format strings ("G" or "g", "D" or "d", "X" or "x", and "F" or "f" ) to convert a member of the `ArrivalStatus` enumeration to its string representations.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classformat1.cs" id="Snippet10":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classformat1.vb" id="Snippet10":::  
-  
-<a name="iterating"></a>   
-### Iterating enumeration members  
- The <xref:System.Enum> type does not implement the <xref:System.Collections.IEnumerable> or <xref:System.Collections.Generic.IEnumerable%601> interface, which would enable you to iterate members of a collection by using a `foreach` (in C#) or `For Each` (in Visual Basic) construct. However, you can enumerate members in either of two ways.  
-  
--   You can call the <xref:System.Enum.GetNames%2A> method to retrieve a string array containing the names of the enumeration members. Next, for each element of the string array, you can call the <xref:System.Enum.Parse%2A> method to convert the string to its equivalent enumeration value. The following example illustrates this approach.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classformat1.vb" id="Snippet10":::
+
+<a name="iterating"></a>
+### Iterating enumeration members
+ The <xref:System.Enum> type does not implement the <xref:System.Collections.IEnumerable> or <xref:System.Collections.Generic.IEnumerable%601> interface, which would enable you to iterate members of a collection by using a `foreach` (in C#) or `For Each` (in Visual Basic) construct. However, you can enumerate members in either of two ways.
+
+-   You can call the <xref:System.Enum.GetNames%2A> method to retrieve a string array containing the names of the enumeration members. Next, for each element of the string array, you can call the <xref:System.Enum.Parse%2A> method to convert the string to its equivalent enumeration value. The following example illustrates this approach.
+
      :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classiterate.cs" id="Snippet11":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classiterate.vb" id="Snippet11":::  
-  
--   You can call the <xref:System.Enum.GetValues%2A> method to retrieve an array that contains the underlying values in the enumeration. Next, for each element of the array, you can call the <xref:System.Enum.ToObject%2A> method to convert the integer to its equivalent enumeration value. The following example illustrates this approach.  
-  
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classiterate.vb" id="Snippet11":::
+
+-   You can call the <xref:System.Enum.GetValues%2A> method to retrieve an array that contains the underlying values in the enumeration. Next, for each element of the array, you can call the <xref:System.Enum.ToObject%2A> method to convert the integer to its equivalent enumeration value. The following example illustrates this approach.
+
      :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classiterate.cs" id="Snippet12":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classiterate.vb" id="Snippet12":::  
-  
-<a name="Flags"></a>   
-## Non-exclusive members and the Flags attribute  
- One common use of an enumeration is to represent a set of mutually exclusive values. For example, an `ArrivalStatus` instance can have a value of `Early`, `OnTime`, or `Late`. It makes no sense for the value of an `ArrivalStatus` instance to reflect more than one enumeration constant.  
-  
- In other cases, however, the value of an enumeration object can include multiple enumeration members, and each member represents a bit field in the enumeration value. The <xref:System.FlagsAttribute> attribute can be used to indicate that the enumeration consists of bit fields. For example, an enumeration named `Pets` might be used to indicate the kinds of pets in a household. It can be defined as follows.  
-  
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classiterate.vb" id="Snippet12":::
+
+<a name="Flags"></a>
+## Non-exclusive members and the Flags attribute
+ One common use of an enumeration is to represent a set of mutually exclusive values. For example, an `ArrivalStatus` instance can have a value of `Early`, `OnTime`, or `Late`. It makes no sense for the value of an `ArrivalStatus` instance to reflect more than one enumeration constant.
+
+ In other cases, however, the value of an enumeration object can include multiple enumeration members, and each member represents a bit field in the enumeration value. The <xref:System.FlagsAttribute> attribute can be used to indicate that the enumeration consists of bit fields. For example, an enumeration named `Pets` might be used to indicate the kinds of pets in a household. It can be defined as follows.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classbitwise1.cs" id="Snippet13":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet13":::  
-  
- The `Pets` enumeration can then be used as shown in the following example.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet13":::
+
+ The `Pets` enumeration can then be used as shown in the following example.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classbitwise1.cs" id="Snippet14":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet14":::  
-  
- The following best practices should be used when defining a bitwise enumeration and applying the <xref:System.FlagsAttribute> attribute.  
-  
--   Use the <xref:System.FlagsAttribute> custom attribute for an enumeration only if a bitwise operation (AND, OR, EXCLUSIVE OR) is to be performed on a numeric value.  
-  
--   Define enumeration constants in powers of two, that is, 1, 2, 4, 8, and so on. This means the individual flags in combined enumeration constants do not overlap.  
-  
--   Consider creating an enumerated constant for commonly used flag combinations. For example, if you have an enumeration used for file I/O operations that contains the enumerated constants `Read = 1` and `Write = 2`, consider creating the enumerated constant `ReadWrite = Read OR Write`, which combines the `Read` and `Write` flags. In addition, the bitwise OR operation used to combine the flags might be considered an advanced concept in some circumstances that should not be required for simple tasks.  
-  
--   Use caution if you define a negative number as a flag enumerated constant because many flag positions might be set to 1, which might make your code confusing and encourage coding errors.  
-  
--   A convenient way to test whether a flag is set in a numeric value is to call the instance <xref:System.Enum.HasFlag%2A> method, as shown in the following example.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet14":::
+
+ The following best practices should be used when defining a bitwise enumeration and applying the <xref:System.FlagsAttribute> attribute.
+
+-   Use the <xref:System.FlagsAttribute> custom attribute for an enumeration only if a bitwise operation (AND, OR, EXCLUSIVE OR) is to be performed on a numeric value.
+
+-   Define enumeration constants in powers of two, that is, 1, 2, 4, 8, and so on. This means the individual flags in combined enumeration constants do not overlap.
+
+-   Consider creating an enumerated constant for commonly used flag combinations. For example, if you have an enumeration used for file I/O operations that contains the enumerated constants `Read = 1` and `Write = 2`, consider creating the enumerated constant `ReadWrite = Read OR Write`, which combines the `Read` and `Write` flags. In addition, the bitwise OR operation used to combine the flags might be considered an advanced concept in some circumstances that should not be required for simple tasks.
+
+-   Use caution if you define a negative number as a flag enumerated constant because many flag positions might be set to 1, which might make your code confusing and encourage coding errors.
+
+-   A convenient way to test whether a flag is set in a numeric value is to call the instance <xref:System.Enum.HasFlag%2A> method, as shown in the following example.
+
      :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classbitwise1.cs" id="Snippet15":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet15":::  
-  
-     It is equivalent to performing a bitwise AND operation between the numeric value and the flag enumerated constant, which sets all bits in the numeric value to zero that do not correspond to the flag, and then testing whether the result of that operation is equal to the flag enumerated constant. This is illustrated in the following example.  
-  
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet15":::
+
+     It is equivalent to performing a bitwise AND operation between the numeric value and the flag enumerated constant, which sets all bits in the numeric value to zero that do not correspond to the flag, and then testing whether the result of that operation is equal to the flag enumerated constant. This is illustrated in the following example.
+
      :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classbitwise1.cs" id="Snippet16":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet16":::  
-  
--   Use `None` as the name of the flag enumerated constant whose value is zero. You cannot use the `None` enumerated constant in a bitwise AND operation to test for a flag because the result is always zero. However, you can perform a logical, not a bitwise, comparison between the numeric value and the `None` enumerated constant to determine whether any bits in the numeric value are set. This is illustrated in the following example.  
-  
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet16":::
+
+-   Use `None` as the name of the flag enumerated constant whose value is zero. You cannot use the `None` enumerated constant in a bitwise AND operation to test for a flag because the result is always zero. However, you can perform a logical, not a bitwise, comparison between the numeric value and the `None` enumerated constant to determine whether any bits in the numeric value are set. This is illustrated in the following example.
+
      :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/classbitwise1.cs" id="Snippet17":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet17":::  
-  
--   Do not define an enumeration value solely to mirror the state of the enumeration itself. For example, do not define an enumerated constant that merely marks the end of the enumeration. If you need to determine the last value of the enumeration, check for that value explicitly. In addition, you can perform a range check for the first and last enumerated constant if all values within the range are valid.  
-  
-<a name="Methods"></a>   
-## Adding enumeration methods  
- Because enumeration types are defined by language structures, such as `enum` (C#) and `Enum` (Visual Basic), you cannot define custom methods for an enumeration type other than those methods inherited from the <xref:System.Enum> class.  However, you can use extension methods to add functionality to a particular enumeration type.  
-  
- In the following example, the `Grades` enumeration represents the possible letter grades that a student may receive in a class. An extension method named `Passing` is added to the `Grades` type so that each instance of that type now "knows" whether it represents a passing grade or not.       The `Extensions` class also contains a static read-write variable that defines the minimum passing grade. The return value of the `Passing` extension method reflects the current value of that variable.  
-  
+     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/classbitwise1.vb" id="Snippet17":::
+
+-   Do not define an enumeration value solely to mirror the state of the enumeration itself. For example, do not define an enumerated constant that merely marks the end of the enumeration. If you need to determine the last value of the enumeration, check for that value explicitly. In addition, you can perform a range check for the first and last enumerated constant if all values within the range are valid.
+
+<a name="Methods"></a>
+## Adding enumeration methods
+ Because enumeration types are defined by language structures, such as `enum` (C#) and `Enum` (Visual Basic), you cannot define custom methods for an enumeration type other than those methods inherited from the <xref:System.Enum> class.  However, you can use extension methods to add functionality to a particular enumeration type.
+
+ In the following example, the `Grades` enumeration represents the possible letter grades that a student may receive in a class. An extension method named `Passing` is added to the `Grades` type so that each instance of that type now "knows" whether it represents a passing grade or not.       The `Extensions` class also contains a static read-write variable that defines the minimum passing grade. The return value of the `Passing` extension method reflects the current value of that variable.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.class/cs/Extensions.cs" interactive="try-dotnet" id="Snippet18":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/Extensions.vb" id="Snippet18"::: 
-  
-   
-  
-## Examples  
- The following example demonstrates using an enumeration to represent named values and another enumeration to represent named bit fields.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.class/vb/Extensions.vb" id="Snippet18":::
+
+
+
+## Examples
+ The following example demonstrates using an enumeration to represent named values and another enumeration to represent named bit fields.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enummain/CPP/EnumMain.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enummain/CS/EnumMain.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enummain/VB/EnumMain.vb" id="Snippet1":::
-  
+
  ]]></format>
     </remarks>
     <threadsafe>This type is thread safe.</threadsafe>
@@ -345,33 +345,33 @@
       <Docs>
         <param name="target">An object to compare, or <see langword="null" />.</param>
         <summary>Compares this instance to a specified object and returns an indication of their relative values.</summary>
-        <returns>A signed number that indicates the relative values of this instance and <paramref name="target" />.  
-  
- <list type="table"><listheader><term> Value  
-  
- </term><description> Meaning  
-  
- </description></listheader><item><term> Less than zero  
-  
- </term><description> The value of this instance is less than the value of <paramref name="target" />.  
-  
- </description></item><item><term> Zero  
-  
- </term><description> The value of this instance is equal to the value of <paramref name="target" />.  
-  
- </description></item><item><term> Greater than zero  
-  
+        <returns>A signed number that indicates the relative values of this instance and <paramref name="target" />.
+
+ <list type="table"><listheader><term> Value
+
+ </term><description> Meaning
+
+ </description></listheader><item><term> Less than zero
+
+ </term><description> The value of this instance is less than the value of <paramref name="target" />.
+
+ </description></item><item><term> Zero
+
+ </term><description> The value of this instance is equal to the value of <paramref name="target" />.
+
+ </description></item><item><term> Greater than zero
+
  </term><description> The value of this instance is greater than the value of <paramref name="target" />, or <paramref name="target" /> is <see langword="null" />.</description></item></list></returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example illustrates the use of `CompareTo` in the context of `Enum`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example illustrates the use of `CompareTo` in the context of `Enum`.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enumcompareto/CPP/EnumCompareTo.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enumcompareto/CS/EnumCompareTo.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enumcompareto/VB/EnumCompareTo.vb" id="Snippet1":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -432,22 +432,22 @@
         <returns>
           <see langword="true" /> if <paramref name="obj" /> is an enumeration value of the same type and with the same underlying value as this instance; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.Equals%28System.Object%29?displayProperty=nameWithType> method overrides <xref:System.ValueType.Equals%28System.Object%29?displayProperty=nameWithType> to define how enumeration members are evaluated for equality.  
-  
-   
-  
-## Examples  
- The following example illustrates the use of the <xref:System.Enum.Equals%2A> method.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.Equals%28System.Object%29?displayProperty=nameWithType> method overrides <xref:System.ValueType.Equals%28System.Object%29?displayProperty=nameWithType> to define how enumeration members are evaluated for equality.
+
+
+
+## Examples
+ The following example illustrates the use of the <xref:System.Enum.Equals%2A> method.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enumequals/CPP/EnumEquals.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enumequals/CS/EnumEquals.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enumequals/VB/EnumEquals.vb" id="Snippet1":::
- 
- The following example defines two enumeration types, `SledDog` and `WorkDog`. The `SledDog` enumeration has two members, `SledDog.AlaskanMalamute` and `SledDog.Malamute`, that have the same underlying value. The call to the <xref:System.Enum.Equals%2A> method indicates that these values are equal because their underlying values are the same. The `SledDog.Malamute` and `WorkDog.Newfoundland` members have the same underlying value, although they represent different enumeration types. A call to the <xref:System.Enum.Equals%2A> method indicates that these values are not equal.  
-  
+
+ The following example defines two enumeration types, `SledDog` and `WorkDog`. The `SledDog` enumeration has two members, `SledDog.AlaskanMalamute` and `SledDog.Malamute`, that have the same underlying value. The call to the <xref:System.Enum.Equals%2A> method indicates that these values are equal because their underlying values are the same. The `SledDog.Malamute` and `WorkDog.Newfoundland` members have the same underlying value, although they represent different enumeration types. A call to the <xref:System.Enum.Equals%2A> method indicates that these values are not equal.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.equals/cs/enumequals.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.equals/vb/enumequals.vb" id="Snippet1":::
 
@@ -509,38 +509,38 @@
         <summary>Converts the specified value of a specified enumerated type to its equivalent string representation according to the specified format.</summary>
         <returns>A string representation of <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The following table shows the valid values for the `format` parameter.  
-  
-|Format|Description|  
-|------------|-----------------|  
-|"G" or "g"|If `value` is equal to a named enumerated constant, the name of that constant is returned; otherwise, the decimal equivalent of `value` is returned.<br /><br /> For example, suppose the only enumerated constant is named Red, and its value is 1. If `value` is specified as 1, this format returns "Red". However, if `value` is specified as 2, this format returns "2".<br /><br /> -or-<br /><br /> If the <xref:System.FlagsAttribute> custom attribute is applied to the enumeration, `value` is treated as a bit field that contains one or more flags that consist of one or more bits.<br /><br /> If `value` is equal to a combination of named enumerated constants, a delimiter-separated list of the names of those constants is returned. `value` is searched for flags, going from the flag with the largest value to the smallest value. For each flag that corresponds to a bit field in `value`, the name of the constant is concatenated to the delimiter-separated list. The value of that flag is then excluded from further consideration, and the search continues for the next flag.<br /><br /> If `value` is not equal to a combination of named enumerated constants, the decimal equivalent of `value` is returned.|  
-|"X" or "x"|Represents `value` in hexadecimal format without a leading "0x".|  
-|"D" or "d"|Represents `value` in decimal form.|  
-|"F" or "f"|Behaves identically to "G" or "g", except that the <xref:System.FlagsAttribute> is not required to be present on the <xref:System.Enum> declaration.|  
-  
-   
-  
-## Examples  
- The following example illustrates the use of `Format` in the context of `Enum`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The following table shows the valid values for the `format` parameter.
+
+|Format|Description|
+|------------|-----------------|
+|"G" or "g"|If `value` is equal to a named enumerated constant, the name of that constant is returned; otherwise, the decimal equivalent of `value` is returned.<br /><br /> For example, suppose the only enumerated constant is named Red, and its value is 1. If `value` is specified as 1, this format returns "Red". However, if `value` is specified as 2, this format returns "2".<br /><br /> -or-<br /><br /> If the <xref:System.FlagsAttribute> custom attribute is applied to the enumeration, `value` is treated as a bit field that contains one or more flags that consist of one or more bits.<br /><br /> If `value` is equal to a combination of named enumerated constants, a delimiter-separated list of the names of those constants is returned. `value` is searched for flags, going from the flag with the largest value to the smallest value. For each flag that corresponds to a bit field in `value`, the name of the constant is concatenated to the delimiter-separated list. The value of that flag is then excluded from further consideration, and the search continues for the next flag.<br /><br /> If `value` is not equal to a combination of named enumerated constants, the decimal equivalent of `value` is returned.|
+|"X" or "x"|Represents `value` in hexadecimal format without a leading "0x".|
+|"D" or "d"|Represents `value` in decimal form.|
+|"F" or "f"|Behaves identically to "G" or "g", except that the <xref:System.FlagsAttribute> is not required to be present on the <xref:System.Enum> declaration.|
+
+
+
+## Examples
+ The following example illustrates the use of `Format` in the context of `Enum`.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enumformat/CPP/EnumFormat.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enumformat/CS/EnumFormat.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enumformat/VB/EnumFormat.vb" id="Snippet1":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="enumType" />, <paramref name="value" />, or <paramref name="format" /> parameter is <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">The <paramref name="enumType" /> parameter is not an <see cref="T:System.Enum" /> type.  
-  
- -or-  
-  
- The <paramref name="value" /> is from an enumeration that differs in type from <paramref name="enumType" />.  
-  
- -or-  
-  
+        <exception cref="T:System.ArgumentException">The <paramref name="enumType" /> parameter is not an <see cref="T:System.Enum" /> type.
+
+ -or-
+
+ The <paramref name="value" /> is from an enumeration that differs in type from <paramref name="enumType" />.
+
+ -or-
+
  The type of <paramref name="value" /> is not an underlying type of <paramref name="enumType" />.</exception>
         <exception cref="T:System.FormatException">The <paramref name="format" /> parameter contains an invalid value.</exception>
         <exception cref="T:System.InvalidOperationException">
@@ -650,29 +650,29 @@
         <summary>Retrieves the name of the constant in the specified enumeration that has the specified value.</summary>
         <returns>A string containing the name of the enumerated constant in <paramref name="enumType" /> whose value is <paramref name="value" />; or <see langword="null" /> if no such constant is found.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If multiple enumeration members have the same underlying value, the <xref:System.Enum.GetName%2A> method guarantees that it will return the name of one of those enumeration members. However, it does not guarantee that it will always return the name of the same enumeration member. As a result, when multiple enumeration members have the same value, your application code should never depend on the method returning a particular member's name.  
-  
-   
-  
-## Examples  
- The following example illustrates the use of `GetName`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If multiple enumeration members have the same underlying value, the <xref:System.Enum.GetName%2A> method guarantees that it will return the name of one of those enumeration members. However, it does not guarantee that it will always return the name of the same enumeration member. As a result, when multiple enumeration members have the same value, your application code should never depend on the method returning a particular member's name.
+
+
+
+## Examples
+ The following example illustrates the use of `GetName`.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enumgetname/CPP/EnumGetName.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enumgetname/CS/EnumGetName.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enumgetname/VB/EnumGetName.vb" id="Snippet1":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="enumType" /> or <paramref name="value" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.  
-  
- -or-  
-  
+          <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.
+
+ -or-
+
  <paramref name="value" /> is neither of type <paramref name="enumType" /> nor does it have the same underlying type as <paramref name="enumType" />.</exception>
       </Docs>
     </Member>
@@ -768,24 +768,24 @@
         <summary>Retrieves an array of the names of the constants in a specified enumeration.</summary>
         <returns>A string array of the names of the constants in <paramref name="enumType" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The elements of the return value array are sorted by the binary values of the enumerated constants (that is, by their unsigned magnitude). The following example provides displays information about the array returned by the <xref:System.Enum.GetNames%2A> method for an enumeration that includes a negative, zero, and a positive value.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The elements of the return value array are sorted by the binary values of the enumerated constants (that is, by their unsigned magnitude). The following example provides displays information about the array returned by the <xref:System.Enum.GetNames%2A> method for an enumeration that includes a negative, zero, and a positive value.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.getnames/cs/getnames1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.getnames/vb/getnames1.vb" id="Snippet1":::
 
- If there are enumerated constants with same value, the order of their corresponding names is unspecified.  
-  
-   
-  
-## Examples  
- The following example illustrates the use of the <xref:System.Enum.GetNames%2A> method.  
- 
+ If there are enumerated constants with same value, the order of their corresponding names is unspecified.
+
+
+
+## Examples
+ The following example illustrates the use of the <xref:System.Enum.GetNames%2A> method.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enumgetnames/CPP/EnumGetNames.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enumgetnames/CS/EnumGetNames.cs" interactive="try-dotnet" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enumgetnames/VB/EnumGetNames.vb" id="Snippet1"::: 
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enumgetnames/VB/EnumGetNames.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -934,16 +934,16 @@
         <summary>Returns the underlying type of the specified enumeration.</summary>
         <returns>The underlying type of <paramref name="enumType" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum> structure enables values to be represented as named constants. The data type of the enumeration's values is known as its underlying type. For example, the underlying type of the <xref:System.DayOfWeek> enumeration, which consists of constants that represent each day of the week (<xref:System.DayOfWeek.Monday?displayProperty=nameWithType>, <xref:System.DayOfWeek.Tuesday?displayProperty=nameWithType>, and so on), is <xref:System.Int32>.  
-  
-   
-  
-## Examples  
- The following example calls the <xref:System.Enum.GetUnderlyingType%2A> method to display the underlying type of some enumeration members.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum> structure enables values to be represented as named constants. The data type of the enumeration's values is known as its underlying type. For example, the underlying type of the <xref:System.DayOfWeek> enumeration, which consists of constants that represent each day of the week (<xref:System.DayOfWeek.Monday?displayProperty=nameWithType>, <xref:System.DayOfWeek.Tuesday?displayProperty=nameWithType>, and so on), is <xref:System.Int32>.
+
+
+
+## Examples
+ The following example calls the <xref:System.Enum.GetUnderlyingType%2A> method to display the underlying type of some enumeration members.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.getunderlyingtype/cs/getunderlyingtype1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.getunderlyingtype/vb/getunderlyingtype1.vb" id="Snippet1":::
 
@@ -1005,45 +1005,45 @@
         <summary>Retrieves an array of the values of the constants in a specified enumeration.</summary>
         <returns>An array that contains the values of the constants in <paramref name="enumType" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The elements of the array are sorted by the binary values of the enumeration constants (that is, by their unsigned magnitude). The following example displays information about the array returned by the <xref:System.Enum.GetValues%2A> method for an enumeration that includes a negative value, zero, and a positive value.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The elements of the array are sorted by the binary values of the enumeration constants (that is, by their unsigned magnitude). The following example displays information about the array returned by the <xref:System.Enum.GetValues%2A> method for an enumeration that includes a negative value, zero, and a positive value.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.getvalues/cs/getvalues1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.getvalues/vb/getvalues1.vb" id="Snippet1":::
-  
- The <xref:System.Enum.GetValues%2A> method returns an array that contains a value for each member of the `enumType` enumeration. If multiple members have the same value, the returned array includes duplicate values. In this case, calling the <xref:System.Enum.GetName%2A> method with each value in the returned array does not restore the unique names assigned to members that have duplicate values. To retrieve all the names of enumeration members successfully, call the <xref:System.Enum.GetNames%2A> method.  
-  
- The <xref:System.Enum.GetValues%2A> method cannot be invoked by using reflection in a reflection-only context. Instead, you can retrieve the value of all enumeration members by using the <xref:System.Type.GetFields%2A?displayProperty=nameWithType> method to get an array of <xref:System.Reflection.FieldInfo> objects that represent enumeration members and then call the <xref:System.Reflection.FieldInfo.GetRawConstantValue%2A?displayProperty=nameWithType> method on each element of the array. The following example illustrates this technique. It requires that you define the following enumeration in an assembly named Enumerations.dll:  
-  
+
+ The <xref:System.Enum.GetValues%2A> method returns an array that contains a value for each member of the `enumType` enumeration. If multiple members have the same value, the returned array includes duplicate values. In this case, calling the <xref:System.Enum.GetName%2A> method with each value in the returned array does not restore the unique names assigned to members that have duplicate values. To retrieve all the names of enumeration members successfully, call the <xref:System.Enum.GetNames%2A> method.
+
+ The <xref:System.Enum.GetValues%2A> method cannot be invoked by using reflection in a reflection-only context. Instead, you can retrieve the value of all enumeration members by using the <xref:System.Type.GetFields%2A?displayProperty=nameWithType> method to get an array of <xref:System.Reflection.FieldInfo> objects that represent enumeration members and then call the <xref:System.Reflection.FieldInfo.GetRawConstantValue%2A?displayProperty=nameWithType> method on each element of the array. The following example illustrates this technique. It requires that you define the following enumeration in an assembly named Enumerations.dll:
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.getvalues/cs/getvalues_reflectiononly.cs" id="Snippet2":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.getvalues/vb/getvalues_reflectiononly.vb" id="Snippet2":::  
-  
- The assembly is loaded in a reflection-only context, a <xref:System.Type> object that represents the `Pets` enumeration is instantiated, an array of <xref:System.Reflection.FieldInfo> objects is retrieved, and the field values are displayed to the console.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.getvalues/vb/getvalues_reflectiononly.vb" id="Snippet2":::
+
+ The assembly is loaded in a reflection-only context, a <xref:System.Type> object that represents the `Pets` enumeration is instantiated, an array of <xref:System.Reflection.FieldInfo> objects is retrieved, and the field values are displayed to the console.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.getvalues/cs/getvalues_reflectiononly.cs" id="Snippet3":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.getvalues/vb/getvalues_reflectiononly.vb" id="Snippet3":::  
-  
-   
-  
-## Examples  
- The following example illustrates the use of <xref:System.Enum.GetValues%2A>.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.getvalues/vb/getvalues_reflectiononly.vb" id="Snippet3":::
+
+
+
+## Examples
+ The following example illustrates the use of <xref:System.Enum.GetValues%2A>.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enumgetvalues/CPP/EnumGetValues.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enumgetvalues/CS/EnumGetValues.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enumgetvalues/VB/EnumGetValues.vb" id="Snippet1":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="enumType" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.</exception>
-        <exception cref="T:System.InvalidOperationException">The method is invoked by reflection in a reflection-only context,  
-  
- -or-  
-  
+        <exception cref="T:System.InvalidOperationException">The method is invoked by reflection in a reflection-only context,
+
+ -or-
+
  <paramref name="enumType" /> is a type from an assembly loaded in a reflection-only context.</exception>
       </Docs>
     </Member>
@@ -1135,30 +1135,30 @@
         <returns>
           <see langword="true" /> if the bit field or bit fields that are set in <paramref name="flag" /> are also set in the current instance; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.HasFlag%2A> method returns the result of the following Boolean expression.  
-  
-```  
-thisInstance And flag = flag   
-```  
-  
- If the underlying value of `flag` is zero, the method returns `true`. If this behavior is not desirable, you can use the <xref:System.Enum.Equals%2A> method to test for equality with zero and call <xref:System.Enum.HasFlag%2A> only if the underlying value of `flag` is non-zero, as the following example illustrates.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.HasFlag%2A> method returns the result of the following Boolean expression.
+
+```
+thisInstance And flag = flag
+```
+
+ If the underlying value of `flag` is zero, the method returns `true`. If this behavior is not desirable, you can use the <xref:System.Enum.Equals%2A> method to test for equality with zero and call <xref:System.Enum.HasFlag%2A> only if the underlying value of `flag` is non-zero, as the following example illustrates.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.hasflag/cs/hasflag0.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.hasflag/vb/hasflag0.vb" id="Snippet1":::
 
- The <xref:System.Enum.HasFlag%2A> method is designed to be used with enumeration types that are marked with the <xref:System.FlagsAttribute> attribute and can be used to determine whether multiple bit fields are set. For enumeration types that are not marked with the <xref:System.FlagsAttribute> attribute, call either the <xref:System.Enum.Equals%2A> method or the <xref:System.Enum.CompareTo%2A> method.  
-  
-   
-  
-## Examples  
- The following example defines an `DinnerItems` enumeration that reflects categories of items that a customer can order in a restaurant. The example tests whether the customer has ordered both an entrée and a beverage.  
-  
+ The <xref:System.Enum.HasFlag%2A> method is designed to be used with enumeration types that are marked with the <xref:System.FlagsAttribute> attribute and can be used to determine whether multiple bit fields are set. For enumeration types that are not marked with the <xref:System.FlagsAttribute> attribute, call either the <xref:System.Enum.Equals%2A> method or the <xref:System.Enum.CompareTo%2A> method.
+
+
+
+## Examples
+ The following example defines an `DinnerItems` enumeration that reflects categories of items that a customer can order in a restaurant. The example tests whether the customer has ordered both an entrée and a beverage.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.hasflag/cs/hasflag1.cs" interactive="try-dotnet" id="Snippet2":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.hasflag/vb/hasflag1.vb" id="Snippet2":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -1219,26 +1219,26 @@ thisInstance And flag = flag
         <returns>
           <see langword="true" /> if a constant in <paramref name="enumType" /> has a value equal to <paramref name="value" />; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `value` parameter can be any of the following:  
-  
--   Any member of type `enumType`.  
-  
--   A variable whose value is an enumeration member of type `enumType`.  
-  
--   The string representation of the name of an enumeration member. The characters in the string must have the same case as the enumeration member name.  
-  
--   A value of the underlying type of `enumType`.  
-  
- If the constants in `enumType` define a set of bit fields and `value` contains the values, names, or underlying values of multiple bit fields, the <xref:System.Enum.IsDefined%2A> method returns `false`. In other words, for enumerations that define a set of bit fields, the method determines only whether a single bit field belongs to the enumeration. To determine whether multiple bit fields are set in an enumeration type that is tagged with the <xref:System.FlagsAttribute> attribute, you can call the <xref:System.Enum.HasFlag%2A> method.  
-  
-   
-  
-## Examples  
- The following example defines an enumeration named `PetType` that consists of individual bit fields. It then calls the <xref:System.Enum.IsDefined%2A> method with possible underlying enumeration values, string names, and composite values that result from setting multiple bit fields.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `value` parameter can be any of the following:
+
+-   Any member of type `enumType`.
+
+-   A variable whose value is an enumeration member of type `enumType`.
+
+-   The string representation of the name of an enumeration member. The characters in the string must have the same case as the enumeration member name.
+
+-   A value of the underlying type of `enumType`.
+
+ If the constants in `enumType` define a set of bit fields and `value` contains the values, names, or underlying values of multiple bit fields, the <xref:System.Enum.IsDefined%2A> method returns `false`. In other words, for enumerations that define a set of bit fields, the method determines only whether a single bit field belongs to the enumeration. To determine whether multiple bit fields are set in an enumeration type that is tagged with the <xref:System.FlagsAttribute> attribute, you can call the <xref:System.Enum.HasFlag%2A> method.
+
+
+
+## Examples
+ The following example defines an enumeration named `PetType` that consists of individual bit fields. It then calls the <xref:System.Enum.IsDefined%2A> method with possible underlying enumeration values, string names, and composite values that result from setting multiple bit fields.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Enum.IsDefined/cs/isdefined1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Enum.IsDefined/vb/IsDefined1.vb" id="Snippet1":::
 
@@ -1247,20 +1247,20 @@ thisInstance And flag = flag
         <exception cref="T:System.ArgumentNullException">
           <paramref name="enumType" /> or <paramref name="value" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="enumType" /> is not an <see langword="Enum" />.  
-  
- -or-  
-  
- The type of <paramref name="value" /> is an enumeration, but it is not an enumeration of type <paramref name="enumType" />.  
-  
- -or-  
-  
+          <paramref name="enumType" /> is not an <see langword="Enum" />.
+
+ -or-
+
+ The type of <paramref name="value" /> is an enumeration, but it is not an enumeration of type <paramref name="enumType" />.
+
+ -or-
+
  The type of <paramref name="value" /> is not an underlying type of <paramref name="enumType" />.</exception>
         <exception cref="T:System.InvalidOperationException">
           <paramref name="value" /> is not type <see cref="T:System.SByte" />, <see cref="T:System.Int16" />, <see cref="T:System.Int32" />, <see cref="T:System.Int64" />, <see cref="T:System.Byte" />, <see cref="T:System.UInt16" />, <see cref="T:System.UInt32" />, or <see cref="T:System.UInt64" />, or <see cref="T:System.String" />.</exception>
         <block subset="none" type="usage">
-          <para>If <paramref name="enumType" /> is an enumeration that is defined by using the <see cref="T:System.FlagsAttribute" /> attribute, the method returns <see langword="false" /> if multiple bit fields in <paramref name="value" /> are set but <paramref name="value" /> does not correspond to a composite enumeration value, or if <paramref name="value" /> is a string concatenation of the names of multiple bit flags. In the following example, a <c>Pets</c> enumeration is defined with the <see cref="T:System.FlagsAttribute" /> attribute. The <see cref="M:System.Enum.IsDefined(System.Type,System.Object)" /> method returns <see langword="false" /> when you pass it an enumeration value that has two bit fields (<c>Pets.Dog</c> and <c>Pets.Cat</c>) set, and when you pass it the string representation of that enumeration value ("Dog, Cat").  
-  
+          <para>If <paramref name="enumType" /> is an enumeration that is defined by using the <see cref="T:System.FlagsAttribute" /> attribute, the method returns <see langword="false" /> if multiple bit fields in <paramref name="value" /> are set but <paramref name="value" /> does not correspond to a composite enumeration value, or if <paramref name="value" /> is a string concatenation of the names of multiple bit flags. In the following example, a <c>Pets</c> enumeration is defined with the <see cref="T:System.FlagsAttribute" /> attribute. The <see cref="M:System.Enum.IsDefined(System.Type,System.Object)" /> method returns <see langword="false" /> when you pass it an enumeration value that has two bit fields (<c>Pets.Dog</c> and <c>Pets.Cat</c>) set, and when you pass it the string representation of that enumeration value ("Dog, Cat").
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Enum.IsDefined/cs/isdefined2.cs" interactive="try-dotnet" id="Snippet2":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Enum.IsDefined/vb/isdefined2.vb" id="Snippet2":::
 
@@ -1358,7 +1358,7 @@ thisInstance And flag = flag
       <Docs>
         <param name="enumType">An enumeration type.</param>
         <param name="value">A span containing the name or value to convert.</param>
-        <summary>Converts the span of chars representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.</summary>
+        <summary>Converts the span of characters representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.</summary>
         <returns>An object of type <paramref name="enumType" /> whose value is represented by <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1424,40 +1424,40 @@ thisInstance And flag = flag
         <summary>Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.</summary>
         <returns>An object of type <paramref name="enumType" /> whose value is represented by <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `value` parameter contains the string representation of an enumeration member's underlying value or named constant, or a list of named constants delimited by commas (,). One or more blank spaces can precede or follow each value, name, or comma in `value`. If `value` is a list, the return value is the value of the specified names combined with a bitwise `OR` operation.  
-  
- If `value` is a name that does not correspond to a named constant of `enumType`, the method throws an <xref:System.ArgumentException>. If `value` is the string representation of an integer that does not represent an underlying value of the `enumType` enumeration, the method returns an enumeration member whose underlying value is `value` converted to an integral type. If this behavior is undesirable, call the <xref:System.Enum.IsDefined%2A> method to ensure that a particular string representation of an integer is actually a member of `enumType`. The following example defines a `Colors` enumeration, calls the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method to convert strings to their corresponding enumeration values, and calls the <xref:System.Enum.IsDefined%2A> method to ensure that particular integral values are underlying values in the `Colors` enumeration.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `value` parameter contains the string representation of an enumeration member's underlying value or named constant, or a list of named constants delimited by commas (,). One or more blank spaces can precede or follow each value, name, or comma in `value`. If `value` is a list, the return value is the value of the specified names combined with a bitwise `OR` operation.
+
+ If `value` is a name that does not correspond to a named constant of `enumType`, the method throws an <xref:System.ArgumentException>. If `value` is the string representation of an integer that does not represent an underlying value of the `enumType` enumeration, the method returns an enumeration member whose underlying value is `value` converted to an integral type. If this behavior is undesirable, call the <xref:System.Enum.IsDefined%2A> method to ensure that a particular string representation of an integer is actually a member of `enumType`. The following example defines a `Colors` enumeration, calls the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method to convert strings to their corresponding enumeration values, and calls the <xref:System.Enum.IsDefined%2A> method to ensure that particular integral values are underlying values in the `Colors` enumeration.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Enum.Parse/cs/ParseExample1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Enum.Parse/vb/ParseExample1.vb" id="Snippet1":::
-  
- This operation is case-sensitive.  
-  
-   
-  
-## Examples  
- The following example uses the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method to parse an array of strings that are created by calling the <xref:System.Enum.GetNames%2A> method. It also uses the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method to parse an enumeration value that consists of a bit field.  
-  
+
+ This operation is case-sensitive.
+
+
+
+## Examples
+ The following example uses the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method to parse an array of strings that are created by calling the <xref:System.Enum.GetNames%2A> method. It also uses the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method to parse an enumeration value that consists of a bit field.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enumparse/CPP/EnumParse.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enumparse/CS/EnumParse.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enumparse/VB/EnumParse.vb" id="Snippet1":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="enumType" /> or <paramref name="value" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.  
-  
- -or-  
-  
- <paramref name="value" /> is either an empty string or only contains white space.  
-  
- -or-  
-  
+          <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.
+
+ -or-
+
+ <paramref name="value" /> is either an empty string or only contains white space.
+
+ -or-
+
  <paramref name="value" /> is a name, but not one of the named constants defined for the enumeration.</exception>
         <exception cref="T:System.OverflowException">
           <paramref name="value" /> is outside the range of the underlying type of <paramref name="enumType" />.</exception>
@@ -1495,7 +1495,7 @@ thisInstance And flag = flag
         <param name="value">A span containing the name or value to convert.</param>
         <param name="ignoreCase">
           <see langword="true" /> to ignore case; <see langword="false" /> to regard case.</param>
-        <summary>Converts the span of chars representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object. A parameter specifies whether the operation is case-insensitive.</summary>
+        <summary>Converts the span of characters representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object. A parameter specifies whether the operation is case-insensitive.</summary>
         <returns>An object of type <paramref name="enumType" /> whose value is represented by <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1564,36 +1564,36 @@ thisInstance And flag = flag
         <summary>Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object. A parameter specifies whether the operation is case-insensitive.</summary>
         <returns>An object of type <paramref name="enumType" /> whose value is represented by <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `value` parameter contains the string representation of an enumeration member's underlying value or named constant, or a list of named constants delimited by commas (,). One or more blank spaces can precede or follow each value, name, or comma in `value`. If `value` is a list, the return value is the value of the specified names combined with a bitwise `OR` operation.  
-  
- If `value` is a name that does not correspond to a named constant of `enumType`, the method throws an <xref:System.ArgumentException>. If `value` is the string representation of an integer that does not represent an underlying value of the `enumType` enumeration, the method returns an enumeration member whose underlying value is `value` converted to an integral type. If this behavior is undesirable, call the <xref:System.Enum.IsDefined%2A> method to ensure that a particular string representation of an integer is actually a member of `enumType`. The following example defines a `Colors` enumeration, calls the <xref:System.Enum.Parse%28System.Type%2CSystem.String%2CSystem.Boolean%29> method to convert strings to their corresponding enumeration values, and calls the <xref:System.Enum.IsDefined%2A> method to ensure that particular integral values are underlying values in the `Colors` enumeration.  
-  
- The `ignoreCase` parameter specifies whether this operation is case-sensitive.  
-  
-   
-  
-## Examples  
- The following example uses the <xref:System.Enum.Parse%28System.Type%2CSystem.String%2CSystem.Boolean%29> method to parse an array of strings that are created by calling the <xref:System.Enum.GetNames%2A> method. It also uses the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method to parse an enumeration value that consists of a bit field.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `value` parameter contains the string representation of an enumeration member's underlying value or named constant, or a list of named constants delimited by commas (,). One or more blank spaces can precede or follow each value, name, or comma in `value`. If `value` is a list, the return value is the value of the specified names combined with a bitwise `OR` operation.
+
+ If `value` is a name that does not correspond to a named constant of `enumType`, the method throws an <xref:System.ArgumentException>. If `value` is the string representation of an integer that does not represent an underlying value of the `enumType` enumeration, the method returns an enumeration member whose underlying value is `value` converted to an integral type. If this behavior is undesirable, call the <xref:System.Enum.IsDefined%2A> method to ensure that a particular string representation of an integer is actually a member of `enumType`. The following example defines a `Colors` enumeration, calls the <xref:System.Enum.Parse%28System.Type%2CSystem.String%2CSystem.Boolean%29> method to convert strings to their corresponding enumeration values, and calls the <xref:System.Enum.IsDefined%2A> method to ensure that particular integral values are underlying values in the `Colors` enumeration.
+
+ The `ignoreCase` parameter specifies whether this operation is case-sensitive.
+
+
+
+## Examples
+ The following example uses the <xref:System.Enum.Parse%28System.Type%2CSystem.String%2CSystem.Boolean%29> method to parse an array of strings that are created by calling the <xref:System.Enum.GetNames%2A> method. It also uses the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method to parse an enumeration value that consists of a bit field.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Enum.Parse/cs/ParseExample2.cs" interactive="try-dotnet" id="Snippet2":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Enum.Parse/vb/ParseExample2.vb" id="Snippet2":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="enumType" /> or <paramref name="value" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.  
-  
- -or-  
-  
- <paramref name="value" /> is either an empty string ("") or only contains white space.  
-  
- -or-  
-  
+          <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.
+
+ -or-
+
+ <paramref name="value" /> is either an empty string ("") or only contains white space.
+
+ -or-
+
  <paramref name="value" /> is a name, but not one of the named constants defined for the enumeration.</exception>
         <exception cref="T:System.OverflowException">
           <paramref name="value" /> is outside the range of the underlying type of <paramref name="enumType" />.</exception>
@@ -1636,7 +1636,7 @@ thisInstance And flag = flag
       <Docs>
         <typeparam name="TEnum">An enumeration type.</typeparam>
         <param name="value">A span containing the name or value to convert.</param>
-        <summary>Converts the span of chars representation of the name or numeric value of one or more enumerated constants specified by <typeparamref name="TEnum" /> to an equivalent enumerated object.</summary>
+        <summary>Converts the span of characters representation of the name or numeric value of one or more enumerated constants specified by <typeparamref name="TEnum" /> to an equivalent enumerated object.</summary>
         <returns>
           <typeparamref name="TEnum" /> An object of type <typeparamref name="TEnum" /> whose value is represented by <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
@@ -1737,7 +1737,7 @@ thisInstance And flag = flag
         <param name="value">A span containing the name or value to convert.</param>
         <param name="ignoreCase">
           <see langword="true" /> to ignore case; <see langword="false" /> to regard case.</param>
-        <summary>Converts the span of chars representation of the name or numeric value of one or more enumerated constants specified by <typeparamref name="TEnum" /> to an equivalent enumerated object. A parameter specifies whether the operation is case-insensitive.</summary>
+        <summary>Converts the span of characters representation of the name or numeric value of one or more enumerated constants specified by <typeparamref name="TEnum" /> to an equivalent enumerated object. A parameter specifies whether the operation is case-insensitive.</summary>
         <returns>
           <typeparamref name="TEnum" /> An object of type <typeparamref name="TEnum" /> whose value is represented by <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
@@ -1880,11 +1880,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a Boolean value based on the underlying type.</summary>
         <returns>This member always throws an exception.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Currently not implemented. Always throws an exception.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Currently not implemented. Always throws an exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidCastException">In all cases.</exception>
@@ -1934,11 +1934,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to an 8-bit unsigned integer based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1987,11 +1987,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a Unicode character based on the underlying type.</summary>
         <returns>This member always throws an exception.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Currently not implemented. Always throws an exception.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Currently not implemented. Always throws an exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidCastException">In all cases.</exception>
@@ -2041,11 +2041,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a <see cref="T:System.DateTime" /> based on the underlying type.</summary>
         <returns>This member always throws an exception.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Currently not implemented. Always throws an exception.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Currently not implemented. Always throws an exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidCastException">In all cases.</exception>
@@ -2095,11 +2095,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a <see cref="T:System.Decimal" /> based on the underlying type.</summary>
         <returns>This member always throws an exception.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Currently not implemented. Always throws an exception.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Currently not implemented. Always throws an exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidCastException">In all cases.</exception>
@@ -2149,11 +2149,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a double-precision floating point number based on the underlying type.</summary>
         <returns>This member always throws an exception.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Currently not implemented. Always throws an exception.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Currently not implemented. Always throws an exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidCastException">In all cases.</exception>
@@ -2203,11 +2203,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a 16-bit signed integer based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2256,11 +2256,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a 32-bit signed integer based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2309,11 +2309,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a 64-bit signed integer based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2368,11 +2368,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to an 8-bit signed integer based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2421,11 +2421,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a single-precision floating-point number based on the underlying type.</summary>
         <returns>This member always throws an exception.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Currently not implemented. Always throws an exception.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Currently not implemented. Always throws an exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidCastException">In all cases.</exception>
@@ -2518,11 +2518,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a specified type based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2577,11 +2577,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a 16-bit unsigned integer based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2636,11 +2636,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a 32-bit unsigned integer based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2695,11 +2695,11 @@ thisInstance And flag = flag
         <summary>Converts the current value to a 64-bit unsigned integer based on the underlying type.</summary>
         <returns>The converted value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Uses <xref:System.Convert> to perform the conversion.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Uses <xref:System.Convert> to perform the conversion.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2814,13 +2814,13 @@ thisInstance And flag = flag
         <summary>Converts the specified 8-bit unsigned integer to an enumeration member.</summary>
         <returns>An instance of the enumeration set to <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.Byte%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.Byte%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -2881,13 +2881,13 @@ thisInstance And flag = flag
         <summary>Converts the specified 16-bit signed integer to an enumeration member.</summary>
         <returns>An instance of the enumeration set to <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.Int16%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.Int16%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -2948,13 +2948,13 @@ thisInstance And flag = flag
         <summary>Converts the specified 32-bit signed integer to an enumeration member.</summary>
         <returns>An instance of the enumeration set to <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.Int32%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.Int32%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -3015,13 +3015,13 @@ thisInstance And flag = flag
         <summary>Converts the specified 64-bit signed integer to an enumeration member.</summary>
         <returns>An instance of the enumeration set to <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.Int64%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.Int64%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -3082,22 +3082,22 @@ thisInstance And flag = flag
         <summary>Converts the specified object with an integer value to an enumeration member.</summary>
         <returns>An enumeration object whose value is <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.Object%29> method converts the integral value `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.Object%29> method converts the integral value `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="enumType" /> or <paramref name="value" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.  
-  
- -or-  
-  
+          <paramref name="enumType" /> is not an <see cref="T:System.Enum" />.
+
+ -or-
+
  <paramref name="value" /> is not type <see cref="T:System.SByte" />, <see cref="T:System.Int16" />, <see cref="T:System.Int32" />, <see cref="T:System.Int64" />, <see cref="T:System.Byte" />, <see cref="T:System.UInt16" />, <see cref="T:System.UInt32" />, or <see cref="T:System.UInt64" />.</exception>
         <altmember cref="M:System.Enum.IsDefined(System.Type,System.Object)" />
       </Docs>
@@ -3157,13 +3157,13 @@ thisInstance And flag = flag
         <summary>Converts the specified 8-bit signed integer value to an enumeration member.</summary>
         <returns>An instance of the enumeration set to <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.SByte%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.SByte%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -3228,13 +3228,13 @@ thisInstance And flag = flag
         <summary>Converts the specified 16-bit unsigned integer value to an enumeration member.</summary>
         <returns>An instance of the enumeration set to <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.UInt16%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.UInt16%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -3299,13 +3299,13 @@ thisInstance And flag = flag
         <summary>Converts the specified 32-bit unsigned integer value to an enumeration member.</summary>
         <returns>An instance of the enumeration set to <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.UInt32%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.UInt32%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -3370,13 +3370,13 @@ thisInstance And flag = flag
         <summary>Converts the specified 64-bit unsigned integer value to an enumeration member.</summary>
         <returns>An instance of the enumeration set to <paramref name="value" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Enum.ToObject%28System.Type%2CSystem.UInt64%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.  
-  
- This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Enum.ToObject%28System.Type%2CSystem.UInt64%29> method converts `value` to an enumeration member whose underlying value is `value`. Note that the conversion succeeds even if value is outside the bounds of `enumType` members. To ensure that `value` is a valid underlying value of the `enumType` enumeration, pass it to the <xref:System.Enum.IsDefined%2A> method.
+
+ This conversion method returns a value of type <xref:System.Object>. You can then cast it or convert it to an object of type `enumType`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -3440,30 +3440,30 @@ thisInstance And flag = flag
         <summary>Converts the value of this instance to its equivalent string representation.</summary>
         <returns>The string representation of the value of this instance.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The return value is formatted with the general format specifier ("G"). That is, if the <xref:System.FlagsAttribute> is not applied to this enumerated type and there is a named constant equal to the value of this instance, then the return value is a string containing the name of the constant. If the <xref:System.FlagsAttribute> is applied and there is a combination of one or more named constants equal to the value of this instance, then the return value is a string containing a delimiter-separated list of the names of the constants. Otherwise, the return value is the string representation of the numeric value of this instance. For more information about formatting enumeration values, see [Enumeration Format Strings](/dotnet/standard/base-types/enumeration-format-strings). For more information about formatting in general, see [Formatting Types](/dotnet/standard/base-types/formatting-types).  
-  
-   
-  
-## Examples  
- The following example demonstrates converting an enumerated value to a string.  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The return value is formatted with the general format specifier ("G"). That is, if the <xref:System.FlagsAttribute> is not applied to this enumerated type and there is a named constant equal to the value of this instance, then the return value is a string containing the name of the constant. If the <xref:System.FlagsAttribute> is applied and there is a combination of one or more named constants equal to the value of this instance, then the return value is a string containing a delimiter-separated list of the names of the constants. Otherwise, the return value is the string representation of the numeric value of this instance. For more information about formatting enumeration values, see [Enumeration Format Strings](/dotnet/standard/base-types/enumeration-format-strings). For more information about formatting in general, see [Formatting Types](/dotnet/standard/base-types/formatting-types).
+
+
+
+## Examples
+ The following example demonstrates converting an enumerated value to a string.
 
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic Enum.ToString2 Example/CPP/source.cpp" id="Snippet1":::
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic Enum.ToString2 Example/CS/source.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/System/Enum/ToString/source.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic Enum.ToString2 Example/VB/source.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
         <block subset="none" type="usage">
-          <para>If multiple enumeration members have the same underlying value and you attempt to retrieve the string representation of an enumeration member's name based on its underlying value, your code should not make any assumptions about which name the method will return. For example, the following enumeration defines two members, <c>Shade.Gray</c> and <c>Shade.Grey</c>, that have the same underlying value.  
-  
+          <para>If multiple enumeration members have the same underlying value and you attempt to retrieve the string representation of an enumeration member's name based on its underlying value, your code should not make any assumptions about which name the method will return. For example, the following enumeration defines two members, <c>Shade.Gray</c> and <c>Shade.Grey</c>, that have the same underlying value.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.tostring/cs/tostringbyvalue1.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.tostring/vb/tostringbyvalue1.vb" id="Snippet1":::  
-  
- The following method call attempts to retrieve the name of a member of the <c>Shade</c> enumeration whose underlying value is 1. The method can return either "Gray" or "Grey", and your code should not make any assumptions about which string will be returned.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.tostring/vb/tostringbyvalue1.vb" id="Snippet1":::
+
+ The following method call attempts to retrieve the name of a member of the <c>Shade</c> enumeration whose underlying value is 1. The method can return either "Gray" or "Grey", and your code should not make any assumptions about which string will be returned.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.tostring/cs/tostringbyvalue1.cs" id="Snippet2":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.tostring/vb/tostringbyvalue1.vb" id="Snippet2":::</para>
         </block>
@@ -3576,16 +3576,16 @@ thisInstance And flag = flag
         <summary>Converts the value of this instance to its equivalent string representation using the specified format.</summary>
         <returns>The string representation of the value of this instance as specified by <paramref name="format" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `format` parameter can be one of the following format strings: "G" or "g", "D" or "d", "X" or "x", and "F" or "f" (the format string is not case-sensitive). If `format` is `null` or an empty string (""), the general format specifier ("G") is used. For more information about the enumeration format strings and formatting enumeration values, see [Enumeration Format Strings](/dotnet/standard/base-types/enumeration-format-strings). For more information about formatting in general, see [Formatting Types](/dotnet/standard/base-types/formatting-types).  
-  
-   
-  
-## Examples  
- The following example demonstrates how to convert an enumerated value to a string.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `format` parameter can be one of the following format strings: "G" or "g", "D" or "d", "X" or "x", and "F" or "f" (the format string is not case-sensitive). If `format` is `null` or an empty string (""), the general format specifier ("G") is used. For more information about the enumeration format strings and formatting enumeration values, see [Enumeration Format Strings](/dotnet/standard/base-types/enumeration-format-strings). For more information about formatting in general, see [Formatting Types](/dotnet/standard/base-types/formatting-types).
+
+
+
+## Examples
+ The following example demonstrates how to convert an enumerated value to a string.
+
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/enum.tostring/CPP/tostr.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/enum.tostring/CS/tostr.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/enum.tostring/VB/tostr.vb" id="Snippet1":::
@@ -3597,13 +3597,13 @@ thisInstance And flag = flag
         <exception cref="T:System.InvalidOperationException">
           <paramref name="format" /> equals "X", but the enumeration type is unknown.</exception>
         <block subset="none" type="usage">
-          <para>If multiple enumeration members have the same underlying value and you attempt to retrieve the string representation of an enumeration member's name based on its underlying value, your code should not make any assumptions about which name the method will return. For example, the following enumeration defines two members, <c>Shade.Gray</c> and <c>Shade.Grey</c>, that have the same underlying value.  
-  
+          <para>If multiple enumeration members have the same underlying value and you attempt to retrieve the string representation of an enumeration member's name based on its underlying value, your code should not make any assumptions about which name the method will return. For example, the following enumeration defines two members, <c>Shade.Gray</c> and <c>Shade.Grey</c>, that have the same underlying value.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.tostring/cs/tostringbyvalue1.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.tostring/vb/tostringbyvalue1.vb" id="Snippet1":::  
-  
- The following method call attempts to retrieve the name of a member of the <c>Shade</c> enumeration whose underlying value is 1. The method can return either "Gray" or "Grey", and your code should not make any assumptions about which string will be returned.  
-  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.tostring/vb/tostringbyvalue1.vb" id="Snippet1":::
+
+ The following method call attempts to retrieve the name of a member of the <c>Shade</c> enumeration whose underlying value is 1. The method can return either "Gray" or "Grey", and your code should not make any assumptions about which string will be returned.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.tostring/cs/tostringbyvalue1.cs" id="Snippet3":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.tostring/vb/tostringbyvalue1.vb" id="Snippet3":::</para>
         </block>
@@ -3669,13 +3669,13 @@ thisInstance And flag = flag
         <summary>This method overload is obsolete; use <see cref="M:System.Enum.ToString(System.String)" />.</summary>
         <returns>The string representation of the value of this instance as specified by <paramref name="format" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `format` parameter can be one of the following format strings: "G" or "g", "D" or "d", "X" or "x", and "F" or "f" (the format string is not case-sensitive). If `format` is `null` or an empty string (""), the general format specifier ("G") is used. For more information about the enumeration format strings and formatting enumeration values, see [Enumeration Format Strings](/dotnet/standard/base-types/enumeration-format-strings). For more information about formatting in general, see [Formatting Types](/dotnet/standard/base-types/formatting-types).  
-  
- Specify only `format`; the `provider` parameter is obsolete.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `format` parameter can be one of the following format strings: "G" or "g", "D" or "d", "X" or "x", and "F" or "f" (the format string is not case-sensitive). If `format` is `null` or an empty string (""), the general format specifier ("G") is used. For more information about the enumeration format strings and formatting enumeration values, see [Enumeration Format Strings](/dotnet/standard/base-types/enumeration-format-strings). For more information about formatting in general, see [Formatting Types](/dotnet/standard/base-types/formatting-types).
+
+ Specify only `format`; the `provider` parameter is obsolete.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.FormatException">
@@ -3726,8 +3726,8 @@ thisInstance And flag = flag
       <Docs>
         <param name="enumType">The enum type to use for parsing.</param>
         <param name="value">The span representation of the name or numeric value of one or more enumerated constants.</param>
-        <param name="result">When this method returns <see langword="true" />, an object containing an enumeration constant representing the parsed value.</param>
-        <summary>Converts the span of chars representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.</summary>
+        <param name="result">When this method returns <see langword="true" />, contains an enumeration constant that represents the parsed value.</param>
+        <summary>Converts the span of characters representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.</summary>
         <returns>
           <see langword="true" /> if the conversion succeeded; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
@@ -3768,7 +3768,7 @@ thisInstance And flag = flag
       <Docs>
         <param name="enumType">The enum type to use for parsing.</param>
         <param name="value">The string representation of the name or numeric value of one or more enumerated constants.</param>
-        <param name="result">When this method returns <see langword="true" />, an object containing an enumeration constant representing the parsed value.</param>
+        <param name="result">When this method returns <see langword="true" />, contains an enumeration constant that represents the parsed value.</param>
         <summary>Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.</summary>
         <returns>
           <see langword="true" /> if the conversion succeeded; <see langword="false" /> otherwise.</returns>
@@ -3807,8 +3807,8 @@ thisInstance And flag = flag
         <param name="value">The span representation of the name or numeric value of one or more enumerated constants.</param>
         <param name="ignoreCase">
           <see langword="true" /> to read <paramref name="enumType" /> in case insensitive mode; <see langword="false" /> to read <paramref name="enumType" /> in case sensitive mode.</param>
-        <param name="result">When this method returns <see langword="true" />, an object containing an enumeration constant representing the parsed value.</param>
-        <summary>Converts the span of chars representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object. A parameter specifies whether the operation is case-insensitive.</summary>
+        <param name="result">When this method returns <see langword="true" />, contains an enumeration constant that represents the parsed value.</param>
+        <summary>Converts the span of characters representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object. A parameter specifies whether the operation is case-insensitive.</summary>
         <returns>
           <see langword="true" /> if the conversion succeeded; <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
@@ -3852,7 +3852,7 @@ thisInstance And flag = flag
         <param name="value">The string representation of the name or numeric value of one or more enumerated constants.</param>
         <param name="ignoreCase">
           <see langword="true" /> to read <paramref name="value" /> in case insensitive mode; <see langword="false" /> to read <paramref name="value" /> in case sensitive mode.</param>
-        <param name="result">When this method returns <see langword="true" />, an object containing an enumeration constant representing the parsed value.</param>
+        <param name="result">When this method returns <see langword="true" />, contains an enumeration constant that represents the parsed value.</param>
         <summary>Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.</summary>
         <returns>
           <see langword="true" /> if the conversion succeeded; <see langword="false" /> otherwise.</returns>
@@ -3896,7 +3896,7 @@ thisInstance And flag = flag
       <Docs>
         <typeparam name="TEnum">The type of the <paramref name="result" /> object.</typeparam>
         <param name="value">The span representation of the name or numeric value of one or more enumerated constants.</param>
-        <param name="result">When this method returns <see langword="true" />, an object containing an enumeration constant representing the parsed value.</param>
+        <param name="result">When this method returns <see langword="true" />, contains an enumeration constant that represents the parsed value.</param>
         <summary>Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.</summary>
         <returns>
           <see langword="true" /> if the conversion succeeded; <see langword="false" /> otherwise.</returns>
@@ -3961,28 +3961,26 @@ thisInstance And flag = flag
       <Docs>
         <typeparam name="TEnum">The enumeration type to which to convert <paramref name="value" />.</typeparam>
         <param name="value">The case-sensitive string representation of the enumeration name or underlying value to convert.</param>
-        <param name="result">When this method returns, <paramref name="result" /> contains an object of type <c>TEnum</c> whose value is represented by <paramref name="value" /> if the parse operation succeeds. If the parse operation fails, <paramref name="result" /> contains the default value of the underlying type of <c>TEnum</c>. Note that this value need not be a member of the <c>TEnum</c> enumeration. This parameter is passed uninitialized.</param>
+        <param name="result">When this method returns, contains an object of type <c>TEnum</c> whose value is represented by <paramref name="value" /> if the parse operation succeeds. If the parse operation fails, contains the default value of the underlying type of <c>TEnum</c>. This value need not be a member of the <c>TEnum</c> enumeration. This parameter is passed uninitialized.</param>
         <summary>Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object. The return value indicates whether the conversion succeeded.</summary>
         <returns>
           <see langword="true" /> if the <paramref name="value" /> parameter was converted successfully; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Enum.TryParse%60%601%28System.String%2C%60%600%40%29> is identical to the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method, except that instead of throwing an exception, it returns `false` if the conversion fails. It eliminates the need for exception handling when parsing the string representation of an enumeration value.  
-  
- The `value` parameter contains the string representation of an enumeration member's underlying value or named constant, or a list of named constants or underlying values delimited by commas (,). If `value` includes multiple named constants or values, one or more blank spaces can precede or follow each value, name, or comma in `value`. If `value` is a list, `result` reflects the value of the specified names or underlying values combined with a bitwise `OR` operation. If `value` is the string representation of the name of an enumeration value, the comparison of `value` with enumeration names is case-sensitive.  
-  
- If `value` is a name that does not correspond to a named constant of `TEnum`, the method returns `false`. If `value` is the string representation of an integer that does not represent an underlying value of the `TEnum` enumeration, the method returns an enumeration member whose underlying value is `value` converted to an integral type. If this behavior is undesirable, call the <xref:System.Enum.IsDefined%2A> method to ensure that a particular string representation of an integer is actually a member of `TEnum`.  
-  
-   
-  
-## Examples  
- The following example defines a `Colors` enumeration, calls the <xref:System.Enum.TryParse%60%601%28System.String%2C%60%600%40%29> method to convert strings to their corresponding enumeration values, and calls the <xref:System.Enum.IsDefined%2A> method to ensure that particular integral values are underlying values in the `Colors` enumeration.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.Enum.TryParse%60%601%28System.String%2C%60%600%40%29> is identical to the <xref:System.Enum.Parse%28System.Type%2CSystem.String%29> method, except that instead of throwing an exception, it returns `false` if the conversion fails. It eliminates the need for exception handling when parsing the string representation of an enumeration value.
+
+ The `value` parameter contains the string representation of an enumeration member's underlying value or named constant, or a list of named constants or underlying values delimited by commas (,). If `value` includes multiple named constants or values, one or more blank spaces can precede or follow each value, name, or comma in `value`. If `value` is a list, `result` reflects the value of the specified names or underlying values combined with a bitwise `OR` operation. If `value` is the string representation of the name of an enumeration value, the comparison of `value` with enumeration names is case-sensitive.
+
+ If `value` is a name that does not correspond to a named constant of `TEnum`, the method returns `false`. If `value` is the string representation of an integer that does not represent an underlying value of the `TEnum` enumeration, the method returns an enumeration member whose underlying value is `value` converted to an integral type. If this behavior is undesirable, call the <xref:System.Enum.IsDefined%2A> method to ensure that a particular string representation of an integer is actually a member of `TEnum`.
+
+## Examples
+ The following example defines a `Colors` enumeration, calls the <xref:System.Enum.TryParse%60%601%28System.String%2C%60%600%40%29> method to convert strings to their corresponding enumeration values, and calls the <xref:System.Enum.IsDefined%2A> method to ensure that particular integral values are underlying values in the `Colors` enumeration.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.tryparse/cs/tryparse1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.tryparse/vb/tryparse1.vb" id="Snippet1":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -4030,7 +4028,7 @@ thisInstance And flag = flag
         <param name="value">The span representation of the name or numeric value of one or more enumerated constants.</param>
         <param name="ignoreCase">
           <see langword="true" /> to ignore case; <see langword="false" /> to consider case.</param>
-        <param name="result">When this method returns <see langword="true" />, an object containing an enumeration constant representing the parsed value.</param>
+        <param name="result">When this method returns <see langword="true" />, contains an enumeration constant that represents the parsed value.</param>
         <summary>Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object. A parameter specifies whether the operation is case-sensitive. The return value indicates whether the conversion succeeded.</summary>
         <returns>
           <see langword="true" /> if the conversion succeeded; <see langword="false" /> otherwise.</returns>
@@ -4098,28 +4096,26 @@ thisInstance And flag = flag
         <param name="value">The string representation of the enumeration name or underlying value to convert.</param>
         <param name="ignoreCase">
           <see langword="true" /> to ignore case; <see langword="false" /> to consider case.</param>
-        <param name="result">When this method returns, <paramref name="result" /> contains an object of type <c>TEnum</c> whose value is represented by <paramref name="value" /> if the parse operation succeeds. If the parse operation fails, <paramref name="result" /> contains the default value of the underlying type of <c>TEnum</c>. Note that this value need not be a member of the <c>TEnum</c> enumeration. This parameter is passed uninitialized.</param>
+        <param name="result">When this method returns, contains an object of type <c>TEnum</c> whose value is represented by <paramref name="value" /> if the parse operation succeeds. If the parse operation fails, contains the default value of the underlying type of <c>TEnum</c>. This value need not be a member of the <c>TEnum</c> enumeration. This parameter is passed uninitialized.</param>
         <summary>Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object. A parameter specifies whether the operation is case-sensitive. The return value indicates whether the conversion succeeded.</summary>
         <returns>
           <see langword="true" /> if the <paramref name="value" /> parameter was converted successfully; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.Enum.TryParse%60%601%28System.String%2CSystem.Boolean%2C%60%600%40%29> is identical to the <xref:System.Enum.Parse%28System.Type%2CSystem.String%2CSystem.Boolean%29> method, except that instead of throwing an exception, it returns `false` if the conversion fails. It eliminates the need for exception handling when parsing the string representation of an enumeration value.  
-  
- The `value` parameter contains the string representation of an enumeration member's underlying value or named constant, or a list of named constants or underlying values delimited by commas (,). If `value` includes multiple named constants or values, one or more blank spaces can precede or follow each value, name, or comma in `value`. If `value` is a list, `result` reflects the value of the specified names or underlying values combined with a bitwise `OR` operation. If `value` is the string representation of the name of an enumeration value, the comparison of `value` with enumeration names depends on the `ignoreCase` parameter. If `true`, the comparison is case-insensitive; if `false`, it is case-sensitive.  
-  
- If `value` is a name that does not correspond to a named constant of `TEnum`, the method returns `false`. If `value` is the string representation of an integer that does not represent an underlying value of the `TEnum` enumeration, the method returns an enumeration member whose underlying value is `value` converted to an integral type. If this behavior is undesirable, call the <xref:System.Enum.IsDefined%2A> method to ensure that a particular string representation of an integer is actually a member of `TEnum`.  
-  
-   
-  
-## Examples  
- The following example defines a `Colors` enumeration, calls the <xref:System.Enum.TryParse%60%601%28System.String%2CSystem.Boolean%2C%60%600%40%29> method to convert strings to their corresponding enumeration values, and calls the <xref:System.Enum.IsDefined%2A> method to ensure that particular integral values are underlying values in the `Colors` enumeration. The <xref:System.Enum.TryParse%60%601%28System.String%2CSystem.Boolean%2C%60%600%40%29> method uses case-insensitive comparison when trying to convert the string representations of named constants to their equivalent enumeration values.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.Enum.TryParse%60%601%28System.String%2CSystem.Boolean%2C%60%600%40%29> is identical to the <xref:System.Enum.Parse%28System.Type%2CSystem.String%2CSystem.Boolean%29> method, except that instead of throwing an exception, it returns `false` if the conversion fails. It eliminates the need for exception handling when parsing the string representation of an enumeration value.
+
+ The `value` parameter contains the string representation of an enumeration member's underlying value or named constant, or a list of named constants or underlying values delimited by commas (,). If `value` includes multiple named constants or values, one or more blank spaces can precede or follow each value, name, or comma in `value`. If `value` is a list, `result` reflects the value of the specified names or underlying values combined with a bitwise `OR` operation. If `value` is the string representation of the name of an enumeration value, the comparison of `value` with enumeration names depends on the `ignoreCase` parameter. If `true`, the comparison is case-insensitive; if `false`, it is case-sensitive.
+
+ If `value` is a name that does not correspond to a named constant of `TEnum`, the method returns `false`. If `value` is the string representation of an integer that does not represent an underlying value of the `TEnum` enumeration, the method returns an enumeration member whose underlying value is `value` converted to an integral type. If this behavior is undesirable, call the <xref:System.Enum.IsDefined%2A> method to ensure that a particular string representation of an integer is actually a member of `TEnum`.
+
+## Examples
+ The following example defines a `Colors` enumeration, calls the <xref:System.Enum.TryParse%60%601%28System.String%2CSystem.Boolean%2C%60%600%40%29> method to convert strings to their corresponding enumeration values, and calls the <xref:System.Enum.IsDefined%2A> method to ensure that particular integral values are underlying values in the `Colors` enumeration. The <xref:System.Enum.TryParse%60%601%28System.String%2CSystem.Boolean%2C%60%600%40%29> method uses case-insensitive comparison when trying to convert the string representations of named constants to their equivalent enumeration values.
+
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.enum.tryparse/cs/tryparse2.cs" interactive="try-dotnet" id="Snippet2":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.enum.tryparse/vb/tryparse2.vb" id="Snippet2":::
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
