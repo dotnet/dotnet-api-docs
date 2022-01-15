@@ -1,4 +1,4 @@
-//<root>
+﻿//<root>
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -27,7 +27,7 @@ namespace Demo
     //<UtilitySource>
     public abstract class UtilBaseEventSource : EventSource
     {
-        protected UtilBaseEventSource() 
+        protected UtilBaseEventSource()
             : base()
         { }
 
@@ -68,7 +68,7 @@ namespace Demo
     //<ComplexSource>
     public class ComplexComponent : IDisposable
     {
-        internal static Dictionary<string,string> _internalState = new();
+        internal static Dictionary<string, string> _internalState = new();
 
         private string _name;
 
@@ -116,10 +116,10 @@ namespace Demo
 
         public static class Keywords
         {
-            public const EventKeywords ComponentLifespan  = (EventKeywords)1;
-            public const EventKeywords StateChanges       = (EventKeywords)(1 << 1);
-            public const EventKeywords Performance        = (EventKeywords)(1 << 2);
-            public const EventKeywords DumpState          = (EventKeywords)(1 << 3);
+            public const EventKeywords ComponentLifespan = (EventKeywords)1;
+            public const EventKeywords StateChanges = (EventKeywords)(1 << 1);
+            public const EventKeywords Performance = (EventKeywords)(1 << 2);
+            public const EventKeywords DumpState = (EventKeywords)(1 << 3);
             // a utility keyword for a common combination of keywords users might enable
             public const EventKeywords StateTracking = ComponentLifespan & StateChanges & DumpState;
         }
@@ -150,7 +150,7 @@ namespace Demo
         public void ExpensiveWorkStop(string name) => WriteEvent(5, name);
 
         [Event(6, Keywords = Keywords.DumpState)]
-        public void ComponentState(string key, string value) =>  WriteEvent(6, key, value);
+        public void ComponentState(string key, string value) => WriteEvent(6, key, value);
 
         [NonEvent]
         public void DumpComponentState()

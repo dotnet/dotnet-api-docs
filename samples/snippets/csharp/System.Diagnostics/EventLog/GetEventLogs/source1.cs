@@ -1,10 +1,9 @@
 ﻿//<Snippet1>
 
 using System;
-using System.IO;
-using System.Globalization;
-using System.Data;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using Microsoft.Win32;
 
 namespace EventLogSamples

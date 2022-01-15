@@ -1,6 +1,5 @@
 ﻿//<Snippet1>
 using System.Diagnostics.Tracing;
-using System.Collections.Generic;
 
 namespace Demo1
 {
@@ -16,7 +15,7 @@ namespace Demo1
     //</Snippet2>
 
     //<Snippet3>
-    class Program
+    class Program1
     {
         static void Main(string[] args)
         {
