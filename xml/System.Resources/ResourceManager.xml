@@ -115,12 +115,12 @@
 
 -   <xref:System.Resources.ResourceManager.%23ctor%28System.String%2CSystem.Reflection.Assembly%29> looks up resources based on two pieces of information that you supply: the base name of the .resources file, and the assembly in which the default .resources file resides. The base name includes the namespace and root name of the .resources file, without its culture or extension. Note that .resources files that are compiled from the command line typically do not include a namespace name, whereas .resources files that are created in the Visual Studio environment do. For example, if a resource file is named MyCompany.StringResources.resources and the <xref:System.Resources.ResourceManager> constructor is called from a static method named `Example.Main`, the following code instantiates a <xref:System.Resources.ResourceManager> object that can retrieve resources from the .resources file:
 
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.resources.retrieving/cs/ctor1.cs" id="Snippet1":::
+     :::code language="csharp" source="~/samples/snippets/csharp/System.Resources/ResourceManager/Overview/ctor1.cs" id="Snippet1":::
      :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/ctor1.vb" id="Snippet1":::
 
 -   <xref:System.Resources.ResourceManager.%23ctor%28System.Type%29> looks up resources in satellite assemblies based on information from a type object. The type's fully qualified name corresponds to the base name of the .resources file without its file name extension. In desktop apps that are created by using the Visual Studio Resource Designer, Visual Studio creates a wrapper class whose fully qualified name is the same as the root name of the .resources file. For example, if a resource file is named MyCompany.StringResources.resources and there is a wrapper class named `MyCompany.StringResources`, the following code instantiates a <xref:System.Resources.ResourceManager> object that can retrieve resources from the .resources file:
 
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.resources.retrieving/cs/ctor1.cs" id="Snippet2":::
+     :::code language="csharp" source="~/samples/snippets/csharp/System.Resources/ResourceManager/Overview/ctor1.cs" id="Snippet2":::
      :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/ctor1.vb" id="Snippet2":::
 
  If the appropriate resources cannot be found, the constructor call creates a valid <xref:System.Resources.ResourceManager> object. However, the attempt to retrieve a resource throws a <xref:System.Resources.MissingManifestResourceException> exception. For information about dealing with the exception, see the [Handling MissingManifestResourceException and MissingSatelliteAssembly Exceptions](#exception) section later in this article.
@@ -188,7 +188,7 @@ HelloString=Всем привет!
 
  Here's the source code for the example (Example.vb for the Visual Basic version or Example.cs for the C# version):
 
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.resources.currentculture/cs/example.cs" id="Snippet1":::
+ :::code language="csharp" source="~/samples/snippets/csharp/System.Resources/ResourceManager/Overview/example.cs" id="Snippet1":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.currentculture/vb/example.vb" id="Snippet1":::
 
  To compile this example, create a batch (.bat) file that contains the following commands and run it from the command prompt. If you're using C#, specify `csc` instead of `vbc` and `Example.cs` instead of `Example.vb`.
@@ -1088,17 +1088,17 @@ csc Example.cs /resource:ExampleResources.resources
 ## Examples
  The following example uses the <xref:System.Resources.ResourceManager.GetObject%28System.String%29> method to deserialize a custom object. The example includes a source code file named UIElements.cs (UIElements.vb if you're using Visual Basic) that defines the following structure named `PersonTable`. This structure is intended to be used by a general table display routine that displays the localized names of table columns. Note that the `PersonTable` structure is marked with the <xref:System.SerializableAttribute> attribute.
 
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.resources.retrieving/cs/example.cs" id="Snippet6":::
+ :::code language="csharp" source="~/samples/snippets/csharp/System.Resources/ResourceManager/Overview/example1.cs" id="Snippet6":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/example.vb" id="Snippet6":::
 
  The following code from a file named CreateResources.cs (CreateResources.vb for Visual Basic) creates an XML resource file named UIResources.resx that stores a table title and a `PersonTable` object that contains information for an app that is localized for the English language.
 
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.resources.retrieving/cs/example1.cs" id="Snippet7":::
+ :::code language="csharp" source="~/samples/snippets/csharp/System.Resources/ResourceManager/Overview/example11.cs" id="Snippet7":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/example.vb" id="Snippet7":::
 
  The following code in a source code file named GetObject.cs (GetObject.vb) then retrieves the resources and displays them to the console.
 
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.resources.retrieving/cs/example2.cs" id="Snippet8":::
+ :::code language="csharp" source="~/samples/snippets/csharp/System.Resources/ResourceManager/Overview/example2.cs" id="Snippet8":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/example2.vb" id="Snippet8":::
 
  You can build the necessary resource file and assemblies and run the app by executing the following batch file. You must use the `/r` option to supply Resgen.exe with a reference to UIElements.dll so that it can access information about the `PersonTable` structure. If you're using C#, replace the `vbc` compiler name with `csc`, and replace the `.vb` extension with `.cs`.
@@ -1568,12 +1568,12 @@ al /out:fr-FR\ShowNumbers.resources.dll /culture:fr-FR /embed:NumberResources.fr
 ## Examples
  The following example uses the <xref:System.Resources.ResourceManager.GetStream%28System.String%29> method to retrieve a bitmap that is used in an app's opening splash window. The following source code from a file named CreateResources.cs (for C#) or CreateResources.vb (for Visual Basic) generates a .resx file named AppResources.resx that contains the serialized image. In this case, the image is loaded from a file named SplashScreen.jpg; you can modify the file name to substitute your own image.
 
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.resources.retrieving/cs/createresources.cs" id="Snippet4":::
+ :::code language="csharp" source="~/samples/snippets/csharp/System.Resources/ResourceManager/Overview/createresources.cs" id="Snippet4":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/createresources.vb" id="Snippet4":::
 
  The following code from a file named GetStream.cs (for C#) or GetStream.vb (for Visual Basic) then retrieves the resource and displays the image in a <xref:System.Windows.Forms.PictureBox?displayProperty=nameWithType> control.
 
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.resources.retrieving/cs/getstream.cs" id="Snippet5":::
+ :::code language="csharp" source="~/samples/snippets/csharp/System.Resources/ResourceManager/Overview/getstream.cs" id="Snippet5":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/getstream.vb" id="Snippet5":::
 
  You can use the following batch file to build the C# example. For Visual Basic, change `csc` to `vbc`, and change the extension of the source code file from `.cs` to `.vb`.
