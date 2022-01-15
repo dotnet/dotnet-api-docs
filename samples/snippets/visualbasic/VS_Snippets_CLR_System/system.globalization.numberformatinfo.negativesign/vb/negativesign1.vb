@@ -11,7 +11,7 @@ Module Example
       Dim numbers() As Double = { -1.0, -16.3, -106.35 }
 
       For Each number In numbers
-         Console.WriteLine(number.ToString(culture))
+         Console.WriteLine(number.ToString(ci))
       Next
    End Sub
 End Module

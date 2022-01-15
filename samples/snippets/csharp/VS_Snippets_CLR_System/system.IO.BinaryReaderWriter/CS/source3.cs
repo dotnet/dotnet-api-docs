@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 
-public class BinReadWrite
+public class BinReadWrite3
 {
     public static void Main()
     {
