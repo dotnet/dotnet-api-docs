@@ -1,3 +1,4 @@
+// GetValue(String, Object)
 // <Snippet1>
 using System;
 using Microsoft.Win32;
