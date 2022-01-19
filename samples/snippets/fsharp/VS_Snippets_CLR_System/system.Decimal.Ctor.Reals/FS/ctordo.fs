@@ -1,4 +1,6 @@
-﻿//<Snippet2>
+﻿module ctordo
+
+//<Snippet2>
 // Example of the decimal( double ) constructor.
 open System
 
