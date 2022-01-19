@@ -31,7 +31,7 @@ class Example
         Console.WriteLine("Done emptying queue.  InitialCount={0}, CurrentCount={1}, IsSet={2}",
             cde.InitialCount, cde.CurrentCount, cde.IsSet);
 
-        // Proper form is to wait for the tasks to complete, even if you that their work
+        // Proper form is to wait for the tasks to complete, even if you know that their work
         // is done already.
         await Task.WhenAll(t1, t2);
 
