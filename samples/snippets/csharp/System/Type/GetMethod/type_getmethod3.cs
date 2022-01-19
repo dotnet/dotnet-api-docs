@@ -3,7 +3,7 @@
 using System;
 using System.Reflection;
 
-class Program
+class Program3
 {
     // Methods to get:
 
