@@ -5,4 +5,4 @@
 > |---------------------------------|----------------|---------------------|-------------------------|
 > | file.ai, file.aif               | *.ai           | file.ai             | file.ai                 |
 > | book.xls, book.xlsx             | *.xls          | book.xls            | **book.xls, book.xlsx** |
-> | ello.txt, hello.txt, hello.txtt | ?ello.txt      | ello.txt, hello.txt | ello.txt, hello.txt     |               |
+> | ello.txt, hello.txt, hello.txtt | ?ello.txt      | ello.txt, hello.txt | ello.txt, hello.txt     |
