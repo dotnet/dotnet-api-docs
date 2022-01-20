@@ -4006,27 +4006,29 @@ An I/O error occurred.</exception>
       </Parameters>
       <Docs>
         <param name="sourceDirName">The path of the file or directory to move.</param>
-        <param name="destDirName">The path to the new location for <paramref name="sourceDirName" />. If <paramref name="sourceDirName" /> is a file, then <paramref name="destDirName" /> must also be a file name.</param>
+        <param name="destDirName">The path to the new location for <paramref name="sourceDirName" /> or its contents. If <paramref name="sourceDirName" /> is a file, then <paramref name="destDirName" /> must also be a file name.</param>
         <summary>Moves a file or a directory and its contents to a new location.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- This method creates a new directory with the name specified by `destDirName` and moves the contents of `sourceDirName` to the newly created destination directory. If you try to move a directory to a directory that already exists, an <xref:System.IO.IOException> will occur. For example, an exception will occur if you try to move c:\mydir to c:\public, and c:\public already exists. Alternatively, you could specify "c:\\\public\\\mydir" as the `destDirName` parameter, provided that "mydir" does not exist under "c:\\\public", or specify a new directory name such as "c:\\\newdir".  
-  
- The `sourceDirName` and `destDirName` arguments are permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory. To obtain the current working directory, see <xref:System.IO.Directory.GetCurrentDirectory%2A>.  
-  
- Trailing spaces are removed from the end of the path parameters before moving the directory.  
-  
- For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).  
+## Remarks
 
+This method creates a new directory with the name specified by `destDirName` and moves the contents of `sourceDirName`, including files and directories, to the newly created destination directory. It then deletes the `sourceDirName` directory.
+
+If you try to move a directory to a directory that already exists, an <xref:System.IO.IOException> will occur. For example, an exception will occur if you try to move c:\mydir to c:\public, and c:\public already exists. Alternatively, you could specify "c:\\\public\\\mydir" as the `destDirName` parameter, provided that "mydir" does not exist under "c:\\\public", or specify a new directory name such as "c:\\\newdir".  
+  
+The `sourceDirName` and `destDirName` arguments are permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory. To obtain the current working directory, see <xref:System.IO.Directory.GetCurrentDirectory%2A>.  
+  
+Trailing spaces are removed from the end of the path parameters before moving the directory.  
+  
+For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).
 
 > [!NOTE]
->  Starting with .NET Core 3.0, the `Move` method throws an <xref:System.IO.IOException> in all platforms when the `destDirName` already exists. In .NET Core 2.2 and previous versions, the exception was only thrown on Windows, and other platforms could either fail or overwrite the `destDirName`. See [C++ rename](https://linux.die.net/man/2/rename).
-   
-  
+> Starting with .NET Core 3.0, the `Move` method throws an <xref:System.IO.IOException> in all platforms when the `destDirName` already exists. In .NET Core 2.2 and previous versions, the exception was only thrown on Windows, and other platforms could either fail or overwrite the `destDirName`. See [C++ rename](https://linux.die.net/man/2/rename).
+
 ## Examples  
- The following example demonstrates how to move a directory and all its files to a new directory. The original directory no longer exists after it has been moved.  
+
+The following example demonstrates how to move a directory and all its files to a new directory. The original directory no longer exists after it has been moved.  
   
  :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.IO.Directory/CS/class6.cs" id="Snippet14":::
  :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.IO.Directory/VB/class6.vb" id="Snippet14":::  
@@ -4037,7 +4039,7 @@ An I/O error occurred.</exception>
   
  -or-  
   
- <paramref name="destDirName" /> already exists. See the Note in the Remarks section.
+ <paramref name="destDirName" /> already exists. See the note in the Remarks section.
   
  -or-  
   
