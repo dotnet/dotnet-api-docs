@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 
-public class DateToStringExample
+public class ToStringExample1
 {
     public static void Main()
     {

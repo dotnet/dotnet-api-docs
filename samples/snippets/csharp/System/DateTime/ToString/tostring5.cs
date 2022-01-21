@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 
-public class Example3
+public class ToStringExample5
 {
     public static void Main3()
     {
