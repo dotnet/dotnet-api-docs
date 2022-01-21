@@ -1,4 +1,4 @@
-// <Snippet11>
+﻿// <Snippet11>
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,7 +10,7 @@ public class Continent
    public Decimal Area { get; set; }
 }
 
-public class Example
+public class Example11
 {
    static List<Continent> continents = new List<Continent>();
    static string msg;

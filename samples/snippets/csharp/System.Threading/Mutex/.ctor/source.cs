@@ -58,7 +58,7 @@ internal class Example
             //
             string user = Environment.UserDomainName + "\\"
                 + Environment.UserName;
-            MutexSecurity mSec = new MutexSecurity();
+            var mSec = new MutexSecurity();
 
             MutexAccessRule rule = new MutexAccessRule(user, 
                 MutexRights.Synchronize | MutexRights.Modify, 

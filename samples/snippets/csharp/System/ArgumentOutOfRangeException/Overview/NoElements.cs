@@ -1,8 +1,8 @@
-// <Snippet4>
+﻿// <Snippet4>
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class Example4
 {
    public static void Main()
    {
@@ -22,7 +22,7 @@ public class Example
 //   Parameter name: index
 // </Snippet4>
 
-public class Example2
+public class Example5
 {
    public static void Test()
    {

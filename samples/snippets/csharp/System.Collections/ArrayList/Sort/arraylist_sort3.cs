@@ -4,54 +4,55 @@
 using System;
 using System.Collections;
 
-public class SamplesArrayList  {
+public class SamplesArrayList3
+{
+    public class myReverserClass : IComparer
+    {
+        // Calls CaseInsensitiveComparer.Compare with the parameters reversed.
+        int IComparer.Compare(Object x, Object y)
+        {
+            return ((new CaseInsensitiveComparer()).Compare(y, x));
+        }
+    }
 
-   public class myReverserClass : IComparer  {
+    public static void Main()
+    {
+        // Creates and initializes a new ArrayList.
+        ArrayList myAL = new ArrayList();
+        myAL.Add("The");
+        myAL.Add("QUICK");
+        myAL.Add("BROWN");
+        myAL.Add("FOX");
+        myAL.Add("jumps");
+        myAL.Add("over");
+        myAL.Add("the");
+        myAL.Add("lazy");
+        myAL.Add("dog");
 
-      // Calls CaseInsensitiveComparer.Compare with the parameters reversed.
-      int IComparer.Compare( Object x, Object y )  {
-          return( (new CaseInsensitiveComparer()).Compare( y, x ) );
-      }
-   }
+        // Displays the values of the ArrayList.
+        Console.WriteLine("The ArrayList initially contains the following values:");
+        PrintIndexAndValues(myAL);
 
-   public static void Main()  {
+        // Sorts the values of the ArrayList using the default comparer.
+        myAL.Sort(1, 3, null);
+        Console.WriteLine("After sorting from index 1 to index 3 with the default comparer:");
+        PrintIndexAndValues(myAL);
 
-      // Creates and initializes a new ArrayList.
-      ArrayList myAL = new ArrayList();
-      myAL.Add( "The" );
-      myAL.Add( "QUICK" );
-      myAL.Add( "BROWN" );
-      myAL.Add( "FOX" );
-      myAL.Add( "jumps" );
-      myAL.Add( "over" );
-      myAL.Add( "the" );
-      myAL.Add( "lazy" );
-      myAL.Add( "dog" );
+        // Sorts the values of the ArrayList using the reverse case-insensitive comparer.
+        IComparer myComparer = new myReverserClass();
+        myAL.Sort(1, 3, myComparer);
+        Console.WriteLine("After sorting from index 1 to index 3 with the reverse case-insensitive comparer:");
+        PrintIndexAndValues(myAL);
+    }
 
-      // Displays the values of the ArrayList.
-      Console.WriteLine( "The ArrayList initially contains the following values:" );
-      PrintIndexAndValues( myAL );
-
-      // Sorts the values of the ArrayList using the default comparer.
-      myAL.Sort( 1, 3, null );
-      Console.WriteLine( "After sorting from index 1 to index 3 with the default comparer:" );
-      PrintIndexAndValues( myAL );
-
-      // Sorts the values of the ArrayList using the reverse case-insensitive comparer.
-      IComparer myComparer = new myReverserClass();
-      myAL.Sort( 1, 3, myComparer );
-      Console.WriteLine( "After sorting from index 1 to index 3 with the reverse case-insensitive comparer:" );
-      PrintIndexAndValues( myAL );
-   }
-
-   public static void PrintIndexAndValues( IEnumerable myList )  {
-      int i = 0;
-      foreach ( Object obj in myList )
-         Console.WriteLine( "\t[{0}]:\t{1}", i++, obj );
-      Console.WriteLine();
-   }
+    public static void PrintIndexAndValues(IEnumerable myList)
+    {
+        int i = 0;
+        foreach (Object obj in myList)
+            Console.WriteLine("\t[{0}]:\t{1}", i++, obj);
+        Console.WriteLine();
+    }
 }
-
 
 /*
 This code produces the following output.

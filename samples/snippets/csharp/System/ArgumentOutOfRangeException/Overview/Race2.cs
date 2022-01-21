@@ -1,18 +1,18 @@
-// <Snippet12>
+﻿// <Snippet12>
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
 
-public class Continent
+public class ContinentD
 {
    public string Name { get; set; }
    public int Population { get; set; }
    public Decimal Area { get; set; }
 }
 
-public class Example
+public class Example12
 {
-   static ConcurrentBag<Continent> continents = new ConcurrentBag<Continent>();
+   static ConcurrentBag<ContinentD> ContinentDs = new ConcurrentBag<ContinentD>();
    static CountdownEvent gate;
    static string msg = string.Empty;
 
@@ -25,7 +25,7 @@ public class Example
 
       // Populate the list.
       foreach (var name in names) {
-         var th = new Thread(PopulateContinents);
+         var th = new Thread(PopulateContinentDs);
          th.Start(name);
       }
 
@@ -34,26 +34,26 @@ public class Example
       Console.WriteLine(msg);
       Console.WriteLine();
 
-      var arr = continents.ToArray();
+      var arr = ContinentDs.ToArray();
       for (int ctr = 0; ctr < names.Length; ctr++) {
-         var continent = arr[ctr];
+         var ContinentD = arr[ctr];
          Console.WriteLine("{0}: Area: {1}, Population {2}",
-                           continent.Name, continent.Population,
-                           continent.Area);
+                           ContinentD.Name, ContinentD.Population,
+                           ContinentD.Area);
       }
    }
 
-   private static void PopulateContinents(Object obj)
+   private static void PopulateContinentDs(Object obj)
    {
       string name = obj.ToString();
       lock(msg) {
          msg += string.Format("Adding '{0}' to the list.\n", name);
       }
-      var continent = new Continent();
-      continent.Name = name;
+      var ContinentD = new ContinentD();
+      ContinentD.Name = name;
       // Sleep to simulate retrieving remaining data.
       Thread.Sleep(25);
-      continents.Add(continent);
+      ContinentDs.Add(ContinentD);
       gate.Signal();
    }
 }

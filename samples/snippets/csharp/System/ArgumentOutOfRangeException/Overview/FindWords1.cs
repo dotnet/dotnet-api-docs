@@ -1,8 +1,8 @@
-// <Snippet19>
+﻿// <Snippet19>
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class Example19
 {
    public static void Main()
    {

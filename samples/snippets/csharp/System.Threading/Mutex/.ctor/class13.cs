@@ -7,7 +7,7 @@
 using System;
 using System.Threading;
 
-class Test
+class Test13
 {
     // Create a new Mutex. The creating thread does not own the
     // Mutex.

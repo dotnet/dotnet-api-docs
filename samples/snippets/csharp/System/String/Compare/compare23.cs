@@ -1,11 +1,11 @@
-﻿// <Snippet23>
-using System;
+﻿using System;
 using System.Globalization;
 
-public class Example
+public class Example23
 {
     public static void Main()
     {
+        // <Snippet23>
         string s1 = "Ani\u00ADmal";
         string s2 = "animal";
       
@@ -15,6 +15,7 @@ public class Example
 
         // The example displays the following output:
         //       Comparison of 'Ani-mal' and 'animal': 0
+
+        // </Snippet23>
     }
 }
-// </Snippet23>

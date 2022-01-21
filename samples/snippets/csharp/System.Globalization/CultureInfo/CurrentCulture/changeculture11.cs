@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-public class Info : MarshalByRefObject
+public class Info11 : MarshalByRefObject
 {
    public void ShowCurrentCulture()
    {
@@ -14,11 +14,11 @@ public class Info : MarshalByRefObject
    }
 }
 
-public class Example
+public class Example11
 {
    public static void Main()
    {
-      Info inf = new Info();
+      Info11 inf = new Info11();
       // Set the current culture to Dutch (Netherlands).
       Thread.CurrentThread.Name = "MainThread";
       CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("nl-NL");
@@ -26,7 +26,7 @@ public class Example
 
       // Create a new application domain.
        AppDomain ad = AppDomain.CreateDomain("Domain2");
-       Info inf2 = (Info) ad.CreateInstanceAndUnwrap(typeof(Info).Assembly.FullName, "Info");
+       Info11 inf2 = (Info11) ad.CreateInstanceAndUnwrap(typeof(Info11).Assembly.FullName, "Info11");
        inf2.ShowCurrentCulture();
    }
 }

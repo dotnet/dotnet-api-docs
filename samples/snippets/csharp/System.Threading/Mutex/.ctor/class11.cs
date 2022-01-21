@@ -2,7 +2,7 @@
 using System;
 using System.Threading;
 
-public class Test
+public class Test1
 {
     public static void Main()
     {

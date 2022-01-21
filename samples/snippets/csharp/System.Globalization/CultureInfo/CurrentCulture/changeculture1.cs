@@ -14,7 +14,7 @@ public class Info : MarshalByRefObject
    }
 }
 
-public class Example
+public class Example1
 {
    public static void Main()
    {

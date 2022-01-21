@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-public class Example
+public class Remarks
 {
     public static void Main()
     {
