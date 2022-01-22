@@ -1,7 +1,7 @@
-// Sample for String.Compare(String, Int32, String, Int32, Int32)
+﻿// Sample for String.Compare(String, Int32, String, Int32, Int32)
 using System;
 
-class Sample
+class Sample3
 {
     public static void Main()
     {
