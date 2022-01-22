@@ -6,15 +6,15 @@ When you set the mode to Update, the underlying file or stream must support read
 
 The following methods include a parameter named `mode` that lets you specify the archive mode:
 
--   <xref:System.IO.Compression.ZipArchive.%23ctor%28System.IO.Stream%2CSystem.IO.Compression.ZipArchiveMode%2CSystem.Boolean%29?displayProperty=nameWithType>
+- <xref:System.IO.Compression.ZipArchive.%23ctor%28System.IO.Stream%2CSystem.IO.Compression.ZipArchiveMode%2CSystem.Boolean%29?displayProperty=nameWithType>
 
--   <xref:System.IO.Compression.ZipArchive.%23ctor%28System.IO.Stream%2CSystem.IO.Compression.ZipArchiveMode%29?displayProperty=nameWithType>
+- <xref:System.IO.Compression.ZipArchive.%23ctor%28System.IO.Stream%2CSystem.IO.Compression.ZipArchiveMode%29?displayProperty=nameWithType>
 
--   <xref:System.IO.Compression.ZipFile.Open%28System.String%2CSystem.IO.Compression.ZipArchiveMode%29?displayProperty=nameWithType>
+- <xref:System.IO.Compression.ZipFile.Open%28System.String%2CSystem.IO.Compression.ZipArchiveMode%29?displayProperty=nameWithType>
 
 ## Examples
 
 The following example shows how to specify a `ZipArchiveMode` value when creating a <xref:System.IO.Compression.ZipArchive> object.
 
-:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/cs/program1.cs" id="Snippet1":::
+:::code language="csharp" source="~/samples/snippets/csharp/System.IO.Compression/ZipArchive/CreateEntry/program1.cs" id="Snippet1":::
 :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/vb/program1.vb" id="Snippet1":::
