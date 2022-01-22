@@ -27,6 +27,6 @@ The following example shows how to create a new entry in a zip archive from an e
 
 The following example shows how to iterate through the contents of a zip archive and extract files that have a .txt extension.
 
-:::code language="csharp" source="~/ samples/snippets/csharp/System.IO.Compression/ZipArchive/Entries/program1.cs" id="Snippet1":::
+:::code language="csharp" source="~/samples/snippets/csharp/System.IO.Compression/ZipArchive/Entries/program1.cs" id="Snippet1":::
 :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchive/vb/program1.vb" id="Snippet1":::
   
