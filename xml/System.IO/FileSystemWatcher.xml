@@ -830,13 +830,42 @@
   
  :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic NotifyFilters Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/samples/snippets/csharp/System.IO/FileSystemWatcher/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic NotifyFilters Example/VB/source.vb" id="Snippet1":::  
+ :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic NotifyFilters Example/VB/source.vb" id="Snippet1":::
+
+## Troubleshooting
+ If an exception <see cref="T:System.IO.IOException" /> is thrown
+ telling you that the *the configured user limit on the number of inotify instances has been reached*,
+ you can use the following shell function to fix the problem:
+
+```sh
+handle_mui_error() {
+MUI_PATH=/proc/sys/fs/inotify/max_user_instances
+let mui=$(<"${MUI_PATH}")
+[[
+ "${1}" = "The configured user limit (${mui}) on the number of inotify instances has been reached"
+ ]] && let 'mui <<= 01' &&
+ echo $mui > "${MUI_PATH}" ||
+ pkexec sh -c ">'${MUI_PATH}' echo $mui"
+}
+# Example usage:
+handle_mui_error 'The configured user limit (128) on the number of inotify instances has been reached'
+```
+
+ Each execution of this script doubles the system-wide limit, except when run in parallel.
+ This script requires privilege elevation, so either run it as superuser
+ or be prepared to authenticate using [pkexec]((https://www.freedesktop.org/software/polkit).
+ This is a global setting that can be modified by another user at any time.
+ Use the configuration tools provided by your operating system to change the initial value of this setting at boot time.
+ This script does not attempt to fix the other possible reason for this exception,
+ which is *the per-process limit on the number of open file descriptors has been reached*
+ (see your operating system documentation for error `EMFILE`).
   
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.IO.FileSystemWatcher" /> object has been disposed.</exception>
         <exception cref="T:System.PlatformNotSupportedException">The current operating system is not Microsoft Windows NT or later.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The directory specified in <see cref="P:System.IO.FileSystemWatcher.Path" /> could not be found.</exception>
+        <exception cref="T:System.IO.IOException">The configured user limit on the number of inotify instances has been reached, or the per-process limit on the number of open file descriptors has been reached.</exception>
         <exception cref="T:System.ArgumentException">
           <see cref="P:System.IO.FileSystemWatcher.Path" /> has not been set or is invalid.</exception>
       </Docs>
