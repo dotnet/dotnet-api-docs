@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Text;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 
 public class Sync_Send_Receive

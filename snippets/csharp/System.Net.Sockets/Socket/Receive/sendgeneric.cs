@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-
 using System.Net;
 using System.Net.Sockets;
-
-using System.IO;
 using System.Text;
 using System.Threading;
 
 namespace send_generics_csharp
 {
-	class Class1
+    class Class1
 	{
         public static int syncSendAndReceive(string host, int port)
         {
