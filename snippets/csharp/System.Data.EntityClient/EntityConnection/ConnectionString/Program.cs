@@ -1,20 +1,16 @@
 ﻿//<snippetNamespaces>
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Data.Common;
 using System.Data;
-using System.IO;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Data.EntityClient;
-using AdventureWorksModel;
+//using AdventureWorksModel;
 using System.Data.Metadata.Edm;
 //</snippetNamespaces>
 //<snippetIncludes>
 using System.Data.Objects;
-using System.Data.Objects.DataClasses;
+using System.Data.SqlClient;
 //</snippetIncludes>
-using System.Transactions;
 
 namespace eSQLExamplesCS
 {
