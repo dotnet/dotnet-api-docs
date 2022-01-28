@@ -1,22 +1,21 @@
 ﻿// <Snippet1>
 using System;
-using System.IO;
 using System.Xml;
 
-public class Sample {
+public class Sample3
+{
+    public static void Main()
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.LoadXml("<book ISBN='1-861001-57-5'>" +
+                    "<title>Pride And Prejudice</title>" +
+                    "<price>19.95</price>" +
+                    "</book>");
 
-  public static void Main() {
+        XmlNode root = doc.FirstChild;
 
-    XmlDocument doc = new XmlDocument();
-    doc.LoadXml("<book ISBN='1-861001-57-5'>" +
-                "<title>Pride And Prejudice</title>" +
-                "<price>19.95</price>" +
-                "</book>");
-
-    XmlNode root = doc.FirstChild;
-
-    Console.WriteLine("Display the price element...");
-    Console.WriteLine(root.LastChild.OuterXml);
-  }
+        Console.WriteLine("Display the price element...");
+        Console.WriteLine(root.LastChild.OuterXml);
+    }
 }
-   // </Snippet1>
+// </Snippet1>
