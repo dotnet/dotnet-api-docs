@@ -18,10 +18,10 @@ If you reference the `System.IO.Compression.FileSystem` assembly in your project
 
 The first example shows how to create a new entry in a zip archive and write to it.
 
-:::code language="csharp" source="~/samples/snippets/csharp/System.IO.Compression/ZipArchive/CreateEntry/program1.cs" id="Snippet1":::
-:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/vb/program1.vb" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/CreateEntry/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/vb/program1.vb" id="Snippet1":::
 
 The second example shows how to use the <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile%28System.IO.Compression.ZipArchiveEntry%2CSystem.String%29> extension method. You must reference the `System.IO.Compression.FileSystem` assembly in your project for the code to execute.
 
-:::code language="csharp" source="~/samples/snippets/csharp/System.IO.Compression/ZipArchive/Entries/program1.cs" id="Snippet1":::
-:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchive/vb/program1.vb" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/Entries/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchive/vb/program1.vb" id="Snippet1":::
