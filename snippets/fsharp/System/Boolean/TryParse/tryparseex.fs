@@ -11,7 +11,7 @@ for value in values do
         printfn $"'{value}' --> {flag}"
     | false, _ ->
         printfn $"""Unable to parse '%s{if value = null then "<null>" else value}'."""
-                                
+
 // The example displays the following output:
 //       Unable to parse '<null>'.
 //       Unable to parse ''.

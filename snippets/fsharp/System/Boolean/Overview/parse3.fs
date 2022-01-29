@@ -12,10 +12,10 @@ for value in values do
         printfn $"Converted '{value}' to {result}"
     | false, _ ->
         printfn $"Unable to convert '{value}'"
-        
+
 // The example displays the following output:
 //       Converted '09' to True
 //       Unable to convert '12.6'
 //       Converted '0' to False
 //       Converted '-13 ' to True
-// </Snippet9>
+// </Snippet9> 

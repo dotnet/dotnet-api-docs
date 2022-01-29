@@ -33,7 +33,7 @@ for cultureName in cultureNames do
 
     String.Format(formatter, "Value for '{0}': {1}", culture.Name, value)
     |> printfn "%s"
- 
+
 // The example displays the following output:
 //       Value for '': True
 //       Value for 'en-US': True

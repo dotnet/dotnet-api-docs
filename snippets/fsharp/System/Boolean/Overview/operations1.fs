@@ -43,7 +43,7 @@ elif fileName = "" && isRedirected then
     showSyntax "The /f switch must be followed by a filename."    
 else
     use mutable sw = null
-    
+
     // Handle output.
     let writeLine =
         if isRedirected then 

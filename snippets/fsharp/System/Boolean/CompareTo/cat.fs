@@ -67,7 +67,7 @@ try
     show "TimeSpan: " l1 l2 (l1.CompareTo l2) (l1.CompareTo (l2 :> obj))
     show "Version:  " m1 m2 (m1.CompareTo m2) (m1.CompareTo (m2 :> obj))
     show "Guid:     " n1 n2 (n1.CompareTo n2) (n1.CompareTo (n2 :> obj))
-    
+
     printfn "\nThe following types are not CLS-compliant:"
     show "SByte:    " w1 w2 (w1.CompareTo w2) (w1.CompareTo (w2 :> obj))
     show "UInt16:   " x1 x2 (x1.CompareTo x2) (x1.CompareTo (x2 :> obj))
@@ -75,32 +75,28 @@ try
     show "UInt64:   " z1 z2 (z1.CompareTo z2) (z1.CompareTo (z2 :> obj))
 with e -> printfn $"{e}"
 
-(*
-This example produces the following results:
 
-The following is the result of using the generic and non-generic versions of the
-CompareTo method for several base types:
-
-Boolean:  True is equal to True
-Byte:     1 is equal to 1
-Int16:    -2 is less than 2
-Int32:    3 is equal to 3
-Int64:    4 is greater than -4
-Decimal:  -5.5 is less than 5.5
-Single:   6.6 is equal to 6.6
-Double:   7.7 is greater than -7.7
-Char:     A is equal to A
-String:   abc is equal to abc
-DateTime: 12/1/2003 5:37:46 PM is equal to 12/1/2003 5:37:46 PM
-TimeSpan: 11.22:33:44 is equal to 11.22:33:44
-Version:  1.2.333.4 is less than 2.0
-Guid:     ca761232-ed42-11ce-bacd-00aa0057b223 is equal to ca761232-ed42-11ce-bacd-00
-aa0057b223
-
-The following types are not CLS-compliant:
-SByte:    8 is equal to 8
-UInt16:   9 is equal to 9
-UInt32:   10 is equal to 10
-UInt64:   11 is equal to 11
-*)
+// This example produces the following results:
+// The following is the result of using the generic and non-generic versions of the
+// CompareTo method for several base types:
+// Boolean:  True is equal to True
+// Byte:     1 is equal to 1
+// Int16:    -2 is less than 2
+// Int32:    3 is equal to 3
+// Int64:    4 is greater than -4
+// Decimal:  -5.5 is less than 5.5
+// Single:   6.6 is equal to 6.6
+// Double:   7.7 is greater than -7.7
+// Char:     A is equal to A
+// String:   abc is equal to abc
+// DateTime: 12/1/2003 5:37:46 PM is equal to 12/1/2003 5:37:46 PM
+// TimeSpan: 11.22:33:44 is equal to 11.22:33:44
+// Version:  1.2.333.4 is less than 2.0
+// Guid:     ca761232-ed42-11ce-bacd-00aa0057b223 is equal to ca761232-ed42-11ce-bacd-00
+// aa0057b223
+// The following types are not CLS-compliant:
+// SByte:    8 is equal to 8
+// UInt16:   9 is equal to 9
+// UInt32:   10 is equal to 10
+// UInt64:   11 is equal to 11
 //</snippet1>
