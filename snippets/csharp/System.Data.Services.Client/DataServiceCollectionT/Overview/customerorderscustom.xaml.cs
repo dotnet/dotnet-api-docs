@@ -1,20 +1,10 @@
 ﻿//<snippetWpfDataBindingCustom>
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.Services.Client;
-using NorthwindClient.Northwind;
 using System.Collections.Specialized;
+using System.Data.Services.Client;
+using System.Linq;
+using System.Windows;
+using NorthwindClient.Northwind;
 
 namespace NorthwindClient
 {
@@ -27,7 +17,7 @@ namespace NorthwindClient
 
         public CustomerOrdersCustom()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -50,7 +40,7 @@ namespace NorthwindClient
 
                 // Bind the root StackPanel element to the collection;
                 // related object binding paths are defined in the XAML.
-                this.LayoutRoot.DataContext = trackedCustomers;
+                LayoutRoot.DataContext = trackedCustomers;
                 //</snippetMasterDetailBinding>
             }
             catch (DataServiceQueryException ex)
