@@ -15,6 +15,7 @@ using System.IdentityModel;
 using System.IdentityModel.Configuration;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 
@@ -124,7 +125,7 @@ namespace PassiveFlowSTS
         protected override ClaimsIdentity GetOutputClaimsIdentity(ClaimsPrincipal principal, RequestSecurityToken request, Scope scope)
         {
             ClaimsIdentity outgoingIdentity = new ClaimsIdentity();
-            ClaimsIdentity incomingIdentity = principal.Identities[0];
+            ClaimsIdentity incomingIdentity = principal.Identities.First();
 
             // Do the claim transform based on who the IP STS is and the claims issued by those
             // Transform the incoming claims to appropriate outgoing claims

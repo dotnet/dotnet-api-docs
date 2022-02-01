@@ -12,15 +12,12 @@
 
 // <Snippet3>
 using System;
-using System.Collections.Generic;
 using System.IdentityModel;
 using System.IdentityModel.Configuration;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Principal;
 
 namespace PassiveSTS
 {

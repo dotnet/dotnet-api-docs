@@ -12,7 +12,6 @@
 
 using System.IdentityModel.Configuration;
 using System.Web;
-using SimpleWebToken;
 
 // <Snippet2>
 namespace PassiveSTS
@@ -33,21 +32,21 @@ namespace PassiveSTS
             {
                 HttpApplicationState httpAppState = HttpContext.Current.Application;
 
-                CustomSecurityTokenServiceConfiguration myConfiguration = httpAppState.Get( CustomSecurityTokenServiceConfigurationKey ) as CustomSecurityTokenServiceConfiguration;
+                CustomSecurityTokenServiceConfiguration myConfiguration = httpAppState.Get(CustomSecurityTokenServiceConfigurationKey) as CustomSecurityTokenServiceConfiguration;
 
-                if ( myConfiguration != null )
+                if (myConfiguration != null)
                 {
                     return myConfiguration;
                 }
 
-                lock ( syncRoot )
+                lock (syncRoot)
                 {
-                    myConfiguration = httpAppState.Get( CustomSecurityTokenServiceConfigurationKey ) as CustomSecurityTokenServiceConfiguration;
+                    myConfiguration = httpAppState.Get(CustomSecurityTokenServiceConfigurationKey) as CustomSecurityTokenServiceConfiguration;
 
-                    if ( myConfiguration == null )
+                    if (myConfiguration == null)
                     {
                         myConfiguration = new CustomSecurityTokenServiceConfiguration();
-                        httpAppState.Add( CustomSecurityTokenServiceConfigurationKey, myConfiguration );
+                        httpAppState.Add(CustomSecurityTokenServiceConfigurationKey, myConfiguration);
                     }
 
                     return myConfiguration;
@@ -56,18 +55,8 @@ namespace PassiveSTS
         }
 
         public CustomSecurityTokenServiceConfiguration()
-            : base( "PassiveSTS" )
-        {
-            this.SecurityTokenService = typeof( PassiveSTS.CustomSecurityTokenService );
-            SimpleWebTokenHandler tokenHandler = new SimpleWebTokenHandler();
-            this.SecurityTokenHandlers.Add(tokenHandler);
-            
-            CustomIssuerTokenResolver  customTokenResolver =  new SimpleWebToken.CustomIssuerTokenResolver();
-            customTokenResolver.AddAudienceKeyPair("http://localhost:19851/", Base64SymmetricKey);
-            this.IssuerTokenResolver = customTokenResolver;
-
-            this.DefaultTokenType = SimpleWebTokenHandler.SimpleWebTokenTypeUri;
-        }
+            : base("PassiveSTS")
+        { }
     }
 }
 

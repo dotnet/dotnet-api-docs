@@ -11,7 +11,6 @@
 //-----------------------------------------------------------------------------
 
 //<Snippet1>
-using System;
 using System.IdentityModel.Tokens;
 
 namespace System.IdentityModel.Samples

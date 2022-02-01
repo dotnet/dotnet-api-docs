@@ -3,7 +3,7 @@ using System;
 using System.Device.Location;
 namespace ResolveAddressSync
 {
-    class Program
+    class AsyncProgram
     {
         public static void Main(string[] args)
         {

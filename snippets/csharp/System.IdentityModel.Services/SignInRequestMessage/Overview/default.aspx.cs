@@ -15,6 +15,7 @@ using System.IdentityModel;
 using System.IdentityModel.Configuration;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Services;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Web.UI;
@@ -42,7 +43,7 @@ namespace PassiveFlowSTS
         {
             if (IsAuthenticatedUser)
             {
-                ClaimsIdentity id = ((ClaimsPrincipal)Thread.CurrentPrincipal).Identities[0];
+                ClaimsIdentity id = ((ClaimsPrincipal)Thread.CurrentPrincipal).Identities.First();
 
                 // Use the WSFederationMessage.CreateFromUri to parse the request and create a SignInRequestMessage object.
                 Uri requestUri = new Uri(Request.Url.AbsoluteUri);

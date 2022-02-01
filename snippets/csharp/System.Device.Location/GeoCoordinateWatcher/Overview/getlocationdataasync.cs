@@ -4,7 +4,7 @@ using System.Device.Location;
 
 namespace GetLocationEvent
 {
-    class Program
+    class AsyncProgram
     {
         static void Main(string[] args)
         {
