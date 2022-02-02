@@ -21,8 +21,15 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a batch of commands which can be executed against a data source in a single round trip. Provides a base class for database-specific classes that represent command batches.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The precise semantics of batch execution vary across ADO.NET providers, especially around error handilng. When possible, it is recommended that an error in a command within the batch immediately terminate the batch, skip all subsequent commands and roll back commands already executed. However, this behavior may not be supported across databases; consult your ADO.NET provider's documentation.
+  
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -38,7 +45,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Constructs an instance of the <see cref="T:System.Data.Common.DbBatch" /> object.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -58,8 +65,8 @@
         <ReturnType>System.Data.Common.DbBatchCommandCollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the collection of <see cref="T:System.Data.Common.DbBatchCommand" /> objects.</summary>
+        <value>The commands contained within the batch.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -80,8 +87,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Attempts to cancel the execution of a <see cref="T:System.Data.Common.DbBatch" />.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If there is nothing to cancel, nothing happens. However, if there is a batch in process, and the attempt to cancel fails, no exception is generated.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Connection">
@@ -100,8 +114,8 @@
         <ReturnType>System.Data.Common.DbConnection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets or sets the <see cref="T:System.Data.Common.DbConnection" /> used by this <see cref="T:System.Data.Common.DbBatch" />.</summary>
+        <value>The connection to the data source.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -122,8 +136,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Creates a new instance of a <see cref="T:System.Data.Common.DbBatchCommand" /> object.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbBatchCommand" /> object.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -144,8 +158,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>When overridden in a derived class, creates a new instance of a <see cref="T:System.Data.Common.DbBatchCommand" /> object.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbBatchCommand" /> object.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -165,8 +179,8 @@
         <ReturnType>System.Data.Common.DbBatchCommandCollection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>When overridden in a derived class, gets the collection of <see cref="T:System.Data.Common.DbBatchCommand" /> objects.</summary>
+        <value>The commands contained within the batch.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -186,8 +200,8 @@
         <ReturnType>System.Data.Common.DbConnection</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>When overridden in a derived class, gets or sets the <see cref="T:System.Data.Common.DbConnection" /> used by this <see cref="T:System.Data.Common.DbBatch" />.</summary>
+        <value>The connection to the data source.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -207,8 +221,8 @@
         <ReturnType>System.Data.Common.DbTransaction</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>When overridden in a derived class, gets or sets the <see cref="P:System.Data.Common.DbTransaction" /> within which this <see cref="T:System.Data.Common.DbBatch" /> object executes.</summary>
+        <value>The transaction within which a batch of a .NET data provider executes. The default value is a null reference (<see langword="Nothing" /> in Visual Basic).</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -256,9 +270,17 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources asynchronously.</summary>
-        <returns>A task that represents the asynchronous dispose operation.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Asynchronously diposes the batch object.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.ValueTask" /> representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default implementation of this asynchronous method delegates to its synchronous counterpart and returns a completed `ValueTask`, potentially blocking the calling thread.
+ 
+ Data providers that support [asynchronous programming](/dotnet/framework/data/adonet/asynchronous-programming) should override the default implementation using asynchronous I/O operations.
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ExecuteDbDataReader">
@@ -280,10 +302,19 @@
         <Parameter Name="behavior" Type="System.Data.CommandBehavior" />
       </Parameters>
       <Docs>
-        <param name="behavior">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="behavior">An instance of <see cref="T:System.Data.CommandBehavior" />, specifying options for batch execution and data retrieval.</param>
+        <summary>When overridden in a derived class, executes the batch against its connection, returning a <see cref="T:System.Data.Common.DbDataReader" /> which can be used to access the results.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbDataReader" /> object.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When the batch returns multiple result sets from different commands, <xref:System.Data.Common.DbDataReader.NextResult> can be used to advance the reader to the next result set.
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Data.Common.DbException">An error occurred while executing the batch.</exception>
+        <exception cref="T:System.ArgumentException">An invalid <see cref="T:System.Data.CommandBehavior" /> value.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExecuteDbDataReaderAsync">
@@ -306,11 +337,22 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="behavior">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="behavior">An instance of <see cref="T:System.Data.CommandBehavior" />, specifying options for batch execution and data retrieval.</param>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>Providers should implement this method to provide a non-default implementation for <see cref="Overload:System.Data.Common.DbCommand.ExecuteReader" /> overloads.  
+  
+ The default implementation invokes the synchronous <see cref="M:System.Data.Common.DbCommand.ExecuteReader" /> method and returns a completed task, blocking the calling thread. The default implementation will return a cancelled task if passed an already cancelled cancellation token. Exceptions thrown by ExecuteReader will be communicated via the returned Task Exception property.  
+  
+ This method accepts a cancellation token that can be used to request the operation to be cancelled early. Implementations may ignore this request.</summary>
+        <returns>A task representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ For more information about asynchronous programming, see [Asynchronous Programming](/dotnet/framework/data/adonet/asynchronous-programming).  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ExecuteNonQuery">
@@ -330,9 +372,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Executes the batch against its connection object, returning the total number of rows affected across all the batch commands.</summary>
+        <returns>The total number of rows affected across all the batch commands.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ You can use <xref:System.Data.Common.DbBatch.ExecuteNonQuery%2A> to perform catalog operations (for example, querying the structure of a database or creating database objects such as tables), or to change the data in a database by executing UPDATE, INSERT, or DELETE statements.  
+  
+ Although <xref:System.Data.Common.DbBatch.ExecuteNonQuery%2A> does not return any rows, any output parameters or return values mapped to parameters are populated with data.  
+  
+ For UPDATE, INSERT, and DELETE statements, the return value is the total number of rows affected by the batch. If no UPDATE, INSERT, or DELETE statements are included in the batch, the return value is -1.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ExecuteNonQueryAsync">
@@ -353,10 +406,23 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>This is the asynchronous version of <see cref="M:System.Data.Common.DbBatch.ExecuteNonQuery" />. Providers should override with an appropriate implementation. The cancellation token may optionally be ignored.  
+  
+ The default implementation invokes the synchronous <see cref="M:System.Data.Common.DbBatch.ExecuteNonQuery" /> method and returns a completed task, blocking the calling thread. The default implementation will return a cancelled task if passed an already cancelled cancellation token.  Exceptions thrown by <see cref="M:System.Data.Common.DbBatch.ExecuteNonQuery" /> will be communicated via the returned Task Exception property.  
+  
+ Do not invoke other methods and properties of the <see langword="DbCommand" /> object until the returned Task is complete.</summary>
+        <returns>A task representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ For more information about asynchronous programming, see [Asynchronous Programming](/dotnet/framework/data/adonet/asynchronous-programming).  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Data.Common.DbException">An error occurred while executing the batch.</exception>
+        <related type="Article" href="/dotnet/framework/data/adonet/ado-net-overview">ADO.NET Overview</related>
       </Docs>
     </Member>
     <Member MemberName="ExecuteReader">
@@ -377,10 +443,17 @@
         <Parameter Name="behavior" Type="System.Data.CommandBehavior" />
       </Parameters>
       <Docs>
-        <param name="behavior">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="behavior">An instance of <see cref="T:System.Data.CommandBehavior" />, specifying options for batch execution and data retrieval.</param>
+        <summary>Executes the batch against its connection, returning a <see cref="T:System.Data.Common.DbDataReader" /> which can be used to access the results.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbDataReader" /> object.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ When the batch returns multiple result sets from different commands, <xref:System.Data.Common.DbDataReader.NextResult> can be used to advance the reader to the next result set.
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ExecuteReaderAsync">
@@ -401,10 +474,19 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="behavior">An instance of <see cref="T:System.Data.CommandBehavior" />, specifying options for batch execution and data retrieval.</param>
+        <summary>An asynchronous version of <see cref="Overload:System.Data.Common.DbBatch.ExecuteReader" />, which executes the batch against its connection, returning a <see cref="T:System.Data.Common.DbDataReader" /> which can be used to access the results.</summary>
+        <returns>A task representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Managed provider implementers must call <xref:System.Data.Common.DbBatch.ExecuteDbDataReaderAsync%2A> in <xref:System.Data.Common.DbBatch.ExecuteReaderAsync%2A>. For more information about asynchronous programming, see [Asynchronous Programming](/dotnet/framework/data/adonet/asynchronous-programming).  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Data.Common.DbException">An error occurred while executing the batch.</exception>
+        <exception cref="T:System.ArgumentException">An invalid <see cref="T:System.Data.CommandBehavior" /> value.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExecuteReaderAsync">
@@ -426,11 +508,20 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="behavior">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="behavior">An instance of <see cref="T:System.Data.CommandBehavior" />, specifying options for batch execution and data retrieval.</param>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>An asynchronous version of <see cref="Overload:System.Data.Common.DbBatch.ExecuteReader" />, which executes the batch against its connection, returning a <see cref="T:System.Data.Common.DbDataReader" /> which can be used to access the results.</summary>
+        <returns>A task representing the asynchronous operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Managed provider implementers must call <xref:System.Data.Common.DbBatch.ExecuteDbDataReaderAsync%2A> in <xref:System.Data.Common.DbBatch.ExecuteReaderAsync%2A>. For more information about asynchronous programming, see [Asynchronous Programming](/dotnet/framework/data/adonet/asynchronous-programming).  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Data.Common.DbException">An error occurred while executing the batch.</exception>
+        <exception cref="T:System.ArgumentException">An invalid <see cref="T:System.Data.CommandBehavior" /> value.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExecuteScalar">
@@ -450,9 +541,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Executes the batch and returns the first column of the first row in the first returned result set. All other columns, rows and resultsets are ignored.</summary>
+        <returns>The first column of the first row in the first result set.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Data.Common.DbException">An error occurred while executing the batch.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExecuteScalarAsync">
@@ -473,10 +565,11 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>An asynchronous version of <see cref="M:System.Data.Common.DbBatch.ExecuteScalar" />, which executes the batch and returns the first column of the first row in the first returned result set. All other columns, rows and result sets are ignored.</summary>
+        <returns>The first column of the first row in the first result set.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Data.Common.DbException">An error occurred while executing the batch.</exception>
       </Docs>
     </Member>
     <Member MemberName="Prepare">
@@ -496,7 +589,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Creates a prepared (or compiled) version of the batch, or of each of its commands, on the data source.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -518,9 +611,9 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="cancellationToken">An optional token to cancel the asynchronous operation. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously creates a prepared (or compiled) version of the batch, or of each of its commands, on the data source.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -540,9 +633,18 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the wait time (in seconds) before terminating the attempt to execute the batch and generating an error.</summary>
+        <value>The time in seconds to wait for the batch to execute.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ An <xref:System.ArgumentException> is generated if the assigned <xref:System.Data.Common.DbBatch.Timeout%2A> property value is less than 0.  
+  
+ Note to implementers, it is recommended that 0 means no timeout.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Transaction">
@@ -561,8 +663,8 @@
         <ReturnType>System.Data.Common.DbTransaction</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets or sets the <see cref="T:System.Data.Common.DbTransaction" /> within which this <see cref="T:System.Data.Common.DbBatch" /> object executes.</summary>
+        <value>The transaction within which a batch of a .NET data provider executes. The default value is a null reference (<see langword="Nothing" /> in Visual Basic).</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
