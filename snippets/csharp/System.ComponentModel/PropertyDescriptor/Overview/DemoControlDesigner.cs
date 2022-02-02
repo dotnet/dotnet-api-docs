@@ -1,12 +1,10 @@
 ﻿// <snippet10>
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Text;
 using System.Windows.Forms.Design;
 
 namespace ReadOnlyPropertyDescriptorTest
-{   
+{
     class DemoControlDesigner : ControlDesigner
     {
         // The PostFilterProperties method replaces the control's 

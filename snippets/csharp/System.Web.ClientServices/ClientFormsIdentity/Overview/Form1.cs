@@ -1,18 +1,13 @@
 ﻿//<snippet000>
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 //<snippet001>
 using System.Net;
 using System.Threading;
 using System.Web.ClientServices;
 using System.Web.ClientServices.Providers;
 using System.Web.Security;
+using System.Windows.Forms;
 //</snippet001>
 
 namespace ClientAppServicesDemo
@@ -55,7 +50,7 @@ namespace ClientAppServicesDemo
             //<snippet015>
             ((ClientSettingsProvider)Properties.Settings.Default.Providers
                 ["System.Web.ClientServices.Providers.ClientSettingsProvider"])
-                .SettingsSaved += 
+                .SettingsSaved +=
                 new EventHandler<SettingsSavedEventArgs>(Form1_SettingsSaved);
             //</snippet015>
         }
@@ -77,7 +72,7 @@ namespace ClientAppServicesDemo
                 if (DialogResult.OK == MessageBox.Show(
                     "Unable to access the authentication service." +
                     Environment.NewLine + "Attempt login in offline mode?",
-                    "Warning", MessageBoxButtons.OKCancel, 
+                    "Warning", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning))
                 {
                     ConnectivityStatus.IsOffline = true;
@@ -164,7 +159,7 @@ namespace ClientAppServicesDemo
                         {
                             MessageBox.Show("Unable to authenticate. " +
                                 "Settings were not saved on the remote service.",
-                                "Not logged in", MessageBoxButtons.OK, 
+                                "Not logged in", MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
                         }
                         else
@@ -178,15 +173,15 @@ namespace ClientAppServicesDemo
                         MessageBox.Show(
                             "Unable to access the authentication service. " +
                             "Settings were not saved on the remote service.",
-                            "Not logged in", MessageBoxButtons.OK, 
+                            "Not logged in", MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
                     }
                 }
                 else
                 {
                     MessageBox.Show("Unable to access the Web settings service. " +
-                        "Settings were not saved on the remote service.", 
-                        "Not logged in", MessageBoxButtons.OK, 
+                        "Settings were not saved on the remote service.",
+                        "Not logged in", MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                 }
             }
@@ -206,7 +201,7 @@ namespace ClientAppServicesDemo
             {
                 authProvider.Logout();
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 MessageBox.Show("Unable to access the authentication service." +
                     Environment.NewLine + "Logging off locally only.",
