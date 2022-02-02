@@ -1,7 +1,6 @@
 ﻿namespace global
 
 open System
-open System.Collections.Generic
 
 // <Snippet5>
 [<Struct>]
@@ -15,7 +14,7 @@ exception LocationUnknownException
 // </Snippet7>
 
 // <Snippet6>
-type Unsubscriber(observers: List<IObserver<Location>>, observer: IObserver<Location>) =
+type Unsubscriber(observers: ResizeArray<IObserver<Location>>, observer: IObserver<Location>) =
     interface IDisposable with
         member _.Dispose() =
             if observer <> null && observers.Contains observer then
