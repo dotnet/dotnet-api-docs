@@ -12,6 +12,7 @@ namespace InkCanvasSamples
 
     public partial class MyApp : Application
     {
+        public static void Main() { }
 
         void AppStartup(object sender, StartupEventArgs args)
         {

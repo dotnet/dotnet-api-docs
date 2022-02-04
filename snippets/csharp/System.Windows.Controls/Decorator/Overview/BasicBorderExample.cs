@@ -1,5 +1,4 @@
 ﻿// <SnippetBasicBorderCodeExampleWholePage>
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -24,7 +23,7 @@ namespace SDKSample
             // Add TextBox to the Border.
             myBorder.Child = myTextBox;
             // myStackPanel.Children.Add(myTextBox);
-            this.Content = myBorder; 
+            this.Content = myBorder;
         }
     }
 }

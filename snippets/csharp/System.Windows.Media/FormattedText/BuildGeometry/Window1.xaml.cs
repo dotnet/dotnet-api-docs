@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 // Namespace that defines the OutlineText custom control class in the referenced assembly.
-using OutlineText;
+using SDKSample;
 
 namespace SDKSample
 {

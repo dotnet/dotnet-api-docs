@@ -1336,7 +1336,7 @@ SELECT CustomerID, NameStyle, Title, FirstName COLLATE SQL_Latin1_General_CP1_CI
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = DataGrid_CustomColumns.Properties.Settings.Default.AdventureWorksLT2008ConnectionString;
+            this._connection.ConnectionString = DataGrid1.Properties.Settings.Default.AdventureWorksLT2008ConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

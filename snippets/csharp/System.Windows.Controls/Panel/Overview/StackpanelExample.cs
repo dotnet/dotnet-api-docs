@@ -1,13 +1,11 @@
 ﻿// <SnippetStackPanelExampleWholePage>
-using System;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace SDKSample
 {
-    public partial class StackpanelExample : Page
+    public partial class StackPanelExample : Page
     {
-        public StackpanelExample()
+        public StackPanelExample()
         {
             // Create two buttons
             Button myButton1 = new Button();

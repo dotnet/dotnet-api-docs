@@ -1,6 +1,4 @@
 ﻿// <SnippetCharacterCasingCodeExampleWholePage>
-using System;
-using System.Windows;
 using System.Windows.Controls;
 namespace SDKSample
 {
@@ -10,7 +8,7 @@ namespace SDKSample
         {
             StackPanel myStackPanel = new StackPanel();
 
-            //Create TextBox
+            // Create TextBox.
             TextBox myTextBox = new TextBox();
             myTextBox.Width = 100;
 

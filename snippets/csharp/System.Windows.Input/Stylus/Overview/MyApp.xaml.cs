@@ -12,6 +12,8 @@ namespace StylusSamples
 
     public partial class MyApp : Application
     {
+        public static void Main() {}
+        
         void AppStartingUp(object sender, StartupEventArgs e)
         {
             Window1 mainWindow = new Window1();

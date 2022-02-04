@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Printing;
 using System.IO;
+using System.Printing;
 using System.Threading;
 
 namespace BatchPrintXPSFiles
@@ -24,8 +22,8 @@ namespace BatchPrintXPSFiles
             // Start the printing thread. The method passed to the Thread 
             // constructor will execute.
             printingThread.Start();
-        }//end Main
-    }//end Program class
+        }
+    }
 
     public class BatchXPSPrinter
     {
@@ -34,7 +32,7 @@ namespace BatchPrintXPSFiles
             // Create print server and print queue.
             LocalPrintServer localPrintServer = new LocalPrintServer();
             PrintQueue defaultPrintQueue = LocalPrintServer.GetDefaultPrintQueue();
-            
+
             // Prompt user to identify the directory, and then create the directory object.
             Console.Write("Enter the directory containing the XPS files: ");
             String directoryPath = Console.ReadLine();
@@ -57,7 +55,7 @@ namespace BatchPrintXPSFiles
                 {
                     Console.WriteLine("\nJobs will now be added to the print queue.");
                     Console.WriteLine("If the queue is not paused and the printer is working, jobs will begin printing.");
-                    
+
                     // Batch process all XPS files in the directory.
                     foreach (FileInfo f in dir.GetFiles("*.xps"))
                     {
@@ -78,13 +76,13 @@ namespace BatchPrintXPSFiles
                             }
                             Console.WriteLine("\tContinuing with next XPS file.\n");
                         }
-                    }// end for each XPS file
-                }//end if there are no XPS files in the directory
-            }//end if the directory does not exist
+                    }
+                }
+            }
 
             Console.WriteLine("Press Enter to end program.");
             Console.ReadLine();
-        }// end PrintXPS method
-    }// end BatchXPSPrinter class
+        }
+    }
     //</SnippetBatchPrintXPSFiles>
-}// end namespace
+}

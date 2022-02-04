@@ -34,13 +34,6 @@
 
 using System;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Automation;
-using System.Windows.Controls;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.Threading;
-using System.IO;
 
 namespace SDKSample
 {

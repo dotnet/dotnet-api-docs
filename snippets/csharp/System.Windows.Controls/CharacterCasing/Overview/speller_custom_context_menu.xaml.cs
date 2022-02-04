@@ -1,23 +1,19 @@
 ﻿// <SnippetSpellerCustomContextMenuCodeExampleWholePage>
-using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SDKSample
 {
     public partial class SpellerCustomContextMenu : Page
     {
-
         void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            //This is required for the first time ContextMenu invocation so that TextEditor doesnt handle it.
+            // This is required for the first time ContextMenu
+            // invocation so that TextEditor doesnt handle it.
             myTextBox.ContextMenu = GetContextMenu();
         }
+
         void tb_ContextMenuOpening(object sender, RoutedEventArgs e)
         {
             int caretIndex, cmdIndex;
@@ -60,7 +56,8 @@ namespace SDKSample
         {
             ContextMenu cm = new ContextMenu();
 
-            //Can create STATIC custom menu items if exists here...
+            // Can create STATIC custom menu items if exists here...
+
             MenuItem m1, m2, m3, m4;
             m1 = new MenuItem();
             m1.Header = "File";
@@ -71,7 +68,7 @@ namespace SDKSample
             m4 = new MenuItem();
             m4.Header = "Recent Files";
 
-            //Can add functionality for the custom menu items here...
+            // Can add functionality for the custom menu items here...
 
             cm.Items.Add(m1);
             cm.Items.Add(m2);

@@ -1,18 +1,10 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.IO;
-using System.Collections.ObjectModel;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 namespace SDKSample
 {
     public partial class BeginChangeEndChangeExample : Page
     {
         public BeginChangeEndChangeExample()
         {
-
             StackPanel myStackPanel = new StackPanel();
 
             // <SnippetBeginChangeEndChangeCodeExampleInline1>
@@ -26,7 +18,7 @@ namespace SDKSample
 
             // Put some initial text in the TextBox.
             myTextBox.Text = "Initial text in TextBox";
-            
+
             // Make other changes if desired...
 
             // Whenever BeginChange() is called EndChange() must also be

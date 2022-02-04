@@ -13,7 +13,7 @@ namespace SDKSample
         {
             InitializeComponent();
 
-            MyStackpanelExampleFrame.Content = new StackpanelExample();
+            MyStackpanelExampleFrame.Content = new StackPanelExample();
         }
     }
 }

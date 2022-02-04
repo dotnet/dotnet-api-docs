@@ -8,6 +8,8 @@ namespace SDKSample
 {
     public partial class TypographyCodeSnippets : Page
     {
+        public static void Main() { }
+
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             Stub01();
@@ -32,6 +34,6 @@ namespace SDKSample
 
             MyParagraph.Inlines.Add(new LineBreak());
             // </SnippetTypographyCodeSnippet1>
-        } 
+        }
     }
 }

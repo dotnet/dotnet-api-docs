@@ -10,7 +10,6 @@ namespace SDKSample
 {
     public partial class MyApp : Application
     {
-
         public MyApp()
         {
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);

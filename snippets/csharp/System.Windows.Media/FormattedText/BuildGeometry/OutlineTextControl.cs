@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Media;
 using System.Windows;
 
-namespace OutlineText
+namespace SDKSample
 {
     /// <summary>
     /// OutlineText custom control class derives layout, event, data binding, and rendering from derived FrameworkElement class.

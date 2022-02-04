@@ -1,7 +1,5 @@
 ﻿// <SnippetTextBoxBackgroundCodeExampleWholePage>
 using System;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -10,10 +8,8 @@ namespace SDKSample
 {
     public partial class TextBoxBackgroundExample : Page
     {
-
         void OnTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-
             if (myTextBox.Text == "")
             {
                 // Create an ImageBrush.
