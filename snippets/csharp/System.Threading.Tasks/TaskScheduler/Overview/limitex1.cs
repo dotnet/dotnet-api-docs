@@ -104,7 +104,7 @@ public class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
    // Inform the ThreadPool that there's work to be executed for this scheduler.
    private void NotifyThreadPoolOfPendingWork()
    {
-       ThreadPool.UnsafeQueueUserWorkItem(_ =>
+       ThreadPool.QueueUserWorkItem(_ =>
        {
            // Note that the current thread is now processing work items.
            // This is necessary to enable inlining of tasks into this thread.
