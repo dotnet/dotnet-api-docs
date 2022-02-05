@@ -1,453 +1,313 @@
-module system.convert_snippet
+module Convert_snippet
 
 open System
 
-let convertDoubles(double doubleVal
-    ConvertDoubleBool(doubleVal)
-    ConvertDoubleByte(doubleVal)
-    ConvertDoubleInt(doubleVal)
-    ConvertDoubleDecimal((decimal) doubleVal)
-    CovertDoubleFloat(doubleVal)
-    ConvertDoubleString(doubleVal)
-
-let convertLongs(long longVal
-    ConvertLongChar(longVal)
-    ConvertLongByte(longVal)
-    ConvertLongDecimal(longVal)
-    ConvertLongFloat(longVal)
-
-let convertStrings(string stringVal
-    ConvertStringBoolean(stringVal)
-    ConvertStringByte(stringVal)
-    ConvertStringChar(stringVal)
-    ConvertStringDecimal(stringVal)
-    ConvertStringFloat(stringVal)
-
-let convertChars(char charVal
-    ConvertCharDecimal(charVal)
-
-let convertBytes(byte byteVal
-    ConvertByteDecimal(byteVal)
-    ConvertByteSingle(byteVal)
-
 //<Snippet1>
-let convertDoubleBool(double doubleVal
-    bool	boolVal
+let convertDoubleBool (doubleVal: float) =
     // Double to bool conversion cannot overflow.
-    boolVal = System.Convert.ToBoolean(doubleVal)
-    System.Console.WriteLine("{0} as a Boolean is: {1}.",
-        doubleVal, boolVal)
+    let boolVal = Convert.ToBoolean doubleVal
+    printfn $"{doubleVal} as a Boolean is: {boolVal}."
 
     // bool to double conversion cannot overflow.
-    doubleVal = System.Convert.ToDouble(boolVal)
-    System.Console.WriteLine("{0} as a double is: {1}.",
-        boolVal, doubleVal)
+    let doubleVal = Convert.ToDouble boolVal
+    printfn $"{boolVal} as a double is: {doubleVal}."
 //</Snippet1>
 
 //<Snippet2>
-let convertDoubleByte(double doubleVal
-    byte	byteVal = 0
-
+let convertDoubleByte (doubleVal: float) =
     // Double to byte conversion can overflow.
-    try {
-        byteVal = System.Convert.ToByte(doubleVal)
-        System.Console.WriteLine("{0} as a byte is: {1}.",
-            doubleVal, byteVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Overflow in double-to-byte conversion.")
+    try
+        let byteVal = Convert.ToByte doubleVal
+        printfn $"{doubleVal} as a byte is: {byteVal}."
+        
+        // Byte to double conversion cannot overflow.
+        let doubleVal = Convert.ToDouble byteVal
+        printfn $"{byteVal} as a double is: {doubleVal}."
+    with :? OverflowException ->
+        printfn "Overflow in double-to-byte conversion."
 
-    // Byte to double conversion cannot overflow.
-    doubleVal = System.Convert.ToDouble(byteVal)
-    System.Console.WriteLine("{0} as a double is: {1}.",
-        byteVal, doubleVal)
 //</Snippet2>
 
 //<Snippet3>
-let convertDoubleInt(double doubleVal
-
-    int     intVal = 0
+let convertDoubleInt (doubleVal: float) = 
+    let intVal = 0
     // Double to int conversion can overflow.
-    try {
-        intVal = System.Convert.ToInt32(doubleVal)
-        System.Console.WriteLine("{0} as an int is: {1}",
-            doubleVal, intVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Overflow in double-to-int conversion.")
+    try
+        let intVal = Convert.ToInt32 doubleVal
+        printfn $"{doubleVal} as an int is: {intVal}"
+    with :? OverflowException ->
+        printfn "Overflow in double-to-int conversion."
 
     // Int to double conversion cannot overflow.
-    doubleVal = System.Convert.ToDouble(intVal)
-    System.Console.WriteLine("{0} as a double is: {1}",
-        intVal, doubleVal)
+    let doubleVal = Convert.ToDouble intVal
+    printfn $"{intVal} as a double is: {doubleVal}"
 //</Snippet3>
 
 //<Snippet5>
-let convertDoubleDecimal(decimal decimalVal){
-
-    double doubleVal
-
+let convertDoubleDecimal (decimalVal: float) =
     // Decimal to double conversion cannot overflow.
-    doubleVal = System.Convert.ToDouble(decimalVal)
-    System.Console.WriteLine("{0} as a double is: {1}",
-            decimalVal, doubleVal)
+    let doubleVal = 
+        Convert.ToDouble decimalVal
+    printfn $"{decimalVal} as a double is: {doubleVal}"
 
     // Conversion from double to decimal can overflow.
     try
-        decimalVal = System.Convert.ToDecimal(doubleVal)
-        System.Console.WriteLine ("{0} as a decimal is: {1}",
-            doubleVal, decimalVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Overflow in double-to-double conversion.")
+        let decimalVal = Convert.ToDecimal doubleVal
+        printfn $"{doubleVal} as a decimal is: {decimalVal}"
+    with :? OverflowException ->
+        printfn "Overflow in double-to-double conversion."
 //</Snippet5>
 
 //<Snippet6>
-let covertDoubleFloat(double doubleVal
-    float floatVal = 0
-
+let covertDoubleFloat (doubleVal: float) =
     // Double to float conversion cannot overflow.
-        floatVal = System.Convert.ToSingle(doubleVal)
-        System.Console.WriteLine("{0} as a float is {1}",
-            doubleVal, floatVal)
+    let floatVal = Convert.ToSingle doubleVal
+    printfn $"{doubleVal} as a float is {floatVal}"
 
     // Conversion from float to double cannot overflow.
-    doubleVal = System.Convert.ToDouble(floatVal)
-    System.Console.WriteLine("{0} as a double is: {1}",
-        floatVal, doubleVal)
+    let doubleVal = Convert.ToDouble floatVal
+    printfn $"{floatVal} as a double is: {doubleVal}"
 //</Snippet6>
 
 //<Snippet7>
-let convertDoubleString(double doubleVal
-
-    string	stringVal
-
+let convertDoubleString (doubleVal: float) =
     // A conversion from Double to string cannot overflow.
-    stringVal = System.Convert.ToString(doubleVal)
-    System.Console.WriteLine("{0} as a string is: {1}",
-        doubleVal, stringVal)
+    let stringVal = Convert.ToString doubleVal
+    printfn $"{doubleVal} as a string is: {stringVal}"
 
-    try {
-        doubleVal = System.Convert.ToDouble(stringVal)
-        System.Console.WriteLine("{0} as a double is: {1}",
-            stringVal, doubleVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Conversion from string-to-double overflowed.")
-    catch (System.FormatException
-        System.Console.WriteLine(
-            "The string was not formatted as a double.")
-    catch (System.ArgumentException
-        System.Console.WriteLine(
-            "The string pointed to null.")
+    try
+        let doubleVal = Convert.ToDouble stringVal
+        printfn $"{stringVal} as a double is: {doubleVal}"
+    with
+    | :? OverflowException ->
+        printfn "Conversion from string-to-double overflowed."
+    | :? FormatException ->
+        printfn "The string was not formatted as a double."
+    | :? ArgumentException ->
+        printfn "The string pointed to null."
 //</Snippet7>
 
 //<Snippet8>
-let convertLongChar(long longVal
+let convertLongChar (longVal: int64) =
+    let charVal = 'a'
 
-    char	charVal = 'a'
-
-    try {
-        charVal = System.Convert.ToChar(longVal)
-        System.Console.WriteLine("{0} as a char is {1}",
-            longVal, charVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Overflow in long-to-char conversion.")
+    try
+        let charVal = Convert.ToChar longVal
+        printfn $"{longVal} as a char is {charVal}"
+    with :? OverflowException ->
+        printfn "Overflow in long-to-char conversion."
 
     // A conversion from Char to long cannot overflow.
-    longVal = System.Convert.ToInt64(charVal)
-    System.Console.WriteLine("{0} as an Int64 is {1}",
-        charVal, longVal)
+    let longVal = Convert.ToInt64 charVal
+    printfn $"{charVal} as an Int64 is {longVal}"
 //</Snippet8>
 
 //<Snippet9>
-let convertLongByte(long longVal
-
-    byte	byteVal = 0
+let convertLongByte (longVal: int64) =
+    let byteVal = 0
 
     // A conversion from Long to byte can overflow.
-    try {
-        byteVal = System.Convert.ToByte(longVal)
-        System.Console.WriteLine("{0} as a byte is {1}",
-            longVal, byteVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Overflow in long-to-byte conversion.")
+    try
+        let byteVal = Convert.ToByte longVal
+        printfn $"{longVal} as a byte is {byteVal}"
+    with :? OverflowException ->
+        printfn "Overflow in long-to-byte conversion."
 
     // A conversion from Byte to long cannot overflow.
-    longVal = System.Convert.ToInt64(byteVal)
-    System.Console.WriteLine("{0} as an Int64 is {1}",
-        byteVal, longVal)
+    let longVal = Convert.ToInt64 byteVal
+    printfn $"{byteVal} as an Int64 is {longVal}"
 //</Snippet9>
 
 //<Snippet10>
-let convertLongDecimal(long longVal
-
-    decimal	decimalVal
-
+let convertLongDecimal (longVal: int64) =
     // Long to decimal conversion cannot overflow.
-    decimalVal = System.Convert.ToDecimal(longVal)
-    System.Console.WriteLine("{0} as a decimal is {1}",
-            longVal, decimalVal)
+    let decimalVal = Convert.ToDecimal longVal
+    printfn $"{longVal} as a decimal is {decimalVal}"
 
     // Decimal to long conversion can overflow.
-    try {
-        longVal = System.Convert.ToInt64(decimalVal)
-        System.Console.WriteLine("{0} as a long is {1}",
-            decimalVal, longVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Overflow in decimal-to-long conversion.")
+    try
+        let longVal = Convert.ToInt64 decimalVal
+        printfn $"{decimalVal} as a long is {longVal}"
+    with :? OverflowException ->
+        printfn "Overflow in decimal-to-long conversion."
 //</Snippet10>
 
 //<Snippet11>
-let convertLongFloat(long longVal
-
-    float	floatVal
-
+let convertLongFloat (longVal: int64) =
     // A conversion from Long to float cannot overflow.
-    floatVal = System.Convert.ToSingle(longVal)
-    System.Console.WriteLine("{0} as a float is {1}",
-            longVal, floatVal)
+    let floatVal = Convert.ToSingle longVal
+    printfn $"{longVal} as a float is {floatVal}"
 
     // A conversion from float to long can overflow.
-    try {
-        longVal = System.Convert.ToInt64(floatVal)
-        System.Console.WriteLine("{0} as a long is {1}",
-            floatVal, longVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Overflow in float-to-long conversion.")
+    try
+        let longVal = Convert.ToInt64 floatVal
+        printfn $"{floatVal} as a long is {longVal}"
+    with :? OverflowException ->
+        printfn "Overflow in float-to-long conversion."
 //</Snippet11>
 
 //<Snippet12>
-let convertStringBoolean(string stringVal
+let convertStringBoolean (stringVal: string) =
+    let boolVal = false
 
-    bool boolVal = false
-
-    try {
-        boolVal = System.Convert.ToBoolean(stringVal)
-        if (boolVal
-            System.Console.WriteLine(
-                "String was equal to System.Boolean.TrueString.")
-        else {
-            System.Console.WriteLine(
-                "String was equal to System.Boolean.FalseString.")
-    catch (System.FormatException){
-        System.Console.WriteLine(
-            "The string must equal System.Boolean.TrueString " +
-            "or System.Boolean.FalseString.")
+    try
+        let boolVal = Convert.ToBoolean stringVal
+        if boolVal then
+            printfn "String was equal to System.Boolean.TrueString."
+        else
+            printfn "String was equal to System.Boolean.FalseString."
+    with :? FormatException ->
+        printfn "The string must equal System.Boolean.TrueString or System.Boolean.FalseString."
 
     // A conversion from bool to string will always succeed.
-    stringVal = System.Convert.ToString(boolVal)
-    System.Console.WriteLine("{0} as a string is {1}",
-        boolVal, stringVal)
+    let stringVal = Convert.ToString boolVal
+    printfn $"{boolVal} as a string is {stringVal}"
 //</Snippet12>
 
 //<Snippet13>
-let convertStringByte(string stringVal
-    byte byteVal = 0
+let convertStringByte (stringVal: string) =
+    let byteVal = 0
 
-    try {
-        byteVal = System.Convert.ToByte(stringVal)
-        System.Console.WriteLine("{0} as a byte is: {1}",
-            stringVal, byteVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "Conversion from string to byte overflowed.")
-    catch (System.FormatException
-        System.Console.WriteLine(
-            "The string is not formatted as a byte.")
-    catch (System.ArgumentNullException
-        System.Console.WriteLine(
-            "The string is null.")
+    try
+        let byteVal = Convert.ToByte stringVal
+        printfn $"{stringVal} as a byte is: {byteVal}"
+    with
+    | :? OverflowException ->
+        printfn "Conversion from string to byte overflowed."
+    | :? FormatException ->
+        printfn "The string is not formatted as a byte."
+    | :? ArgumentNullException ->
+        printfn "The string is null."
 
     //The conversion from byte to string is always valid.
-    stringVal = System.Convert.ToString(byteVal)
-    System.Console.WriteLine("{0} as a string is {1}",
-        byteVal, stringVal)
+    let stringVal = Convert.ToString byteVal
+    printfn $"{byteVal} as a string is {stringVal}"
 //</Snippet13>
 
 //<Snippet14>
-let convertStringChar(string stringVal
-    char charVal = 'a'
+let convertStringChar (stringVal: string) =
+    let charVal = 'a'
 
     // A string must be one character long to convert to char.
-    try {
-        charVal = System.Convert.ToChar(stringVal)
-        System.Console.WriteLine("{0} as a char is {1}",
-            stringVal, charVal)
-    catch (System.FormatException
-        System.Console.WriteLine(
-            "The string is longer than one character.")
-    catch (System.ArgumentNullException
-        System.Console.WriteLine("The string is null.")
+    try
+        let charVal = Convert.ToChar stringVal
+        printfn $"{stringVal} as a char is {charVal}"
+    with
+    | :? FormatException ->
+        printfn "The string is longer than one character."
+    | :? ArgumentNullException ->
+        printfn "The string is null."
 
     // A char to string conversion will always succeed.
-    stringVal = System.Convert.ToString(charVal)
-    System.Console.WriteLine("The character as a string is {0}",
-            stringVal)
+    let stringVal = Convert.ToString charVal
+    printfn $"The character as a string is {stringVal}"
 //</Snippet14>
 
 //<Snippet15>
-let convertStringDecimal(string stringVal
-    decimal decimalVal = 0
+let convertStringDecimal (stringVal: string) =
+    let decimalVal = 0m
 
-    try {
-        decimalVal = System.Convert.ToDecimal(stringVal)
-        System.Console.WriteLine(
-            "The string as a decimal is {0}.", decimalVal)
-    catch (System.OverflowException){
-        System.Console.WriteLine(
-            "The conversion from string to decimal overflowed.")
-    catch (System.FormatException
-        System.Console.WriteLine(
-            "The string is not formatted as a decimal.")
-    catch (System.ArgumentNullException
-        System.Console.WriteLine(
-            "The string is null.")
+    try
+        let decimalVal = Convert.ToDecimal(stringVal)
+        printfn $"The string as a decimal is {decimalVal}."
+    with
+    | :? OverflowException ->
+        printfn "The conversion from string to decimal overflowed."
+    | :? FormatException ->
+        printfn "The string is not formatted as a decimal."
+    | :? ArgumentNullException ->
+        printfn "The string is null."
 
     // Decimal to string conversion will not overflow.
-    stringVal = System.Convert.ToString(decimalVal)
-    System.Console.WriteLine(
-        "The decimal as a string is {0}.", stringVal)
+    let stringVal = Convert.ToString decimalVal
+    printfn $"The decimal as a string is {stringVal}."
 //</Snippet15>
 
 //<Snippet16>
-let convertStringFloat(string stringVal
-    float floatVal = 0
+let convertStringFloat (stringVal: string) =
+    let floatVal = 0f
 
-    try {
-        floatVal = System.Convert.ToSingle(stringVal)
-        System.Console.WriteLine(
-            "The string as a float is {0}.", floatVal)
-    catch (System.OverflowException){
-        System.Console.WriteLine(
-            "The conversion from string-to-float overflowed.")
-    catch (System.FormatException
-        System.Console.WriteLine(
-            "The string is not formatted as a float.")
-    catch (System.ArgumentNullException
-        System.Console.WriteLine(
-            "The string is null.")
+    try
+        let floatVal = Convert.ToSingle stringVal
+        printfn $"The string as a float is {floatVal}."
+    with
+    | :? OverflowException ->
+        printfn "The conversion from string-to-float overflowed."
+    | :? FormatException ->
+        printfn "The string is not formatted as a float."
+    | :? ArgumentNullException ->
+        printfn "The string is null."
 
     // Float to string conversion will not overflow.
-    stringVal = System.Convert.ToString(floatVal)
-    System.Console.WriteLine(
-        "The float as a string is {0}.", stringVal)
+    let stringVal = Convert.ToString floatVal
+    printfn $"The float as a string is {stringVal}."
 //</Snippet16>
 
 //<Snippet17>
-let convertCharDecimal(char charVal
-    Decimal decimalVal = 0
+let convertCharDecimal (charVal: char) =
+    let decimalVal = 0m
 
     // Char to decimal conversion is not supported and will always
     // throw an InvalidCastException.
-    try {
-        decimalVal = System.Convert.ToDecimal(charVal)
-    catch (System.InvalidCastException
-        System.Console.WriteLine(
-            "Char-to-Decimal conversion is not supported " +
-            "by the .NET Framework.")
+    try
+        let decimalVal = Convert.ToDecimal charVal
+        ()
+    with :? InvalidCastException ->
+        printfn "Char-to-Decimal conversion is not supported by the .NET Runtime."
 
     //Decimal to char conversion is also not supported.
-    try {
-        charVal = System.Convert.ToChar(decimalVal)
-    catch (System.InvalidCastException
-        System.Console.WriteLine(
-            "Decimal-to-Char conversion is not supported " +
-            "by the .NET Framework.")
+    try
+        let charVal = Convert.ToChar decimalVal
+        ()
+    with :? InvalidCastException ->
+        printfn "Decimal-to-Char conversion is not supported by the .NET Runtime."
 //</Snippet17>
 
 //<Snippet18>
-let convertByteDecimal(byte byteVal
-    decimal decimalVal
-
+let convertByteDecimal (byteVal: byte) =
     // Byte to decimal conversion will not overflow.
-    decimalVal = System.Convert.ToDecimal(byteVal)
-    System.Console.WriteLine("The byte as a decimal is {0}.",
-        decimalVal)
+    let decimalVal = Convert.ToDecimal byteVal
+    printfn $"The byte as a decimal is {decimalVal}."
 
     // Decimal to byte conversion can overflow.
-    try {
-        byteVal = System.Convert.ToByte(decimalVal)
-        System.Console.WriteLine("The Decimal as a byte is {0}.",
-            byteVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "The decimal value is too large for a byte.")
+    try
+        let byteVal = Convert.ToByte decimalVal
+        printfn $"The Decimal as a byte is {byteVal}."
+    with :? OverflowException ->
+        printfn "The decimal value is too large for a byte."
 //</Snippet18>
 
 //<Snippet19>
-let convertByteSingle(byte byteVal
-    float floatVal
-
+let convertByteSingle (byteVal: byte) =
     // Byte to float conversion will not overflow.
-    floatVal = System.Convert.ToSingle(byteVal)
-    System.Console.WriteLine("The byte as a float is {0}.",
-        floatVal)
+    let floatVal = Convert.ToSingle byteVal
+    printfn $"The byte as a float is {floatVal}."
 
     // Float to byte conversion can overflow.
-    try {
-        byteVal = System.Convert.ToByte(floatVal)
-        System.Console.WriteLine("The float as a byte is {0}.",
-            byteVal)
-    catch (System.OverflowException
-        System.Console.WriteLine(
-            "The float value is too large for a byte.")
+    try
+        let byteVal = Convert.ToByte floatVal
+        printfn $"The float as a byte is {byteVal}."
+    with :? OverflowException ->
+        printfn "The float value is too large for a byte."
 //</Snippet19>
 
 //<Snippet20>
-let convertBoolean(
-    const int year			= 1979
-    const int month			= 7
-    const int day			= 28
-    const int hour			= 13
-    const int minute		= 26
-    const int second		= 15
-    const int millisecond	= 53
+let convertBoolean () =
+    let year        = 1979
+    let month       = 7
+    let day         = 28
+    let hour        = 13
+    let minute      = 26
+    let second      = 15
+    let millisecond = 53
 
-    DateTime dateTime = new DateTime(year, month, day, hour,
-                                minute, second, millisecond)
-
-    bool boolVal
+    let dateTime = DateTime(year, month, day, hour, minute, second, millisecond)
 
     // System.InvalidCastException is always thrown.
-    try {
-        boolVal = System.Convert.ToBoolean(dateTime)
-    catch (System.InvalidCastException
-        System.Console.WriteLine("Conversion from DateTime to " +
-            "Boolean is not supported by the .NET Framework.")
+    try
+        let boolVal = Convert.ToBoolean dateTime
+        ()
+    with :? InvalidCastException ->
+        printfn "Conversion from DateTime to Boolean is not supported by the .NET Runtime."
 //</Snippet20>
-
-
-ConvertSnippet	snippet = new ConvertSnippet()
-
-double	doubleVal
-System.Console.WriteLine("Enter the double value: ")
-doubleVal = System.Convert.ToDouble(System.Console.ReadLine())
-snippet.ConvertDoubles(doubleVal)
-
-long longVal
-System.Console.WriteLine("Enter the Int64 value: ")
-longVal = System.Convert.ToInt64(System.Console.ReadLine())
-snippet.ConvertLongs(longVal)
-
-string stringVal
-System.Console.WriteLine("Enter the String value: ")
-stringVal = System.Console.ReadLine()
-snippet.ConvertStrings(stringVal)
-
-char charVal
-System.Console.WriteLine("Enter the char value: ")
-charVal = System.Convert.ToChar(System.Console.ReadLine())
-snippet.ConvertChars(charVal)
-
-byte byteVal
-System.Console.WriteLine("Enter the byte value: ")
-byteVal = System.Convert.ToByte(System.Console.ReadLine())
-snippet.ConvertBytes(byteVal)
-
-snippet.ConvertBoolean()
 
