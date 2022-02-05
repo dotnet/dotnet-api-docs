@@ -32,7 +32,7 @@ namespace SDKSample
         #endregion
 
         #region FrameworkElement Overrides
-//<SnippetOnRender>
+        //<SnippetOnRender>
         /// <summary>
         /// OnRender override draws the geometry of the text and optional highlight.
         /// </summary>
@@ -48,8 +48,9 @@ namespace SDKSample
                 drawingContext.DrawGeometry(null, new System.Windows.Media.Pen(Stroke, StrokeThickness), _textHighLightGeometry);
             }
         }
-//</SnippetOnRender>
-//<SnippetCreateText>
+        //</SnippetOnRender>
+
+        //<SnippetCreateText>
         /// <summary>
         /// Create the outline geometry based on the formatted text.
         /// </summary>
@@ -84,7 +85,7 @@ namespace SDKSample
                 _textHighLightGeometry = formattedText.BuildHighlightGeometry(new System.Windows.Point(0, 0));
             }
         }
-  //</SnippetCreateText>      
+        //</SnippetCreateText>      
         #endregion
 
         #region DependencyProperties
@@ -307,7 +308,7 @@ namespace SDKSample
             );
 
         /// <summary>
-        ///     The stroke thickness of the font.
+        /// The stroke thickness of the font.
         /// </summary>
         public ushort StrokeThickness
         {
