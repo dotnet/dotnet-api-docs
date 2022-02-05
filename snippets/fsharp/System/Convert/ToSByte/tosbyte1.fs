@@ -133,7 +133,7 @@ let convertInt32 () =
     // </Snippet7>
 
 let convertInt64 () =
-    // <Snippet7>
+    // <Snippet8>
     let numbers =
         [| Int64.MinValue; -1L; 0L; 121L; 340L; Int64.MaxValue |]
     
@@ -150,7 +150,7 @@ let convertInt64 () =
     //    Converted the Int64 value 121 to the SByte value 121.
     //    Converted the Int64 value 340 to the SByte value 340.
     //    The Int64 value 9223372036854775807 is outside the range of the SByte type.
-    // </Snippet7>
+    // </Snippet8>
 
 let convertObject () =
     // <Snippet9>
