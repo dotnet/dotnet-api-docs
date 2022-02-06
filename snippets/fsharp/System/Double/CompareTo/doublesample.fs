@@ -65,20 +65,35 @@ printfn $"10.0 minus NegativeInfinity equals {10.0 - Double.NegativeInfinity}."
 
 //<snippet10>
 // This will equal Infinity.
-printfn $"PositiveInfinity plus 10.0 equals {Double.PositiveInfinity + 10.0}."
+printfn $"PositiveInfinity plus 10.0 equals {Double.PositiveInfinity + 10.}."
 //</snippet10>
 
 //<snippet11>
 // This will return "true".
-printfn $"IsInfinity(3.0 / 0) = %b{Double.IsInfinity(3.0 / 0.)}."
+printfn $"IsInfinity(3.0 / 0) = %b{Double.IsInfinity(3. / 0.)}."
 //</snippet11>
 
 //<snippet12>
 // This will return "true".
-printfn $"IsPositiveInfinity(4.0 / 0) = %b{Double.IsPositiveInfinity(4.0 / 0.)}."
+printfn $"IsPositiveInfinity(4.0 / 0) = %b{Double.IsPositiveInfinity(4. / 0.)}."
 //</snippet12>
 
 //<snippet13>
 // This will return "true".
-printfn $"IsNegativeInfinity(-5.0 / 0) = {Double.IsNegativeInfinity(-5.0 / 0.)}."
+printfn $"IsNegativeInfinity(-5.0 / 0) = {Double.IsNegativeInfinity(-5. / 0.)}."
 //</snippet13>
+
+
+let a = 500.
+//<snippet16>
+let obj1 = double 450 |> box
+    
+if a.CompareTo obj1 < 0 then
+    printfn $"{a} is less than {obj1}."
+
+if a.CompareTo obj1 > 0 then
+    printfn $"{a} is greater than {obj1}."
+
+if a.CompareTo obj1 = 0 then
+    printfn $"{a} equals {obj1}."
+//</snippet16>
