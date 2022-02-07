@@ -12,7 +12,6 @@ namespace SDKSample
         public SampleViewer()
         {
             InitializeComponent();
-            MyRectangleOpacityFadeExampleFrame.Content = new RectangleOpacityFadeExample();
             MyControllableStoryboardExampleFrame.Content = new ControllableStoryboardExample();
         }
     }

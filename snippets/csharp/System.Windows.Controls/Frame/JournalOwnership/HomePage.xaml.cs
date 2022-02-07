@@ -14,7 +14,7 @@ namespace XAML
     {
         public HomePage()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
     }
 }

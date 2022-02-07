@@ -1,4 +1,4 @@
-﻿using System.Data.Objects;
+﻿using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Windows;
 

@@ -58,7 +58,7 @@ namespace GestureControl
         protected override void OnStylusUp(StylusEventArgs e)
         {
             base.OnStylusUp(e);
-            
+
             stylusPoints.Add(e.GetStylusPoints(this));
             Stroke stroke = new Stroke(stylusPoints);
 
@@ -68,7 +68,7 @@ namespace GestureControl
             {
                 StrokeCollection gestureStrokes = new StrokeCollection();
                 gestureStrokes.Add(stroke);
-                
+
                 ReadOnlyCollection<GestureRecognitionResult> results =
                                 recognizer.Recognize(gestureStrokes);
 
@@ -90,11 +90,11 @@ namespace GestureControl
                 Application.Current.Windows[0].Title = "Recognizer not available";
                 presenter.Strokes.Add(stroke);
             }
-            
+
             Stylus.Capture(null);
         }
         //</Snippet3>
-        
+
         //</Snippet1>
 
         private void ConstructorSnippet()
@@ -127,7 +127,7 @@ namespace GestureControl
         private bool InterpretScratchoutGesture(Stroke stroke)
         {
             // Attempt to instantiate a recognizer for scratchout gestures.
-            ApplicationGesture[] gestures = {ApplicationGesture.ScratchOut};
+            ApplicationGesture[] gestures = { ApplicationGesture.ScratchOut };
             GestureRecognizer recognizer = new GestureRecognizer(gestures);
 
             if (!recognizer.IsRecognizerAvailable)
@@ -159,9 +159,7 @@ namespace GestureControl
         }
         //</Snippet8>
 
-    //<Snippet2>
-    } //end class
-    //</Snippet2>
+    }
     class Program : Application
     {
         Window win;
@@ -182,6 +180,6 @@ namespace GestureControl
             new Program().Run();
         }
     }
-//<Snippet7>
+    //<Snippet7>
 } //end namespace
-//</Snippet7>
+  //</Snippet7>
