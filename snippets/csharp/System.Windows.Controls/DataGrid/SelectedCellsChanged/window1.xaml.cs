@@ -35,7 +35,7 @@ namespace DataGrid_CellSelection
         {
             AdventureWorksLT2008DataSetTableAdapters.CustomerTableAdapter custadapter = new AdventureWorksLT2008DataSetTableAdapters.CustomerTableAdapter();
             AdventureWorksLT2008DataSet.CustomerDataTable custdata = new AdventureWorksLT2008DataSet.CustomerDataTable();
-            custadapter.Fill(custdata);
+            //custadapter.Fill(custdata);
 
             return custdata;
         }

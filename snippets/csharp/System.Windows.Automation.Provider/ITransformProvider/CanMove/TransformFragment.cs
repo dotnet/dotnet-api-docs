@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation;
-using System.Runtime.InteropServices;
-using MS.Win32;
-using System.Collections;
+using System.Windows.Automation.Provider;
+using System.Windows.Forms;
 
 namespace UIAITransformProvider_snip
 {
@@ -31,7 +26,7 @@ namespace UIAITransformProvider_snip
         }
 
         #region IRawElementProviderSimple Members
-        
+
         /// <summary>
         /// Retrieves the object that supports the specified control pattern.
         /// </summary>
@@ -170,9 +165,9 @@ namespace UIAITransformProvider_snip
         //}
 
         #endregion IRawElementProviderFragment Members
-        
+
         #region IRawElementProviderFragmentRoot
- 
+
         /// <summary>
         /// Gets the element at the specified point.
         /// </summary>
@@ -265,9 +260,9 @@ namespace UIAITransformProvider_snip
             // of the custom control.
             int maxLeft = 10;
             int maxTop = 10;
-            int maxRight = 
+            int maxRight =
                 this.customControl.formWidth - this.customControl.Width - 10;
-            int maxBottom = 
+            int maxBottom =
                 this.customControl.formHeight - this.customControl.Height - 10;
 
             if (leftInt < maxLeft)
@@ -281,7 +276,7 @@ namespace UIAITransformProvider_snip
 
             // Invoke control method on separate thread to avoid clashing with UI.
             // Use anonymous method for simplicity.
-            this.customControl.Invoke(new MethodInvoker(delegate()
+            this.customControl.Invoke(new MethodInvoker(delegate ()
             {
                 this.customControl.Left = leftInt;
                 this.customControl.Top = topInt;
@@ -311,8 +306,8 @@ namespace UIAITransformProvider_snip
             // using the keyboard or mouse.
             // Use the bounds of the parent window to limit the placement 
             // of the custom control.
-            Size MaxSize = 
-                new Size(this.customControl.formWidth - 20, 
+            Size MaxSize =
+                new Size(this.customControl.formWidth - 20,
                 this.customControl.formHeight - 20);
             Size MinSize = new Size(10, 10);
 
@@ -327,7 +322,7 @@ namespace UIAITransformProvider_snip
 
             // Invoke control method on separate thread to avoid clashing with UI.
             // Use anonymous method for simplicity.
-            this.customControl.Invoke(new MethodInvoker(delegate()
+            this.customControl.Invoke(new MethodInvoker(delegate ()
             {
                 this.customControl.Size = new Size(widthInt, heightInt);
             }));
@@ -347,39 +342,39 @@ namespace UIAITransformProvider_snip
         // Rotation code to be implemented.    
         //int degrees = (int)degreesToRotate;
 
-            //int height = this.customControl.Height;
-            //int width = this.customControl.Width;
+        //int height = this.customControl.Height;
+        //int width = this.customControl.Width;
 
-            //Point offset = new Point();
-            //offset.X = this.customControl.Width / 2;
-            //offset.Y = this.customControl.Height / 2;
+        //Point offset = new Point();
+        //offset.X = this.customControl.Width / 2;
+        //offset.Y = this.customControl.Height / 2;
 
-            //Point[] controlCorners = new Point[4];
-            //controlCorners[0] = new Point(0, 0);
-            //controlCorners[1] = new Point(this.customControl.Width, 0);
-            //controlCorners[2] = new Point(this.customControl.Width, this.customControl.Height);
-            //controlCorners[3] = new Point(0, this.customControl.Height);
+        //Point[] controlCorners = new Point[4];
+        //controlCorners[0] = new Point(0, 0);
+        //controlCorners[1] = new Point(this.customControl.Width, 0);
+        //controlCorners[2] = new Point(this.customControl.Width, this.customControl.Height);
+        //controlCorners[3] = new Point(0, this.customControl.Height);
 
-            //Point[] controlCornersNew = new Point[4];
+        //Point[] controlCornersNew = new Point[4];
 
-            //for (int loop = 0; loop <= 3; loop++)
-            //{
-            //    Point thisPoint = controlCorners[loop];
-            //    double x = thisPoint.X - offset.X;
-            //    double y = thisPoint.Y - offset.Y;
-            //    thisPoint.X = (int)(x * Math.Cos(degrees) - y * Math.Sin(degrees));
-            //    thisPoint.Y = (int)(x * Math.Sin(degrees) - y * Math.Cos(degrees));
-            //    controlCornersNew[loop].X = thisPoint.X + offset.X;
-            //    controlCornersNew[loop].Y = thisPoint.Y + offset.Y;
-            //}
+        //for (int loop = 0; loop <= 3; loop++)
+        //{
+        //    Point thisPoint = controlCorners[loop];
+        //    double x = thisPoint.X - offset.X;
+        //    double y = thisPoint.Y - offset.Y;
+        //    thisPoint.X = (int)(x * Math.Cos(degrees) - y * Math.Sin(degrees));
+        //    thisPoint.Y = (int)(x * Math.Sin(degrees) - y * Math.Cos(degrees));
+        //    controlCornersNew[loop].X = thisPoint.X + offset.X;
+        //    controlCornersNew[loop].Y = thisPoint.Y + offset.Y;
+        //}
 
-            //this.customControl.Invoke(new MethodInvoker(delegate()
-            //{
-            //    //this.customControl.Top = controlCornersNew[0].Y;
-            //    //this.customControl.Left = controlCornersNew[0].X;
-            //    this.customControl.Width = height;
-            //    this.customControl.Height = width;
-            //}));
+        //this.customControl.Invoke(new MethodInvoker(delegate()
+        //{
+        //    //this.customControl.Top = controlCornersNew[0].Y;
+        //    //this.customControl.Left = controlCornersNew[0].X;
+        //    this.customControl.Width = height;
+        //    this.customControl.Height = width;
+        //}));
 
         #endregion ITransformProvider Members
 

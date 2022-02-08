@@ -32,11 +32,11 @@ namespace ColumnsArtSample
             //DG1.DataContext = custtable;
 
             //Data for CheckBox column
-            AdventureWorksLT2008DataSet1TableAdapters.SalesOrderHeaderTableAdapter orderadapter = new AdventureWorksLT2008DataSet1TableAdapters.SalesOrderHeaderTableAdapter();
-            AdventureWorksLT2008DataSet1.SalesOrderHeaderDataTable ordertable = new AdventureWorksLT2008DataSet1.SalesOrderHeaderDataTable();
-            orderadapter.Fill(ordertable);
+            //AdventureWorksLT2008DataSet1TableAdapters.SalesOrderHeaderTableAdapter orderadapter = new AdventureWorksLT2008DataSet1TableAdapters.SalesOrderHeaderTableAdapter();
+            //AdventureWorksLT2008DataSet1.SalesOrderHeaderDataTable ordertable = new AdventureWorksLT2008DataSet1.SalesOrderHeaderDataTable();
+            //orderadapter.Fill(ordertable);
 
-            DG1.DataContext = ordertable;
+            //DG1.DataContext = ordertable;
         }
     }
 }

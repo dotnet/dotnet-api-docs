@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation;
-using System.Runtime.InteropServices;
-using MS.Win32;
-using System.Collections;
+using System.Windows.Automation.Provider;
+using System.Windows.Forms;
 
 namespace UIAIToggleProvider_snip
 {
@@ -122,7 +117,7 @@ namespace UIAIToggleProvider_snip
         {
             get
             {
-                return customControl.toggleStateColor[customControl.controlColor];;
+                return customControl.toggleStateColor[customControl.controlColor]; ;
             }
         }
         // </SnippetToggleState>
@@ -140,11 +135,11 @@ namespace UIAIToggleProvider_snip
         /// </remarks>
         void IToggleProvider.Toggle()
         {
-            ToggleState toggleState = 
+            ToggleState toggleState =
                 customControl.toggleStateColor[customControl.controlColor];
             // Invoke control method on separate thread to avoid clashing with UI.
             // Use anonymous method for simplicity.
-            this.customControl.Invoke(new MethodInvoker(delegate()
+            this.customControl.Invoke(new MethodInvoker(delegate ()
             {
                 if (toggleState == ToggleState.On)
                 {
