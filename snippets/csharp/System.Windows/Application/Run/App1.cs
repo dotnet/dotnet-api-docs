@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CSharp
 {
-    public class EntryPoint
+    public class EntryPoint1
     {
         // All WPF applications should execute on a single-threaded apartment (STA) thread
         [STAThread]
