@@ -16,5 +16,5 @@ The following methods include a parameter named `mode` that lets you specify the
 
 The following example shows how to specify a `ZipArchiveMode` value when creating a <xref:System.IO.Compression.ZipArchive> object.
 
-:::code language="csharp" source="~/samples/snippets/csharp/System.IO.Compression/ZipArchive/CreateEntry/program1.cs" id="Snippet1":::
-:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/vb/program1.vb" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/CreateEntry/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/vb/program1.vb" id="Snippet1":::
