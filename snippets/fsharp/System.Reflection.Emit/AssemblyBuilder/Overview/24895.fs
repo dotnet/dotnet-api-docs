@@ -1,3 +1,4 @@
+//<Snippet1>
 open System
 open System.Threading
 open System.Reflection
@@ -225,3 +226,4 @@ obj1.Number: 127
 obj1.MyMethod(22): 2794
 obj1.Number: 5280
 *)
+//</Snippet1>
