@@ -11,9 +11,9 @@ public class Example
     {
         bool flag = false;
         NumEnum testEnum = NumEnum.One;
-        // Get the type of myTestEnum.
+        // Get the type of testEnum.
         Type t = testEnum.GetType();
-        // Get the IsValueType property of the myTestEnum variable.
+        // Get the IsValueType property of the testEnum variable.
         flag = t.IsValueType;
         Console.WriteLine("{0} is a value type: {1}", t.FullName, flag);
     }
