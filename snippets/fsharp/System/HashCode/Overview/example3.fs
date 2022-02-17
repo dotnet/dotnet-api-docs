@@ -16,8 +16,8 @@ type Path([<ParamArray>]segments: string[]) =
 
     interface IEquatable<Path> with
         member this.Equals(other: Path) =
-            Object.ReferenceEquals(this.Segments, other.Segments) &&
-            not (this.Segments <> null) && 
+            Object.ReferenceEquals(this.Segments, other.Segments) ||
+            not (isNull this.Segments) && 
             not (isNull other.Segments) &&
             this.Segments.Count = other.Segments.Count &&
             Seq.forall2 (fun x y -> String.Equals(x, y, StringComparison.OrdinalIgnoreCase)) this.Segments other.Segments 
