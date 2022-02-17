@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using System.Windows.Forms;
+
 
 [assembly:CLSCompliant(true)]
 

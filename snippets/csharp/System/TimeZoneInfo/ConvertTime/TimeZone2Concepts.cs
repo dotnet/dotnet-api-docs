@@ -1,10 +1,10 @@
-﻿// Note that this source code file includes a code module (modMain) and
+// Note that this source code file includes a code module (modMain) and
 // a WinForm. 
 
 using System;
 using System.Collections.ObjectModel;
 using System.Security;
-using System.Windows.Forms;
+
 
 [assembly:CLSCompliant(true)]
 
@@ -286,7 +286,7 @@ public class TZExamples
    // </Snippet11>
 }
 
-public class TZListForm : Form
+public class TZListForm
 {
    private System.Windows.Forms.ListBox timeZoneList;
    private System.Windows.Forms.Button OkButton;

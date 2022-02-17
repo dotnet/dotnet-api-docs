@@ -1,6 +1,6 @@
-﻿// <Snippet2>
+// <Snippet2>
 using System;
-using System.Windows.Forms;
+
 
 public class TestAction1
 {

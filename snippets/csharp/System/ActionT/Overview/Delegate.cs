@@ -1,6 +1,6 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
-using System.Windows.Forms;
+
 
 delegate void DisplayMessage(string message);
 
