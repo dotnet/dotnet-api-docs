@@ -1,4 +1,4 @@
-﻿// <Snippet7>
+// <Snippet7>
 using System;
 
 public class Example
@@ -10,7 +10,7 @@ public class Example
    }
 }
 // The example displays the following output:
-//    Unhandled Exception: System.FormatException: Format specifier was invalid.
+//    Unhandled Exception: System.FormatExceptionat specifier was invalid.
 //       at System.Number.FormatDecimal(Decimal value, String format, NumberFormatInfo info)
 //       at System.Decimal.ToString(String format, IFormatProvider provider)
 //       at System.Text.StringBuilder.AppendFormat(IFormatProvider provider, String format, Object[] args)

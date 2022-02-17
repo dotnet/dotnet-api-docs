@@ -3,7 +3,7 @@ using System.Data;
 using System.Security.Principal;
 
 
-public class Form1: Form
+public class Form1
 {
  protected void Method()
  {

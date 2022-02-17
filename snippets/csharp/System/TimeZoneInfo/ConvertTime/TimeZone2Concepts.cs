@@ -4,7 +4,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Security;
-
+using System.Windows.Forms;
 
 [assembly:CLSCompliant(true)]
 
@@ -286,7 +286,7 @@ public class TZExamples
    // </Snippet11>
 }
 
-public class TZListForm
+public class TZListForm : Form
 {
    private System.Windows.Forms.ListBox timeZoneList;
    private System.Windows.Forms.Button OkButton;

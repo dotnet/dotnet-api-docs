@@ -4,7 +4,7 @@ using System.Security.Principal;
 using System.IO;
 
 
-public class Form1: Form
+public class Form1
 {
  protected void Method()
  {
