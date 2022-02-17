@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Security.Principal;
-using System.Windows.Forms;
 
-public class Form1: Form
+public class Form1
 {
     protected void Method()
     {

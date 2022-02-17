@@ -1,6 +1,5 @@
 ﻿// <Snippet4>
 using System;
-using System.Windows.Forms;
 
 public class Name
 {
