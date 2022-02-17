@@ -1,6 +1,6 @@
-// <Snippet4>
+﻿// <Snippet4>
 using System;
-
+using System.Windows.Forms;
 
 public class TestLambdaExpression
 {
