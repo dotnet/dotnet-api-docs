@@ -1,9 +1,6 @@
 ﻿//<Snippet1>
 using System;
-using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.ComponentModel.Design.Serialization;
-using System.Windows.Forms;
 
 namespace ContextStackExample
 {
