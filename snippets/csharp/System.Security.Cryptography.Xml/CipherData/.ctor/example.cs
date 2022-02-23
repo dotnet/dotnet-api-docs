@@ -8,7 +8,7 @@ using System.IO;
 /// and write it to an XML file. It demonstrates the use of CipherReference.
 namespace EncryptedDataSample
 {
-	class Sample1
+	class Example
 	{
 		[STAThread]
 		static void Main(string[] args)
