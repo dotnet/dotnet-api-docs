@@ -16,3 +16,4 @@ let main _ =
 
     printfn $"{RemotingServices.GetObjectUri obj}"
     0
+// </Snippet1>
