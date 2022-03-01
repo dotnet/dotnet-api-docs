@@ -50,7 +50,7 @@ class Members
                 // Verify that multiple blocks can not be transformed.
                 if (!base64Transform.CanTransformMultipleBlocks)
                 {
-                    // Initializie the offset size.
+                    // Initialize the offset size.
                     int inputOffset = 0;
 
                     // Iterate through inputBytes transforming by blockSize.
@@ -85,7 +85,7 @@ class Members
                 // Determine if the current transform can be reused.
                 if (!base64Transform.CanReuseTransform)
                 {
-                    // Free up any used resources.
+                    // Free any used resources.
                     base64Transform.Clear();
                 }
             }
@@ -99,17 +99,17 @@ class Members
 
                 byte[] myOutputBytes = new byte[myTransform.OutputBlockSize];
 
-                //Open the input and output files.
+                // Open the input and output files.
                 using (FileStream myInputFile = new FileStream(inFileName, FileMode.Open, FileAccess.Read))
                 {
                     using (FileStream myOutputFile = new FileStream(outFileName, FileMode.Create, FileAccess.Write))
                     {
 
-                        //Retrieve the file contents into a byte array. 
+                        // Retrieve the file contents into a byte array. 
                         byte[] myInputBytes = new byte[myInputFile.Length];
                         myInputFile.Read(myInputBytes, 0, myInputBytes.Length);
 
-                        //Transform the data in chunks the size of InputBlockSize. 
+                        // Transform the data in chunks the size of InputBlockSize. 
                         int i = 0;
                         while (myInputBytes.Length - i > 4/*myTransform.InputBlockSize*/)
                         {
@@ -118,11 +118,11 @@ class Members
                             myOutputFile.Write(myOutputBytes, 0, bytesWritten);
                         }
 
-                        //Transform the final block of data.
+                        // Transform the final block of data.
                         myOutputBytes = myTransform.TransformFinalBlock(myInputBytes, i, myInputBytes.Length - i);
                         myOutputFile.Write(myOutputBytes, 0, myOutputBytes.Length);
 
-                        //Free up any used resources.
+                        // Free up any used resources.
                         myTransform.Clear();
                     }
                 }
