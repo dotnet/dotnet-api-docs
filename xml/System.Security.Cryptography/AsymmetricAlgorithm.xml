@@ -636,11 +636,31 @@ This method is obsolete in .NET 5 and later versions.
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" Index="1" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>Exports the current key in the PKCS#8 EncryptedPrivateKeyInfo format with a char-based password, PEM encoded.</summary>
+        <returns>A string containing the PEM-encoded PKCS#8 EncryptedPrivateKeyInfo.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+              When `pbeParameters` indicates an algorithm that
+              uses PBKDF2 (Password-Based Key Derivation Function 2), the password
+              is converted to bytes via the UTF-8 encoding.
+
+              A PEM-encoded PKCS#8 EncryptedPrivateKeyInfo will begin with
+             `-----BEGIN ENCRYPTED PRIVATE KEY-----` and end with
+             `-----END ENCRYPTED PRIVATE KEY-----`, with the base64 encoded DER
+              contents of the key between the PEM boundaries.
+
+              The PEM is encoded according to the IETF RFC 7468 "strict" encoding rules.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotImplementedException">An implementation for <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.ExportEncryptedPkcs8PrivateKey(System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters)" /> or
+            <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.TryExportEncryptedPkcs8PrivateKey(System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters,System.Span{System.Byte},System.Int32@)" /> has not been provided.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportPkcs8PrivateKey">
@@ -702,9 +722,26 @@ This method is obsolete in .NET 5 and later versions.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Exports the current key in the PKCS#8 PrivateKeyInfo format, PEM encoded.</summary>
+        <returns>A string containing the PEM-encoded PKCS#8 PrivateKeyInfo.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+
+              A PEM-encoded PKCS#8 PrivateKeyInfo will begin with `-----BEGIN PRIVATE KEY-----`
+              and end with `-----END PRIVATE KEY-----`, with the base64 encoded DER
+              contents of the key between the PEM boundaries.
+
+              The PEM is encoded according to the IETF RFC 7468 "strict" encoding rules.
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotImplementedException">An implementation for <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.ExportPkcs8PrivateKey" /> or
+            <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.TryExportPkcs8PrivateKey(System.Span{System.Byte},System.Int32@)" /> has not been provided.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportSubjectPublicKeyInfo">
@@ -764,9 +801,27 @@ This method is obsolete in .NET 5 and later versions.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Exports the public-key portion of the current key in the X.509 SubjectPublicKeyInfo format, PEM encoded.</summary>
+        <returns>A string containing the PEM-encoded X.509 SubjectPublicKeyInfo.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+
+              A PEM-encoded X.509 SubjectPublicKeyInfo will begin with
+             `-----BEGIN PUBLIC KEY-----` and end with
+             `-----END PUBLIC KEY-----`, with the base64 encoded DER
+              contents of the key between the PEM boundaries.
+
+              The PEM is encoded according to the IETF RFC 7468 "strict"
+              encoding rules.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotImplementedException">An implementation for <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.ExportSubjectPublicKeyInfo" /> or
+            <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.TryExportSubjectPublicKeyInfo(System.Span{System.Byte},System.Int32@)" /> has not been provided.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
       </Docs>
     </Member>
     <Member MemberName="FromXmlString">
@@ -1887,13 +1942,35 @@ This member is an explicit interface member implementation. It can be used only 
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" Index="3" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <param name="destination">The character span to receive the PEM-encoded PKCS#8 EncryptedPrivateKeyInfo data.</param>
+        <param name="charsWritten">When this method returns, contains a value that indicates the number of characters written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Exports the current key in the PKCS#8 EncryptedPrivateKeyInfo format with a char-based password, PEM encoded.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is big enough to receive the output; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+              When `pbeParameters` indicates an algorithm that
+              uses PBKDF2 (Password-Based Key Derivation Function 2), the password
+              is converted to bytes via the UTF-8 encoding.
+
+              A PEM-encoded PKCS#8 EncryptedPrivateKeyInfo will begin with
+            `-----BEGIN ENCRYPTED PRIVATE KEY-----` and end with
+            `-----END ENCRYPTED PRIVATE KEY-----`, with the base64 encoded DER
+              contents of the key between the PEM boundaries.
+
+              The PEM is encoded according to the IETF RFC 7468 "strict"
+              encoding rules.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotImplementedException">An implementation for <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.TryExportEncryptedPkcs8PrivateKey(System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters,System.Span{System.Byte},System.Int32@)" />
+            has not been provided.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryExportPkcs8PrivateKey">
@@ -1971,11 +2048,28 @@ This member is an explicit interface member implementation. It can be used only 
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">The character span to receive the PEM-encoded PKCS#8 PrivateKeyInfo data.</param>
+        <param name="charsWritten">When this method returns, contains a value that indicates the number of characters written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to export the current key in the PEM-encoded PKCS#8 PrivateKeyInfo format into a provided buffer.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is big enough to receive the output; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+              A PEM-encoded PKCS#8 PrivateKeyInfo will begin with `-----BEGIN PRIVATE KEY-----`
+              and end with `-----END PRIVATE KEY-----`, with the base64 encoded DER
+              contents of the key between the PEM boundaries.
+
+              The PEM is encoded according to the IETF RFC 7468 "strict"
+              encoding rules.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotImplementedException">An implementation for <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.TryExportPkcs8PrivateKey(System.Span{System.Byte},System.Int32@)" />
+            has not been provided.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryExportSubjectPublicKeyInfo">
@@ -2053,11 +2147,31 @@ This member is an explicit interface member implementation. It can be used only 
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">The character span to receive the PEM-encoded X.509 SubjectPublicKeyInfo data.</param>
+        <param name="charsWritten">When this method returns, contains a value that indicates the number of characters written to <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        <summary>Attempts to export the current key in the PEM-encoded X.509 SubjectPublicKeyInfo format into a provided buffer.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="destination" /> is big enough to receive the output; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+
+              A PEM-encoded X.509 SubjectPublicKeyInfo will begin with
+            `-----BEGIN PUBLIC KEY-----` and end with
+            `-----END PUBLIC KEY-----`, with the base64 encoded DER
+              contents of the key between the PEM boundaries.
+
+              The PEM is encoded according to the IETF RFC 7468 "strict"
+              encoding rules.
+
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.NotImplementedException">An implementation for <see cref="M:System.Security.Cryptography.AsymmetricAlgorithm.TryExportSubjectPublicKeyInfo(System.Span{System.Byte},System.Int32@)" />
+            has not been provided.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The key could not be exported.</exception>
       </Docs>
     </Member>
   </Members>
