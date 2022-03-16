@@ -4709,11 +4709,15 @@ Starting with .NET Framework 4, the ability to execute code in assemblies loaded
 
  The <xref:System.Reflection.Assembly.LoadFrom%2A> method has the following disadvantages. Consider using <xref:System.Reflection.Assembly.Load%2A> instead.
 
--   If an assembly with the same identity is already loaded, <xref:System.Reflection.Assembly.LoadFrom%2A> returns the loaded assembly even if a different path was specified.
+-   If an assembly with the same identity is already loaded in the load-from context, <xref:System.Reflection.Assembly.LoadFrom%2A> returns the loaded assembly even if a different path was specified.
 
--   If an assembly is loaded with <xref:System.Reflection.Assembly.LoadFrom%2A>, and later an assembly in the load context attempts to load the same assembly by display name, the load attempt fails. This can occur when an assembly is de-serialized.
+-   An assembly can be loaded in the load-from context even though an assembly with the same identity exists in the load context. Interoperability between the two assemblies will not work, leading to errors such as <xref:System.InvalidCastException>, <xref:System.MissingMethodException>, or other unexpected behavior.
 
--   If an assembly is loaded with <xref:System.Reflection.Assembly.LoadFrom%2A>, and the probing path includes an assembly with the same identity but a different location, an <xref:System.InvalidCastException>, <xref:System.MissingMethodException>, or other unexpected behavior can occur.
+-   Calling <xref:System.Reflection.Assembly.LoadFrom%2A> with a location that's in the probing path will load the assembly in the load context and not in the load-from context.
+
+-   If an assembly file whose identity is goverened by a binding redirect policy is passed to <xref:System.Reflection.Assembly.LoadFrom%2A>, the policy will be applied and the assembly will be loaded from the probing path in the load context.
+
+-   If an assembly is loaded in the load-from context, and later an assembly in the load context attempts to load the same assembly by display name, the load attempt fails. This can occur when an assembly is deserialized.
 
 -   <xref:System.Reflection.Assembly.LoadFrom%2A> demands <xref:System.Security.Permissions.FileIOPermissionAccess.Read?displayProperty=nameWithType> and <xref:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery?displayProperty=nameWithType>, or <xref:System.Net.WebPermission>, on the specified path.
 
