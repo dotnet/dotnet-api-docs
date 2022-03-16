@@ -70,7 +70,11 @@
 
 10. <xref:System.Net.Http.HttpClient.PatchAsync%2A>  
   
- <xref:System.Net.Http.HttpClient> is intended to be instantiated once and re-used throughout the life of an application. Instantiating an HttpClient class for every request will exhaust the number of sockets available under heavy loads. This will result in SocketException errors. Below is an example using HttpClient correctly.  
+ <xref:System.Net.Http.HttpClient> is intended to be instantiated once and re-used throughout the life of an application. Instantiating an HttpClient class for every request will exhaust the number of sockets available under heavy loads. This will result in SocketException errors.
+
+ However, long running applications using <xref:System.Net.Http.HttpClient> as a singleton may run into problems with not picking up DNS changes. A better approach for such cases is to utilize the `HttpClientFactory` introduced in .NET Core 2.1, which handles the lifetime of the underlying <xref:System.Net.Http.HttpMessageHandler>. It will also allow an application to use DI and inject a <xref:System.Net.Http.HttpClient>. 
+
+ Below is an example using HttpClient for a short-lived application that does not have DNS change concerns. For examples on how to use `HttpClientFactory` and DI, [refer to this guide on HttpClientFactory](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#multiple-ways-to-use-ihttpclientfactory).
   
 ```csharp
 public class GoodController : ApiController
@@ -157,7 +161,12 @@ Certain aspects of <xref:System.Net.Http.HttpClient>'s behavior are customizable
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- <xref:System.Net.Http.HttpClient> is intended to be instantiated once and re-used throughout the life of an application. Instantiating an HttpClient class for every request will exhaust the number of sockets available under heavy loads. This will result in SocketException errors. Below is an example using HttpClient correctly.  
+ <xref:System.Net.Http.HttpClient> is intended to be instantiated once and re-used throughout the life of an application. Instantiating an HttpClient class for every request will exhaust the number of sockets available under heavy loads. This will result in SocketException errors.
+
+ However, long running applications using <xref:System.Net.Http.HttpClient> as a singleton may run into problems with not picking up DNS changes. A better approach for such cases is to utilize the `HttpClientFactory` introduced in .NET Core 2.1, which handles the lifetime of the underlying <xref:System.Net.Http.HttpMessageHandler>. It will also allow an application to use DI and inject a <xref:System.Net.Http.HttpClient>. 
+
+ Below is an example using HttpClient for a short-lived application that does not have DNS change concerns. For examples on how to use `HttpClientFactory` and DI, [refer to this guide on HttpClientFactory](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#multiple-ways-to-use-ihttpclientfactory).
+  
   
 ```csharp  
 public class GoodController : ApiController  
