@@ -71,43 +71,42 @@
   <Docs>
     <summary>Represents an asynchronous operation.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[
+      <format type="text/markdown"><![CDATA[  
+   
+## Remarks  
+ The <xref:System.Threading.Tasks.Task> class represents a single operation that does not return a value and that usually executes asynchronously. <xref:System.Threading.Tasks.Task> objects are one of the central components of the  [task-based asynchronous pattern](/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap) first introduced in the .NET Framework 4. Because the work performed by a <xref:System.Threading.Tasks.Task> object typically executes asynchronously on a thread pool thread rather than synchronously on the main application thread, you can use the <xref:System.Threading.Tasks.Task.Status%2A> property, as well as the <xref:System.Threading.Tasks.Task.IsCanceled%2A>, <xref:System.Threading.Tasks.Task.IsCompleted%2A>, and <xref:System.Threading.Tasks.Task.IsFaulted%2A> properties, to determine the   state of a task. Most commonly, a lambda expression is used to specify the work that the task is to perform.  
+  
+ For operations that return values, you use the <xref:System.Threading.Tasks.Task%601> class.  
+  
+ In this section:  
+  
+ [Task instantiation examples](#Instant)   
+ [Creating and executing a task](#Creating)   
+ [Separating task creation and execution](#Separating)   
+ [Waiting for one or more tasks to complete](#WaitingForOne)   
+ [Tasks and culture](#Culture)   
+ [For debugger developers](#Debugger)  
 
-## Remarks
- The <xref:System.Threading.Tasks.Task> class represents a single operation that does not return a value and that usually executes asynchronously. <xref:System.Threading.Tasks.Task> objects are one of the central components of the  [task-based asynchronous pattern](/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap) first introduced in the .NET Framework 4. Because the work performed by a <xref:System.Threading.Tasks.Task> object typically executes asynchronously on a thread pool thread rather than synchronously on the main application thread, you can use the <xref:System.Threading.Tasks.Task.Status%2A> property, as well as the <xref:System.Threading.Tasks.Task.IsCanceled%2A>, <xref:System.Threading.Tasks.Task.IsCompleted%2A>, and <xref:System.Threading.Tasks.Task.IsFaulted%2A> properties, to determine the   state of a task. Most commonly, a lambda expression is used to specify the work that the task is to perform.
-
- For operations that return values, you use the <xref:System.Threading.Tasks.Task%601> class.
-
- In this section:
-
- [Task instantiation examples](#Instant)
- [Creating and executing a task](#Creating)
- [Separating task creation and execution](#Separating)
- [Waiting for one or more tasks to complete](#WaitingForOne)
- [Tasks and culture](#Culture)
- [For debugger developers](#Debugger)
-
- <a name="Instant"></a>
-## Task instantiation
- The following example creates and executes four tasks. Three tasks execute an <xref:System.Action%601> delegate named `action`, which accepts an argument of type <xref:System.Object>. A fourth task executes a lambda expression (an <xref:System.Action> delegate) that is defined inline in the call to the task creation method. Each task is instantiated and run in a different way:
-
--   Task `t1` is instantiated by calling a Task class constructor, but is started by calling its <xref:System.Threading.Tasks.Task.Start> method only after task `t2` has started.
-
--   Task `t2` is instantiated and started in a single method call by calling the <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%29?displayProperty=nameWithType> method.
-
--   Task `t3` is instantiated and started in a single method call by calling the <xref:System.Threading.Tasks.Task.Run%28System.Action%29> method.
-
--   Task `t4` is executed synchronously on the main thread by calling the <xref:System.Threading.Tasks.Task.RunSynchronously> method.
-
- Because task `t4` executes synchronously, it executes on the main application thread. The remaining tasks execute asynchronously typically on one or more thread pool threads.
-
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.tasks.task/cs/startnew.cs" id="Snippet01":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task/vb/startnew.vb" id="Snippet01":::
-
-<a name="Creating"></a>
-## Creating and executing a task
-
-<xref:System.Threading.Tasks.Task> instances may be created in a variety of ways. The most common approach, which is available starting with the .NET Framework 4.5, is to call the static <xref:System.Threading.Tasks.Task.Run%2A> method. The <xref:System.Threading.Tasks.Task.Run%2A> method provides a simple way to start a task using default values and without requiring additional parameters. The following example uses the <xref:System.Threading.Tasks.Task.Run%28System.Action%29> method to start a task that loops and then displays the number of loop iterations:  
+ <a name="Instant"></a>     
+## Task instantiation  
+ The following example creates and executes four tasks. Three tasks execute an <xref:System.Action%601> delegate named `action`, which accepts an argument of type <xref:System.Object>. A fourth task executes a lambda expression (an <xref:System.Action> delegate) that is defined inline in the call to the task creation method. Each task is instantiated and run in a different way:  
+  
+- Task `t1` is instantiated by calling a Task class constructor, but is started by calling its <xref:System.Threading.Tasks.Task.Start> method only after task `t2` has started.  
+  
+- Task `t2` is instantiated and started in a single method call by calling the <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%29?displayProperty=nameWithType> method.  
+  
+- Task `t3` is instantiated and started in a single method call by calling the <xref:System.Threading.Tasks.Task.Run%28System.Action%29> method.  
+  
+- Task `t4` is executed synchronously on the main thread by calling the <xref:System.Threading.Tasks.Task.RunSynchronously> method.  
+  
+ Because task `t4` executes synchronously, it executes on the main application thread. The remaining tasks execute asynchronously typically on one or more thread pool threads.  
+  
+ :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Overview/startnew.cs" id="Snippet01":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task/vb/startnew.vb" id="Snippet01"::: 
+    
+<a name="Creating"></a>   
+## Creating and executing a task  
+ <xref:System.Threading.Tasks.Task> instances may be created in a variety of ways. The most common approach, which is available starting with the .NET Framework 4.5, is to call the static <xref:System.Threading.Tasks.Task.Run%2A> method. The <xref:System.Threading.Tasks.Task.Run%2A> method provides a simple way to start a task using default values and without requiring additional parameters. The following example uses the <xref:System.Threading.Tasks.Task.Run%28System.Action%29> method to start a task that loops and then displays the number of loop iterations:  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Overview/run1.cs" id="Snippet6":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task/vb/run1.vb" id="Snippet6":::  
@@ -227,18 +226,17 @@
         <param name="action">The delegate that represents the code to execute in the task.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Task" /> with the specified action.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This constructor should only be used in advanced scenarios where it is required that the creation and starting of the task is separated.
-
- Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.Task.Run%28System.Action%29?displayProperty=nameWithType> or <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%29?displayProperty=nameWithType> method.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This constructor should only be used in advanced scenarios where it is required that the creation and starting of the task is separated.  
+  
+ Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.Task.Run%28System.Action%29?displayProperty=nameWithType> or <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%29?displayProperty=nameWithType> method.  
+  
  If a task with no action is needed just for the consumer of an API to have something to await, a <xref:System.Threading.Tasks.TaskCompletionSource%601> should be used.
-
-## Examples
-
-The following example uses the <xref:System.Threading.Tasks.Task.%23ctor%28System.Action%29> constructor to create tasks that retrieve the filenames in specified directories. All tasks write the file names to a single <xref:System.Collections.Concurrent.ConcurrentBag%601> object. The example then calls the <xref:System.Threading.Tasks.Task.WaitAll%28System.Threading.Tasks.Task%5B%5D%29> method to ensure that all tasks have completed, and then displays a count of the total number of file names written to the <xref:System.Collections.Concurrent.ConcurrentBag%601> object.  
+  
+## Examples  
+ The following example uses the <xref:System.Threading.Tasks.Task.%23ctor%28System.Action%29> constructor to create tasks that retrieve the filenames in specified directories. All tasks write the file names to a single <xref:System.Collections.Concurrent.ConcurrentBag%601> object. The example then calls the <xref:System.Threading.Tasks.Task.WaitAll%28System.Threading.Tasks.Task%5B%5D%29> method to ensure that all tasks have completed, and then displays a count of the total number of file names written to the <xref:System.Collections.Concurrent.ConcurrentBag%601> object.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/.ctor/ctor1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.ctor/vb/ctor1.vb" id="Snippet1":::  
@@ -295,16 +293,15 @@ The following example uses the <xref:System.Threading.Tasks.Task.%23ctor%28Syste
         <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that the new  task will observe.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Task" /> with the specified action and <see cref="T:System.Threading.CancellationToken" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.Task.Run%28System.Action%2CSystem.Threading.CancellationToken%29?displayProperty=nameWithType> and <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%2CSystem.Threading.CancellationToken%29?displayProperty=nameWithType> methods. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.Task.Run%28System.Action%2CSystem.Threading.CancellationToken%29?displayProperty=nameWithType> and <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%2CSystem.Threading.CancellationToken%29?displayProperty=nameWithType> methods. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.  
+  
  For more information, see [Task Parallelism (Task Parallel Library)](/dotnet/standard/parallel-programming/task-based-asynchronous-programming) and [Cancellation in Managed Threads](/dotnet/standard/threading/cancellation-in-managed-threads).
-
-## Examples
-
-The following example calls the <xref:System.Threading.Tasks.Task.%23ctor%28System.Action%2CSystem.Threading.CancellationToken%29> constructor to create a task that iterates the files in the C:\Windows\System32 directory. The lambda expression calls the <xref:System.Threading.Tasks.Parallel.ForEach%2A?displayProperty=nameWithType> method to add information about each  file to a <xref:System.Collections.Generic.List%601> object. Each detached nested task invoked by the <xref:System.Threading.Tasks.Parallel.ForEach%2A?displayProperty=nameWithType> loop checks the state of the cancellation token and, if cancellation is requested, calls the <xref:System.Threading.CancellationToken.ThrowIfCancellationRequested%2A?displayProperty=nameWithType> method. The <xref:System.Threading.CancellationToken.ThrowIfCancellationRequested%2A?displayProperty=nameWithType> method throws an <xref:System.OperationCanceledException> exception that is handled in a `catch` block when the calling thread calls the <xref:System.Threading.Tasks.Task.Wait%2A?displayProperty=nameWithType> method.  The <xref:System.Threading.Tasks.Task.Start%2A> method is then called to start the task.  
+  
+## Examples  
+ The following example calls the <xref:System.Threading.Tasks.Task.%23ctor%28System.Action%2CSystem.Threading.CancellationToken%29> constructor to create a task that iterates the files in the C:\Windows\System32 directory. The lambda expression calls the <xref:System.Threading.Tasks.Parallel.ForEach%2A?displayProperty=nameWithType> method to add information about each  file to a <xref:System.Collections.Generic.List%601> object. Each detached nested task invoked by the <xref:System.Threading.Tasks.Parallel.ForEach%2A?displayProperty=nameWithType> loop checks the state of the cancellation token and, if cancellation is requested, calls the <xref:System.Threading.CancellationToken.ThrowIfCancellationRequested%2A?displayProperty=nameWithType> method. The <xref:System.Threading.CancellationToken.ThrowIfCancellationRequested%2A?displayProperty=nameWithType> method throws an <xref:System.OperationCanceledException> exception that is handled in a `catch` block when the calling thread calls the <xref:System.Threading.Tasks.Task.Wait%2A?displayProperty=nameWithType> method.  The <xref:System.Threading.Tasks.Task.Start%2A> method is then called to start the task.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/.ctor/run4.cs" id="Snippet4":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.ctor/vb/run4.vb" id="Snippet4":::  
@@ -356,11 +353,11 @@ The following example calls the <xref:System.Threading.Tasks.Task.%23ctor%28Syst
         <param name="creationOptions">The <see cref="T:System.Threading.Tasks.TaskCreationOptions" /> used to customize the task's behavior.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Task" /> with the specified action and creation options.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%2CSystem.Threading.Tasks.TaskCreationOptions%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%2CSystem.Threading.Tasks.TaskCreationOptions%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="action" /> argument is null.</exception>
@@ -409,14 +406,13 @@ The following example calls the <xref:System.Threading.Tasks.Task.%23ctor%28Syst
         <param name="state">An object representing data to be used by the action.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Task" /> with the specified action and state.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
  Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.
 
-## Examples
-
-The following example defines an array of 6-letter words. Each word is then passed as an argument to the <xref:System.Threading.Tasks.Task.%23ctor%28System.Action%7BSystem.Object%7D%2CSystem.Object%29> constructor, whose <xref:System.Action%601> delegate scrambles the characters in the word, then displays the original word and its scrambled version.  
+## Examples  
+ The following example defines an array of 6-letter words. Each word is then passed as an argument to the <xref:System.Threading.Tasks.Task.%23ctor%28System.Action%7BSystem.Object%7D%2CSystem.Object%29> constructor, whose <xref:System.Action%601> delegate scrambles the characters in the word, then displays the original word and its scrambled version.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/.ctor/startnew3.cs" id="Snippet3":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.ctor/vb/startnew3.vb" id="Snippet3":::  
@@ -470,13 +466,13 @@ The following example defines an array of 6-letter words. Each word is then pass
         <param name="creationOptions">The <see cref="T:System.Threading.Tasks.TaskCreationOptions" /> used to customize the task's behavior.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Task" /> with the specified action and creation options.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.TaskCreationOptions%2CSystem.Threading.Tasks.TaskScheduler%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.
-
- For more information, see [Task Parallelism (Task Parallel Library)](/dotnet/standard/parallel-programming/task-based-asynchronous-programming) and [Task Cancellation](/dotnet/standard/parallel-programming/task-cancellation).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.TaskCreationOptions%2CSystem.Threading.Tasks.TaskScheduler%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.  
+  
+ For more information, see [Task Parallelism (Task Parallel Library)](/dotnet/standard/parallel-programming/task-based-asynchronous-programming) and [Task Cancellation](/dotnet/standard/parallel-programming/task-cancellation).  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> that created <paramref name="cancellationToken" /> has already been disposed.</exception>
@@ -528,11 +524,11 @@ The following example defines an array of 6-letter words. Each word is then pass
         <param name="cancellationToken">The <see cref="P:System.Threading.Tasks.TaskFactory.CancellationToken" /> that the new task will observe.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Task" /> with the specified action, state, and options.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%2CSystem.Threading.CancellationToken%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%2CSystem.Threading.CancellationToken%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> that created <paramref name="cancellationToken" /> has already been disposed.</exception>
@@ -583,11 +579,11 @@ The following example defines an array of 6-letter words. Each word is then pass
         <param name="creationOptions">The <see cref="T:System.Threading.Tasks.TaskCreationOptions" /> used to customize the task's behavior.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Task" /> with the specified action, state, and options.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%2CSystem.Threading.Tasks.TaskCreationOptions%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%2CSystem.Threading.Tasks.TaskCreationOptions%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="action" /> argument is null.</exception>
@@ -640,11 +636,11 @@ The following example defines an array of 6-letter words. Each word is then pass
         <param name="creationOptions">The <see cref="T:System.Threading.Tasks.TaskCreationOptions" /> used to customize the task's behavior.</param>
         <summary>Initializes a new <see cref="T:System.Threading.Tasks.Task" /> with the specified action, state, and options.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.TaskCreationOptions%2CSystem.Threading.Tasks.TaskScheduler%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Rather than calling this constructor, the most common way to instantiate a <xref:System.Threading.Tasks.Task> object and launch a task is by calling the static <xref:System.Threading.Tasks.TaskFactory.StartNew%28System.Action%7BSystem.Object%7D%2CSystem.Object%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.TaskCreationOptions%2CSystem.Threading.Tasks.TaskScheduler%29?displayProperty=nameWithType> method. The only advantage offered by this constructor is that it allows object instantiation to be separated from task invocation.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> that created <paramref name="cancellationToken" /> has already been disposed.</exception>
@@ -743,13 +739,13 @@ To retrieve the object's data, cast it back to the original type.
         <summary>Gets a task that has already completed successfully.</summary>
         <value>The successfully completed task.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This property returns a task whose <xref:System.Threading.Tasks.Task.Status%2A> property is set to <xref:System.Threading.Tasks.TaskStatus.RanToCompletion>. To create a task that returns a value and runs to completion, call the <xref:System.Threading.Tasks.Task.FromResult%2A> method.
-
- Repeated attempts to retrieve this property value may not always return the same instance.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This property returns a task whose <xref:System.Threading.Tasks.Task.Status%2A> property is set to <xref:System.Threading.Tasks.TaskStatus.RanToCompletion>. To create a task that returns a value and runs to completion, call the <xref:System.Threading.Tasks.Task.FromResult%2A> method.  
+  
+ Repeated attempts to retrieve this property value may not always return the same instance.  
+  
  ]]></format>
         </remarks>
         <altmember cref="M:System.Threading.Tasks.Task.FromResult``1(``0)" />
@@ -869,14 +865,15 @@ When an asynchronous method awaits a <xref:System.Threading.Tasks.Task> directly
         <summary>Creates a continuation that executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.
-
-## Examples
-
-The following example defines a task that populates an array with 100 random date and time values. It uses the <xref:System.Threading.Tasks.Task.ContinueWith%28System.Action%7BSystem.Threading.Tasks.Task%7D%29> method to select the earliest and the latest date values once the array is fully populated.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.  
+  
+   
+  
+## Examples  
+ The following example defines a task that populates an array with 100 random date and time values. It uses the <xref:System.Threading.Tasks.Task.ContinueWith%28System.Action%7BSystem.Threading.Tasks.Task%7D%29> method to select the earliest and the latest date values once the array is fully populated.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/ContinueWith/continuewith1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.continuewith/vb/continuewith1.vb" id="Snippet1":::  
@@ -936,11 +933,11 @@ The following example defines a task that populates an array with 100 random dat
         <summary>Creates a continuation that receives caller-supplied state information and executes when the target <see cref="T:System.Threading.Tasks.Task" /> completes.</summary>
         <returns>A new continuation task.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting early due to cancellation.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting early due to cancellation.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="continuationAction" /> argument is <see langword="null" />.</exception>
@@ -991,11 +988,11 @@ The following example defines a task that populates an array with 100 random dat
         <summary>Creates a continuation that receives a cancellation token and executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> that created the token has already been disposed.</exception>
@@ -1047,57 +1044,57 @@ The following example defines a task that populates an array with 100 random dat
         <summary>Creates a continuation that executes when the target task completes according to the specified <see cref="T:System.Threading.Tasks.TaskContinuationOptions" />.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed. If the continuation criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.
-
-
-
-## Examples
- The following example demonstrates using <xref:System.Threading.Tasks.TaskContinuationOptions> to specify that a continuation task should run synchronously when the antecedent task completes. (If the specified task has already completed by the time <xref:System.Threading.Tasks.Task.ContinueWith%2A> is called, the synchronous continuation will run on the thread calling <xref:System.Threading.Tasks.Task.ContinueWith%2A>.)
-
-```csharp
-
-public class TaskCounter
-{
-   private volatile int _count;
-
-   public void Track(Task t)
-   {
-      if (t == null) throw new ArgumentNullException("t");
-      Interlocked.Increment(ref _count);
-      t.ContinueWith(ct => Interlocked.Decrement(ref _count), TaskContinuationOptions.ExecuteSynchronously);
-   }
-
-   public int NumberOfActiveTasks { get { return _count; } }
-}
-
-```
-
-```vb
-
-Public Class TaskCounter
-   Private _count as Integer
-
-   Public Sub Track(ByVal t as Task)
-      If t is Nothing Then Throw New ArgumentNullException("t")
-      Interlocked.Increment(_count)
-      t.ContinueWith(Sub(ct)
-                        Interlocked.Decrement(_count)
-                     End Sub,
-                     TaskContinuationOptions.ExecuteSynchronously)
-   End Sub
-
-   Public ReadOnly Property NumberOfActiveTasks As Integer
-      Get
-         Return _count
-      End Get
-   End Property
-End Class
-
-```
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed. If the continuation criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.  
+  
+   
+  
+## Examples  
+ The following example demonstrates using <xref:System.Threading.Tasks.TaskContinuationOptions> to specify that a continuation task should run synchronously when the antecedent task completes. (If the specified task has already completed by the time <xref:System.Threading.Tasks.Task.ContinueWith%2A> is called, the synchronous continuation will run on the thread calling <xref:System.Threading.Tasks.Task.ContinueWith%2A>.)  
+  
+```csharp  
+  
+public class TaskCounter  
+{  
+   private volatile int _count;  
+  
+   public void Track(Task t)  
+   {  
+      if (t == null) throw new ArgumentNullException("t");  
+      Interlocked.Increment(ref _count);  
+      t.ContinueWith(ct => Interlocked.Decrement(ref _count), TaskContinuationOptions.ExecuteSynchronously);  
+   }  
+  
+   public int NumberOfActiveTasks { get { return _count; } }  
+}  
+  
+```  
+  
+```vb  
+  
+Public Class TaskCounter  
+   Private _count as Integer  
+  
+   Public Sub Track(ByVal t as Task)  
+      If t is Nothing Then Throw New ArgumentNullException("t")  
+      Interlocked.Increment(_count)  
+      t.ContinueWith(Sub(ct)  
+                        Interlocked.Decrement(_count)  
+                     End Sub,  
+                     TaskContinuationOptions.ExecuteSynchronously)  
+   End Sub  
+  
+   Public ReadOnly Property NumberOfActiveTasks As Integer  
+      Get  
+         Return _count  
+      End Get  
+   End Property  
+End Class  
+  
+```  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="continuationAction" /> argument is null.</exception>
@@ -1149,18 +1146,18 @@ End Class
         <summary>Creates a continuation that executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes. The continuation uses a specified scheduler.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="continuationAction" /> argument is <see langword="null" />.
-
- -or-
-
+        <exception cref="T:System.ArgumentNullException">The <paramref name="continuationAction" /> argument is <see langword="null" />.  
+  
+ -or-  
+  
  The <paramref name="scheduler" /> argument is null.</exception>
       </Docs>
     </Member>
@@ -1212,11 +1209,11 @@ End Class
         <summary>Creates a continuation that receives caller-supplied state information and a cancellation token and that executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="continuationAction" /> argument is <see langword="null" />.</exception>
@@ -1271,11 +1268,11 @@ End Class
         <summary>Creates a continuation that receives caller-supplied state information and executes when the target <see cref="T:System.Threading.Tasks.Task" /> completes. The continuation executes based on a set of specified conditions.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed. If the continuation criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed. If the continuation criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="continuationAction" /> argument is <see langword="null" />.</exception>
@@ -1330,11 +1327,11 @@ End Class
         <summary>Creates a continuation that receives caller-supplied state information and executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes. The continuation uses a specified scheduler.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="scheduler" /> argument is <see langword="null" />.</exception>
@@ -1389,59 +1386,59 @@ End Class
         <summary>Creates a continuation that executes when the target task competes according to the specified <see cref="T:System.Threading.Tasks.TaskContinuationOptions" />. The continuation receives a cancellation token and uses a specified scheduler.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed. If the criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.
-
-
-
-## Examples
- The following is an example of using ContinueWith to run work both in the background and on the user interface threads.
-
-```csharp
-
-private void Button1_Click(object sender, EventArgs e)
-{
-   var backgroundScheduler = TaskScheduler.Default;
-   var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-   Task.Factory.StartNew(delegate { DoBackgroundComputation(); },
-                         backgroundScheduler).
-   ContinueWith(delegate { UpdateUI(); }, uiScheduler).
-                ContinueWith(delegate { DoAnotherBackgroundComputation(); },
-                             backgroundScheduler).
-                ContinueWith(delegate { UpdateUIAgain(); }, uiScheduler);
-}
-
-```
-
-```vb
-
-Private Sub Button1_Click(ByVal sender As System.Object,
-                          ByVal e As System.EventArgs) Handles Button1.Click
-   Dim backgroundScheduler = TaskScheduler.Default
-   Dim uiScheduler = TaskScheduler.FromCurrentSynchronizationContext()
-
-   Task.Factory.StartNew(Sub()
-                           DoBackgroundComputation()
-                         End Sub, backgroundScheduler).ContinueWith(Sub(t)
-                            UpdateUI()
-                         End Sub, uiScheduler).ContinueWith(Sub(t)
-                            DoAnotherBackgroundComputation()
-                         End Sub, backgroundScheduler).ContinueWith(Sub(t)
-                            UpdateUIAgain()
-                         End Sub, uiScheduler)
-End Sub
-
-```
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed. If the criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.  
+  
+   
+  
+## Examples  
+ The following is an example of using ContinueWith to run work both in the background and on the user interface threads.  
+  
+```csharp  
+  
+private void Button1_Click(object sender, EventArgs e)  
+{  
+   var backgroundScheduler = TaskScheduler.Default;  
+   var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();  
+   Task.Factory.StartNew(delegate { DoBackgroundComputation(); },  
+                         backgroundScheduler).  
+   ContinueWith(delegate { UpdateUI(); }, uiScheduler).  
+                ContinueWith(delegate { DoAnotherBackgroundComputation(); },  
+                             backgroundScheduler).  
+                ContinueWith(delegate { UpdateUIAgain(); }, uiScheduler);  
+}  
+  
+```  
+  
+```vb  
+  
+Private Sub Button1_Click(ByVal sender As System.Object,   
+                          ByVal e As System.EventArgs) Handles Button1.Click  
+   Dim backgroundScheduler = TaskScheduler.Default  
+   Dim uiScheduler = TaskScheduler.FromCurrentSynchronizationContext()  
+  
+   Task.Factory.StartNew(Sub()  
+                           DoBackgroundComputation()  
+                         End Sub, backgroundScheduler).ContinueWith(Sub(t)  
+                            UpdateUI()  
+                         End Sub, uiScheduler).ContinueWith(Sub(t)  
+                            DoAnotherBackgroundComputation()  
+                         End Sub, backgroundScheduler).ContinueWith(Sub(t)  
+                            UpdateUIAgain()  
+                         End Sub, uiScheduler)  
+End Sub  
+  
+```  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> that created the token has already been disposed.</exception>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="continuationAction" /> argument is null.
-
- -or-
-
+        <exception cref="T:System.ArgumentNullException">The <paramref name="continuationAction" /> argument is null.  
+  
+ -or-  
+  
  The <paramref name="scheduler" /> argument is null.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="continuationOptions" /> argument specifies an invalid value for <see cref="T:System.Threading.Tasks.TaskContinuationOptions" />.</exception>
       </Docs>
@@ -1498,11 +1495,11 @@ End Sub
         <summary>Creates a continuation that receives caller-supplied state information and a cancellation token and that executes when the target <see cref="T:System.Threading.Tasks.Task" /> completes. The continuation executes based on a set of specified conditions and uses a specified scheduler.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has  completed. If the criteria specified through the `continuationOptions` parameter  are not met, the continuation task will be canceled instead of scheduled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has  completed. If the criteria specified through the `continuationOptions` parameter  are not met, the continuation task will be canceled instead of scheduled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="scheduler" /> argument is <see langword="null" />.</exception>
@@ -1557,14 +1554,15 @@ End Sub
         <summary>Creates a continuation that executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task`1" /> completes and returns a value.</summary>
         <returns>A new continuation task.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.
-
-## Examples
-
-The following example shows how to use the ContinueWith method:  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.  
+  
+   
+  
+## Examples  
+ The following example shows how to use the ContinueWith method:  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Overview/continuationsimple.cs" id="Snippet03":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task/vb/continuationsimple.vb" id="Snippet03":::  
@@ -1625,11 +1623,11 @@ The following example shows how to use the ContinueWith method:
         <summary>Creates a continuation that receives caller-supplied state information and executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes and returns a value.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="continuationFunction" /> argument is <see langword="null" />.</exception>
@@ -1684,17 +1682,17 @@ The following example shows how to use the ContinueWith method:
         <summary>Creates a continuation that executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes and returns a value. The continuation receives a cancellation token.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
-        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.
-
- -or-
-
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.  
+  
+ -or-  
+  
  The <see cref="T:System.Threading.CancellationTokenSource" /> that created the token has already been disposed.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="continuationFunction" /> argument is null.</exception>
       </Docs>
@@ -1748,11 +1746,11 @@ The following example shows how to use the ContinueWith method:
         <summary>Creates a continuation that executes according to the specified continuation options and returns a value.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed. If the continuation criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed. If the continuation criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
@@ -1809,18 +1807,18 @@ The following example shows how to use the ContinueWith method:
         <summary>Creates a continuation that executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes and returns a value. The continuation uses a specified scheduler.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed, whether it completes due to running to completion successfully, faulting due to an unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="continuationFunction" /> argument is null.
-
- -or-
-
+        <exception cref="T:System.ArgumentNullException">The <paramref name="continuationFunction" /> argument is null.  
+  
+ -or-  
+  
  The <paramref name="scheduler" /> argument is null.</exception>
       </Docs>
     </Member>
@@ -1876,11 +1874,11 @@ The following example shows how to use the ContinueWith method:
         <summary>Creates a continuation that executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes and returns a value. The continuation receives caller-supplied state information and a cancellation token.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="continuationFunction" /> argument is <see langword="null" />.</exception>
@@ -1939,11 +1937,11 @@ The following example shows how to use the ContinueWith method:
         <summary>Creates a continuation that executes based on the specified task continuation options when the target <see cref="T:System.Threading.Tasks.Task" /> completes. The continuation receives caller-supplied state information.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed. If the continuation criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed. If the continuation criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="continuationFunction" /> argument is <see langword="null" />.</exception>
@@ -2002,11 +2000,11 @@ The following example shows how to use the ContinueWith method:
         <summary>Creates a continuation that executes asynchronously when the target <see cref="T:System.Threading.Tasks.Task" /> completes. The continuation receives caller-supplied state information and uses a specified scheduler.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has  completed, whether it completes due to running to completion successfully, faulting due to an  unhandled exception, or exiting out early due to being canceled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="scheduler" /> argument is <see langword="null" />.</exception>
@@ -2065,29 +2063,30 @@ The following example shows how to use the ContinueWith method:
         <summary>Creates a continuation that executes according to the specified continuation options and returns a value. The continuation is passed a cancellation token and uses a specified scheduler.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed. If the criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.
-
-## Examples
-
-The following example shows how to use the ContinueWith method with continuation options:  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed. If the criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.  
+  
+   
+  
+## Examples  
+ The following example shows how to use the ContinueWith method with continuation options:  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Overview/continuationoptions.cs" id="Snippet04":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task/vb/continuationoptions.vb" id="Snippet04":::  
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.
-
- -or-
-
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.  
+  
+ -or-  
+  
  The <see cref="T:System.Threading.CancellationTokenSource" /> that created the token has already been disposed.</exception>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="continuationFunction" /> argument is null.
-
- -or-
-
+        <exception cref="T:System.ArgumentNullException">The <paramref name="continuationFunction" /> argument is null.  
+  
+ -or-  
+  
  The <paramref name="scheduler" /> argument is null.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="continuationOptions" /> argument specifies an invalid value for <see cref="T:System.Threading.Tasks.TaskContinuationOptions" />.</exception>
       </Docs>
@@ -2148,11 +2147,11 @@ The following example shows how to use the ContinueWith method with continuation
         <summary>Creates a continuation that executes based on the specified task continuation options when the target <see cref="T:System.Threading.Tasks.Task" /> completes and returns a value. The continuation receives caller-supplied state information and a cancellation token and uses the specified scheduler.</summary>
         <returns>A new continuation <see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has  completed. If the criteria specified through the `continuationOptions` parameter  are not met, the continuation task will be canceled instead of scheduled.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has  completed. If the criteria specified through the `continuationOptions` parameter  are not met, the continuation task will be canceled instead of scheduled.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="scheduler" /> argument is <see langword="null" />.</exception>
@@ -2240,13 +2239,13 @@ The following example shows how to use the ContinueWith method with continuation
         <summary>Returns the ID of the currently executing <see cref="T:System.Threading.Tasks.Task" />.</summary>
         <value>An integer that was assigned by the system to the currently-executing task.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- <xref:System.Threading.Tasks.Task.CurrentId%2A> is a `static` (`Shared` in Visual Basic) property that is used to get the identifier of the currently executing task from the code that the task is executing. It differs from the <xref:System.Threading.Tasks.Task.Id%2A> property, which returns the identifier of a particular <xref:System.Threading.Tasks.Task> instance. If you attempt to retrieve the <xref:System.Threading.Tasks.Task.CurrentId%2A> value from outside the code that a task is executing, the property returns `null`.
-
- Note that although collisions are very rare, task identifiers are not guaranteed to be unique.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <xref:System.Threading.Tasks.Task.CurrentId%2A> is a `static` (`Shared` in Visual Basic) property that is used to get the identifier of the currently executing task from the code that the task is executing. It differs from the <xref:System.Threading.Tasks.Task.Id%2A> property, which returns the identifier of a particular <xref:System.Threading.Tasks.Task> instance. If you attempt to retrieve the <xref:System.Threading.Tasks.Task.CurrentId%2A> value from outside the code that a task is executing, the property returns `null`.  
+  
+ Note that although collisions are very rare, task identifiers are not guaranteed to be unique.  
+  
  ]]></format>
         </remarks>
         <altmember cref="P:System.Threading.Tasks.Task.Id" />
@@ -2305,28 +2304,29 @@ The following example shows how to use the ContinueWith method with continuation
         <summary>Creates a task that completes after a specified number of milliseconds.</summary>
         <returns>A task that represents the time delay.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.Threading.Tasks.Task.Delay%2A> method is typically used to delay the operation of all or part of a task for a specified time interval. Most commonly, the time delay is introduced:
-
--   At the beginning of the task, as the following example shows.
-
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.tasks.task.delay/cs/delay5.cs" id="Snippet5":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay5.vb" id="Snippet5":::
-
--   Sometime while the task is executing. In this case, the call to the <xref:System.Threading.Tasks.Task.Delay%2A> method executes as a child task within a task, as the following example shows. Note that since the task that calls the <xref:System.Threading.Tasks.Task.Delay%2A> method executes asynchronously, the parent task must wait for it to complete by using the `await` keyword.
-
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.tasks.task.delay/cs/delay5.cs" id="Snippet7":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay5.vb" id="Snippet7":::
-
- After the specified time delay, the task is completed in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.
-
- This method depends on the system clock. This means that the time delay will approximately equal the resolution of the system clock if the `millisecondsDelay` argument is less than the resolution of the system clock, which is approximately 15 milliseconds on Windows systems.
-
-## Examples
-
-The following example shows a simple use of the <xref:System.Threading.Tasks.Task.Delay%2A> method.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Threading.Tasks.Task.Delay%2A> method is typically used to delay the operation of all or part of a task for a specified time interval. Most commonly, the time delay is introduced:  
+  
+-   At the beginning of the task, as the following example shows.  
+  
+     :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Delay/delay5.cs" id="Snippet5":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay5.vb" id="Snippet5":::  
+  
+-   Sometime while the task is executing. In this case, the call to the <xref:System.Threading.Tasks.Task.Delay%2A> method executes as a child task within a task, as the following example shows. Note that since the task that calls the <xref:System.Threading.Tasks.Task.Delay%2A> method executes asynchronously, the parent task must wait for it to complete by using the `await` keyword.  
+  
+     :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Delay/delay5.cs" id="Snippet7":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay5.vb" id="Snippet7":::  
+  
+ After the specified time delay, the task is completed in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.  
+  
+ This method depends on the system clock. This means that the time delay will approximately equal the resolution of the system clock if the `millisecondsDelay` argument is less than the resolution of the system clock, which is approximately 15 milliseconds on Windows systems.  
+  
+   
+  
+## Examples  
+ The following example shows a simple use of the <xref:System.Threading.Tasks.Task.Delay%2A> method.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Delay/delay1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay1.vb" id="Snippet1":::  
@@ -2379,18 +2379,19 @@ The following example shows a simple use of the <xref:System.Threading.Tasks.Tas
         <summary>Creates a task that completes after a specified time interval.</summary>
         <returns>A task that represents the time delay.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- After the specified time delay, the task is completed in <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.
-
- For usage scenarios and additional examples, see the documentation for the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> overload.
-
- This method depends on the system clock. This means that the time delay will approximately equal the resolution of the system clock if the `delay` argument is less than the resolution of the system clock, which is approximately 15 milliseconds on Windows systems.
-
-## Examples
-
-The following example shows a simple use of the <xref:System.Threading.Tasks.Task.Delay%2A> method.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ After the specified time delay, the task is completed in <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.  
+  
+ For usage scenarios and additional examples, see the documentation for the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> overload.  
+  
+ This method depends on the system clock. This means that the time delay will approximately equal the resolution of the system clock if the `delay` argument is less than the resolution of the system clock, which is approximately 15 milliseconds on Windows systems.  
+  
+   
+  
+## Examples  
+ The following example shows a simple use of the <xref:System.Threading.Tasks.Task.Delay%2A> method.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Delay/delay2.cs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay2.vb" id="Snippet2":::  
@@ -2398,10 +2399,10 @@ The following example shows a simple use of the <xref:System.Threading.Tasks.Tas
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="delay" /> represents a negative time interval other than <see langword="TimeSpan.FromMilliseconds(-1)" />.
-
- -or-
-
+          <paramref name="delay" /> represents a negative time interval other than <see langword="TimeSpan.FromMilliseconds(-1)" />.  
+  
+ -or-  
+  
  The <paramref name="delay" /> argument's <see cref="P:System.TimeSpan.TotalMilliseconds" /> property is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
       </Docs>
     </Member>
@@ -2450,18 +2451,19 @@ The following example shows a simple use of the <xref:System.Threading.Tasks.Tas
         <summary>Creates a cancellable task that completes after a specified number of milliseconds.</summary>
         <returns>A task that represents the time delay.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- If the cancellation token is signaled before the specified time delay, a <xref:System.Threading.Tasks.TaskCanceledException> exception results, and the task is completed in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.  Otherwise, the task is completed in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state once the specified time delay has elapsed.
-
- For usage scenarios and additional examples, see the documentation for the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> overload.
-
- This method depends on the system clock. This means that the time delay will approximately equal the resolution of the system clock if the `millisecondsDelay` argument is less than the resolution of the system clock, which is approximately 15 milliseconds on Windows systems.
-
-## Examples
-
-The following example launches a task that includes a call to the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%2CSystem.Threading.CancellationToken%29> method with a one second delay. Before the delay interval elapses, the token is cancelled. The output from the example shows that, as a result, a <xref:System.Threading.Tasks.TaskCanceledException> is thrown, and the tasks' <xref:System.Threading.Tasks.Task.Status%2A> property is set to <xref:System.Threading.Tasks.TaskStatus.Canceled>.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If the cancellation token is signaled before the specified time delay, a <xref:System.Threading.Tasks.TaskCanceledException> exception results, and the task is completed in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.  Otherwise, the task is completed in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state once the specified time delay has elapsed.  
+  
+ For usage scenarios and additional examples, see the documentation for the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> overload.  
+  
+ This method depends on the system clock. This means that the time delay will approximately equal the resolution of the system clock if the `millisecondsDelay` argument is less than the resolution of the system clock, which is approximately 15 milliseconds on Windows systems.  
+  
+   
+  
+## Examples  
+ The following example launches a task that includes a call to the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%2CSystem.Threading.CancellationToken%29> method with a one second delay. Before the delay interval elapses, the token is cancelled. The output from the example shows that, as a result, a <xref:System.Threading.Tasks.TaskCanceledException> is thrown, and the tasks' <xref:System.Threading.Tasks.Task.Status%2A> property is set to <xref:System.Threading.Tasks.TaskStatus.Canceled>.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Delay/delay3.cs" id="Snippet3":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay3.vb" id="Snippet3":::  
@@ -2518,18 +2520,19 @@ The following example launches a task that includes a call to the <xref:System.T
         <summary>Creates a cancellable task that completes after a specified time interval.</summary>
         <returns>A task that represents the time delay.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- If the cancellation token is signaled before the specified time delay, a <xref:System.Threading.Tasks.TaskCanceledException> exception results, and the task is completed in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.  Otherwise, the task is completed in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state once the specified time delay has elapsed.
-
- For usage scenarios and additional examples, see the documentation for the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> overload.
-
- This method depends on the system clock. This means that the time delay will approximately equal the resolution of the system clock if the `delay` argument is less than the resolution of the system clock, which is approximately 15 milliseconds on Windows systems.
-
-## Examples
-
-The following example launches a task that includes a call to the <xref:System.Threading.Tasks.Task.Delay%28System.TimeSpan%2CSystem.Threading.CancellationToken%29> method with a 1.5 second delay. Before the delay interval elapses, the token is cancelled. The output from the example shows that, as a result, a <xref:System.Threading.Tasks.TaskCanceledException> is thrown, and the tasks' <xref:System.Threading.Tasks.Task.Status%2A> property is set to <xref:System.Threading.Tasks.TaskStatus.Canceled>.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If the cancellation token is signaled before the specified time delay, a <xref:System.Threading.Tasks.TaskCanceledException> exception results, and the task is completed in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.  Otherwise, the task is completed in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state once the specified time delay has elapsed.  
+  
+ For usage scenarios and additional examples, see the documentation for the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> overload.  
+  
+ This method depends on the system clock. This means that the time delay will approximately equal the resolution of the system clock if the `delay` argument is less than the resolution of the system clock, which is approximately 15 milliseconds on Windows systems.  
+  
+   
+  
+## Examples  
+ The following example launches a task that includes a call to the <xref:System.Threading.Tasks.Task.Delay%28System.TimeSpan%2CSystem.Threading.CancellationToken%29> method with a 1.5 second delay. Before the delay interval elapses, the token is cancelled. The output from the example shows that, as a result, a <xref:System.Threading.Tasks.TaskCanceledException> is thrown, and the tasks' <xref:System.Threading.Tasks.Task.Status%2A> property is set to <xref:System.Threading.Tasks.TaskStatus.Canceled>.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Delay/delay4.cs" id="Snippet4":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay4.vb" id="Snippet4":::  
@@ -2543,10 +2546,10 @@ Task t Status: RanToCompletion, Result: 42
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="delay" /> represents a negative time interval other than <see langword="TimeSpan.FromMilliseconds(-1)" />.
-
- -or-
-
+          <paramref name="delay" /> represents a negative time interval other than <see langword="TimeSpan.FromMilliseconds(-1)" />.  
+  
+ -or-  
+  
  The <paramref name="delay" /> argument's <see cref="P:System.TimeSpan.TotalMilliseconds" /> property is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">The task has been canceled.</exception>
         <exception cref="T:System.ObjectDisposedException">The provided <paramref name="cancellationToken" /> has already been disposed.</exception>
@@ -2602,11 +2605,11 @@ Task t Status: RanToCompletion, Result: 42
       <Docs>
         <summary>Releases all resources used by the current instance of the <see cref="T:System.Threading.Tasks.Task" /> class.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.Threading.Tasks.Task> class implements the <xref:System.IDisposable> interface because internally it uses resources that also implement <xref:System.IDisposable>. However, particularly if your app targets the .NET Framework 4.5 or later, there is no need to call <xref:System.Threading.Tasks.Task.Dispose%2A> unless performance or scalability testing indicates that, based on your usage patterns, your app's performance would be improved by disposing of tasks. For more information, see [Do I need to dispose of Tasks?](https://devblogs.microsoft.com/pfxteam/do-i-need-to-dispose-of-tasks/) in the Parallel Programming with .NET blog.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Threading.Tasks.Task> class implements the <xref:System.IDisposable> interface because internally it uses resources that also implement <xref:System.IDisposable>. However, particularly if your app targets the .NET Framework 4.5 or later, there is no need to call <xref:System.Threading.Tasks.Task.Dispose%2A> unless performance or scalability testing indicates that, based on your usage patterns, your app's performance would be improved by disposing of tasks. For more information, see [Do I need to dispose of Tasks?](https://devblogs.microsoft.com/pfxteam/do-i-need-to-dispose-of-tasks/) in the Parallel Programming with .NET blog.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The task is not in one of the final states: <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" />, <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" />, or <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" />.</exception>
@@ -2652,11 +2655,11 @@ Task t Status: RanToCompletion, Result: 42
         <param name="disposing">A Boolean value that indicates whether this method is being called due to a call to <see cref="M:System.Threading.Tasks.Task.Dispose" />.</param>
         <summary>Disposes the <see cref="T:System.Threading.Tasks.Task" />, releasing all of its unmanaged resources.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.Threading.Tasks.Task> class implements the <xref:System.IDisposable> interface because internally it uses resources that also implement <xref:System.IDisposable>. However, particularly if your app targets the .NET Framework 4.5 or later, there is no need to call <xref:System.Threading.Tasks.Task.Dispose%2A> unless performance or scalability testing indicates that, based on your usage patterns, your app's performance would be improved by disposing of tasks. For more information, see [Do I need to dispose of Tasks?](https://devblogs.microsoft.com/pfxteam/do-i-need-to-dispose-of-tasks/) in the Parallel Programming with .NET blog.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Threading.Tasks.Task> class implements the <xref:System.IDisposable> interface because internally it uses resources that also implement <xref:System.IDisposable>. However, particularly if your app targets the .NET Framework 4.5 or later, there is no need to call <xref:System.Threading.Tasks.Task.Dispose%2A> unless performance or scalability testing indicates that, based on your usage patterns, your app's performance would be improved by disposing of tasks. For more information, see [Do I need to dispose of Tasks?](https://devblogs.microsoft.com/pfxteam/do-i-need-to-dispose-of-tasks/) in the Parallel Programming with .NET blog.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The task is not in one of the final states: <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" />, <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" />, or <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" />.</exception>
@@ -2703,11 +2706,11 @@ Task t Status: RanToCompletion, Result: 42
         <summary>Gets the <see cref="T:System.AggregateException" /> that caused the <see cref="T:System.Threading.Tasks.Task" /> to end prematurely. If the <see cref="T:System.Threading.Tasks.Task" /> completed successfully or has not yet thrown any exceptions, this will return <see langword="null" />.</summary>
         <value>The <see cref="T:System.AggregateException" /> that caused the <see cref="T:System.Threading.Tasks.Task" /> to end prematurely.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Tasks that throw unhandled exceptions store the resulting exception and propagate it wrapped in a <xref:System.AggregateException> in calls to <xref:System.Threading.Tasks.Task.Wait%2A> or in accesses to the <xref:System.Threading.Tasks.Task.Exception%2A> property. On .NET Framework 4.0, any exceptions not observed by the time the task instance is garbage collected will be propagated on the finalizer thread, which crashes the process. On .NET Framework 4.5 and later the default behavior changed so unobserved exceptions are not rethrown from the Finalizer. .NET Core does not rethrow the exception on the Finalizer. For more information and an example, see [Exception Handling (Task Parallel Library)](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Tasks that throw unhandled exceptions store the resulting exception and propagate it wrapped in a <xref:System.AggregateException> in calls to <xref:System.Threading.Tasks.Task.Wait%2A> or in accesses to the <xref:System.Threading.Tasks.Task.Exception%2A> property. On .NET Framework 4.0, any exceptions not observed by the time the task instance is garbage collected will be propagated on the finalizer thread, which crashes the process. On .NET Framework 4.5 and later the default behavior changed so unobserved exceptions are not rethrown from the Finalizer. .NET Core does not rethrow the exception on the Finalizer. For more information and an example, see [Exception Handling (Task Parallel Library)](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).  
+  
  ]]></format>
         </remarks>
       </Docs>
@@ -2751,20 +2754,20 @@ Task t Status: RanToCompletion, Result: 42
         <summary>Provides access to factory methods for creating and configuring <see cref="T:System.Threading.Tasks.Task" /> and <see cref="T:System.Threading.Tasks.Task`1" /> instances.</summary>
         <value>A factory object that can create a variety of <see cref="T:System.Threading.Tasks.Task" /> and <see cref="T:System.Threading.Tasks.Task`1" /> objects.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This property returns a default instance of the <xref:System.Threading.Tasks.TaskFactory> class that is identical to the one created by calling the parameterless <xref:System.Threading.Tasks.TaskFactory.%23ctor?displayProperty=nameWithType> constructor. It has the following property values:
-
-|Property|Value|
-|--------------|-----------|
-|<xref:System.Threading.Tasks.TaskFactory.CancellationToken%2A?displayProperty=nameWithType>|<xref:System.Threading.CancellationToken.None%2A?displayProperty=nameWithType>|
-|<xref:System.Threading.Tasks.TaskFactory.ContinuationOptions%2A?displayProperty=nameWithType>|<xref:System.Threading.Tasks.TaskContinuationOptions.None?displayProperty=nameWithType>|
-|<xref:System.Threading.Tasks.TaskFactory.CreationOptions%2A?displayProperty=nameWithType>|<xref:System.Threading.Tasks.TaskCreationOptions.None?displayProperty=nameWithType>|
-|<xref:System.Threading.Tasks.TaskFactory.Scheduler%2A?displayProperty=nameWithType>|`null`, or <xref:System.Threading.Tasks.TaskScheduler.Current%2A?displayProperty=nameWithType>|
-
- The most common use of this property is to create and start a new task in a single call to the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A?displayProperty=nameWithType> method.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This property returns a default instance of the <xref:System.Threading.Tasks.TaskFactory> class that is identical to the one created by calling the parameterless <xref:System.Threading.Tasks.TaskFactory.%23ctor?displayProperty=nameWithType> constructor. It has the following property values:  
+  
+|Property|Value|  
+|--------------|-----------|  
+|<xref:System.Threading.Tasks.TaskFactory.CancellationToken%2A?displayProperty=nameWithType>|<xref:System.Threading.CancellationToken.None%2A?displayProperty=nameWithType>|  
+|<xref:System.Threading.Tasks.TaskFactory.ContinuationOptions%2A?displayProperty=nameWithType>|<xref:System.Threading.Tasks.TaskContinuationOptions.None?displayProperty=nameWithType>|  
+|<xref:System.Threading.Tasks.TaskFactory.CreationOptions%2A?displayProperty=nameWithType>|<xref:System.Threading.Tasks.TaskCreationOptions.None?displayProperty=nameWithType>|  
+|<xref:System.Threading.Tasks.TaskFactory.Scheduler%2A?displayProperty=nameWithType>|`null`, or <xref:System.Threading.Tasks.TaskScheduler.Current%2A?displayProperty=nameWithType>|  
+  
+ The most common use of this property is to create and start a new task in a single call to the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A?displayProperty=nameWithType> method.  
+  
 > [!NOTE]
 >  Starting with the .NET Framework 4.5, the <xref:System.Threading.Tasks.Task.Run%2A?displayProperty=nameWithType> method provides the easiest way to create a <xref:System.Threading.Tasks.Task> object with default configuration values.  
   
@@ -2914,11 +2917,11 @@ Task t Status: RanToCompletion, Result: 42
         <summary>Creates a <see cref="T:System.Threading.Tasks.Task" /> that has completed with a specified exception.</summary>
         <returns>The faulted task.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This method creates a <xref:System.Threading.Tasks.Task> object whose <xref:System.Threading.Tasks.Task.Status%2A> property is <xref:System.Threading.Tasks.TaskStatus.Faulted> and whose <xref:System.Threading.Tasks.Task.Exception%2A> property contains `exception`. The method is commonly used when you immediately know that the work that a task performs will throw an exception before executing a longer code path. For an example, see the <xref:System.Threading.Tasks.Task.FromException%60%601%28System.Exception%29> overload.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method creates a <xref:System.Threading.Tasks.Task> object whose <xref:System.Threading.Tasks.Task.Status%2A> property is <xref:System.Threading.Tasks.TaskStatus.Faulted> and whose <xref:System.Threading.Tasks.Task.Exception%2A> property contains `exception`. The method is commonly used when you immediately know that the work that a task performs will throw an exception before executing a longer code path. For an example, see the <xref:System.Threading.Tasks.Task.FromException%60%601%28System.Exception%29> overload.  
+  
  ]]></format>
         </remarks>
       </Docs>
@@ -3033,19 +3036,18 @@ Task t Status: RanToCompletion, Result: 42
         <summary>Creates a <see cref="T:System.Threading.Tasks.Task`1" /> that's completed successfully with the specified result.</summary>
         <returns>The successfully completed task.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
+          <format type="text/markdown"><![CDATA[  
+  
 ## Remarks
 
 This method creates a <xref:System.Threading.Tasks.Task%601> object whose <xref:System.Threading.Tasks.Task%601.Result%2A?displayProperty=nameWithType> property is `result` and whose <xref:System.Threading.Tasks.Task.Status%2A> property is <xref:System.Threading.Tasks.TaskStatus.RanToCompletion>. The method is commonly used when the return value of a task is immediately known without executing a longer code path. The example provides an illustration.
 
 To create a `Task` object that does not return a value, retrieve the `Task` object from the <xref:System.Threading.Tasks.Task.CompletedTask%2A> property.
 
-Starting in .NET 6, for some `T` types and some result values, this method may return a cached singleton object rather than allocating a new object.
-
-## Examples
-
-The following example is a command-line utility that calculates the number of bytes in the files in each directory whose name is passed as a command-line argument. Rather than executing a longer code path that instantiates a <xref:System.IO.FileStream> object and retrieves the value of its <xref:System.IO.FileStream.Length%2A?displayProperty=nameWithType> property for each file in the directory, the example simply calls the <xref:System.Threading.Tasks.Task.FromResult%2A> method to create a task whose <xref:System.Threading.Tasks.Task%601.Result%2A?displayProperty=nameWithType> property is zero (0) if a directory has no files.  
+Starting in .NET 6, for some `T` types and some result values, this method may return a cached singleton object rather than allocating a new object. 
+  
+## Examples  
+ The following example is a command-line utility that calculates the number of bytes in the files in each directory whose name is passed as a command-line argument. Rather than executing a longer code path that instantiates a <xref:System.IO.FileStream> object and retrieves the value of its <xref:System.IO.FileStream.Length%2A?displayProperty=nameWithType> property for each file in the directory, the example simply calls the <xref:System.Threading.Tasks.Task.FromResult%2A> method to create a task whose <xref:System.Threading.Tasks.Task%601.Result%2A?displayProperty=nameWithType> property is zero (0) if a directory has no files.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/FromExceptionTResult/fromresult1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.fromresult/vb/fromresult1.vb" id="Snippet1":::  
@@ -3101,11 +3103,11 @@ The following example is a command-line utility that calculates the number of by
         <summary>Gets an awaiter used to await this <see cref="T:System.Threading.Tasks.Task" />.</summary>
         <returns>An awaiter instance.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This method is intended for compiler use rather than for use in application code.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method is intended for compiler use rather than for use in application code.  
+  
  ]]></format>
         </remarks>
       </Docs>
@@ -3149,13 +3151,13 @@ The following example is a command-line utility that calculates the number of by
         <summary>Gets an ID for this <see cref="T:System.Threading.Tasks.Task" /> instance.</summary>
         <value>The identifier that is assigned by the system to this <see cref="T:System.Threading.Tasks.Task" /> instance.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Task IDs are assigned on-demand and do not necessarily represent the order in which task instances are created. Note that although collisions are very rare, task identifiers are not guaranteed to be unique.
-
- To get the task ID of the currently executing task from within code that task is executing, use the <xref:System.Threading.Tasks.Task.CurrentId%2A> property.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Task IDs are assigned on-demand and do not necessarily represent the order in which task instances are created. Note that although collisions are very rare, task identifiers are not guaranteed to be unique.  
+  
+ To get the task ID of the currently executing task from within code that task is executing, use the <xref:System.Threading.Tasks.Task.CurrentId%2A> property.  
+  
  ]]></format>
         </remarks>
         <altmember cref="P:System.Threading.Tasks.Task.CurrentId" />
@@ -3201,20 +3203,20 @@ The following example is a command-line utility that calculates the number of by
         <value>
           <see langword="true" /> if the task has completed due to being canceled; otherwise <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- A <xref:System.Threading.Tasks.Task> will complete in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state under any of the following conditions:
-
--   Its <xref:System.Threading.Tasks.TaskFactory.CancellationToken%2A> was marked for cancellation before the task started executing,
-
--   The task acknowledged the cancellation request on its already signaled <xref:System.Threading.Tasks.TaskFactory.CancellationToken%2A> by throwing an <xref:System.OperationCanceledException> that bears the same <xref:System.Threading.CancellationToken>.
-
--   The task acknowledged the cancellation request on its already signaled <xref:System.Threading.Tasks.TaskFactory.CancellationToken%2A> by calling the <xref:System.Threading.CancellationToken.ThrowIfCancellationRequested%2A> method on the <xref:System.Threading.CancellationToken>.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ A <xref:System.Threading.Tasks.Task> will complete in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state under any of the following conditions:  
+  
+-   Its <xref:System.Threading.Tasks.TaskFactory.CancellationToken%2A> was marked for cancellation before the task started executing,  
+  
+-   The task acknowledged the cancellation request on its already signaled <xref:System.Threading.Tasks.TaskFactory.CancellationToken%2A> by throwing an <xref:System.OperationCanceledException> that bears the same <xref:System.Threading.CancellationToken>.  
+  
+-   The task acknowledged the cancellation request on its already signaled <xref:System.Threading.Tasks.TaskFactory.CancellationToken%2A> by calling the <xref:System.Threading.CancellationToken.ThrowIfCancellationRequested%2A> method on the <xref:System.Threading.CancellationToken>.  
+  
 > [!IMPORTANT]
->  Retrieving the value of the <xref:System.Threading.Tasks.Task.IsCanceled%2A> property does not block the calling thread until the task has completed.
-
+>  Retrieving the value of the <xref:System.Threading.Tasks.Task.IsCanceled%2A> property does not block the calling thread until the task has completed.  
+  
  ]]></format>
         </remarks>
       </Docs>
@@ -3268,13 +3270,13 @@ The following example is a command-line utility that calculates the number of by
         <value>
           <see langword="true" /> if the task has completed (that is, the task is in one of the three final states: <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion" />, <see cref="F:System.Threading.Tasks.TaskStatus.Faulted" />, or <see cref="F:System.Threading.Tasks.TaskStatus.Canceled" />); otherwise, <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+  
 > [!IMPORTANT]
-> Retrieving the value of the <xref:System.Threading.Tasks.Task.IsCompleted%2A?displayProperty=nameWithType> property does not block the calling thread until the task has completed.
-
+> Retrieving the value of the <xref:System.Threading.Tasks.Task.IsCompleted%2A?displayProperty=nameWithType> property does not block the calling thread until the task has completed.  
+  
  ]]></format>
         </remarks>
       </Docs>
@@ -3356,14 +3358,14 @@ The following example is a command-line utility that calculates the number of by
         <value>
           <see langword="true" /> if the task has thrown an unhandled exception; otherwise <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- If <xref:System.Threading.Tasks.Task.IsFaulted%2A> is `true`, the task's <xref:System.Threading.Tasks.Task.Status%2A> is equal to <xref:System.Threading.Tasks.TaskStatus.Faulted>, and its <xref:System.Threading.Tasks.Task.Exception%2A> property will be non-null.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If <xref:System.Threading.Tasks.Task.IsFaulted%2A> is `true`, the task's <xref:System.Threading.Tasks.Task.Status%2A> is equal to <xref:System.Threading.Tasks.TaskStatus.Faulted>, and its <xref:System.Threading.Tasks.Task.Exception%2A> property will be non-null.  
+  
 > [!IMPORTANT]
->  Retrieving the value of the <xref:System.Threading.Tasks.Task.IsFaulted%2A?displayProperty=nameWithType> property does not block the calling thread until the task has completed.
-
+>  Retrieving the value of the <xref:System.Threading.Tasks.Task.IsFaulted%2A?displayProperty=nameWithType> property does not block the calling thread until the task has completed.  
+  
  ]]></format>
         </remarks>
       </Docs>
@@ -3377,11 +3379,11 @@ The following example is a command-line utility that calculates the number of by
       <Docs>
         <summary>Queues the specified work to run on the ThreadPool and returns a task or <see cref="T:System.Threading.Tasks.Task`1" /> handle for that work.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.Threading.Tasks.Task.Run%2A> method provides a set of overloads that make it easy to start a task by using default values. It is a lightweight alternative to the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A> overloads.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Threading.Tasks.Task.Run%2A> method provides a set of overloads that make it easy to start a task by using default values. It is a lightweight alternative to the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A> overloads.  
+  
  ]]></format>
         </remarks>
       </Docs>
@@ -3429,22 +3431,23 @@ The following example is a command-line utility that calculates the number of by
         <summary>Queues the specified work to run on the thread pool and returns a <see cref="T:System.Threading.Tasks.Task" /> object that represents that work.</summary>
         <returns>A task that represents the work queued to execute in the ThreadPool.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.Threading.Tasks.Task.Run%2A> method allows you to create and execute a task in a single method call and is a simpler alternative to the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A> method. It creates a task with the following default values:
-
--   Its cancellation token is <xref:System.Threading.CancellationToken.None%2A?displayProperty=nameWithType>.
-
--   Its <xref:System.Threading.Tasks.Task.CreationOptions%2A> property value is <xref:System.Threading.Tasks.TaskCreationOptions.DenyChildAttach?displayProperty=nameWithType>.
-
--   It uses the default task scheduler.
-
- For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).
-
-## Examples
-
-The following example defines a `ShowThreadInfo` method  that displays the <xref:System.Threading.Thread.ManagedThreadId%2A?displayProperty=nameWithType> of the current thread. It is called directly from the application thread, and is called from the <xref:System.Action> delegate passed to the <xref:System.Threading.Tasks.Task.Run%28System.Action%29> method.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Threading.Tasks.Task.Run%2A> method allows you to create and execute a task in a single method call and is a simpler alternative to the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A> method. It creates a task with the following default values:  
+  
+-   Its cancellation token is <xref:System.Threading.CancellationToken.None%2A?displayProperty=nameWithType>.  
+  
+-   Its <xref:System.Threading.Tasks.Task.CreationOptions%2A> property value is <xref:System.Threading.Tasks.TaskCreationOptions.DenyChildAttach?displayProperty=nameWithType>.  
+  
+-   It uses the default task scheduler.  
+  
+ For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).  
+  
+   
+  
+## Examples  
+ The following example defines a `ShowThreadInfo` method  that displays the <xref:System.Threading.Thread.ManagedThreadId%2A?displayProperty=nameWithType> of the current thread. It is called directly from the application thread, and is called from the <xref:System.Action> delegate passed to the <xref:System.Threading.Tasks.Task.Run%28System.Action%29> method.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/.ctor/Run11.cs" id="Snippet11":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.run/vb/Run11.vb" id="Snippet11":::  
@@ -3513,11 +3516,11 @@ The following example defines a `ShowThreadInfo` method  that displays the <xref
         <summary>Queues the specified work to run on the thread pool and returns a proxy for the  task returned by <paramref name="function" />.</summary>
         <returns>A task that represents a proxy for the task returned by <paramref name="function" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="function" /> parameter was <see langword="null" />.</exception>
@@ -3644,11 +3647,11 @@ The following example defines a `ShowThreadInfo` method  that displays the <xref
         <summary>Queues the specified work to run on the thread pool and returns a proxy for the task returned by <paramref name="function" />. A cancellation token allows the work to be cancelled if it has not yet started.</summary>
         <returns>A task that represents a proxy for the task returned by <paramref name="function" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="function" /> parameter was <see langword="null" />.</exception>
@@ -3706,11 +3709,11 @@ The following example defines a `ShowThreadInfo` method  that displays the <xref
         <summary>Queues the specified work to run on the thread pool and returns a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />. A cancellation token allows the work to be cancelled if it has not yet started.</summary>
         <returns>A <see langword="Task(TResult)" /> that represents a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="function" /> parameter was <see langword="null" />.</exception>
@@ -3843,11 +3846,11 @@ The following example defines a `ShowThreadInfo` method  that displays the <xref
         <summary>Queues the specified work to run on the thread pool and returns a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />.</summary>
         <returns>A <see langword="Task(TResult)" /> that represents a proxy for the <see langword="Task(TResult)" /> returned by <paramref name="function" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="function" /> parameter was <see langword="null" />.</exception>
@@ -4058,13 +4061,13 @@ The following example defines a `ShowThreadInfo` method  that displays the <xref
         <param name="scheduler">The scheduler on which to attempt to run this task inline.</param>
         <summary>Runs the <see cref="T:System.Threading.Tasks.Task" /> synchronously on the <see cref="T:System.Threading.Tasks.TaskScheduler" /> provided.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Tasks executed by calling the <xref:System.Threading.Tasks.Task.RunSynchronously%2A> method are instantiated by calling a <xref:System.Threading.Tasks.Task> or <xref:System.Threading.Tasks.Task%601> class constructor. The task to be run synchronously must be in the <xref:System.Threading.Tasks.TaskStatus.Created> state. A task may be started and run only once. Any attempts to schedule a task a second time results in an exception.
-
- If the target scheduler does not support running this task on the current thread, the task will be scheduled for execution on the scheduler, and the current thread will block until the task has completed execution. Because of this, the calling thread does not need to call a method such as <xref:System.Threading.Tasks.Task.Wait%2A> to ensure that the task has completed execution. For more information on exception handling for task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Tasks executed by calling the <xref:System.Threading.Tasks.Task.RunSynchronously%2A> method are instantiated by calling a <xref:System.Threading.Tasks.Task> or <xref:System.Threading.Tasks.Task%601> class constructor. The task to be run synchronously must be in the <xref:System.Threading.Tasks.TaskStatus.Created> state. A task may be started and run only once. Any attempts to schedule a task a second time results in an exception.  
+  
+ If the target scheduler does not support running this task on the current thread, the task will be scheduled for execution on the scheduler, and the current thread will block until the task has completed execution. Because of this, the calling thread does not need to call a method such as <xref:System.Threading.Tasks.Task.Wait%2A> to ensure that the task has completed execution. For more information on exception handling for task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> instance has been disposed.</exception>
@@ -4189,13 +4192,13 @@ The following example defines a `ShowThreadInfo` method  that displays the <xref
         <param name="scheduler">The <see cref="T:System.Threading.Tasks.TaskScheduler" /> with which to associate and execute this task.</param>
         <summary>Starts the <see cref="T:System.Threading.Tasks.Task" />, scheduling it for execution to the specified <see cref="T:System.Threading.Tasks.TaskScheduler" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- A task may only be started and run only once. Any attempts to schedule a task a second time will result in an exception.
-
- For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ A task may only be started and run only once. Any attempts to schedule a task a second time will result in an exception.  
+  
+ For information on handling exceptions thrown by task operations, see [Exception Handling](/dotnet/standard/parallel-programming/exception-handling-task-parallel-library).  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="scheduler" /> argument is <see langword="null" />.</exception>
@@ -4305,11 +4308,11 @@ The following example defines a `ShowThreadInfo` method  that displays the <xref
         <summary>Gets a <see cref="T:System.Threading.WaitHandle" /> that can be used to wait for the task to complete.</summary>
         <value>A <see cref="T:System.Threading.WaitHandle" /> that can be used to wait for the task to complete.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Using the wait functionality provided by <xref:System.Threading.Tasks.Task.Wait%2A?displayProperty=nameWithType> is preferable to using <xref:System.IAsyncResult.AsyncWaitHandle%2A> for similar functionality. For more information, see the "Waiting on Tasks" section in [Task-based Asynchronous Programming](/dotnet/standard/parallel-programming/task-based-asynchronous-programming) and [Using TPL with Other Asynchronous Patterns](/dotnet/standard/parallel-programming/using-tpl-with-other-asynchronous-patterns).
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Using the wait functionality provided by <xref:System.Threading.Tasks.Task.Wait%2A?displayProperty=nameWithType> is preferable to using <xref:System.IAsyncResult.AsyncWaitHandle%2A> for similar functionality. For more information, see the "Waiting on Tasks" section in [Task-based Asynchronous Programming](/dotnet/standard/parallel-programming/task-based-asynchronous-programming) and [Using TPL with Other Asynchronous Patterns](/dotnet/standard/parallel-programming/using-tpl-with-other-asynchronous-patterns).  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
@@ -4431,10 +4434,10 @@ This member is an explicit interface member implementation. It can be used only 
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
-        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.
-
- -or-
-
+        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.  
+  
+ -or-  
+  
  An exception was thrown during the execution of the task. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains information about the exception or exceptions.</exception>
         <related type="ExternalDocumentation" href="https://devblogs.microsoft.com/pfxteam/task-wait-and-inlining/">Task.Wait and "Inlining"</related>
       </Docs>
@@ -4507,10 +4510,10 @@ This member is an explicit interface member implementation. It can be used only 
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite time-out.</exception>
-        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.
-
- -or-
-
+        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.  
+  
+ -or-  
+  
  An exception was thrown during the execution of the task. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains information about the exception or exceptions.</exception>
       </Docs>
     </Member>
@@ -4556,15 +4559,15 @@ This member is an explicit interface member implementation. It can be used only 
         <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
         <summary>Waits for the <see cref="T:System.Threading.Tasks.Task" /> to complete execution. The wait terminates if a cancellation token is canceled before the task completes.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.Threading.Tasks.Task.Wait%28System.Threading.CancellationToken%29> method creates a cancelable wait; that is, it causes the current thread to wait until one of the following occurs:
-
--   The task completes.
-
--   The cancellation token is canceled. In this case, the call to the <xref:System.Threading.Tasks.Task.Wait%28System.Threading.CancellationToken%29> method throws an <xref:System.OperationCanceledException>.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The <xref:System.Threading.Tasks.Task.Wait%28System.Threading.CancellationToken%29> method creates a cancelable wait; that is, it causes the current thread to wait until one of the following occurs:  
+  
+-   The task completes.  
+  
+-   The cancellation token is canceled. In this case, the call to the <xref:System.Threading.Tasks.Task.Wait%28System.Threading.CancellationToken%29> method throws an <xref:System.OperationCanceledException>.  
+  
 > [!NOTE]
 >  Canceling the `cancellationToken` cancellation token has no effect on the running task unless it has also been passed the cancellation token and is prepared to handle cancellation. Passing the `cancellationToken` object to this method simply allows the wait to be canceled.  
   
@@ -4580,10 +4583,10 @@ This member is an explicit interface member implementation. It can be used only 
         </remarks>
         <exception cref="T:System.OperationCanceledException">The <paramref name="cancellationToken" /> was canceled.</exception>
         <exception cref="T:System.ObjectDisposedException">The task has been disposed.</exception>
-        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.
-
- -or-
-
+        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.  
+  
+ -or-  
+  
  An exception was thrown during the execution of the task. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains information about the exception or exceptions.</exception>
       </Docs>
     </Member>
@@ -4654,15 +4657,15 @@ This member is an explicit interface member implementation. It can be used only 
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents an infinite time-out.
-
- -or-
-
+          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents an infinite time-out.  
+  
+ -or-  
+  
  <paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
-        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.
-
- -or-
-
+        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.  
+  
+ -or-  
+  
  An exception was thrown during the execution of the task. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains information about the exception or exceptions.</exception>
       </Docs>
     </Member>
@@ -4712,27 +4715,26 @@ This member is an explicit interface member implementation. It can be used only 
         <returns>
           <see langword="true" /> if the <see cref="T:System.Threading.Tasks.Task" /> completed execution within the allotted time; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- <xref:System.Threading.Tasks.Task.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> is a synchronization method that causes the calling thread to wait for the current task instance to complete until one of the following occurs:
-
--   The task completes successfully.
-
--   The task itself is canceled or throws an exception. In this case, you handle an <xref:System.AggregateException> exception. The <xref:System.AggregateException.InnerExceptions%2A?displayProperty=nameWithType> property contains details about the exception or exceptions.
-
--   The `cancellationToken` cancellation token is canceled. In this case, the call to the <xref:System.Threading.Tasks.Task.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> method throws an <xref:System.OperationCanceledException>.
-
--   The interval defined by `millisecondsTimeout` elapses. In this case, the current thread resumes execution and the method returns `false`.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <xref:System.Threading.Tasks.Task.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> is a synchronization method that causes the calling thread to wait for the current task instance to complete until one of the following occurs:  
+  
+-   The task completes successfully.  
+  
+-   The task itself is canceled or throws an exception. In this case, you handle an <xref:System.AggregateException> exception. The <xref:System.AggregateException.InnerExceptions%2A?displayProperty=nameWithType> property contains details about the exception or exceptions.  
+  
+-   The `cancellationToken` cancellation token is canceled. In this case, the call to the <xref:System.Threading.Tasks.Task.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> method throws an <xref:System.OperationCanceledException>.  
+  
+-   The interval defined by `millisecondsTimeout` elapses. In this case, the current thread resumes execution and the method returns `false`.  
+  
 > [!NOTE]
->  Canceling the `cancellationToken` cancellation token has no effect on the running task unless it has also been passed the cancellation token and is prepared to handle cancellation. Passing the `cancellationToken` object to this method simply allows the wait to be canceled based on some condition.
-
-
-
-## Examples
-
-The following example calls the <xref:System.Threading.Tasks.Task.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> method to provide both a timeout value and a cancellation token that can end the wait for a task's completion. A new thread is started and executes the `CancelToken` method, which pauses and then calls the <xref:System.Threading.CancellationTokenSource.Cancel%2A?displayProperty=nameWithType> method to cancel the cancellation tokens. A task is then launched and delays for 5 seconds. The <xref:System.Threading.Tasks.Task.Wait%2A> method is then called to wait for the task's completion and is provided both a brief timeout value and a cancellation token.  
+>  Canceling the `cancellationToken` cancellation token has no effect on the running task unless it has also been passed the cancellation token and is prepared to handle cancellation. Passing the `cancellationToken` object to this method simply allows the wait to be canceled based on some condition.  
+  
+   
+  
+## Examples  
+ The following example calls the <xref:System.Threading.Tasks.Task.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> method to provide both a timeout value and a cancellation token that can end the wait for a task's completion. A new thread is started and executes the `CancelToken` method, which pauses and then calls the <xref:System.Threading.CancellationTokenSource.Cancel%2A?displayProperty=nameWithType> method to cancel the cancellation tokens. A task is then launched and delays for 5 seconds. The <xref:System.Threading.Tasks.Task.Wait%2A> method is then called to wait for the task's completion and is provided both a brief timeout value and a cancellation token.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Wait/wait4.cs" id="Snippet4":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.wait/vb/wait4.vb" id="Snippet4":::  
@@ -4745,10 +4747,10 @@ The following example calls the <xref:System.Threading.Tasks.Task.Wait%28System.
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite time-out.</exception>
-        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.
-
- -or-
-
+        <exception cref="T:System.AggregateException">The task was canceled. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains a <see cref="T:System.Threading.Tasks.TaskCanceledException" /> object.  
+  
+ -or-  
+  
  An exception was thrown during the execution of the task. The <see cref="P:System.AggregateException.InnerExceptions" /> collection contains information about the exception or exceptions.</exception>
       </Docs>
     </Member>
@@ -4817,11 +4819,10 @@ The following example calls the <xref:System.Threading.Tasks.Task.Wait%28System.
         <param name="tasks">An array of <see cref="T:System.Threading.Tasks.Task" /> instances on which to wait.</param>
         <summary>Waits for all of the provided <see cref="T:System.Threading.Tasks.Task" /> objects to complete execution.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Examples
-
-The following example starts 10 tasks, each of which is passed an index as a state object. Tasks with an index from two to five throw exceptions. The call to the <xref:System.Threading.Tasks.Task.WaitAll%2A> method wraps all exceptions in an <xref:System.AggregateException> object and propagates it to the calling thread.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ The following example starts 10 tasks, each of which is passed an index as a state object. Tasks with an index from two to five throw exceptions. The call to the <xref:System.Threading.Tasks.Task.WaitAll%2A> method wraps all exceptions in an <xref:System.AggregateException> object and propagates it to the calling thread.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Overview/waitall.cs" id="Snippet02":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task/vb/waitall.vb" id="Snippet02":::  
@@ -4831,10 +4832,10 @@ The following example starts 10 tasks, each of which is passed an index as a sta
         <exception cref="T:System.ObjectDisposedException">One or more of the <see cref="T:System.Threading.Tasks.Task" /> objects in <paramref name="tasks" /> has been disposed.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> argument contains a null element.</exception>
-        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> exception contains an <see cref="T:System.OperationCanceledException" /> exception in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.
-
- -or-
-
+        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> exception contains an <see cref="T:System.OperationCanceledException" /> exception in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.  
+  
+ -or-  
+  
  An exception was thrown during the execution of at least one of the <see cref="T:System.Threading.Tasks.Task" /> instances.</exception>
       </Docs>
     </Member>
@@ -4892,10 +4893,10 @@ The following example starts 10 tasks, each of which is passed an index as a sta
         <remarks>To be added.</remarks>
         <exception cref="T:System.ObjectDisposedException">One or more of the <see cref="T:System.Threading.Tasks.Task" /> objects in <paramref name="tasks" /> has been disposed.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument is <see langword="null" />.</exception>
-        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.
-
- -or-
-
+        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.  
+  
+ -or-  
+  
  An exception was thrown during the execution of at least one of the <see cref="T:System.Threading.Tasks.Task" /> instances.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite time-out.</exception>
@@ -4952,19 +4953,19 @@ The following example starts 10 tasks, each of which is passed an index as a sta
         <param name="cancellationToken">A <see cref="P:System.Threading.Tasks.TaskFactory.CancellationToken" /> to observe while waiting for the tasks to complete.</param>
         <summary>Waits for all of the provided <see cref="T:System.Threading.Tasks.Task" /> objects to complete execution unless the wait is cancelled.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The `cancellationToken` argument is used to cancel the wait operation. Cancellation of the tasks is a distinct operation, and is signaled by the <xref:System.AggregateException> as noted above.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The `cancellationToken` argument is used to cancel the wait operation. Cancellation of the tasks is a distinct operation, and is signaled by the <xref:System.AggregateException> as noted above.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.OperationCanceledException">The <paramref name="cancellationToken" /> was canceled.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument is <see langword="null" />.</exception>
-        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.
-
- -or-
-
+        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.  
+  
+ -or-  
+  
  An exception was thrown during the execution of at least one of the <see cref="T:System.Threading.Tasks.Task" /> instances.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> argument contains a null element.</exception>
         <exception cref="T:System.ObjectDisposedException">One or more of the <see cref="T:System.Threading.Tasks.Task" /> objects in <paramref name="tasks" /> has been disposed.</exception>
@@ -5024,16 +5025,16 @@ The following example starts 10 tasks, each of which is passed an index as a sta
         <remarks>To be added.</remarks>
         <exception cref="T:System.ObjectDisposedException">One or more of the <see cref="T:System.Threading.Tasks.Task" /> objects in <paramref name="tasks" /> has been disposed.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument is <see langword="null" />.</exception>
-        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.
-
- -or-
-
+        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.  
+  
+ -or-  
+  
  An exception was thrown during the execution of at least one of the <see cref="T:System.Threading.Tasks.Task" /> instances.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents an infinite time-out.
-
- -or-
-
+          <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents an infinite time-out.  
+  
+ -or-  
+  
  <paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> argument contains a null element.</exception>
       </Docs>
@@ -5092,19 +5093,19 @@ The following example starts 10 tasks, each of which is passed an index as a sta
         <returns>
           <see langword="true" /> if all of the <see cref="T:System.Threading.Tasks.Task" /> instances completed execution within the allotted time; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The `cancellationToken` argument is used to cancel the wait operation. Cancellation of the tasks is a distinct operation, and is signaled by the <xref:System.AggregateException> noted above.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The `cancellationToken` argument is used to cancel the wait operation. Cancellation of the tasks is a distinct operation, and is signaled by the <xref:System.AggregateException> noted above.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">One or more of the <see cref="T:System.Threading.Tasks.Task" /> objects in <paramref name="tasks" /> has been disposed.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument is <see langword="null" />.</exception>
-        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.
-
- -or-
-
+        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" /> contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.  
+  
+ -or-  
+  
  An exception was thrown during the execution of at least one of the <see cref="T:System.Threading.Tasks.Task" /> instances.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite time-out.</exception>
@@ -5172,11 +5173,10 @@ The following example starts 10 tasks, each of which is passed an index as a sta
         <summary>Waits for any of the provided <see cref="T:System.Threading.Tasks.Task" /> objects to complete execution.</summary>
         <returns>The index of the completed <see cref="T:System.Threading.Tasks.Task" /> object in the <paramref name="tasks" /> array.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Examples
-
-The following example launches five tasks, each of which sleeps for a minimum of 50 milliseconds or a maximum of 1,050 milliseconds. The <xref:System.Threading.Tasks.Task.WaitAny%2A> method then waits for any of the tasks to complete. The example displays the task ID of the task that ended the wait, as well as the current status of all the tasks.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ The following example launches five tasks, each of which sleeps for a minimum of 50 milliseconds or a maximum of 1,050 milliseconds. The <xref:System.Threading.Tasks.Task.WaitAny%2A> method then waits for any of the tasks to complete. The example displays the task ID of the task that ended the wait, as well as the current status of all the tasks.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/WaitAny/WaitAny1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/System.Threading.Tasks.Task.WaitAny/vb/WaitAny1.vb" id="Snippet1":::  
@@ -5338,10 +5338,10 @@ The following example launches five tasks, each of which sleeps for a minimum of
         <remarks>To be added.</remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.Tasks.Task" /> has been disposed.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument is <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">The <see cref="P:System.TimeSpan.TotalMilliseconds" /> property of the <paramref name="timeout" /> argument is a negative number other than -1, which represents an infinite time-out.
-
- -or-
-
+        <exception cref="T:System.ArgumentOutOfRangeException">The <see cref="P:System.TimeSpan.TotalMilliseconds" /> property of the <paramref name="timeout" /> argument is a negative number other than -1, which represents an infinite time-out.  
+  
+ -or-  
+  
  The <see cref="P:System.TimeSpan.TotalMilliseconds" /> property of the <paramref name="timeout" /> argument is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> argument contains a null element.</exception>
       </Docs>
@@ -5561,25 +5561,26 @@ The following example launches five tasks, each of which sleeps for a minimum of
         <summary>Creates a task that will complete when all of the <see cref="T:System.Threading.Tasks.Task" /> objects in an enumerable collection have completed.</summary>
         <returns>A task that represents the completion of all of the supplied tasks.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The overloads of the <xref:System.Threading.Tasks.Task.WhenAll%2A> method that return a <xref:System.Threading.Tasks.Task> object are typically called when you are interested in the status of a set of tasks or in the exceptions thrown by a set of tasks.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The overloads of the <xref:System.Threading.Tasks.Task.WhenAll%2A> method that return a <xref:System.Threading.Tasks.Task> object are typically called when you are interested in the status of a set of tasks or in the exceptions thrown by a set of tasks.  
+  
 > [!NOTE]
->  The call to <xref:System.Threading.Tasks.Task.WhenAll%28System.Collections.Generic.IEnumerable%7BSystem.Threading.Tasks.Task%7D%29> method does not block the calling thread.
-
- If any of the supplied tasks completes in a faulted state, the returned task will also complete in a <xref:System.Threading.Tasks.TaskStatus.Faulted> state,  where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.
-
- If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.
-
- If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.
-
- If the supplied array/enumerable contains no tasks, the returned task will immediately transition to a <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state before it's returned to the caller.
-
-## Examples
-
-The following example creates a set of tasks that ping the URLs in an array. The tasks are stored in a `List<Task>` collection that is passed to the <xref:System.Threading.Tasks.Task.WhenAll%28System.Collections.Generic.IEnumerable%7BSystem.Threading.Tasks.Task%7D%29> method. After the call to the <xref:System.Threading.Tasks.Task.Wait%2A> method ensures that all threads have completed, the example examines the <xref:System.Threading.Tasks.Task.Status%2A?displayProperty=nameWithType> property to determine whether any tasks have faulted.  
+>  The call to <xref:System.Threading.Tasks.Task.WhenAll%28System.Collections.Generic.IEnumerable%7BSystem.Threading.Tasks.Task%7D%29> method does not block the calling thread.  
+  
+ If any of the supplied tasks completes in a faulted state, the returned task will also complete in a <xref:System.Threading.Tasks.TaskStatus.Faulted> state,  where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.  
+  
+ If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.  
+  
+ If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.  
+  
+ If the supplied array/enumerable contains no tasks, the returned task will immediately transition to a <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state before it's returned to the caller.  
+  
+   
+  
+## Examples  
+ The following example creates a set of tasks that ping the URLs in an array. The tasks are stored in a `List<Task>` collection that is passed to the <xref:System.Threading.Tasks.Task.WhenAll%28System.Collections.Generic.IEnumerable%7BSystem.Threading.Tasks.Task%7D%29> method. After the call to the <xref:System.Threading.Tasks.Task.Wait%2A> method ensures that all threads have completed, the example examines the <xref:System.Threading.Tasks.Task.Status%2A?displayProperty=nameWithType> property to determine whether any tasks have faulted.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/WhenAll/WhenAll4.cs" id="Snippet4":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.whenall/vb/WhenAll4.vb" id="Snippet4":::  
@@ -5640,25 +5641,26 @@ The following example creates a set of tasks that ping the URLs in an array. The
         <summary>Creates a task that will complete when all of the <see cref="T:System.Threading.Tasks.Task" /> objects in an array have completed.</summary>
         <returns>A task that represents the completion of all of the supplied tasks.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The overloads of the <xref:System.Threading.Tasks.Task.WhenAll%2A> method that return a <xref:System.Threading.Tasks.Task> object are typically called when you are interested in the status of a set of tasks or in the exceptions thrown by a set of tasks.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The overloads of the <xref:System.Threading.Tasks.Task.WhenAll%2A> method that return a <xref:System.Threading.Tasks.Task> object are typically called when you are interested in the status of a set of tasks or in the exceptions thrown by a set of tasks.  
+  
 > [!NOTE]
->  The call to <xref:System.Threading.Tasks.Task.WhenAll%28System.Threading.Tasks.Task%5B%5D%29> method does not block the calling thread.
-
- If any of the supplied tasks completes in a faulted state, the returned task will also complete in a <xref:System.Threading.Tasks.TaskStatus.Faulted> state, where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.
-
- If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.
-
- If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.
-
- If the supplied array/enumerable contains no tasks, the returned task will immediately transition to a <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state before it's returned to the caller.
-
-## Examples
-
-The following example creates a set of tasks that ping the URLs in an array. The tasks are stored in a `List<Task>` collection that is converted to an array and passed to the <xref:System.Threading.Tasks.Task.WhenAll%28System.Collections.Generic.IEnumerable%7BSystem.Threading.Tasks.Task%7D%29> method. After the call to the <xref:System.Threading.Tasks.Task.Wait%2A> method ensures that all threads have completed, the example examines the <xref:System.Threading.Tasks.Task.Status%2A?displayProperty=nameWithType> property to determine whether any tasks have faulted.  
+>  The call to <xref:System.Threading.Tasks.Task.WhenAll%28System.Threading.Tasks.Task%5B%5D%29> method does not block the calling thread.  
+  
+ If any of the supplied tasks completes in a faulted state, the returned task will also complete in a <xref:System.Threading.Tasks.TaskStatus.Faulted> state, where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.  
+  
+ If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.  
+  
+ If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.  
+  
+ If the supplied array/enumerable contains no tasks, the returned task will immediately transition to a <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state before it's returned to the caller.  
+  
+   
+  
+## Examples  
+ The following example creates a set of tasks that ping the URLs in an array. The tasks are stored in a `List<Task>` collection that is converted to an array and passed to the <xref:System.Threading.Tasks.Task.WhenAll%28System.Collections.Generic.IEnumerable%7BSystem.Threading.Tasks.Task%7D%29> method. After the call to the <xref:System.Threading.Tasks.Task.Wait%2A> method ensures that all threads have completed, the example examines the <xref:System.Threading.Tasks.Task.Status%2A?displayProperty=nameWithType> property to determine whether any tasks have faulted.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/WhenAll/WhenAll3.cs" id="Snippet3":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.whenall/vb/WhenAll3.vb" id="Snippet3":::  
@@ -5716,22 +5718,23 @@ The following example creates a set of tasks that ping the URLs in an array. The
         <summary>Creates a task that will complete when all of the <see cref="T:System.Threading.Tasks.Task`1" /> objects in an enumerable collection have completed.</summary>
         <returns>A task that represents the completion of all of the supplied tasks.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The call to <xref:System.Threading.Tasks.Task.WhenAll%60%601%28System.Collections.Generic.IEnumerable%7BSystem.Threading.Tasks.Task%7B%60%600%7D%7D%29> method does not block the calling thread. However, a call to the returned <xref:System.Threading.Tasks.Task%601.Result%2A> property does block the calling thread.
-
- If any of the supplied tasks completes in a faulted state, the returned task will also complete in a <xref:System.Threading.Tasks.TaskStatus.Faulted> state, where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.
-
- If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.
-
- If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.  The <xref:System.Threading.Tasks.Task%601.Result%2A?displayProperty=nameWithType> property of the returned task will be set to an array containing all of the results of the supplied tasks in the same order as they were provided (e.g. if the input tasks array contained t1, t2, t3, the output task's <xref:System.Threading.Tasks.Task%601.Result%2A?displayProperty=nameWithType> property will return an `TResult[]` where `arr[0] == t1.Result, arr[1] == t2.Result, and arr[2] == t3.Result)`.
-
- If the `tasks` argument contains no tasks, the returned task will immediately transition to a <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state before it's returned to the caller. The returned `TResult[]` will be an array of 0 elements.
-
-## Examples
-
-The following example creates ten tasks, each of which instantiates a random number generator that creates 1,000 random numbers between 1 and 1,000 and computes their mean. The <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> method is used to delay instantiation of the random number generators so that they are not created with identical seed values. The call to the <xref:System.Threading.Tasks.Task.WhenAll%2A> method then returns an <xref:System.Int64> array that contains the mean computed by each task. These are then used to calculate the overall mean.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The call to <xref:System.Threading.Tasks.Task.WhenAll%60%601%28System.Collections.Generic.IEnumerable%7BSystem.Threading.Tasks.Task%7B%60%600%7D%7D%29> method does not block the calling thread. However, a call to the returned <xref:System.Threading.Tasks.Task%601.Result%2A> property does block the calling thread.  
+  
+ If any of the supplied tasks completes in a faulted state, the returned task will also complete in a <xref:System.Threading.Tasks.TaskStatus.Faulted> state, where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.  
+  
+ If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.  
+  
+ If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.  The <xref:System.Threading.Tasks.Task%601.Result%2A?displayProperty=nameWithType> property of the returned task will be set to an array containing all of the results of the supplied tasks in the same order as they were provided (e.g. if the input tasks array contained t1, t2, t3, the output task's <xref:System.Threading.Tasks.Task%601.Result%2A?displayProperty=nameWithType> property will return an `TResult[]` where `arr[0] == t1.Result, arr[1] == t2.Result, and arr[2] == t3.Result)`.  
+  
+ If the `tasks` argument contains no tasks, the returned task will immediately transition to a <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state before it's returned to the caller. The returned `TResult[]` will be an array of 0 elements.  
+  
+   
+  
+## Examples  
+ The following example creates ten tasks, each of which instantiates a random number generator that creates 1,000 random numbers between 1 and 1,000 and computes their mean. The <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> method is used to delay instantiation of the random number generators so that they are not created with identical seed values. The call to the <xref:System.Threading.Tasks.Task.WhenAll%2A> method then returns an <xref:System.Int64> array that contains the mean computed by each task. These are then used to calculate the overall mean.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/WhenAll/whenall1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.whenall/vb/whenall1.vb" id="Snippet1":::  
@@ -5798,22 +5801,23 @@ The following example creates ten tasks, each of which instantiates a random num
         <summary>Creates a task that will complete when all of the <see cref="T:System.Threading.Tasks.Task`1" /> objects in an array have completed.</summary>
         <returns>A task that represents the completion of all of the supplied tasks.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The call to <xref:System.Threading.Tasks.Task.WhenAll%60%601%28System.Threading.Tasks.Task%7B%60%600%7D%5B%5D%29> method does not block the calling thread. However, a call to the returned <xref:System.Threading.Tasks.Task%601.Result%2A> property does block the calling thread.
-
- If any of the supplied tasks completes in a faulted state, the returned task will also complete in a <xref:System.Threading.Tasks.TaskStatus.Faulted> state, where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.
-
- If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.
-
- If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.  The <xref:System.Threading.Tasks.Task%601.Result%2A> of the returned task will be set to an array containing all of the results of the supplied tasks in the same order as they were provided (e.g. if the input tasks array contained t1, t2, t3, the output   task's <xref:System.Threading.Tasks.Task%601.Result%2A> will return an `TResult[]` where `arr[0] == t1.Result, arr[1] == t2.Result, and arr[2] == t3.Result)`.
-
- If the supplied array/enumerable contains no tasks, the returned task will immediately transition to a <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state before it's returned to the caller.  The returned `TResult[]` will be an array of 0 elements.
-
-## Examples
-
-The following example creates ten tasks, each of which instantiates a random number generator that creates 1,000 random numbers between 1 and 1,000 and computes their mean. In this case, the ten individual tasks are stored in a `Task<Int64>` array.  The <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> method is used to delay instantiation of the random number generators so that they are not created with identical seed values. The call to the <xref:System.Threading.Tasks.Task.WhenAll%2A> method then returns an <xref:System.Int64> array that contains the mean computed by each task. These are then used to calculate the overall mean.  
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The call to <xref:System.Threading.Tasks.Task.WhenAll%60%601%28System.Threading.Tasks.Task%7B%60%600%7D%5B%5D%29> method does not block the calling thread. However, a call to the returned <xref:System.Threading.Tasks.Task%601.Result%2A> property does block the calling thread.  
+  
+ If any of the supplied tasks completes in a faulted state, the returned task will also complete in a <xref:System.Threading.Tasks.TaskStatus.Faulted> state, where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.  
+  
+ If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the <xref:System.Threading.Tasks.TaskStatus.Canceled> state.  
+  
+ If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.  The <xref:System.Threading.Tasks.Task%601.Result%2A> of the returned task will be set to an array containing all of the results of the supplied tasks in the same order as they were provided (e.g. if the input tasks array contained t1, t2, t3, the output   task's <xref:System.Threading.Tasks.Task%601.Result%2A> will return an `TResult[]` where `arr[0] == t1.Result, arr[1] == t2.Result, and arr[2] == t3.Result)`.  
+  
+ If the supplied array/enumerable contains no tasks, the returned task will immediately transition to a <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state before it's returned to the caller.  The returned `TResult[]` will be an array of 0 elements.  
+  
+   
+  
+## Examples  
+ The following example creates ten tasks, each of which instantiates a random number generator that creates 1,000 random numbers between 1 and 1,000 and computes their mean. In this case, the ten individual tasks are stored in a `Task<Int64>` array.  The <xref:System.Threading.Tasks.Task.Delay%28System.Int32%29> method is used to delay instantiation of the random number generators so that they are not created with identical seed values. The call to the <xref:System.Threading.Tasks.Task.WhenAll%2A> method then returns an <xref:System.Int64> array that contains the mean computed by each task. These are then used to calculate the overall mean.  
   
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/WhenAll/whenall2.cs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.whenall/vb/whenall2.vb" id="Snippet2":::  
@@ -5877,11 +5881,11 @@ The following example creates ten tasks, each of which instantiates a random num
         <summary>Creates a task that will complete when any of the supplied tasks have completed.</summary>
         <returns>A task that represents the completion of one of the supplied tasks.  The return task's Result is the task that completed.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the `RanToCompletion` state  with its Result set to the first task to complete.  This is true even if the first task to complete ended in the `Canceled` or `Faulted` state.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the `RanToCompletion` state  with its Result set to the first task to complete.  This is true even if the first task to complete ended in the `Canceled` or `Faulted` state.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument was <see langword="null" />.</exception>
@@ -5938,11 +5942,11 @@ The following example creates ten tasks, each of which instantiates a random num
         <summary>Creates a task that will complete when any of the supplied tasks have completed.</summary>
         <returns>A task that represents the completion of one of the supplied tasks.  The return task's Result is the task that completed.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the `RanToCompletion` state   with its `Result` set to the first task to complete.  This is true even if the first task to complete ended in the `Canceled` or `Faulted` state.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the `RanToCompletion` state   with its `Result` set to the first task to complete.  This is true even if the first task to complete ended in the `Canceled` or `Faulted` state.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument was null.</exception>
@@ -6044,11 +6048,11 @@ The returned task will complete when any of the supplied tasks has completed.  T
         <summary>Creates a task that will complete when any of the supplied tasks have completed.</summary>
         <returns>A task that represents the completion of one of the supplied tasks.  The return task's Result is the task that completed.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the RanToCompletion state with its Result set to the first task to complete. This is true even if the first task to complete ended in the Canceled or Faulted state.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the RanToCompletion state with its Result set to the first task to complete. This is true even if the first task to complete ended in the Canceled or Faulted state.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument was <see langword="null" />.</exception>
@@ -6109,11 +6113,11 @@ The returned task will complete when any of the supplied tasks has completed.  T
         <summary>Creates a task that will complete when any of the supplied tasks have completed.</summary>
         <returns>A task that represents the completion of one of the supplied tasks.  The return task's Result is the task that completed.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the RanToCompletion state with its Result set to the first task to complete. This is true even if the first task to complete ended in the Canceled or Faulted state.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the RanToCompletion state with its Result set to the first task to complete. This is true even if the first task to complete ended in the Canceled or Faulted state.  
+  
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument was null.</exception>
@@ -6212,11 +6216,11 @@ The returned task will complete when any of the supplied tasks has completed.  T
         <summary>Creates an awaitable task that asynchronously yields back to the current context when awaited.</summary>
         <returns>A context that, when awaited, will asynchronously transition back into the current context at the time of the await. If the current <see cref="T:System.Threading.SynchronizationContext" /> is non-null, it is treated as the current context. Otherwise, the task scheduler that is associated with the currently executing task is treated as the current context.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- You can use `await Task.Yield();` in an asynchronous method to force the method to complete asynchronously. If there is a current synchronization context (<xref:System.Threading.SynchronizationContext> object), this will post the remainder of the method's execution back to that context. However, the context will decide how to prioritize this work relative to other work that may be pending. The synchronization context that is present on a UI thread in most UI environments will often prioritize work posted to the context higher than input and rendering work. For this reason, do not rely on `await Task.Yield();` to keep a UI responsive.  For more information, see the entry [Useful Abstractions Enabled with ContinueWith](https://devblogs.microsoft.com/pfxteam/useful-abstractions-enabled-with-continuewith/) in the Parallel Programming with .NET blog.
-
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ You can use `await Task.Yield();` in an asynchronous method to force the method to complete asynchronously. If there is a current synchronization context (<xref:System.Threading.SynchronizationContext> object), this will post the remainder of the method's execution back to that context. However, the context will decide how to prioritize this work relative to other work that may be pending. The synchronization context that is present on a UI thread in most UI environments will often prioritize work posted to the context higher than input and rendering work. For this reason, do not rely on `await Task.Yield();` to keep a UI responsive.  For more information, see the entry [Useful Abstractions Enabled with ContinueWith](https://devblogs.microsoft.com/pfxteam/useful-abstractions-enabled-with-continuewith/) in the Parallel Programming with .NET blog.  
+  
  ]]></format>
         </remarks>
       </Docs>
