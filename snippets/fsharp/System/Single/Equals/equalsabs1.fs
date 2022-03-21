@@ -1,4 +1,6 @@
-﻿// <Snippet1>
+module equalsabs1 
+
+// <Snippet1>
 open System
 
 let hasMinimalDifference (value1: float32) (value2: float32) units =
