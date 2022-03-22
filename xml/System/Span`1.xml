@@ -1,5 +1,5 @@
 <Type Name="Span&lt;T&gt;" FullName="System.Span&lt;T&gt;">
-  <TypeSignature Language="C#" Value="public struct Span&lt;T&gt;" />
+  <TypeSignature Language="C#" Value="public readonly ref struct Span&lt;T&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Span`1&lt;T&gt; extends System.ValueType" />
   <TypeSignature Language="DocId" Value="T:System.Span`1" />
   <TypeSignature Language="VB.NET" Value="Public Structure Span(Of T)" />
@@ -11,6 +11,7 @@
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
@@ -24,6 +25,8 @@
     <TypeForwarding From="System.Memory" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
     <TypeForwarding From="System.Memory" FromVersion="6.0.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="System.Memory" FromVersion="7.0.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="System.Memory" FromVersion="4.1.0.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-2.1;netcore-2.2" />
     <TypeForwarding From="System.Memory" FromVersion="4.2.0.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-3.0" />
     <TypeForwarding From="System.Memory" FromVersion="4.2.1.0" To="System.Runtime" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
@@ -63,18 +66,22 @@ For spans that represent immutable or read-only structures, use <xref:System.Rea
 A `Span<T>` represents a contiguous region of arbitrary memory. A `Span<T>` instance is often used to hold the elements of an array or a portion of an array. Unlike an array, however, a `Span<T>` instance can point to managed memory, native memory, or memory managed on the stack. The following example creates a `Span<Byte>` from an array:
 
 :::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet1":::
      
 The following example creates a `Span<Byte>` from 100 bytes of native memory:
 
 :::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet2":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet2":::
 
 The following example uses the C# [stackalloc](/dotnet/csharp/language-reference/keywords/stackalloc) keyword to allocate 100 bytes of memory on the stack:
 
 :::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet3":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet3":::
 
 Because `Span<T>` is an abstraction over an arbitrary block of memory, methods of the `Span<T>` type and methods with `Span<T>` parameters operate on any `Span<T>` object regardless of the kind of memory it encapsulates. For example, each of the separate sections of code that initialize the span and calculate the sum of its elements can be changed into single initialization and calculation methods, as the following example illustrates:
 
 :::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet4":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet4":::
 
 ## Span\<T> and arrays
 
@@ -83,6 +90,7 @@ When it wraps an array, `Span<T>` can wrap an entire array, as it did in the exa
 The following example creates a slice of the middle five elements of a 10-element integer array. Note that the code doubles the values of each integer in the slice. As the output shows, the changes made by the span are reflected in the values of the array.
 
 :::code language="csharp" source="~/snippets/csharp/System/Span/Slice/Program.cs":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Slice/Program.fs":::
 
 ## Span\<T> and slices
 
@@ -95,6 +103,7 @@ The following example creates a slice of the middle five elements of a 10-elemen
 This allocation and copy operation can be eliminated by using either `Span<T>` or <xref:System.ReadOnlySpan%601>, as the following example shows:
 
 :::code language="csharp" source="~/snippets/csharp/System/Span/Slice/Program2.cs":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Slice/Program2.fs":::
 
 
       ]]></format>
@@ -104,7 +113,7 @@ This allocation and copy operation can be eliminated by using either `Span<T>` o
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Span (T[]? array);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public Span (T[]? array);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] array) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.#ctor(`0[])" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (array As T())" />
@@ -118,6 +127,7 @@ This allocation and copy operation can be eliminated by using either `Span<T>` o
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -156,6 +166,7 @@ If `array` is `null`, this constructor returns a `null` `Span<T>`.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -192,7 +203,7 @@ If `array` is `null`, this constructor returns a `null` `Span<T>`.
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Span (T[]? array, int start, int length);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public Span (T[]? array, int start, int length);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] array, int32 start, int32 length) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.#ctor(`0[],System.Int32,System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (array As T(), start As Integer, length As Integer)" />
@@ -206,6 +217,7 @@ If `array` is `null`, this constructor returns a `null` `Span<T>`.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -262,6 +274,7 @@ This method returns `default` when `array` is `null`.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -299,6 +312,7 @@ The `Clear` method sets the items in the <xref:System.Span%601> object to their 
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -341,6 +355,7 @@ This method copies all of `source` to `destination` even if `source` and `destin
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -359,7 +374,7 @@ This method copies all of `source` to `destination` even if `source` and `destin
       </Docs>
     </Member>
     <Member MemberName="Equals">
-      <MemberSignature Language="C#" Value="public override bool Equals (object? obj);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public override bool Equals (object? obj);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.Equals(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function Equals (obj As Object) As Boolean" />
@@ -373,6 +388,7 @@ This method copies all of `source` to `destination` even if `source` and `destin
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -390,7 +406,7 @@ This method copies all of `source` to `destination` even if `source` and `destin
           <AttributeName Language="C#">[System.Obsolete("Equals() on Span will always throw an exception. Use == instead.")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Obsolete("Equals() on Span will always throw an exception. Use == instead.")&gt;]</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Obsolete("Equals() on Span will always throw an exception. Use the equality operator instead.")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Obsolete("Equals() on Span will always throw an exception. Use the equality operator instead.")&gt;]</AttributeName>
         </Attribute>
@@ -434,6 +450,7 @@ To compare two <xref:System.Span%601> objects for equality, use the <xref:System
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -468,6 +485,7 @@ To compare two <xref:System.Span%601> objects for equality, use the <xref:System
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -505,6 +523,7 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -548,6 +567,7 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -585,6 +605,7 @@ If pinning a `Span<char>`, the resulting `char*` __is not__ assumed to be null-t
 The following example demonstrates creating an integer array, pinning it, and writing each element to the console.
 
 :::code language="csharp" source="~/snippets/csharp/System/ReadOnlySpanT/GetPinnableReference/getpinnablereference1.cs":::
+:::code language="fsharp" source="~/snippets/fsharp/System/ReadOnlySpanT/GetPinnableReference/getpinnablereference1.fs":::
 
  ]]></format>
         </remarks>
@@ -604,6 +625,7 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -636,6 +658,7 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -673,6 +696,7 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -704,6 +728,7 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -748,6 +773,7 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -783,6 +809,7 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -805,7 +832,7 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
-      <MemberSignature Language="C#" Value="public static implicit operator Span&lt;T&gt; (T[]? array);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static implicit operator Span&lt;T&gt; (T[]? array);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype System.Span`1&lt;!T&gt; op_Implicit(!T[] array) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.op_Implicit(`0[])~System.Span{`0}" />
       <MemberSignature Language="VB.NET" Value="Public Shared Widening Operator CType (array As T()) As Span(Of T)" />
@@ -819,6 +846,7 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -854,6 +882,7 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -898,6 +927,7 @@ Two <xref:System.Span%601> objects are equal if they have different lengths or i
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -935,6 +965,7 @@ Two <xref:System.Span%601> objects are equal if they have different lengths or i
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -974,6 +1005,7 @@ Two <xref:System.Span%601> objects are equal if they have different lengths or i
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1012,6 +1044,7 @@ This method performs a heap allocation and therefore should be avoided if possib
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1049,6 +1082,7 @@ For a `Span<Char>`, the `ToString` method returns a <xref:System.String> that co
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>

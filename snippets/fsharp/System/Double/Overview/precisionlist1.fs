@@ -5,6 +5,7 @@ open System
 
 let value1 = 1. / 3.
 let sValue2 = 1f /3f
+
 let value2 = double sValue2
 printfn $"{value1:R} = {value2:R}: {value1.Equals value2}"
 // The example displays the following output:

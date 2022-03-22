@@ -13,6 +13,7 @@
     <AssemblyVersion>4.1.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>System.Core</AssemblyName>
@@ -28,13 +29,14 @@
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Pipes" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Pipes" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Pipes" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.IO.Pipes.PipeStream</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Exposes the client side of an anonymous pipe stream, which supports both synchronous and asynchronous read and write operations.</summary>
+    <summary>Exposes the client side of an anonymous pipe stream, which supports both synchronous and asynchronous read and write operations (without cancellation support on Windows platforms).</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -46,7 +48,8 @@
  Anonymous pipes do not support the <xref:System.IO.Pipes.PipeTransmissionMode.Message?displayProperty=nameWithType> read mode.  
   
  The client side of an anonymous pipe must be created from a pipe handle provided by the server side by calling the <xref:System.IO.Pipes.AnonymousPipeServerStream.GetClientHandleAsString%2A> method. The string is then passed as a parameter when creating the client process. From the client process, it is passed to the <xref:System.IO.Pipes.AnonymousPipeClientStream> constructor as the `pipeHandleAsString` parameter.  
-  
+
+ On Windows, asynchronous (overlapped) read and write operations are not supported by anonymous pipes (see https://docs.microsoft.com/en-us/windows/win32/ipc/anonymous-pipe-operations). The <xref:System.IO.Pipes.AnonymousPipeClientStream> class will still schedule work on the thread pool on Windows platforms so asynchronous <xref:System.IO.Stream> operations work, but cancellation of those operations is not supported.
 ## Examples  
 
 The following example sends a string from a parent process to a child process by using anonymous pipes. This example creates an <xref:System.IO.Pipes.AnonymousPipeServerStream> object in a parent process with a <xref:System.IO.Pipes.PipeDirection> value of <xref:System.IO.Pipes.PipeDirection.Out>. It also creates an <xref:System.IO.Pipes.AnonymousPipeClientStream> object in a child process with a <xref:System.IO.Pipes.PipeDirection> value of <xref:System.IO.Pipes.PipeDirection.In>. The parent process then sends a user-supplied string to the child process. The string is displayed to the console.  
@@ -87,6 +90,7 @@ The following example sends a string from a parent process to a child process by
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -151,6 +155,7 @@ The following example sends a string from a parent process to a child process by
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -224,6 +229,7 @@ The following example sends a string from a parent process to a child process by
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -293,6 +299,7 @@ The following example sends a string from a parent process to a child process by
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -328,6 +335,7 @@ The following example sends a string from a parent process to a child process by
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
@@ -393,6 +401,7 @@ The following example sends a string from a parent process to a child process by
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Core</AssemblyName>
