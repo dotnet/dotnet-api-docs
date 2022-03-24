@@ -17,5 +17,5 @@ The methods for manipulating zip archives and their files are spread across thre
 
 This example shows how to create and extract a zip archive by using the <xref:System.IO.Compression.ZipFile> class. It compresses the contents of a folder into a zip archive, and then extracts that content to a new folder.
 
-:::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.zipfile/cs/program1.cs" id="Snippet1":::
-:::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.zipfile/vb/program1.vb" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipFile/CreateFromDirectory/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.zipfile/vb/program1.vb" id="Snippet1":::
