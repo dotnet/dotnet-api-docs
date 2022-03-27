@@ -41,39 +41,39 @@ class Sample
 //       The current culture is en-US.
 //       
 //       Comparisons using CurrentCulture:
-//       i (U+0069) = i (U+0131): False
+//       i (U+0069) = ı (U+0131): False
 //       i (U+0069) = I (U+0049): False
 //       
-//       i (U+0131) = I (U+0049): False
+//       ı (U+0131) = I (U+0049): False
 //       
 //       Comparisons using CurrentCultureIgnoreCase:
-//       i (U+0069) = i (U+0131): False
+//       i (U+0069) = ı (U+0131): False
 //       i (U+0069) = I (U+0049): True
 //       
-//       i (U+0131) = I (U+0049): False
+//       ı (U+0131) = I (U+0049): False
 //       
 //       Comparisons using InvariantCulture:
-//       i (U+0069) = i (U+0131): False
+//       i (U+0069) = ı (U+0131): False
 //       i (U+0069) = I (U+0049): False
 //       
-//       i (U+0131) = I (U+0049): False
+//       ı (U+0131) = I (U+0049): False
 //       
 //       Comparisons using InvariantCultureIgnoreCase:
-//       i (U+0069) = i (U+0131): False
+//       i (U+0069) = ı (U+0131): False
 //       i (U+0069) = I (U+0049): True
 //       
-//       i (U+0131) = I (U+0049): False
+//       ı (U+0131) = I (U+0049): False
 //       
 //       Comparisons using Ordinal:
-//       i (U+0069) = i (U+0131): False
+//       i (U+0069) = ı (U+0131): False
 //       i (U+0069) = I (U+0049): False
 //       
-//       i (U+0131) = I (U+0049): False
+//       ı (U+0131) = I (U+0049): False
 //       
 //       Comparisons using OrdinalIgnoreCase:
-//       i (U+0069) = i (U+0131): False
+//       i (U+0069) = ı (U+0131): False
 //       i (U+0069) = I (U+0049): True
 //       
-//       i (U+0131) = I (U+0049): False
+//       ı (U+0131) = I (U+0049): False
 // </Snippet1>
 // 119 lines
