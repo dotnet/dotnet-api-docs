@@ -15,7 +15,7 @@ namespace GetPreambleExample
          byte[] preamble = unicode.GetPreamble();
 
          // Make sure a preamble was returned 
-         // and is large enough to containa BOM.
+         // and is large enough to contain a BOM.
          if(preamble.Length >= 2)
          {
             if(preamble[0] == 0xFE && preamble[1] == 0xFF)
