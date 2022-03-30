@@ -40,10 +40,10 @@ public class Example3
 //       case = Case (Ordinal): False
 //       case = Case (OrdinalIgnoreCase): True
 //    
-//       encyclopædia = encyclopaedia (CurrentCulture): True
-//       encyclopædia = encyclopaedia (CurrentCultureIgnoreCase): True
-//       encyclopædia = encyclopaedia (InvariantCulture): True
-//       encyclopædia = encyclopaedia (InvariantCultureIgnoreCase): True
+//       encyclopædia = encyclopaedia (CurrentCulture): False
+//       encyclopædia = encyclopaedia (CurrentCultureIgnoreCase): False
+//       encyclopædia = encyclopaedia (InvariantCulture): False
+//       encyclopædia = encyclopaedia (InvariantCultureIgnoreCase): False
 //       encyclopædia = encyclopaedia (Ordinal): False
 //       encyclopædia = encyclopaedia (OrdinalIgnoreCase): False
 //    
@@ -72,8 +72,8 @@ public class Example3
 //    
 //       encyclopædia = encyclopaedia (CurrentCulture): False
 //       encyclopædia = encyclopaedia (CurrentCultureIgnoreCase): False
-//       encyclopædia = encyclopaedia (InvariantCulture): True
-//       encyclopædia = encyclopaedia (InvariantCultureIgnoreCase): True
+//       encyclopædia = encyclopaedia (InvariantCulture): False
+//       encyclopædia = encyclopaedia (InvariantCultureIgnoreCase): False
 //       encyclopædia = encyclopaedia (Ordinal): False
 //       encyclopædia = encyclopaedia (OrdinalIgnoreCase): False
 //    
